@@ -3,6 +3,7 @@
 /carplay/gen
 /carplay/build
 /carplay/.classpath
+/carplay/project.properties
 /.gradle
 /dhroid/bin
 /dhroid/build
