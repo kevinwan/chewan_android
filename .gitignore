@@ -1,0 +1,13 @@
+/carplay/bin
+/carplay/.settings
+/carplay/gen
+/carplay/build
+/carplay/.classpath
+/.gradle
+/dhroid/bin
+/dhroid/build
+/dhroid/gen
+/dhroid/.classpath
+/dhroid/.settings
+/dhroid/.svn
+/build
