@@ -8,5 +8,6 @@
     <color name="text_black_light">#656d78</color>
     <color name="text_blue">#5D9CEC</color>
     <color name="text_grey">#aab2bd</color>
-
+    <!-- 主题背景颜色浅蓝色 -->
+	<color name="theme_bg">#47D1D4</color>
 </resources>
