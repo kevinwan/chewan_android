@@ -9,7 +9,12 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-
+/**
+ * 找回密码(设置新密码)页面
+ * hqh
+ * @author Administrator
+ *
+ */
 public class PwdNextActivity extends CarPlayBaseActivity {
 
 	@Override
