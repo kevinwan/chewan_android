@@ -9,5 +9,8 @@
     <string name="crash_dialog_title">错误信息</string>
     <string name="title_activity_personal_data">编辑资料</string>
     <string name="title_activity_setting">设置</string>
+    <string name="title_activity_register">RegisterActivity</string>
+    <string name="title_activity_forget_pwd">ForgetPwdActivity</string>
+    <string name="title_activity_pwd_next">PwdNextActivity</string>
 
 </resources>

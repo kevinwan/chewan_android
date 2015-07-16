@@ -10,4 +10,6 @@
     <color name="text_grey">#aab2bd</color>
     <color name="text_orange">#fc6e51</color>
 
+    <!-- 主题背景颜色浅蓝色 -->
+	<color name="theme_bg">#47D1D4</color>
 </resources>
