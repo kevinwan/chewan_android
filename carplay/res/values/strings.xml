@@ -7,5 +7,7 @@
     <string name="progress_doing">加载中...</string>
     <string name="crash_dialog_text">抱歉,程序停止运行</string>
     <string name="crash_dialog_title">错误信息</string>
+    <string name="title_activity_personal_data">编辑资料</string>
+    <string name="title_activity_setting">设置</string>
 
 </resources>
