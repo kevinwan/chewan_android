@@ -14,7 +14,7 @@
 
         <ImageView
             android:id="@+id/clear"
-            style="@style/text_grey_small"
+            style="@style/icon_style"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_centerVertical="true"
@@ -33,7 +33,9 @@
 
         <ImageView
             android:id="@+id/img"
-            style="@style/icon_style"
+            android:layout_width="25dp"
+            android:layout_height="18dp"
+            android:layout_marginRight="5dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:src="@drawable/right_btn" />
@@ -57,7 +59,7 @@
 
         <ImageView
             android:id="@+id/like"
-            style="@style/text_grey_small"
+            style="@style/icon_style"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_centerVertical="true"
@@ -67,7 +69,9 @@
 
         <ImageView
             android:id="@+id/img"
-            style="@style/icon_style"
+            android:layout_width="25dp"
+            android:layout_height="18dp"
+            android:layout_marginRight="5dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:src="@drawable/right_btn" />
@@ -91,7 +95,7 @@
 
         <ImageView
             android:id="@+id/about_us"
-            style="@style/text_grey_small"
+            style="@style/icon_style"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_centerVertical="true"
@@ -101,7 +105,9 @@
 
         <ImageView
             android:id="@+id/img"
-            style="@style/icon_style"
+             android:layout_width="25dp"
+            android:layout_height="18dp"
+            android:layout_marginRight="5dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:src="@drawable/right_btn" />
@@ -125,7 +131,7 @@
 
         <ImageView
             android:id="@+id/versions"
-            style="@style/text_grey_small"
+           style="@style/icon_style"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_centerVertical="true"
@@ -135,7 +141,9 @@
 
         <ImageView
             android:id="@+id/img"
-            style="@style/icon_style"
+            android:layout_width="25dp"
+            android:layout_height="18dp"
+            android:layout_marginRight="5dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:src="@drawable/right_btn" />
@@ -159,7 +167,7 @@
 
         <ImageView
             android:id="@+id/at_versions"
-            style="@style/text_grey_small"
+            style="@style/icon_style"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_centerVertical="true"
@@ -169,7 +177,9 @@
 
         <ImageView
             android:id="@+id/img"
-            style="@style/icon_style"
+            android:layout_width="25dp"
+            android:layout_height="18dp"
+            android:layout_marginRight="5dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:src="@drawable/right_btn" />
