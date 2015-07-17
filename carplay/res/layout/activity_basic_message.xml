@@ -156,7 +156,7 @@
         android:layout_marginRight="15dp" 
         android:layout_marginTop="20dp"
         android:text="下一步"
-        android:textSize="@dimen/text_small"
+        android:textSize="@dimen/text_medium"
         android:textColor="@color/white"
         />
 

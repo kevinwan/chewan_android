@@ -68,21 +68,20 @@
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/title_activity_creat_event" >
-              <intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.PartyDetailsActivity" />
         <activity
             android:name=".activity.AuthenticateOwnersActivity"
             android:label="@string/title_activity_authenticate_owners" >
-          
         </activity>
         <activity
             android:name=".activity.EventInformationActivity"
             android:label="@string/title_activity_event_information" >
-            
             
         </activity>
         <activity

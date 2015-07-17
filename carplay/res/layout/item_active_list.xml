@@ -18,13 +18,14 @@
 
         <TextView
             android:id="@+id/status"
-            style="@style/text_blue_small"
+            style="@style/text_white_smaller"
             android:layout_marginTop="5dp"
+            android:background="@drawable/button_radian"
             android:text="我请客" />
 
         <TextView
             android:id="@+id/seat_count"
-            style="@style/text_blue_small"
+            style="@style/text_grey_smaller"
             android:layout_marginTop="5dp"
             android:text="3/5座" />
     </LinearLayout>
@@ -50,7 +51,7 @@
 
                 <TextView
                     android:id="@+id/tv_nickname"
-                    style="@style/text_blue_small"
+                    style="@style/text_blue_medium"
                     android:layout_marginTop="5dp"
                     android:text="淘气小布丁" />
 
@@ -106,10 +107,6 @@
             android:gravity="center"
             android:orientation="horizontal" >
 
-            <!-- <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/icon_time" /> -->
 
             <TextView
                 android:id="@+id/tv_publish_time"

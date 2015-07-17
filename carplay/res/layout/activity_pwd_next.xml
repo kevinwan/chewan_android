@@ -19,7 +19,7 @@
         android:layout_height="wrap_content" >
 
         <TextView
-            style="@style/text_grey_small"
+            style="@style/text_grey_medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -43,7 +43,7 @@
     <Button
             style="@style/text_white_medium"  
             android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="45dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/button_zc_bg"
                 android:text="完成"/>

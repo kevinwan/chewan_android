@@ -80,7 +80,7 @@
             android:background="@drawable/button_zc_bg"
             android:text="登录"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_small" />
+            android:textSize="@dimen/text_medium" />
     </LinearLayout>
 
     <LinearLayout

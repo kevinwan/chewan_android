@@ -9,9 +9,15 @@
     <color name="text_blue">#5D9CEC</color>
     <color name="text_grey">#aab2bd</color>
     <color name="text_orange">#fc6e51</color>
-    
+
     <!-- 分割线 -->
-	<color name="cutline">#e6e9ed</color>
+    <color name="cutline">#e6e9ed</color>
     <!-- 主题背景颜色浅蓝色 -->
-	<color name="theme_bg">#47D1D4</color>
+    <color name="theme_bg">#47D1D4</color>
+
+    <!-- 背景灰 -->
+    <color name="bg_grey">#f5f7fa</color>
+    <!-- 线灰 -->
+    <color name="line_grey">#e6e9ed</color>
+
 </resources>
