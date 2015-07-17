@@ -17,7 +17,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
-
+/**
+ * 
+ * @Description 我关注的人
+ * @author wang
+ * @date 2015-7-17 上午11:09:27
+ */
 public class AttentionPersonActivity extends CarPlayBaseActivity {
     TextView title;
     NetRefreshAndMoreListView listView;
