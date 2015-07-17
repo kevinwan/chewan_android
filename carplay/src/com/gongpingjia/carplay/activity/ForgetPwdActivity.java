@@ -38,4 +38,11 @@ public class ForgetPwdActivity extends CarPlayBaseActivity {
 			}
 		});
 	}
+
+    @Override
+    public void initView()
+    {
+        // TODO Auto-generated method stub
+        
+    }
 }

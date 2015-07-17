@@ -6,15 +6,23 @@ import android.view.MenuItem;
 
 import com.gongpingjia.carplay.R;
 
-public class PlayCarChatActivity extends CarPlayBaseActivity {
-/**
- * 玩转车聊页面
- * hqh
- */
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_play_car_chat);
-	}
-
+public class PlayCarChatActivity extends CarPlayBaseActivity
+{
+    /**
+     * 玩转车聊页面 hqh
+     */
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_play_car_chat);
+    }
+    
+    @Override
+    public void initView()
+    {
+        // TODO Auto-generated method stub
+        
+    }
+    
 }

@@ -36,4 +36,11 @@ public class RegisterActivity extends CarPlayBaseActivity {
 		});
 	}
 
+    @Override
+    public void initView()
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
 }

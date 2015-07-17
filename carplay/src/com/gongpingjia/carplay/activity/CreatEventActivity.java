@@ -22,4 +22,11 @@ public class CreatEventActivity extends CarPlayBaseActivity {
 		setTitle("创建活动");
 	}
 
+    @Override
+    public void initView()
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
 }

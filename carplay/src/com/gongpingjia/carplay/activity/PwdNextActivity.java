@@ -23,4 +23,11 @@ public class PwdNextActivity extends CarPlayBaseActivity {
 		setTitle("找回密码");
 	}
 
+    @Override
+    public void initView()
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
 }

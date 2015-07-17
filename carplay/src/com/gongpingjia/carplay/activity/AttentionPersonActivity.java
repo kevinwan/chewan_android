@@ -18,18 +18,29 @@ import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
 
-public class AttentionPersonActivity extends CarPlayBaseActivity {
+public class AttentionPersonActivity extends CarPlayBaseActivity
+{
     TextView title;
+    
     NetRefreshAndMoreListView listView;
+    
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attention_person);
-        title = (TextView) findViewById(R.id.title);
+        title = (TextView)findViewById(R.id.title);
         title.setText("我关注的人");
-       
+        
         listView = (NetRefreshAndMoreListView)findViewById(R.id.listview);
         
     }
-
+    
+    @Override
+    public void initView()
+    {
+        // TODO Auto-generated method stub
+        
+    }
+    
 }

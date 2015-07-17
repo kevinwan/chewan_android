@@ -4,6 +4,7 @@ import net.duohuo.dhroid.activity.BaseActivity;
 import net.duohuo.dhroid.dialog.IDialog;
 import net.duohuo.dhroid.ioc.IocContainer;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,19 +13,23 @@ import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
 
-public class CarPlayBaseActivity extends BaseActivity
+public abstract class CarPlayBaseActivity extends BaseActivity
 {
     public IDialog dialoger;
+    
+    public Activity self;
     
     @Override
     public void setContentView(int layoutResID)
     {
         super.setContentView(layoutResID);
-        initView();
         dialoger = IocContainer.getShare().get(IDialog.class);
+        self = this;
+        initTitleBar();
+        initView();
     }
     
-    private void initView()
+    private void initTitleBar()
     {
         View backV = findViewById(R.id.backLayout);
         if (backV != null)
@@ -40,6 +45,8 @@ public class CarPlayBaseActivity extends BaseActivity
             });
         }
     }
+    
+    public abstract void initView();
     
     /** 左边返回按钮为空 */
     public void setLeftIconGone()
