@@ -1,26 +1,30 @@
 package com.gongpingjia.carplay.activity;
 
+import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.R.id;
+import com.gongpingjia.carplay.R.layout;
+
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.gongpingjia.carplay.R;
-
 /**
- * 玩转车聊页面 hqh
+ * 登录页面
+ * @author Administrator
+ *
  */
-public class PlayCarChatActivity extends CarPlayBaseActivity {
+public class LoginActivity extends CarPlayBaseActivity{
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_play_car_chat);
+		setContentView(R.layout.activity_login);
 	}
+
 
 	@Override
 	public void initView() {
 		// TODO Auto-generated method stub
-
+		
 	}
-
 }

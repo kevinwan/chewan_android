@@ -51,7 +51,7 @@
             android:label="@string/title_activity_pwd_next" >
         </activity>
         <activity
-            android:name="com.gongpingjia.carplay.activity.AttentionPersonActivity"
+            android:name=".activity.AttentionPersonActivity"
             android:label="@string/title_activity_attention_person" >
         </activity>
         <activity
@@ -71,7 +71,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.PartyDetailsActivity" >
+        <activity android:name=".activity.PartyDetailsActivity" />
+        <activity
+            android:name="com.gongpingjia.carplay.activity.AuthenticateOwnersActivity"
+            android:label="@string/title_activity_authenticate_owners" >
+        </activity>
+        <activity
+            android:name="com.gongpingjia.carplay.activity.EventInformationActivity"
+            android:label="@string/title_activity_event_information" >
+        </activity>
+        <activity
+            android:name="com.gongpingjia.carplay.activity.LoginActivity"
+            android:label="@string/title_activity_login" >
         </activity>
     </application>
 

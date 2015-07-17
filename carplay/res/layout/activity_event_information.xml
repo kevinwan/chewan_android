@@ -1,0 +1,150 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <include layout="@layout/include_title_bar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="13dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <ImageView
+                style="@style/icon_style_small"
+                android:src="@drawable/e_introduce" />
+
+            <TextView
+                style="@style/text_grey_small"
+                android:text="活动介绍" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right|center_vertical"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="25dp"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/right_btn" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            style="@style/text_blacklight_small"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="3dp"
+            android:text="突然好想去怀柔吃鱼，有车的小伙伴们赶紧来报名，一起来一场说走就走的旅行~" />
+    </LinearLayout>
+
+    <View style="@style/line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <ImageView
+            style="@style/icon_style_small"
+            android:layout_marginLeft="14dp"
+            android:src="@drawable/organizer3x" />
+
+        <TextView
+            style="@style/text_grey_small"
+            android:text="组织者" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="right|center_vertical"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginRight="3dp"
+                android:src="@drawable/head3" />
+
+            <TextView
+                style="@style/text_black_small"
+                android:layout_marginRight="3dp"
+                android:text="千里走单骑" />
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="25dp"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/right_btn" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View style="@style/line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <ImageView
+                style="@style/icon_style_small"
+                android:src="@drawable/active_member3x" />
+
+            <TextView
+                style="@style/text_grey_small"
+                android:text="活动成员" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right|center_vertical"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="25dp"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/right_btn" />
+            </LinearLayout>
+        </LinearLayout>
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginTop="7dp"
+                android:src="@drawable/head3" />
+    </LinearLayout>
+ <View style="@style/line" />
+
+ <Button
+     style="@style/text_white_small"
+     android:layout_width="match_parent"
+     android:layout_height="40dp"
+     android:background="@drawable/button_radian"
+     android:layout_marginLeft="14dp"
+     android:layout_marginRight="14dp"
+     android:layout_marginTop="20dp"
+     android:text="退出群聊" />
+
+</LinearLayout>

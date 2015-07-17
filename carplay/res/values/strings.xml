@@ -12,9 +12,12 @@
     <string name="title_activity_register">RegisterActivity</string>
     <string name="title_activity_forget_pwd">ForgetPwdActivity</string>
     <string name="title_activity_pwd_next">PwdNextActivity</string>
-    <string name="title_activity_attention_person">AttentionPersonActivity</string>
+    <string name="title_activity_attention_person">我关注的人</string>
     <string name="title_activity_play_car_chat">PlayCarChatActivity</string>
     <string name="title_activity_basic_message">BasicMessageActivity</string>
     <string name="title_activity_creat_event">CreatEventActivity</string>
+    <string name="title_activity_authenticate_owners">认证车主</string>
+    <string name="title_activity_event_information">活动信息</string>
+    <string name="title_activity_login">LoginActivity</string>
 
 </resources>

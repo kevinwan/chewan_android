@@ -106,10 +106,10 @@
             android:gravity="center"
             android:orientation="horizontal" >
 
-            <ImageView
+            <!-- <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/icon_time" />
+                android:background="@drawable/icon_time" /> -->
 
             <TextView
                 android:id="@+id/tv_publish_time"
