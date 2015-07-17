@@ -10,7 +10,11 @@ import android.widget.Button;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.R.id;
 import com.gongpingjia.carplay.R.layout;
-
+/**
+ * 找回密码
+ * @author Administrator
+ *
+ */
 public class ForgetPwdActivity extends CarPlayBaseActivity {
 
 	private Button mNext=null;

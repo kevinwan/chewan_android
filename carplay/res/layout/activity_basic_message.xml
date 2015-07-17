@@ -1,0 +1,163 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context="com.gongpingjia.carplay.activity.BasicMessageActivity" >
+
+    <include layout="@layout/include_title_bar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="#f5f7fa"
+        android:gravity="center" >
+
+        <ImageView
+            android:layout_width="85dp"
+            android:layout_height="85dp"
+            android:src="@drawable/head_icon" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp" >
+
+        <TextView
+            style="@style/text_grey_medium"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="昵称" />
+
+        <TextView
+            style="@style/text_blacklight_medium"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:gravity="center_vertical|right"
+            android:text="月满轩尼诗" />
+    </LinearLayout>
+
+    <View style="@style/line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp" >
+
+        <TextView
+            style="@style/text_grey_medium"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="性别" />
+
+        <RadioGroup
+            android:id="@+id/tab"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:gravity="center_vertical|right"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/tab_left"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="20dp"
+                android:button="@null"
+                android:checked="true"
+                android:drawableLeft="@drawable/radio_sex"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
+                android:text="男"
+                android:textColor="#FD6D53"
+                android:textSize="@dimen/text_medium" />
+
+            <RadioButton
+                android:id="@+id/tab_right"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:button="@null"
+                android:drawableLeft="@drawable/radio_sex"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
+                android:text="女"
+                android:textColor="@color/text_grey"
+                android:textSize="@dimen/text_medium" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <View style="@style/line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp" >
+
+        <TextView
+            style="@style/text_grey_medium"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="年龄" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:gravity="center_vertical|right" >
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="18dp"
+                android:src="@drawable/below_btn" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View style="@style/line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp" >
+
+        <TextView
+            style="@style/text_grey_medium"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="地区" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:gravity="center_vertical|right" >
+
+            <TextView
+                style="@style/text_blacklight_small"
+                android:layout_marginRight="3dp"
+                android:text="北京" />
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="25dp"
+                android:src="@drawable/right_btn" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View style="@style/line" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/button_zc_bg" 
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp" 
+        android:layout_marginTop="20dp"
+        android:text="下一步"
+        android:textSize="@dimen/text_small"
+        android:textColor="@color/white"
+        />
+
+</LinearLayout>

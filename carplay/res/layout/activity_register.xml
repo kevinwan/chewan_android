@@ -35,16 +35,14 @@
                 android:gravity="center_vertical"
                 android:hint="请输入手机号"
                 android:inputType="number"
-                android:textColorHint="@color/text_grey"
-                android:singleLine="true" >
+                android:singleLine="true"
+                android:textColorHint="@color/text_grey" >
 
                 <requestFocus />
             </EditText>
         </LinearLayout>
-        <View 
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/text_grey"/>
+
+        <View style="@style/line" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -66,21 +64,20 @@
                 android:gravity="center_vertical"
                 android:hint="请输入验证码"
                 android:inputType="number"
-                android:textColorHint="@color/text_grey"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:textColorHint="@color/text_grey" />
 
             <Button
                 style="@style/text_white_small"
-                android:background="@drawable/button_yanzheng_bg"
                 android:layout_width="100dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center_vertical"
+                android:background="@drawable/button_yanzheng_bg"
                 android:text="获取验证码" />
         </LinearLayout>
-<View 
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/text_grey"/>
+
+        <View style="@style/line" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
@@ -101,35 +98,31 @@
                 android:gravity="center_vertical"
                 android:hint="请输入密码"
                 android:password="true"
-                android:textColorHint="@color/text_grey"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:textColorHint="@color/text_grey" />
         </LinearLayout>
-<View 
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/text_grey"/>
+
+        <View style="@style/line" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center" >
-            
-            
-            <LinearLayout 
+
+            <LinearLayout
                 android:layout_width="45dp"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                >
+                android:gravity="center" >
 
-                <ImageView 
-                     android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/checked"
-                    />
-                
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/checked" />
             </LinearLayout>
-            
-            <TextView style="@style/text_grey_small"
-                android:text="我已阅读并同意"/>
+
+            <TextView
+                style="@style/text_grey_small"
+                android:text="我已阅读并同意" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -142,21 +135,20 @@
                     android:text="车玩服务条款"
                     android:textColor="@color/theme_bg" />
 
-                <View 
+                <View
                     android:layout_width="match_parent"
-                android:layout_height="1.5px"
-                android:background="@color/theme_bg"/>
+                    android:layout_height="1.5px"
+                    android:background="@color/theme_bg" />
             </LinearLayout>
-
         </LinearLayout>
+
         <Button
             android:id="@+id/next"
-            style="@style/text_white_medium"  
+            style="@style/text_white_medium"
             android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/button_zc_bg"
-                android:text="下一步"/>
+            android:layout_height="50dp"
+            android:background="@drawable/button_zc_bg"
+            android:text="下一步" />
     </LinearLayout>
-    
 
 </LinearLayout>
