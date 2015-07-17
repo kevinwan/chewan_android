@@ -113,8 +113,10 @@
         android:text="复仇者联盟终于上映了，有没有萌妹纸陪我去看，包接送，电影票哦" />
 
     <LinearLayout
+        android:id="@+id/layout_pictures"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
 
     <LinearLayout
         android:layout_width="match_parent"
