@@ -81,7 +81,7 @@
             android:label="@string/title_activity_event_information" >
         </activity>
         <activity
-            android:name="com.gongpingjia.carplay.activity.LoginActivity"
+            android:name=".activity.LoginActivity"
             android:label="@string/title_activity_login" >
         </activity>
     </application>

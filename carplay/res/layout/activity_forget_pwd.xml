@@ -20,14 +20,14 @@
             android:layout_height="wrap_content" >
 
             <TextView
-                style="@style/text_grey_small"
+                style="@style/text_grey_medium"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="手机号" />
 
             <EditText
-                style="@style/text_black_small"
+                style="@style/text_black_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="55dp"
                 android:layout_weight="1"
@@ -49,14 +49,14 @@
             android:layout_height="wrap_content" >
 
             <TextView
-                style="@style/text_grey_small"
+                style="@style/text_grey_medium"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="验证码" />
 
             <EditText
-                style="@style/text_black_small"
+                style="@style/text_black_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="55dp"
                 android:layout_weight="1"
@@ -82,7 +82,7 @@
             android:id="@+id/next"
             style="@style/text_white_medium"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="45dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/button_zc_bg"
             android:text="下一步" />
