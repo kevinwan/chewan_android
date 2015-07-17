@@ -68,7 +68,6 @@
             android:src="@drawable/like" />
 
         <ImageView
-            android:id="@+id/img"
             android:layout_width="25dp"
             android:layout_height="18dp"
             android:layout_marginRight="5dp"
@@ -104,7 +103,6 @@
             android:src="@drawable/about_us" />
 
         <ImageView
-            android:id="@+id/img"
              android:layout_width="25dp"
             android:layout_height="18dp"
             android:layout_marginRight="5dp"
@@ -140,7 +138,6 @@
             android:src="@drawable/versions" />
 
         <ImageView
-            android:id="@+id/img"
             android:layout_width="25dp"
             android:layout_height="18dp"
             android:layout_marginRight="5dp"
@@ -176,7 +173,6 @@
             android:src="@drawable/at_versions" />
 
         <ImageView
-            android:id="@+id/img"
             android:layout_width="25dp"
             android:layout_height="18dp"
             android:layout_marginRight="5dp"
