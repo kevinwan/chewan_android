@@ -28,6 +28,13 @@
         <item name="android:textSize">@dimen/text_small</item>
     </style>
 
+    <style name="text_blacklight_medium">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_black_light</item>
+        <item name="android:textSize">@dimen/text_medium</item>
+    </style>
+    
     <style name="text_blacklight_small">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -102,6 +109,26 @@
         <item name="android:layout_width">25dp</item>
         <item name="android:layout_height">25dp</item>
         <item name="android:layout_marginRight">14dp</item>
+    </style>
+    
+     <style name="icon_style_small">
+        <item name="android:layout_width">18dp</item>
+        <item name="android:layout_height">18dp</item>
+        <item name="android:layout_marginRight">7dp</item>
+    </style>
+    
+    <style name="line">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1.5px</item>
+        <item name="android:background">@color/cutline</item>
+    </style>
+    
+    <style name="linearlayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:gravity">center_vertical</item>
     </style>
 
 

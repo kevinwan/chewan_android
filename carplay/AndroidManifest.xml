@@ -29,20 +29,14 @@
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".activity.PersonalDataActivity"
             android:label="@string/title_activity_personal_data" >
         </activity>
         <activity
-            android:name="com.gongpingjia.carplay.activity.SettingActivity"
+            android:name=".activity.SettingActivity"
             android:label="@string/title_activity_setting" >
-            
         </activity>
         <activity
             android:name=".activity.RegisterActivity"
@@ -53,8 +47,26 @@
             android:label="@string/title_activity_forget_pwd" >
         </activity>
         <activity
-            android:name="com.gongpingjia.carplay.activity.PwdNextActivity"
+            android:name=".activity.PwdNextActivity"
             android:label="@string/title_activity_pwd_next" >
+        </activity>
+        <activity
+            android:name=".activity.PlayCarChatActivity"
+            android:label="@string/title_activity_play_car_chat" >
+        </activity>
+        <activity
+            android:name=".activity.BasicMessageActivity"
+            android:label="@string/title_activity_basic_message" >
+           
+        </activity>
+        <activity
+            android:name="com.gongpingjia.carplay.activity.CreatEventActivity"
+            android:label="@string/title_activity_creat_event" >
+             <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

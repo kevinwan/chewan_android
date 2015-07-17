@@ -8,7 +8,11 @@ import android.view.View;
 import android.widget.Button;
 
 import com.gongpingjia.carplay.R;
-
+/***
+ * 注册页面
+ * @author Administrator
+ *
+ */
 public class RegisterActivity extends CarPlayBaseActivity {
 
 	private Button mNext=null;
