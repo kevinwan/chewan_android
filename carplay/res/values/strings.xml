@@ -16,5 +16,6 @@
     <string name="title_activity_play_car_chat">PlayCarChatActivity</string>
     <string name="title_activity_basic_message">BasicMessageActivity</string>
     <string name="title_activity_creat_event">CreatEventActivity</string>
+    <string name="title_activity_login">LoginActivity</string>
 
 </resources>
