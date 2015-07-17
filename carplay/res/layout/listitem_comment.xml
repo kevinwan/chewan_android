@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/bg_grey"
+    android:orientation="horizontal"
+    android:padding="10dp" >
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/icon_comment_msg"
+        android:visibility="invisible" />
+
+    <ImageView
+        android:id="@+id/imgView_avatar"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/head2" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/tv_nickname"
+                style="@style/text_blue_medium"
+                android:text="半夜偷西瓜" />
+
+            <RelativeLayout
+                android:id="@+id/layout_sex"
+                android:layout_width="35dp"
+                android:layout_height="17dp"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/man" >
+
+                <TextView
+                    android:id="@+id/tv_user_sex"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="男"
+                    android:textColor="@color/white" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right|center_vertical" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/icon_time" />
+
+                <TextView
+                    android:id="@+id/tv_publish_time"
+                    style="@style/text_grey_small"
+                    android:layout_marginLeft="5dp"
+                    android:text="1小时前" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_comment_content"
+            style="@style/text_black_medium"
+            android:padding="5dp"
+            android:text="哎，为啥只限妹子？这种大片不应该跟好基友一起去看的吗？" />
+    </LinearLayout>
+
+</LinearLayout>
