@@ -72,7 +72,7 @@ public class CarPlayApplication extends Application
                 .discCacheFileNameGenerator(new Md5FileNameGenerator())
                 .build();
         ImageLoader.getInstance().init(imageconfig);
-        UserLocation.getInstance().init(getApplicationContext());
+        // UserLocation.getInstance().init(getApplicationContext());
         
     }
     
