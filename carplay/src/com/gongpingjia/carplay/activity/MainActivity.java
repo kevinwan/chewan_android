@@ -12,7 +12,7 @@ public class MainActivity extends CarPlayBaseActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.itme_attention_person);
     }
     
 }

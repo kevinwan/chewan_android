@@ -40,9 +40,8 @@
             android:label="@string/title_activity_personal_data" >
         </activity>
         <activity
-            android:name="com.gongpingjia.carplay.activity.SettingActivity"
+            android:name=".activity.SettingActivity"
             android:label="@string/title_activity_setting" >
-            
         </activity>
         <activity
             android:name=".activity.RegisterActivity"
@@ -53,8 +52,12 @@
             android:label="@string/title_activity_forget_pwd" >
         </activity>
         <activity
-            android:name="com.gongpingjia.carplay.activity.PwdNextActivity"
+            android:name=".activity.PwdNextActivity"
             android:label="@string/title_activity_pwd_next" >
+        </activity>
+        <activity
+            android:name="com.gongpingjia.carplay.activity.AttentionPersonActivity"
+            android:label="@string/title_activity_attention_person" >
         </activity>
     </application>
 

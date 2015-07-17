@@ -12,5 +12,6 @@
     <string name="title_activity_register">RegisterActivity</string>
     <string name="title_activity_forget_pwd">ForgetPwdActivity</string>
     <string name="title_activity_pwd_next">PwdNextActivity</string>
+    <string name="title_activity_attention_person">AttentionPersonActivity</string>
 
 </resources>
