@@ -7,27 +7,24 @@ import com.gongpingjia.carplay.R.layout;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
 /**
- * 找回密码(设置新密码)页面
- * hqh
+ * 登录页面
  * @author Administrator
  *
  */
-public class PwdNextActivity extends CarPlayBaseActivity {
+public class LoginActivity extends CarPlayBaseActivity{
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_pwd_next);
-		
-		setTitle("找回密码");
+		setContentView(R.layout.activity_login);
 	}
 
-    @Override
-    public void initView()
-    {
-        // TODO Auto-generated method stub
-        
-    }
 
+	@Override
+	public void initView() {
+		// TODO Auto-generated method stub
+		
+	}
 }

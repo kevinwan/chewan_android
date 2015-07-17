@@ -20,4 +20,10 @@ public class EventInformationActivity extends CarPlayBaseActivity {
         setContentView(R.layout.activity_event_information);
     }
 
+    @Override
+    public void initView() {
+        // TODO Auto-generated method stub
+        
+    }
+
 }

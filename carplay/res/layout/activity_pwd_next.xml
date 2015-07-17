@@ -34,7 +34,7 @@
             android:background="@color/nothing"
             android:gravity="center_vertical|right"
             android:hint="请输入新密码"
-            android:password="true"
+            android:inputType="textPassword"
             android:singleLine="true"
             android:textColorHint="@color/text_grey" />
     </LinearLayout>

@@ -1,0 +1,312 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.gongpingjia.carplay.MyActivity" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="210dp"
+            android:src="@color/text_grey" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="190dp"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="95dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/head2" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="30dp"
+                    android:orientation="vertical" >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical" >
+
+                        <TextView
+                            style="@style/text_blue_medium"
+                            android:text="半夜偷西瓜" />
+
+                        <RelativeLayout
+                            android:id="@+id/person_sex"
+                            android:layout_width="40dp"
+                            android:layout_height="17dp"
+                            android:layout_marginLeft="7dp"
+                            android:background="@drawable/woman" >
+
+                            <TextView
+                                android:id="@+id/person_age"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="2dp"
+                                android:text="23"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/text_smaller" />
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp" >
+
+                        <ImageView
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:layout_marginRight="7dp"
+                            android:src="@drawable/tips_bg" />
+
+                        <TextView
+                            style="@style/text_grey_smaller"
+                            android:text="california, 12年驾龄" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                style="@style/line"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        style="@style/text_grey_medium"
+                        android:text="552" />
+
+                    <TextView
+                        style="@style/text_grey_small"
+                        android:layout_marginTop="4dp"
+                        android:text="我的发布" />
+                </LinearLayout>
+
+                <View
+                    style="@style/line"
+                    android:layout_width="1.5dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginTop="15dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        style="@style/text_grey_medium"
+                        android:text="565" />
+
+                    <TextView
+                        style="@style/text_grey_small"
+                        android:layout_marginTop="4dp"
+                        android:text="我的关注" />
+                </LinearLayout>
+
+                <View
+                    style="@style/line"
+                    android:layout_width="1.5dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginTop="15dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        style="@style/text_grey_medium"
+                        android:text="16552" />
+
+                    <TextView
+                        style="@style/text_grey_small"
+                        android:layout_marginTop="4dp"
+                        android:text="我的参与" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/linearlayout"
+                android:layout_height="65dp" >
+
+                <ImageView
+                    style="@style/icon_style_small"
+                    android:src="@drawable/my_attention" />
+
+                <TextView
+                    style="@style/text_black_medium"
+                    android:text="我关注的人" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="right|center_vertical"
+                    android:orientation="horizontal" >
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/right_btn" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View style="@style/line" />
+
+            <LinearLayout
+                style="@style/linearlayout"
+                android:layout_height="65dp" >
+
+                <ImageView
+                    style="@style/icon_style_small"
+                    android:src="@drawable/my_approve" />
+
+                <TextView
+                    style="@style/text_black_medium"
+                    android:text="车主认证" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right|center_vertical"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        style="@style/text_blacklight_small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="5dp"
+                        android:gravity="center_vertical"
+                        android:text="已认证" />
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp" />
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/right_btn" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View style="@style/line" />
+
+            <LinearLayout
+                style="@style/linearlayout"
+                android:layout_height="65dp" >
+
+                <ImageView
+                    style="@style/icon_style_small"
+                    android:src="@drawable/my_carplay" />
+
+                <TextView
+                    style="@style/text_black_medium"
+                    android:text="玩转车玩" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="right|center_vertical"
+                    android:orientation="horizontal" >
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/right_btn" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View style="@style/line" />
+
+            <LinearLayout
+                style="@style/linearlayout"
+                android:layout_height="65dp" >
+
+                <ImageView
+                    style="@style/icon_style_small"
+                    android:src="@drawable/my_about" />
+
+                <TextView
+                    style="@style/text_black_medium"
+                    android:text="关于我们" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="right|center_vertical"
+                    android:orientation="horizontal" >
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/right_btn" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View style="@style/line" />
+
+            <LinearLayout
+                style="@style/linearlayout"
+                android:layout_height="65dp" >
+
+                <ImageView
+                    style="@style/icon_style_small"
+                    android:src="@drawable/my_edit" />
+
+                <TextView
+                    style="@style/text_black_medium"
+                    android:text="编辑资料" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="right|center_vertical"
+                    android:orientation="horizontal" >
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/right_btn" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+</ScrollView>

@@ -20,4 +20,10 @@ public class AuthenticateOwnersActivity extends CarPlayBaseActivity {
         setContentView(R.layout.activity_authenticate_owners);
     }
 
+    @Override
+    public void initView() {
+        // TODO Auto-generated method stub
+        
+    }
+
 }

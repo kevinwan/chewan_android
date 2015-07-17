@@ -27,7 +27,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".activity.CreatEventActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
@@ -63,8 +63,13 @@
             android:label="@string/title_activity_basic_message" >
         </activity>
         <activity
-            android:name=".activity.CreatEventActivity"
+            android:name=".activity.MainActivity"
             android:label="@string/title_activity_creat_event" >
+              <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name="com.gongpingjia.carplay.activity.AuthenticateOwnersActivity"
@@ -74,11 +79,11 @@
         <activity
             android:name="com.gongpingjia.carplay.activity.EventInformationActivity"
             android:label="@string/title_activity_event_information" >
-              <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            
+        </activity>
+        <activity
+            android:name="com.gongpingjia.carplay.activity.LoginActivity"
+            android:label="@string/title_activity_login" >
         </activity>
     </application>
 

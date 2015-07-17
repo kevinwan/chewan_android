@@ -18,5 +18,6 @@
     <string name="title_activity_creat_event">CreatEventActivity</string>
     <string name="title_activity_authenticate_owners">认证车主</string>
     <string name="title_activity_event_information">活动信息</string>
+    <string name="title_activity_login">LoginActivity</string>
 
 </resources>
