@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:layout_toLeftOf="@id/tv_no"
-            android:background="@drawable/radioBtn_normal" />
+            android:background="@drawable/radiobtn_normal" />
 
         <TextView
             android:id="@+id/tv_yes"
@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:layout_toLeftOf="@id/tv_yes"
-            android:background="@drawable/radioBtn_pressed" />
+            android:background="@drawable/radiobtn_pressed" />
     </RelativeLayout>
 
     <View style="@style/line_horizontal" />

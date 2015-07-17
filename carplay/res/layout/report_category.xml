@@ -12,7 +12,7 @@
 
         <TextView
             android:id="@+id/report_rumor_txt"
-            style="@style/text_grey_small"
+            style="@style/text_grey_medium"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:text="谣言" />
@@ -45,7 +45,7 @@
             android:layout_centerVertical="true"
             android:text="恶意营销 "
             android:textColor="@color/text_orange"
-            android:textSize="13sp" />
+            android:textSize="@dimen/text_medium" />
 
         <ImageView
             android:layout_width="18dp"
@@ -68,7 +68,7 @@
 
         <TextView
             android:id="@+id/report_induce_txt"
-            style="@style/text_grey_small"
+            style="@style/text_grey_medium"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:text="诱导分享 " />
@@ -95,7 +95,7 @@
 
         <TextView
             android:id="@+id/report_political_txt"
-            style="@style/text_grey_small"
+            style="@style/text_grey_medium"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:text="政治" />
@@ -122,7 +122,7 @@
 
         <TextView
             android:id="@+id/report_other_txt"
-            style="@style/text_grey_small"
+            style="@style/text_grey_medium"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:text="其它" />
@@ -156,6 +156,7 @@
             android:layout_marginTop="10dp"
             android:layout_weight="1"
             android:background="#f5f5f5"
+            android:textSize="@dimen/text_medium"
             android:text="取消" />
 
         <Button
@@ -168,6 +169,7 @@
             android:layout_marginTop="10dp"
             android:layout_weight="1"
             android:background="@color/theme_bg"
+             android:textSize="@dimen/text_medium"
             android:text="确定"
             android:textColor="@color/white" />
     </LinearLayout>

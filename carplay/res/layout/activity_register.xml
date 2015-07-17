@@ -20,7 +20,7 @@
             android:layout_height="wrap_content" >
 
             <TextView
-                style="@style/text_grey_small"
+                style="@style/text_grey_medium"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -49,7 +49,7 @@
             android:layout_height="wrap_content" >
 
             <TextView
-                style="@style/text_grey_small"
+                style="@style/text_grey_medium"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -83,7 +83,7 @@
             android:layout_height="wrap_content" >
 
             <TextView
-                style="@style/text_grey_small"
+                style="@style/text_grey_medium"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -146,7 +146,7 @@
             android:id="@+id/next"
             style="@style/text_white_medium"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="45dp"
             android:background="@drawable/button_zc_bg"
             android:text="下一步" />
     </LinearLayout>

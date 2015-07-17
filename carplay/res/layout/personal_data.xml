@@ -9,10 +9,10 @@
     <RelativeLayout
         android:id="@+id/personal_head"
         android:layout_width="match_parent"
-        android:layout_height="50dp" >
+        android:layout_height="60dp" >
 
         <TextView
-            style="@style/text_grey_small"
+            style="@style/text_grey_medium"
             android:layout_centerVertical="true"
             android:layout_marginLeft="17dp"
             android:text="头像" />
@@ -33,7 +33,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="3dp"
             android:layout_toLeftOf="@+id/img"
-            android:src="@drawable/head2" />
+            android:src="@drawable/head5" />
     </RelativeLayout>
 
     <View
@@ -44,17 +44,17 @@
     <RelativeLayout
         android:id="@+id/personal_nickname"
         android:layout_width="match_parent"
-        android:layout_height="50dp" >
+        android:layout_height="60dp" >
 
         <TextView
-            style="@style/text_grey_small"
+            style="@style/text_grey_medium"
             android:layout_centerVertical="true"
             android:layout_marginLeft="17dp"
             android:text="昵称" />
 
         <TextView
             android:id="@+id/nickname_txt"
-            style="@style/text_blacklight_small"
+            style="@style/text_blacklight_medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -79,17 +79,17 @@
     <RelativeLayout
         android:id="@+id/personal_sex"
         android:layout_width="match_parent"
-        android:layout_height="50dp" >
+        android:layout_height="60dp" >
 
         <TextView
-            style="@style/text_grey_small"
+            style="@style/text_grey_medium"
             android:layout_centerVertical="true"
             android:layout_marginLeft="17dp"
             android:text="性别" />
 
         <TextView
             android:id="@+id/sex_txt"
-            style="@style/text_blacklight_small"
+            style="@style/text_blacklight_medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -114,17 +114,17 @@
     <RelativeLayout
         android:id="@+id/personal_driving_years"
         android:layout_width="match_parent"
-        android:layout_height="50dp" >
+        android:layout_height="60dp" >
 
         <TextView
-            style="@style/text_grey_small"
+            style="@style/text_grey_medium"
             android:layout_centerVertical="true"
             android:layout_marginLeft="17dp"
             android:text="驾龄" />
 
         <TextView
             android:id="@+id/driving_years_txt"
-            style="@style/text_blacklight_small"
+            style="@style/text_blacklight_medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -149,17 +149,17 @@
     <RelativeLayout
         android:id="@+id/personal_city"
         android:layout_width="match_parent"
-        android:layout_height="50dp" >
+        android:layout_height="60dp" >
 
         <TextView
-            style="@style/text_grey_small"
+            style="@style/text_grey_medium"
             android:layout_centerVertical="true"
             android:layout_marginLeft="17dp"
             android:text="地区" />
 
         <TextView
             android:id="@+id/city_txt"
-            style="@style/text_blacklight_small"
+            style="@style/text_blacklight_medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
