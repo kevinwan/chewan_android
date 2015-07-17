@@ -34,7 +34,7 @@
         <item name="android:textColor">@color/text_black_light</item>
         <item name="android:textSize">@dimen/text_medium</item>
     </style>
-    
+
     <style name="text_blacklight_small">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -90,7 +90,7 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/text_medium</item>
     </style>
-    
+
     <style name="text_white_small">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -110,19 +110,19 @@
         <item name="android:layout_height">25dp</item>
         <item name="android:layout_marginRight">14dp</item>
     </style>
-    
-     <style name="icon_style_small">
+
+    <style name="icon_style_small">
         <item name="android:layout_width">18dp</item>
         <item name="android:layout_height">18dp</item>
         <item name="android:layout_marginRight">7dp</item>
     </style>
-    
+
     <style name="line">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1.5px</item>
         <item name="android:background">@color/cutline</item>
     </style>
-    
+
     <style name="linearlayout">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -131,5 +131,16 @@
         <item name="android:gravity">center_vertical</item>
     </style>
 
+    <style name="line_horizontal">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1px</item>
+        <item name="android:background">@color/line_grey</item>
+    </style>
+
+    <style name="line_vertical">
+        <item name="android:layout_width">1px</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/line_grey</item>
+    </style>
 
 </resources>

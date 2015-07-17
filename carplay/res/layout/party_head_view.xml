@@ -152,10 +152,7 @@
                     android:text="5月29日   19:30" />
             </LinearLayout>
 
-            <View
-                android:layout_width="1px"
-                android:layout_height="match_parent"
-                android:background="@color/line_grey" />
+            <View style="@style/line_vertical" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -176,10 +173,8 @@
             </LinearLayout>
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/line_grey" />
+        <View style="@style/line_horizontal" />
+"
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -204,10 +199,7 @@
                     android:text="CBD万达广场" />
             </LinearLayout>
 
-            <View
-                android:layout_width="1px"
-                android:layout_height="match_parent"
-                android:background="@color/line_grey" />
+            <View style="@style/line_vertical" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -228,10 +220,7 @@
             </LinearLayout>
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/line_grey" />
+        <View style="@style/line_horizontal" />
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -1,0 +1,31 @@
+package com.gongpingjia.carplay.activity;
+
+import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
+
+
+/*
+ *@author zhanglong
+ *Email:1269521147@qq.com
+ */
+public class AttendDlgFragment extends DialogFragment {
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO Auto-generated method stub
+        getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
+        View view = inflater.inflate(R.layout.fragment_dlg_attend, container);
+//        Button submitBtn = view.findViewById(R.id.btn_submit);
+        return view;
+    }
+    
+    public interface OnDialogCallbacks{
+        void onSubmit();
+    }
+
+}

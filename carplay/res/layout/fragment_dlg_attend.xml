@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp" >
+
+        <TextView
+            style="@style/text_black_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="请选择" />
+    </RelativeLayout>
+
+    <View style="@style/line_horizontal" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp" >
+
+        <TextView
+            style="@style/text_grey_medium"
+            android:text="是否愿意出车" />
+
+        <TextView
+            android:id="@+id/tv_no"
+            style="@style/text_grey_medium"
+            android:layout_alignParentRight="true"
+            android:text="否" />
+
+        <ImageView
+            android:id="@+id/imgView_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@id/tv_no"
+            android:background="@drawable/radioBtn_normal" />
+
+        <TextView
+            android:id="@+id/tv_yes"
+            style="@style/text_grey_medium"
+            android:layout_marginRight="15dp"
+            android:layout_toLeftOf="@id/imgView_no"
+            android:text="是" />
+
+        <ImageView
+            android:id="@+id/imgView_yes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@id/tv_yes"
+            android:background="@drawable/radioBtn_pressed" />
+    </RelativeLayout>
+
+    <View style="@style/line_horizontal" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp" >
+
+        <TextView
+            style="@style/text_grey_medium"
+            android:text="提供座位数" />
+
+        <TextView
+            android:id="@+id/tv_left_num"
+            style="@style/text_grey_medium"
+            android:layout_alignParentRight="true"
+            android:text="个" />
+
+        <EditText
+            android:id="@+id/et_num_site"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/tv_left_num"
+            android:background="@color/nothing" />
+    </RelativeLayout>
+
+    <View style="@style/line_horizontal" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp" >
+
+        <Button
+            android:id="@+id/btn_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/button_zc_bg"
+            android:text="提交"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_medium" />
+    </RelativeLayout>
+
+</LinearLayout>
