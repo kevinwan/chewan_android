@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.duohuo.dhroid.adapter.BeanAdapter.ViewHolder;
+import net.duohuo.dhroid.adapter.NetJSONAdapter;
 import net.duohuo.dhroid.view.NetRefreshAndMoreListView;
 import android.content.Context;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.api.API;
 /**
  * 
  * @Description 我关注的人
@@ -26,8 +28,7 @@ import com.gongpingjia.carplay.R;
 
 public class AttentionPersonActivity extends CarPlayBaseActivity
 {
-    TextView title;
-    
+    NetJSONAdapter adapter;
     NetRefreshAndMoreListView listView;
     
     @Override
@@ -35,18 +36,17 @@ public class AttentionPersonActivity extends CarPlayBaseActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attention_person);
-        title = (TextView)findViewById(R.id.title);
-        title.setText("我关注的人");
         
-        listView = (NetRefreshAndMoreListView)findViewById(R.id.listview);
+       
         
     }
     
     @Override
     public void initView()
     {
-        // TODO Auto-generated method stub
-        
+        setTitle("我关注的人");
+        listView = (NetRefreshAndMoreListView)findViewById(R.id.listview);
+         adapter = new NetJSONAdapter(API.Baseurl, self, R.layout.itme_attention_person);
     }
     
 }

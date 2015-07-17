@@ -20,7 +20,7 @@
             android:layout_height="60dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="9dp"
+            android:layout_marginLeft="10dp"
             android:src="@drawable/comment" />
 
         <LinearLayout
@@ -31,13 +31,13 @@
             android:orientation="vertical" >
 
             <TextView
-                style="@style/text_black_small"
+                style="@style/text_black_medium"
                 android:layout_marginTop="16dp"
                 android:text="新的留言" />
 
             <TextView
-                style="@style/text_grey_smaller"
-                android:layout_marginTop="7dp"
+                style="@style/text_grey_small"
+                android:layout_marginTop="5dp"
                 android:text="包接送吗？" />
         </LinearLayout>
 
@@ -84,7 +84,7 @@
             android:layout_height="60dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="9dp"
+            android:layout_marginLeft="10dp"
             android:src="@drawable/apply_for" />
 
         <LinearLayout
@@ -95,7 +95,7 @@
             android:orientation="vertical" >
 
             <TextView
-                style="@style/text_black_small"
+                style="@style/text_black_medium"
                 android:layout_marginTop="16dp"
                 android:text="活动参与申请" />
 
@@ -110,7 +110,7 @@
                     android:layout_height="wrap_content"
                     android:text="系统:"
                     android:textColor="@color/text_orange"
-                    android:textSize="14sp" />
+                    android:textSize="@dimen/text_small" />
 
                 <TextView
                     style="@style/text_grey_small"
