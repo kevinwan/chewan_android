@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    tools:context="com.gongpingjia.carplay.activity.CreatEventActivity" >
+    tools:context="com.gongpingjia.carplay.activity.EditEventActivity" >
 
     <include layout="@layout/include_title_bar" />
 
@@ -16,6 +16,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical" >
+            </LinearLayout>
 
             <LinearLayout style="@style/linearlayout" >
 
@@ -34,7 +43,7 @@
                     android:orientation="horizontal" >
 
                     <TextView
-                        style="@style/text_black_medium"
+                        style="@style/text_blacklight_medium"
                         android:layout_width="wrap_content"
                         android:layout_height="60dp"
                         android:layout_marginRight="5dp"
@@ -56,37 +65,71 @@
                     style="@style/icon_style_small"
                     android:src="@drawable/e_introduce" />
 
-                <EditText
-                    style="@style/text_blacklight_small"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:background="@color/nothing"
-                    android:hint="请输入活动介绍"
-                    android:textColorHint="@color/text_grey" >
-                <requestFocus />
-                </EditText>
-            </LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:gravity="right|center_vertical"
+                    android:orientation="horizontal" >
 
-            <View style="@style/line" />
-
-            <LinearLayout style="@style/linearlayout" >
-
-                <RelativeLayout
-                    android:layout_width="90dp"
-                    android:layout_height="90dp"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginTop="15dp"
-                    android:background="#ccd1d9"
-                    android:gravity="center" >
+                    <TextView
+                        style="@style/text_blacklight_medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="60dp"
+                        android:layout_marginRight="5dp"
+                        android:gravity="center_vertical"
+                        android:text="南京将军山一日游" />
 
                     <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:src="@drawable/e_camera" />
-                </RelativeLayout>
+                        android:layout_width="18dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/right_btn" />
+                </LinearLayout>
             </LinearLayout>
 
             <View style="@style/line" />
+
+            <LinearLayout
+                style="@style/linearlayout"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="bottom"
+                    android:orientation="horizontal" >
+
+                    <ImageView
+                        style="@style/icon_style_small"
+                        android:src="@drawable/e_content" />
+
+                    <TextView
+                        style="@style/text_grey_medium"
+                        android:text="活动介绍" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="right|bottom"
+                        android:orientation="horizontal" >
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="25dp"
+                            android:src="@drawable/right_btn" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    style="@style/text_blacklight_small"
+                    android:layout_marginTop="7dp"
+                    android:lineSpacingExtra="1.5dp"
+                    android:textScaleX="1.1"
+                    android:text="参加的人员需准备一些必备的个人物资,尽量早点到达出发点,如果迟到我们不等,如果有什么个人问题,可以拨打我手机18502504444" />
+            </LinearLayout>
+
+            <View
+                style="@style/line"
+                android:layout_marginTop="15dp" />
 
             <LinearLayout style="@style/linearlayout" >
 
@@ -133,19 +176,14 @@
                         style="@style/text_blacklight_medium"
                         android:layout_width="wrap_content"
                         android:layout_height="60dp"
-                        android:layout_marginRight="5dp"
                         android:gravity="center_vertical"
                         android:text="2015年7月16日 18:03" />
-
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="18dp"
-                        android:src="@drawable/below_btn" />
+                    
                 </LinearLayout>
             </LinearLayout>
 
             <View style="@style/line" />
-
+            
             <LinearLayout style="@style/linearlayout" >
 
                 <ImageView
@@ -166,19 +204,13 @@
                         style="@style/text_blacklight_medium"
                         android:layout_width="wrap_content"
                         android:layout_height="60dp"
-                        android:layout_marginRight="5dp"
                         android:gravity="center_vertical"
                         android:text="不确定" />
 
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="18dp"
-                        android:src="@drawable/below_btn" />
                 </LinearLayout>
             </LinearLayout>
-
-            <View style="@style/line" />
-
+             <View style="@style/line" />
+            
             <LinearLayout style="@style/linearlayout" >
 
                 <ImageView
@@ -199,75 +231,26 @@
                         style="@style/text_blacklight_medium"
                         android:layout_width="wrap_content"
                         android:layout_height="60dp"
-                        android:layout_marginRight="5dp"
                         android:gravity="center_vertical"
                         android:text="AA制" />
 
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="18dp"
-                        android:src="@drawable/below_btn" />
                 </LinearLayout>
             </LinearLayout>
-
-            <View style="@style/line" />
-
-            <LinearLayout style="@style/linearlayout" >
-
-                <ImageView
-                    style="@style/icon_style_small"
-                    android:src="@drawable/e_seating" />
-
-                <TextView
-                    style="@style/text_grey_medium"
-                    android:text="座位数" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="right|center_vertical"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        style="@style/text_blacklight_medium"
-                        android:layout_width="wrap_content"
-                        android:layout_height="60dp"
-                        android:layout_marginRight="5dp"
-                        android:gravity="center_vertical"
-                        android:text="5个" />
-
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="18dp"
-                        android:src="@drawable/below_btn" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <View style="@style/line" />
-
-            <LinearLayout style="@style/linearlayout"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp" >
-
-                <Button
-                    android:layout_width="match_parent"
+            
+             <View style="@style/line" />
+             
+             <Button  android:layout_width="match_parent"
                     android:layout_height="45dp"
-                    android:text="完成"
-                    android:textSize="@dimen/text_small"
-                    android:textColor="@color/text_black_light"
-                    android:background="#f1f1f1"
-                    android:layout_weight="1" />
-
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:layout_weight="0.8"
-                    android:background="@drawable/button_zc_bg"
-                    android:text="完成并邀请好友"
                     android:layout_marginLeft="10dp"
-                    android:textSize="@dimen/text_small"
-                    android:textColor="@color/white" />
-            </LinearLayout>
+                    android:layout_marginRight="10dp"
+                    android:text="保存"
+                    android:layout_marginTop="20dp"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_medium"
+                    android:background="@drawable/button_zc_bg"
+                    android:layout_marginBottom="20dp"
+                    />
+             
         </LinearLayout>
     </ScrollView>
 
