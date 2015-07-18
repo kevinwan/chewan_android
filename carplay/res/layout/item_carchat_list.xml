@@ -16,13 +16,14 @@
 
         <TextView
             android:id="@+id/text_title"
-            style="@style/text_black_medium"
-            />
+            style="@style/text_black_medium" />
 
         <TextView
-            android:id="@+id/text"
+            android:id="@+id/content"
             style="@style/text_grey_small"
-            android:layout_marginTop="7dp" />
+            android:layout_marginTop="7dp"
+            android:lineSpacingExtra="1.5dp"
+            android:textScaleX="1.1" />
     </LinearLayout>
 
     <View style="@style/line" />

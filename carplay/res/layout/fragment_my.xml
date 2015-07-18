@@ -72,6 +72,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
                         android:layout_marginTop="10dp" >
 
                         <ImageView
@@ -164,7 +165,7 @@
 
             <LinearLayout
                 style="@style/linearlayout"
-                android:layout_height="65dp" >
+                >
 
                 <ImageView
                     style="@style/icon_style_small"
@@ -176,7 +177,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="60dp"
                     android:gravity="right|center_vertical"
                     android:orientation="horizontal" >
 
@@ -190,8 +191,7 @@
             <View style="@style/line" />
 
             <LinearLayout
-                style="@style/linearlayout"
-                android:layout_height="65dp" >
+                style="@style/linearlayout" >
 
                 <ImageView
                     style="@style/icon_style_small"
@@ -210,7 +210,7 @@
                     <TextView
                         style="@style/text_blacklight_small"
                         android:layout_width="wrap_content"
-                        android:layout_height="50dp"
+                        android:layout_height="60dp"
                         android:layout_marginRight="5dp"
                         android:gravity="center_vertical"
                         android:text="已认证" />
@@ -229,8 +229,7 @@
             <View style="@style/line" />
 
             <LinearLayout
-                style="@style/linearlayout"
-                android:layout_height="65dp" >
+                style="@style/linearlayout" >
 
                 <ImageView
                     style="@style/icon_style_small"
@@ -242,7 +241,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="60dp"
                     android:gravity="right|center_vertical"
                     android:orientation="horizontal" >
 
@@ -256,8 +255,7 @@
             <View style="@style/line" />
 
             <LinearLayout
-                style="@style/linearlayout"
-                android:layout_height="65dp" >
+                style="@style/linearlayout">
 
                 <ImageView
                     style="@style/icon_style_small"
@@ -269,7 +267,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="60dp"
                     android:gravity="right|center_vertical"
                     android:orientation="horizontal" >
 
@@ -283,8 +281,7 @@
             <View style="@style/line" />
 
             <LinearLayout
-                style="@style/linearlayout"
-                android:layout_height="65dp" >
+                style="@style/linearlayout">
 
                 <ImageView
                     style="@style/icon_style_small"
@@ -296,7 +293,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="60dp"
                     android:gravity="right|center_vertical"
                     android:orientation="horizontal" >
 
