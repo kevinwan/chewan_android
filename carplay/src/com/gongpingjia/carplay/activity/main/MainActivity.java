@@ -16,10 +16,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.activity.MsgFragment;
+import com.gongpingjia.carplay.activity.SettingActivity;
 import com.gongpingjia.carplay.activity.active.ActiveListFragment;
 import com.gongpingjia.carplay.activity.my.MyFragment;
 
-public class MainActivity extends FragmentActivity
+public class MainActivity extends BaseFragmentActivity
 {
     LinearLayout layout;
     
@@ -82,65 +84,65 @@ public class MainActivity extends FragmentActivity
                         setTitle("同城");
                         img.setImageResource(R.drawable.city_f);
                         switchContent(ActiveListFragment.getInstance());
-                        // setRightAction("创建活动", -1, new OnClickListener()
-                        // {
-                        //
-                        // @Override
-                        // public void onClick(View arg0)
-                        // {
-                        // // Intent it = new Intent(MainActivity.this, CreateAcActivity.class);
-                        // // startActivity(it);
-                        // }
-                        // });
-                        // setLeftAction(R.drawable.filtrate, "筛选", new OnClickListener()
-                        // {
-                        //
-                        // @Override
-                        // public void onClick(View arg0)
-                        // {
-                        //
-                        // }
-                        // });
+                        setRightAction("创建活动", -1, new OnClickListener()
+                        {
+                            
+                            @Override
+                            public void onClick(View arg0)
+                            {
+                                // Intent it = new Intent(MainActivity.this, CreateAcActivity.class);
+                                // startActivity(it);
+                            }
+                        });
+                        setLeftAction(R.drawable.filtrate, "筛选", new OnClickListener()
+                        {
+                            
+                            @Override
+                            public void onClick(View arg0)
+                            {
+                                
+                            }
+                        });
                         break;
                     
                     case 1:
                         setTitle("消息");
-                        switchContent(MyFragment.getInstance());
+                        switchContent(MsgFragment.getInstance());
                         img.setImageResource(R.drawable.msg_f);
-                        // setLeftAction(-2, null, new OnClickListener()
-                        // {
-                        //
-                        // @Override
-                        // public void onClick(View arg0)
-                        // {
-                        // }
-                        // });
+                        setLeftAction(-2, null, new OnClickListener()
+                        {
+                            
+                            @Override
+                            public void onClick(View arg0)
+                            {
+                            }
+                        });
                         break;
                     
                     case 2:
                         setTitle("我的");
                         switchContent(MyFragment.getInstance());
                         img.setImageResource(R.drawable.my_f);
-                        // setLeftAction(R.drawable.icon_setting, "设置", new OnClickListener()
-                        // {
-                        //
-                        // @Override
-                        // public void onClick(View arg0)
-                        // {
-                        // Intent it = new Intent(MainActivity.this, SettingActivity.class);
-                        // startActivity(it);
-                        // }
-                        // });
-                        // setRightAction(null, R.drawable.icon_camera, new OnClickListener()
-                        // {
-                        //
-                        // @Override
-                        // public void onClick(View arg0)
-                        // {
-                        // // Intent it = new Intent(MainActivity.this, EditCarmeraActivity.class);
-                        // // startActivity(it);
-                        // }
-                        // });
+                        setLeftAction(R.drawable.icon_setting, "设置", new OnClickListener()
+                        {
+                            
+                            @Override
+                            public void onClick(View arg0)
+                            {
+                                Intent it = new Intent(MainActivity.this, SettingActivity.class);
+                                startActivity(it);
+                            }
+                        });
+                        setRightAction(null, R.drawable.icon_camera, new OnClickListener()
+                        {
+                            
+                            @Override
+                            public void onClick(View arg0)
+                            {
+                                // Intent it = new Intent(MainActivity.this, EditCarmeraActivity.class);
+                                // startActivity(it);
+                            }
+                        });
                         break;
                     
                     default:

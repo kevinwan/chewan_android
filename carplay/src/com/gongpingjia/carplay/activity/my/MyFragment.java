@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.gongpingjia.carplay.R;
-import com.gongpingjia.carplay.activity.active.ActiveListFragment;
 import com.gongpingjia.carplay.adapter.ActiveAdapter;
 
 public class MyFragment extends Fragment

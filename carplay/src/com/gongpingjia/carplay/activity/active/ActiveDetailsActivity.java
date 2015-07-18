@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.util.PicLayoutUtil;
 
@@ -16,7 +17,7 @@ import com.gongpingjia.carplay.util.PicLayoutUtil;
  *@author zhanglong
  *Email:1269521147@qq.com
  */
-public class ActiveDetailsActivity extends BaseActivity
+public class ActiveDetailsActivity extends CarPlayBaseActivity
 {
     
     private NetRefreshAndMoreListView mListView;
@@ -46,5 +47,12 @@ public class ActiveDetailsActivity extends BaseActivity
         mJsonAdapter.fromWhat("car_list");
         mListView.setAdapter(mJsonAdapter);
         mJsonAdapter.showNextInDialog();
+    }
+    
+    @Override
+    public void initView()
+    {
+        // TODO Auto-generated method stub
+        
     }
 }

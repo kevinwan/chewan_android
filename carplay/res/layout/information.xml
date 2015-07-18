@@ -5,8 +5,6 @@
     android:background="@color/white"
     android:orientation="vertical" >
 
-    <include layout="@layout/include_title_bar" />
-
     <RelativeLayout
         android:id="@+id/comment_layout"
         android:layout_width="match_parent"

@@ -26,37 +26,21 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        <activity
-            android:name=".activity.CreatEventActivity"
-            android:label="@string/app_name" >
+        <activity android:name=".activity.CreatEventActivity" >
         </activity>
-        <activity
-            android:name=".activity.PersonalDataActivity"
-            android:label="@string/title_activity_personal_data" >
+        <activity android:name=".activity.PersonalDataActivity" >
         </activity>
-        <activity
-            android:name=".activity.SettingActivity"
-            android:label="@string/title_activity_setting" >
+        <activity android:name=".activity.SettingActivity" >
         </activity>
-        <activity
-            android:name=".activity.RegisterActivity"
-            android:label="@string/title_activity_register" >
+        <activity android:name=".activity.RegisterActivity" >
         </activity>
-        <activity
-            android:name=".activity.ForgetPwdActivity"
-            android:label="@string/title_activity_forget_pwd" >
+        <activity android:name=".activity.ForgetPwdActivity" >
         </activity>
-        <activity
-            android:name=".activity.PwdNextActivity"
-            android:label="@string/title_activity_pwd_next" >
+        <activity android:name=".activity.PwdNextActivity" >
         </activity>
-        <activity
-            android:name=".activity.AttentionPersonActivity"
-            android:label="@string/title_activity_attention_person" >
+        <activity android:name=".activity.AttentionPersonActivity" >
         </activity>
-        <activity
-            android:name=".activity.PlayCarChatActivity"
-            android:label="@string/title_activity_play_car_chat" >
+        <activity android:name=".activity.PlayCarChatActivity" >
         </activity>
         <activity
             android:name=".activity.BasicMessageActivity"
@@ -72,31 +56,19 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.PartyDetailsActivity" />
-        <activity
-            android:name=".activity.AuthenticateOwnersActivity"
-            android:label="@string/title_activity_authenticate_owners" >
+        <activity android:name=".activity.AuthenticateOwnersActivity" >
         </activity>
-        <activity
-            android:name=".activity.EventInformationActivity"
-            android:label="@string/title_activity_event_information" >
+        <activity android:name=".activity.EventInformationActivity" >
         </activity>
-        <activity
-            android:name=".activity.LoginActivity"
-            android:label="@string/title_activity_login" >
+        <activity android:name=".activity.LoginActivity" >
         </activity>
         <activity android:name=".activity.ChatActivity" >
         </activity>
-        <activity
-            android:name=".activity.EditEventActivity"
-            android:label="@string/title_activity_edit_event" >
+        <activity android:name=".activity.EditEventActivity" >
         </activity>
-        <activity
-            android:name=".activity.NewMessageActivity"
-            android:label="@string/title_activity_new_message" >
+        <activity android:name=".activity.NewMessageActivity" >
         </activity>
-        <activity 
-            android:name=".activity.ParticipateApplicationActivity">
-            
+        <activity android:name=".activity.ParticipateApplicationActivity" >
         </activity>
     </application>
 
