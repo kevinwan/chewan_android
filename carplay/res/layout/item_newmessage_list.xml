@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical" >
+    
+    <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="85dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/head2" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical" >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical" >
+
+                        <TextView
+                            style="@style/text_black_medium"
+                            android:text="半夜偷西瓜" />
+
+                        <RelativeLayout
+                            android:id="@+id/person_sex"
+                            android:layout_width="40dp"
+                            android:layout_height="17dp"
+                            android:layout_marginLeft="7dp"
+                            android:background="@drawable/woman" >
+
+                            <TextView
+                                android:id="@+id/person_age"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="2dp"
+                                android:text="23"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/text_smaller" />
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp" >
+
+                        <ImageView
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:layout_marginRight="7dp"
+                            android:src="@drawable/tips_bg" />
+
+                        <TextView
+                            style="@style/text_grey_small"
+                            android:text="california, 12年驾龄" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+    <View style="@style/line"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"/>
+    
+</LinearLayout>

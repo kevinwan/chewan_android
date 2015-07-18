@@ -3,7 +3,6 @@ package com.gongpingjia.carplay.activity;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.duohuo.dhroid.activity.BaseActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,7 +19,7 @@ import com.gongpingjia.carplay.bean.ChatMessage;
  *@author zhanglong
  *Email:1269521147@qq.com
  */
-public class ChatActivity extends BaseActivity implements OnClickListener {
+public class ChatActivity extends CarPlayBaseActivity implements OnClickListener {
 
     private ListView mChatListView;
 
@@ -83,6 +82,12 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
             mChatAdapter.refresh();
             break;
         }
+    }
+
+    @Override
+    public void initView() {
+        // TODO Auto-generated method stub
+        
     }
 
 }
