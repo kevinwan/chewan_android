@@ -9,14 +9,14 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="90dp"
+        android:layout_height="105dp"
         android:orientation="vertical" >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="14dp"
-            android:layout_marginTop="13dp"
+            android:layout_marginTop="16dp"
             android:gravity="center_vertical"
             android:orientation="horizontal" >
 
@@ -25,7 +25,7 @@
                 android:src="@drawable/e_introduce" />
 
             <TextView
-                style="@style/text_grey_small"
+                style="@style/text_grey_medium"
                 android:text="活动介绍" />
 
             <LinearLayout
@@ -43,9 +43,9 @@
         </LinearLayout>
 
         <TextView
-            style="@style/text_blacklight_small"
+            style="@style/text_blacklight_medium"
             android:layout_marginLeft="14dp"
-            android:layout_marginTop="3dp"
+            android:layout_marginTop="5dp"
             android:text="突然好想去怀柔吃鱼，有车的小伙伴们赶紧来报名，一起来一场说走就走的旅行~" />
     </LinearLayout>
 
@@ -53,7 +53,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:gravity="center_vertical"
         android:orientation="horizontal" >
 
@@ -63,7 +63,7 @@
             android:src="@drawable/organizer3x" />
 
         <TextView
-            style="@style/text_grey_small"
+            style="@style/text_grey_medium"
             android:text="组织者" />
 
         <LinearLayout
@@ -73,13 +73,13 @@
             android:orientation="horizontal" >
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_marginRight="3dp"
                 android:src="@drawable/head3" />
 
             <TextView
-                style="@style/text_black_small"
+                style="@style/text_black_medium"
                 android:layout_marginRight="3dp"
                 android:text="千里走单骑" />
 
@@ -95,14 +95,14 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="75dp"
+        android:layout_height="88dp"
         android:orientation="vertical" >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="14dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="15dp"
             android:gravity="center_vertical"
             android:orientation="horizontal" >
 
@@ -111,7 +111,7 @@
                 android:src="@drawable/active_member3x" />
 
             <TextView
-                style="@style/text_grey_small"
+                style="@style/text_grey_medium"
                 android:text="活动成员" />
 
             <LinearLayout
@@ -128,17 +128,17 @@
             </LinearLayout>
         </LinearLayout>
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginLeft="14dp"
-                android:layout_marginTop="7dp"
+                android:layout_marginTop="5dp"
                 android:src="@drawable/head3" />
     </LinearLayout>
  <View style="@style/line" />
 
  <Button
-     style="@style/text_white_small"
+     style="@style/text_white_medium"
      android:layout_width="match_parent"
      android:layout_height="40dp"
      android:background="@drawable/button_radian"

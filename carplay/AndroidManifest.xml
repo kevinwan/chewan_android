@@ -73,16 +73,26 @@
         </activity>
         <activity android:name=".activity.PartyDetailsActivity" />
         <activity
-            android:name="com.gongpingjia.carplay.activity.AuthenticateOwnersActivity"
+            android:name=".activity.AuthenticateOwnersActivity"
             android:label="@string/title_activity_authenticate_owners" >
         </activity>
         <activity
-            android:name="com.gongpingjia.carplay.activity.EventInformationActivity"
+            android:name=".activity.EventInformationActivity"
             android:label="@string/title_activity_event_information" >
         </activity>
         <activity
-            android:name="com.gongpingjia.carplay.activity.LoginActivity"
+            android:name=".activity.LoginActivity"
             android:label="@string/title_activity_login" >
+        </activity>
+        <activity android:name=".activity.ChatActivity" >
+        </activity>
+        <activity
+            android:name=".activity.EditEventActivity"
+            android:label="@string/title_activity_edit_event" >
+        </activity>
+        <activity
+            android:name="com.gongpingjia.carplay.activity.NewMessageActivity"
+            android:label="@string/title_activity_new_message" >
         </activity>
     </application>
 

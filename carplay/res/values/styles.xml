@@ -148,4 +148,16 @@
         <item name="android:gravity">center_vertical</item>
     </style>
 
+    <style name="line_horizontal">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1px</item>
+        <item name="android:background">@color/line_grey</item>
+    </style>
+
+    <style name="line_vertical">
+        <item name="android:layout_width">1px</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/line_grey</item>
+    </style>
+
 </resources>

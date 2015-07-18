@@ -1,4 +1,4 @@
-package com.gongpingjia.carplay.activity;
+package com.gongpingjia.carplay.activity.active;
 
 import net.duohuo.dhroid.activity.BaseActivity;
 import net.duohuo.dhroid.adapter.NetJSONAdapter;
@@ -16,7 +16,7 @@ import com.gongpingjia.carplay.util.PicLayoutUtil;
  *@author zhanglong
  *Email:1269521147@qq.com
  */
-public class PartyDetailsActivity extends BaseActivity
+public class ActiveDetailsActivity extends BaseActivity
 {
     
     private NetRefreshAndMoreListView mListView;
@@ -32,11 +32,11 @@ public class PartyDetailsActivity extends BaseActivity
     {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_party_details);
+        setContentView(R.layout.activity_active_details);
         mListView = (NetRefreshAndMoreListView)findViewById(R.id.listview);
         mInflater = LayoutInflater.from(this);
         
-        View view = mInflater.inflate(R.layout.party_head_view, null);
+        View view = mInflater.inflate(R.layout.active_head_view, null);
         mPicturesLayout = (LinearLayout)view.findViewById(R.id.layout_pictures);
         // PicLayoutUtil photoUtil = new PicLayoutUtil(this, 3, 10, mPicturesLayout);
         // photoUtil.addMoreChild();
