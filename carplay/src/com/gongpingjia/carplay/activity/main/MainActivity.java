@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.active.ActiveListFragment;
+import com.gongpingjia.carplay.activity.my.MyFragment;
 
 public class MainActivity extends FragmentActivity
 {
@@ -74,11 +75,12 @@ public class MainActivity extends FragmentActivity
             TextView text = (TextView)childV.findViewById(R.id.text);
             if (index == i)
             {
-                text.setTextColor(getResources().getColor(R.color.text_blue));
+                text.setTextColor(getResources().getColor(R.color.text_blue_light));
                 switch (index)
                 {
                     case 0:
                         setTitle("同城");
+                        img.setImageResource(R.drawable.city_f);
                         switchContent(ActiveListFragment.getInstance());
                         // setRightAction("创建活动", -1, new OnClickListener()
                         // {
@@ -103,6 +105,8 @@ public class MainActivity extends FragmentActivity
                     
                     case 1:
                         setTitle("消息");
+                        switchContent(MyFragment.getInstance());
+                        img.setImageResource(R.drawable.msg_f);
                         // setLeftAction(-2, null, new OnClickListener()
                         // {
                         //
@@ -115,6 +119,8 @@ public class MainActivity extends FragmentActivity
                     
                     case 2:
                         setTitle("我的");
+                        switchContent(MyFragment.getInstance());
+                        img.setImageResource(R.drawable.my_f);
                         // setLeftAction(R.drawable.icon_setting, "设置", new OnClickListener()
                         // {
                         //
