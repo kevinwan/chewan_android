@@ -5,7 +5,7 @@
     android:background="@drawable/login_bg"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context="com.gongpingjia.carplay.activity.LoginActivity" >
+    tools:context="com.gongpingjia.carplay.activity.my.LoginActivity" >
 
     <ImageView
         android:id="@+id/imageView1"

@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    tools:context="com.gongpingjia.carplay.activity.RegisterActivity" >
+    tools:context="com.gongpingjia.carplay.activity.my.RegisterActivity" >
 
     <include layout="@layout/include_title_bar" />
 

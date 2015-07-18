@@ -16,10 +16,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
-import com.gongpingjia.carplay.activity.MsgFragment;
-import com.gongpingjia.carplay.activity.SettingActivity;
 import com.gongpingjia.carplay.activity.active.ActiveListFragment;
+import com.gongpingjia.carplay.activity.msg.MsgFragment;
 import com.gongpingjia.carplay.activity.my.MyFragment;
+import com.gongpingjia.carplay.activity.my.SettingActivity;
 
 public class MainActivity extends BaseFragmentActivity
 {

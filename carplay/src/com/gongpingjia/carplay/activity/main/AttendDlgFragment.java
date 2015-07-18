@@ -1,4 +1,4 @@
-package com.gongpingjia.carplay.activity;
+package com.gongpingjia.carplay.activity.main;
 
 import com.gongpingjia.carplay.R;
 

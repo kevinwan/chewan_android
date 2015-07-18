@@ -26,21 +26,21 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        <activity android:name=".activity.CreatEventActivity" >
+        <activity android:name="com.gongpingjia.carplay.activity.active.CreatEventActivity" >
         </activity>
-        <activity android:name=".activity.PersonalDataActivity" >
+        <activity android:name="com.gongpingjia.carplay.activity.my.PersonalDataActivity" >
         </activity>
-        <activity android:name=".activity.SettingActivity" >
+        <activity android:name="com.gongpingjia.carplay.activity.my.SettingActivity" >
         </activity>
-        <activity android:name=".activity.RegisterActivity" >
+        <activity android:name="com.gongpingjia.carplay.activity.my.RegisterActivity" >
         </activity>
-        <activity android:name=".activity.ForgetPwdActivity" >
+        <activity android:name="com.gongpingjia.carplay.activity.my.ForgetPwdActivity" >
         </activity>
-        <activity android:name=".activity.PwdNextActivity" >
+        <activity android:name="com.gongpingjia.carplay.activity.my.PwdNextActivity" >
         </activity>
-        <activity android:name=".activity.AttentionPersonActivity" >
+        <activity android:name="com.gongpingjia.carplay.activity.my.AttentionPersonActivity" >
         </activity>
-        <activity android:name=".activity.PlayCarChatActivity" >
+        <activity android:name="com.gongpingjia.carplay.activity.msg.PlayCarChatActivity" >
         </activity>
         <activity
             android:name=".activity.BasicMessageActivity"
@@ -56,19 +56,19 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.PartyDetailsActivity" />
-        <activity android:name=".activity.AuthenticateOwnersActivity" >
+        <activity android:name=".activity.my.AuthenticateOwnersActivity" >
         </activity>
-        <activity android:name=".activity.EventInformationActivity" >
+        <activity android:name="com.gongpingjia.carplay.activity.active.EventInformationActivity" >
         </activity>
-        <activity android:name=".activity.LoginActivity" >
+        <activity android:name="com.gongpingjia.carplay.activity.my.LoginActivity" >
         </activity>
-        <activity android:name=".activity.ChatActivity" >
+        <activity android:name="com.gongpingjia.carplay.activity.msg.ChatActivity" >
         </activity>
-        <activity android:name=".activity.EditEventActivity" >
+        <activity android:name="com.gongpingjia.carplay.activity.active.EditEventActivity" >
         </activity>
-        <activity android:name=".activity.NewMessageActivity" >
+        <activity android:name="com.gongpingjia.carplay.activity.msg.NewMessageActivity" >
         </activity>
-        <activity android:name=".activity.ParticipateApplicationActivity" >
+        <activity android:name="com.gongpingjia.carplay.activity.my.ParticipateApplicationActivity" >
         </activity>
     </application>
 

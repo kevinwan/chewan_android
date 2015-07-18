@@ -1,4 +1,4 @@
-package com.gongpingjia.carplay.activity;
+package com.gongpingjia.carplay.activity.my;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 
 /**
  * 

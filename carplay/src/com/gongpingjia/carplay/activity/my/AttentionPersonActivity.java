@@ -1,4 +1,4 @@
-package com.gongpingjia.carplay.activity;
+package com.gongpingjia.carplay.activity.my;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +27,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.api.API;
 
 /**

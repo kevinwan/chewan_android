@@ -1,4 +1,4 @@
-package com.gongpingjia.carplay.activity;
+package com.gongpingjia.carplay.activity.msg;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.adapter.ChatAdapter;
 import com.gongpingjia.carplay.adapter.ChatAdapter.OnRefreshListener;
 import com.gongpingjia.carplay.bean.ChatMessage;

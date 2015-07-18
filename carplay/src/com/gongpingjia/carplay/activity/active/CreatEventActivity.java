@@ -1,10 +1,11 @@
-package com.gongpingjia.carplay.activity;
+package com.gongpingjia.carplay.activity.active;
 
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 
 /***
  * 

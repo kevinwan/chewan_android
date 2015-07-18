@@ -1,4 +1,4 @@
-package com.gongpingjia.carplay.activity;
+package com.gongpingjia.carplay.activity.msg;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

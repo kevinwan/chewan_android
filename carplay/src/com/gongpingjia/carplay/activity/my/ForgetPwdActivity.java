@@ -1,4 +1,4 @@
-package com.gongpingjia.carplay.activity;
+package com.gongpingjia.carplay.activity.my;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,7 @@ import android.widget.Button;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.R.id;
 import com.gongpingjia.carplay.R.layout;
+import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 /**
  * 找回密码
  * @author Administrator
