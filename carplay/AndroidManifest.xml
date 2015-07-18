@@ -37,7 +37,6 @@
         <activity
             android:name=".activity.SettingActivity"
             android:label="@string/title_activity_setting" >
-           
         </activity>
         <activity
             android:name=".activity.RegisterActivity"
@@ -54,8 +53,6 @@
         <activity
             android:name=".activity.AttentionPersonActivity"
             android:label="@string/title_activity_attention_person" >
-            
-             
         </activity>
         <activity
             android:name=".activity.PlayCarChatActivity"
@@ -82,11 +79,12 @@
         <activity
             android:name=".activity.EventInformationActivity"
             android:label="@string/title_activity_event_information" >
-            
         </activity>
         <activity
             android:name=".activity.LoginActivity"
             android:label="@string/title_activity_login" >
+        </activity>
+        <activity android:name=".activity.ChatActivity" >
         </activity>
     </application>
 
