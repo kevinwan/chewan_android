@@ -19,5 +19,7 @@
     <color name="bg_grey">#f5f7fa</color>
     <!-- 线灰 -->
     <color name="line_grey">#e6e9ed</color>
+    
+     <color name="tab_grey_bg">#f5f7fa</color>
 
 </resources>

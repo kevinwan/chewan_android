@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <net.duohuo.dhroid.view.NetRefreshAndMoreListView
+        android:id="@+id/listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/nothing"
+        android:cacheColorHint="#00000000"
+        android:clipToPadding="false"
+        android:divider="@color/nothing"
+        android:dividerHeight="1dp"
+        android:fadingEdge="none"
+        android:listSelector="@android:color/transparent" />
+
+    <LinearLayout
+        android:id="@+id/empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="160dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            style="@style/text_grey_small"
+            android:layout_marginTop="6dp"
+            android:text="暂无车源"
+            android:textSize="@dimen/text_medium" />
+
+        <TextView
+            style="@style/text_grey_small"
+            android:layout_marginTop="1dp"
+            android:text="NO CAR"
+            android:textSize="9sp" />
+    </LinearLayout>
+
+</RelativeLayout>
