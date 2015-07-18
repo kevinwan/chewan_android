@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="70dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/head_img"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="9dp"
+            android:src="@drawable/head2" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/head_img"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <TextView
+                    style="@style/text_black_medium"
+                    android:layout_marginTop="5dp"
+                    android:text="淘气小布丁" />
+
+                <RelativeLayout
+                    android:layout_width="35dp"
+                    android:layout_height="18dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="7dp"
+                    android:background="@drawable/woman" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="2dp"
+                        android:text="23"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_smaller" />
+                </RelativeLayout>
+
+                <ImageView
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/head2" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    style="@style/text_grey_small"
+                    android:layout_marginBottom="5dp"
+                    android:text="想加入昆明湖一日游活动" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/person_cancel"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="9dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/orangle_yuan_btn"
+            android:gravity="center"
+            android:text="同意"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_small" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_grey"
+            android:textSize="@dimen/text_smaller"
+            android:layout_marginTop="5dp"
+            android:layout_alignRight="@+id/person_cancel"
+            android:layout_below="@+id/person_cancel"
+            android:text="提供3座位" />
+    </RelativeLayout>
+
+    <View style="@style/line" />
+
+</LinearLayout>

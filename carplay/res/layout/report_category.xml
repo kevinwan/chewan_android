@@ -168,7 +168,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
             android:layout_weight="1"
-            android:background="@color/theme_bg"
+            android:background="@drawable/button_zc_bg"
              android:textSize="@dimen/text_medium"
             android:text="确定"
             android:textColor="@color/white" />
