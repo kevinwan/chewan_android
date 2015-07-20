@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.my.MyFragment;
+import com.gongpingjia.carplay.activity.my.ParticipateApplicationActivity;
 
 /**
  * 
@@ -43,14 +44,23 @@ public class MsgFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         final View view = inflater.inflate(R.layout.information, container, false);
-        RelativeLayout leave_comments_layout = (RelativeLayout) view.findViewById(R.id.leave_comments_layout);
+        RelativeLayout leave_comments_layout = (RelativeLayout)view.findViewById(R.id.leave_comments_layout);
         leave_comments_layout.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
-				Intent intent=new Intent(getActivity(),NewMessageActivity.class);
-				startActivity(intent);
+//				Intent intent = new Intent(getActivity(),NewMessageActivity.class);
+//				startActivity(intent);
 				
+			}
+		});
+        RelativeLayout apply_for_layout = (RelativeLayout) view.findViewById(R.id.apply_for_layout);
+        apply_for_layout.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				Intent intent = new Intent(getActivity(),ParticipateApplicationActivity.class);
+				startActivity(intent);
 			}
 		});
         return view;

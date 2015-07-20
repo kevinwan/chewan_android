@@ -27,7 +27,7 @@ public class MyFragment extends Fragment implements OnClickListener
     /** 我的关注,我的发布,我的参与 三个点击区域的View */
     View my_attentionV, my_releaseV, my_participationV;
     
-    LinearLayout carchat;
+    LinearLayout carchat,owners_certification,people_concerned;
     
     public static MyFragment getInstance()
     {
@@ -55,6 +55,8 @@ public class MyFragment extends Fragment implements OnClickListener
         my_releaseV = mainV.findViewById(R.id.my_release);
         my_participationV = mainV.findViewById(R.id.my_participation);
         carchat=(LinearLayout) mainV.findViewById(R.id.carchat);
+        people_concerned=(LinearLayout) mainV.findViewById(R.id.people_concerned);
+        owners_certification=(LinearLayout) mainV.findViewById(R.id.owners_certification);
         
         my_attentionV.setOnClickListener(this);
         my_releaseV.setOnClickListener(this);
@@ -87,7 +89,12 @@ public class MyFragment extends Fragment implements OnClickListener
                 it = new Intent(getActivity(), PlayCarChatActivity.class);
                 startActivity(it);
                 break;
-            
+            case R.id.people_concerned:
+                it = new Intent(getActivity(), AttentionPersonActivity.class);
+                startActivity(it);
+                break;
+            case R.id.owners_certification:
+                it = new Intent(getActivity(), AuthenticateOwnersActivity.class);
             default:
                 break;
         }

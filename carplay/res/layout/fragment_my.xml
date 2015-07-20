@@ -177,6 +177,7 @@
                     android:src="@drawable/my_attention" />
 
                 <TextView
+                    android:id="@+id/people_concerned"
                     style="@style/text_black_medium"
                     android:text="我关注的人" />
 
@@ -202,6 +203,7 @@
                     android:src="@drawable/my_approve" />
 
                 <TextView
+                    android:id="@+id/owners_certification"
                     style="@style/text_black_medium"
                     android:text="车主认证" />
 
