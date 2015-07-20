@@ -5,7 +5,9 @@ import net.duohuo.dhroid.dialog.IDialog;
 import net.duohuo.dhroid.ioc.IocContainer;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -18,6 +20,10 @@ public abstract class CarPlayBaseActivity extends BaseActivity
     public IDialog dialoger;
     
     public Activity self;
+    
+    Integer dialogcount = 0;
+    
+    Dialog progressdialog;
     
     @Override
     public void setContentView(int layoutResID)
@@ -212,6 +218,54 @@ public abstract class CarPlayBaseActivity extends BaseActivity
     public void modalOutAnim()
     {
         overridePendingTransition(R.anim.fade_in, R.anim.slide_down_out);
+    }
+    
+    /**
+     * 弹出提示框
+     * 
+     * @param msg
+     */
+    public void showToast(String msg)
+    {
+        dialoger.showToastShort(getApplicationContext(), msg);
+    }
+    
+    /**
+     * 显示加载框
+     * 
+     * @param msg
+     * @return
+     */
+    public Dialog showProgressDialog(String msg)
+    {
+        if (TextUtils.isEmpty(msg))
+            msg = getString(R.string.progress_doing);
+        
+        synchronized (dialogcount)
+        {
+            dialogcount++;
+        }
+        
+        if (progressdialog == null || !progressdialog.isShowing())
+        {
+            progressdialog = dialoger.showProgressDialog(this, msg);
+        }
+        return progressdialog;
+    }
+    
+    /**
+     * dismiss加载框
+     */
+    public void hidenProgressDialog()
+    {
+        synchronized (dialogcount)
+        {
+            dialogcount--;
+        }
+        if (dialogcount == 0)
+        {
+            progressdialog.dismiss();
+        }
     }
     
 }

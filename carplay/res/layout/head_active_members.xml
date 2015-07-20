@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/seat_des"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="13dp"
+        android:layout_marginTop="13dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/seat_des"
+            style="@style/text_grey_small"
+            android:text="共8个座位,  还剩" />
+
+        <TextView
+            android:id="@+id/seat_count"
+            style="@style/text_grey_small"
+            android:text="8个"
+            android:textColor="@color/text_orange" />
+
+        <TextView
+            style="@style/text_grey_small"
+            android:text="座位" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/car_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+    </LinearLayout>
+
+</LinearLayout>

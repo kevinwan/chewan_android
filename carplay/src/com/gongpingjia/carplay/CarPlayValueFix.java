@@ -15,7 +15,7 @@ public class CarPlayValueFix implements ValueFix
     
     static Map<String, DisplayImageOptions> imageOptions;
     
-    public static DisplayImageOptions optionsDefault, carPicOptions, brandOptions, bigcarOptions;
+    public static DisplayImageOptions optionsDefault, headOptions;
     static
     {
         imageOptions = new HashMap<String, DisplayImageOptions>();
@@ -25,6 +25,14 @@ public class CarPlayValueFix implements ValueFix
         .cacheOnDisc()
             .build();
         imageOptions.put("default", optionsDefault);
+        
+        headOptions =
+            new DisplayImageOptions.Builder().showImageForEmptyUri(R.drawable.head2)
+                .showStubImage(R.drawable.head2)
+                .cacheInMemory()
+                .cacheOnDisc()
+                .build();
+        imageOptions.put("head", headOptions);
         
     }
     

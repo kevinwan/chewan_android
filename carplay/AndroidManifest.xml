@@ -26,6 +26,10 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="f5a41f709dd7b958bda5c51d3a0a247e" />
+
         <activity android:name=".activity.active.CreatEventActivity" >
         </activity>
         <activity android:name=".activity.my.PersonalDataActivity" >
@@ -42,13 +46,9 @@
         </activity>
         <activity android:name=".activity.msg.PlayCarChatActivity" >
         </activity>
-        <activity
-            android:name=".activity.BasicMessageActivity"
-            android:label="@string/title_activity_basic_message" >
+        <activity android:name=".activity.BasicMessageActivity" >
         </activity>
-        <activity
-            android:name=".activity.main.MainActivity"
-            android:label="@string/title_activity_creat_event" >
+        <activity android:name=".activity.main.MainActivity" >
         </activity>
         <activity android:name=".activity.PartyDetailsActivity" />
         <activity android:name=".activity.my.AuthenticateOwnersActivity" >
@@ -71,16 +71,18 @@
         </activity>
         <activity android:name=".activity.my.MyReleaseActiveActivity" >
         </activity>
-        <activity android:name=".activity.main.SplashActivity" >
+        <activity android:name=".activity.active.SplashActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.gongpingjia.carplay.activity.active.EventIntroduceActivity"
-            android:label="@string/title_activity_event_introduce" >
+        <activity android:name="com.gongpingjia.carplay.activity.active.EventIntroduceActivity" >
+        </activity>
+        <activity android:name=".activity.active.ActiveMembersActivity" >
+        </activity>
+        <activity android:name=".activity.active.MyActiveMembersManageActivity" >
         </activity>
     </application>
 
