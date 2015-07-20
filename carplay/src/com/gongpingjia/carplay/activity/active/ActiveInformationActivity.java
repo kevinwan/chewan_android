@@ -13,7 +13,7 @@ import android.view.MenuItem;
  * @author wang
  * @date 2015-7-17 上午11:09:03
  */
-public class EventInformationActivity extends CarPlayBaseActivity {
+public class ActiveInformationActivity extends CarPlayBaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -26,7 +26,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        <activity android:name=".activity.active.CreatEventActivity" >
+        <activity android:name=".activity.active.CreatActiveActivity" >
         </activity>
         <activity android:name=".activity.my.PersonalDataActivity" >
         </activity>
@@ -43,23 +43,28 @@
         <activity android:name=".activity.msg.PlayCarChatActivity" >
         </activity>
         <activity
-            android:name=".activity.BasicMessageActivity"
+            android:name="com.gongpingjia.carplay.activity.my.BasicMessageActivity"
             android:label="@string/title_activity_basic_message" >
         </activity>
         <activity
             android:name=".activity.main.MainActivity"
             android:label="@string/title_activity_creat_event" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".activity.PartyDetailsActivity" />
         <activity android:name=".activity.my.AuthenticateOwnersActivity" >
         </activity>
-        <activity android:name=".activity.active.EventInformationActivity" >
+        <activity android:name=".activity.active.ActiveInformationActivity" >
         </activity>
         <activity android:name=".activity.my.LoginActivity" >
         </activity>
         <activity android:name=".activity.msg.ChatActivity" >
         </activity>
-        <activity android:name=".activity.active.EditEventActivity" >
+        <activity android:name=".activity.active.EditActiveActivity" >
         </activity>
         <activity android:name=".activity.msg.NewMessageActivity" >
         </activity>
@@ -72,15 +77,10 @@
         <activity android:name=".activity.my.MyReleaseActiveActivity" >
         </activity>
         <activity android:name=".activity.main.SplashActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
-        <activity
-            android:name="com.gongpingjia.carplay.activity.active.EventIntroduceActivity"
-            android:label="@string/title_activity_event_introduce" >
+        <activity android:name=".activity.active.ActiveIntroduceActivity" >
+        </activity>
+         <activity android:name=".activity.active.ActiveDetailsActivity" >
         </activity>
         <activity android:name=".activity.my.ManageAlbumActivity" >
         </activity>

@@ -1,17 +1,17 @@
 package com.gongpingjia.carplay.activity.active;
 
-import net.duohuo.dhroid.activity.BaseActivity;
 import net.duohuo.dhroid.adapter.NetJSONAdapter;
 import net.duohuo.dhroid.view.NetRefreshAndMoreListView;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.api.API;
-import com.gongpingjia.carplay.util.PicLayoutUtil;
 
 /*
  *@author zhanglong
@@ -47,6 +47,18 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity
         mJsonAdapter.fromWhat("car_list");
         mListView.setAdapter(mJsonAdapter);
         mJsonAdapter.showNextInDialog();
+        
+        setRightAction("编辑活动", -1, new OnClickListener()
+        {
+            
+            @Override
+            public void onClick(View arg0)
+            {
+                 Intent it = new Intent(ActiveDetailsActivity.this, EditActiveActivity.class);
+                 startActivity(it);
+            }
+        });
+
     }
     
     @Override

@@ -232,7 +232,9 @@
 
             <View style="@style/line" />
 
-            <LinearLayout style="@style/linearlayout" >
+            <LinearLayout style="@style/linearlayout" 
+                android:id="@+id/carchat"
+                >
 
                 <ImageView
                     style="@style/icon_style_small"
@@ -240,7 +242,7 @@
 
                 <TextView
                     style="@style/text_black_medium"
-                    android:text="玩转车玩" />
+                    android:text="玩转车聊" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
