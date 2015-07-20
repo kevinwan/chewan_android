@@ -82,6 +82,8 @@
             android:name="com.gongpingjia.carplay.activity.active.EventIntroduceActivity"
             android:label="@string/title_activity_event_introduce" >
         </activity>
+        <activity android:name=".activity.my.ManageAlbumActivity" >
+        </activity>
     </application>
 
 </manifest>
