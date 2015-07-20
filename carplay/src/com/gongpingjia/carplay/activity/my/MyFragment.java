@@ -8,8 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.activity.msg.PlayCarChatActivity;
 import com.gongpingjia.carplay.adapter.ActiveAdapter;
 
 public class MyFragment extends Fragment implements OnClickListener
@@ -24,6 +26,8 @@ public class MyFragment extends Fragment implements OnClickListener
     
     /** 我的关注,我的发布,我的参与 三个点击区域的View */
     View my_attentionV, my_releaseV, my_participationV;
+    
+    LinearLayout carchat,owners_certification,people_concerned;
     
     public static MyFragment getInstance()
     {
@@ -46,13 +50,18 @@ public class MyFragment extends Fragment implements OnClickListener
     
     private void initView()
     {
+    	
         my_attentionV = mainV.findViewById(R.id.my_attention);
         my_releaseV = mainV.findViewById(R.id.my_release);
         my_participationV = mainV.findViewById(R.id.my_participation);
+        carchat=(LinearLayout) mainV.findViewById(R.id.carchat);
+        people_concerned=(LinearLayout) mainV.findViewById(R.id.people_concerned);
+        owners_certification=(LinearLayout) mainV.findViewById(R.id.owners_certification);
         
         my_attentionV.setOnClickListener(this);
         my_releaseV.setOnClickListener(this);
         my_participationV.setOnClickListener(this);
+        carchat.setOnClickListener(this);
     }
     
     @Override
@@ -76,7 +85,16 @@ public class MyFragment extends Fragment implements OnClickListener
                 it = new Intent(getActivity(), MyParticipationActiveActivity.class);
                 startActivity(it);
                 break;
-            
+            case R.id.carchat:
+                it = new Intent(getActivity(), PlayCarChatActivity.class);
+                startActivity(it);
+                break;
+            case R.id.people_concerned:
+                it = new Intent(getActivity(), AttentionPersonActivity.class);
+                startActivity(it);
+                break;
+            case R.id.owners_certification:
+                it = new Intent(getActivity(), AuthenticateOwnersActivity.class);
             default:
                 break;
         }

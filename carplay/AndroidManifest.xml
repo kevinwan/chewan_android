@@ -30,7 +30,7 @@
             android:name="com.amap.api.v2.apikey"
             android:value="f5a41f709dd7b958bda5c51d3a0a247e" />
 
-        <activity android:name=".activity.active.CreatEventActivity" >
+        <activity android:name=".activity.active.CreatActiveActivity" >
         </activity>
         <activity android:name=".activity.my.PersonalDataActivity" >
         </activity>
@@ -48,18 +48,21 @@
         </activity>
         <activity android:name=".activity.BasicMessageActivity" >
         </activity>
-        <activity android:name=".activity.main.MainActivity" >
+        <activity android:name=".activity.main.MainActivity" />
+        <activity
+            android:name="com.gongpingjia.carplay.activity.my.BasicMessageActivity"
+            android:label="@string/title_activity_basic_message" >
         </activity>
         <activity android:name=".activity.PartyDetailsActivity" />
         <activity android:name=".activity.my.AuthenticateOwnersActivity" >
         </activity>
-        <activity android:name=".activity.active.EventInformationActivity" >
+        <activity android:name=".activity.active.ActiveInformationActivity" >
         </activity>
         <activity android:name=".activity.my.LoginActivity" >
         </activity>
         <activity android:name=".activity.msg.ChatActivity" >
         </activity>
-        <activity android:name=".activity.active.EditEventActivity" >
+        <activity android:name=".activity.active.EditActiveActivity" >
         </activity>
         <activity android:name=".activity.msg.NewMessageActivity" >
         </activity>
@@ -83,6 +86,12 @@
         <activity android:name=".activity.active.ActiveMembersActivity" >
         </activity>
         <activity android:name=".activity.active.MyActiveMembersManageActivity" >
+        </activity>
+        <activity android:name=".activity.active.ActiveIntroduceActivity" >
+        </activity>
+        <activity android:name=".activity.active.ActiveDetailsActivity" >
+        </activity>
+        <activity android:name=".activity.my.ManageAlbumActivity" >
         </activity>
     </application>
 

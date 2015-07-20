@@ -4,22 +4,23 @@ import android.os.Bundle;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
+
 /***
- * 活动介绍
+ * 编辑活动页面
+ * 
  * @author Administrator
- *
+ * 
  */
-public class EventIntroduceActivity extends CarPlayBaseActivity {
+public class EditActiveActivity extends CarPlayBaseActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_event_introduce);
+		setContentView(R.layout.activity_edit_event);
 	}
-
 
 	@Override
 	public void initView() {
-		setTitle("活动介绍");
+		setTitle("编辑活动");
 	}
 }

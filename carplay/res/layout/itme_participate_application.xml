@@ -35,6 +35,7 @@
                 android:orientation="horizontal" >
 
                 <TextView
+                    android:id="@+id/participate_name"
                     style="@style/text_black_medium"
                     android:layout_marginTop="5dp"
                     android:text="淘气小布丁" />
@@ -58,6 +59,7 @@
                 </RelativeLayout>
 
                 <ImageView
+                    android:id="@+id/car_brand"
                     android:layout_width="13dp"
                     android:layout_height="13dp"
                     android:layout_marginLeft="5dp"
@@ -73,6 +75,7 @@
                 android:orientation="horizontal" >
 
                 <TextView
+                    android:id="@+id/participate_txt"
                     style="@style/text_grey_small"
                     android:layout_marginBottom="5dp"
                     android:text="想加入昆明湖一日游活动" />
@@ -98,6 +101,7 @@
             android:textColor="@color/text_grey"
             android:textSize="@dimen/text_smaller"
             android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
             android:layout_alignRight="@+id/person_cancel"
             android:layout_below="@+id/person_cancel"
             android:text="提供3座位" />

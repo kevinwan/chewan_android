@@ -70,7 +70,7 @@ public class AttentionPersonActivity extends CarPlayBaseActivity {
             @Override
             public Object fix(View itemV, Integer position, Object o, Object jo) {
 
-                return "秦始皇" ;
+                return "淘气小布丁" ;
             }
 
         });
@@ -90,7 +90,7 @@ public class AttentionPersonActivity extends CarPlayBaseActivity {
          @Override
          public Object fix(View itemV, Integer position, Object o, Object jo)
          {
-         return "御车    ,  2222年驾龄" ;
+         return "x6    ,  8年驾龄" ;
          }
          });
 

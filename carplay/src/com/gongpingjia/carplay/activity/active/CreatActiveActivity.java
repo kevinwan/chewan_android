@@ -13,7 +13,7 @@ import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
  * @author Administrator
  *
  */
-public class CreatEventActivity extends CarPlayBaseActivity {
+public class CreatActiveActivity extends CarPlayBaseActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

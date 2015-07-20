@@ -23,6 +23,7 @@ public class AuthenticateOwnersActivity extends CarPlayBaseActivity {
 
     @Override
     public void initView() {
+    	setTitle("车主认证");
         // TODO Auto-generated method stub
         
     }

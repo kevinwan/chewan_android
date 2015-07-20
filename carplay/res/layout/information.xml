@@ -6,14 +6,14 @@
     android:orientation="vertical" >
 
     <RelativeLayout
-        android:id="@+id/comment_layout"
+        android:id="@+id/leave_comments_layout"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:gravity="center_vertical"
         android:orientation="horizontal" >
 
         <ImageView
-            android:id="@+id/comment_img"
+            android:id="@+id/leave_comments_img"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_alignParentLeft="true"
@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/comment_img"
+            android:layout_toRightOf="@id/leave_comments_img"
             android:orientation="vertical" >
 
             <TextView
