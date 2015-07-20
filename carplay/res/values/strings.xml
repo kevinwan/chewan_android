@@ -21,5 +21,7 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_edit_event">EditEventActivity</string>
     <string name="title_activity_new_message">NewMessageActivity</string>
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="title_activity_event_introduce">EventIntroduceActivity</string>
 
 </resources>

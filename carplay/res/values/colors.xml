@@ -22,5 +22,7 @@
     <color name="line_grey">#e6e9ed</color>
     
      <color name="tab_grey_bg">#f5f7fa</color>
+     
+     <color name="text_red">#fc6e51</color>
 
 </resources>

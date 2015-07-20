@@ -49,11 +49,6 @@
         <activity
             android:name=".activity.main.MainActivity"
             android:label="@string/title_activity_creat_event" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".activity.PartyDetailsActivity" />
         <activity android:name=".activity.my.AuthenticateOwnersActivity" >
@@ -75,6 +70,18 @@
         <activity android:name=".activity.my.MyParticipationActiveActivity" >
         </activity>
         <activity android:name=".activity.my.MyReleaseActiveActivity" >
+        </activity>
+        <activity android:name=".activity.main.SplashActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.gongpingjia.carplay.activity.active.EventIntroduceActivity"
+            android:label="@string/title_activity_event_introduce" >
+>>>>>>> origin/master
         </activity>
     </application>
 
