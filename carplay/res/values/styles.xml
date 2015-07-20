@@ -109,10 +109,8 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">15sp</item>
-        <item name="android:paddingTop">4dp</item>
-        <item name="android:paddingBottom">4dp</item>
-        <item name="android:background">@drawable/button_yanzheng_bg</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:background">@drawable/btn_orange_bg_s</item>
     </style>
 
     <style name="text_title">
@@ -150,12 +148,12 @@
 
     <style name="line_horizontal">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">1px</item>
+        <item name="android:layout_height">1.5px</item>
         <item name="android:background">@color/line_grey</item>
     </style>
 
     <style name="line_vertical">
-        <item name="android:layout_width">1px</item>
+        <item name="android:layout_width">1.5px</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:background">@color/line_grey</item>
     </style>

@@ -148,12 +148,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
                 android:background="@color/tab_grey_bg"
+                 android:gravity="center_vertical"
                 android:padding="8dp" >
 
                 <LinearLayout
                     android:id="@+id/headlayout"
                     android:layout_width="0dp"
-                    android:layout_height="fill_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:orientation="horizontal" >
@@ -165,8 +166,7 @@
                     android:layout_width="75dp"
                     android:layout_marginLeft="10dp"
                     android:gravity="center"
-                    android:text="我要去玩"
-                    android:textSize="15sp" />
+                    android:text="我要去玩" />
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

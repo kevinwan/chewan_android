@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:paddingRight="12dp" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/date_left"
+            style="@style/text_blue_small"
+            android:layout_width="46dp"
+            android:layout_marginRight="3dp"
+            android:gravity="right"
+            android:text="05.28"
+            android:textColor="@color/text_blue_light" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_centerHorizontal="true"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:id="@+id/line_top"
+                    style="@style/line_vertical"
+                    android:layout_height="8dp"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    style="@style/line_vertical"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:src="@drawable/blue_point" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/content"
+                style="@style/text_black_medium"
+                android:text="突然好怀念吃烤鱼,有车的小伙伴赶紧来报名,一起来一场说走就走的旅行..." />
+
+            <LinearLayout
+                android:id="@+id/piclayout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp" >
+
+                <TextView
+                    android:id="@+id/date"
+                    style="@style/text_blacklight_small"
+                    android:drawableLeft="@drawable/icon_my_time"
+                    android:drawablePadding="3dp"
+                    android:text="5月29日" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center" >
+
+                    <TextView
+                        android:id="@+id/address"
+                        style="@style/text_blacklight_small"
+                        android:drawableLeft="@drawable/icon_my_location"
+                        android:drawablePadding="3dp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="CBD万达影院" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/pay_type"
+                    style="@style/text_blacklight_small"
+                    android:drawableLeft="@drawable/icon_my_money"
+                    android:drawablePadding="3dp"
+                    android:text="我请客" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:layout_marginTop="1dp"
+                android:background="@color/tab_grey_bg"
+                android:gravity="center_vertical"
+                android:padding="8dp" >
+
+                <LinearLayout
+                    android:id="@+id/headlayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal" >
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/chat"
+                    style="@style/text_orangebg"
+                    android:layout_width="48dp"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:text="聊天" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>
