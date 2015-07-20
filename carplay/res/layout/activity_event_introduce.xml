@@ -1,0 +1,23 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context="com.gongpingjia.carplay.activity.active.EventIntroduceActivity" >
+
+    <include layout="@layout/include_title_bar"/>
+
+    <TextView
+        style="@style/text_blacklight_medium"
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="18dp"
+        android:layout_marginTop="20dp"
+        android:text="突然好想去怀柔吃烤鱼,有车的小伙伴们赶紧来报名,一起来一场说走就走的旅行~ " />
+    
+    
+    <View style="@style/line"
+        android:layout_marginTop="20dp"
+        />
+    
+</LinearLayout>
