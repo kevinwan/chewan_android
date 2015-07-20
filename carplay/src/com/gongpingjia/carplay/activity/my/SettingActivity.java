@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
+import com.gongpingjia.carplay.util.QiangZuoDialog;
 
 /**
  * 
@@ -71,8 +72,12 @@ public class SettingActivity extends CarPlayBaseActivity implements OnClickListe
                 break;
             case R.id.setting_quit:
                 Toast.makeText(mySelf, "退出登录", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(mySelf, PersonalDataActivity.class);
-                startActivity(intent);
+//                QiangZuoDialog dialog = new QiangZuoDialog(mySelf,"虚位以待...");
+//                dialog.UnmannedDialog();
+                QiangZuoDialog dialog = new QiangZuoDialog(mySelf,"浮世年华","23",R.drawable.head5,R.drawable.woman,"占座中...");
+                dialog.SomeoneDialog();
+//                Intent intent = new Intent(mySelf, PersonalDataActivity.class);
+//                startActivity(intent);
                 break;
             
             default:

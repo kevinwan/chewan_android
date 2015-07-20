@@ -88,35 +88,47 @@
             android:layout_marginTop="8dp"
             android:orientation="horizontal" >
 
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="30dp"
-                android:layout_weight="1"
-                android:background="@drawable/gray_left_frame"
-                android:gravity="center"
-                android:text="男生"
-                android:textColor="@color/text_grey"
-                android:textSize="@dimen/text_medium" />
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
 
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="30dp"
-                android:layout_weight="1"
-                android:background="@drawable/orangle_frame"
-                android:gravity="center"
-                android:text="女生"
-                android:textColor="@color/text_orange"
-                android:textSize="@dimen/text_medium" />
+                <RadioButton
+                    android:layout_width="fill_parent"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio_filter_left"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="男生"
+                    android:textColor="@color/text_grey"
+                    android:textSize="@dimen/text_medium" />
 
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="30dp"
-                android:layout_weight="1"
-                android:background="@drawable/gray_right_frame"
-                android:gravity="center"
-                android:text="不限"
-                android:textColor="@color/text_grey"
-                android:textSize="@dimen/text_medium" />
+                <RadioButton
+                    android:layout_width="fill_parent"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio_filter_frame"
+                    android:button="@null"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:text="女生"
+                    android:textColor="@color/text_grey"
+                    android:textSize="@dimen/text_medium" />
+
+                <RadioButton
+                    android:layout_width="fill_parent"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio_filter_right"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="不限"
+                    android:textColor="@color/text_grey"
+                    android:textSize="@dimen/text_medium" />
+            </RadioGroup>
+
+           
         </LinearLayout>
 
         <TextView
@@ -130,31 +142,35 @@
             android:layout_marginTop="8dp"
             android:orientation="horizontal" >
 
-            <TextView
+            <RadioButton
                 android:layout_width="fill_parent"
                 android:layout_height="30dp"
                 android:layout_weight="1"
-                android:background="@drawable/orangle_left_frame"
+                android:background="@drawable/radio_filter_left"
+                android:button="@null"
+                android:checked="true"
                 android:gravity="center"
                 android:text="车主"
-                android:textColor="@color/text_orange"
+                android:textColor="@color/text_grey"
                 android:textSize="@dimen/text_medium" />
 
-            <TextView
+            <RadioButton
                 android:layout_width="fill_parent"
                 android:layout_height="30dp"
                 android:layout_weight="1"
-                android:background="@drawable/gray_frame"
+                android:background="@drawable/radio_filter_frame"
+                android:button="@null"
                 android:gravity="center"
                 android:text="非车主"
                 android:textColor="@color/text_grey"
                 android:textSize="@dimen/text_medium" />
 
-            <TextView
+            <RadioButton
                 android:layout_width="fill_parent"
                 android:layout_height="30dp"
                 android:layout_weight="1"
-                android:background="@drawable/gray_right_frame"
+                android:background="@drawable/radio_filter_right"
+                android:button="@null"
                 android:gravity="center"
                 android:text="不限"
                 android:textColor="@color/text_grey"
@@ -173,34 +189,38 @@
             android:layout_marginTop="8dp"
             android:orientation="horizontal" >
 
-            <TextView
+            <RadioButton
                 android:layout_width="fill_parent"
                 android:layout_height="30dp"
                 android:layout_weight="1"
-                android:background="@drawable/gray_left_frame"
+                android:background="@drawable/radio_filter_left"
+                android:button="@null"
                 android:gravity="center"
-                android:text="一般 "
+                android:text="一般"
                 android:textColor="@color/text_grey"
                 android:textSize="@dimen/text_medium" />
 
-            <TextView
+            <RadioButton
                 android:layout_width="fill_parent"
                 android:layout_height="30dp"
                 android:layout_weight="1"
-                android:background="@drawable/gray_frame"
+                android:background="@drawable/radio_filter_frame"
+                android:button="@null"
                 android:gravity="center"
                 android:text="好车"
                 android:textColor="@color/text_grey"
                 android:textSize="@dimen/text_medium" />
 
-            <TextView
+            <RadioButton
                 android:layout_width="fill_parent"
                 android:layout_height="30dp"
                 android:layout_weight="1"
-                android:background="@drawable/orangle_right_frame"
+                android:background="@drawable/radio_filter_right"
+                android:button="@null"
+                android:checked="true"
                 android:gravity="center"
                 android:text="不限"
-                android:textColor="@color/text_orange"
+                android:textColor="@color/text_grey"
                 android:textSize="@dimen/text_medium" />
         </LinearLayout>
     </LinearLayout>
@@ -219,8 +239,9 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_weight="1"
-            android:background="#f5f5f5"
+            android:background="@drawable/gray_fillet_button"
             android:text="取消"
+            android:textColor="@color/text_black"
             android:textSize="@dimen/text_medium" />
 
         <Button

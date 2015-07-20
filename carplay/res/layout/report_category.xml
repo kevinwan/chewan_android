@@ -155,8 +155,9 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_weight="1"
-            android:background="#f5f5f5"
+            android:background="@drawable/gray_fillet_button"
             android:textSize="@dimen/text_medium"
+            android:textColor="@color/text_black"
             android:text="取消" />
 
         <Button
