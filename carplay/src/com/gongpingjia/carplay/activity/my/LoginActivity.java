@@ -8,6 +8,9 @@ import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 /**
  * 登录页面
@@ -15,7 +18,9 @@ import android.view.MenuItem;
  *
  */
 public class LoginActivity extends CarPlayBaseActivity{
-
+	private EditText PhoneNumEditText;
+	private EditText PasswordEditText;
+	private Button LoginButton;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -25,7 +30,16 @@ public class LoginActivity extends CarPlayBaseActivity{
 
 	@Override
 	public void initView() {
-		// TODO Auto-generated method stub
-		
+		 PhoneNumEditText = (EditText) findViewById(R.id.ed_login_phone);
+		 PasswordEditText = (EditText) findViewById(R.id.ed_login_password);
+		 LoginButton = (Button) findViewById(R.id.button_login);
+		 LoginButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				 String strPhoneNum = PhoneNumEditText.getText().toString();
+				 String strPassword = PasswordEditText.getText().toString();
+			}
+		});
 	}
 }

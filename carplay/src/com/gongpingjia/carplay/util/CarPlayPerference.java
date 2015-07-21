@@ -25,8 +25,28 @@ public class CarPlayPerference extends Perference
     
     // 用户的密码
     public String pswd;
-    
-    public String username;
+    //手机号
+    public String phone;
+    //验证码
+    public String code;
+    //性别
+    public String gender;
+    //出生年
+    public Integer birthYear;
+    //出生月
+    public Integer birthMonth;
+   //出生日	
+    public Integer birthday;
+    //省份
+    public String  province;
+   //城市
+    public String  city;
+    //区域
+    public String  district;
+   //图片
+    public String  photo;
+    //昵称
+    public String nickname;
     
     public String headUrl;
     
@@ -40,15 +60,6 @@ public class CarPlayPerference extends Perference
         this.uid = uid;
     }
     
-    public String getUsername()
-    {
-        return username;
-    }
-    
-    public void setUsername(String username)
-    {
-        this.username = username;
-    }
     
     public String settingbg;
     
@@ -89,5 +100,110 @@ public class CarPlayPerference extends Perference
     {
         this.pswd = pswd;
     }
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public Integer getBirthYear() {
+		return birthYear;
+	}
+
+	public void setBirthYear(Integer birthYear) {
+		this.birthYear = birthYear;
+	}
+
+	public Integer getBirthMonth() {
+		return birthMonth;
+	}
+
+	public void setBirthMonth(Integer birthMonth) {
+		this.birthMonth = birthMonth;
+	}
+
+	public Integer getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(Integer birthday) {
+		this.birthday = birthday;
+	}
+
+	public String getProvince() {
+		return province;
+	}
+
+	public void setProvince(String province) {
+		this.province = province;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getDistrict() {
+		return district;
+	}
+
+	public void setDistrict(String district) {
+		this.district = district;
+	}
+
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public String getHeadUrl() {
+		return headUrl;
+	}
+
+	public void setHeadUrl(String headUrl) {
+		this.headUrl = headUrl;
+	}
+
+	public String getSettingbg() {
+		return settingbg;
+	}
+
+	public void setSettingbg(String settingbg) {
+		this.settingbg = settingbg;
+	}
+    
     
 }
