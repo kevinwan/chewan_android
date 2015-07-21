@@ -74,7 +74,7 @@
         </activity>
         <activity android:name=".activity.my.MyReleaseActiveActivity" >
         </activity>
-        <activity android:name=".activity.my.CarTypeSelectActivity" >
+        <activity android:name=".activity.main.SplashActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -94,6 +94,8 @@
         <activity android:name=".activity.my.ManageAlbumActivity" >
         </activity>
         <activity android:name=".activity.active.ActivePositionActivity" >
+        </activity>
+        <activity android:name=".activity.my.CarTypeSelectActivity" >
         </activity>
     </application>
 
