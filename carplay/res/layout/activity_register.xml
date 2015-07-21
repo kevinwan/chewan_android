@@ -27,6 +27,7 @@
                 android:text="手机号" />
 
             <EditText
+                android:id="@+id/phone"
                 style="@style/text_black_small"
                 android:layout_width="wrap_content"
                 android:layout_height="55dp"
@@ -56,6 +57,7 @@
                 android:text="验证码" />
 
             <EditText
+                android:id="@+id/code"
                 style="@style/text_black_small"
                 android:layout_width="wrap_content"
                 android:layout_height="55dp"
@@ -68,6 +70,7 @@
                 android:textColorHint="@color/text_grey" />
 
             <Button
+                android:id="@+id/btn_code"
                 style="@style/text_white_small"
                 android:layout_width="100dp"
                 android:layout_height="40dp"
@@ -90,6 +93,7 @@
                 android:text="密码" />
 
             <EditText
+                android:id="@+id/pswd"
                 style="@style/text_black_small"
                 android:layout_width="wrap_content"
                 android:layout_height="55dp"
@@ -114,10 +118,14 @@
                 android:layout_height="match_parent"
                 android:gravity="center" >
 
-                <ImageView
+                <CheckBox
+                     android:id="@+id/checked"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@drawable/checked" />
+                    android:button="@null"
+                    android:checked="true"
+                    android:background="@drawable/cheack_zc" />
+
             </LinearLayout>
 
             <TextView
@@ -125,6 +133,7 @@
                 android:text="我已阅读并同意" />
 
             <LinearLayout
+                android:id="@+id/cwfwtk"
                 android:layout_width="wrap_content"
                 android:layout_height="75dp"
                 android:gravity="center"
