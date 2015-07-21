@@ -24,7 +24,7 @@ public class CarPlayPerference extends Perference
     public String uid;
     
     // 用户的密码
-    public String pswd;
+    public String password;
     //手机号
     public String phone;
     //验证码
@@ -91,15 +91,15 @@ public class CarPlayPerference extends Perference
         // });
     }
     
-    public String getPswd()
-    {
-        return pswd;
-    }
     
-    public void setPswd(String pswd)
-    {
-        this.pswd = pswd;
-    }
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
 	public String getPhone() {
 		return phone;
