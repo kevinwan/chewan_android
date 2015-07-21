@@ -38,6 +38,12 @@
             android:layout_height="50dp"
             android:gravity="right|center_vertical"
             android:orientation="horizontal" >
+            <EditText 
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="right|center"
+                android:background="@null"
+                android:text=" "/>
 
             <ImageView
                 android:layout_width="25dp"

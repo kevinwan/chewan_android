@@ -32,6 +32,7 @@
                 android:src="@drawable/phone" />
 
             <EditText
+                android:id="@+id/ed_login_phone"
                 style="@style/text_white_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
@@ -59,6 +60,7 @@
                 android:src="@drawable/password" />
 
             <EditText
+                android:id="@+id/ed_login_password"
                 style="@style/text_white_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
@@ -74,6 +76,7 @@
         <View style="@style/line" />
 
         <Button
+            android:id="@+id/button_login"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginTop="30dp"
@@ -92,6 +95,7 @@
          >
 
         <TextView
+            android:id="@+id/login_forgetpsw"
             style="@style/text_white_medium"
              android:layout_width="match_parent"
             android:layout_height="55dp"
@@ -101,6 +105,7 @@
             />
 
         <LinearLayout
+            android:id="@+id/login_register"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_weight="1"

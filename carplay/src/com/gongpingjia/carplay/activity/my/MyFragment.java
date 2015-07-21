@@ -62,6 +62,8 @@ public class MyFragment extends Fragment implements OnClickListener
         my_releaseV.setOnClickListener(this);
         my_participationV.setOnClickListener(this);
         carchat.setOnClickListener(this);
+        people_concerned.setOnClickListener(this);
+        owners_certification.setOnClickListener(this);
     }
     
     @Override
@@ -95,6 +97,7 @@ public class MyFragment extends Fragment implements OnClickListener
                 break;
             case R.id.owners_certification:
                 it = new Intent(getActivity(), AuthenticateOwnersActivity.class);
+                startActivity(it);
             default:
                 break;
         }
