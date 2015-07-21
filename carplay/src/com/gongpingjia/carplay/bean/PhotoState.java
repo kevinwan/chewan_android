@@ -1,15 +1,19 @@
 package com.gongpingjia.carplay.bean;
 
-/*
- *@author zhanglong
- *Email:1269521147@qq.com
- */
+/** 
+ * @Description 照片状态
+ * @author Administrator
+ * @date 2015-7-21 上午9:38:14 
+ */ 
 public class PhotoState {
 
+    //图片的本地路径
     private String path;
 
+    //是否是最后一张图片
     private boolean isLast;
     
+    //图片是否被选中
     private boolean isChecked;
 
     public boolean isChecked() {

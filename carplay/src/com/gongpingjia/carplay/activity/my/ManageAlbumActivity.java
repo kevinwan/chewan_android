@@ -7,6 +7,7 @@ import java.util.List;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
@@ -17,16 +18,20 @@ import com.gongpingjia.carplay.adapter.ImageAdapter;
 import com.gongpingjia.carplay.bean.PhotoState;
 import com.gongpingjia.carplay.util.PhotoUtil;
 
-/*
- *@author zhanglong
- *Email:1269521147@qq.com
- */
-public class ManageAlbumActivity extends CarPlayBaseActivity {
+/** 
+ * @Description 相册管理
+ * @author Administrator
+ * @date 2015-7-21 上午9:36:10 
+ */ 
+public class ManageAlbumActivity extends CarPlayBaseActivity implements OnClickListener {
 
+    //从相册取照片
     private static final int REQUEST_PICK = 1;
 
+    //相机拍照
     private static final int REQUEST_TAKE = 2;
 
+    //剪切之后的照片
     private static final int RESULT_CROP = 10;
 
     private GridView mPhotoGridView;
@@ -47,15 +52,7 @@ public class ManageAlbumActivity extends CarPlayBaseActivity {
         setContentView(R.layout.activity_manage_album);
 
         setTitle("相册管理");
-        setRightAction("编辑", -1, new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                
-            }
-        });
-
+        setRightAction("编辑", -1, this);
         mCacheDir = new File(getExternalCacheDir(), "CarPlay");
         mCacheDir.mkdirs();
 
@@ -116,6 +113,12 @@ public class ManageAlbumActivity extends CarPlayBaseActivity {
                 break;
             }
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+        // TODO Auto-generated method stub
+        
     }
 
 }

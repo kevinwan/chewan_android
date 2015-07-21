@@ -15,7 +15,7 @@ import android.provider.MediaStore;
 public class PhotoUtil {
 
     /**
-     * @Description ��ͼ���ȡͼƬ
+     * @Description 
      * @author Administrator
      * @param activity
      * @param requestCode
@@ -28,7 +28,7 @@ public class PhotoUtil {
     }
 
     /**
-     * @Description ��������ջ�ȡ
+     * @Description
      * @author Administrator
      * @param activity
      * @param requestCode
@@ -41,7 +41,7 @@ public class PhotoUtil {
     }
 
     /**
-     * @Description ��ϵͳͼ���н�ȡͼƬ
+     * @Description
      * @author Administrator
      * @param activity
      * @param data 
@@ -55,7 +55,7 @@ public class PhotoUtil {
 
      
     /** 
-     * @Description ����������л�ȡͼƬ
+     * @Description
      * @author Administrator
      * @param activity
      * @param path
@@ -67,7 +67,7 @@ public class PhotoUtil {
     }
 
     /**
-     * @Description �ü�ͼƬ
+     * @Description
      * @author Administrator
      * @param context
      * @param data
@@ -86,7 +86,7 @@ public class PhotoUtil {
         intent.putExtra(MediaStore.EXTRA_OUTPUT, outUri);
         intent.putExtra("return-data", false);
         intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
-        intent.putExtra("noFaceDetection", false); // ��������ʶ��
+        intent.putExtra("noFaceDetection", false); // 人脸检测
         activity.startActivityForResult(intent, cropCode);
     }
 
