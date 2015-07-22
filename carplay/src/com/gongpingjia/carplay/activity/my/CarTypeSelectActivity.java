@@ -12,7 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.Bundle;
-import android.view.Gravity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -41,8 +41,11 @@ import com.nostra13.universalimageloader.core.ImageLoader;
  */
 public class CarTypeSelectActivity extends CarPlayBaseActivity {
 
+    private View mHeaderLayout;
+
     private SideBar mSideBar;
 
+    // 车辆型号list view
     private ListView mListView;
 
     private TextView mDialogText;
@@ -59,6 +62,7 @@ public class CarTypeSelectActivity extends CarPlayBaseActivity {
 
     private View mPopView;
 
+    // 弹出list view
     private ListView mPopListView;
 
     private View mBrandHeader;
@@ -68,9 +72,15 @@ public class CarTypeSelectActivity extends CarPlayBaseActivity {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car_type_select);
+
+        mHeaderLayout = findViewById(R.id.title_bar);
+
         mSideBar = (SideBar) findViewById(R.id.sideBar);
         mListView = (ListView) findViewById(R.id.lv_car_type);
         mDialogText = (TextView) findViewById(R.id.tv_dialog);
+
+        mSideBar.setListView(mListView);
+        mSideBar.setTextView(mDialogText);
 
         // 弹出车型
         mPopView = LayoutInflater.from(this).inflate(R.layout.pop_brand_details, null);
@@ -82,6 +92,7 @@ public class CarTypeSelectActivity extends CarPlayBaseActivity {
                 // TODO Auto-generated method stub
                 if (mPopWindow.isShowing()) {
                     mPopWindow.dismiss();
+                    Log.e("", mBrands.get(position).toString());
                 }
             }
         });
@@ -117,8 +128,6 @@ public class CarTypeSelectActivity extends CarPlayBaseActivity {
                         }
                     }
 
-                    mSideBar.setListView(mListView);
-                    mSideBar.setTextView(mDialogText);
                     mBrandAdapter = new BrandAdapter(CarTypeSelectActivity.this, mDatas);
                     mListView.setAdapter(mBrandAdapter);
                 }
@@ -160,8 +169,7 @@ public class CarTypeSelectActivity extends CarPlayBaseActivity {
                             ArrayAdapter<String> adapter = new ArrayAdapter<>(self, R.layout.listitem_brand,
                                     R.id.tv_brand_name, strs);
 
-                            // 设置listView的header
-
+                            // 更新list view header数据
                             ImageView image = (ImageView) mBrandHeader.findViewById(R.id.imgView_car_logo);
                             ImageLoader.getInstance().displayImage(mDatas.get(position).getUrl(), image,
                                     CarPlayValueFix.optionsDefault);
@@ -170,7 +178,7 @@ public class CarTypeSelectActivity extends CarPlayBaseActivity {
 
                             mPopListView.setAdapter(adapter);
                             if (!mPopWindow.isShowing()) {
-                                mPopWindow.showAsDropDown(view);
+                                mPopWindow.showAsDropDown(mHeaderLayout);
                             }
                         }
                     }
