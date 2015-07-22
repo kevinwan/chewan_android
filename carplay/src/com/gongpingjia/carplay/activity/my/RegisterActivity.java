@@ -1,5 +1,8 @@
 package com.gongpingjia.carplay.activity.my;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import net.duohuo.dhroid.ioc.IocContainer;
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.NetTask;
@@ -123,8 +126,8 @@ public class RegisterActivity extends CarPlayBaseActivity implements
 			showToast("请输入密码");
 			return;
 		} else {
-			if (strPassword.length() < 6 || strPassword.length() > 20) {
-				showToast("密码长度应在6-20之间，请重新输入");
+			if (strPassword.length() < 6 || strPassword.length() > 16) {
+				showToast("密码长度应在6-16之间，请重新输入");
 				return;
 			}
 		}
@@ -133,26 +136,25 @@ public class RegisterActivity extends CarPlayBaseActivity implements
 			showToast("请阅读并同意车玩服务条款");
 			return;
 		}
-		
-		DhNet net = new DhNet("http://cwapi.gongpingjia.com/v1/phone/"
-				+ strPhone + "/verification");
-		net.addParam("code", strCaptcha);
-		net.doPostInDialog(new NetTask(self) {
-
-			@Override
-			public void doInUI(Response response, Integer transfer) {
-				if (response.isSuccess()) {
+//		
+//		/** 校验验证码  */
+//		DhNet net = new DhNet("http://cwapi.gongpingjia.com/v1/phone/"
+//				+ strPhone + "/verification");
+//		net.addParam("code",strCaptcha);
+//		net.doPostInDialog(new NetTask(self) {
+//
+//			@Override
+//			public void doInUI(Response response, Integer transfer) {
+//				if (response.isSuccess()) {
 					Intent it=new Intent(self,BasicMessageActivity.class);
 					it.putExtra("phone", strPhone);
 					it.putExtra("code", strCaptcha);
 					it.putExtra("pswd", strPassword);
 					startActivity(it);
-				} else {
-					showToast(response.msg);
-				}
-			}
-		});
-
+//				} else {
+//				}
+//			}
+//		});
 	}
 
 	/**
@@ -182,7 +184,6 @@ public class RegisterActivity extends CarPlayBaseActivity implements
 					codeBtn.setEnabled(false);
 				} else {
 					codeBtn.setEnabled(true);
-					showToast(response.msg);
 				}
 			}
 		});
