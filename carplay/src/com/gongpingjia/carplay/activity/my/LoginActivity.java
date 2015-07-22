@@ -19,6 +19,7 @@ import com.gongpingjia.carplay.activity.main.MainActivity;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.CarPlayPerference;
 import com.gongpingjia.carplay.util.MD5Util;
+import com.gongpingjia.carplay.util.Utils;
 
 import android.app.Activity;
 import android.content.Context;
@@ -42,15 +43,15 @@ import android.widget.Toast;
  * 
  */
 public class LoginActivity extends CarPlayBaseActivity {
-	//手机号
+	// 手机号
 	private EditText PhoneNumEditText;
-	//密码
+	// 密码
 	private EditText PasswordEditText;
-	//登录
+	// 登录
 	private Button LoginButton;
-	//注册
+	// 注册
 	private LinearLayout login_register;
-	//忘记密码
+	// 忘记密码
 	private TextView login_forgetpsw;
 
 	@Override
@@ -68,7 +69,7 @@ public class LoginActivity extends CarPlayBaseActivity {
 
 			@Override
 			public void onClick(View arg0) {
-				autoCloseKeyboard(self, arg0);
+				Utils.autoCloseKeyboard(self, arg0);
 				final String strPhoneNum = PhoneNumEditText.getText()
 						.toString();
 				final String strPassword = PasswordEditText.getText()
@@ -77,7 +78,7 @@ public class LoginActivity extends CarPlayBaseActivity {
 					Toast.makeText(self, "手机号码不能为空", Toast.LENGTH_SHORT).show();
 					return;
 				}
-				if (!isMobileNum(strPhoneNum)) {
+				if (!Utils.isValidMobilePhoneNumber(strPhoneNum)) {
 					Toast.makeText(self, "手机格式错误", Toast.LENGTH_SHORT).show();
 					return;
 
@@ -97,14 +98,14 @@ public class LoginActivity extends CarPlayBaseActivity {
 					public void doInUI(Response response, Integer transfer) {
 						if (response.isSuccess()) {
 							System.out.println("*******" + response.isSuccess());
-							JSONObject object = response.jSON();
+							JSONObject jo = response.jSON();
 							User user = User.getInstance();
-							user.setUserId(JSONUtil.getString(object, "userId"));
-							user.setToken(JSONUtil.getString(object, "token"));
+							user.setUserId(JSONUtil.getString(jo, "userId"));
+							user.setToken(JSONUtil.getString(jo, "token"));
 							System.out.println("userID:"
-									+ JSONUtil.getString(object, "userId")
+									+ JSONUtil.getString(jo, "userId")
 									+ "token:"
-									+ JSONUtil.getString(object, "token"));
+									+ JSONUtil.getString(jo, "token"));
 
 							CarPlayPerference per = IocContainer.getShare()
 									.get(CarPlayPerference.class);
@@ -112,9 +113,8 @@ public class LoginActivity extends CarPlayBaseActivity {
 							per.password = strPassword;
 							per.commit();
 
-							// Intent intent = new
-							// Intent(self,MainActivity.class);
-							// startActivity(intent);
+							Intent intent = new Intent(self, MainActivity.class);
+							startActivity(intent);
 						} else {
 							showToast(response.msg);
 
@@ -130,6 +130,7 @@ public class LoginActivity extends CarPlayBaseActivity {
 				});
 			}
 		});
+		//忘记密码
 		login_forgetpsw = (TextView) findViewById(R.id.login_forgetpsw);
 		login_forgetpsw.setOnClickListener(new View.OnClickListener() {
 
@@ -139,6 +140,7 @@ public class LoginActivity extends CarPlayBaseActivity {
 				startActivity(intent);
 			}
 		});
+		//注册
 		login_register = (LinearLayout) findViewById(R.id.login_register);
 		login_register.setOnClickListener(new View.OnClickListener() {
 
@@ -152,28 +154,4 @@ public class LoginActivity extends CarPlayBaseActivity {
 
 	}
 
-	/** 用于判断手机号段是否合法 */
-	public static boolean isMobileNum(String num) {
-		Pattern p = Pattern.compile("^(1[3,4,5,7,8][0-9])\\d{8}$");
-		Matcher m = p.matcher(num);
-		return m.matches();
-	}
-
-	/**
-	 * 如果键盘没有收回 自动关闭键盘
-	 * 
-	 * @param activity
-	 *            Activity
-	 * @param v
-	 *            控件View
-	 */
-	public static void autoCloseKeyboard(Activity activity, View v) {
-		/** 收起键盘 */
-		View view = activity.getWindow().peekDecorView();
-		if (view != null && view.getWindowToken() != null) {
-			InputMethodManager imm = (InputMethodManager) activity
-					.getSystemService(Context.INPUT_METHOD_SERVICE);
-			imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-		}
-	}
 }
