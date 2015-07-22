@@ -1,9 +1,9 @@
 package com.gongpingjia.carplay.activity.active;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.duohuo.dhroid.net.DhNet;
-import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
 
@@ -11,15 +11,18 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.GridView;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
+import com.gongpingjia.carplay.adapter.ImageAdapter;
+import com.gongpingjia.carplay.bean.PhotoState;
 import com.gongpingjia.carplay.bean.User;
-import com.gongpingjia.carplay.util.MD5Util;
 
 /***
  * 
@@ -31,6 +34,15 @@ import com.gongpingjia.carplay.util.MD5Util;
 public class CreateActiveActivity extends CarPlayBaseActivity implements OnClickListener {
 
     private Button mFinishBtn, mFinishInviteBtn;
+
+    private GridView mPhotoGridView;
+
+    private ImageAdapter mImageAdapter;
+
+    private List<PhotoState> mPhotoStates;
+
+    // 最后一张图片的状态
+    private PhotoState mLastPhoto;
 
     // 活动类型
     private String mActiveType;
@@ -61,38 +73,41 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
 
         mFinishBtn = (Button) findViewById(R.id.btn_finish);
         mFinishInviteBtn = (Button) findViewById(R.id.btn_finish_invite);
+        mPhotoGridView = (GridView) findViewById(R.id.gv_photo);
 
         mFinishBtn.setOnClickListener(this);
         mFinishInviteBtn.setOnClickListener(this);
 
-        DhNet net = new DhNet("http://cwapi.gongpingjia.com/v1/user/login");
-        net.addParam("phone", "18951650020");
-        net.addParam("password", MD5Util.string2MD5("123456"));
-        net.doPost(new NetTask(this) {
+        mPhotoStates = new ArrayList<PhotoState>();
+        mLastPhoto = new PhotoState();
+        mLastPhoto.setLast(true);
+        mLastPhoto.setChecked(false);
+        mPhotoStates.add(mLastPhoto);
+        mImageAdapter = new ImageAdapter(this, mPhotoStates);
+
+        mPhotoGridView.setAdapter(mImageAdapter);
+
+        mPhotoGridView.setOnItemClickListener(new OnItemClickListener() {
 
             @Override
-            public void doInUI(Response response, Integer transfer) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // TODO Auto-generated method stub
-                if (response.isSuccess()) {
-                    JSONObject json = response.jSON();
-                    User user = User.getInstance();
-                    try {
-                        user.setUserId(JSONUtil.getString(json.getJSONObject("data"), "userId"));
-                        user.setToken(JSONUtil.getString(json.getJSONObject("data"), "token"));
-                        showToast("登陆成功");
-                        Log.e("userId", user.getUserId());
-                        Log.e("Token", user.getToken());
-                    } catch (JSONException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
+                if (mPhotoStates.get(position).isLast()) {
+                    view.setOnClickListener(new View.OnClickListener() {
 
+                        @Override
+                        public void onClick(View v) {
+                            // TODO Auto-generated method stub
+                            showToast("last position");
+                        }
+                    });
                 } else {
-                    try {
-                        showToast(response.jSON().getString("errmsg"));
-                    } catch (JSONException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
+                    if (mPhotoStates.get(position).isChecked()) {
+                        mPhotoStates.get(position).setChecked(false);
+                        view.findViewById(R.id.imgView_visible).setVisibility(View.GONE);
+                    } else {
+                        mPhotoStates.get(position).setChecked(true);
+                        view.findViewById(R.id.imgView_visible).setVisibility(View.VISIBLE);
                     }
                 }
             }
