@@ -36,8 +36,8 @@
         </activity>
         <activity android:name=".activity.my.SettingActivity" >
         </activity>
-        <activity android:name=".activity.my.CarTypeSelectActivity" >
-             <intent-filter>
+        <activity android:name=".activity.my.LoginActivity" >
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -54,16 +54,14 @@
         <activity android:name=".activity.BasicMessageActivity" >
         </activity>
         <activity android:name=".activity.main.MainActivity" />
-        <activity
-            android:name="com.gongpingjia.carplay.activity.my.BasicMessageActivity"
-            android:label="@string/title_activity_basic_message" >
+        <activity android:name="com.gongpingjia.carplay.activity.my.BasicMessageActivity" >
         </activity>
         <activity android:name=".activity.PartyDetailsActivity" />
         <activity android:name=".activity.my.AuthenticateOwnersActivity" >
         </activity>
         <activity android:name=".activity.active.ActiveInformationActivity" >
         </activity>
-        <activity android:name=".activity.my.LoginActivity" >
+        <activity android:name=".activity.my.RegisterActivity" >
         </activity>
         <activity android:name=".activity.msg.ChatActivity" >
         </activity>
@@ -95,11 +93,8 @@
         </activity>
         <activity android:name=".activity.active.ActivePositionActivity" >
         </activity>
-        <!--
         <activity android:name=".activity.my.CarTypeSelectActivity" >
         </activity>
-        -->
-
     </application>
 
 </manifest>

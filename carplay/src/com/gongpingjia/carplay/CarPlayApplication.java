@@ -5,20 +5,8 @@ import net.duohuo.dhroid.adapter.ValueFix;
 import net.duohuo.dhroid.dialog.IDialog;
 import net.duohuo.dhroid.ioc.Instance.InstanceScope;
 import net.duohuo.dhroid.ioc.IocContainer;
-import net.duohuo.dhroid.net.DhNet;
-import net.duohuo.dhroid.net.NetTask;
-import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.net.cache.DaoHelper;
-import net.duohuo.dhroid.util.UserLocation;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Application;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.os.Handler;
 
 import com.gongpingjia.carplay.view.NomalDialog;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
@@ -54,6 +42,7 @@ public class CarPlayApplication extends Application
         Const.DATABASE_VERSION = 5;
         Const.response_success = "result";
         Const.response_result_status = "0";
+        Const.postType = 2;
         IocContainer.getShare().initApplication(this);
         IocContainer.getShare().bind(CarPlayValueFix.class).to(ValueFix.class).scope(InstanceScope.SCOPE_SINGLETON);
         IocContainer.getShare().bind(NomalDialog.class).to(IDialog.class).scope(InstanceScope.SCOPE_SINGLETON);
