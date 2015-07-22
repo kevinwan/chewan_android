@@ -5,9 +5,11 @@ import net.duohuo.dhroid.adapter.ValueFix;
 import net.duohuo.dhroid.dialog.IDialog;
 import net.duohuo.dhroid.ioc.Instance.InstanceScope;
 import net.duohuo.dhroid.ioc.IocContainer;
+import net.duohuo.dhroid.net.GlobalCodeHandler;
 import net.duohuo.dhroid.net.cache.DaoHelper;
 import android.app.Application;
 
+import com.gongpingjia.carplay.data.CityDataManage;
 import com.gongpingjia.carplay.view.NomalDialog;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -41,6 +43,7 @@ public class CarPlayApplication extends Application
         Const.netadapter_step_default = 10;
         Const.DATABASE_VERSION = 5;
         Const.response_success = "result";
+        Const.response_msg = "errmsg";
         Const.response_result_status = "0";
         Const.postType = 2;
         IocContainer.getShare().initApplication(this);
@@ -50,7 +53,10 @@ public class CarPlayApplication extends Application
             .bind(DaoHelper.class)
             .to(OrmLiteSqliteOpenHelper.class)
             .scope(InstanceScope.SCOPE_SINGLETON);
-        
+        IocContainer.getShare()
+            .bind(KmlGlobalCodeHandler.class)
+            .to(GlobalCodeHandler.class)
+            .scope(InstanceScope.SCOPE_SINGLETON);
         dialoger = IocContainer.getShare().get(IDialog.class);
         // CrashHandler.getInstance().init();
         
@@ -62,6 +68,8 @@ public class CarPlayApplication extends Application
                 .discCacheFileNameGenerator(new Md5FileNameGenerator())
                 .build();
         ImageLoader.getInstance().init(imageconfig);
+        
+        CityDataManage.initProvinceDatas();
         // UserLocation.getInstance().init(getApplicationContext());
         
     }

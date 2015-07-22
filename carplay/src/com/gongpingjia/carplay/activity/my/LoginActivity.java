@@ -101,13 +101,10 @@ public class LoginActivity extends CarPlayBaseActivity
                     {
                         if (response.isSuccess())
                         {
-                            System.out.println("*******" + response.isSuccess());
                             JSONObject jo = response.jSONFrom("data");
                             User user = User.getInstance();
                             user.setUserId(JSONUtil.getString(jo, "userId"));
                             user.setToken(JSONUtil.getString(jo, "token"));
-                            System.out.println("userID:" + JSONUtil.getString(jo, "userId") + "token:"
-                                + JSONUtil.getString(jo, "token"));
                             
                             CarPlayPerference per = IocContainer.getShare().get(CarPlayPerference.class);
                             per.phone = strPhoneNum;

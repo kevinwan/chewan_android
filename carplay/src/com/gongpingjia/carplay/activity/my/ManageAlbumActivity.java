@@ -16,7 +16,6 @@ import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.adapter.ImageAdapter;
 import com.gongpingjia.carplay.bean.PhotoState;
-import com.gongpingjia.carplay.util.PhotoUtil;
 
 /**
  * @Description 相册管理
@@ -71,7 +70,7 @@ public class ManageAlbumActivity extends CarPlayBaseActivity implements OnClickL
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // TODO Auto-generated method stub
                 if (mDatas.get(position).isLast()) {
-                    PhotoUtil.getPhotoFromPick(ManageAlbumActivity.this, REQUEST_PICK);
+//                    PhotoUtil.getPhotoFromPick(ManageAlbumActivity.this, REQUEST_PICK);
                 } else {
                     if (mDatas.get(position).isChecked()) {
                         view.findViewById(R.id.imgView_visible).setVisibility(View.GONE);
@@ -103,7 +102,7 @@ public class ManageAlbumActivity extends CarPlayBaseActivity implements OnClickL
                 mCurPhotoState.setChecked(false);
                 mCurPhotoState.setLast(false);
                 mCurPhotoState.setPath(path);
-                PhotoUtil.onPhotoFromPick(this, data, path, RESULT_CROP);
+//                PhotoUtil.onPhotoFromPick(this, data, path, RESULT_CROP);
                 break;
             case RESULT_CROP:
                 if (mDatas.size() != 9) {
