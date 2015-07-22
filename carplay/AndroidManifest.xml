@@ -37,7 +37,7 @@
         <activity android:name=".activity.my.SettingActivity" >
         </activity>
         <activity android:name=".activity.my.RegisterActivity" >
-             <intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -54,9 +54,7 @@
         <activity android:name=".activity.BasicMessageActivity" >
         </activity>
         <activity android:name=".activity.main.MainActivity" />
-        <activity
-            android:name="com.gongpingjia.carplay.activity.my.BasicMessageActivity"
-            android:label="@string/title_activity_basic_message" >
+        <activity android:name="com.gongpingjia.carplay.activity.my.BasicMessageActivity" >
         </activity>
         <activity android:name=".activity.PartyDetailsActivity" />
         <activity android:name=".activity.my.AuthenticateOwnersActivity" >

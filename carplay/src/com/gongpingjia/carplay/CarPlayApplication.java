@@ -42,6 +42,7 @@ public class CarPlayApplication extends Application
         Const.DATABASE_VERSION = 5;
         Const.response_success = "result";
         Const.response_result_status = "0";
+        Const.postType = 2;
         IocContainer.getShare().initApplication(this);
         IocContainer.getShare().bind(CarPlayValueFix.class).to(ValueFix.class).scope(InstanceScope.SCOPE_SINGLETON);
         IocContainer.getShare().bind(NomalDialog.class).to(IDialog.class).scope(InstanceScope.SCOPE_SINGLETON);

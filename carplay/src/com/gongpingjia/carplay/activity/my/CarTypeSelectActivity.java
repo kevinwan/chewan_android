@@ -92,7 +92,7 @@ public class CarTypeSelectActivity extends CarPlayBaseActivity {
         mPopWindow = new PopupWindow(mPopView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 
         // 请求主页面所有车型
-        mBrands = new ArrayList<>();
+        mBrands = new ArrayList<BrandDetails>();
         mDatas = new ArrayList<CarBrand>();
         DhNet dhNet = new DhNet(API.allCarBrands);
         dhNet.doGetInDialog(new NetTask(this) {
@@ -140,7 +140,7 @@ public class CarTypeSelectActivity extends CarPlayBaseActivity {
                         // TODO Auto-generated method stub
                         if (response.isSuccess()) {
                             JSONArray array = response.jSONArrayFrom("data");
-                            List<String> strs = new ArrayList<>();
+                            List<String> strs = new ArrayList<String>();
                             for (int i = 0; i < array.length(); i++) {
                                 BrandDetails details = new BrandDetails();
                                 try {
@@ -157,7 +157,7 @@ public class CarTypeSelectActivity extends CarPlayBaseActivity {
                                 mBrands.add(details);
                             }
                             // 设置数据源
-                            ArrayAdapter<String> adapter = new ArrayAdapter<>(self, R.layout.listitem_brand,
+                            ArrayAdapter<String> adapter = new ArrayAdapter<String>(self, R.layout.listitem_brand,
                                     R.id.tv_brand_name, strs);
 
                             // 设置listView的header
