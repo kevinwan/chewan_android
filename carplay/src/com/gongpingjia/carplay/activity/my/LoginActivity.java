@@ -16,6 +16,7 @@ import com.gongpingjia.carplay.R.id;
 import com.gongpingjia.carplay.R.layout;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.activity.main.MainActivity;
+import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.CarPlayPerference;
 import com.gongpingjia.carplay.util.MD5Util;
@@ -88,8 +89,7 @@ public class LoginActivity extends CarPlayBaseActivity {
 					return;
 				}
 
-				DhNet net = new DhNet(
-						"http://cwapi.gongpingjia.com/v1/user/login");
+				DhNet net = new DhNet(API.login);
 				net.addParam("phone", strPhoneNum);
 				net.addParam("password", MD5Util.string2MD5(strPassword));
 				net.doPost(new NetTask(self) {
@@ -98,7 +98,7 @@ public class LoginActivity extends CarPlayBaseActivity {
 					public void doInUI(Response response, Integer transfer) {
 						if (response.isSuccess()) {
 							System.out.println("*******" + response.isSuccess());
-							JSONObject jo = response.jSON();
+							JSONObject jo = response.jSONFrom("data");
 							User user = User.getInstance();
 							user.setUserId(JSONUtil.getString(jo, "userId"));
 							user.setToken(JSONUtil.getString(jo, "token"));
@@ -130,7 +130,7 @@ public class LoginActivity extends CarPlayBaseActivity {
 				});
 			}
 		});
-		//忘记密码
+		// 忘记密码
 		login_forgetpsw = (TextView) findViewById(R.id.login_forgetpsw);
 		login_forgetpsw.setOnClickListener(new View.OnClickListener() {
 
@@ -140,7 +140,7 @@ public class LoginActivity extends CarPlayBaseActivity {
 				startActivity(intent);
 			}
 		});
-		//注册
+		// 注册
 		login_register = (LinearLayout) findViewById(R.id.login_register);
 		login_register.setOnClickListener(new View.OnClickListener() {
 

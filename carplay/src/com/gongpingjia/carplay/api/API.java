@@ -10,5 +10,9 @@ public class API {
     public static final String carDetails = " http://cwapi.gongpingjia.com/v1/car/model";
 
     public static final String CWBaseurl = "http://cwapi.gongpingjia.com/v1";
+    // 登录
+    public static final String login = CWBaseurl + "/user/login";
+    //重设密码
+    public static final String newPassword = CWBaseurl + "/user/password";
 
 }
