@@ -37,26 +37,31 @@ public class BasicMessageActivity extends CarPlayBaseActivity implements
 	/** 性别 */
 	private RadioGroup sexR = null;
 
-	/** 年龄 */
+	/** 选择年龄 */
 	private TextView ageT = null;
 
-	/** 城市 */
+	/** 选择城市 */
 	private TextView cityT = null;
 
 	/** 下一步 */
 	private Button nextBtn = null;
 
-	private String sex="男";
+	private String sex = "男";
+	private	int birthYear;
+	private int birthMonth;
+	private int birthday;
+	private String province;
+	private String city;
+	private String district;
+	private String photo;
 	
-	
-	
-	 private String mPhotoPath;
-	 
-	 
-	 private File dir;
-	 
-	 private static final int REQUEST_IMG_TAKE = 1;
-	 private static final int REQUEST_CROP = 2;
+	private String mPhotoPath;
+
+	private File dir;
+
+	private static final int REQUEST_IMG_TAKE = 1;
+	private static final int REQUEST_CROP = 2;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -75,13 +80,13 @@ public class BasicMessageActivity extends CarPlayBaseActivity implements
 			public void onCheckedChanged(RadioGroup arg0, int arg1) {
 				for (int i = 0; i < sexR.getChildCount(); i++) {
 					RadioButton rb_all = (RadioButton) sexR.getChildAt(i);
-					if (rb_all.isChecked()){
-						sex=rb_all.getText().toString();
+					if (rb_all.isChecked()) {
+						sex = rb_all.getText().toString();
 						rb_all.setTextColor(Color.parseColor("#FD6D53"));
-					}else
+					} else
 						rb_all.setTextColor(Color.parseColor("#aab2bd"));
 				}
-				
+
 			}
 		});
 
@@ -95,18 +100,18 @@ public class BasicMessageActivity extends CarPlayBaseActivity implements
 		ageT.setOnClickListener(this);
 		cityT.setOnClickListener(this);
 		nextBtn.setOnClickListener(this);
-		
-		
+
 		dir = new File(this.getExternalCacheDir(), "gpj");
-        dir.mkdirs();
+		dir.mkdirs();
 	}
 
 	@Override
 	public void onClick(View arg0) {
 		switch (arg0.getId()) {
 		case R.id.head:
-			 mPhotoPath = new File(dir, System.currentTimeMillis() + ".jpg").getAbsolutePath();
-             PhotoUtil.getPhotoFromCamera(this, REQUEST_IMG_TAKE, mPhotoPath);
+			mPhotoPath = new File(dir, System.currentTimeMillis() + ".jpg")
+					.getAbsolutePath();
+			PhotoUtil.getPhotoFromCamera(this, REQUEST_IMG_TAKE, mPhotoPath);
 			break;
 		case R.id.age:
 
@@ -115,9 +120,9 @@ public class BasicMessageActivity extends CarPlayBaseActivity implements
 
 			break;
 		case R.id.next:
-			
+
 			nextStep();
-			
+
 			break;
 
 		default:
@@ -126,7 +131,7 @@ public class BasicMessageActivity extends CarPlayBaseActivity implements
 	}
 
 	private void nextStep() {
-		
+
 		final String strnickname = nicknameT.getText().toString().trim();
 		if (TextUtils.isEmpty(strnickname)) {
 			showToast("昵称不能为空");
@@ -142,46 +147,47 @@ public class BasicMessageActivity extends CarPlayBaseActivity implements
 			showToast("请设置您所在的城市");
 			return;
 		}
-		
-		
-		Bundle bundle=new Bundle();
-		Bundle b=getIntent().getExtras();
-		if(b!=null){
+
+		Bundle bundle = new Bundle();
+		Bundle b = getIntent().getExtras();
+		if (b != null) {
 			bundle.putString("phone", b.getString("phone"));
 			bundle.putString("code", b.getString("code"));
 			bundle.putString("pswd", b.getString("pswd"));
 		}
 		bundle.putString("nickname", strnickname);
-		bundle.putString("sex",sex);
-		bundle.putString("age", strage);
-		bundle.putString("city", strcity);
-		Intent it=new Intent(self,AuthenticateOwnersActivity.class);
+		bundle.putString("gender", sex);
+		bundle.putInt("birthYear", birthYear);
+		bundle.putInt("birthMonth", birthMonth);
+		bundle.putInt("birthday", birthday);
+		bundle.putString("province", province);
+		bundle.putString("city", city);
+		bundle.putString("district", district);
+		bundle.putString("photo", photo);
+		
+		Intent it = new Intent(self, AuthenticateOwnersActivity.class);
 		it.putExtra("data", bundle);
 		startActivity(it);
 	}
-	
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        // TODO Auto-generated method stub
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK)
-        {
-            // Bundle bundle = data.getExtras();
-            switch (requestCode)
-            {
-                case REQUEST_IMG_TAKE:
-                    PhotoUtil.onPhotoFromCamera(this,mPhotoPath ,REQUEST_CROP );
-                    break;
-                
-            }
-        }
-    }
-	
+
 	@Override
-    public void onSaveInstanceState(Bundle savedInstanceState)
-    {
-        savedInstanceState.putString("temppath", mPhotoPath);
-        super.onSaveInstanceState(savedInstanceState);
-    }
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode == Activity.RESULT_OK) {
+			// Bundle bundle = data.getExtras();
+			switch (requestCode) {
+			case REQUEST_IMG_TAKE:
+				PhotoUtil.onPhotoFromCamera(this, mPhotoPath, REQUEST_CROP);
+				break;
+
+			}
+		}
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle savedInstanceState) {
+		savedInstanceState.putString("temppath", mPhotoPath);
+		super.onSaveInstanceState(savedInstanceState);
+	}
 }

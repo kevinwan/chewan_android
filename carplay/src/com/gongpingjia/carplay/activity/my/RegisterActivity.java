@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.util.CarPlayPerference;
+import com.gongpingjia.carplay.util.MD5Util;
 import com.gongpingjia.carplay.util.Utils;
 
 /***
@@ -149,7 +150,7 @@ public class RegisterActivity extends CarPlayBaseActivity implements
 					Intent it=new Intent(self,BasicMessageActivity.class);
 					it.putExtra("phone", strPhone);
 					it.putExtra("code", strCaptcha);
-					it.putExtra("pswd", strPassword);
+					it.putExtra("pswd", MD5Util.string2MD5(strPassword));
 					startActivity(it);
 //				} else {
 //				}
