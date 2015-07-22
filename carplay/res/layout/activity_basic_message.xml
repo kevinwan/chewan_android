@@ -15,6 +15,7 @@
         android:gravity="center" >
 
         <ImageView
+            android:id="@+id/head"
             android:layout_width="85dp"
             android:layout_height="85dp"
             android:src="@drawable/head_icon" />
@@ -32,12 +33,15 @@
             android:gravity="center_vertical"
             android:text="昵称" />
 
-        <TextView
+        <EditText
+            android:id="@+id/nickname"
             style="@style/text_blacklight_medium"
             android:layout_width="match_parent"
             android:layout_height="55dp"
+            android:hint="请输入昵称"
+            android:background="@color/nothing"
             android:gravity="center_vertical|right"
-            android:text="月满轩尼诗" />
+             />
     </LinearLayout>
 
     <View style="@style/line" />
@@ -92,6 +96,7 @@
     <View style="@style/line" />
 
     <LinearLayout
+        android:id="@+id/age"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
@@ -118,6 +123,7 @@
     <View style="@style/line" />
 
     <LinearLayout
+        android:id="@+id/city"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
@@ -149,6 +155,7 @@
     <View style="@style/line" />
 
     <Button
+        android:id="@+id/next"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="@drawable/button_zc_bg" 

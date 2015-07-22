@@ -95,6 +95,7 @@
          >
 
         <TextView
+            android:id="@+id/login_forgetpsw"
             style="@style/text_white_medium"
              android:layout_width="match_parent"
             android:layout_height="55dp"
@@ -104,6 +105,7 @@
             />
 
         <LinearLayout
+            android:id="@+id/login_register"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_weight="1"
