@@ -18,6 +18,7 @@ import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.activity.main.MainActivity;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.CarPlayPerference;
+import com.gongpingjia.carplay.util.MD5Util;
 
 import android.app.Activity;
 import android.content.Context;
@@ -89,7 +90,7 @@ public class LoginActivity extends CarPlayBaseActivity {
 				DhNet net = new DhNet(
 						"http://cwapi.gongpingjia.com/v1/user/login");
 				net.addParam("phone", strPhoneNum);
-				net.addParam("password", strPassword);
+				net.addParam("password", MD5Util.string2MD5(strPassword));
 				net.doPost(new NetTask(self) {
 
 					@Override
