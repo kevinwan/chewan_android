@@ -69,6 +69,7 @@ public class PwdNextActivity extends CarPlayBaseActivity {
 				}
 				DhNet net = new DhNet(API.newPassword);
 				net.addParam("phone", phone);
+				System.out.println(phone+code+strpwd);
 				net.addParam("code", code);
 				net.addParam("password", MD5Util.string2MD5(strpwd));
 				net.doPost(new NetTask(self) {
@@ -76,7 +77,6 @@ public class PwdNextActivity extends CarPlayBaseActivity {
 					@Override
 					public void doInUI(Response response, Integer transfer) {
 						if (response.isSuccess()) {
-							System.out.println(response.isSuccess());
 							JSONObject jo = response.jSONFrom("data");
 							User user = User.getInstance();
 							user.setUserId(JSONUtil.getString(jo, "userId"));

@@ -108,24 +108,26 @@ public class ForgetPwdActivity extends CarPlayBaseActivity implements
 				showToast("请输入验证码");
 				return;
 			}
-			DhNet net = new DhNet("http://cwapi.gongpingjia.com/v1/phone/"+strPhone+"/verification");
-			net.addParam("code",strVerification);
-			net.doPost(new NetTask(self) {
-				
-				@Override
-				public void doInUI(Response response, Integer transfer) {
-					Intent intent = new Intent(ForgetPwdActivity.this,
-							PwdNextActivity.class);
-					intent.putExtra("PhoneNum", strPhone);
-					intent.putExtra("Verification", strVerification);
-					startActivity(intent);
-				}
-			});
-			
-			
-			
+			// DhNet net = new
+			// DhNet("http://cwapi.gongpingjia.com/v1/phone/"+strPhone+"/verification");
+			// net.addParam("code",strVerification);
+			// net.doPost(new NetTask(self) {
+			//
+			// @Override
+			// public void doInUI(Response response, Integer transfer) {
+			// if (response.isSuccess()) {
+			Intent intent = new Intent(ForgetPwdActivity.this,
+					PwdNextActivity.class);
+			intent.putExtra("PhoneNum", strPhone);
+			intent.putExtra("Verification", strVerification);
+			startActivity(intent);
+			// }else{
+			// showToast(response.result);
+			// }
+			//
+			// }
+			// });
 
-			
 			break;
 		case R.id.button_forget_verification:// 获取验证码
 			ed_forget_verification.setText("");
