@@ -27,6 +27,7 @@
                 android:text="手机号" />
 
             <EditText
+                android:id="@+id/ed_forget_phone"
                 style="@style/text_black_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="55dp"
@@ -56,6 +57,7 @@
                 android:text="验证码" />
 
             <EditText
+                android:id="@+id/ed_forget_verification"
                 style="@style/text_black_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="55dp"
@@ -68,6 +70,7 @@
                 android:textColorHint="@color/text_grey" />
 
             <Button
+                android:id="@+id/button_forget_verification"
                 style="@style/text_white_small"
                 android:layout_width="100dp"
                 android:layout_height="40dp"

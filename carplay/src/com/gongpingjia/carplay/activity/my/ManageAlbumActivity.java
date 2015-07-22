@@ -18,20 +18,20 @@ import com.gongpingjia.carplay.adapter.ImageAdapter;
 import com.gongpingjia.carplay.bean.PhotoState;
 import com.gongpingjia.carplay.util.PhotoUtil;
 
-/** 
+/**
  * @Description 相册管理
  * @author Administrator
- * @date 2015-7-21 上午9:36:10 
- */ 
+ * @date 2015-7-21 上午9:36:10
+ */
 public class ManageAlbumActivity extends CarPlayBaseActivity implements OnClickListener {
 
-    //从相册取照片
+    // 从相册取照片
     private static final int REQUEST_PICK = 1;
 
-    //相机拍照
+    // 相机拍照
     private static final int REQUEST_TAKE = 2;
 
-    //剪切之后的照片
+    // 剪切之后的照片
     private static final int RESULT_CROP = 10;
 
     private GridView mPhotoGridView;
@@ -106,10 +106,12 @@ public class ManageAlbumActivity extends CarPlayBaseActivity implements OnClickL
                 PhotoUtil.onPhotoFromPick(this, data, path, RESULT_CROP);
                 break;
             case RESULT_CROP:
-                mDatas.remove(mDatas.size() - 1);
-                mDatas.add(mCurPhotoState);
-                mDatas.add(mLastPhotoState);
-                mPhotoAdapter.notifyDataSetChanged();
+                if (mDatas.size() != 9) {
+                    mDatas.remove(mDatas.size() - 1);
+                    mDatas.add(mCurPhotoState);
+                    mDatas.add(mLastPhotoState);
+                    mPhotoAdapter.notifyDataSetChanged();
+                }
                 break;
             }
         }
@@ -118,7 +120,7 @@ public class ManageAlbumActivity extends CarPlayBaseActivity implements OnClickL
     @Override
     public void onClick(View v) {
         // TODO Auto-generated method stub
-        
+
     }
 
 }

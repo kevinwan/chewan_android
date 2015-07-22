@@ -1,8 +1,5 @@
 package com.gongpingjia.carplay.activity.my;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import net.duohuo.dhroid.ioc.IocContainer;
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
@@ -11,13 +8,10 @@ import net.duohuo.dhroid.net.Response;
 
 import org.json.JSONObject;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -26,9 +20,12 @@ import android.widget.Toast;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
+import com.gongpingjia.carplay.activity.main.MainActivity;
+import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.CarPlayPerference;
 import com.gongpingjia.carplay.util.MD5Util;
+import com.gongpingjia.carplay.util.Utils;
 
 /**
  * 登录页面
@@ -36,6 +33,7 @@ import com.gongpingjia.carplay.util.MD5Util;
  * @author Administrator
  * 
  */
+
 public class LoginActivity extends CarPlayBaseActivity
 {
     // 手机号
@@ -72,7 +70,7 @@ public class LoginActivity extends CarPlayBaseActivity
             @Override
             public void onClick(View arg0)
             {
-                autoCloseKeyboard(self, arg0);
+                Utils.autoCloseKeyboard(self, arg0);
                 final String strPhoneNum = PhoneNumEditText.getText().toString();
                 final String strPassword = PasswordEditText.getText().toString();
                 if (TextUtils.isEmpty(strPhoneNum))
@@ -80,7 +78,7 @@ public class LoginActivity extends CarPlayBaseActivity
                     Toast.makeText(self, "手机号码不能为空", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (!isMobileNum(strPhoneNum))
+                if (!Utils.isValidMobilePhoneNumber(strPhoneNum))
                 {
                     Toast.makeText(self, "手机格式错误", Toast.LENGTH_SHORT).show();
                     return;
@@ -92,7 +90,7 @@ public class LoginActivity extends CarPlayBaseActivity
                     return;
                 }
                 
-                DhNet net = new DhNet("http://cwapi.gongpingjia.com/v1/user/login");
+                DhNet net = new DhNet(API.login);
                 net.addParam("phone", strPhoneNum);
                 net.addParam("password", MD5Util.string2MD5(strPassword));
                 net.doPost(new NetTask(self)
@@ -104,21 +102,20 @@ public class LoginActivity extends CarPlayBaseActivity
                         if (response.isSuccess())
                         {
                             System.out.println("*******" + response.isSuccess());
-                            JSONObject object = response.jSON();
+                            JSONObject jo = response.jSONFrom("data");
                             User user = User.getInstance();
-                            user.setUserId(JSONUtil.getString(object, "userId"));
-                            user.setToken(JSONUtil.getString(object, "token"));
-                            System.out.println("userID:" + JSONUtil.getString(object, "userId") + "token:"
-                                + JSONUtil.getString(object, "token"));
+                            user.setUserId(JSONUtil.getString(jo, "userId"));
+                            user.setToken(JSONUtil.getString(jo, "token"));
+                            System.out.println("userID:" + JSONUtil.getString(jo, "userId") + "token:"
+                                + JSONUtil.getString(jo, "token"));
                             
                             CarPlayPerference per = IocContainer.getShare().get(CarPlayPerference.class);
                             per.phone = strPhoneNum;
                             per.password = strPassword;
                             per.commit();
                             
-                            // Intent intent = new
-                            // Intent(self,MainActivity.class);
-                            // startActivity(intent);
+                            Intent intent = new Intent(self, MainActivity.class);
+                            startActivity(intent);
                         }
                         else
                         {
@@ -137,6 +134,7 @@ public class LoginActivity extends CarPlayBaseActivity
                 });
             }
         });
+        // 忘记密码
         login_forgetpsw = (TextView)findViewById(R.id.login_forgetpsw);
         login_forgetpsw.setOnClickListener(new View.OnClickListener()
         {
@@ -148,6 +146,7 @@ public class LoginActivity extends CarPlayBaseActivity
                 startActivity(intent);
             }
         });
+        // 注册
         login_register = (LinearLayout)findViewById(R.id.login_register);
         login_register.setOnClickListener(new View.OnClickListener()
         {
@@ -163,28 +162,4 @@ public class LoginActivity extends CarPlayBaseActivity
         
     }
     
-    /** 用于判断手机号段是否合法 */
-    public static boolean isMobileNum(String num)
-    {
-        Pattern p = Pattern.compile("^(1[3,4,5,7,8][0-9])\\d{8}$");
-        Matcher m = p.matcher(num);
-        return m.matches();
-    }
-    
-    /**
-     * 如果键盘没有收回 自动关闭键盘
-     * 
-     * @param activity Activity
-     * @param v 控件View
-     */
-    public static void autoCloseKeyboard(Activity activity, View v)
-    {
-        /** 收起键盘 */
-        View view = activity.getWindow().peekDecorView();
-        if (view != null && view.getWindowToken() != null)
-        {
-            InputMethodManager imm = (InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-        }
-    }
 }

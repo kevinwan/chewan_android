@@ -77,18 +77,21 @@ public class SideBar extends View {
         }
         if (event.getAction() == MotionEvent.ACTION_DOWN || event.getAction() == MotionEvent.ACTION_MOVE) {
             setBackgroundColor(Color.parseColor("#f5f7fa"));
-            mDialogText.setVisibility(View.VISIBLE);
-            mDialogText.setText(String.valueOf(l[idx]));
-            mDialogText.setTextSize(34);
+            if (mDialogText != null) {
+                mDialogText.setVisibility(View.VISIBLE);
+                mDialogText.setText(String.valueOf(l[idx]));
+                mDialogText.setTextSize(34);
+            }
             if (sectionIndexter == null) {
                 sectionIndexter = (SectionIndexer) list.getAdapter();
             }
-            int position = sectionIndexter.getPositionForSection(l[idx]);
-
-            if (position == -1) {
-                return true;
+            if (sectionIndexter != null) {
+                int position = sectionIndexter.getPositionForSection(l[idx]);
+                if (position == -1) {
+                    return true;
+                }
+                list.setSelection(position);
             }
-            list.setSelection(position);
         } else {
             mDialogText.setVisibility(View.INVISIBLE);
 

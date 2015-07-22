@@ -71,7 +71,15 @@
             android:layout_height="50dp"
             android:gravity="right|center_vertical"
             android:orientation="horizontal" >
-
+			
+            <TextView 
+                android:id="@+id/model"
+                style="@style/text_blacklight_small"
+                android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|right"
+            android:text="奥迪"
+                />
             <ImageView
                 android:layout_width="25dp"
                 android:layout_height="18dp"

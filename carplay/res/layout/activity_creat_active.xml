@@ -28,15 +28,15 @@
                     android:text="活动类型" />
 
                 <LinearLayout
+                    android:id="@+id/layout_active_type"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="60dp"
                     android:gravity="right|center_vertical"
                     android:orientation="horizontal" >
 
                     <TextView
+                        android:id="@+id/tv_active_type"
                         style="@style/text_black_medium"
-                        android:layout_width="wrap_content"
-                        android:layout_height="60dp"
                         android:layout_marginRight="5dp"
                         android:gravity="center_vertical"
                         android:text="看电影" />
@@ -57,13 +57,15 @@
                     android:src="@drawable/e_introduce" />
 
                 <EditText
+                    android:id="@+id/et_active_des"
                     style="@style/text_blacklight_small"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@color/nothing"
                     android:hint="请输入活动介绍"
                     android:textColorHint="@color/text_grey" >
-                <requestFocus />
+
+                    <requestFocus />
                 </EditText>
             </LinearLayout>
 
@@ -245,28 +247,31 @@
 
             <View style="@style/line" />
 
-            <LinearLayout style="@style/linearlayout"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp" >
+            <LinearLayout
+                style="@style/linearlayout"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp" >
 
                 <Button
+                    android:id="@+id/btn_finish"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
-                    android:text="完成"
-                    android:textSize="@dimen/text_small"
-                    android:textColor="@color/text_black_light"
+                    android:layout_weight="1"
                     android:background="#f1f1f1"
-                    android:layout_weight="1" />
+                    android:text="完成"
+                    android:textColor="@color/text_black_light"
+                    android:textSize="@dimen/text_small" />
 
                 <Button
+                    android:id="@+id/btn_finish_invite"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_weight="0.8"
                     android:background="@drawable/button_zc_bg"
                     android:text="完成并邀请好友"
-                    android:layout_marginLeft="10dp"
-                    android:textSize="@dimen/text_small"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_small" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

@@ -74,10 +74,10 @@ public class SettingActivity extends CarPlayBaseActivity implements OnClickListe
                 Toast.makeText(mySelf, "退出登录", Toast.LENGTH_SHORT).show();
 //                QiangZuoDialog dialog = new QiangZuoDialog(mySelf,"虚位以待...");
 //                dialog.UnmannedDialog();
-                QiangZuoDialog dialog = new QiangZuoDialog(mySelf,"浮世年华","23",R.drawable.head5,R.drawable.woman,"占座中...");
-                dialog.SomeoneDialog();
-//                Intent intent = new Intent(mySelf, PersonalDataActivity.class);
-//                startActivity(intent);
+//                QiangZuoDialog dialog = new QiangZuoDialog(mySelf,"浮世年华","23",R.drawable.head5,R.drawable.woman,"占座中...");
+//                dialog.SomeoneDialog();
+                Intent intent = new Intent(mySelf, LoginActivity.class);
+                startActivity(intent);
                 break;
             
             default:
