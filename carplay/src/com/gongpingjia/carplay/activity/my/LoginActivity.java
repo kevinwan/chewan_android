@@ -8,6 +8,7 @@ import net.duohuo.dhroid.net.Response;
 
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -33,110 +34,144 @@ import com.gongpingjia.carplay.util.Utils;
  * @author Administrator
  * 
  */
-public class LoginActivity extends CarPlayBaseActivity {
-	// 手机号
-	private EditText PhoneNumEditText;
-	// 密码
-	private EditText PasswordEditText;
-	// 登录
-	private Button LoginButton;
-	// 注册
-	private LinearLayout login_register;
-	// 忘记密码
-	private TextView login_forgetpsw;
-
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_login);
-	}
-
-	@Override
-	public void initView() {
-		PhoneNumEditText = (EditText) findViewById(R.id.ed_login_phone);
-		PasswordEditText = (EditText) findViewById(R.id.ed_login_password);
-		LoginButton = (Button) findViewById(R.id.button_login);
-		LoginButton.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				Utils.autoCloseKeyboard(self, arg0);
-				final String strPhoneNum = PhoneNumEditText.getText()
-						.toString();
-				final String strPassword = PasswordEditText.getText()
-						.toString();
-				if (TextUtils.isEmpty(strPhoneNum)) {
-					Toast.makeText(self, "手机号码不能为空", Toast.LENGTH_SHORT).show();
-					return;
-				}
-				if (!Utils.isValidMobilePhoneNumber(strPhoneNum)) {
-					Toast.makeText(self, "手机格式错误", Toast.LENGTH_SHORT).show();
-					return;
-
-				}
-				if (TextUtils.isEmpty(strPassword)) {
-					Toast.makeText(self, "请输入密码", Toast.LENGTH_SHORT).show();
-					return;
-				}
-
-				DhNet net = new DhNet(API.login);
-				net.addParam("phone", strPhoneNum);
-				net.addParam("password", MD5Util.string2MD5(strPassword));
-				net.doPost(new NetTask(self) {
-
-					@Override
-					public void doInUI(Response response, Integer transfer) {
-						if (response.isSuccess()) {
-							JSONObject jo = response.jSONFrom("data");
-							User user = User.getInstance();
-							user.setUserId(JSONUtil.getString(jo, "userId"));
-							user.setToken(JSONUtil.getString(jo, "token"));
-
-							CarPlayPerference per = IocContainer.getShare()
-									.get(CarPlayPerference.class);
-							per.phone = strPhoneNum;
-							per.password = strPassword;
-							per.commit();
-
-							Intent intent = new Intent(self, MainActivity.class);
-							startActivity(intent);
-						} else {
-							showToast(response.msg);
-
-						}
-					}
-
-					@Override
-					public void onErray(Response response) {
-						// TODO Auto-generated method stub
-						super.onErray(response);
-						showToast(response.msg);
-					}
-				});
-			}
-		});
-		// 忘记密码
-		login_forgetpsw = (TextView) findViewById(R.id.login_forgetpsw);
-		login_forgetpsw.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				Intent intent = new Intent(self, ForgetPwdActivity.class);
-				startActivity(intent);
-			}
-		});
-		// 注册
-		login_register = (LinearLayout) findViewById(R.id.login_register);
-		login_register.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				Intent intent = new Intent(self, RegisterActivity.class);
-				startActivity(intent);
-
-			}
-		});
-
-	}
-
+public class LoginActivity extends CarPlayBaseActivity
+{
+    
+    // 手机号
+    private EditText PhoneNumEditText;
+    
+    // 密码
+    private EditText PasswordEditText;
+    
+    // 登录
+    private Button LoginButton;
+    
+    // 注册
+    private LinearLayout login_register;
+    
+    // 忘记密码
+    private TextView login_forgetpsw;
+    
+    public static final int Register = 1;
+    
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
+    }
+    
+    @Override
+    public void initView()
+    {
+        PhoneNumEditText = (EditText)findViewById(R.id.ed_login_phone);
+        PasswordEditText = (EditText)findViewById(R.id.ed_login_password);
+        LoginButton = (Button)findViewById(R.id.button_login);
+        LoginButton.setOnClickListener(new View.OnClickListener()
+        {
+            
+            @Override
+            public void onClick(View arg0)
+            {
+                Utils.autoCloseKeyboard(self, arg0);
+                final String strPhoneNum = PhoneNumEditText.getText().toString();
+                final String strPassword = PasswordEditText.getText().toString();
+                if (TextUtils.isEmpty(strPhoneNum))
+                {
+                    Toast.makeText(self, "手机号码不能为空", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (!Utils.isValidMobilePhoneNumber(strPhoneNum))
+                {
+                    Toast.makeText(self, "手机格式错误", Toast.LENGTH_SHORT).show();
+                    return;
+                    
+                }
+                if (TextUtils.isEmpty(strPassword))
+                {
+                    Toast.makeText(self, "请输入密码", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                
+                DhNet net = new DhNet(API.login);
+                net.addParam("phone", strPhoneNum);
+                net.addParam("password", MD5Util.string2MD5(strPassword));
+                net.doPost(new NetTask(self)
+                {
+                    
+                    @Override
+                    public void doInUI(Response response, Integer transfer)
+                    {
+                        if (response.isSuccess())
+                        {
+                            JSONObject jo = response.jSONFrom("data");
+                            User user = User.getInstance();
+                            user.setUserId(JSONUtil.getString(jo, "userId"));
+                            user.setToken(JSONUtil.getString(jo, "token"));
+                            
+                            CarPlayPerference per = IocContainer.getShare().get(CarPlayPerference.class);
+                            per.phone = strPhoneNum;
+                            per.password = strPassword;
+                            per.commit();
+                            
+                            Intent intent = new Intent(self, MainActivity.class);
+                            startActivity(intent);
+                        }
+                        else
+                        {
+                            showToast(response.msg);
+                            
+                        }
+                    }
+                    
+                    @Override
+                    public void onErray(Response response)
+                    {
+                        // TODO Auto-generated method stub
+                        super.onErray(response);
+                        showToast(response.msg);
+                    }
+                });
+            }
+        });
+        // 忘记密码
+        login_forgetpsw = (TextView)findViewById(R.id.login_forgetpsw);
+        login_forgetpsw.setOnClickListener(new View.OnClickListener()
+        {
+            
+            @Override
+            public void onClick(View arg0)
+            {
+                Intent intent = new Intent(self, ForgetPwdActivity.class);
+                startActivity(intent);
+            }
+        });
+        // 注册
+        login_register = (LinearLayout)findViewById(R.id.login_register);
+        login_register.setOnClickListener(new View.OnClickListener()
+        {
+            
+            @Override
+            public void onClick(View arg0)
+            {
+                Intent intent = new Intent(self, RegisterActivity.class);
+                startActivityForResult(intent, Register);
+                
+            }
+        });
+        
+    }
+    
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK)
+        {
+            if (requestCode == Register)
+            {
+                finish();
+            }
+        }
+    }
 }

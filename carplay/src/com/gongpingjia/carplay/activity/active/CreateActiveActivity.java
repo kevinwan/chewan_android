@@ -29,7 +29,6 @@ import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.bean.PhotoState;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.MD5Util;
-import com.gongpingjia.carplay.util.PhotoUtil;
 import com.gongpingjia.carplay.view.NestedGridView;
 
 /***
@@ -112,7 +111,7 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // TODO Auto-generated method stub
                 if (mPhotoStates.get(position).isLast()) {
-                    PhotoUtil.getPhotoFromPick(self, REQEUST_PICK);
+//                    PhotoUtil.getPhotoFromPick(self, REQEUST_PICK);
                 } else {
                     mPhotoStates.remove(position);
                     mImageAdapter.notifyDataSetChanged();
@@ -199,7 +198,7 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
             switch (requestCode) {
             case REQEUST_PICK:
                 mCurPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg").getAbsolutePath();
-                PhotoUtil.onPhotoFromPick(self, data, mCurPath, REQUEST_CROP);
+//                PhotoUtil.onPhotoFromPick(self, data, mCurPath, REQUEST_CROP);
                 break;
             case REQUEST_CROP:
                 User user = User.getInstance();

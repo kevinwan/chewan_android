@@ -14,9 +14,11 @@
         android:orientation="horizontal" >
 
         <ImageView
+            android:id="@+id/pic"
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:layout_marginLeft="14dp"
+            android:scaleType="fitXY"
             android:src="@drawable/great_camera" />
     </LinearLayout>
 
@@ -38,12 +40,14 @@
             android:layout_height="50dp"
             android:gravity="right|center_vertical"
             android:orientation="horizontal" >
-            <EditText 
+
+            <EditText
+                android:id="@+id/drivingExperience"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:gravity="right|center"
                 android:background="@null"
-                android:text=" "/>
+                android:gravity="right|center"
+                android:text=" " />
 
             <ImageView
                 android:layout_width="25dp"
@@ -71,15 +75,15 @@
             android:layout_height="50dp"
             android:gravity="right|center_vertical"
             android:orientation="horizontal" >
-			
-            <TextView 
+
+            <TextView
                 android:id="@+id/model"
                 style="@style/text_blacklight_small"
                 android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical|right"
-            android:text="奥迪"
-                />
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|right"
+                android:text="奥迪" />
+
             <ImageView
                 android:layout_width="25dp"
                 android:layout_height="18dp"

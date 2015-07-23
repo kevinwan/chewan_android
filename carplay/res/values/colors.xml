@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="province_line_border">#C7C7C7</color>
     <color name="white">#FFFFFF</color>
     <color name="nothing">#00000000</color>
     <color name="black">#000000</color>
@@ -20,9 +21,7 @@
     <color name="bg_grey">#f5f7fa</color>
     <!-- 线灰 -->
     <color name="line_grey">#e6e9ed</color>
-    
-     <color name="tab_grey_bg">#f5f7fa</color>
-     
-     <color name="text_red">#fc6e51</color>
+    <color name="tab_grey_bg">#f5f7fa</color>
+    <color name="text_red">#fc6e51</color>
 
 </resources>
