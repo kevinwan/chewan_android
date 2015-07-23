@@ -90,6 +90,7 @@ public class PwdNextActivity extends CarPlayBaseActivity {
 							Intent intent = new Intent(self,
 									LoginActivity.class);
 							startActivity(intent);
+							self.finish();
 
 						} else {
 							showToast(response.result);

@@ -85,7 +85,7 @@ public class ForgetPwdActivity extends CarPlayBaseActivity implements
 		public void onTick(long millisUntilFinished) {
 			button_forget_verification.setEnabled(false);
 			button_forget_verification
-					.setText(millisUntilFinished / 1000 + "秒");
+					.setText(millisUntilFinished / 1000 + "s");
 		}
 	}
 
@@ -116,11 +116,11 @@ public class ForgetPwdActivity extends CarPlayBaseActivity implements
 			// @Override
 			// public void doInUI(Response response, Integer transfer) {
 			// if (response.isSuccess()) {
-			Intent intent = new Intent(ForgetPwdActivity.this,
-					PwdNextActivity.class);
+			Intent intent = new Intent(self, PwdNextActivity.class);
 			intent.putExtra("PhoneNum", strPhone);
 			intent.putExtra("Verification", strVerification);
 			startActivity(intent);
+			self.finish();
 			// }else{
 			// showToast(response.result);
 			// }
