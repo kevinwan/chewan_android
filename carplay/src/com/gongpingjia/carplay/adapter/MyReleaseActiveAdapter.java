@@ -67,19 +67,19 @@ public class MyReleaseActiveAdapter extends NetJSONAdapter
             
         }
         holder.lineTopI.setVisibility(position == 0 ? View.INVISIBLE : View.VISIBLE);
-        PicLayoutUtil headUtil = new PicLayoutUtil(mContext, 5, 5, holder.headlayoutV, headlayoutWidth);
-        headUtil.AddChild();
-        
-        if (position % 2 == 0)
-        {
-            PicLayoutUtil util = new PicLayoutUtil(mContext, 4, 5, holder.piclayoutV, piclayoutWidth);
-            util.addMoreChild();
-        }
-        else
-        {
-            PicLayoutUtil util = new PicLayoutUtil(mContext, 2, 5, holder.piclayoutV, piclayoutWidth);
-            util.addMoreChild();
-        }
+        // PicLayoutUtil headUtil = new PicLayoutUtil(mContext, 5, 5, holder.headlayoutV, headlayoutWidth);
+        // headUtil.AddChild();
+        //
+        // if (position % 2 == 0)
+        // {
+        // PicLayoutUtil util = new PicLayoutUtil(mContext, 4, 5, holder.piclayoutV, piclayoutWidth);
+        // util.addMoreChild();
+        // }
+        // else
+        // {
+        // PicLayoutUtil util = new PicLayoutUtil(mContext, 2, 5, holder.piclayoutV, piclayoutWidth);
+        // util.addMoreChild();
+        // }
         
         return convertView;
     }

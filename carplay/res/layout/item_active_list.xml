@@ -14,11 +14,10 @@
         android:gravity="center_horizontal"
         android:orientation="vertical" >
 
-        <ImageView
+        <com.gongpingjia.carplay.view.RoundImageView
             android:id="@+id/head"
             android:layout_width="59dp"
-            android:layout_height="59dp"
-            android:src="@drawable/head2" />
+            android:layout_height="59dp" />
 
         <TextView
             android:id="@+id/status"
@@ -31,11 +30,22 @@
             android:paddingTop="2dp"
             android:text="我请客" />
 
-        <TextView
-            android:id="@+id/seat_count"
-            style="@style/text_grey_smaller"
-            android:layout_marginTop="5dp"
-            android:text="3/5座" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp" >
+
+            <TextView
+                android:id="@+id/seat_count"
+                style="@style/text_grey_smaller"
+                android:text="3"
+                android:textColor="@color/text_orange" />
+
+            <TextView
+                android:id="@+id/seat_count_all"
+                style="@style/text_grey_smaller"
+                android:text="/5座" />
+        </LinearLayout>
     </LinearLayout>
 
     <RelativeLayout
@@ -70,7 +80,7 @@
                     android:background="@drawable/man" >
 
                     <TextView
-                        android:id="@+id/tv_user_age"
+                        android:id="@+id/age"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -107,7 +117,7 @@
                     android:src="@drawable/head2" />
 
                 <TextView
-                    android:id="@+id/tv_drive_age"
+                    android:id="@+id/drive_age"
                     style="@style/text_grey_small"
                     android:layout_marginLeft="5dp"
                     android:text="X6,  8年驾龄" />
@@ -132,10 +142,14 @@
                 android:layout_marginTop="3dp" >
 
                 <TextView
+                    style="@style/text_blacklight_small"
+                    android:text="时间: " />
+
+                <TextView
                     android:id="@+id/time"
                     style="@style/text_blacklight_small"
                     android:layout_weight="1"
-                    android:text="时间: 5月29日 9:30" />
+                    android:text="5月29日 9:30" />
 
                 <TextView
                     android:id="@+id/address"
@@ -148,7 +162,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
                 android:background="@color/tab_grey_bg"
-                 android:gravity="center_vertical"
+                android:gravity="center_vertical"
                 android:padding="8dp" >
 
                 <LinearLayout

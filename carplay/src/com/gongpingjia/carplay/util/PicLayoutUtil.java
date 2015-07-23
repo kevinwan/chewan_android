@@ -1,10 +1,15 @@
 package com.gongpingjia.carplay.util;
 
+import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.util.DhUtil;
+import net.duohuo.dhroid.util.ViewUtil;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -12,7 +17,12 @@ import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 
+import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.view.RoundImageView;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
 
 public class PicLayoutUtil
 {
@@ -36,14 +46,14 @@ public class PicLayoutUtil
     
     int headMax = 5;
     
-    public PicLayoutUtil(Context context, int count, int padding, LinearLayout layout, int width)
+    public PicLayoutUtil(Context context, JSONArray jsa, int padding, LinearLayout layout, int width)
     {
-        this.count = count;
+        this.data = jsa;
+        this.count = jsa.length();
         this.padding = DhUtil.dip2px(context, padding);
         this.layout = layout;
         this.mContext = context;
         this.width = width;
-        layout.removeAllViews();
     }
     
     /**
@@ -52,12 +62,23 @@ public class PicLayoutUtil
      */
     public void AddChild()
     {
-        int childWidth = (width - (headMax - 1) * padding) / headMax;
-        params = new LayoutParams(childWidth, childWidth);
-        params.rightMargin = padding;
-        for (int i = 0; i < count; i++)
+        if (layout.getChildCount() == 0)
         {
-            layout.addView(createHeadImageView(), params);
+            int childWidth = (width - (headMax - 1) * padding) / headMax;
+            params = new LayoutParams(childWidth, childWidth);
+            params.rightMargin = padding;
+            for (int i = 0; i < count; i++)
+            {
+                try
+                {
+                    layout.addView(createHeadImageView(data.getJSONObject(i)), params);
+                }
+                catch (JSONException e)
+                {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
         }
     }
     
@@ -68,25 +89,36 @@ public class PicLayoutUtil
      */
     public void addMoreChild()
     {
-        if (count == 1)
+        if (layout.getChildCount() == 0)
         {
-            addPicOneChild();
-        }
-        else if (count < 4)
-        {
-            int childWidth = (width - (horizontalMax - 1) * padding) / horizontalMax;
-            params = new LayoutParams(childWidth, childWidth);
-            params.rightMargin = padding;
-            AddPicThreeChild();
-        }
-        else
-        {
-            int childWidth = (width - (horizontalMax - 1) * padding) / horizontalMax;
-            params = new LayoutParams(childWidth, childWidth);
-            params.rightMargin = padding;
-            for (int i = 0; i < count; i++)
+            if (count == 1)
             {
-                addMorePic();
+                addPicOneChild();
+            }
+            else if (count < 4)
+            {
+                int childWidth = (width - (horizontalMax - 1) * padding) / horizontalMax;
+                params = new LayoutParams(childWidth, childWidth);
+                params.rightMargin = padding;
+                AddPicThreeChild();
+            }
+            else
+            {
+                int childWidth = (width - (horizontalMax - 1) * padding) / horizontalMax;
+                params = new LayoutParams(childWidth, childWidth);
+                params.rightMargin = padding;
+                for (int i = 0; i < count; i++)
+                {
+                    try
+                    {
+                        addMorePic(data.getJSONObject(i));
+                    }
+                    catch (JSONException e)
+                    {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
             }
         }
         
@@ -97,14 +129,24 @@ public class PicLayoutUtil
         LinearLayout child = addChild(layout);
         for (int i = 0; i < count; i++)
         {
-            child.addView(createPicImageView(), params);
+            try
+            {
+                child.addView(createPicImageView(data.getJSONObject(i)), params);
+            }
+            catch (JSONException e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
     }
     
-    private ImageView createHeadImageView()
+    private ImageView createHeadImageView(JSONObject jo)
     {
-        ImageView img = new ImageView(mContext);
-        img.setImageResource(R.drawable.head3);
+        RoundImageView img = new RoundImageView(mContext);
+        img.setLayoutParams(params);
+        ViewUtil.bindNetImage(img, JSONUtil.getString(jo, "photo"), "optionsDefault");
+        img.setTag(JSONUtil.getString(jo, "userId"));
         img.setOnClickListener(new OnClickListener()
         {
             
@@ -113,7 +155,8 @@ public class PicLayoutUtil
             {
                 if (onChildClickListener != null)
                 {
-                    onChildClickListener.onclick("userid");
+                    ImageView i = (ImageView)v;
+                    onChildClickListener.onclick(i.getTag().toString());
                 }
             }
         });
@@ -121,10 +164,11 @@ public class PicLayoutUtil
         return img;
     }
     
-    private ImageView createPicImageView()
+    private ImageView createPicImageView(JSONObject jo)
     {
         ImageView img = new ImageView(mContext);
-        img.setImageResource(R.drawable.model_pic);
+        img.setLayoutParams(params);
+        ViewUtil.bindNetImage(img, JSONUtil.getString(jo, "thumbnail_pic"), "optionsDefault");
         img.setScaleType(ScaleType.FIT_XY);
         img.setOnClickListener(new OnClickListener()
         {
@@ -144,25 +188,34 @@ public class PicLayoutUtil
     
     private void addPicOneChild()
     {
-        params = new LayoutParams(200, 100);
-        ImageView img = new ImageView(mContext);
-        img.setImageResource(R.drawable.ic_launcher);
-        layout.addView(img, params);
-        img.setOnClickListener(new OnClickListener()
+        try
         {
-            
-            @Override
-            public void onClick(View v)
+            JSONObject jo = data.getJSONObject(0);
+            params = new LayoutParams(200, 100);
+            ImageView img = new ImageView(mContext);
+            ViewUtil.bindNetImage(img, JSONUtil.getString(jo, "thumbnail_pic"), "optionsDefault");
+            layout.addView(img, params);
+            img.setOnClickListener(new OnClickListener()
             {
-                if (onChildClickListener != null)
+                
+                @Override
+                public void onClick(View v)
                 {
-                    onChildClickListener.onclick("userid");
+                    if (onChildClickListener != null)
+                    {
+                        onChildClickListener.onclick("userid");
+                    }
                 }
-            }
-        });
+            });
+        }
+        catch (JSONException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
     
-    private void addMorePic()
+    private void addMorePic(JSONObject jo)
     {
         LinearLayout child;
         if (layout.getChildCount() == 0)
@@ -178,7 +231,7 @@ public class PicLayoutUtil
             }
         }
         
-        child.addView(createPicImageView(), params);
+        child.addView(createPicImageView(jo), params);
     }
     
     private LinearLayout addChild(LinearLayout piclayout)

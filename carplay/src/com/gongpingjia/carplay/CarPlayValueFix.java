@@ -43,7 +43,7 @@ public class CarPlayValueFix implements ValueFix
             return null;
         if ("time".equals(type))
         {
-            return getStandardTime(Long.parseLong(o.toString()) * 1000, "yyyy-MM-dd");
+            return getStandardTime(Long.parseLong(o.toString()), "MM月dd日 HH:mm");
         }
         else if ("neartime".equals(type))
         {

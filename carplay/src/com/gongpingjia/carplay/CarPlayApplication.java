@@ -63,7 +63,7 @@ public class CarPlayApplication extends Application
         imageconfig =
             new ImageLoaderConfiguration.Builder(getApplicationContext()).threadPoolSize(3)
                 .threadPriority(Thread.NORM_PRIORITY - 2)
-                .memoryCacheSize(1500000)
+                .memoryCacheSize(1800000)
                 .denyCacheImageMultipleSizesInMemory()
                 .discCacheFileNameGenerator(new Md5FileNameGenerator())
                 .build();

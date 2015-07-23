@@ -158,4 +158,10 @@
         <item name="android:background">@color/line_grey</item>
     </style>
 
+    <!-- 拍照动画 -->
+    <style name="PopupMenu" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/menu_up</item>
+        <item name="android:windowExitAnimation">@anim/menu_out</item>
+    </style>
+
 </resources>

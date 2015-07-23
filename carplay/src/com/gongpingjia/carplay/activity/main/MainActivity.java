@@ -33,6 +33,8 @@ public class MainActivity extends BaseFragmentActivity
     // Fragment 的栈
     public static Stack<Fragment> slist;
     
+    LinearLayout topTab;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -41,14 +43,15 @@ public class MainActivity extends BaseFragmentActivity
         initView();
         initTab();
         setTab(0);
+        
     }
     
     public void initView()
     {
         slist = new Stack<Fragment>();
-        
         fm = getSupportFragmentManager();
         tabV = (LinearLayout)findViewById(R.id.tab);
+        topTab = (LinearLayout)findViewById(R.id.top_tab);
     }
     
     private void initTab()
@@ -91,8 +94,8 @@ public class MainActivity extends BaseFragmentActivity
                             @Override
                             public void onClick(View arg0)
                             {
-                                 Intent it = new Intent(MainActivity.this, CreateActiveActivity.class);
-                                 startActivity(it);
+                                Intent it = new Intent(MainActivity.this, CreateActiveActivity.class);
+                                startActivity(it);
                             }
                         });
                         setLeftAction(R.drawable.filtrate, "筛选", new OnClickListener()
@@ -173,6 +176,8 @@ public class MainActivity extends BaseFragmentActivity
             }
         }
     }
+    
+    
     
     public void switchContent(Fragment fragment)
     {

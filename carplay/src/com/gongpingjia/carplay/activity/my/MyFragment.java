@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.msg.PlayCarChatActivity;
 import com.gongpingjia.carplay.adapter.ActiveAdapter;
+import com.gongpingjia.carplay.bean.User;
 
 public class MyFragment extends Fragment implements OnClickListener
 {
@@ -27,7 +28,7 @@ public class MyFragment extends Fragment implements OnClickListener
     /** 我的关注,我的发布,我的参与 三个点击区域的View */
     View my_attentionV, my_releaseV, my_participationV;
     
-    LinearLayout carchat,owners_certification,people_concerned;
+    LinearLayout carchat, owners_certification, people_concerned;
     
     public static MyFragment getInstance()
     {
@@ -50,13 +51,13 @@ public class MyFragment extends Fragment implements OnClickListener
     
     private void initView()
     {
-    	
+        
         my_attentionV = mainV.findViewById(R.id.my_attention);
         my_releaseV = mainV.findViewById(R.id.my_release);
         my_participationV = mainV.findViewById(R.id.my_participation);
-        carchat=(LinearLayout) mainV.findViewById(R.id.carchat);
-        people_concerned=(LinearLayout) mainV.findViewById(R.id.people_concerned);
-        owners_certification=(LinearLayout) mainV.findViewById(R.id.owners_certification);
+        carchat = (LinearLayout)mainV.findViewById(R.id.carchat);
+        people_concerned = (LinearLayout)mainV.findViewById(R.id.people_concerned);
+        owners_certification = (LinearLayout)mainV.findViewById(R.id.owners_certification);
         
         my_attentionV.setOnClickListener(this);
         my_releaseV.setOnClickListener(this);
@@ -75,16 +76,19 @@ public class MyFragment extends Fragment implements OnClickListener
         {
             case R.id.my_attention:
                 it = new Intent(getActivity(), MyAttentionActiveActivity.class);
+                it.putExtra("userid", User.getInstance().getUserId());
                 startActivity(it);
                 break;
             
             case R.id.my_release:
                 it = new Intent(getActivity(), MyReleaseActiveActivity.class);
+                it.putExtra("userid", User.getInstance().getUserId());
                 startActivity(it);
                 break;
             
             case R.id.my_participation:
                 it = new Intent(getActivity(), MyParticipationActiveActivity.class);
+                it.putExtra("userid", User.getInstance().getUserId());
                 startActivity(it);
                 break;
             case R.id.carchat:

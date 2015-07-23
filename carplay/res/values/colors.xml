@@ -23,5 +23,7 @@
     <color name="line_grey">#e6e9ed</color>
     <color name="tab_grey_bg">#f5f7fa</color>
     <color name="text_red">#fc6e51</color>
+    <color name="main_tab_bg">#F6F7FB</color>
+    <color name="black40">#66000000</color>
 
 </resources>
