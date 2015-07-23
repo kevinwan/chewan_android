@@ -116,6 +116,8 @@ public class LoginActivity extends CarPlayBaseActivity
                             
                             Intent intent = new Intent(self, MainActivity.class);
                             startActivity(intent);
+                            finish();
+                            
                         }
                         else
                         {

@@ -104,8 +104,10 @@ public class CarTypeSelectActivity extends CarPlayBaseActivity
                     Intent it = getIntent();
                     it.putExtra("brandName", currentBrand.getBrand());
                     it.putExtra("brandLogo", currentBrand.getUrl());
-                    it.putExtra("model", mBrands.get(position).getName());
+                    it.putExtra("modelName", mBrands.get(position).getName());
+                    it.putExtra("modelSlug", mBrands.get(position).getSlug());
                     setResult(Activity.RESULT_OK, it);
+                    finish();
                     // Log.e("", mBrands.get(position).toString());
                 }
             }

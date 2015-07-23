@@ -47,7 +47,9 @@
                 android:layout_height="fill_parent"
                 android:background="@null"
                 android:gravity="right|center"
-                android:text=" " />
+                android:inputType="number"
+                android:text=" "
+                android:textColor="@color/text_black_light" />
 
             <ImageView
                 android:layout_width="25dp"
@@ -95,6 +97,7 @@
     <View style="@style/line" />
 
     <Button
+        android:id="@+id/submit"
         style="@style/text_white_medium"
         android:layout_width="match_parent"
         android:layout_height="40dp"
