@@ -12,6 +12,9 @@ import net.duohuo.dhroid.net.upload.FileInfo;
 import net.duohuo.dhroid.util.ImageUtil;
 import net.duohuo.dhroid.util.PhotoUtil;
 import android.app.Activity;
+import net.duohuo.dhroid.net.DhNet;
+import net.duohuo.dhroid.net.NetTask;
+import net.duohuo.dhroid.net.Response;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -27,6 +30,7 @@ import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.view.dialog.PhotoSelectDialog;
 import com.gongpingjia.carplay.view.dialog.PhotoSelectDialog.OnStateChangeListener;
+import com.gongpingjia.carplay.util.MD5Util;
 
 /**
  * 
@@ -92,10 +96,10 @@ public class AuthenticateOwnersActivity extends CarPlayBaseActivity implements O
     private void authtion()
     {
         DhNet net = new DhNet(API.CWBaseurl+"/user/"+user.getUserId()+"/authentication?token="+user.getToken());
-        net.addParam("drivingExperience", value)
-        net.addParam("carBrand", value)
-        net.addParam("carBrandLogo", value)
-        net.addParam("carModel", value)
+//        net.addParam("drivingExperience", value)
+//        net.addParam("carBrand", value)
+//        net.addParam("carBrandLogo", value)
+//        net.addParam("carModel", value)
     }
     
     private void uploadPic(String path)
@@ -158,4 +162,6 @@ public class AuthenticateOwnersActivity extends CarPlayBaseActivity implements O
             }
         }
     }
+
+	
 }
