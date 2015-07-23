@@ -138,24 +138,24 @@ public class RegisterActivity extends CarPlayBaseActivity implements
 			return;
 		}
 //		
-//		/** 校验验证码  */
-//		DhNet net = new DhNet("http://cwapi.gongpingjia.com/v1/phone/"
-//				+ strPhone + "/verification");
-//		net.addParam("code",strCaptcha);
-//		net.doPostInDialog(new NetTask(self) {
-//
-//			@Override
-//			public void doInUI(Response response, Integer transfer) {
-//				if (response.isSuccess()) {
+		/** 校验验证码  */
+		DhNet net = new DhNet("http://cwapi.gongpingjia.com/v1/phone/"
+				+ strPhone + "/verification");
+		net.addParam("code",strCaptcha);
+		net.doPostInDialog(new NetTask(self) {
+
+			@Override
+			public void doInUI(Response response, Integer transfer) {
+				if (response.isSuccess()) {
 					Intent it=new Intent(self,BasicMessageActivity.class);
 					it.putExtra("phone", strPhone);
 					it.putExtra("code", strCaptcha);
 					it.putExtra("pswd", MD5Util.string2MD5(strPassword));
 					startActivity(it);
-//				} else {
-//				}
-//			}
-//		});
+				} else {
+				}
+			}
+		});
 	}
 
 	/**
