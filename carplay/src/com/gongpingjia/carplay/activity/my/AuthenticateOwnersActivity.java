@@ -1,18 +1,13 @@
 package com.gongpingjia.carplay.activity.my;
 
-import com.gongpingjia.carplay.R;
-import com.gongpingjia.carplay.R.layout;
-import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
-import com.gongpingjia.carplay.activity.active.CreatActiveActivity;
-import com.gongpingjia.carplay.activity.main.MainActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
+
+import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 
 /**
  * 

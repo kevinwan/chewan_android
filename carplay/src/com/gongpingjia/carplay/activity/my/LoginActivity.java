@@ -33,9 +33,9 @@ import com.gongpingjia.carplay.util.Utils;
  * @author Administrator
  * 
  */
-
 public class LoginActivity extends CarPlayBaseActivity
 {
+    
     // 手机号
     private EditText PhoneNumEditText;
     

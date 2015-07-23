@@ -137,6 +137,7 @@ public class CityPickDialog extends AlertDialog implements android.view.View.OnC
         switch (v.getId())
         {
             case R.id.btn_confirm:
+                
                 showSelectedResult();
                 break;
             default:
