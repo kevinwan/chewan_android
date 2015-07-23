@@ -18,17 +18,21 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="188dp"
             android:orientation="vertical" >
 
             <LinearLayout
+                android:id="@+id/logined"
                 android:layout_width="match_parent"
                 android:layout_height="95dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:orientation="horizontal" >
+                android:layout_marginTop="188dp"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                 >
 
                 <ImageView
+                    android:id="@+id/head"
                     android:layout_width="59dp"
                     android:layout_height="59dp"
                     android:src="@drawable/head2" />
@@ -46,23 +50,24 @@
                         android:gravity="center_vertical" >
 
                         <TextView
+                            android:id="@+id/nickname"
                             style="@style/text_blue_medium"
                             android:text="半夜偷西瓜" />
 
                         <RelativeLayout
-                            android:id="@+id/person_sex"
+                            android:id="@+id/gender"
                             android:layout_width="40dp"
                             android:layout_height="17dp"
                             android:layout_marginLeft="7dp"
                             android:background="@drawable/woman" >
 
                             <TextView
-                                android:id="@+id/person_age"
+                                android:id="@+id/age"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentRight="true"
                                 android:layout_centerVertical="true"
-                                android:layout_marginRight="2dp"
+                                android:layout_marginRight="4dp"
                                 android:text="23"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/text_smaller" />
@@ -76,15 +81,66 @@
                         android:gravity="center_vertical" >
 
                         <ImageView
+                            android:id="@+id/carBrandLogo"
                             android:layout_width="12dp"
                             android:layout_height="12dp"
                             android:layout_marginRight="7dp"
                             android:src="@drawable/tips_bg" />
 
                         <TextView
+                            android:id="@+id/carModel"
                             style="@style/text_grey_smaller"
                             android:text="california, 12年驾龄" />
                     </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/notlogin"
+                android:layout_width="match_parent"
+                android:layout_height="95dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="210dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:layout_width="59dp"
+                    android:layout_height="59dp"
+                    android:src="@drawable/my_n" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="12dp"
+                    android:layout_height="match_parent" >
+                    
+                     <TextView 
+                        style="@style/text_black_medium"
+                        android:text="未登录"
+                        />
+                     <TextView 
+                        style="@style/text_grey_small"
+                        android:layout_marginTop="10dp"
+                        android:text="风吹鸡蛋壳,财去人安乐"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical|right"
+                    android:layout_height="match_parent" >
+                     
+                <Button 
+                    android:id="@+id/login"
+                    style="@style/text_white_medium"
+                     android:layout_width="65dp"
+                    android:layout_height="35dp"
+                    android:text="登录"
+                    android:background="@drawable/button_yanzheng_bg"
+                    />
                 </LinearLayout>
             </LinearLayout>
 

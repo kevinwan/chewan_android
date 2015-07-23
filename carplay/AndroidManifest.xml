@@ -37,11 +37,7 @@
         <activity android:name=".activity.my.SettingActivity" >
         </activity>
         <activity android:name=".activity.my.LoginActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            
         </activity>
         <activity android:name=".activity.my.ForgetPwdActivity" >
         </activity>
@@ -78,6 +74,11 @@
         <activity android:name=".activity.my.MyReleaseActiveActivity" >
         </activity>
         <activity android:name=".activity.main.SplashActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name="com.gongpingjia.carplay.activity.active.EventIntroduceActivity" >
         </activity>

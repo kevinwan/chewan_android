@@ -114,9 +114,9 @@ public class LoginActivity extends CarPlayBaseActivity
                             per.password = strPassword;
                             per.commit();
                             
-                            Intent intent = new Intent(self, MainActivity.class);
-                            startActivity(intent);
-                            finish();
+                            Intent it =new Intent(self,MyFragment.class);
+                            setResult(RESULT_OK, it);
+                            self.finish();
                             
                         }
                         else
