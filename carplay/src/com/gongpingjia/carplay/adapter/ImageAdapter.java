@@ -74,6 +74,11 @@ public class ImageAdapter extends BaseAdapter {
             imgView.setBackgroundColor(Color.parseColor("#CCD0D9"));
             imgVisible.setVisibility(View.GONE);
         } else {
+            if (photo.isChecked()) {
+                imgVisible.setVisibility(View.VISIBLE);
+            } else {
+                imgView.setVisibility(View.GONE);
+            }
             imgView.setScaleType(ScaleType.CENTER_CROP);
             imgView.setImageBitmap(ImageUtil.getBitmap(photo.getPath()));
         }

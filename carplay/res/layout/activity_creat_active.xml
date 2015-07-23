@@ -14,7 +14,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical" >
 
             <LinearLayout style="@style/linearlayout" >
@@ -71,7 +71,7 @@
 
             <View style="@style/line" />
 
-            <GridView
+            <com.gongpingjia.carplay.view.NestedGridView
                 android:id="@+id/gv_photo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -80,9 +80,10 @@
                 android:gravity="center"
                 android:horizontalSpacing="10dp"
                 android:numColumns="auto_fit"
+                android:padding="10dp"
                 android:stretchMode="columnWidth"
                 android:verticalSpacing="10dp" >
-            </GridView>
+            </com.gongpingjia.carplay.view.NestedGridView>
 
             <View style="@style/line" />
 

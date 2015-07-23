@@ -1,28 +1,36 @@
 package com.gongpingjia.carplay.activity.active;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.duohuo.dhroid.net.DhNet;
+import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
+import net.duohuo.dhroid.net.upload.FileInfo;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
-import android.widget.GridView;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.adapter.ImageAdapter;
+import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.bean.PhotoState;
 import com.gongpingjia.carplay.bean.User;
+import com.gongpingjia.carplay.util.MD5Util;
+import com.gongpingjia.carplay.util.PhotoUtil;
+import com.gongpingjia.carplay.view.NestedGridView;
 
 /***
  * 
@@ -33,9 +41,13 @@ import com.gongpingjia.carplay.bean.User;
  */
 public class CreateActiveActivity extends CarPlayBaseActivity implements OnClickListener {
 
+    private static final int REQEUST_PICK = 1;
+
+    private static final int REQUEST_CROP = 2;
+
     private Button mFinishBtn, mFinishInviteBtn;
 
-    private GridView mPhotoGridView;
+    private NestedGridView mPhotoGridView;
 
     private ImageAdapter mImageAdapter;
 
@@ -51,7 +63,7 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
     private String mActiveIntroduction;
 
     // 上传图片返回的七牛云存储地址
-    private List<String> mPictures;
+    private List<String> mPicIds;
 
     private String mActiveDestination;
 
@@ -65,15 +77,22 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
 
     private DhNet mDhNet;
 
+    private File mCacheDir;
+
+    private String mCurPath;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_creat_active);
         setTitle("创建活动");
 
+        mCacheDir = new File(getExternalCacheDir(), "CarPlay");
+        mCacheDir.mkdirs();
+
         mFinishBtn = (Button) findViewById(R.id.btn_finish);
         mFinishInviteBtn = (Button) findViewById(R.id.btn_finish_invite);
-        mPhotoGridView = (GridView) findViewById(R.id.gv_photo);
+        mPhotoGridView = (NestedGridView) findViewById(R.id.gv_photo);
 
         mFinishBtn.setOnClickListener(this);
         mFinishInviteBtn.setOnClickListener(this);
@@ -93,22 +112,30 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // TODO Auto-generated method stub
                 if (mPhotoStates.get(position).isLast()) {
-                    view.setOnClickListener(new View.OnClickListener() {
-
-                        @Override
-                        public void onClick(View v) {
-                            // TODO Auto-generated method stub
-                            showToast("last position");
-                        }
-                    });
+                    PhotoUtil.getPhotoFromPick(self, REQEUST_PICK);
                 } else {
-                    if (mPhotoStates.get(position).isChecked()) {
-                        mPhotoStates.get(position).setChecked(false);
-                        view.findViewById(R.id.imgView_visible).setVisibility(View.GONE);
-                    } else {
-                        mPhotoStates.get(position).setChecked(true);
-                        view.findViewById(R.id.imgView_visible).setVisibility(View.VISIBLE);
-                    }
+                    mPhotoStates.remove(position);
+                    mImageAdapter.notifyDataSetChanged();
+                }
+            }
+        });
+
+        DhNet net = new DhNet(API.login);
+        net.addParam("phone", "18951650020");
+        net.addParam("password", MD5Util.string2MD5("123456"));
+        net.doPost(new NetTask(self) {
+
+            @Override
+            public void doInUI(Response response, Integer transfer) {
+                // TODO Auto-generated method stub
+                if (response.isSuccess()) {
+                    JSONObject jo = response.jSONFrom("data");
+                    User user = User.getInstance();
+                    user.setUserId(JSONUtil.getString(jo, "userId"));
+                    user.setToken(JSONUtil.getString(jo, "token"));
+                    showToast("登陆成功");
+                } else {
+                    showToast(response.msg);
                 }
             }
         });
@@ -161,6 +188,58 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
         case R.id.btn_finish_invite:
 
             break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // TODO Auto-generated method stub
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+            case REQEUST_PICK:
+                mCurPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg").getAbsolutePath();
+                PhotoUtil.onPhotoFromPick(self, data, mCurPath, REQUEST_CROP);
+                break;
+            case REQUEST_CROP:
+                User user = User.getInstance();
+                DhNet net = new DhNet(API.uploadPictures + "userId=" + user.getUserId() + "&token=" + user.getToken());
+                net.upload(new FileInfo("attach", new File(mCurPath)), new NetTask(self) {
+
+                    @Override
+                    public void doInUI(Response response, Integer transfer) {
+                        // TODO Auto-generated method stub
+                        if (response.isSuccess()) {
+                            JSONObject jo = response.jSONFrom("data");
+                            try {
+                                String picId = jo.getString("photoId");
+                                String picUrl = jo.getString("photoUrl");
+                                mPicIds.add(picId);
+                            } catch (JSONException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            }
+                        } else {
+
+                        }
+                    }
+                });
+
+                mPhotoStates.remove(mPhotoStates.size() - 1);
+                PhotoState state = new PhotoState();
+                state.setChecked(true);
+                state.setLast(false);
+                state.setPath(mCurPath);
+                mPhotoStates.add(state);
+                if (mPhotoStates.size() == 9) {
+                    mImageAdapter.notifyDataSetChanged();
+                    return;
+                }
+                mPhotoStates.add(mLastPhoto);
+                mImageAdapter.notifyDataSetChanged();
+
+                break;
+            }
         }
     }
 }
