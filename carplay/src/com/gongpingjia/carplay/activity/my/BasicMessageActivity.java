@@ -2,12 +2,16 @@ package com.gongpingjia.carplay.activity.my;
 
 import java.io.File;
 
+import org.json.JSONObject;
+
 import net.duohuo.dhroid.net.DhNet;
+import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.net.upload.FileInfo;
 import net.duohuo.dhroid.util.ImageUtil;
 import net.duohuo.dhroid.util.PhotoUtil;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -60,22 +64,6 @@ public class BasicMessageActivity extends CarPlayBaseActivity implements OnClick
     /** 下一步 */
     private Button nextBtn = null;
     
-    private String sex = "男";
-    
-    private int birthYear;
-    
-    private int birthMonth;
-    
-    private int birthday;
-    
-    private String province;
-    
-    private String city;
-    
-    private String district;
-    
-    private String photo;
-    
     private String mPhotoPath;
     
     PhotoSelectDialog photoDialog;
@@ -83,6 +71,14 @@ public class BasicMessageActivity extends CarPlayBaseActivity implements OnClick
     DateDialog dateDialog;
     
     CityPickDialog cityDialog;
+    
+    int mYear, mMonth, mDay;
+    
+    String mProvice, mCity, mDistrict;
+    
+    String photoUid;
+    
+    public static final int AuthenticateOwners = 1;
     
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -112,43 +108,29 @@ public class BasicMessageActivity extends CarPlayBaseActivity implements OnClick
         {
             
             @Override
-            public void result(String date, long datetime)
+            public void result(String date, long datetime, int year, int month, int day)
             {
                 ageT.setText(date);
+                mYear = year;
+                mMonth = month;
+                mDay = day;
             }
         });
         
-        cityDialog = new CityPickDialog(self, false);
+        cityDialog = new CityPickDialog(self);
         cityDialog.setOnPickResultListener(new OnPickResultListener()
         {
             
             @Override
             public void onResult(String provice, String city, String district)
             {
-                cityT.setText(city);
+                cityT.setText(provice + city + district);
+                mProvice = provice;
+                mCity = city;
+                mDistrict = district;
             }
         });
         sexR = (RadioGroup)findViewById(R.id.tab);
-        sexR.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
-        {
-            
-            @Override
-            public void onCheckedChanged(RadioGroup arg0, int arg1)
-            {
-                for (int i = 0; i < sexR.getChildCount(); i++)
-                {
-                    RadioButton rb_all = (RadioButton)sexR.getChildAt(i);
-                    if (rb_all.isChecked())
-                    {
-                        sex = rb_all.getText().toString();
-                        rb_all.setTextColor(Color.parseColor("#FD6D53"));
-                    }
-                    else
-                        rb_all.setTextColor(Color.parseColor("#aab2bd"));
-                }
-                
-            }
-        });
         
         headI = (ImageView)findViewById(R.id.head);
         nicknameT = (EditText)findViewById(R.id.nickname);
@@ -172,6 +154,11 @@ public class BasicMessageActivity extends CarPlayBaseActivity implements OnClick
             @Override
             public void doInUI(Response response, Integer transfer)
             {
+                if (response.isSuccess())
+                {
+                    JSONObject jo = response.jSONFromData();
+                    photoUid = JSONUtil.getString(jo, "photoId");
+                }
             }
         });
     }
@@ -223,27 +210,63 @@ public class BasicMessageActivity extends CarPlayBaseActivity implements OnClick
             return;
         }
         
-        Bundle bundle = new Bundle();
-        Bundle b = getIntent().getExtras();
-        if (b != null)
-        {
-            bundle.putString("phone", b.getString("phone"));
-            bundle.putString("code", b.getString("code"));
-            bundle.putString("pswd", b.getString("pswd"));
-        }
-        bundle.putString("nickname", strnickname);
-        bundle.putString("gender", sex);
-        bundle.putInt("birthYear", birthYear);
-        bundle.putInt("birthMonth", birthMonth);
-        bundle.putInt("birthday", birthday);
-        bundle.putString("province", province);
-        bundle.putString("city", city);
-        bundle.putString("district", district);
-        bundle.putString("photo", photo);
+        register();
         
-        Intent it = new Intent(self, AuthenticateOwnersActivity.class);
-        it.putExtra("data", bundle);
-        startActivity(it);
+        // Bundle bundle = new Bundle();
+        // Bundle b = getIntent().getExtras();
+        // if (b != null)
+        // {
+        // bundle.putString("phone", b.getString("phone"));
+        // bundle.putString("code", b.getString("code"));
+        // bundle.putString("pswd", b.getString("pswd"));
+        // }
+        // bundle.putString("nickname", strnickname);
+        // bundle.putString("gender", sex);
+        // bundle.putInt("birthYear", birthYear);
+        // bundle.putInt("birthMonth", birthMonth);
+        // bundle.putInt("birthday", birthday);
+        // bundle.putString("province", province);
+        // bundle.putString("city", city);
+        // bundle.putString("district", district);
+        // bundle.putString("photo", photo);
+        //
+        // Intent it = new Intent(self, AuthenticateOwnersActivity.class);
+        // it.putExtra("data", bundle);
+        // startActivity(it);
+    }
+    
+    private void register()
+    {
+        Intent it = getIntent();
+        String gender = sexR.getCheckedRadioButtonId() == R.id.tab_left ? "男" : "女";
+        DhNet net = new DhNet(API.register);
+        net.addParam("phone", it.getStringExtra("phone"));
+        net.addParam("code", it.getStringExtra("code"));
+        net.addParam("password", it.getStringExtra("pswd"));
+        net.addParam("nickname", nicknameT.getText().toString());
+        net.addParam("gender", gender);
+        net.addParam("birthYear", mYear);
+        net.addParam("birthMonth", mMonth);
+        net.addParam("birthDay", mDay);
+        net.addParam("province", mProvice);
+        net.addParam("city", mCity);
+        
+        net.addParam("district", mDistrict);
+        net.addParam("photo", photoUid);
+        net.doPostInDialog(new NetTask(self)
+        {
+            
+            @Override
+            public void doInUI(Response response, Integer transfer)
+            {
+                if (response.isSuccess())
+                {
+                    showToast("注册成功!");
+                    Intent it = new Intent(self, AuthenticateOwnersActivity.class);
+                    startActivityForResult(it, AuthenticateOwners);
+                }
+            }
+        });
     }
     
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
@@ -262,6 +285,12 @@ public class BasicMessageActivity extends CarPlayBaseActivity implements OnClick
                     Bitmap bmp = PhotoUtil.getLocalImage(new File(mPhotoPath));
                     headI.setImageBitmap(ImageUtil.toRoundCorner(bmp, 1000));
                     uploadHead(mPhotoPath);
+                    break;
+                
+                case AuthenticateOwners:
+                    Intent it = getIntent();
+                    setResult(Activity.RESULT_OK, it);
+                    finish();
                     break;
             }
         }

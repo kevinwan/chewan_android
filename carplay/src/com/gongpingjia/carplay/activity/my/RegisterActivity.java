@@ -7,6 +7,7 @@ import net.duohuo.dhroid.ioc.IocContainer;
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -57,6 +58,8 @@ public class RegisterActivity extends CarPlayBaseActivity implements OnClickList
     
     TimeCount time;
     
+    public static final int BasicMessage = 1;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -69,7 +72,6 @@ public class RegisterActivity extends CarPlayBaseActivity implements OnClickList
     public void initView()
     {
         setTitle("注册");
-        
         viewInit();
         
     }
@@ -223,12 +225,28 @@ public class RegisterActivity extends CarPlayBaseActivity implements OnClickList
                 {
                     Intent it = new Intent(self, BasicMessageActivity.class);
                     it.putExtra("phone", phone);
+                    it.putExtra("code", code);
                     it.putExtra("pswd", MD5Util.string2MD5(pswdEt.getText().toString()));
-                    startActivity(it);
+                    startActivityForResult(it, BasicMessage);
                 }
                 
             }
         });
+    }
+    
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK)
+        {
+            if (requestCode == BasicMessage)
+            {
+                Intent it = getIntent();
+                setResult(Activity.RESULT_OK, it);
+                finish();
+            }
+        }
     }
     
     /**

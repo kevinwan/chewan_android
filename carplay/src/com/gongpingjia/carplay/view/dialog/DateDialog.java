@@ -82,7 +82,7 @@ public class DateDialog
                 
                 if (onDateResultListener != null)
                 {
-                    onDateResultListener.result(dateString, time);
+                    onDateResultListener.result(dateString, time,datePicker.getYear(),datePicker.getMonth()+1,datePicker.getDayOfMonth());
                 }
             }
         });
@@ -102,6 +102,6 @@ public class DateDialog
     
     public interface OnDateResultListener
     {
-        void result(String date, long datetime);
+        void result(String date, long datetime, int year, int month, int day);
     }
 }

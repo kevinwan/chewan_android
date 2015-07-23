@@ -8,6 +8,7 @@ import net.duohuo.dhroid.net.Response;
 
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -50,6 +51,8 @@ public class LoginActivity extends CarPlayBaseActivity
     
     // 忘记密码
     private TextView login_forgetpsw;
+    
+    public static final int Register = 1;
     
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -152,11 +155,23 @@ public class LoginActivity extends CarPlayBaseActivity
             public void onClick(View arg0)
             {
                 Intent intent = new Intent(self, RegisterActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, Register);
                 
             }
         });
         
     }
     
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK)
+        {
+            if (requestCode == Register)
+            {
+                finish();
+            }
+        }
+    }
 }

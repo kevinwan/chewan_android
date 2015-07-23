@@ -22,4 +22,6 @@ public class API
     
     public static final String uploadHead = CWBaseurl + "/avatar/upload";
     
+    public static final String register = CWBaseurl + "/user/register";
+    
 }
