@@ -93,7 +93,7 @@ public class CityPickDialog extends AlertDialog implements android.view.View.OnC
         }
         else if (wheel == mViewDistrict)
         {
-            mCurrentDistrictName = CityDataManage.mDistrictDatasMap.get(CityDataManage.mCurrentCityName)[newValue];
+            mCurrentDistrictName = CityDataManage.mDistrictDatasMap.get(mCurrentCityName)[newValue];
         }
     }
     
@@ -151,6 +151,7 @@ public class CityPickDialog extends AlertDialog implements android.view.View.OnC
         {
             onPickResultListener.onResult(mCurrentProviceName, mCurrentCityName, mCurrentDistrictName);
         }
+        dismiss();
     }
     
     public interface OnPickResultListener

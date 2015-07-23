@@ -30,6 +30,7 @@ import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.api.Constant;
+import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.view.dialog.CityPickDialog;
 import com.gongpingjia.carplay.view.dialog.CityPickDialog.OnPickResultListener;
 import com.gongpingjia.carplay.view.dialog.DateDialog;
@@ -262,6 +263,12 @@ public class BasicMessageActivity extends CarPlayBaseActivity implements OnClick
                 if (response.isSuccess())
                 {
                     showToast("注册成功!");
+                    JSONObject jo = response.jSONFromData();
+                    
+                    User user = User.getInstance();
+                    user.setToken(JSONUtil.getString(jo, "token"));
+                    user.setUserId(JSONUtil.getString(jo, "userId"));
+                    
                     Intent it = new Intent(self, AuthenticateOwnersActivity.class);
                     startActivityForResult(it, AuthenticateOwners);
                 }

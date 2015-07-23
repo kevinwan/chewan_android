@@ -127,8 +127,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="match_parent"
                         android:layout_marginRight="3dp"
-                        android:gravity="center_vertical|right"
-                        android:text="1994年01月26日" />
+                        android:gravity="center_vertical|right" />
 
                     <ImageView
                         android:layout_width="25dp"
@@ -163,8 +162,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginRight="10dp"
-                        android:gravity="center_vertical|right"
-                        android:text="北京" />
+                        android:gravity="center_vertical|right" />
 
                     <ImageView
                         android:layout_width="18dp"
