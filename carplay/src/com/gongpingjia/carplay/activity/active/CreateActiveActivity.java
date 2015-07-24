@@ -17,6 +17,7 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -37,6 +38,8 @@ import com.gongpingjia.carplay.view.NestedGridView;
 import com.gongpingjia.carplay.view.dialog.CommonDialog;
 import com.gongpingjia.carplay.view.dialog.DateDialog;
 import com.gongpingjia.carplay.view.dialog.DateDialog.OnDateResultListener;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 
 /***
  * 
@@ -65,24 +68,8 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
     // 最后一张图片的状态
     private PhotoState mLastPhoto;
 
-    // 活动类型
-    private String mActiveType;
-
-    // 活动介绍
-    private String mActiveIntroduction;
-
     // 上传图片返回的id
     private List<String> mPicIds;
-
-    private String mActiveDestination;
-
-    private long mStartTime;
-
-    private long mEndTime;
-
-    private String mPayType;
-
-    private int mSeats;
 
     private DhNet mDhNet;
 
@@ -148,6 +135,7 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
         mStartTimeLayout.setOnClickListener(this);
         mEndTimeLayout.setOnClickListener(this);
         mSeatLayout.setOnClickListener(this);
+        mFeeLayout.setOnClickListener(this);
 
         mCacheDir = new File(getExternalCacheDir(), "CarPlay");
         mCacheDir.mkdirs();
@@ -311,31 +299,25 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                     + "&token=" + user.getToken());
             mDhNet.addParam("type", mTypeText.getText().toString());
             mDhNet.addParam("introduction", mDescriptionText.getText().toString());
-            mDhNet.addParam("cover", "[" + mPicIds.get(0) + "]");
             mDhNet.addParam("start", mStartTimeText.getText().toString());
+            // mDhNet.addParam("cover", );
             mDhNet.addParam("location", "紫金山");
             mDhNet.addParam("city", "南京");
             mDhNet.addParam("pay", mFeeText.getText().toString());
             mDhNet.addParam("seat", mSeatText.getText().toString());
 
-            mDhNet.doPost(new NetTask(this) {
+            mDhNet.doPostInDialog(new NetTask(this) {
 
                 @Override
                 public void doInUI(Response response, Integer transfer) {
                     // TODO Auto-generated method stub
                     if (response.isSuccess()) {
-                        JSONObject json = response.jSON();
+                        JSONObject json = responsse.jSON();
                         showToast("发布成功");
-                    } else {
-                        try {
-                            showToast(response.jSON().getString("errmsg"));
-                        } catch (JSONException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
-                        }
                     }
                 }
             });
+            Log.e("tag", "do in ui last");
             break;
         case R.id.btn_finish_invite:
 
@@ -353,9 +335,12 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
             case REQUEST_DESCRIPTION:
                 mDescriptionText.setText(data.getStringExtra("des"));
                 break;
-
+            case Constant.TAKE_PHOTO:
+                PhotoUtil.onPhotoFromCamera(self, Constant.ZOOM_PIC, mCurPath, 1, 1, 1000);
+                break;
             case Constant.PICK_PHOTO:
                 PhotoUtil.onPhotoFromPick(self, Constant.ZOOM_PIC, mCurPath, data, 1, 1, 1000);
+                break;
             case Constant.ZOOM_PIC:
                 User user = User.getInstance();
                 DhNet net = new DhNet(API.uploadPictures + "userId=" + user.getUserId() + "&token=" + user.getToken());
@@ -372,8 +357,14 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
+                            showToast("上传成功");
                         } else {
-
+                            try {
+                                showToast(response.jSON().getString("errmsg"));
+                            } catch (JSONException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            }
                         }
                     }
                 });
