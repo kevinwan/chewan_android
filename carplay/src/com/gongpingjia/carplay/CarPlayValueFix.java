@@ -66,7 +66,7 @@ public class CarPlayValueFix implements ValueFix
     public static String converTime(long timestamp)
     {
         long currentSeconds = System.currentTimeMillis();
-        long timeGap = (currentSeconds - timestamp ) / 1000;// 与现在时间相差秒�?
+        long timeGap = (currentSeconds - timestamp) / 1000;// 与现在时间相差秒�?
         String timeStr = null;
         if (timeGap > 24 * 60 * 60)
         {// 1天以�?

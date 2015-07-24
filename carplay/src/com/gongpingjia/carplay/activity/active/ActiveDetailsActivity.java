@@ -29,8 +29,11 @@ import android.widget.LinearLayout;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
+import com.gongpingjia.carplay.activity.my.LoginActivity;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.bean.User;
+import com.gongpingjia.carplay.manage.UserInfoManage;
+import com.gongpingjia.carplay.manage.UserInfoManage.LoginCallBack;
 import com.gongpingjia.carplay.util.PicLayoutUtil;
 
 /*
@@ -58,6 +61,8 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements OnClic
     
     EditText comment_contentE;
     
+    User user;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -70,21 +75,13 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements OnClic
     @Override
     public void initView()
     {
+        user = User.getInstance();
         Display display = getWindowManager().getDefaultDisplay();
         int width = display.getWidth();
         piclayoutWidth = width - DhUtil.dip2px(self, 10 + 10);
         headlayoutWidth = piclayoutWidth - DhUtil.dip2px(self, 80 + 8 * 2 + 10);
         setTitle("活动详情");
-        setRightAction("编辑活动", -1, new OnClickListener()
-        {
-            
-            @Override
-            public void onClick(View arg0)
-            {
-                Intent it = new Intent(ActiveDetailsActivity.this, EditActiveActivity.class);
-                startActivity(it);
-            }
-        });
+        // /activity/$activityId/subscribe?
         activityId = getIntent().getStringExtra("activityId");
         mListView = (NetRefreshAndMoreListView)findViewById(R.id.listview);
         mInflater = LayoutInflater.from(this);
@@ -93,7 +90,6 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements OnClic
         comment_contentE = (EditText)findViewById(R.id.comment_content);
         headV = mInflater.inflate(R.layout.active_head_view, null);
         mListView.addHeaderView(headV);
-        User user = User.getInstance();
         mJsonAdapter =
             new NetJSONAdapter(API.CWBaseurl + "/activity/" + activityId + "/comment?userId=" + user.getUserId()
                 + "&token=" + user.getToken(), this, R.layout.listitem_comment);
@@ -149,6 +145,47 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements OnClic
     private void bindHeadView(JSONObject headJo)
     {
         JSONObject createrJo = JSONUtil.getJSONObject(headJo, "organizer");
+        
+        if (JSONUtil.getString(createrJo, "userId").equals(user.getUserId()))
+        {
+            setRightAction("编辑活动", -1, new OnClickListener()
+            {
+                
+                @Override
+                public void onClick(View arg0)
+                {
+                    Intent it = new Intent(ActiveDetailsActivity.this, EditActiveActivity.class);
+                    startActivity(it);
+                }
+            });
+        }
+        else
+        {
+            setRightAction("关注", -1, new OnClickListener()
+            {
+                
+                @Override
+                public void onClick(View arg0)
+                {
+                    UserInfoManage.getInstance().checkLogin(self, new LoginCallBack()
+                    {
+                        
+                        @Override
+                        public void onisLogin()
+                        {
+                            attention();
+                        }
+                        
+                        @Override
+                        public void onLoginFail()
+                        {
+                            
+                        }
+                    });
+                }
+            });
+        }
+        
         ViewUtil.bindView(headV.findViewById(R.id.name), JSONUtil.getString(createrJo, "nickname"));
         ViewUtil.bindView(headV.findViewById(R.id.drive_age), JSONUtil.getString(createrJo, "carModel") + ","
             + JSONUtil.getString(createrJo, "drivingExperience") + "年驾龄");
@@ -240,6 +277,26 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements OnClic
         });
     }
     
+    private void attention()
+    {
+        DhNet net =
+            new DhNet(API.CWBaseurl + "/activity/" + activityId + "/subscribe?userId=" + user.getUserId() + "&token="
+                + user.getToken());
+        net.doGetInDialog(new NetTask(self)
+        {
+            
+            @Override
+            public void doInUI(Response response, Integer transfer)
+            {
+                if (response.isSuccess())
+                {
+                    showToast("关注成功!");
+                    setRightVISIBLEOrGone(View.GONE);
+                }
+            }
+        });
+    }
+    
     @Override
     public void onClick(View v)
     {
@@ -253,4 +310,5 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements OnClic
                 break;
         }
     }
+    
 }

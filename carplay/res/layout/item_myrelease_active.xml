@@ -16,6 +16,7 @@
             style="@style/text_blue_small"
             android:layout_width="46dp"
             android:layout_marginRight="3dp"
+            android:layout_marginTop="1dp"
             android:gravity="right"
             android:text="05.28"
             android:textColor="@color/text_blue_light" />

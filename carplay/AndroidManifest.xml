@@ -36,8 +36,6 @@
         </activity>
         <activity android:name=".activity.my.SettingActivity" >
         </activity>
-        <activity android:name=".activity.my.LoginActivity" >
-        </activity>
         <activity android:name=".activity.my.ForgetPwdActivity" >
         </activity>
         <activity android:name=".activity.my.PwdNextActivity" >
@@ -96,7 +94,9 @@
         </activity>
         <activity android:name=".activity.active.ActiveDescriptionActivity" >
         </activity>
-        <activity android:name=".activity.main.SplashActivity" >
+        <activity android:name=".activity.my.PersonDetailActivity" >
+        </activity>
+        <activity android:name=".activity.my.LoginActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
