@@ -48,7 +48,8 @@
         </activity>
         <activity android:name=".activity.BasicMessageActivity" >
         </activity>
-        <activity android:name=".activity.main.MainActivity" />
+        <activity android:name=".activity.main.MainActivity" >
+        </activity>
         <activity android:name=".activity.my.BasicMessageActivity" >
         </activity>
         <activity android:name=".activity.PartyDetailsActivity" />
@@ -97,7 +98,7 @@
         <activity android:name=".activity.active.ActiveDescriptionActivity" >
         </activity>
         <activity android:name=".activity.main.SplashActivity" >
-            <intent-filter>
+             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
