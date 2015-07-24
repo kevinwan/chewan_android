@@ -13,7 +13,6 @@ import net.duohuo.dhroid.view.NetRefreshAndMoreListView;
 
 import org.json.JSONObject;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -35,6 +34,7 @@ import com.gongpingjia.carplay.activity.msg.PlayCarChatActivity;
 import com.gongpingjia.carplay.adapter.ActiveAdapter;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.bean.User;
+import com.gongpingjia.carplay.view.RoundImageView;
 
 public class MyFragment extends Fragment implements OnClickListener {
 	public static final int LOGINCODE = 1;
@@ -58,7 +58,7 @@ public class MyFragment extends Fragment implements OnClickListener {
 	Button loginBtn;
 
 	/** 头像,车logo */
-	ImageView headI, carBrandLogoI;
+	RoundImageView headI, carBrandLogoI;
 	/** 昵称,年龄,车型+车龄 */
 	TextView nicknameT, ageT, carModelT;
 	/** 性别 */
@@ -85,9 +85,9 @@ public class MyFragment extends Fragment implements OnClickListener {
 		user = User.getInstance();
 		loginedLl = (LinearLayout) mainV.findViewById(R.id.logined);
 		notloginLl = (LinearLayout) mainV.findViewById(R.id.notlogin);
-
-		headI = (ImageView) mainV.findViewById(R.id.head);
-		carBrandLogoI = (ImageView) mainV.findViewById(R.id.carBrandLogo);
+		loginBtn = (Button) mainV.findViewById(R.id.login);
+		headI = (RoundImageView) mainV.findViewById(R.id.head);
+		carBrandLogoI = (RoundImageView) mainV.findViewById(R.id.carBrandLogo);
 		nicknameT = (TextView) mainV.findViewById(R.id.nickname);
 		ageT = (TextView) mainV.findViewById(R.id.age);
 		carModelT = (TextView) mainV.findViewById(R.id.carModel);
@@ -96,15 +96,9 @@ public class MyFragment extends Fragment implements OnClickListener {
 		if (TextUtils.isEmpty(user.getUserId())) {
 			loginedLl.setVisibility(View.GONE);
 			notloginLl.setVisibility(View.VISIBLE);
+		} 
 
-			// 已登录
-		} else {
-			loginedLl.setVisibility(View.VISIBLE);
-			notloginLl.setVisibility(View.GONE);
-			getMyDetails();
-		}
-
-		loginBtn = (Button) mainV.findViewById(R.id.login);
+		
 		my_attentionV = mainV.findViewById(R.id.my_attention);
 		my_releaseV = mainV.findViewById(R.id.my_release);
 		my_participationV = mainV.findViewById(R.id.my_participation);
@@ -158,12 +152,10 @@ public class MyFragment extends Fragment implements OnClickListener {
 
 				if (TextUtils.isEmpty(carBrandLogo)
 						|| carBrandLogo.equals("null")) {
-					carBrandLogoI.setVisibility(View.INVISIBLE);
+					carBrandLogoI.setVisibility(View.GONE);
 				} else {
-					Bitmap carlogo = PhotoUtil.getLocalImage(new File(
-							carBrandLogo));
-					carBrandLogoI.setImageBitmap(ImageUtil.toRoundCorner(
-							carlogo, 1000));
+					carBrandLogoI.setVisibility(View.VISIBLE);
+					ViewUtil.bindNetImage(carBrandLogoI, carBrandLogo, CarPlayValueFix.optionsDefault.toString());
 				}
 
 				if (gender.equals("男"))
@@ -216,15 +208,13 @@ public class MyFragment extends Fragment implements OnClickListener {
 	}
 
 	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO Auto-generated method stub
-		super.onActivityResult(requestCode, resultCode, data);
-		if (resultCode == Activity.RESULT_OK) {
-			if (requestCode == LOGINCODE) {
-				loginedLl.setVisibility(View.VISIBLE);
-				notloginLl.setVisibility(View.GONE);
-				getMyDetails();
-			}
+	public void onResume() {
+		super.onResume();
+		//已登录
+		if (!TextUtils.isEmpty(user.getUserId())) {
+			loginedLl.setVisibility(View.VISIBLE);
+			notloginLl.setVisibility(View.GONE);
+			getMyDetails();
 		}
 	}
 
