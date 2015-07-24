@@ -98,7 +98,6 @@
         </activity>
         <activity android:name=".activity.active.CreateActiveActivity" >
         </activity>
-
         <activity android:name=".activity.active.ActiveDescriptionActivity" >
         </activity>
     </application>

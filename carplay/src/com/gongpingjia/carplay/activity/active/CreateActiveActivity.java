@@ -312,7 +312,6 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                 public void doInUI(Response response, Integer transfer) {
                     // TODO Auto-generated method stub
                     if (response.isSuccess()) {
-                        JSONObject json = responsse.jSON();
                         showToast("发布成功");
                     }
                 }
