@@ -37,7 +37,6 @@
         <activity android:name=".activity.my.SettingActivity" >
         </activity>
         <activity android:name=".activity.my.LoginActivity" >
-            
         </activity>
         <activity android:name=".activity.my.ForgetPwdActivity" >
         </activity>
@@ -49,8 +48,9 @@
         </activity>
         <activity android:name=".activity.BasicMessageActivity" >
         </activity>
-        <activity android:name=".activity.main.MainActivity" />
-        <activity android:name="com.gongpingjia.carplay.activity.my.BasicMessageActivity" >
+        <activity android:name=".activity.main.MainActivity" >
+        </activity>
+        <activity android:name=".activity.my.BasicMessageActivity" >
         </activity>
         <activity android:name=".activity.PartyDetailsActivity" />
         <activity android:name=".activity.my.AuthenticateOwnersActivity" >
@@ -73,14 +73,9 @@
         </activity>
         <activity android:name=".activity.my.MyReleaseActiveActivity" >
         </activity>
-        <activity android:name=".activity.main.SplashActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <activity android:name=".activity.main.GuidanceActivity" >
         </activity>
-        <activity android:name="com.gongpingjia.carplay.activity.active.EventIntroduceActivity" >
+        <activity android:name=".activity.active.EventIntroduceActivity" >
         </activity>
         <activity android:name=".activity.active.ActiveMembersActivity" >
         </activity>
@@ -90,16 +85,26 @@
         </activity>
         <activity android:name=".activity.active.ActiveDetailsActivity" >
         </activity>
-        <activity android:name=".activity.my.ManageAlbumActivity" >
-        </activity>
         <activity android:name=".activity.active.MapActivity" >
+        </activity>
+        <activity android:name=".activity.my.ManageAlbumActivity" >
         </activity>
 
         <activity android:name=".activity.my.CarTypeSelectActivity" >
         </activity>
+        <!--
         <activity android:name=".activity.active.CreateActiveActivity" >
         </activity>
+        -->
+
         <activity android:name=".activity.active.ActiveDescriptionActivity" >
+        </activity>
+        <activity android:name=".activity.active.CreateActiveActivity" >
+             <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

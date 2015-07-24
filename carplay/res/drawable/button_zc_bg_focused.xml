@@ -1,11 +1,16 @@
-<?xml version="1.0" encoding="UTF-8"?> 
-<shape xmlns:android="http://schemas.android.com/apk/res/android"> 
-    <solid android:color="#FFFFFF" /> 
-    <corners android:radius="2dip"/>
-    <stroke  
-        android:width="1dip"  
-        android:color="#93D3D4" /> 
+<?xml version="1.0" encoding="UTF-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <solid android:color="#FFFFFF" />
+
+    <corners android:radius="3dip" />
+
+    <stroke
+        android:width="1dip"
+        android:color="#93D3D4" />
+
     <gradient
-            android:startColor="#93D3D4"
-            android:endColor="#93D3D4"/>    
+        android:endColor="#93D3D4"
+        android:startColor="#93D3D4" />
+
 </shape>

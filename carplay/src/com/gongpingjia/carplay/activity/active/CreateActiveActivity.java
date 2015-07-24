@@ -17,7 +17,6 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -38,8 +37,6 @@ import com.gongpingjia.carplay.view.NestedGridView;
 import com.gongpingjia.carplay.view.dialog.CommonDialog;
 import com.gongpingjia.carplay.view.dialog.DateDialog;
 import com.gongpingjia.carplay.view.dialog.DateDialog.OnDateResultListener;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 
 /***
  * 
@@ -52,12 +49,14 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
 
     private static final int REQUEST_DESCRIPTION = 1;
 
+    private static final int REQUEST_DESTINATION = 2;
+
     private Button mFinishBtn, mFinishInviteBtn;
 
     private View mTypeLayout, mDescriptionLayout, mDestimationLayout, mStartTimeLayout, mEndTimeLayout, mFeeLayout,
             mSeatLayout;
 
-    private TextView mTypeText, mDescriptionText, mStartTimeText, mEndTimeText, mFeeText, mSeatText;
+    private TextView mTypeText, mDescriptionText, mStartTimeText, mEndTimeText, mFeeText, mSeatText,mDestimationText;
 
     private NestedGridView mPhotoGridView;
 
@@ -117,6 +116,7 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
         mEndTimeText = (TextView) findViewById(R.id.tv_end_time);
         mFeeText = (TextView) findViewById(R.id.tv_fee);
         mSeatText = (TextView) findViewById(R.id.tv_seat);
+        mDestimationText = (TextView) findViewById(R.id.tv_destination);
 
         mTypeLayout = findViewById(R.id.layout_active_type);
         mDescriptionLayout = findViewById(R.id.layout_description);
@@ -226,6 +226,11 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
             startActivityForResult(it, REQUEST_DESCRIPTION);
             break;
 
+        case R.id.layout_destination:
+            it = new Intent(self, MapActivity.class);
+            startActivityForResult(it, REQUEST_DESTINATION);
+            break;
+
         case R.id.layout_start_time:
             date = new DateDialog();
             date.setOnDateResultListener(new OnDateResultListener() {
@@ -300,7 +305,7 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
             mDhNet.addParam("type", mTypeText.getText().toString());
             mDhNet.addParam("introduction", mDescriptionText.getText().toString());
             mDhNet.addParam("start", mStartTimeText.getText().toString());
-            // mDhNet.addParam("cover", );
+            mDhNet.addParam("cover", "[\"68cbd3b0-d19b-4754-8b08-835b9d94a869\"]");
             mDhNet.addParam("location", "紫金山");
             mDhNet.addParam("city", "南京");
             mDhNet.addParam("pay", mFeeText.getText().toString());
@@ -332,6 +337,9 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
 
             case REQUEST_DESCRIPTION:
                 mDescriptionText.setText(data.getStringExtra("des"));
+                break;
+
+            case REQUEST_DESTINATION:
                 break;
             case Constant.TAKE_PHOTO:
                 PhotoUtil.onPhotoFromCamera(self, Constant.ZOOM_PIC, mCurPath, 1, 1, 1000);

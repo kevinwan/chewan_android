@@ -155,8 +155,9 @@
                     android:orientation="vertical" >
 
                     <TextView
+                        android:id="@+id/postNumber"
                         style="@style/text_grey_medium"
-                        android:text="552" />
+                        android:text="0" />
 
                     <TextView
                         style="@style/text_grey_small"
@@ -180,8 +181,9 @@
                     android:orientation="vertical" >
 
                     <TextView
+                        android:id="@+id/subscribeNumber"
                         style="@style/text_grey_medium"
-                        android:text="565" />
+                        android:text="0" />
 
                     <TextView
                         style="@style/text_grey_small"
@@ -206,8 +208,9 @@
                     android:orientation="vertical" >
 
                     <TextView
+                        android:id="@+id/joinNumber"
                         style="@style/text_grey_medium"
-                        android:text="16552" />
+                        android:text="0" />
 
                     <TextView
                         style="@style/text_grey_small"

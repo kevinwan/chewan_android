@@ -110,7 +110,7 @@
                 android:gravity="center"
                 android:orientation="horizontal" >
 
-                <ImageView
+                <com.gongpingjia.carplay.view.RoundImageView
                     android:id="@+id/car_logo"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
