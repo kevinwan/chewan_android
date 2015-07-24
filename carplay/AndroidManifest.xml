@@ -92,8 +92,9 @@
         </activity>
         <activity android:name=".activity.my.ManageAlbumActivity" >
         </activity>
-        <activity android:name=".activity.active.ActivePositionActivity" >
+        <activity android:name=".activity.active.MapActivity" >
         </activity>
+
         <activity android:name=".activity.my.CarTypeSelectActivity" >
         </activity>
         <activity android:name=".activity.active.CreateActiveActivity" >

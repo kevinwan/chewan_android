@@ -316,7 +316,6 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                     }
                 }
             });
-            Log.e("tag", "do in ui last");
             break;
         case R.id.btn_finish_invite:
 
