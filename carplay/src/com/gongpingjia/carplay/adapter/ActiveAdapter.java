@@ -38,16 +38,30 @@ public class ActiveAdapter extends NetJSONAdapter
         this.mResource = mResource;
         Display display = ((Activity)context).getWindowManager().getDefaultDisplay();
         int width = display.getWidth();
-        piclayoutWidth =
-            width - DhUtil.dip2px(context, 59) - DhUtil.dip2px(context, 12) * 2 - DhUtil.dip2px(context, 10);
-        headlayoutWidth =
-            piclayoutWidth - DhUtil.dip2px(context, 75) - DhUtil.dip2px(context, 10) - DhUtil.dip2px(context, 8) * 2;
+        piclayoutWidth = width - DhUtil.dip2px(context, 59 + 12 * 2 + 10);
+        headlayoutWidth = piclayoutWidth - DhUtil.dip2px(context, 75 + 10 + 8 * 2);
+    }
+    
+    @Override
+    public int getItemViewType(int position)
+    {
+        JSONObject jo = mVaules.get(position);
+        int piccount = JSONUtil.getJSONArray(jo, "cover").length();
+        return piccount;
+    }
+    
+    @Override
+    public int getViewTypeCount()
+    {
+        // TODO Auto-generated method stub
+        return 10;
     }
     
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
         ViewHolder holder;
+        int type = getItemViewType(position);
         // TODO Auto-generated method stub
         if (convertView == null)
         {
@@ -70,11 +84,15 @@ public class ActiveAdapter extends NetJSONAdapter
             holder.drive_ageT = (TextView)convertView.findViewById(R.id.drive_age);
             holder.seat_count_allT = (TextView)convertView.findViewById(R.id.seat_count_all);
             convertView.setTag(holder);
+            PicLayoutUtil picUtil = new PicLayoutUtil(mContext, type, 5, holder.piclayoutV, piclayoutWidth);
+            picUtil.addMoreChild();
+            
+            PicLayoutUtil headUtil = new PicLayoutUtil(mContext, 5, 5, holder.headlayoutV, headlayoutWidth);
+            headUtil.AddAllHead();
         }
         else
         {
             holder = (ViewHolder)convertView.getTag();
-            
         }
         
         JSONObject jo = mVaules.get(position);
@@ -89,6 +107,9 @@ public class ActiveAdapter extends NetJSONAdapter
         {
             holder.layout_sexV.setBackgroundResource(R.drawable.woman);
         }
+        
+        System.out.println("holder.piclayoutV" + holder.piclayoutV);
+        System.out.println("数量" + holder.piclayoutV.getChildCount());
         ViewUtil.bindView(holder.ageT, JSONUtil.getString(creater, "age"));
         ViewUtil.bindView(holder.tv_publish_timeT, JSONUtil.getString(jo, "publishTime"), "neartime");
         ViewUtil.bindNetImage(holder.car_logoI, JSONUtil.getString(creater, "carBrandLogo"), "optionsDefault");
@@ -98,12 +119,13 @@ public class ActiveAdapter extends NetJSONAdapter
         ViewUtil.bindView(holder.contentT, JSONUtil.getString(creater, "introduction"));
         JSONArray picJsa = JSONUtil.getJSONArray(jo, "cover");
         // holder.piclayoutV.removeAllViews();
-        PicLayoutUtil util = new PicLayoutUtil(mContext, picJsa, 5, holder.piclayoutV, piclayoutWidth);
-        util.addMoreChild();
+        PicLayoutUtil util = new PicLayoutUtil();
+        util.BindImageView(holder.piclayoutV, picJsa);
+        // util.addMoreChild();
         // holder.headlayoutV.removeAllViews();
         JSONArray headJsa = JSONUtil.getJSONArray(jo, "members");
-        PicLayoutUtil headUtil = new PicLayoutUtil(mContext, headJsa, 5, holder.headlayoutV, headlayoutWidth);
-        headUtil.AddChild();
+        PicLayoutUtil headUtil = new PicLayoutUtil();
+        headUtil.BindHeadImage(holder.headlayoutV, headJsa);
         
         if (JSONUtil.getLong(jo, "start") == 0)
         {

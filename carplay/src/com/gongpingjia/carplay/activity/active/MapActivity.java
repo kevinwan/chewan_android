@@ -31,49 +31,54 @@ import com.gongpingjia.carplay.view.ClearableEditText;
  *@author zhanglong
  *Email:1269521147@qq.com
  */
-public class ActivePositionActivity extends CarPlayBaseActivity implements OnMarkerClickListener, InfoWindowAdapter,
-        OnPoiSearchListener {
-
+public class MapActivity extends CarPlayBaseActivity implements OnMarkerClickListener, InfoWindowAdapter,
+    OnPoiSearchListener
+{
+    
     private MapView mMapView;
-
+    
     private AMap aMap;
-
+    
     private PoiSearch mPoiSearch;
-
+    
     private PoiSearch.Query mQuery;
-
+    
     private PoiResult mPoiResult;
-
+    
     private ProgressDialog mProgressDlg;
-
+    
     private ClearableEditText mSearchEdit;
-
+    
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_active_position);
-
-        mSearchEdit = (ClearableEditText) findViewById(R.id.et_search);
-
-        mMapView = (MapView) findViewById(R.id.mapView);
+        
+        mSearchEdit = (ClearableEditText)findViewById(R.id.et_search);
+        
+        mMapView = (MapView)findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
         aMap = mMapView.getMap();
-
-        mSearchEdit.setOnEditorActionListener(new OnEditorActionListener() {
-
+        
+        mSearchEdit.setOnEditorActionListener(new OnEditorActionListener()
+        {
+            
             @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
+            {
                 // TODO Auto-generated method stub
-
+                
                 if ((actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_UNSPECIFIED)
-                        && event != null) {
+                    && event != null)
+                {
                     showProgressDlg();
                     mQuery = new PoiSearch.Query(mSearchEdit.getText().toString(), "", "南京");
                     mQuery.setPageSize(10);
                     mQuery.setPageNum(0);// 设置查第一页
-
-                    mPoiSearch = new PoiSearch(ActivePositionActivity.this, mQuery);
-                    mPoiSearch.setOnPoiSearchListener(ActivePositionActivity.this);
+                    
+                    mPoiSearch = new PoiSearch(MapActivity.this, mQuery);
+                    mPoiSearch.setOnPoiSearchListener(MapActivity.this);
                     mPoiSearch.searchPOIAsyn();
                     return true;
                 }
@@ -81,108 +86,136 @@ public class ActivePositionActivity extends CarPlayBaseActivity implements OnMar
             }
         });
     }
-
-    public void showProgressDlg() {
-        if (mProgressDlg == null) {
+    
+    public void showProgressDlg()
+    {
+        if (mProgressDlg == null)
+        {
             mProgressDlg = new ProgressDialog(this);
             mProgressDlg.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             mProgressDlg.setIndeterminate(false);
             mProgressDlg.setCancelable(false);
             mProgressDlg.setMessage("正在搜索......");
             mProgressDlg.show();
-
+            
         }
     }
-
-    public void hideProgressDlg() {
-        if (mProgressDlg != null) {
+    
+    public void hideProgressDlg()
+    {
+        if (mProgressDlg != null)
+        {
             mProgressDlg.hide();
         }
     }
-
+    
     @Override
-    protected void onPause() {
+    protected void onPause()
+    {
         // TODO Auto-generated method stub
         super.onPause();
         mMapView.onPause();
     }
-
+    
     @Override
-    protected void onDestroy() {
+    protected void onDestroy()
+    {
         // TODO Auto-generated method stub
         super.onDestroy();
         mMapView.onDestroy();
     }
-
+    
     @Override
-    public void onPoiItemDetailSearched(PoiItemDetail arg0, int arg1) {
+    public void onPoiItemDetailSearched(PoiItemDetail arg0, int arg1)
+    {
         // TODO Auto-generated method stub
-
+        
     }
-
+    
     @Override
-    public void onPoiSearched(PoiResult result, int rCode) {
+    public void onPoiSearched(PoiResult result, int rCode)
+    {
         // TODO Auto-generated method stub
         hideProgressDlg();
-
-        if (rCode == 0) {
-            if (result != null && result.getQuery() != null) {
+        
+        if (rCode == 0)
+        {
+            if (result != null && result.getQuery() != null)
+            {
                 // 搜索poi的结果
-                if (result.getQuery().equals(mQuery)) {// 是否同一条
+                if (result.getQuery().equals(mQuery))
+                {// 是否同一条
                     mPoiResult = result;
                     List<PoiItem> poiItems = result.getPois();
                     // 当搜索不到poiitem数据时，会返回含有搜索关键字的城市信息
                     List<SuggestionCity> suggestionCities = result.getSearchSuggestionCitys();
-
-                    if (poiItems != null && poiItems.size() > 0) {
+                    
+                    if (poiItems != null && poiItems.size() > 0)
+                    {
                         aMap.clear();
                         PoiOverlay poiOverlay = new PoiOverlay(aMap, poiItems);
                         poiOverlay.removeFromMap();
                         poiOverlay.addToMap();
                         poiOverlay.zoomToSpan();
-                    } else if (suggestionCities != null && suggestionCities.size() > 0) {
+                    }
+                    else if (suggestionCities != null && suggestionCities.size() > 0)
+                    {
                         Toast.makeText(this, "在下列城市搜索到结果" + suggestionCities.toString(), Toast.LENGTH_SHORT).show();
-                    } else {
+                    }
+                    else
+                    {
                         Toast.makeText(this, "暂无搜索结果", Toast.LENGTH_SHORT).show();
                     }
-
+                    
                 }
-            } else {
+            }
+            else
+            {
                 Toast.makeText(this, "暂无搜索结果", Toast.LENGTH_SHORT).show();
             }
-        } else if (rCode == 27) {
+        }
+        else if (rCode == 27)
+        {
             Toast.makeText(this, "网络出问题啦", Toast.LENGTH_SHORT).show();
-        } else if (rCode == 32) {
+        }
+        else if (rCode == 32)
+        {
             Toast.makeText(this, "api key error", Toast.LENGTH_SHORT).show();
-        } else {
+        }
+        else
+        {
             Toast.makeText(this, "出现未知异常", Toast.LENGTH_SHORT).show();
         }
-
+        
     }
-
+    
     @Override
-    public View getInfoContents(Marker arg0) {
+    public View getInfoContents(Marker arg0)
+    {
         // TODO Auto-generated method stub
         return null;
     }
-
+    
     @Override
-    public View getInfoWindow(Marker arg0) {
+    public View getInfoWindow(Marker arg0)
+    {
         // TODO Auto-generated method stub
         return null;
     }
-
+    
     @Override
-    public boolean onMarkerClick(Marker marker) {
+    public boolean onMarkerClick(Marker marker)
+    {
         // TODO Auto-generated method stub
         marker.showInfoWindow();
         return false;
     }
-
+    
     @Override
-    public void initView() {
+    public void initView()
+    {
         // TODO Auto-generated method stub
-
+        
     }
-
+    
 }

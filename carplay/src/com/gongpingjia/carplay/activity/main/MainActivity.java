@@ -3,6 +3,7 @@ package com.gongpingjia.carplay.activity.main;
 import java.util.List;
 import java.util.Stack;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -21,6 +22,7 @@ import com.gongpingjia.carplay.activity.active.CreateActiveActivity;
 import com.gongpingjia.carplay.activity.msg.MsgFragment;
 import com.gongpingjia.carplay.activity.my.MyFragment;
 import com.gongpingjia.carplay.activity.my.SettingActivity;
+import com.gongpingjia.carplay.view.pop.ActiveFilterPop;
 
 public class MainActivity extends BaseFragmentActivity
 {
@@ -33,7 +35,9 @@ public class MainActivity extends BaseFragmentActivity
     // Fragment 的栈
     public static Stack<Fragment> slist;
     
-    LinearLayout topTab;
+    ActiveFilterPop activeFilterPop;
+    
+    View titleBar;
     
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -43,7 +47,6 @@ public class MainActivity extends BaseFragmentActivity
         initView();
         initTab();
         setTab(0);
-        
     }
     
     public void initView()
@@ -51,7 +54,8 @@ public class MainActivity extends BaseFragmentActivity
         slist = new Stack<Fragment>();
         fm = getSupportFragmentManager();
         tabV = (LinearLayout)findViewById(R.id.tab);
-        topTab = (LinearLayout)findViewById(R.id.top_tab);
+        activeFilterPop = ActiveFilterPop.getInstance(self);
+        titleBar = findViewById(R.id.titlebar);
     }
     
     private void initTab()
@@ -104,7 +108,7 @@ public class MainActivity extends BaseFragmentActivity
                             @Override
                             public void onClick(View arg0)
                             {
-                                
+                                activeFilterPop.show(titleBar);
                             }
                         });
                         break;
@@ -177,7 +181,18 @@ public class MainActivity extends BaseFragmentActivity
         }
     }
     
-    
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK)
+        {
+            if (requestCode == ActiveFilterPop.Location)
+            {
+                
+            }
+        }
+    }
     
     public void switchContent(Fragment fragment)
     {

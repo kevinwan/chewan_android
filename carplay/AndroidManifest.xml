@@ -84,6 +84,8 @@
         </activity>
         <activity android:name=".activity.active.ActiveDetailsActivity" >
         </activity>
+        <activity android:name=".activity.active.MapActivity" >
+        </activity>
         <activity android:name=".activity.my.ManageAlbumActivity" >
         </activity>
         <activity android:name=".activity.active.ActivePositionActivity" >
