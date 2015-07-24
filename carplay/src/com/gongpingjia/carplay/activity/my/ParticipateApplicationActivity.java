@@ -43,7 +43,9 @@ public class ParticipateApplicationActivity extends CarPlayBaseActivity {
 		User user = User.getInstance();
 		listView = (NetRefreshAndMoreListView) findViewById(R.id.listview);
 		adapter = new NetJSONAdapter(
-				"http://cwapi.gongpingjia.com/v1/user/846de312-306c-4916-91c1-a5e69b158014/application/list?token=750dd49c-6129-4a9a-9558-27fa74fc4ce7",
+				"http://cwapi.gongpingjia.com/v1/user/"
+						+ user.getUserId() + "/application/list? token="
+						+ user.getToken(),
 				self, R.layout.itme_participate_application);
 		adapter.fromWhat("data");
 		adapter.addField("nickname", R.id.participate_name);
