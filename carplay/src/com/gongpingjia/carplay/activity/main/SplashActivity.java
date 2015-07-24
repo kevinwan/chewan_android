@@ -10,9 +10,10 @@ import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.util.CarPlayPerference;
 
 public class SplashActivity extends CarPlayBaseActivity {
-	
+
 	CarPlayPerference per;
 	private final Handler mHandler = new Handler();
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -23,42 +24,38 @@ public class SplashActivity extends CarPlayBaseActivity {
 	public void initView() {
 		per = IocContainer.getShare().get(CarPlayPerference.class);
 		per.load();
-		
-				if (per.isFirst==0) {
-					
-					first();
-					
-				}else{
-					notFirst();
-				}
-		
+
+		if (per.isFirst == 0) {
+
+			first();
+
+		} else {
+			notFirst();
+		}
+
 	}
 
 	private void first() {
-		 mHandler.postDelayed(new Runnable()
-	        {
-	            @Override
-	            public void run()
-	            {
-	            	Intent intent=new Intent(self,GuidanceActivity.class);
-					startActivity(intent);
-					per.isFirst=1;
-					per.commit();
-					self.finish();
-	            }
-	        }, 3000);
+		mHandler.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				Intent intent = new Intent(self, GuidanceActivity.class);
+				startActivity(intent);
+				per.isFirst = 1;
+				per.commit();
+				self.finish();
+			}
+		}, 3000);
 	}
-	
+
 	private void notFirst() {
-		 mHandler.postDelayed(new Runnable()
-	        {
-	            @Override
-	            public void run()
-	            {
-	            	Intent intent=new Intent(self,MainActivity.class);
-					startActivity(intent);
-					self.finish();
-	            }
-	        }, 3000);
+		mHandler.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				Intent intent = new Intent(self, MainActivity.class);
+				startActivity(intent);
+				self.finish();
+			}
+		}, 3000);
 	}
 }

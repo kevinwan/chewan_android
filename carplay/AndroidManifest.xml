@@ -46,7 +46,8 @@
         </activity>
         <activity android:name=".activity.BasicMessageActivity" >
         </activity>
-        <activity android:name=".activity.main.MainActivity" />
+        <activity android:name=".activity.main.MainActivity" >
+        </activity>
         <activity android:name=".activity.my.BasicMessageActivity" >
         </activity>
         <activity android:name=".activity.PartyDetailsActivity" />
@@ -86,8 +87,7 @@
         </activity>
         <activity android:name=".activity.my.ManageAlbumActivity" >
         </activity>
-        <activity android:name=".activity.active.ActivePositionActivity" >
-        </activity>
+
         <activity android:name=".activity.my.CarTypeSelectActivity" >
         </activity>
         <activity android:name=".activity.active.CreateActiveActivity" >
@@ -96,8 +96,8 @@
         </activity>
         <activity android:name=".activity.my.PersonDetailActivity" >
         </activity>
-        <activity android:name=".activity.my.LoginActivity" >
-            <intent-filter>
+        <activity android:name=".activity.main.SplashActivity" >
+             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
