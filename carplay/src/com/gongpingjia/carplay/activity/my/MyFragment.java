@@ -63,6 +63,8 @@ public class MyFragment extends Fragment implements OnClickListener {
 	TextView nicknameT, ageT, carModelT;
 	/** 性别 */
 	RelativeLayout genderR;
+	/** 发布数,关注数,参与数 */
+	TextView postNumberT, subscribeNumberT, joinNumberT;
 
 	public static MyFragment getInstance() {
 		if (instance == null) {
@@ -92,13 +94,11 @@ public class MyFragment extends Fragment implements OnClickListener {
 		ageT = (TextView) mainV.findViewById(R.id.age);
 		carModelT = (TextView) mainV.findViewById(R.id.carModel);
 		genderR = (RelativeLayout) mainV.findViewById(R.id.gender);
-
-		if (TextUtils.isEmpty(user.getUserId())) {
-			loginedLl.setVisibility(View.GONE);
-			notloginLl.setVisibility(View.VISIBLE);
-		} 
-
 		
+		postNumberT=(TextView) mainV.findViewById(R.id.postNumber);
+		subscribeNumberT=(TextView) mainV.findViewById(R.id.subscribeNumber);
+		joinNumberT=(TextView) mainV.findViewById(R.id.joinNumber);
+
 		my_attentionV = mainV.findViewById(R.id.my_attention);
 		my_releaseV = mainV.findViewById(R.id.my_release);
 		my_participationV = mainV.findViewById(R.id.my_participation);
@@ -115,6 +115,15 @@ public class MyFragment extends Fragment implements OnClickListener {
 		carchat.setOnClickListener(this);
 		people_concerned.setOnClickListener(this);
 		owners_certification.setOnClickListener(this);
+		
+		//未登录
+		if (TextUtils.isEmpty(user.getUserId())) {
+			loginedLl.setVisibility(View.GONE);
+			notloginLl.setVisibility(View.VISIBLE);
+			postNumberT.setText("0");
+			subscribeNumberT.setText("0");
+			joinNumberT.setText("0");
+		}
 	}
 
 	/** 获取个人资料 */
@@ -136,32 +145,40 @@ public class MyFragment extends Fragment implements OnClickListener {
 				String photo = JSONUtil.getString(jo, "photo");
 				String carBrandLogo = JSONUtil.getString(jo, "carBrandLogo");
 				String gender = JSONUtil.getString(jo, "gender");
-				
+				String postNumber=JSONUtil.getString(jo, "postNumber");
+				String subscribeNumber=JSONUtil.getString(jo, "subscribeNumber");
+				String joinNumber=JSONUtil.getString(jo, "joinNumber");
+
 				nicknameT.setText(nickname);
 				ageT.setText(age);
 
-				ViewUtil.bindNetImage(headI, photo, CarPlayValueFix.optionsDefault.toString());
-				
+				ViewUtil.bindNetImage(headI, photo,
+						CarPlayValueFix.optionsDefault.toString());
+
 				if (TextUtils.isEmpty(carModel)) {
 					carModelT.setText("带我飞~");
-				}else{
-					carModelT.setText(carModel + "  " + drivingExperience + "年");
+				} else {
+					carModelT
+							.setText(carModel + "  " + drivingExperience + "年");
 				}
-				
-
 
 				if (TextUtils.isEmpty(carBrandLogo)
 						|| carBrandLogo.equals("null")) {
 					carBrandLogoI.setVisibility(View.GONE);
 				} else {
 					carBrandLogoI.setVisibility(View.VISIBLE);
-					ViewUtil.bindNetImage(carBrandLogoI, carBrandLogo, CarPlayValueFix.optionsDefault.toString());
+					ViewUtil.bindNetImage(carBrandLogoI, carBrandLogo,
+							CarPlayValueFix.optionsDefault.toString());
 				}
 
 				if (gender.equals("男"))
 					genderR.setBackgroundResource(R.drawable.man);
 				else
 					genderR.setBackgroundResource(R.drawable.woman);
+				
+				postNumberT.setText(postNumber);
+				subscribeNumberT.setText(subscribeNumber);
+				joinNumberT.setText(joinNumber);
 
 			}
 		});
@@ -210,7 +227,7 @@ public class MyFragment extends Fragment implements OnClickListener {
 	@Override
 	public void onResume() {
 		super.onResume();
-		//已登录
+		// 已登录
 		if (!TextUtils.isEmpty(user.getUserId())) {
 			loginedLl.setVisibility(View.VISIBLE);
 			notloginLl.setVisibility(View.GONE);

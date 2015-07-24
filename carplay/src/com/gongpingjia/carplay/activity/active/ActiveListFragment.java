@@ -1,16 +1,22 @@
 package com.gongpingjia.carplay.activity.active;
 
+import org.json.JSONObject;
+
 import net.duohuo.dhroid.adapter.FieldMap;
 import net.duohuo.dhroid.net.DhNet;
+import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.view.NetRefreshAndMoreListView;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -61,6 +67,18 @@ public class ActiveListFragment extends Fragment
         initTopTab();
         user = User.getInstance();
         listV = (NetRefreshAndMoreListView)mainV.findViewById(R.id.listview);
+        listV.setOnItemClickListener(new OnItemClickListener()
+        {
+            
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3)
+            {
+                JSONObject jo = (JSONObject)adapter.getItem(position - 1);
+                Intent it = new Intent(getActivity(), ActiveDetailsActivity.class);
+                it.putExtra("activityId", JSONUtil.getString(jo, "activityId"));
+                startActivity(it);
+            }
+        });
         adapter = new ActiveAdapter(API.activeList, getActivity(), R.layout.item_active_list);
         
         adapter.addparam("key", "hot");

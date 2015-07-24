@@ -26,7 +26,7 @@
             android:layout_marginRight="5dp"
             android:src="@drawable/right_btn" />
 
-        <ImageView
+        <com.gongpingjia.carplay.view.RoundImageView
             android:id="@+id/head_img"
             android:layout_width="35dp"
             android:layout_height="35dp"

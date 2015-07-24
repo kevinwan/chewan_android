@@ -18,80 +18,76 @@ import android.content.Context;
  * @author duohuo
  * 
  */
-public class CarPlayPerference extends Perference
-{
-    
-    public String uid;
-    
-    // 用户的密码
-    public String password;
-    //手机号
-    public String phone;
-    //验证码
-    public String code;
-    //性别
-    public String gender;
-    //出生年
-    public Integer birthYear;
-    //出生月
-    public Integer birthMonth;
-   //出生日	
-    public Integer birthday;
-    //省份
-    public String  province;
-   //城市
-    public String  city;
-    //区域
-    public String  district;
-   //图片
-    public String  photo;
-    //昵称
-    public String nickname;
-    
-    public String headUrl;
-    
-    public String getUid()
-    {
-        return uid;
-    }
-    
-    public void setUid(String uid)
-    {
-        this.uid = uid;
-    }
-    
-    
-    public String settingbg;
-    
-    // 网络更新用户信息
-    public void refreshUserInfo(Context context)
-    {
-        // DhNet net = new DhNet(API.persondetail);
-        // net.useCache(CachePolicy.POLICY_NOCACHE);
-        // net.doGet(new NetTask(context)
-        // {
-        // @Override
-        // public void doInUI(Response response, Integer transfer)
-        // {
-        // if (response.isSuccess())
-        // {
-        // JSONObject jo = response.jSONFromData();
-        // String faceurl = JSONUtil.getString(jo, "faceurl");
-        // if (faceurl != null)
-        // {
-        // faceurl = faceurl.replace("_s.jpg", "_m.jpg");
-        // }
-        // // face = API.ImageBase + faceurl;
-        // uid = JSONUtil.getString(jo, "id");
-        // username = JSONUtil.getString(jo, "name");
-        // commit();
-        // notifyDataSetChanged();
-        // }
-        // }
-        // });
-    }
-    
-    
+public class CarPlayPerference extends Perference {
+
+	public String uid;
+
+	// 用户的密码
+	public String password;
+	// 手机号
+	public String phone;
+	// 验证码
+	public String code;
+	// 性别
+	public String gender;
+	// 出生年
+	public Integer birthYear;
+	// 出生月
+	public Integer birthMonth;
+	// 出生日
+	public Integer birthday;
+	// 省份
+	public String province;
+	// 城市
+	public String city;
+	// 区域
+	public String district;
+	// 图片
+	public String photo;
+	// 昵称
+	public String nickname;
+
+	public String headUrl;
+
+	// 第一次登陆
+	public int isFirst = 0;
+
+	public String getUid() {
+		return uid;
+	}
+
+	public void setUid(String uid) {
+		this.uid = uid;
+	}
+
+	public String settingbg;
+
+	// 网络更新用户信息
+	public void refreshUserInfo(Context context) {
+		// DhNet net = new DhNet(API.persondetail);
+		// net.useCache(CachePolicy.POLICY_NOCACHE);
+		// net.doGet(new NetTask(context)
+		// {
+		// @Override
+		// public void doInUI(Response response, Integer transfer)
+		// {
+		// if (response.isSuccess())
+		// {
+		// JSONObject jo = response.jSONFromData();
+		// String faceurl = JSONUtil.getString(jo, "faceurl");
+		// if (faceurl != null)
+		// {
+		// faceurl = faceurl.replace("_s.jpg", "_m.jpg");
+		// }
+		// // face = API.ImageBase + faceurl;
+		// uid = JSONUtil.getString(jo, "id");
+		// username = JSONUtil.getString(jo, "name");
+		// commit();
+		// notifyDataSetChanged();
+		// }
+		// }
+		// });
+	}
 
 	public String getPassword() {
 		return password;
@@ -204,6 +200,13 @@ public class CarPlayPerference extends Perference
 	public void setSettingbg(String settingbg) {
 		this.settingbg = settingbg;
 	}
-    
-    
+
+	public int getIsFirst() {
+		return isFirst;
+	}
+
+	public void setIsFirst(int isFirst) {
+		this.isFirst = isFirst;
+	}
+
 }

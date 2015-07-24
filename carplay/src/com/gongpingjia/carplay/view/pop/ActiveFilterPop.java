@@ -1,6 +1,8 @@
 package com.gongpingjia.carplay.view.pop;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +15,11 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.activity.active.MapActivity;
 
 public class ActiveFilterPop extends PopupWindow implements OnClickListener
 {
-    Context context;
+    Activity context;
     
     public PopupWindow pop;
     
@@ -44,7 +47,11 @@ public class ActiveFilterPop extends PopupWindow implements OnClickListener
     
     String province, city, district;
     
-    public ActiveFilterPop(Context context)
+    public static final int Location = 1;
+    
+    public static final int Type = 2;
+    
+    public ActiveFilterPop(Activity context)
     {
         this.context = context;
         contentV = LayoutInflater.from(context).inflate(R.layout.pop_active_filter, null);
@@ -59,7 +66,7 @@ public class ActiveFilterPop extends PopupWindow implements OnClickListener
         initView();
     }
     
-    public static ActiveFilterPop getInstance(Context context)
+    public static ActiveFilterPop getInstance(Activity context)
     {
         if (activeFilterPop == null)
         {
@@ -91,7 +98,17 @@ public class ActiveFilterPop extends PopupWindow implements OnClickListener
         typeT = (TextView)contentV.findViewById(R.id.type);
         
         cancleB = (Button)contentV.findViewById(R.id.cancle);
+        
         okB = (Button)contentV.findViewById(R.id.ok);
+        cancleB.setOnClickListener(this);
+        okB.setOnClickListener(this);
+        locationLayoutV.setOnClickListener(this);
+        typeLayoutV.setOnClickListener(this);
+    }
+    
+    public void setAddress(String address)
+    {
+        addresssT.setText(address);
     }
     
     public void show(View v)
@@ -168,6 +185,17 @@ public class ActiveFilterPop extends PopupWindow implements OnClickListener
                 break;
             
             case R.id.ok:
+                getSelectResult();
+                dismiss();
+                break;
+            
+            case R.id.locationLayout:
+                Intent it = new Intent(context, MapActivity.class);
+                context.startActivityForResult(it, Location);
+                break;
+            
+            case R.id.typeLayout:
+                
                 break;
             
             default:

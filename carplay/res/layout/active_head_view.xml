@@ -11,8 +11,8 @@
         android:gravity="center_vertical"
         android:orientation="horizontal" >
 
-        <ImageView
-            android:id="@+id/imgView_avatar"
+        <com.gongpingjia.carplay.view.RoundImageView
+            android:id="@+id/head"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignParentLeft="true"
@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/imgView_avatar"
+            android:layout_toRightOf="@+id/head"
             android:orientation="vertical" >
 
             <LinearLayout
@@ -35,7 +35,7 @@
                 android:orientation="horizontal" >
 
                 <TextView
-                    android:id="@+id/tv_nickname"
+                    android:id="@+id/name"
                     style="@style/text_blue_medium"
                     android:layout_marginTop="5dp"
                     android:text="淘气小布丁" />
@@ -49,7 +49,7 @@
                     android:background="@drawable/man" >
 
                     <TextView
-                        android:id="@+id/tv_user_age"
+                        android:id="@+id/age"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -68,15 +68,15 @@
                 android:gravity="center"
                 android:orientation="horizontal" >
 
-                <ImageView
-                    android:id="@+id/imgView_car"
+                <com.gongpingjia.carplay.view.RoundImageView
+                    android:id="@+id/car_logo"
                     android:layout_width="10dp"
                     android:layout_height="10dp"
                     android:layout_marginBottom="5dp"
                     android:src="@drawable/head2" />
 
                 <TextView
-                    android:id="@+id/tv_drive_age"
+                    android:id="@+id/drive_age"
                     style="@style/text_grey_small"
                     android:layout_marginBottom="5dp"
                     android:layout_marginLeft="5dp"
@@ -98,7 +98,7 @@
                 android:background="@drawable/icon_time" />
 
             <TextView
-                android:id="@+id/tv_publish_time"
+                android:id="@+id/publish_time"
                 style="@style/text_grey_small"
                 android:layout_marginLeft="5dp"
                 android:text="1小时前" />
@@ -106,21 +106,46 @@
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/tv_party_publish_content"
+        android:id="@+id/content"
         style="@style/text_black_medium"
         android:background="@color/white"
         android:padding="10dp"
         android:text="复仇者联盟终于上映了，有没有萌妹纸陪我去看，包接送，电影票哦" />
 
     <LinearLayout
-        android:id="@+id/layout_pictures"
+        android:id="@+id/pic_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/white"
         android:orientation="vertical" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:background="@color/tab_grey_bg"
+        android:gravity="center_vertical"
+        android:padding="8dp" >
+
+        <LinearLayout
+            android:id="@+id/headlayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/join"
+            style="@style/text_orangebg"
+            android:layout_width="80dp"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:text="我要去玩"
+            android:textSize="@dimen/text_medium" />
     </LinearLayout>
 
     <LinearLayout
@@ -146,7 +171,7 @@
                     android:text="开始时间" />
 
                 <TextView
-                    android:id="@+id/tv_party_start_time"
+                    android:id="@+id/start_time"
                     style="@style/text_black_medium"
                     android:layout_marginTop="5dp"
                     android:text="5月29日   19:30" />
@@ -166,7 +191,7 @@
                     android:text="结束时间" />
 
                 <TextView
-                    android:id="@+id/tv_party_end_time"
+                    android:id="@+id/end_time"
                     style="@style/text_black_medium"
                     android:layout_marginTop="5dp"
                     android:text="不确定" />
@@ -174,7 +199,6 @@
         </LinearLayout>
 
         <View style="@style/line_horizontal" />
-"
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -193,7 +217,7 @@
                     android:text="目的地" />
 
                 <TextView
-                    android:id="@+id/tv_party_place"
+                    android:id="@+id/address"
                     style="@style/text_black_medium"
                     android:layout_marginTop="5dp"
                     android:text="CBD万达广场" />
@@ -213,7 +237,7 @@
                     android:text="费用" />
 
                 <TextView
-                    android:id="@+id/tv_party_fee"
+                    android:id="@+id/pay"
                     style="@style/text_black_medium"
                     android:layout_marginTop="5dp"
                     android:text="我请客" />
@@ -233,7 +257,7 @@
                 android:text="活动说明" />
 
             <TextView
-                android:id="@+id/tv_party_des"
+                android:id="@+id/des"
                 style="@style/text_black_medium"
                 android:layout_marginTop="5dp"
                 android:text="我请客" />

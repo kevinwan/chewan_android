@@ -2,13 +2,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     tools:context="com.gongpingjia.carplay.activity.main.SplashActivity" >
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
-    </android.support.v4.view.ViewPager>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/sp_bg" />
+     <ImageView
+        android:layout_width="178dp"
+        android:layout_height="178dp"
+        android:layout_marginTop="86dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/sp_icon" />
 
 </RelativeLayout>

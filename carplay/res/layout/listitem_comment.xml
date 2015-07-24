@@ -12,7 +12,7 @@
         android:background="@drawable/icon_comment_msg"
         android:visibility="invisible" />
 
-    <ImageView
+    <com.gongpingjia.carplay.view.RoundImageView
         android:id="@+id/imgView_avatar"
         android:layout_width="30dp"
         android:layout_height="30dp"
@@ -45,11 +45,12 @@
                 android:background="@drawable/man" >
 
                 <TextView
-                    android:id="@+id/tv_user_sex"
+                    android:id="@+id/age"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="男"
+                    android:layout_marginRight="2dp"
+                    android:text="23"
                     android:textColor="@color/white" />
             </RelativeLayout>
 
