@@ -113,8 +113,6 @@ public class ParticipateApplicationActivity extends CarPlayBaseActivity {
 //									Integer transfer) {
 //								if (response.isSuccess()) {
 //									textView.setText("已同意");
-//									textView.setBackgroundResource(Color.rgb(
-//											0xf5, 0xf7, 0xfa));
 //									adapter.refresh();
 //								} else {
 //									showToast(response.result);

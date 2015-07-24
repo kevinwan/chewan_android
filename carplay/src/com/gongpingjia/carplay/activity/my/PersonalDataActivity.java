@@ -23,7 +23,7 @@ public class PersonalDataActivity extends CarPlayBaseActivity implements OnClick
     
     ImageView head_img;
     
-    TextView nickname_txt, sex_txt, driving_years_txt, city_txt, title;
+    TextView nickname_txt, sex_txt, driving_years_txt, city_txt;
     
     private PersonalDataActivity mySelf = this;
     
@@ -32,23 +32,7 @@ public class PersonalDataActivity extends CarPlayBaseActivity implements OnClick
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.personal_data);
-        personal_city = (RelativeLayout)findViewById(R.id.personal_city);
-        personal_driving_years = (RelativeLayout)findViewById(R.id.personal_driving_years);
-        personal_head = (RelativeLayout)findViewById(R.id.personal_head);
-        personal_nickname = (RelativeLayout)findViewById(R.id.personal_nickname);
-        personal_sex = (RelativeLayout)findViewById(R.id.personal_sex);
-        head_img = (ImageView)findViewById(R.id.head_img);
-        nickname_txt = (TextView)findViewById(R.id.nickname_txt);
-        sex_txt = (TextView)findViewById(R.id.sex_txt);
-        driving_years_txt = (TextView)findViewById(R.id.driving_years_txt);
-        city_txt = (TextView)findViewById(R.id.city_txt);
-        title = (TextView)findViewById(R.id.title);
-        title.setText("编辑资料");
-        personal_city.setOnClickListener(this);
-        personal_driving_years.setOnClickListener(this);
-        personal_head.setOnClickListener(this);
-        personal_nickname.setOnClickListener(this);
-        personal_sex.setOnClickListener(this);
+        
         
     }
     
@@ -81,7 +65,22 @@ public class PersonalDataActivity extends CarPlayBaseActivity implements OnClick
     @Override
     public void initView()
     {
-        // TODO Auto-generated method stub
+    	personal_city = (RelativeLayout)findViewById(R.id.personal_city);
+        personal_driving_years = (RelativeLayout)findViewById(R.id.personal_driving_years);
+        personal_head = (RelativeLayout)findViewById(R.id.personal_head);
+        personal_nickname = (RelativeLayout)findViewById(R.id.personal_nickname);
+        personal_sex = (RelativeLayout)findViewById(R.id.personal_sex);
+        head_img = (ImageView)findViewById(R.id.head_img);
+        nickname_txt = (TextView)findViewById(R.id.nickname_txt);
+        sex_txt = (TextView)findViewById(R.id.sex_txt);
+        driving_years_txt = (TextView)findViewById(R.id.driving_years_txt);
+        city_txt = (TextView)findViewById(R.id.city_txt);
+        setTitle("编辑资料");
+        personal_city.setOnClickListener(this);
+        personal_driving_years.setOnClickListener(this);
+        personal_head.setOnClickListener(this);
+        personal_nickname.setOnClickListener(this);
+        personal_sex.setOnClickListener(this);
         
     }
     
