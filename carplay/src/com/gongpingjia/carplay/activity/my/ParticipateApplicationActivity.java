@@ -2,6 +2,7 @@ package com.gongpingjia.carplay.activity.my;
 
 import net.duohuo.dhroid.adapter.FieldMap;
 import net.duohuo.dhroid.adapter.NetJSONAdapter;
+import net.duohuo.dhroid.util.ViewUtil;
 import net.duohuo.dhroid.view.NetRefreshAndMoreListView;
 
 import com.gongpingjia.carplay.R;
@@ -45,7 +46,6 @@ public class ParticipateApplicationActivity extends CarPlayBaseActivity {
 		adapter = new NetJSONAdapter(
 				"http://cwapi.gongpingjia.com/v1/user/846de312-306c-4916-91c1-a5e69b158014/application/list?token=750dd49c-6129-4a9a-9558-27fa74fc4ce7",
 				self, R.layout.itme_participate_application);
-
 		adapter.fromWhat("data");
 		adapter.addField("nickname", R.id.participate_name);
 		adapter.addField("age", R.id.participate_age);
