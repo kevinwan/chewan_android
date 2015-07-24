@@ -56,7 +56,7 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
     private View mTypeLayout, mDescriptionLayout, mDestimationLayout, mStartTimeLayout, mEndTimeLayout, mFeeLayout,
             mSeatLayout;
 
-    private TextView mTypeText, mDescriptionText, mStartTimeText, mEndTimeText, mFeeText, mSeatText,mDestimationText;
+    private TextView mTypeText, mDescriptionText, mStartTimeText, mEndTimeText, mFeeText, mSeatText, mDestimationText;
 
     private NestedGridView mPhotoGridView;
 
@@ -83,6 +83,8 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
     private List<String> mTypeOptions;
 
     private List<String> mSeatOptions;
+
+    private String mCity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -287,6 +289,11 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                 return;
             }
 
+            if (mDestimationText.getText().toString().length() == 0) {
+                showToast("请选择目的地");
+                return;
+            }
+
             if (mStartTimeText.getText().toString().length() == 0) {
                 showToast("请选择开始日期");
                 return;
@@ -306,8 +313,8 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
             mDhNet.addParam("introduction", mDescriptionText.getText().toString());
             mDhNet.addParam("start", mStartTimeText.getText().toString());
             mDhNet.addParam("cover", "[\"68cbd3b0-d19b-4754-8b08-835b9d94a869\"]");
-            mDhNet.addParam("location", "紫金山");
-            mDhNet.addParam("city", "南京");
+            mDhNet.addParam("location", mDestimationText.getText().toString());
+            mDhNet.addParam("city", mCity);
             mDhNet.addParam("pay", mFeeText.getText().toString());
             mDhNet.addParam("seat", mSeatText.getText().toString());
 
@@ -340,6 +347,8 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                 break;
 
             case REQUEST_DESTINATION:
+                mDestimationText.setText(data.getStringExtra("destination"));
+                mCity = data.getStringExtra("city");
                 break;
             case Constant.TAKE_PHOTO:
                 PhotoUtil.onPhotoFromCamera(self, Constant.ZOOM_PIC, mCurPath, 1, 1, 1000);

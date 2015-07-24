@@ -2,6 +2,7 @@ package com.gongpingjia.carplay.activity.active;
 
 import java.util.List;
 
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -88,7 +89,6 @@ public class MapActivity extends CarPlayBaseActivity implements OnMarkerClickLis
 
         setUpMap();
 
-       
         mLocDesText = (TextView) findViewById(R.id.tv_loc_des);
         mLocTitleText = (TextView) findViewById(R.id.tv_loc_title);
         mSearchEdit = (ClearableEditText) findViewById(R.id.et_search);
@@ -122,13 +122,13 @@ public class MapActivity extends CarPlayBaseActivity implements OnMarkerClickLis
             public void onClick(View v) {
                 // TODO Auto-generated method stub
                 if (mAddress != null) {
-                    mAddress.getCity();
-                    mAddress.getProvince();
+                    Intent it = new Intent();
+                    it.putExtra("city", mAddress.getCity());
+                    it.putExtra("destination", mAddress.getFormatAddress());
+                    setResult(RESULT_OK, it);
+                    self.finish();
                 } else {
-                    LatLonPoint latLonPoint = new LatLonPoint(mCurLatLng.latitude, mCurLatLng.longitude);
-                    RegeocodeQuery query = new RegeocodeQuery(latLonPoint, 200, GeocodeSearch.AMAP);// 第一个参数表示一个Latlng，第二参数表示范围多少米，第三个参数表示是火系坐标系还是GPS原生坐标系
-                    mGeoSearch.getFromLocationAsyn(query);// 设置同步逆地理编码请求
-                    //返回address
+                    showToast("请选择地点");
                 }
             }
         });
@@ -274,6 +274,10 @@ public class MapActivity extends CarPlayBaseActivity implements OnMarkerClickLis
                 aMap.moveCamera(CameraUpdateFactory.changeLatLng(ll));
                 aMap.moveCamera(CameraUpdateFactory.zoomTo(18));
                 mIsFirstLocate = false;
+
+                LatLonPoint latLonPoint = new LatLonPoint(ll.latitude, ll.longitude);
+                RegeocodeQuery query = new RegeocodeQuery(latLonPoint, 200, GeocodeSearch.AMAP);// 第一个参数表示一个Latlng，第二参数表示范围多少米，第三个参数表示是火系坐标系还是GPS原生坐标系
+                mGeoSearch.getFromLocationAsyn(query);// 设置同步逆地理编码请求
             }
         }
     }

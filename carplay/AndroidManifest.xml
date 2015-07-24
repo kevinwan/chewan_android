@@ -92,17 +92,12 @@
 
         <activity android:name=".activity.my.CarTypeSelectActivity" >
         </activity>
-        <!--
-        <activity android:name=".activity.active.CreateActiveActivity" >
-        </activity>
-        -->
-
         <activity android:name=".activity.active.ActiveDescriptionActivity" >
         </activity>
-        <activity android:name=".activity.active.CreateActiveActivity" />
+        <!-- <activity android:name=".activity.active.CreateActiveActivity" /> -->
         <activity android:name=".activity.my.PersonDetailActivity" >
         </activity>
-        <activity android:name=".activity.main.SplashActivity" >
+        <activity android:name=".activity.active.CreateActiveActivity" >
              <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
