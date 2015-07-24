@@ -11,7 +11,7 @@
         android:gravity="center_vertical"
         android:orientation="horizontal" >
 
-        <ImageView
+        <com.gongpingjia.carplay.view.RoundImageView
             android:id="@+id/head_img"
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -80,25 +80,26 @@
                     android:id="@+id/participate_txt"
                     style="@style/text_grey_small"
                     android:layout_marginBottom="5dp"
-                    android:textColor="@color/theme_bg"
                     android:text="想加入昆明湖一日游活动" />
+
                 <TextView
-                    android:id="@+id/gender_txt" 
+                    android:id="@+id/gender_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
+
                 <TextView
-                    android:id="@+id/applicationId_txt" 
+                    android:id="@+id/applicationId_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
             </LinearLayout>
         </LinearLayout>
 
         <TextView
-            android:id="@+id/person_cancel"
+            android:id="@+id/button_agree"
             android:layout_width="60dp"
             android:layout_height="30dp"
             android:layout_alignParentRight="true"
@@ -114,13 +115,13 @@
             android:id="@+id/zuoweishu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/text_orange"
-            android:textSize="@dimen/text_smaller"
-            android:layout_marginTop="5dp"
+            android:layout_alignRight="@+id/button_agree"
+            android:layout_below="@+id/button_agree"
             android:layout_marginRight="5dp"
-            android:layout_alignRight="@+id/person_cancel"
-            android:layout_below="@+id/person_cancel"
-            android:text="3" />
+            android:layout_marginTop="5dp"
+            android:text="3"
+            android:textColor="@color/text_grey"
+            android:textSize="@dimen/text_smaller" />
     </RelativeLayout>
 
     <View style="@style/line" />
