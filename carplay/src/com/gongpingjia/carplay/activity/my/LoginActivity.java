@@ -24,6 +24,7 @@ import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.activity.main.MainActivity;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.bean.User;
+import com.gongpingjia.carplay.manage.UserInfoManage.LoginCallBack;
 import com.gongpingjia.carplay.util.CarPlayPerference;
 import com.gongpingjia.carplay.util.MD5Util;
 import com.gongpingjia.carplay.util.Utils;
@@ -53,6 +54,8 @@ public class LoginActivity extends CarPlayBaseActivity
     private TextView login_forgetpsw;
     
     public static final int Register = 1;
+    
+    public static LoginCallBack loginCall;
     
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -108,12 +111,18 @@ public class LoginActivity extends CarPlayBaseActivity
                             User user = User.getInstance();
                             user.setUserId(JSONUtil.getString(jo, "userId"));
                             user.setToken(JSONUtil.getString(jo, "token"));
-                            
+                            user.setBrand(JSONUtil.getString(jo, "brand"));
+                            user.setBrandLogo(JSONUtil.getString(jo, "brandLogo"));
+                            user.setModel(JSONUtil.getString(jo, "model"));
+                            user.setSeatNumber(JSONUtil.getInt(jo, "seatNumber"));
+                            user.setIsAuthenticated(JSONUtil.getInt(jo, "isAuthenticated"));
+                            user.setLogin(true);
                             CarPlayPerference per = IocContainer.getShare().get(CarPlayPerference.class);
                             per.phone = strPhoneNum;
                             per.password = strPassword;
                             per.commit();
-                            
+                            Intent it = new Intent(self, MainActivity.class);
+                            startActivity(it);
                             self.finish();
                             
                         }
@@ -174,4 +183,23 @@ public class LoginActivity extends CarPlayBaseActivity
             }
         }
     }
+    
+    @Override
+    public void finish()
+    {
+        super.finish();
+        if (loginCall != null)
+        {
+            if (User.getInstance().isLogin())
+            {
+                loginCall.onisLogin();
+            }
+            else
+            {
+                loginCall.onLoginFail();
+            }
+        }
+        loginCall = null;
+    }
+    
 }

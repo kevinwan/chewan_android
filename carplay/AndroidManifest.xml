@@ -99,7 +99,10 @@
 
         <activity android:name=".activity.active.ActiveDescriptionActivity" >
         </activity>
-        <activity android:name=".activity.active.CreateActiveActivity" >
+        <activity android:name=".activity.active.CreateActiveActivity" />
+        <activity android:name=".activity.my.PersonDetailActivity" >
+        </activity>
+        <activity android:name=".activity.main.SplashActivity" >
              <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

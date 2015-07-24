@@ -1,5 +1,8 @@
 package com.gongpingjia.carplay.adapter;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.adapter.ActiveAdapter.ViewHolder;
 import com.gongpingjia.carplay.util.PicLayoutUtil;
@@ -14,7 +17,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import net.duohuo.dhroid.adapter.NetJSONAdapter;
+import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.util.DhUtil;
+import net.duohuo.dhroid.util.ViewUtil;
 
 public class MyReleaseActiveAdapter extends NetJSONAdapter
 {
@@ -41,11 +46,26 @@ public class MyReleaseActiveAdapter extends NetJSONAdapter
     }
     
     @Override
+    public int getItemViewType(int position)
+    {
+        JSONObject jo = mVaules.get(position);
+        int piccount = JSONUtil.getJSONArray(jo, "cover").length();
+        return piccount;
+    }
+    
+    @Override
+    public int getViewTypeCount()
+    {
+        // TODO Auto-generated method stub
+        return 10;
+    }
+    
+    @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
         
         ViewHolder holder;
-        // TODO Auto-generated method stub
+        int type = getItemViewType(position);
         if (convertView == null)
         {
             convertView = mLayoutInflater.inflate(mResource, null);
@@ -60,6 +80,12 @@ public class MyReleaseActiveAdapter extends NetJSONAdapter
             holder.headlayoutV = (LinearLayout)convertView.findViewById(R.id.headlayout);
             holder.lineTopI = (ImageView)convertView.findViewById(R.id.line_top);
             convertView.setTag(holder);
+            
+            PicLayoutUtil picUtil = new PicLayoutUtil(mContext, type, 5, holder.piclayoutV, piclayoutWidth);
+            picUtil.addMoreChild();
+            
+            PicLayoutUtil headUtil = new PicLayoutUtil(mContext, 5, 5, holder.headlayoutV, headlayoutWidth);
+            headUtil.AddAllHead();
         }
         else
         {
@@ -67,19 +93,33 @@ public class MyReleaseActiveAdapter extends NetJSONAdapter
             
         }
         holder.lineTopI.setVisibility(position == 0 ? View.INVISIBLE : View.VISIBLE);
-        // PicLayoutUtil headUtil = new PicLayoutUtil(mContext, 5, 5, holder.headlayoutV, headlayoutWidth);
-        // headUtil.AddChild();
-        //
-        // if (position % 2 == 0)
-        // {
-        // PicLayoutUtil util = new PicLayoutUtil(mContext, 4, 5, holder.piclayoutV, piclayoutWidth);
+        
+        JSONObject jo = mVaules.get(position);
+        JSONObject creater = JSONUtil.getJSONObject(jo, "organizer");
+        
+        ViewUtil.bindView(holder.contentT, JSONUtil.getString(creater, "introduction"));
+        JSONArray picJsa = JSONUtil.getJSONArray(jo, "cover");
+        // holder.piclayoutV.removeAllViews();
+        PicLayoutUtil util = new PicLayoutUtil();
+        util.BindImageView(holder.piclayoutV, picJsa);
         // util.addMoreChild();
-        // }
-        // else
-        // {
-        // PicLayoutUtil util = new PicLayoutUtil(mContext, 2, 5, holder.piclayoutV, piclayoutWidth);
-        // util.addMoreChild();
-        // }
+        // holder.headlayoutV.removeAllViews();
+        JSONArray headJsa = JSONUtil.getJSONArray(jo, "members");
+        PicLayoutUtil headUtil = new PicLayoutUtil();
+        headUtil.BindHeadImage(holder.headlayoutV, headJsa);
+        
+        if (JSONUtil.getLong(jo, "start") == 0)
+        {
+            ViewUtil.bindView(holder.dateT, "不确定");
+        }
+        else
+        {
+            ViewUtil.bindView(holder.dateT, JSONUtil.getLong(jo, "start"), "time");
+        }
+        ViewUtil.bindView(holder.addressT, "地点: " + JSONUtil.getString(jo, "location"));
+        
+        ViewUtil.bindView(holder.payTypeT, JSONUtil.getString(jo, "pay"));
+        ViewUtil.bindView(holder.date_leftT, JSONUtil.getString(jo, "publishDate"));
         
         return convertView;
     }

@@ -296,6 +296,7 @@ public class PicLayoutUtil
         try
         {
             params = new LayoutParams(200, 100);
+            params = new LayoutParams(DhUtil.dip2px(mContext, 100), DhUtil.dip2px(mContext, 200));
             ImageView img = new ImageView(mContext);
             img.setLayoutParams(params);
             if (type == 1)
