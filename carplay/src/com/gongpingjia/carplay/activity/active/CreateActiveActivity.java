@@ -186,25 +186,25 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
             }
         });
 
-        DhNet net = new DhNet(API.login);
-        net.addParam("phone", "18951650020");
-        net.addParam("password", MD5Util.string2MD5("123456"));
-        net.doPost(new NetTask(self) {
-
-            @Override
-            public void doInUI(Response response, Integer transfer) {
-                // TODO Auto-generated method stub
-                if (response.isSuccess()) {
-                    JSONObject jo = response.jSONFrom("data");
-                    User user = User.getInstance();
-                    user.setUserId(JSONUtil.getString(jo, "userId"));
-                    user.setToken(JSONUtil.getString(jo, "token"));
-                    showToast("登陆成功");
-                } else {
-                    showToast(response.msg);
-                }
-            }
-        });
+        // DhNet net = new DhNet(API.login);
+        // net.addParam("phone", "18951650020");
+        // net.addParam("password", MD5Util.string2MD5("123456"));
+        // net.doPost(new NetTask(self) {
+        //
+        // @Override
+        // public void doInUI(Response response, Integer transfer) {
+        // // TODO Auto-generated method stub
+        // if (response.isSuccess()) {
+        // JSONObject jo = response.jSONFrom("data");
+        // User user = User.getInstance();
+        // user.setUserId(JSONUtil.getString(jo, "userId"));
+        // user.setToken(JSONUtil.getString(jo, "token"));
+        // showToast("登陆成功");
+        // } else {
+        // showToast(response.msg);
+        // }
+        // }
+        // });
 
     }
 

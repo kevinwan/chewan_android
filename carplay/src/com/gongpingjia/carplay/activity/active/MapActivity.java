@@ -5,13 +5,9 @@ import java.util.List;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
-import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationListener;
@@ -50,6 +46,8 @@ import com.gongpingjia.carplay.view.ClearableEditText;
  */
 public class MapActivity extends CarPlayBaseActivity implements OnMarkerClickListener, OnPoiSearchListener,
         AMapLocationListener, OnMapClickListener, OnGeocodeSearchListener {
+
+    private static final int REQUEST_KEY = 0;
 
     private MapView mMapView;
 
@@ -92,25 +90,13 @@ public class MapActivity extends CarPlayBaseActivity implements OnMarkerClickLis
         mLocDesText = (TextView) findViewById(R.id.tv_loc_des);
         mLocTitleText = (TextView) findViewById(R.id.tv_loc_title);
         mSearchEdit = (ClearableEditText) findViewById(R.id.et_search);
-        mSearchEdit.setOnEditorActionListener(new OnEditorActionListener() {
+        mSearchEdit.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+            public void onClick(View v) {
                 // TODO Auto-generated method stub
-
-                if ((actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_UNSPECIFIED)
-                        && event != null) {
-                    showProgressDialog("正在搜索");
-                    mQuery = new PoiSearch.Query(mSearchEdit.getText().toString(), "", "");// 全国搜索
-                    mQuery.setPageSize(10);// 每页查询10个
-                    mQuery.setPageNum(0);// 设置查第一页
-
-                    mPoiSearch = new PoiSearch(MapActivity.this, mQuery);
-                    mPoiSearch.setOnPoiSearchListener(MapActivity.this);
-                    mPoiSearch.searchPOIAsyn();
-                    return true;
-                }
-                return false;
+                Intent it = new Intent(self, SearchPlaceActivity.class);
+                self.startActivityForResult(it, REQUEST_KEY);
             }
         });
 
@@ -156,13 +142,19 @@ public class MapActivity extends CarPlayBaseActivity implements OnMarkerClickLis
     }
 
     @Override
+    protected void onResume() {
+        // TODO Auto-generated method stub
+        super.onResume();
+        mMapView.onResume();
+    }
+
+    @Override
     protected void onPause() {
         // TODO Auto-generated method stub
         super.onPause();
         mMapView.onPause();
         if (mLocationManager != null) {
             mLocationManager.removeUpdates(this);
-            mLocationManager.destroy();
         }
         mLocationManager = null;
     }
@@ -202,20 +194,20 @@ public class MapActivity extends CarPlayBaseActivity implements OnMarkerClickLis
                         poiOverlay.addToMap();
                         poiOverlay.zoomToSpan();
                     } else if (suggestionCities != null && suggestionCities.size() > 0) {
-                        Toast.makeText(this, "在下列城市搜索到结果" + suggestionCities.toString(), Toast.LENGTH_SHORT).show();
+                        showToast("在下列城市搜索到结果" + suggestionCities.toString());
                     } else {
-                        Toast.makeText(this, "暂无搜索结果", Toast.LENGTH_SHORT).show();
+                        showToast("暂无搜索结果");
                     }
                 }
             } else {
-                Toast.makeText(this, "暂无搜索结果", Toast.LENGTH_SHORT).show();
+                showToast("暂无搜索结果");
             }
         } else if (rCode == 27) {
-            Toast.makeText(this, "网络出问题啦", Toast.LENGTH_SHORT).show();
+            showToast("网络出问题啦");
         } else if (rCode == 32) {
-            Toast.makeText(this, "api key error", Toast.LENGTH_SHORT).show();
+            showToast("api key error");
         } else {
-            Toast.makeText(this, "出现未知异常", Toast.LENGTH_SHORT).show();
+            showToast("出现未知异常");
         }
 
     }
@@ -319,6 +311,27 @@ public class MapActivity extends CarPlayBaseActivity implements OnMarkerClickLis
         } else {
             showToast("未知错误");
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // TODO Auto-generated method stub
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUEST_KEY) {
+                String key = data.getStringExtra("key");
+                mSearchEdit.setText(key);
+                showProgressDialog("正在搜索");
+                mQuery = new PoiSearch.Query(key, "", "");// 全国搜索
+                mQuery.setPageSize(10);// 每页查询10个
+                mQuery.setPageNum(0);// 设置查第一页
+
+                mPoiSearch = new PoiSearch(MapActivity.this, mQuery);
+                mPoiSearch.setOnPoiSearchListener(MapActivity.this);
+                mPoiSearch.searchPOIAsyn();
+            }
+        }
+
     }
 
 }

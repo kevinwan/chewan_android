@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/theme_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp" >
+
+        <ImageView
+            android:id="@+id/imgView_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/left_back" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical" >
+
+            <TextView
+                android:id="@+id/tv_search"
+                style="@style/text_white_small"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:background="@color/text_red"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="搜索" />
+
+            <com.gongpingjia.carplay.view.ClearableEditText
+                android:id="@+id/et_search"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_toLeftOf="@id/tv_search"
+                android:background="@drawable/edit_normal"
+                android:drawableRight="@drawable/action_cancel"
+                android:padding="5dp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/lv_suggestion"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:divider="@color/nothing" >
+    </ListView>
+
+</LinearLayout>
