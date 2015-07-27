@@ -65,9 +65,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:layout_marginLeft="10dp"
                     android:gravity="right|center_vertical"
-                    android:orientation="horizontal" >
+                    android:orientation="horizontal"
+                    android:padding="10dp" >
 
                     <TextView
                         android:id="@+id/tv_description"
@@ -115,12 +115,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:gravity="right|center_vertical"
-                    android:orientation="horizontal" >
+                    android:orientation="horizontal"
+                    android:padding="10dp" >
 
                     <TextView
                         android:id="@+id/tv_destination"
-                        style="@style/text_blacklight_medium"
-                        android:text="南京" />
+                        style="@style/text_blacklight_medium" />
 
                     <ImageView
                         android:layout_width="18dp"
@@ -260,7 +260,7 @@
                         android:layout_height="60dp"
                         android:layout_marginRight="5dp"
                         android:gravity="center_vertical"
-                        android:text="5个" />
+                        android:text="1" />
 
                     <ImageView
                         android:layout_width="25dp"
