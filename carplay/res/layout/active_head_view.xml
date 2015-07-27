@@ -108,6 +108,7 @@
     <TextView
         android:id="@+id/content"
         style="@style/text_black_medium"
+        android:layout_width="fill_parent"
         android:background="@color/white"
         android:padding="10dp"
         android:text="复仇者联盟终于上映了，有没有萌妹纸陪我去看，包接送，电影票哦" />

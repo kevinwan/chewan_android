@@ -189,7 +189,7 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements OnClic
         ViewUtil.bindView(headV.findViewById(R.id.name), JSONUtil.getString(createrJo, "nickname"));
         ViewUtil.bindView(headV.findViewById(R.id.drive_age), JSONUtil.getString(createrJo, "carModel") + ","
             + JSONUtil.getString(createrJo, "drivingExperience") + "年驾龄");
-        ViewUtil.bindView(headV.findViewById(R.id.content), JSONUtil.getString(createrJo, "introduction"));
+        ViewUtil.bindView(headV.findViewById(R.id.content), JSONUtil.getString(headJo, "introduction"));
         
         ViewUtil.bindNetImage((ImageView)headV.findViewById(R.id.car_logo),
             JSONUtil.getString(createrJo, "carBrandLogo"),
@@ -242,6 +242,7 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements OnClic
         JSONArray headJsa = JSONUtil.getJSONArray(headJo, "members");
         PicLayoutUtil headUtil =
             new PicLayoutUtil(self, headJsa, 5, (LinearLayout)headV.findViewById(R.id.headlayout), headlayoutWidth);
+        headUtil.setHeadMaxCount(6);
         headUtil.AddChild();
     }
     
@@ -282,7 +283,7 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements OnClic
         DhNet net =
             new DhNet(API.CWBaseurl + "/activity/" + activityId + "/subscribe?userId=" + user.getUserId() + "&token="
                 + user.getToken());
-        net.doGetInDialog(new NetTask(self)
+        net.doPostInDialog(new NetTask(self)
         {
             
             @Override
