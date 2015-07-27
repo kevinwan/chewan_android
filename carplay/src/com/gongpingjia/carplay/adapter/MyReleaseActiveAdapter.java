@@ -100,12 +100,12 @@ public class MyReleaseActiveAdapter extends NetJSONAdapter
         ViewUtil.bindView(holder.contentT, JSONUtil.getString(creater, "introduction"));
         JSONArray picJsa = JSONUtil.getJSONArray(jo, "cover");
         // holder.piclayoutV.removeAllViews();
-        PicLayoutUtil util = new PicLayoutUtil();
+        PicLayoutUtil util = new PicLayoutUtil(mContext);
         util.BindImageView(holder.piclayoutV, picJsa);
         // util.addMoreChild();
         // holder.headlayoutV.removeAllViews();
         JSONArray headJsa = JSONUtil.getJSONArray(jo, "members");
-        PicLayoutUtil headUtil = new PicLayoutUtil();
+        PicLayoutUtil headUtil = new PicLayoutUtil(mContext);
         headUtil.BindHeadImage(holder.headlayoutV, headJsa);
         
         if (JSONUtil.getLong(jo, "start") == 0)

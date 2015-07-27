@@ -4,15 +4,20 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.activity.my.PersonDetailActivity;
+import com.gongpingjia.carplay.manage.UserInfoManage;
+import com.gongpingjia.carplay.manage.UserInfoManage.LoginCallBack;
 import com.gongpingjia.carplay.util.PicLayoutUtil;
 import com.gongpingjia.carplay.view.RoundImageView;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -58,7 +63,7 @@ public class ActiveAdapter extends NetJSONAdapter
     }
     
     @Override
-    public View getView(int position, View convertView, ViewGroup parent)
+    public View getView(final int position, View convertView, ViewGroup parent)
     {
         ViewHolder holder;
         int type = getItemViewType(position);
@@ -96,7 +101,7 @@ public class ActiveAdapter extends NetJSONAdapter
         }
         
         JSONObject jo = mVaules.get(position);
-        JSONObject creater = JSONUtil.getJSONObject(jo, "organizer");
+        final JSONObject creater = JSONUtil.getJSONObject(jo, "organizer");
         ViewUtil.bindView(holder.nameT, JSONUtil.getString(creater, "nickname"));
         
         if (JSONUtil.getString(creater, "gender").equals("男"))
@@ -108,23 +113,21 @@ public class ActiveAdapter extends NetJSONAdapter
             holder.layout_sexV.setBackgroundResource(R.drawable.woman);
         }
         
-        System.out.println("holder.piclayoutV" + holder.piclayoutV);
-        System.out.println("数量" + holder.piclayoutV.getChildCount());
         ViewUtil.bindView(holder.ageT, JSONUtil.getString(creater, "age"));
         ViewUtil.bindView(holder.tv_publish_timeT, JSONUtil.getString(jo, "publishTime"), "neartime");
         ViewUtil.bindNetImage(holder.car_logoI, JSONUtil.getString(creater, "carBrandLogo"), "optionsDefault");
         ViewUtil.bindView(holder.drive_ageT,
             JSONUtil.getString(creater, "carModel") + "," + JSONUtil.getString(creater, "drivingExperience") + "年驾龄");
         
-        ViewUtil.bindView(holder.contentT, JSONUtil.getString(creater, "introduction"));
+        ViewUtil.bindView(holder.contentT, JSONUtil.getString(jo, "introduction"));
         JSONArray picJsa = JSONUtil.getJSONArray(jo, "cover");
         // holder.piclayoutV.removeAllViews();
-        PicLayoutUtil util = new PicLayoutUtil();
+        PicLayoutUtil util = new PicLayoutUtil(mContext);
         util.BindImageView(holder.piclayoutV, picJsa);
         // util.addMoreChild();
         // holder.headlayoutV.removeAllViews();
         JSONArray headJsa = JSONUtil.getJSONArray(jo, "members");
-        PicLayoutUtil headUtil = new PicLayoutUtil();
+        PicLayoutUtil headUtil = new PicLayoutUtil(mContext);
         headUtil.BindHeadImage(holder.headlayoutV, headJsa);
         
         if (JSONUtil.getLong(jo, "start") == 0)
@@ -137,6 +140,33 @@ public class ActiveAdapter extends NetJSONAdapter
         }
         ViewUtil.bindView(holder.addressT, "地点: " + JSONUtil.getString(jo, "location"));
         ViewUtil.bindNetImage(holder.headI, JSONUtil.getString(creater, "photo"), "optionsDefault");
+        // holder.headI.setOnClickListener(new OnClickListener()
+        // {
+        //
+        // @Override
+        // public void onClick(final View v)
+        // {
+        // UserInfoManage manager = UserInfoManage.getInstance();
+        // manager.checkLogin((Activity)mContext, new LoginCallBack()
+        // {
+        //
+        // @Override
+        // public void onisLogin()
+        // {
+        // JSONObject jo = mVaules.get(position);
+        // // Intent it = new Intent(mContext, PersonDetailActivity.class);
+        // // it.putExtra("userId", JSONUtil.getString(creater, ""));
+        // // mContext.startActivity(it);
+        // }
+        //
+        // @Override
+        // public void onLoginFail()
+        // {
+        //
+        // }
+        // });
+        // }
+        // });
         
         ViewUtil.bindView(holder.statusT, JSONUtil.getString(jo, "pay"));
         String pay = JSONUtil.getString(jo, "pay");

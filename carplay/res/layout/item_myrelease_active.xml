@@ -134,7 +134,8 @@
                     android:layout_width="48dp"
                     android:layout_marginLeft="10dp"
                     android:gravity="center"
-                    android:text="聊天" />
+                    android:text="聊天"
+                    android:visibility="invisible" />
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

@@ -1,6 +1,15 @@
 package com.gongpingjia.carplay.view;
 
+import org.json.JSONObject;
+
+import com.gongpingjia.carplay.activity.my.PersonDetailActivity;
+import com.gongpingjia.carplay.bean.User;
+import com.gongpingjia.carplay.manage.UserInfoManage;
+import com.gongpingjia.carplay.manage.UserInfoManage.LoginCallBack;
+
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
@@ -13,11 +22,14 @@ import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.ImageView;
+
 /**
  * 圆形的imageView
+ * 
  * @author Zr
- *
+ * 
  */
 public class RoundImageView extends ImageView
 {
@@ -28,12 +40,81 @@ public class RoundImageView extends ImageView
     {
         super(context);
         mContext = context;
+        
+        this.setOnClickListener(new OnClickListener()
+        {
+            
+            @Override
+            public void onClick(final View v)
+            {
+                UserInfoManage manager = UserInfoManage.getInstance();
+                manager.checkLogin((Activity)mContext, new LoginCallBack()
+                {
+                    
+                    @Override
+                    public void onisLogin()
+                    {
+                        User user = User.getInstance();
+                        if (user.getUserId().equals(v.getTag().toString()))
+                        {
+                            
+                        }
+                        else
+                        {
+                            Intent it = new Intent(mContext, PersonDetailActivity.class);
+                            it.putExtra("userId", v.getTag().toString());
+                            mContext.startActivity(it);
+                        }
+                    }
+                    
+                    @Override
+                    public void onLoginFail()
+                    {
+                        
+                    }
+                });
+            }
+        });
     }
     
     public RoundImageView(Context context, AttributeSet attrs)
     {
         super(context, attrs);
         mContext = context;
+        this.setOnClickListener(new OnClickListener()
+        {
+            
+            @Override
+            public void onClick(final View v)
+            {
+                UserInfoManage manager = UserInfoManage.getInstance();
+                manager.checkLogin((Activity)mContext, new LoginCallBack()
+                {
+                    
+                    @Override
+                    public void onisLogin()
+                    {
+                        User user = User.getInstance();
+                        if (user.getUserId().equals(v.getTag().toString()))
+                        {
+                            
+                        }
+                        else
+                        {
+                            Intent it = new Intent(mContext, PersonDetailActivity.class);
+                            it.putExtra("userId", v.getTag().toString());
+                            mContext.startActivity(it);
+                        }
+                    }
+                    
+                    @Override
+                    public void onLoginFail()
+                    {
+                        
+                    }
+                });
+            }
+        });
     }
     
     public RoundImageView(Context context, AttributeSet attrs, int defStyle)
@@ -52,7 +133,8 @@ public class RoundImageView extends ImageView
     @Override
     public void setImageDrawable(Drawable drawable)
     {
-        if(drawable==null)return;
+        if (drawable == null)
+            return;
         BitmapDrawable bd = (BitmapDrawable)drawable;
         Drawable _drawable = new BitmapDrawable(toRoundBitmap(bd.getBitmap()));
         super.setImageDrawable(_drawable);
@@ -61,16 +143,18 @@ public class RoundImageView extends ImageView
     @Override
     public void setImageBitmap(Bitmap bm)
     {
-        if (bm == null)return;
-        try {
-        	Bitmap bitmap = toRoundBitmap(bm);
-        	super.setImageBitmap(bitmap);
-		} catch (Exception e) {
-			
-		}
+        if (bm == null)
+            return;
+        try
+        {
+            Bitmap bitmap = toRoundBitmap(bm);
+            super.setImageBitmap(bitmap);
+        }
+        catch (Exception e)
+        {
+            
+        }
     }
-    
-    
     
     public static Bitmap toRoundBitmap(Bitmap bitmap)
     {

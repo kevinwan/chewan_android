@@ -119,26 +119,11 @@ public class LoginActivity extends CarPlayBaseActivity
                             user.setLogin(true);
                             CarPlayPerference per = IocContainer.getShare().get(CarPlayPerference.class);
                             per.phone = strPhoneNum;
-                            per.password = strPassword;
+                            per.password = MD5Util.string2MD5(strPassword);
                             per.commit();
-                            Intent it = new Intent(self, MainActivity.class);
-                            startActivity(it);
                             self.finish();
                             
                         }
-                        else
-                        {
-                            showToast(response.msg);
-                            
-                        }
-                    }
-                    
-                    @Override
-                    public void onErray(Response response)
-                    {
-                        // TODO Auto-generated method stub
-                        super.onErray(response);
-                        showToast(response.msg);
                     }
                 });
             }

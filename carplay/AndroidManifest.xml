@@ -96,9 +96,7 @@
         <activity android:name=".activity.active.SearchPlaceActivity" />
         <activity android:name=".activity.my.PersonDetailActivity" >
         </activity>
-        <activity
-            android:name=".activity.main.SplashActivity"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" >
+        <activity android:name=".activity.main.SplashActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

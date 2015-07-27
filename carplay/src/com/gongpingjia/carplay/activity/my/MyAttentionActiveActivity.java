@@ -17,8 +17,6 @@ public class MyAttentionActiveActivity extends CarPlayBaseActivity
     
     ActiveAdapter adapter;
     
-    String userid;
-    
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -29,13 +27,12 @@ public class MyAttentionActiveActivity extends CarPlayBaseActivity
     @Override
     public void initView()
     {
-        Intent it = getIntent();
-        userid = it.getStringExtra("userid");
+        setTitle("我的关注");
         User user = User.getInstance();
         listV = (NetRefreshAndMoreListView)findViewById(R.id.listview);
         adapter =
-            new ActiveAdapter(API.CWBaseurl + "/user/" + userid + "/subscribe?userId=" + user.getUserId() + "&token="
-                + user.getToken(), self, R.layout.item_active_list);
+            new ActiveAdapter(API.CWBaseurl + "/user/" + user.getUserId() + "/subscribe?userId=" + user.getUserId()
+                + "&token=" + user.getToken(), self, R.layout.item_active_list);
         
         adapter.fromWhat("data");
         listV.setAdapter(adapter);
