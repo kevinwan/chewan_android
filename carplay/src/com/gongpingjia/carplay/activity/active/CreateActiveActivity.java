@@ -3,6 +3,7 @@ package com.gongpingjia.carplay.activity.active;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
@@ -11,6 +12,7 @@ import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.net.upload.FileInfo;
 import net.duohuo.dhroid.util.PhotoUtil;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -38,8 +40,6 @@ import com.gongpingjia.carplay.view.NestedGridView;
 import com.gongpingjia.carplay.view.dialog.CommonDialog;
 import com.gongpingjia.carplay.view.dialog.DateDialog;
 import com.gongpingjia.carplay.view.dialog.DateDialog.OnDateResultListener;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 
 /***
  * 
@@ -52,12 +52,14 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
 
     private static final int REQUEST_DESCRIPTION = 1;
 
+    private static final int REQUEST_DESTINATION = 2;
+
     private Button mFinishBtn, mFinishInviteBtn;
 
     private View mTypeLayout, mDescriptionLayout, mDestimationLayout, mStartTimeLayout, mEndTimeLayout, mFeeLayout,
             mSeatLayout;
 
-    private TextView mTypeText, mDescriptionText, mStartTimeText, mEndTimeText, mFeeText, mSeatText;
+    private TextView mTypeText, mDescriptionText, mStartTimeText, mEndTimeText, mFeeText, mSeatText, mDestimationText;
 
     private NestedGridView mPhotoGridView;
 
@@ -85,6 +87,15 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
 
     private List<String> mSeatOptions;
 
+    private String mCity;
+
+    private String mLocation;
+
+    // 开始时间默认为当前的时间戳
+    private long mStartTimeStamp = System.currentTimeMillis();
+
+    private long mEndTimeStamp = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,16 +111,16 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
         mFeeOptions.add("我请客");
         mFeeOptions.add("请我吧");
 
-        mTypeOptions.add("看电影啊");
-        mTypeOptions.add("唱歌啊");
-        mTypeOptions.add("跑步啊");
-        mTypeOptions.add("爬山啊");
-        mTypeOptions.add("吃饭啊");
+        mTypeOptions.add("看电影");
+        mTypeOptions.add("吃饭");
+        mTypeOptions.add("唱歌");
+        mTypeOptions.add("旅行");
+        mTypeOptions.add("运动");
+        mTypeOptions.add("拼车");
+        mTypeOptions.add("代驾");
 
         mSeatOptions.add("1");
         mSeatOptions.add("2");
-        mSeatOptions.add("3");
-        mSeatOptions.add("4");
 
         mTypeText = (TextView) findViewById(R.id.tv_active_type);
         mDescriptionText = (TextView) findViewById(R.id.tv_description);
@@ -117,6 +128,7 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
         mEndTimeText = (TextView) findViewById(R.id.tv_end_time);
         mFeeText = (TextView) findViewById(R.id.tv_fee);
         mSeatText = (TextView) findViewById(R.id.tv_seat);
+        mDestimationText = (TextView) findViewById(R.id.tv_destination);
 
         mTypeLayout = findViewById(R.id.layout_active_type);
         mDescriptionLayout = findViewById(R.id.layout_description);
@@ -166,6 +178,9 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                     PhotoUtil.getPhoto(self, Constant.TAKE_PHOTO, Constant.PICK_PHOTO, new File(mCurPath));
                 } else {
                     mPhotoStates.remove(position);
+                    if (mPhotoStates.size() == 8) {
+                        mPhotoStates.add(mLastPhoto);
+                    }
                     mImageAdapter.notifyDataSetChanged();
                 }
             }
@@ -226,6 +241,11 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
             startActivityForResult(it, REQUEST_DESCRIPTION);
             break;
 
+        case R.id.layout_destination:
+            it = new Intent(self, MapActivity.class);
+            startActivityForResult(it, REQUEST_DESTINATION);
+            break;
+
         case R.id.layout_start_time:
             date = new DateDialog();
             date.setOnDateResultListener(new OnDateResultListener() {
@@ -234,6 +254,7 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                 public void result(String date, long datetime, int year, int month, int day) {
                     // TODO Auto-generated method stub
                     mStartTimeText.setText(date);
+                    mStartTimeStamp = datetime;
                 }
             });
             date.show(self);
@@ -246,6 +267,7 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                 public void result(String date, long datetime, int year, int month, int day) {
                     // TODO Auto-generated method stub
                     mEndTimeText.setText(date);
+                    mEndTimeStamp = datetime;
                 }
             });
             date.show(self);
@@ -276,36 +298,39 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
             break;
 
         case R.id.btn_finish:
-
             if (mTypeText.getText().toString().equals("")) {
                 showToast("请选择活动");
                 return;
             }
-
-            if (mStartTimeText.getText().toString().length() == 0) {
-                showToast("请选择开始日期");
-                return;
-            }
-            if (mEndTimeText.getText().toString().length() == 0) {
-                showToast("请选择结束日期");
+            if (mDestimationText.getText().toString().length() == 0) {
+                showToast("请选择目的地");
                 return;
             }
             if (mSeatText.getText().toString().length() == 0) {
                 showToast("请提供座位数");
                 return;
             }
+
             User user = User.getInstance();
-            mDhNet = new DhNet("http://cwapi.gongpingjia.com/v1/activity/register?userId=" + user.getUserId()
-                    + "&token=" + user.getToken());
+            mDhNet = new DhNet(API.createActive + "userId=" + user.getUserId() + "&token=" + user.getToken());
             mDhNet.addParam("type", mTypeText.getText().toString());
             mDhNet.addParam("introduction", mDescriptionText.getText().toString());
-            mDhNet.addParam("start", mStartTimeText.getText().toString());
-            // mDhNet.addParam("cover", );
-            mDhNet.addParam("location", "紫金山");
-            mDhNet.addParam("city", "南京");
+            JSONArray array = new JSONArray(mPicIds);
+            mDhNet.addParam("cover", array);
+            mDhNet.addParam("location", mLocation);
+            mDhNet.addParam("city", mCity);
+            mDhNet.addParam("address", mDestimationText.getText().toString());
+            mDhNet.addParam("start", mStartTimeStamp);
             mDhNet.addParam("pay", mFeeText.getText().toString());
             mDhNet.addParam("seat", mSeatText.getText().toString());
+            if (mEndTimeStamp != 0) {
+                mDhNet.addParam("end", mEndTimeStamp);
+            }
 
+            Map<String, Object> params = mDhNet.getParams();
+            for (String key : params.keySet()) {
+                Log.e("tag", key + ": " + params.get(key));
+            }
             mDhNet.doPostInDialog(new NetTask(this) {
 
                 @Override
@@ -313,6 +338,13 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                     // TODO Auto-generated method stub
                     if (response.isSuccess()) {
                         showToast("发布成功");
+                    } else {
+                        try {
+                            Log.e("err", response.jSON().getString("errmsg"));
+                        } catch (JSONException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
                     }
                 }
             });
@@ -332,6 +364,12 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
 
             case REQUEST_DESCRIPTION:
                 mDescriptionText.setText(data.getStringExtra("des"));
+                break;
+
+            case REQUEST_DESTINATION:
+                mDestimationText.setText(data.getStringExtra("destination"));
+                mCity = data.getStringExtra("city");
+                mLocation = data.getStringExtra("location");
                 break;
             case Constant.TAKE_PHOTO:
                 PhotoUtil.onPhotoFromCamera(self, Constant.ZOOM_PIC, mCurPath, 1, 1, 1000);
@@ -355,7 +393,7 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            showToast("上传成功");
+                            showToast("图片上传成功");
                         } else {
                             try {
                                 showToast(response.jSON().getString("errmsg"));
