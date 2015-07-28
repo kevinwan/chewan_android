@@ -1,11 +1,14 @@
 package com.gongpingjia.carplay.activity.active;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import net.duohuo.dhroid.net.DhNet;
+import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.net.upload.FileInfo;
@@ -33,6 +36,7 @@ import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.PhotoState;
 import com.gongpingjia.carplay.bean.User;
+import com.gongpingjia.carplay.util.MD5Util;
 import com.gongpingjia.carplay.util.Utils;
 import com.gongpingjia.carplay.view.NestedGridView;
 import com.gongpingjia.carplay.view.dialog.CommonDialog;
@@ -52,10 +56,9 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
 
     private static final int REQUEST_DESTINATION = 2;
 
-    private Button mFinishBtn, mFinishInviteBtn;
+    private Button mSaveBtn;;
 
-    private View mTypeLayout, mDescriptionLayout, mDestimationLayout, mStartTimeLayout, mEndTimeLayout, mFeeLayout,
-            mSeatLayout;
+    private View mTypeLayout, mDescriptionLayout, mDestimationLayout, mStartTimeLayout, mEndTimeLayout, mFeeLayout;
 
     private TextView mTypeText, mDescriptionText, mStartTimeText, mEndTimeText, mFeeText, mDestimationText;
 
@@ -88,9 +91,11 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
     private String mLocation;
 
     // 开始时间默认为当前的时间戳
-    private long mStartTimeStamp = System.currentTimeMillis();
+    private long mStartTimeStamp;
 
     private long mEndTimeStamp = 0;
+
+    private String mActiveId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,9 +107,17 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                for(PhotoState state:mPhotoStates){
-                    
+                Iterator<PhotoState> iterator = mPhotoStates.iterator();
+                while (iterator.hasNext()) {
+                    PhotoState state = iterator.next();
+                    if (state.isChecked()) {
+                        // 去除图片id
+                        mPicIds.remove(mPhotoStates.indexOf(state));
+                        // 删除选中图片
+                        iterator.remove();
+                    }
                 }
+                mImageAdapter.notifyDataSetChanged();
             }
         });
     }
@@ -113,7 +126,7 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
     public void initView() {
         // TODO Auto-generated method stub
 
-        setTitle("创建活动");
+        setTitle("编辑活动");
 
         mPicIds = new ArrayList<String>();
         mFeeOptions = new ArrayList<String>();
@@ -143,7 +156,6 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
         mStartTimeLayout = findViewById(R.id.layout_start_time);
         mEndTimeLayout = findViewById(R.id.layout_end_time);
         mFeeLayout = findViewById(R.id.layout_fee);
-        mSeatLayout = findViewById(R.id.layout_seats);
 
         // 初始化开始时间,默认为当前的时间
         mStartTimeText.setText(Utils.getDate());
@@ -153,28 +165,46 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
         mDestimationLayout.setOnClickListener(this);
         mStartTimeLayout.setOnClickListener(this);
         mEndTimeLayout.setOnClickListener(this);
-        mSeatLayout.setOnClickListener(this);
         mFeeLayout.setOnClickListener(this);
 
         mCacheDir = new File(getExternalCacheDir(), "CarPlay");
         mCacheDir.mkdirs();
 
-        mFinishBtn = (Button) findViewById(R.id.btn_finish);
-        mFinishInviteBtn = (Button) findViewById(R.id.btn_finish_invite);
+        mSaveBtn = (Button) findViewById(R.id.btn_save);
         mPhotoGridView = (NestedGridView) findViewById(R.id.gv_photo);
 
-        mFinishBtn.setOnClickListener(this);
-        mFinishInviteBtn.setOnClickListener(this);
+        mSaveBtn.setOnClickListener(this);
 
         mPhotoStates = new ArrayList<PhotoState>();
         mLastPhoto = new PhotoState();
         mLastPhoto.setLast(true);
         mLastPhoto.setChecked(false);
-        mPhotoStates.add(mLastPhoto);
+
         mImageAdapter = new ImageAdapter(this, mPhotoStates);
 
-        mPhotoGridView.setAdapter(mImageAdapter);
+        /*
+         * DhNet net = new DhNet(API.login); net.addParam("phone",
+         * "18951650020"); net.addParam("password",
+         * MD5Util.string2MD5("123456")); net.doPost(new NetTask(self) {
+         * 
+         * @Override public void doInUI(Response response, Integer transfer) {
+         * // TODO Auto-generated method stub if (response.isSuccess()) {
+         * JSONObject jo = response.jSONFrom("data"); User user =
+         * User.getInstance(); user.setUserId(JSONUtil.getString(jo, "userId"));
+         * user.setToken(JSONUtil.getString(jo, "token")); showToast("登陆成功");
+         * 
+         * DhNet net = new DhNet(
+         * "http://cwapi.gongpingjia.com/v1/activity/55838b12-7039-41e5-9150-6dd154de961b/info?userId=846de312-306c-4916-91c1-a5e69b158014&token=750dd49c-6129-4a9a-9558-27fa74fc4ce7"
+         * ); net.doGet(new NetTask(self) {
+         * 
+         * @Override public void doInUI(Response response, Integer transfer) {
+         * // TODO Auto-generated method stub if (response.isSuccess()) {
+         * initDatas(response.jSON()); } } });
+         * 
+         * } else { showToast(response.msg); } } });
+         */
 
+        initDatas();
         mPhotoGridView.setOnItemClickListener(new OnItemClickListener() {
 
             @Override
@@ -184,12 +214,68 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
                     mCurPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg").getAbsolutePath();
                     PhotoUtil.getPhoto(self, Constant.TAKE_PHOTO, Constant.PICK_PHOTO, new File(mCurPath));
                 } else {
-                    mPhotoStates.get(position).setChecked(true);
+                    if (mPhotoStates.get(position).isChecked()) {
+                        mPhotoStates.get(position).setChecked(false);
+                    } else {
+                        mPhotoStates.get(position).setChecked(true);
+                    }
                     mImageAdapter.notifyDataSetChanged();
                 }
             }
         });
 
+    }
+
+    private void initDatas() {
+        Intent it = getIntent();
+        String json = it.getStringExtra("json");
+
+        if (json != null) {
+            try {
+                JSONObject jo = new JSONObject(json);
+                JSONObject data = jo.getJSONObject("data");
+                mActiveId = data.getString("activityId");
+                String location = data.getString("location");
+                String introduction = data.getString("introduction");
+                long startTime = data.getLong("start");
+                long endTime = data.getLong("end");
+                String pay = data.getString("pay");
+                String type = data.getString("type");
+
+                mStartTimeStamp = startTime;
+                mEndTimeStamp = endTime;
+                mLocation = location;
+
+                SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd HH:mm");
+                mDescriptionText.setText(introduction);
+                mTypeText.setText(type);
+                mFeeText.setText(pay);
+                mDestimationText.setText(location);
+                mStartTimeText.setText(format.format(startTime));
+                if (endTime != 0) {
+                    mEndTimeText.setText(format.format(endTime));
+                } else {
+                    mEndTimeText.setText("不确定");
+                }
+
+                JSONArray pics = data.getJSONArray("cover");
+                for (int i = 0; i < pics.length(); i++) {
+                    JSONObject pic = pics.getJSONObject(i);
+                    String picId = pic.getString("coverId");
+                    mPicIds.add(picId);
+                    PhotoState state = new PhotoState();
+                    state.setChecked(false);
+                    state.setLast(false);
+                    state.setPath(pic.getString("thumbnail_pic"));
+                    mPhotoStates.add(state);
+                }
+                mPhotoStates.add(mLastPhoto);
+                mImageAdapter = new ImageAdapter(this, mPhotoStates);
+                mPhotoGridView.setAdapter(mImageAdapter);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -262,7 +348,7 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
             });
             dlg.show();
             break;
-        case R.id.btn_finish:
+        case R.id.btn_save:
             if (mTypeText.getText().toString().equals("")) {
                 showToast("请选择活动");
                 return;
@@ -272,7 +358,8 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
                 return;
             }
             User user = User.getInstance();
-            mDhNet = new DhNet(API.createActive + "userId=" + user.getUserId() + "&token=" + user.getToken());
+            mDhNet = new DhNet(API.editActive + mActiveId + "/?userId=" + user.getUserId() + "&token="
+                    + user.getToken());
             mDhNet.addParam("type", mTypeText.getText().toString());
             mDhNet.addParam("introduction", mDescriptionText.getText().toString());
             JSONArray array = new JSONArray(mPicIds);
@@ -296,7 +383,7 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
                 public void doInUI(Response response, Integer transfer) {
                     // TODO Auto-generated method stub
                     if (response.isSuccess()) {
-                        showToast("发布成功");
+                        showToast("修改成功");
                     } else {
                         try {
                             Log.e("err", response.jSON().getString("errmsg"));
@@ -345,6 +432,7 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
                     public void doInUI(Response response, Integer transfer) {
                         // TODO Auto-generated method stub
                         if (response.isSuccess()) {
+                            // 上传成功的情况下才显示图片
                             JSONObject jo = response.jSONFrom("data");
                             try {
                                 String picId = jo.getString("photoId");
@@ -352,30 +440,28 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
+                            mPhotoStates.remove(mPhotoStates.size() - 1);
+                            PhotoState state = new PhotoState();
+                            state.setChecked(true);
+                            state.setLast(false);
+                            state.setPath(mCurPath);
+                            mPhotoStates.add(state);
+                            if (mPhotoStates.size() == 9) {
+                                mImageAdapter.notifyDataSetChanged();
+                                return;
+                            }
+                            mPhotoStates.add(mLastPhoto);
+                            mImageAdapter.notifyDataSetChanged();
                             showToast("图片上传成功");
                         } else {
                             try {
-                                showToast(response.jSON().getString("errmsg"));
+                                showToast(response.jSON().getString("errmsg") + "\n请重新上传!");
                             } catch (JSONException e) {
-                                // TODO Auto-generated catch block
                                 e.printStackTrace();
                             }
                         }
                     }
                 });
-
-                mPhotoStates.remove(mPhotoStates.size() - 1);
-                PhotoState state = new PhotoState();
-                state.setChecked(true);
-                state.setLast(false);
-                state.setPath(mCurPath);
-                mPhotoStates.add(state);
-                if (mPhotoStates.size() == 9) {
-                    mImageAdapter.notifyDataSetChanged();
-                    return;
-                }
-                mPhotoStates.add(mLastPhoto);
-                mImageAdapter.notifyDataSetChanged();
                 break;
             }
         }

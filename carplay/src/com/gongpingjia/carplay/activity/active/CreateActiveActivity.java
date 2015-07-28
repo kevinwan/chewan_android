@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.duohuo.dhroid.net.DhNet;
+import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.net.upload.FileInfo;
@@ -33,6 +34,7 @@ import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.PhotoState;
 import com.gongpingjia.carplay.bean.User;
+import com.gongpingjia.carplay.util.MD5Util;
 import com.gongpingjia.carplay.util.Utils;
 import com.gongpingjia.carplay.view.NestedGridView;
 import com.gongpingjia.carplay.view.dialog.CommonDialog;
@@ -101,27 +103,6 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_creat_active);
-
-        // DhNet net = new DhNet(API.login);
-        // net.addParam("phone", "18951650020");
-        // net.addParam("password", MD5Util.string2MD5("123456"));
-        // net.doPost(new NetTask(self) {
-        //
-        // @Override
-        // public void doInUI(Response response, Integer transfer) {
-        // // TODO Auto-generated method stub
-        // if (response.isSuccess()) {
-        // JSONObject jo = response.jSONFrom("data");
-        // User user = User.getInstance();
-        // user.setUserId(JSONUtil.getString(jo, "userId"));
-        // user.setToken(JSONUtil.getString(jo, "token"));
-        // showToast("登陆成功");
-        // } else {
-        // showToast(response.msg);
-        // }
-        // }
-        // });
-
     }
 
     @Override
@@ -179,33 +160,52 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
         mFinishInviteBtn = (Button) findViewById(R.id.btn_finish_invite);
         mPhotoGridView = (NestedGridView) findViewById(R.id.gv_photo);
 
-        // 获取可用座位数
-        mDhNet = new DhNet(API.availableSeat + mUser.getUserId() + "/seats?token=" + mUser.getToken());
-        mDhNet.doGet(new NetTask(self) {
+        DhNet net = new DhNet(API.login);
+        net.addParam("phone", "18951650020");
+        net.addParam("password", MD5Util.string2MD5("123456"));
+        net.doPost(new NetTask(self) {
 
             @Override
             public void doInUI(Response response, Integer transfer) {
                 // TODO Auto-generated method stub
                 if (response.isSuccess()) {
-                    JSONObject json = response.jSONFrom("data");
-                    try {
-                        if (json.getInt("isAuthenticated") == 1) {
-                            // 认证车主
-                            int minSeat = json.getInt("minValue");
-                            int maxSeat = json.getInt("maxValue");
-                            for (int i = minSeat; i <= maxSeat; i++) {
-                                mSeatOptions.add(String.valueOf(i));
+                    JSONObject jo = response.jSONFrom("data");
+                    User user = User.getInstance();
+                    user.setUserId(JSONUtil.getString(jo, "userId"));
+                    user.setToken(JSONUtil.getString(jo, "token"));
+                    showToast("登陆成功");
+                    // 获取可用座位数
+                    mDhNet = new DhNet(API.availableSeat + mUser.getUserId() + "/seats?token=" + mUser.getToken());
+                    mDhNet.doGet(new NetTask(self) {
+
+                        @Override
+                        public void doInUI(Response response, Integer transfer) {
+                            // TODO Auto-generated method stub
+                            if (response.isSuccess()) {
+                                JSONObject json = response.jSONFrom("data");
+                                try {
+                                    if (json.getInt("isAuthenticated") == 1) {
+                                        // 认证车主
+                                        int minSeat = json.getInt("minValue");
+                                        int maxSeat = json.getInt("maxValue");
+                                        for (int i = minSeat; i <= maxSeat; i++) {
+                                            mSeatOptions.add(String.valueOf(i));
+                                        }
+                                    } else {
+                                        // 未认证
+                                        mSeatHintText.setText("邀请人数");
+                                        mSeatOptions.add("1");
+                                        mSeatOptions.add("2");
+                                    }
+                                } catch (JSONException e) {
+                                    // TODO Auto-generated catch block
+                                    e.printStackTrace();
+                                }
                             }
-                        } else {
-                            // 未认证
-                            mSeatHintText.setText("邀请人数");
-                            mSeatOptions.add("1");
-                            mSeatOptions.add("2");
                         }
-                    } catch (JSONException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
+                    });
+                } else {
+                    showToast(response.msg);
                 }
             }
         });
@@ -232,7 +232,7 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                     PhotoUtil.getPhoto(self, Constant.TAKE_PHOTO, Constant.PICK_PHOTO, new File(mCurPath));
                 } else {
                     mPhotoStates.remove(position);
-                    if (mPhotoStates.size() == 8) {
+                    if (mPhotoStates.size() == 8 && !mPhotoStates.get(7).isLast()) {
                         mPhotoStates.add(mLastPhoto);
                     }
                     mImageAdapter.notifyDataSetChanged();
@@ -421,30 +421,29 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
+                            mPhotoStates.remove(mPhotoStates.size() - 1);
+                            PhotoState state = new PhotoState();
+                            state.setChecked(true);
+                            state.setLast(false);
+                            state.setPath(mCurPath);
+                            mPhotoStates.add(state);
+                            if (mPhotoStates.size() == 9) {
+                                mImageAdapter.notifyDataSetChanged();
+                                return;
+                            }
+                            mPhotoStates.add(mLastPhoto);
+                            mImageAdapter.notifyDataSetChanged();
                             showToast("图片上传成功");
                         } else {
                             try {
-                                showToast(response.jSON().getString("errmsg"));
+                                showToast(response.jSON().getString("errmsg") + " 图片上传失败,请重新选择上传");
                             } catch (JSONException e) {
-                                // TODO Auto-generated catch block
                                 e.printStackTrace();
                             }
                         }
                     }
                 });
 
-                mPhotoStates.remove(mPhotoStates.size() - 1);
-                PhotoState state = new PhotoState();
-                state.setChecked(true);
-                state.setLast(false);
-                state.setPath(mCurPath);
-                mPhotoStates.add(state);
-                if (mPhotoStates.size() == 9) {
-                    mImageAdapter.notifyDataSetChanged();
-                    return;
-                }
-                mPhotoStates.add(mLastPhoto);
-                mImageAdapter.notifyDataSetChanged();
                 break;
             }
         }

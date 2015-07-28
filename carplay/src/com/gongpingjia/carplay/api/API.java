@@ -32,4 +32,6 @@ public class API {
 
     public static final String availableSeat = CWBaseurl + "/user/";
 
+    public static final String editActive = CWBaseurl + "/activity/";
+
 }

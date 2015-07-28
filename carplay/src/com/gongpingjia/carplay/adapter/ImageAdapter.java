@@ -12,9 +12,10 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
+import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.bean.PhotoState;
-import com.gongpingjia.carplay.util.ImageUtil;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 /*
  *@author zhanglong
@@ -58,30 +59,41 @@ public class ImageAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         // TODO Auto-generated method stub
         PhotoState photo = mDatas.get(position);
-        if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.griditem_photo, null);
-            GridView.LayoutParams params = new GridView.LayoutParams(200, 200);
-            convertView.setLayoutParams(params);
-        }
-
-        ImageView imgView = ViewHolder.getView(convertView, R.id.imgView_photo);
-        ImageView imgVisible = ViewHolder.getView(convertView, R.id.imgView_visible);
+        ViewHolder holder = new ViewHolder();
+        View view = mInflater.inflate(R.layout.griditem_photo, null);
+        GridView.LayoutParams params = new GridView.LayoutParams(200, 200);
+        view.setLayoutParams(params);
+        holder.imgContent = (ImageView) view.findViewById(R.id.imgView_photo);
+        holder.imgLabel = (ImageView) view.findViewById(R.id.imgView_visible);
+        convertView = view;
 
         if (photo.isLast()) {
             // 最后一张照片
-            imgView.setScaleType(ScaleType.CENTER);
-            imgView.setImageResource(R.drawable.icon_add_photo);
-            imgView.setBackgroundColor(Color.parseColor("#CCD0D9"));
-            imgVisible.setVisibility(View.GONE);
+            holder.imgContent.setScaleType(ScaleType.CENTER);
+            holder.imgContent.setImageResource(R.drawable.icon_add_photo);
+            holder.imgContent.setBackgroundColor(Color.parseColor("#CCD0D9"));
+            holder.imgLabel.setVisibility(View.GONE);
         } else {
             if (photo.isChecked()) {
-                imgVisible.setVisibility(View.VISIBLE);
+                holder.imgLabel.setVisibility(View.VISIBLE);
             } else {
-                imgView.setVisibility(View.GONE);
+                holder.imgLabel.setVisibility(View.GONE);
             }
-            imgView.setScaleType(ScaleType.CENTER_CROP);
-            imgView.setImageBitmap(ImageUtil.getBitmap(photo.getPath()));
+            holder.imgContent.setScaleType(ScaleType.CENTER_CROP);
+            if (photo.getPath().startsWith("http")) {
+                ImageLoader.getInstance().displayImage(photo.getPath(), holder.imgContent,
+                        CarPlayValueFix.optionsDefault);
+            } else {
+                ImageLoader.getInstance().displayImage("file://" + photo.getPath(), holder.imgContent,
+                        CarPlayValueFix.optionsDefault);
+            }
         }
         return convertView;
+    }
+
+    class ViewHolder {
+        ImageView imgContent;
+
+        ImageView imgLabel;
     }
 }

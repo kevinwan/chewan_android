@@ -35,7 +35,7 @@
 
             <LinearLayout style="@style/linearlayout" >
 
-                <ImageViews
+                <ImageView
                     style="@style/icon_style_small"
                     android:src="@drawable/e_type" />
 
@@ -73,7 +73,7 @@
                 android:orientation="vertical" >
 
                 <LinearLayout
-                    android:id="@+id/layout_"
+                    android:id="@+id/layout_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="bottom"
@@ -101,11 +101,10 @@
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/tv_active_description"
+                    android:id="@+id/tv_description"
                     style="@style/text_blacklight_small"
                     android:layout_marginTop="7dp"
                     android:lineSpacingExtra="1.5dp"
-                    android:text="参加的人员需准备一些必备的个人物资,尽量早点到达出发点,如果迟到我们不等,如果有什么个人问题,可以拨打我手机18502504444"
                     android:textScaleX="1.1" />
             </LinearLayout>
 
@@ -167,8 +166,7 @@
                         style="@style/text_blacklight_medium"
                         android:layout_width="wrap_content"
                         android:layout_height="60dp"
-                        android:gravity="center_vertical"
-                        android:text="2015年7月16日 18:03" />
+                        android:gravity="center_vertical" />
                 </LinearLayout>
             </LinearLayout>
 

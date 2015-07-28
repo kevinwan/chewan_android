@@ -61,8 +61,6 @@
         </activity>
         <activity android:name=".activity.msg.ChatActivity" >
         </activity>
-        <activity android:name=".activity.active.EditActiveActivity" >
-        </activity>
         <activity android:name=".activity.msg.NewMessageActivity" >
         </activity>
         <activity android:name=".activity.my.ParticipateApplicationActivity" >
@@ -92,11 +90,13 @@
         </activity>
         <activity android:name=".activity.active.ActiveDescriptionActivity" >
         </activity>
-        <activity android:name=".activity.active.CreateActiveActivity" />
+        <!-- <activity android:name=".activity.active.CreateActiveActivity" /> -->
         <activity android:name=".activity.active.SearchPlaceActivity" />
         <activity android:name=".activity.my.PersonDetailActivity" >
         </activity>
-        <activity android:name=".activity.main.SplashActivity" >
+        <activity
+            android:name=".activity.active.EditActiveActivity"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
