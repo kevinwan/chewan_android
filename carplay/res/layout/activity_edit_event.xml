@@ -14,21 +14,28 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <LinearLayout
+            <com.gongpingjia.carplay.view.NestedGridView
+                android:id="@+id/gv_photo"
                 android:layout_width="match_parent"
-                android:layout_height="170dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="15dp"
-                android:orientation="vertical" >
-            </LinearLayout>
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:columnWidth="90dp"
+                android:gravity="center"
+                android:horizontalSpacing="10dp"
+                android:numColumns="auto_fit"
+                android:padding="10dp"
+                android:stretchMode="columnWidth"
+                android:verticalSpacing="10dp" >
+            </com.gongpingjia.carplay.view.NestedGridView>
+
+            <View style="@style/line" />
 
             <LinearLayout style="@style/linearlayout" >
 
-                <ImageView
+                <ImageViews
                     style="@style/icon_style_small"
                     android:src="@drawable/e_type" />
 
@@ -37,12 +44,14 @@
                     android:text="活动类型" />
 
                 <LinearLayout
+                    android:id="@+id/layout_active_type"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="right|center_vertical"
                     android:orientation="horizontal" >
 
                     <TextView
+                        android:id="@+id/tv_active_type"
                         style="@style/text_blacklight_medium"
                         android:layout_width="wrap_content"
                         android:layout_height="60dp"
@@ -59,40 +68,12 @@
 
             <View style="@style/line" />
 
-            <LinearLayout style="@style/linearlayout" >
-
-                <ImageView
-                    style="@style/icon_style_small"
-                    android:src="@drawable/e_introduce" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="right|center_vertical"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        style="@style/text_blacklight_medium"
-                        android:layout_width="wrap_content"
-                        android:layout_height="60dp"
-                        android:layout_marginRight="5dp"
-                        android:gravity="center_vertical"
-                        android:text="南京将军山一日游" />
-
-                    <ImageView
-                        android:layout_width="18dp"
-                        android:layout_height="25dp"
-                        android:src="@drawable/right_btn" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <View style="@style/line" />
-
             <LinearLayout
                 style="@style/linearlayout"
                 android:orientation="vertical" >
 
                 <LinearLayout
+                    android:id="@+id/layout_"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="bottom"
@@ -120,18 +101,21 @@
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/tv_active_description"
                     style="@style/text_blacklight_small"
                     android:layout_marginTop="7dp"
                     android:lineSpacingExtra="1.5dp"
-                    android:textScaleX="1.1"
-                    android:text="参加的人员需准备一些必备的个人物资,尽量早点到达出发点,如果迟到我们不等,如果有什么个人问题,可以拨打我手机18502504444" />
+                    android:text="参加的人员需准备一些必备的个人物资,尽量早点到达出发点,如果迟到我们不等,如果有什么个人问题,可以拨打我手机18502504444"
+                    android:textScaleX="1.1" />
             </LinearLayout>
 
             <View
                 style="@style/line"
                 android:layout_marginTop="15dp" />
 
-            <LinearLayout style="@style/linearlayout" >
+            <LinearLayout
+                android:id="@+id/layout_destination"
+                style="@style/linearlayout" >
 
                 <ImageView
                     style="@style/icon_style_small"
@@ -147,6 +131,10 @@
                     android:gravity="right|center_vertical"
                     android:orientation="horizontal" >
 
+                    <TextView
+                        android:id="@+id/tv_destination"
+                        style="@style/text_blacklight_medium" />
+
                     <ImageView
                         android:layout_width="18dp"
                         android:layout_height="25dp"
@@ -156,7 +144,9 @@
 
             <View style="@style/line" />
 
-            <LinearLayout style="@style/linearlayout" >
+            <LinearLayout
+                android:id="@+id/layout_start_time"
+                style="@style/linearlayout" >
 
                 <ImageView
                     style="@style/icon_style_small"
@@ -173,18 +163,20 @@
                     android:orientation="horizontal" >
 
                     <TextView
+                        android:id="@+id/tv_start_time"
                         style="@style/text_blacklight_medium"
                         android:layout_width="wrap_content"
                         android:layout_height="60dp"
                         android:gravity="center_vertical"
                         android:text="2015年7月16日 18:03" />
-                    
                 </LinearLayout>
             </LinearLayout>
 
             <View style="@style/line" />
-            
-            <LinearLayout style="@style/linearlayout" >
+
+            <LinearLayout
+                android:id="@+id/layout_end_time"
+                style="@style/linearlayout" >
 
                 <ImageView
                     style="@style/icon_style_small"
@@ -201,17 +193,20 @@
                     android:orientation="horizontal" >
 
                     <TextView
+                        android:id="@+id/tv_end_time"
                         style="@style/text_blacklight_medium"
                         android:layout_width="wrap_content"
                         android:layout_height="60dp"
                         android:gravity="center_vertical"
                         android:text="不确定" />
-
                 </LinearLayout>
             </LinearLayout>
-             <View style="@style/line" />
-            
-            <LinearLayout style="@style/linearlayout" >
+
+            <View style="@style/line" />
+
+            <LinearLayout
+                android:id="@+id/layout_fee"
+                style="@style/linearlayout" >
 
                 <ImageView
                     style="@style/icon_style_small"
@@ -228,29 +223,29 @@
                     android:orientation="horizontal" >
 
                     <TextView
+                        android:id="@+id/tv_fee"
                         style="@style/text_blacklight_medium"
                         android:layout_width="wrap_content"
                         android:layout_height="60dp"
                         android:gravity="center_vertical"
                         android:text="AA制" />
-
                 </LinearLayout>
             </LinearLayout>
-            
-             <View style="@style/line" />
-             
-             <Button  android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:text="保存"
-                    android:layout_marginTop="20dp"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_medium"
-                    android:background="@drawable/button_zc_bg"
-                    android:layout_marginBottom="20dp"
-                    />
-             
+
+            <View style="@style/line" />
+
+            <Button
+                android:id="@+id/btn_save"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button_zc_bg"
+                android:text="保存"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_medium" />
         </LinearLayout>
     </ScrollView>
 

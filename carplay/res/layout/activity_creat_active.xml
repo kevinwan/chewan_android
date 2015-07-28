@@ -51,34 +51,43 @@
             <View style="@style/line" />
 
             <LinearLayout
-                android:id="@+id/layout_description"
-                style="@style/linearlayout" >
-
-                <ImageView
-                    style="@style/icon_style_small"
-                    android:src="@drawable/e_introduce" />
-
-                <TextView
-                    style="@style/text_grey_medium"
-                    android:text="请输入活动介绍" />
+                style="@style/linearlayout"
+                android:orientation="vertical" >
 
                 <LinearLayout
+                    android:id="@+id/layout_description"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:gravity="right|center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="10dp" >
-
-                    <TextView
-                        android:id="@+id/tv_description"
-                        style="@style/text_blacklight_medium"
-                        android:singleLine="true" />
+                    android:layout_height="40dp"
+                    android:gravity="bottom"
+                    android:orientation="horizontal" >
 
                     <ImageView
-                        android:layout_width="18dp"
-                        android:layout_height="25dp"
-                        android:src="@drawable/right_btn" />
+                        style="@style/icon_style_small"
+                        android:src="@drawable/e_introduce" />
+
+                    <TextView
+                        style="@style/text_grey_medium"
+                        android:text="请输入活动介绍" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right" >
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="25dp"
+                            android:src="@drawable/right_btn" />
+                    </LinearLayout>
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_description"
+                    style="@style/text_blacklight_small"
+                    android:layout_marginTop="7dp"
+                    android:lineSpacingExtra="1.5dp"
+                    android:text="我们一起去踢足球吧"
+                    android:textScaleX="1.1" />
             </LinearLayout>
 
             <View style="@style/line" />
@@ -243,6 +252,7 @@
                     android:src="@drawable/e_seating" />
 
                 <TextView
+                    android:id="@+id/tv_seat_hint"
                     style="@style/text_grey_medium"
                     android:text="座位数" />
 
@@ -260,7 +270,7 @@
                         android:layout_height="60dp"
                         android:layout_marginRight="5dp"
                         android:gravity="center_vertical"
-                        android:text="1" />
+                        android:text="0" />
 
                     <ImageView
                         android:layout_width="25dp"

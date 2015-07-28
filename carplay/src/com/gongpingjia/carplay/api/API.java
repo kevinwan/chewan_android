@@ -28,6 +28,8 @@ public class API {
 
     public static final String activeList = CWBaseurl + "/activity/list";
 
-    public static final String createActive = CWBaseurl + "activity/register?";
+    public static final String createActive = CWBaseurl + "/activity/register?";
+
+    public static final String availableSeat = CWBaseurl + "/user/";
 
 }

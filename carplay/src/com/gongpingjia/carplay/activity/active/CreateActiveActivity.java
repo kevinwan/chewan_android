@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import net.duohuo.dhroid.net.DhNet;
-import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.net.upload.FileInfo;
@@ -34,7 +33,6 @@ import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.PhotoState;
 import com.gongpingjia.carplay.bean.User;
-import com.gongpingjia.carplay.util.MD5Util;
 import com.gongpingjia.carplay.util.Utils;
 import com.gongpingjia.carplay.view.NestedGridView;
 import com.gongpingjia.carplay.view.dialog.CommonDialog;
@@ -59,7 +57,8 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
     private View mTypeLayout, mDescriptionLayout, mDestimationLayout, mStartTimeLayout, mEndTimeLayout, mFeeLayout,
             mSeatLayout;
 
-    private TextView mTypeText, mDescriptionText, mStartTimeText, mEndTimeText, mFeeText, mSeatText, mDestimationText;
+    private TextView mTypeText, mDescriptionText, mStartTimeText, mEndTimeText, mFeeText, mSeatText, mDestimationText,
+            mSeatHintText;
 
     private NestedGridView mPhotoGridView;
 
@@ -96,12 +95,38 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
 
     private long mEndTimeStamp = 0;
 
+    private User mUser = User.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_creat_active);
-        setTitle("创建活动");
 
+        // DhNet net = new DhNet(API.login);
+        // net.addParam("phone", "18951650020");
+        // net.addParam("password", MD5Util.string2MD5("123456"));
+        // net.doPost(new NetTask(self) {
+        //
+        // @Override
+        // public void doInUI(Response response, Integer transfer) {
+        // // TODO Auto-generated method stub
+        // if (response.isSuccess()) {
+        // JSONObject jo = response.jSONFrom("data");
+        // User user = User.getInstance();
+        // user.setUserId(JSONUtil.getString(jo, "userId"));
+        // user.setToken(JSONUtil.getString(jo, "token"));
+        // showToast("登陆成功");
+        // } else {
+        // showToast(response.msg);
+        // }
+        // }
+        // });
+
+    }
+
+    @Override
+    public void initView() {
+        setTitle("创建活动");
         mPicIds = new ArrayList<String>();
         mFeeOptions = new ArrayList<String>();
         mTypeOptions = new ArrayList<String>();
@@ -119,9 +144,6 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
         mTypeOptions.add("拼车");
         mTypeOptions.add("代驾");
 
-        mSeatOptions.add("1");
-        mSeatOptions.add("2");
-
         mTypeText = (TextView) findViewById(R.id.tv_active_type);
         mDescriptionText = (TextView) findViewById(R.id.tv_description);
         mStartTimeText = (TextView) findViewById(R.id.tv_start_time);
@@ -129,6 +151,7 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
         mFeeText = (TextView) findViewById(R.id.tv_fee);
         mSeatText = (TextView) findViewById(R.id.tv_seat);
         mDestimationText = (TextView) findViewById(R.id.tv_destination);
+        mSeatHintText = (TextView) findViewById(R.id.tv_seat_hint);
 
         mTypeLayout = findViewById(R.id.layout_active_type);
         mDescriptionLayout = findViewById(R.id.layout_description);
@@ -155,6 +178,37 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
         mFinishBtn = (Button) findViewById(R.id.btn_finish);
         mFinishInviteBtn = (Button) findViewById(R.id.btn_finish_invite);
         mPhotoGridView = (NestedGridView) findViewById(R.id.gv_photo);
+
+        // 获取可用座位数
+        mDhNet = new DhNet(API.availableSeat + mUser.getUserId() + "/seats?token=" + mUser.getToken());
+        mDhNet.doGet(new NetTask(self) {
+
+            @Override
+            public void doInUI(Response response, Integer transfer) {
+                // TODO Auto-generated method stub
+                if (response.isSuccess()) {
+                    JSONObject json = response.jSONFrom("data");
+                    try {
+                        if (json.getInt("isAuthenticated") == 1) {
+                            // 认证车主
+                            int minSeat = json.getInt("minValue");
+                            int maxSeat = json.getInt("maxValue");
+                            for (int i = minSeat; i <= maxSeat; i++) {
+                                mSeatOptions.add(String.valueOf(i));
+                            }
+                        } else {
+                            // 未认证
+                            mSeatHintText.setText("邀请人数");
+                            mSeatOptions.add("1");
+                            mSeatOptions.add("2");
+                        }
+                    } catch (JSONException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
 
         mFinishBtn.setOnClickListener(this);
         mFinishInviteBtn.setOnClickListener(this);
@@ -185,32 +239,6 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                 }
             }
         });
-
-        // DhNet net = new DhNet(API.login);
-        // net.addParam("phone", "18951650020");
-        // net.addParam("password", MD5Util.string2MD5("123456"));
-        // net.doPost(new NetTask(self) {
-        //
-        // @Override
-        // public void doInUI(Response response, Integer transfer) {
-        // // TODO Auto-generated method stub
-        // if (response.isSuccess()) {
-        // JSONObject jo = response.jSONFrom("data");
-        // User user = User.getInstance();
-        // user.setUserId(JSONUtil.getString(jo, "userId"));
-        // user.setToken(JSONUtil.getString(jo, "token"));
-        // showToast("登陆成功");
-        // } else {
-        // showToast(response.msg);
-        // }
-        // }
-        // });
-
-    }
-
-    @Override
-    public void initView() {
-        // TODO Auto-generated method stub
 
     }
 

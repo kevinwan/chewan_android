@@ -80,7 +80,7 @@ public class MapActivity extends CarPlayBaseActivity implements OnMarkerClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_active_position);
+        setContentView(R.layout.activity_map);
 
         mMapView = (MapView) findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
