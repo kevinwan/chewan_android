@@ -42,6 +42,7 @@ import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.Utils;
 import com.gongpingjia.carplay.view.NestedGridView;
 import com.gongpingjia.carplay.view.dialog.CommonDialog;
+import com.gongpingjia.carplay.view.dialog.CommonDialog.OnCommonDialogItemClickListener;
 import com.gongpingjia.carplay.view.dialog.DateDialog;
 import com.gongpingjia.carplay.view.dialog.DateDialog.OnDateResultListener;
 
@@ -248,179 +249,153 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
     }
     
     @Override
-    public void onClick(View v)
-    {
+    public void onClick(View v) {
         // TODO Auto-generated method stub
         int id = v.getId();
         Intent it = null;
         CommonDialog dlg = null;
         DateDialog date = null;
-        switch (id)
-        {
-        
-            case R.id.layout_active_type:
-                dlg = new CommonDialog(self, mTypeOptions, "请选择活动");
-                dlg.setOnItemClickListener(new CommonDialog.OnItemClickListener()
-                {
-                    
-                    @Override
-                    public void onItemClickListener(int which)
-                    {
-                        // TODO Auto-generated method stub
-                        mTypeText.setText(mTypeOptions.get(which));
-                    }
-                });
-                dlg.show();
-                break;
-            
-            case R.id.layout_description:
-                it = new Intent(self, ActiveDescriptionActivity.class);
-                startActivityForResult(it, REQUEST_DESCRIPTION);
-                break;
-            
-            case R.id.layout_destination:
-                it = new Intent(self, MapActivity.class);
-                startActivityForResult(it, REQUEST_DESTINATION);
-                break;
-            
-            case R.id.layout_start_time:
-                date = new DateDialog();
-                date.setOnDateResultListener(new OnDateResultListener()
-                {
-                    
-                    @Override
-                    public void result(String date, long datetime, int year, int month, int day)
-                    {
-                        // TODO Auto-generated method stub
-                        mStartTimeText.setText(date);
-                        mStartTimeStamp = datetime;
-                    }
-                });
-                date.show(self);
-                break;
-            case R.id.layout_end_time:
-                date = new DateDialog();
-                date.setOnDateResultListener(new OnDateResultListener()
-                {
-                    
-                    @Override
-                    public void result(String date, long datetime, int year, int month, int day)
-                    {
-                        // TODO Auto-generated method stub
-                        mEndTimeText.setText(date);
-                        mEndTimeStamp = datetime;
-                    }
-                });
-                date.show(self);
-                break;
-            case R.id.layout_fee:
-                dlg = new CommonDialog(self, mFeeOptions, "请选择付费方式");
-                dlg.setOnItemClickListener(new CommonDialog.OnItemClickListener()
-                {
-                    
-                    @Override
-                    public void onItemClickListener(int which)
-                    {
-                        // TODO Auto-generated method stub
-                        mFeeText.setText(mFeeOptions.get(which));
-                    }
-                });
-                dlg.show();
-                break;
-            case R.id.layout_seats:
-                dlg = new CommonDialog(self, mSeatOptions, "请选择提供座位数");
-                dlg.setOnItemClickListener(new CommonDialog.OnItemClickListener()
-                {
-                    
-                    @Override
-                    public void onItemClickListener(int which)
-                    {
-                        // TODO Auto-generated method stub
-                        mSeatText.setText(mSeatOptions.get(which));
-                    }
-                });
-                dlg.show();
-                break;
-            
-            case R.id.btn_finish:
-                if (mTypeText.getText().toString().equals(""))
-                {
-                    showToast("请选择活动");
-                    return;
+        switch (id) {
+
+        case R.id.layout_active_type:
+            dlg = new CommonDialog(self, mTypeOptions, "请选择活动");
+            dlg.setOnDialogItemClickListener(new OnCommonDialogItemClickListener() {
+
+                @Override
+                public void onDialogItemClick(int position) {
+                    // TODO Auto-generated method stub
+                    mTypeText.setText(mTypeOptions.get(position));
                 }
-                if (mPicIds.size() == 0)
-                {
-                    showToast("请至少选择一张图片");
-                    return;
+            });
+            dlg.show();
+            break;
+
+        case R.id.layout_description:
+            it = new Intent(self, ActiveDescriptionActivity.class);
+            startActivityForResult(it, REQUEST_DESCRIPTION);
+            break;
+
+        case R.id.layout_destination:
+            it = new Intent(self, MapActivity.class);
+            startActivityForResult(it, REQUEST_DESTINATION);
+            break;
+
+        case R.id.layout_start_time:
+            date = new DateDialog();
+            date.setOnDateResultListener(new OnDateResultListener() {
+
+                @Override
+                public void result(String date, long datetime, int year, int month, int day) {
+                    // TODO Auto-generated method stub
+                    mStartTimeText.setText(date);
+                    mStartTimeStamp = datetime;
                 }
-                if (mDescriptionText.getText().equals(""))
-                {
-                    
+            });
+            date.show(self);
+            break;
+        case R.id.layout_end_time:
+            date = new DateDialog();
+            date.setOnDateResultListener(new OnDateResultListener() {
+
+                @Override
+                public void result(String date, long datetime, int year, int month, int day) {
+                    // TODO Auto-generated method stub
+                    mEndTimeText.setText(date);
+                    mEndTimeStamp = datetime;
                 }
-                if (mDestimationText.getText().toString().length() == 0)
-                {
-                    showToast("请选择目的地");
-                    return;
+            });
+            date.show(self);
+            break;
+        case R.id.layout_fee:
+            dlg = new CommonDialog(self, mFeeOptions, "请选择付费方式");
+            dlg.setOnDialogItemClickListener(new OnCommonDialogItemClickListener() {
+
+                @Override
+                public void onDialogItemClick(int position) {
+                    // TODO Auto-generated method stub
+                    mFeeText.setText(mFeeOptions.get(position));
                 }
-                if (mSeatText.getText().toString().length() == 0)
-                {
-                    showToast("请提供座位数");
-                    return;
+            });
+            dlg.show();
+            break;
+        case R.id.layout_seats:
+            dlg = new CommonDialog(self, mSeatOptions, "请选择提供座位数");
+            dlg.setOnDialogItemClickListener(new OnCommonDialogItemClickListener() {
+
+                @Override
+                public void onDialogItemClick(int position) {
+                    // TODO Auto-generated method stub
+                    mSeatText.setText(mSeatOptions.get(position));
                 }
-                
-                // 获取可用的座位数
-                mDhNet = new DhNet(API.createActive + "userId=" + mUser.getUserId() + "&token=" + mUser.getToken());
-                mDhNet.addParam("type", mTypeText.getText().toString());
-                mDhNet.addParam("introduction", mDescriptionText.getText().toString());
-                JSONArray array = new JSONArray(mPicIds);
-                mDhNet.addParam("cover", array);
-                mDhNet.addParam("location", mLocation);
-                mDhNet.addParam("city", mCity);
-                mDhNet.addParam("address", mDestimationText.getText().toString());
-                mDhNet.addParam("start", mStartTimeStamp);
-                mDhNet.addParam("pay", mFeeText.getText().toString());
-                mDhNet.addParam("seat", mSeatText.getText().toString());
-                if (mEndTimeStamp != 0)
-                {
-                    mDhNet.addParam("end", mEndTimeStamp);
-                }
-                
-                Map<String, Object> params = mDhNet.getParams();
-                for (String key : params.keySet())
-                {
-                    Log.e("tag", key + ": " + params.get(key));
-                }
-                mDhNet.doPostInDialog(new NetTask(this)
-                {
-                    
-                    @Override
-                    public void doInUI(Response response, Integer transfer)
-                    {
-                        // TODO Auto-generated method stub
-                        if (response.isSuccess())
-                        {
-                            showToast("发布成功");
-                        }
-                        else
-                        {
-                            try
-                            {
-                                Log.e("err", response.jSON().getString("errmsg"));
-                            }
-                            catch (JSONException e)
-                            {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
-                            }
+            });
+            dlg.show();
+            break;
+
+        case R.id.btn_finish:
+            if (mTypeText.getText().toString().equals("")) {
+                showToast("请选择活动");
+                return;
+            }
+            if (mPicIds.size() == 0) {
+                showToast("请至少选择一张图片");
+                return;
+            }
+            if (mDescriptionText.getText().equals("")) {
+
+            }
+            if (mDestimationText.getText().toString().length() == 0) {
+                showToast("请选择目的地");
+                return;
+            }
+            if (mSeatText.getText().toString().length() == 0) {
+                showToast("请提供座位数");
+                return;
+            }
+
+            // 获取可用的座位数
+            mDhNet = new DhNet(API.createActive + "userId=" + mUser.getUserId() + "&token=" + mUser.getToken());
+            mDhNet.addParam("type", mTypeText.getText().toString());
+            mDhNet.addParam("introduction", mDescriptionText.getText().toString());
+            JSONArray array = new JSONArray(mPicIds);
+            mDhNet.addParam("cover", array);
+            mDhNet.addParam("location", mLocation);
+            mDhNet.addParam("city", mCity);
+            mDhNet.addParam("address", mDestimationText.getText().toString());
+            mDhNet.addParam("start", mStartTimeStamp);
+            mDhNet.addParam("pay", mFeeText.getText().toString());
+            mDhNet.addParam("seat", mSeatText.getText().toString());
+            if (mEndTimeStamp != 0) {
+                mDhNet.addParam("end", mEndTimeStamp);
+            }
+
+            Map<String, Object> params = mDhNet.getParams();
+            for (String key : params.keySet()) {
+                Log.e("tag", key + ": " + params.get(key));
+            }
+            mDhNet.doPostInDialog(new NetTask(this) {
+
+                @Override
+                public void doInUI(Response response, Integer transfer) {
+                    // TODO Auto-generated method stub
+                    if (response.isSuccess()) {
+                        showToast("发布成功");
+                    } else {
+                        try {
+                            Log.e("err", response.jSON().getString("errmsg"));
+                        } catch (JSONException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
                         }
                     }
-                });
-                break;
-            case R.id.btn_finish_invite:
-                
-                break;
+                }
+            });
+            break;
+        case R.id.btn_finish_invite:
+
+            break;
         }
     }
+
     
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)

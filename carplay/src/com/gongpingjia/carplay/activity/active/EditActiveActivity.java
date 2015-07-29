@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 import net.duohuo.dhroid.net.DhNet;
-import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.net.upload.FileInfo;
@@ -37,10 +36,10 @@ import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.PhotoState;
 import com.gongpingjia.carplay.bean.User;
-import com.gongpingjia.carplay.util.MD5Util;
 import com.gongpingjia.carplay.util.Utils;
 import com.gongpingjia.carplay.view.NestedGridView;
 import com.gongpingjia.carplay.view.dialog.CommonDialog;
+import com.gongpingjia.carplay.view.dialog.CommonDialog.OnCommonDialogItemClickListener;
 import com.gongpingjia.carplay.view.dialog.DateDialog;
 import com.gongpingjia.carplay.view.dialog.DateDialog.OnDateResultListener;
 
@@ -288,13 +287,14 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
         
             case R.id.layout_active_type:
                 dlg = new CommonDialog(self, mTypeOptions, "请选择活动");
-                dlg.setOnItemClickListener(new CommonDialog.OnItemClickListener()
+                dlg.setOnDialogItemClickListener(new OnCommonDialogItemClickListener()
                 {
                     
                     @Override
-                    public void onItemClickListener(int which)
+                    public void onDialogItemClick(int position)
                     {
-                        mTypeText.setText(mTypeOptions.get(which));
+                        // TODO Auto-generated method stub
+                        mTypeText.setText(mTypeOptions.get(position));
                     }
                 });
                 dlg.show();
@@ -342,13 +342,14 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
                 break;
             case R.id.layout_fee:
                 dlg = new CommonDialog(self, mFeeOptions, "请选择付费方式");
-                dlg.setOnItemClickListener(new CommonDialog.OnItemClickListener()
+                dlg.setOnDialogItemClickListener(new OnCommonDialogItemClickListener()
                 {
                     
                     @Override
-                    public void onItemClickListener(int which)
+                    public void onDialogItemClick(int position)
                     {
-                        mFeeText.setText(mFeeOptions.get(which));
+                        // TODO Auto-generated method stub
+                        mFeeText.setText(mFeeOptions.get(position));
                     }
                 });
                 dlg.show();
@@ -398,13 +399,12 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
                 {
                     Log.e("tag", key + ": " + params.get(key));
                 }
-                mDhNet.doPostInDialog(new NetTask(this)
+                mDhNet.doPostInDialog(new NetTask(self)
                 {
                     
                     @Override
                     public void doInUI(Response response, Integer transfer)
                     {
-                        // TODO Auto-generated method stub
                         if (response.isSuccess())
                         {
                             showToast("修改成功");
@@ -423,6 +423,7 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
                     }
                 });
                 break;
+        
         }
     }
     
@@ -449,7 +450,7 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
                     Bitmap btp1 = PhotoUtil.getLocalImage(new File(mCurPath));
                     String newPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg").getAbsolutePath();
                     int degree = PhotoUtil.getBitmapDegree(mCurPath);
-                    PhotoUtil.saveLocalImage(btp1, new File(newPath),degree);
+                    PhotoUtil.saveLocalImage(btp1, new File(newPath), degree);
                     btp1.recycle();
                     upLoadPic(newPath);
                     // PhotoUtil.onPhotoFromCamera(self, Constant.ZOOM_PIC, mCurPath, 1, 1, 1000);
