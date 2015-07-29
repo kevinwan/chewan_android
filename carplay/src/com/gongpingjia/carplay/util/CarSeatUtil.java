@@ -1,12 +1,11 @@
 package com.gongpingjia.carplay.util;
 
-import net.duohuo.dhroid.image.ImageLoad;
+import net.duohuo.dhroid.net.JSONUtil;
+import net.duohuo.dhroid.util.ViewUtil;
 
 import org.json.JSONArray;
-
-import com.gongpingjia.carplay.CarPlayValueFix;
-import com.gongpingjia.carplay.R;
-import com.nostra13.universalimageloader.core.ImageLoader;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -14,12 +13,16 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.gongpingjia.carplay.CarPlayValueFix;
+import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.view.RoundImageView;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class CarSeatUtil
 {
-    int jsatotalCount = 2;
-    
-    int seatcount = 5;
+    int totalSeatcount, usedSeatCount;
     
     LayoutInflater mLayoutInflater;
     
@@ -31,76 +34,137 @@ public class CarSeatUtil
     
     OnSeatClickListener onSeatClickListener;
     
-    /** 占座 */
-    public static final int Possession = 1;
-    
-    /** 拉下 */
-    public static final int Pulldown = 2;
-    
-    public CarSeatUtil(Context context, JSONArray jsa, LinearLayout layout)
+    public CarSeatUtil(Context context, LinearLayout layout)
     {
         this.mContext = context;
-        this.jsa = jsa;
         mLayoutInflater = LayoutInflater.from(context);
         this.parentV = layout;
     }
     
-    public void addCar()
+    public void addCar(JSONArray jsa)
     {
-        for (int i = 0; i < jsatotalCount; i++)
+        totalSeatcount = 0;
+        usedSeatCount = 0;
+        parentV.removeAllViews();
+        this.jsa = jsa;
+        for (int i = 0; i < jsa.length(); i++)
         {
-            final int groupPostion = i;
-            View childV = mLayoutInflater.inflate(R.layout.item_car_seat, null);
-            parentV.addView(childV);
-            LinearLayout seatLayout = (LinearLayout)childV.findViewById(R.id.seat_layout);
-            for (int j = 0; j < seatcount; j++)
+            try
             {
-                final int childPosition = j;
-                View seatChild = seatLayout.getChildAt(j);
-                ImageView seatI = (ImageView)seatChild.findViewById(R.id.seat);
-                seatI.setVisibility(View.VISIBLE);
-                seatChild.setOnClickListener(new OnClickListener()
+                JSONObject carJo = jsa.getJSONObject(i);
+                View childV = mLayoutInflater.inflate(R.layout.item_car_seat, null);
+                parentV.addView(childV);
+                
+                ImageView carLogo = (ImageView)childV.findViewById(R.id.logo);
+                ViewUtil.bindNetImage(carLogo, JSONUtil.getString(carJo, "carBrandLogo"), "default");
+                ViewUtil.bindView(childV.findViewById(R.id.name), JSONUtil.getString(carJo, "carModel"));
+                
+                final String carId = JSONUtil.getString(carJo, "carId");
+                
+                int seatCount = JSONUtil.getInt(carJo, "totalSeat");
+                totalSeatcount += seatCount;
+                LinearLayout seatLayout = (LinearLayout)childV.findViewById(R.id.seat_layout);
+                
+                for (int j = 0; j < seatCount; j++)
                 {
+                    final int childPosition = j;
+                    View seatChild = seatLayout.getChildAt(j);
+                    ImageView seatI = (ImageView)seatChild.findViewById(R.id.seat);
                     
-                    @Override
-                    public void onClick(View v)
+                    seatI.setVisibility(View.VISIBLE);
+                    seatChild.setOnClickListener(new OnClickListener()
                     {
-                        if (onSeatClickListener != null)
+                        
+                        @Override
+                        public void onClick(View v)
                         {
-                            onSeatClickListener.onClick(groupPostion, childPosition);
+                            if (onSeatClickListener != null)
+                            {
+                                onSeatClickListener.onSeatClick(carId, childPosition);
+                            }
                         }
-                    }
-                });
+                    });
+                }
+                
+                JSONArray userJsa = JSONUtil.getJSONArray(carJo, "users");
+                usedSeatCount += userJsa.length();
+                for (int k = 0; k < userJsa.length(); k++)
+                {
+                    final JSONObject userJo = JSONUtil.getJSONObjectAt(userJsa, k);
+                    int seatIndex = JSONUtil.getInt(userJo, "seatIndex");
+                    View seatChild = seatLayout.getChildAt(seatIndex);
+                    RoundImageView headI = (RoundImageView)seatChild.findViewById(R.id.head);
+                    ImageView seatI = (ImageView)seatChild.findViewById(R.id.seat);
+                    seatI.setImageResource(R.drawable.icon_seat_white);
+                    ViewUtil.bindNetImage(headI, JSONUtil.getString(userJo, "photo"), "default");
+                    // 不可以去掉
+                    headI.setOnClickListener(new OnClickListener()
+                    {
+                        
+                        @Override
+                        public void onClick(View v)
+                        {
+                            if (onSeatClickListener != null)
+                            {
+                                onSeatClickListener.onHeadClick(userJo);
+                            }
+                        }
+                    });
+                    headI.setVisibility(View.VISIBLE);
+                    seatChild.setOnClickListener(new OnClickListener()
+                    {
+                        
+                        @Override
+                        public void onClick(View v)
+                        {
+                            if (onSeatClickListener != null)
+                            {
+                                onSeatClickListener.onHeadClick(userJo);
+                            }
+                        }
+                    });
+                }
             }
+            catch (JSONException e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            
+        }
+        
+        if (onSeatClickListener != null)
+        {
+            onSeatClickListener.seatCount(totalSeatcount, totalSeatcount - usedSeatCount);
         }
     }
     
-    public void changeSeatStatus(int groupPosition, int childPosition, String headUrl, int type)
-    {
-        for (int i = 0; i < jsatotalCount; i++)
-        {
-            View childV = mLayoutInflater.inflate(R.layout.item_car_seat, null);
-            parentV.addView(childV);
-            LinearLayout seatLayout = (LinearLayout)childV.findViewById(R.id.seat_layout);
-            for (int j = 0; j < seatcount; j++)
-            {
-                View seatChild = seatLayout.getChildAt(j);
-                ImageView seatI = (ImageView)seatChild.findViewById(R.id.seat);
-                ImageView headI = (ImageView)seatChild.findViewById(R.id.head);
-                if (type == Possession)
-                {
-                    headI.setVisibility(View.VISIBLE);
-                    seatI.setImageResource(R.drawable.icon_seat_white);
-                    ImageLoader.getInstance().displayImage(headUrl, headI, CarPlayValueFix.headOptions);
-                }
-                else
-                {
-                    seatI.setImageResource(R.drawable.icon_seat_blue);
-                    headI.setVisibility(View.GONE);
-                }
-            }
-        }
-    }
+    // public void changeSeatStatus(int groupPosition, int childPosition, String headUrl, int type)
+    // {
+    // for (int i = 0; i < jsa.length(); i++)
+    // {
+    // View childV = mLayoutInflater.inflate(R.layout.item_car_seat, null);
+    // parentV.addView(childV);
+    // LinearLayout seatLayout = (LinearLayout)childV.findViewById(R.id.seat_layout);
+    // for (int j = 0; j < seatcount; j++)
+    // {
+    // View seatChild = seatLayout.getChildAt(j);
+    // ImageView seatI = (ImageView)seatChild.findViewById(R.id.seat);
+    // RoundImageView headI = (RoundImageView)seatChild.findViewById(R.id.head);
+    // if (type == Possession)
+    // {
+    // headI.setVisibility(View.VISIBLE);
+    // seatI.setImageResource(R.drawable.icon_seat_white);
+    // ImageLoader.getInstance().displayImage(headUrl, headI, CarPlayValueFix.headOptions);
+    // }
+    // else
+    // {
+    // seatI.setImageResource(R.drawable.icon_seat_blue);
+    // headI.setVisibility(View.GONE);
+    // }
+    // }
+    // }
+    // }
     
     public OnSeatClickListener getOnSeatClickListener()
     {
@@ -114,6 +178,10 @@ public class CarSeatUtil
     
     public interface OnSeatClickListener
     {
-        void onClick(int groupPosition, int childPosition);
+        void onSeatClick(String carId, int childPosition);
+        
+        void onHeadClick(JSONObject headJo);
+        
+        void seatCount(int totalCount, int emptyCount);
     }
 }

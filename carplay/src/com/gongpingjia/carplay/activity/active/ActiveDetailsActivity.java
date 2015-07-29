@@ -63,6 +63,8 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements OnClic
     
     User user;
     
+    View headlayoutV;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -89,6 +91,8 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements OnClic
         releaseB.setOnClickListener(this);
         comment_contentE = (EditText)findViewById(R.id.comment_content);
         headV = mInflater.inflate(R.layout.active_head_view, null);
+        headlayoutV = headV.findViewById(R.id.headlayout);
+        headlayoutV.setOnClickListener(this);
         mListView.addHeaderView(headV);
         mJsonAdapter =
             new NetJSONAdapter(API.CWBaseurl + "/activity/" + activityId + "/comment?userId=" + user.getUserId()
@@ -305,6 +309,13 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements OnClic
         {
             case R.id.release:
                 comment();
+                break;
+            
+            case R.id.headlayout:
+                Intent it = new Intent(self, ActiveMembersActivity.class);
+                it.putExtra("activityId", activityId);
+                it.putExtra("isJoin", true);
+                startActivity(it);
                 break;
             
             default:

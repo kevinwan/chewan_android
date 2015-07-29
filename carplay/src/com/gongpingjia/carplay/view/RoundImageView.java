@@ -1,12 +1,5 @@
 package com.gongpingjia.carplay.view;
 
-import org.json.JSONObject;
-
-import com.gongpingjia.carplay.activity.my.PersonDetailActivity;
-import com.gongpingjia.carplay.bean.User;
-import com.gongpingjia.carplay.manage.UserInfoManage;
-import com.gongpingjia.carplay.manage.UserInfoManage.LoginCallBack;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -25,6 +18,11 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.gongpingjia.carplay.activity.my.PersonDetailActivity;
+import com.gongpingjia.carplay.bean.User;
+import com.gongpingjia.carplay.manage.UserInfoManage;
+import com.gongpingjia.carplay.manage.UserInfoManage.LoginCallBack;
+
 /**
  * 圆形的imageView
  * 
@@ -41,40 +39,40 @@ public class RoundImageView extends ImageView
         super(context);
         mContext = context;
         
-        this.setOnClickListener(new OnClickListener()
-        {
-            
-            @Override
-            public void onClick(final View v)
-            {
-                UserInfoManage manager = UserInfoManage.getInstance();
-                manager.checkLogin((Activity)mContext, new LoginCallBack()
-                {
-                    
-                    @Override
-                    public void onisLogin()
-                    {
-                        User user = User.getInstance();
-                        if (user.getUserId().equals(v.getTag().toString()))
-                        {
-                            
-                        }
-                        else
-                        {
-                            Intent it = new Intent(mContext, PersonDetailActivity.class);
-                            it.putExtra("userId", v.getTag().toString());
-                            mContext.startActivity(it);
-                        }
-                    }
-                    
-                    @Override
-                    public void onLoginFail()
-                    {
-                        
-                    }
-                });
-            }
-        });
+        // this.setOnClickListener(new OnClickListener()
+        // {
+        //
+        // @Override
+        // public void onClick(final View v)
+        // {
+        // UserInfoManage manager = UserInfoManage.getInstance();
+        // manager.checkLogin((Activity)mContext, new LoginCallBack()
+        // {
+        //
+        // @Override
+        // public void onisLogin()
+        // {
+        // User user = User.getInstance();
+        // if (user.getUserId().equals(v.getTag().toString()))
+        // {
+        //
+        // }
+        // else
+        // {
+        // Intent it = new Intent(mContext, PersonDetailActivity.class);
+        // it.putExtra("userId", v.getTag().toString());
+        // mContext.startActivity(it);
+        // }
+        // }
+        //
+        // @Override
+        // public void onLoginFail()
+        // {
+        //
+        // }
+        // });
+        // }
+        // });
     }
     
     public RoundImageView(Context context, AttributeSet attrs)
@@ -87,6 +85,11 @@ public class RoundImageView extends ImageView
             @Override
             public void onClick(final View v)
             {
+                if (v.getTag() == null)
+                {
+                    return;
+                }
+                
                 UserInfoManage manager = UserInfoManage.getInstance();
                 manager.checkLogin((Activity)mContext, new LoginCallBack()
                 {

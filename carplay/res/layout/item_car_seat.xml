@@ -22,14 +22,12 @@
             <ImageView
                 android:id="@+id/logo"
                 android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/model_baoma" />
+                android:layout_height="30dp" />
 
             <TextView
                 android:id="@+id/name"
                 style="@style/text_black_medium"
-                android:layout_marginLeft="10dp"
-                android:text="宝马" />
+                android:layout_marginLeft="10dp" />
 
             <LinearLayout
                 android:id="@+id/seat_layout"
@@ -49,12 +47,11 @@
                         android:src="@drawable/icon_seat_blue"
                         android:visibility="gone" />
 
-                    <ImageView
+                    <com.gongpingjia.carplay.view.RoundImageView
                         android:id="@+id/head"
                         android:layout_width="22dp"
                         android:layout_height="22dp"
                         android:layout_centerHorizontal="true"
-                        android:src="@drawable/head2"
                         android:visibility="gone" />
                 </RelativeLayout>
 
@@ -71,12 +68,11 @@
                         android:src="@drawable/icon_seat_blue"
                         android:visibility="gone" />
 
-                    <ImageView
+                    <com.gongpingjia.carplay.view.RoundImageView
                         android:id="@+id/head"
                         android:layout_width="22dp"
                         android:layout_height="22dp"
                         android:layout_centerHorizontal="true"
-                        android:src="@drawable/head2"
                         android:visibility="gone" />
                 </RelativeLayout>
 
@@ -93,12 +89,11 @@
                         android:src="@drawable/icon_seat_blue"
                         android:visibility="gone" />
 
-                    <ImageView
+                    <com.gongpingjia.carplay.view.RoundImageView
                         android:id="@+id/head"
                         android:layout_width="22dp"
                         android:layout_height="22dp"
                         android:layout_centerHorizontal="true"
-                        android:src="@drawable/head2"
                         android:visibility="gone" />
                 </RelativeLayout>
 
@@ -115,12 +110,11 @@
                         android:src="@drawable/icon_seat_blue"
                         android:visibility="gone" />
 
-                    <ImageView
+                    <com.gongpingjia.carplay.view.RoundImageView
                         android:id="@+id/head"
                         android:layout_width="22dp"
                         android:layout_height="22dp"
                         android:layout_centerHorizontal="true"
-                        android:src="@drawable/head2"
                         android:visibility="gone" />
                 </RelativeLayout>
 
@@ -137,12 +131,11 @@
                         android:src="@drawable/icon_seat_blue"
                         android:visibility="gone" />
 
-                    <ImageView
+                    <com.gongpingjia.carplay.view.RoundImageView
                         android:id="@+id/head"
                         android:layout_width="22dp"
                         android:layout_height="22dp"
                         android:layout_centerHorizontal="true"
-                        android:src="@drawable/head2"
                         android:visibility="gone" />
                 </RelativeLayout>
 
@@ -159,12 +152,11 @@
                         android:src="@drawable/icon_seat_blue"
                         android:visibility="gone" />
 
-                    <ImageView
+                    <com.gongpingjia.carplay.view.RoundImageView
                         android:id="@+id/head"
                         android:layout_width="22dp"
                         android:layout_height="22dp"
                         android:layout_centerHorizontal="true"
-                        android:src="@drawable/head2"
                         android:visibility="gone" />
                 </RelativeLayout>
 
@@ -181,12 +173,11 @@
                         android:src="@drawable/icon_seat_blue"
                         android:visibility="gone" />
 
-                    <ImageView
+                    <com.gongpingjia.carplay.view.RoundImageView
                         android:id="@+id/head"
                         android:layout_width="22dp"
                         android:layout_height="22dp"
                         android:layout_centerHorizontal="true"
-                        android:src="@drawable/head2"
                         android:visibility="gone" />
                 </RelativeLayout>
             </LinearLayout>
