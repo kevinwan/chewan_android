@@ -242,10 +242,10 @@ public abstract class CarPlayBaseActivity extends BaseActivity
         if (TextUtils.isEmpty(msg))
             msg = getString(R.string.progress_doing);
         
-        synchronized (dialogcount)
-        {
-            dialogcount++;
-        }
+         synchronized (dialogcount)
+         {
+         dialogcount++;
+         }
         
         if (progressdialog == null || !progressdialog.isShowing())
         {

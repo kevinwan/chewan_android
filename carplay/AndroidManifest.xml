@@ -25,10 +25,11 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
+        android:screenOrientation="portrait"
         android:theme="@style/AppTheme" >
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="b27e335e60c96ab5a330a98cb6a6c59d" />
+            android:value="f5a41f709dd7b958bda5c51d3a0a247e" />
 
         <activity android:name=".activity.active.CreatActiveActivity" >
         </activity>
@@ -94,9 +95,7 @@
         <activity android:name=".activity.active.SearchPlaceActivity" />
         <activity android:name=".activity.my.PersonDetailActivity" >
         </activity>
-        <activity
-            android:name=".activity.active.CreateActiveActivity"
-            android:screenOrientation="portrait" >
+        <activity android:name=".activity.main.SplashActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

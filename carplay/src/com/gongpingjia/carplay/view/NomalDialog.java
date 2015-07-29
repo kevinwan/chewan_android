@@ -24,7 +24,7 @@ public class NomalDialog extends DialogImpl
     @Override
     public Dialog showProgressDialog(Context context, String msg)
     {
-        LoadingDialogNew dialog = new LoadingDialogNew(context);
+        LoadingDialogNew dialog = new LoadingDialogNew(context, msg);
         // dialog.setCancelable(true);
         dialog.show();
         return dialog;
