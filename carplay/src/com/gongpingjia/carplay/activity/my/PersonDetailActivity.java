@@ -154,7 +154,7 @@ public class PersonDetailActivity extends CarPlayBaseActivity implements OnClick
                     
                     JSONObject jo = response.jSONFromData();
                     int isSubscribed = JSONUtil.getInt(jo, "isSubscribed");
-                    ViewUtil.bindView(attentionT, isSubscribed == 0 ? "取消关注" : "关注");
+                    ViewUtil.bindView(attentionT, isSubscribed == 1 ? "取消关注" : "关注");
                     ViewUtil.bindNetImage(headI, JSONUtil.getString(jo, "photo"), "default");
                     ViewUtil.bindView(headV.findViewById(R.id.nickname), JSONUtil.getString(jo, "nickname"));
                     ViewUtil.bindView(headV.findViewById(R.id.drive_age), JSONUtil.getString(jo, "carModel") + ","

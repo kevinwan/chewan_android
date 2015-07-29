@@ -17,8 +17,7 @@
             android:layout_height="50dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="9dp"
-            android:src="@drawable/head2" />
+            android:layout_marginLeft="9dp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -37,8 +36,7 @@
                 <TextView
                     android:id="@+id/name"
                     style="@style/text_blue_medium"
-                    android:layout_marginTop="5dp"
-                    android:text="淘气小布丁" />
+                    android:layout_marginTop="5dp" />
 
                 <RelativeLayout
                     android:id="@+id/layout_sex"
@@ -55,7 +53,6 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="2dp"
-                        android:text="23"
                         android:textColor="@color/white"
                         android:textSize="12sp" />
                 </RelativeLayout>
@@ -70,17 +67,15 @@
 
                 <com.gongpingjia.carplay.view.RoundImageView
                     android:id="@+id/car_logo"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:layout_marginBottom="5dp"
-                    android:src="@drawable/head2" />
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
+                    android:layout_marginBottom="5dp" />
 
                 <TextView
                     android:id="@+id/drive_age"
                     style="@style/text_grey_small"
                     android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:text="X6,  8年驾龄" />
+                    android:layout_marginLeft="5dp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -100,8 +95,7 @@
             <TextView
                 android:id="@+id/publish_time"
                 style="@style/text_grey_small"
-                android:layout_marginLeft="5dp"
-                android:text="1小时前" />
+                android:layout_marginLeft="5dp" />
         </LinearLayout>
     </RelativeLayout>
 
@@ -110,8 +104,7 @@
         style="@style/text_black_medium"
         android:layout_width="fill_parent"
         android:background="@color/white"
-        android:padding="10dp"
-        android:text="复仇者联盟终于上映了，有没有萌妹纸陪我去看，包接送，电影票哦" />
+        android:padding="10dp" />
 
     <LinearLayout
         android:id="@+id/pic_layout"
@@ -142,11 +135,11 @@
         <TextView
             android:id="@+id/join"
             style="@style/text_orangebg"
-            android:layout_width="80dp"
+            android:layout_width="wrap_content"
             android:layout_marginLeft="10dp"
             android:gravity="center"
-            android:text="我要去玩"
-            android:textSize="@dimen/text_medium" />
+            android:textSize="@dimen/text_medium"
+            android:visibility="gone" />
     </LinearLayout>
 
     <LinearLayout
@@ -174,8 +167,7 @@
                 <TextView
                     android:id="@+id/start_time"
                     style="@style/text_black_medium"
-                    android:layout_marginTop="5dp"
-                    android:text="5月29日   19:30" />
+                    android:layout_marginTop="5dp" />
             </LinearLayout>
 
             <View style="@style/line_vertical" />
@@ -194,8 +186,7 @@
                 <TextView
                     android:id="@+id/end_time"
                     style="@style/text_black_medium"
-                    android:layout_marginTop="5dp"
-                    android:text="不确定" />
+                    android:layout_marginTop="5dp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -220,8 +211,7 @@
                 <TextView
                     android:id="@+id/address"
                     style="@style/text_black_medium"
-                    android:layout_marginTop="5dp"
-                    android:text="CBD万达广场" />
+                    android:layout_marginTop="5dp" />
             </LinearLayout>
 
             <View style="@style/line_vertical" />
@@ -240,8 +230,7 @@
                 <TextView
                     android:id="@+id/pay"
                     style="@style/text_black_medium"
-                    android:layout_marginTop="5dp"
-                    android:text="我请客" />
+                    android:layout_marginTop="5dp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -260,8 +249,7 @@
             <TextView
                 android:id="@+id/des"
                 style="@style/text_black_medium"
-                android:layout_marginTop="5dp"
-                android:text="我请客" />
+                android:layout_marginTop="5dp" />
         </LinearLayout>
     </LinearLayout>
 

@@ -91,9 +91,11 @@
         </activity>
         <activity android:name=".activity.active.ActiveDescriptionActivity" >
         </activity>
-        <!-- <activity android:name=".activity.active.CreateActiveActivity" /> -->
+        <activity android:name=".activity.active.CreateActiveActivity" />
         <activity android:name=".activity.active.SearchPlaceActivity" />
         <activity android:name=".activity.my.PersonDetailActivity" >
+        </activity>
+        <activity android:name=".activity.my.MyPerSonDetailActivity" >
         </activity>
         <activity android:name=".activity.main.SplashActivity" >
             <intent-filter>
