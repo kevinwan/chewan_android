@@ -43,13 +43,6 @@ import com.gongpingjia.carplay.view.dialog.CommonDialog;
 import com.gongpingjia.carplay.view.dialog.DateDialog;
 import com.gongpingjia.carplay.view.dialog.DateDialog.OnDateResultListener;
 
-/***
- * 
- * 创建活动
- * 
- * @author Administrator
- * 
- */
 public class EditActiveActivity extends CarPlayBaseActivity implements OnClickListener {
 
     private static final int REQUEST_DESCRIPTION = 1;
@@ -179,37 +172,13 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
         mLastPhoto = new PhotoState();
         mLastPhoto.setLast(true);
         mLastPhoto.setChecked(false);
-
+        mPhotoStates.add(mLastPhoto);
         mImageAdapter = new ImageAdapter(this, mPhotoStates);
-
-        /*
-         * DhNet net = new DhNet(API.login); net.addParam("phone",
-         * "18951650020"); net.addParam("password",
-         * MD5Util.string2MD5("123456")); net.doPost(new NetTask(self) {
-         * 
-         * @Override public void doInUI(Response response, Integer transfer) {
-         * // TODO Auto-generated method stub if (response.isSuccess()) {
-         * JSONObject jo = response.jSONFrom("data"); User user =
-         * User.getInstance(); user.setUserId(JSONUtil.getString(jo, "userId"));
-         * user.setToken(JSONUtil.getString(jo, "token")); showToast("登陆成功");
-         * 
-         * DhNet net = new DhNet(
-         * "http://cwapi.gongpingjia.com/v1/activity/55838b12-7039-41e5-9150-6dd154de961b/info?userId=846de312-306c-4916-91c1-a5e69b158014&token=750dd49c-6129-4a9a-9558-27fa74fc4ce7"
-         * ); net.doGet(new NetTask(self) {
-         * 
-         * @Override public void doInUI(Response response, Integer transfer) {
-         * // TODO Auto-generated method stub if (response.isSuccess()) {
-         * initDatas(response.jSON()); } } });
-         * 
-         * } else { showToast(response.msg); } } });
-         */
-
         initDatas();
         mPhotoGridView.setOnItemClickListener(new OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // TODO Auto-generated method stub
                 if (mPhotoStates.get(position).isLast()) {
                     mCurPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg").getAbsolutePath();
                     PhotoUtil.getPhoto(self, Constant.TAKE_PHOTO, Constant.PICK_PHOTO, new File(mCurPath));
@@ -226,6 +195,7 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
 
     }
 
+    // 获取页面传递过来的数据
     private void initDatas() {
         Intent it = getIntent();
         String json = it.getStringExtra("json");
@@ -293,7 +263,6 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
 
                 @Override
                 public void onItemClickListener(int which) {
-                    // TODO Auto-generated method stub
                     mTypeText.setText(mTypeOptions.get(which));
                 }
             });
@@ -342,7 +311,6 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
 
                 @Override
                 public void onItemClickListener(int which) {
-                    // TODO Auto-generated method stub
                     mFeeText.setText(mFeeOptions.get(which));
                 }
             });
@@ -357,22 +325,30 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
                 showToast("请选择目的地");
                 return;
             }
+            if (mPicIds.size() == 0) {
+                showToast("请至少选择一张图片");
+            }
             User user = User.getInstance();
-            mDhNet = new DhNet(API.editActive + mActiveId + "/?userId=" + user.getUserId() + "&token="
+            mDhNet = new DhNet(API.editActive + mActiveId + "/info?userId=" + user.getUserId() + "&token="
                     + user.getToken());
             mDhNet.addParam("type", mTypeText.getText().toString());
             mDhNet.addParam("introduction", mDescriptionText.getText().toString());
             JSONArray array = new JSONArray(mPicIds);
             mDhNet.addParam("cover", array);
             mDhNet.addParam("location", mLocation);
-            mDhNet.addParam("city", mCity);
-            mDhNet.addParam("address", mDestimationText.getText().toString());
+            if (mCity != null) {
+                mDhNet.addParam("city", mCity);
+            }
+            if (!mDestimationText.getText().toString().equals(mLocation)) {
+                mDhNet.addParam("address", mDestimationText.getText().toString());
+            }
             mDhNet.addParam("start", mStartTimeStamp);
             mDhNet.addParam("pay", mFeeText.getText().toString());
             if (mEndTimeStamp != 0) {
                 mDhNet.addParam("end", mEndTimeStamp);
             }
 
+            Log.e("tag", "url:" + mDhNet.getUrl());
             Map<String, Object> params = mDhNet.getParams();
             for (String key : params.keySet()) {
                 Log.e("tag", key + ": " + params.get(key));
@@ -388,15 +364,11 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
                         try {
                             Log.e("err", response.jSON().getString("errmsg"));
                         } catch (JSONException e) {
-                            // TODO Auto-generated catch block
                             e.printStackTrace();
                         }
                     }
                 }
             });
-            break;
-        case R.id.btn_finish_invite:
-
             break;
         }
     }

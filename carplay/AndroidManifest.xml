@@ -31,7 +31,7 @@
             android:name="com.amap.api.v2.apikey"
             android:value="f5a41f709dd7b958bda5c51d3a0a247e" />
 
-        <activity android:name=".activity.active.CreatActiveActivity" >
+        <activity android:name=".activity.active.CreateActiveActivity" >
         </activity>
         <activity android:name=".activity.my.PersonalDataActivity" >
         </activity>
@@ -91,12 +91,12 @@
         </activity>
         <activity android:name=".activity.active.ActiveDescriptionActivity" >
         </activity>
-        <activity android:name=".activity.active.CreateActiveActivity" />
         <activity android:name=".activity.active.SearchPlaceActivity" />
         <activity android:name=".activity.my.PersonDetailActivity" >
         </activity>
         <activity android:name=".activity.my.MyPerSonDetailActivity" >
         </activity>
+        <activity android:name=".activity.active.EditActiveActivity" />
         <activity android:name=".activity.main.SplashActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

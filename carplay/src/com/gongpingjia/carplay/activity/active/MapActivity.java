@@ -123,7 +123,11 @@ public class MapActivity extends CarPlayBaseActivity implements OnMarkerClickLis
                     it.putExtra("province", mAddress.getProvince());
                     it.putExtra("district", mAddress.getDistrict());
                     it.putExtra("destination", mAddress.getFormatAddress());
-                    it.putExtra("location", mSearchEdit.getText().toString());
+                    if (!mSearchEdit.getText().toString().equals("")) {
+                        it.putExtra("location", mSearchEdit.getText().toString());
+                    } else {
+                        it.putExtra("location", mAddress.getDistrict());
+                    }
                     setResult(RESULT_OK, it);
                     self.finish();
                     MapEB map = new MapEB();

@@ -103,14 +103,11 @@
                 <TextView
                     android:id="@+id/tv_description"
                     style="@style/text_blacklight_small"
-                    android:layout_marginTop="7dp"
-                    android:lineSpacingExtra="1.5dp"
-                    android:textScaleX="1.1" />
+                    android:layout_margin="10dp"
+                    android:lineSpacingExtra="1.5dp" />
             </LinearLayout>
 
-            <View
-                style="@style/line"
-                android:layout_marginTop="15dp" />
+            <View style="@style/line" />
 
             <LinearLayout
                 android:id="@+id/layout_destination"
@@ -132,7 +129,8 @@
 
                     <TextView
                         android:id="@+id/tv_destination"
-                        style="@style/text_blacklight_medium" />
+                        style="@style/text_blacklight_medium"
+                        android:singleLine="true" />
 
                     <ImageView
                         android:layout_width="18dp"
