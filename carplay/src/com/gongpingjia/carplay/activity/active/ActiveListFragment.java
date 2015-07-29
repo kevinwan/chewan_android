@@ -24,7 +24,11 @@ import android.widget.TextView;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.adapter.ActiveAdapter;
 import com.gongpingjia.carplay.api.API;
+import com.gongpingjia.carplay.bean.ActiveParmasEB;
+import com.gongpingjia.carplay.bean.MapEB;
 import com.gongpingjia.carplay.bean.User;
+
+import de.greenrobot.event.EventBus;
 
 public class ActiveListFragment extends Fragment
 {
@@ -56,6 +60,7 @@ public class ActiveListFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         // TODO Auto-generated method stub
+        EventBus.getDefault().register(this);
         mainV = inflater.inflate(R.layout.activity_active_list_fragment, null);
         initView();
         return mainV;
@@ -155,6 +160,25 @@ public class ActiveListFragment extends Fragment
                 img.setVisibility(View.GONE);
             }
         }
-        
     }
+    
+    /** 接受ActiveFilterPop的选择事件 */
+    public void onEventMainThread(ActiveParmasEB pa)
+    {
+        adapter.addparam("city", pa.getCity());
+        adapter.addparam("district", pa.getDistrict());
+        adapter.addparam("type", pa.getActiveType());
+        adapter.addparam("gender", pa.getGender());
+        adapter.addparam("authenticate", pa.getAuthenticate());
+        adapter.addparam("carLevel", pa.getCarLevel());
+        adapter.refreshDialog();
+    }
+    
+    @Override
+    public void onDestroy()
+    {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+    
 }

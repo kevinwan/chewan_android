@@ -1,5 +1,9 @@
 package com.gongpingjia.carplay.view.pop;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +20,12 @@ import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.active.MapActivity;
+import com.gongpingjia.carplay.bean.ActiveParmasEB;
+import com.gongpingjia.carplay.bean.MapEB;
+import com.gongpingjia.carplay.view.dialog.CommonDialog;
+import com.gongpingjia.carplay.view.dialog.CommonDialog.OnItemClickListener;
+
+import de.greenrobot.event.EventBus;
 
 public class ActiveFilterPop extends PopupWindow implements OnClickListener
 {
@@ -51,8 +61,11 @@ public class ActiveFilterPop extends PopupWindow implements OnClickListener
     
     public static final int Type = 2;
     
+    List<String> mTypeOptions;
+    
     public ActiveFilterPop(Activity context)
     {
+        EventBus.getDefault().register(this);
         this.context = context;
         contentV = LayoutInflater.from(context).inflate(R.layout.pop_active_filter, null);
         pop = new PopupWindow(contentV, LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT, true);
@@ -89,6 +102,18 @@ public class ActiveFilterPop extends PopupWindow implements OnClickListener
             }
         });
         
+        // 不可以去掉
+        contentV.findViewById(R.id.content_layout).setOnClickListener(new OnClickListener()
+        {
+            
+            @Override
+            public void onClick(View v)
+            {
+                // TODO Auto-generated method stub
+                
+            }
+        });
+        
         genderRG = (RadioGroup)contentV.findViewById(R.id.gender_rg);
         authenticateRG = (RadioGroup)contentV.findViewById(R.id.authenticate_rg);
         carLevelRG = (RadioGroup)contentV.findViewById(R.id.carLevel_rg);
@@ -104,6 +129,24 @@ public class ActiveFilterPop extends PopupWindow implements OnClickListener
         okB.setOnClickListener(this);
         locationLayoutV.setOnClickListener(this);
         typeLayoutV.setOnClickListener(this);
+        pop.setOnDismissListener(new OnDismissListener()
+        {
+            
+            @Override
+            public void onDismiss()
+            {
+                EventBus.getDefault().unregister(this);
+            }
+        });
+        
+        mTypeOptions = new ArrayList<String>();
+        mTypeOptions.add("看电影");
+        mTypeOptions.add("吃饭");
+        mTypeOptions.add("唱歌");
+        mTypeOptions.add("旅行");
+        mTypeOptions.add("运动");
+        mTypeOptions.add("拼车");
+        mTypeOptions.add("代驾");
     }
     
     public void setAddress(String address)
@@ -139,13 +182,17 @@ public class ActiveFilterPop extends PopupWindow implements OnClickListener
         Integer authenticate = null;
         
         String carLevel = "";
-        if (genderRG.getCheckedRadioButtonId() != 0)
+        if (genderRG.getCheckedRadioButtonId() != -1)
         {
             RadioButton grb = (RadioButton)genderRG.findViewById(genderRG.getCheckedRadioButtonId());
             gender = grb.getText().toString();
+            if (gender.equals("不限"))
+            {
+                gender = "";
+            }
         }
         
-        if (authenticateRG.getCheckedRadioButtonId() != 0)
+        if (authenticateRG.getCheckedRadioButtonId() != -1)
         {
             RadioButton grb = (RadioButton)authenticateRG.findViewById(authenticateRG.getCheckedRadioButtonId());
             String authenticateString = grb.getText().toString();
@@ -163,16 +210,30 @@ public class ActiveFilterPop extends PopupWindow implements OnClickListener
             }
         }
         
-        if (carLevelRG.getCheckedRadioButtonId() != 0)
+        if (carLevelRG.getCheckedRadioButtonId() != -1)
         {
             RadioButton grb = (RadioButton)carLevelRG.findViewById(carLevelRG.getCheckedRadioButtonId());
             carLevel = grb.getText().toString();
+            if(carLevel.equals("一般")) {
+                carLevel = "normal";
+            } else if(carLevel.equals("好车")) {
+                carLevel = "good";
+            } else {
+                carLevel = "";
+            }
         }
         
-        if (onCheckResult != null)
-        {
-            onCheckResult.result(province, city, district, gender, typeT.getText().toString(), authenticate, carLevel);
-        }
+        ActiveParmasEB pa = new ActiveParmasEB();
+        pa.setCity(city);
+        pa.setActiveType(typeT.getText().toString());
+        pa.setAuthenticate(authenticate);
+        pa.setCarLevel(carLevel);
+        pa.setCity(city);
+        pa.setDistrict(district);
+        pa.setGender(gender);
+        EventBus.getDefault().post(pa);
+        
+        pop.dismiss();
     }
     
     @Override
@@ -196,11 +257,29 @@ public class ActiveFilterPop extends PopupWindow implements OnClickListener
             
             case R.id.typeLayout:
                 
+                CommonDialog dialog = new CommonDialog(context, mTypeOptions, "活动类型");
+                dialog.setOnItemClickListener(new OnItemClickListener()
+                {
+                    
+                    @Override
+                    public void onItemClickListener(int which)
+                    {
+                        typeT.setText(mTypeOptions.get(which));
+                    }
+                });
+                dialog.show();
                 break;
             
             default:
                 break;
         }
+    }
+    
+    public void onEventMainThread(MapEB map)
+    {
+        addresssT.setText(map.getCity() + map.getDistrict());
+        city = map.getCity();
+        district = map.getDistrict();
     }
     
 }
