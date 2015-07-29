@@ -4,7 +4,16 @@ import java.util.List;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.gongpingjia.carplay.R;
 
 /*
  *@author zhanglong
@@ -14,45 +23,55 @@ public class CommonDialog {
 
     private Context mContext;
 
-    private String[] mDatas;
+    private List<String> mDatas;
 
     private String mTitle;
 
-    private OnItemClickListener mListener;
+    private AlertDialog mDialog;
+
+    private OnCommonDialogItemClickListener mListener;
 
     public CommonDialog(Context context, List<String> data, String title) {
         this.mContext = context;
         this.mTitle = title;
-        int size = data.size();
-        mDatas = new String[size];
-        for (int i = 0; i < size; i++) {
-            mDatas[i] = data.get(i);
-        }
+        mDatas = data;
     }
 
     public void show() {
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-        builder.setTitle(mTitle);
-        builder.setItems(mDatas, new DialogInterface.OnClickListener() {
+        View content = LayoutInflater.from(mContext).inflate(R.layout.dialog_common, null);
+        ListView listView = (ListView) content.findViewById(R.id.lv_dlg);
+        TextView mTitleText = (TextView) content.findViewById(R.id.tv_dlg_title);
+        mTitleText.setText(mTitle);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext, R.layout.item_dlg, R.id.tv_dlg_item, mDatas);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new OnItemClickListener() {
 
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // TODO Auto-generated method stub
                 if (mListener != null) {
-                    mListener.onItemClickListener(which);
+                    mListener.onDialogItemClick(position);
                 }
-                dialog.dismiss();
+                dismiss();
             }
         });
-        builder.create().show();
+        builder.setView(content);
+        mDialog = builder.create();
+        mDialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        mDialog.show();
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.mListener = listener;
+    private void dismiss() {
+        mDialog.dismiss();
     }
 
-    public interface OnItemClickListener {
-        void onItemClickListener(int which);
+    public void setOnDialogItemClickListener(OnCommonDialogItemClickListener listener) {
+        mListener = listener;
+    }
+
+    public interface OnCommonDialogItemClickListener {
+        void onDialogItemClick(int position);
     }
 
 }

@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 import net.duohuo.dhroid.net.DhNet;
-import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.net.upload.FileInfo;
@@ -36,10 +35,10 @@ import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.PhotoState;
 import com.gongpingjia.carplay.bean.User;
-import com.gongpingjia.carplay.util.MD5Util;
 import com.gongpingjia.carplay.util.Utils;
 import com.gongpingjia.carplay.view.NestedGridView;
 import com.gongpingjia.carplay.view.dialog.CommonDialog;
+import com.gongpingjia.carplay.view.dialog.CommonDialog.OnCommonDialogItemClickListener;
 import com.gongpingjia.carplay.view.dialog.DateDialog;
 import com.gongpingjia.carplay.view.dialog.DateDialog.OnDateResultListener;
 
@@ -259,11 +258,12 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
 
         case R.id.layout_active_type:
             dlg = new CommonDialog(self, mTypeOptions, "请选择活动");
-            dlg.setOnItemClickListener(new CommonDialog.OnItemClickListener() {
+            dlg.setOnDialogItemClickListener(new OnCommonDialogItemClickListener() {
 
                 @Override
-                public void onItemClickListener(int which) {
-                    mTypeText.setText(mTypeOptions.get(which));
+                public void onDialogItemClick(int position) {
+                    // TODO Auto-generated method stub
+                    mTypeText.setText(mTypeOptions.get(position));
                 }
             });
             dlg.show();
@@ -307,11 +307,12 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
             break;
         case R.id.layout_fee:
             dlg = new CommonDialog(self, mFeeOptions, "请选择付费方式");
-            dlg.setOnItemClickListener(new CommonDialog.OnItemClickListener() {
+            dlg.setOnDialogItemClickListener(new OnCommonDialogItemClickListener() {
 
                 @Override
-                public void onItemClickListener(int which) {
-                    mFeeText.setText(mFeeOptions.get(which));
+                public void onDialogItemClick(int position) {
+                    // TODO Auto-generated method stub
+                    mFeeText.setText(mFeeOptions.get(position));
                 }
             });
             dlg.show();

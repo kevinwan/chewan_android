@@ -36,6 +36,7 @@ import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.Utils;
 import com.gongpingjia.carplay.view.NestedGridView;
 import com.gongpingjia.carplay.view.dialog.CommonDialog;
+import com.gongpingjia.carplay.view.dialog.CommonDialog.OnCommonDialogItemClickListener;
 import com.gongpingjia.carplay.view.dialog.DateDialog;
 import com.gongpingjia.carplay.view.dialog.DateDialog.OnDateResultListener;
 
@@ -231,12 +232,12 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
 
         case R.id.layout_active_type:
             dlg = new CommonDialog(self, mTypeOptions, "请选择活动");
-            dlg.setOnItemClickListener(new CommonDialog.OnItemClickListener() {
+            dlg.setOnDialogItemClickListener(new OnCommonDialogItemClickListener() {
 
                 @Override
-                public void onItemClickListener(int which) {
+                public void onDialogItemClick(int position) {
                     // TODO Auto-generated method stub
-                    mTypeText.setText(mTypeOptions.get(which));
+                    mTypeText.setText(mTypeOptions.get(position));
                 }
             });
             dlg.show();
@@ -280,24 +281,24 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
             break;
         case R.id.layout_fee:
             dlg = new CommonDialog(self, mFeeOptions, "请选择付费方式");
-            dlg.setOnItemClickListener(new CommonDialog.OnItemClickListener() {
+            dlg.setOnDialogItemClickListener(new OnCommonDialogItemClickListener() {
 
                 @Override
-                public void onItemClickListener(int which) {
+                public void onDialogItemClick(int position) {
                     // TODO Auto-generated method stub
-                    mFeeText.setText(mFeeOptions.get(which));
+                    mFeeText.setText(mFeeOptions.get(position));
                 }
             });
             dlg.show();
             break;
         case R.id.layout_seats:
             dlg = new CommonDialog(self, mSeatOptions, "请选择提供座位数");
-            dlg.setOnItemClickListener(new CommonDialog.OnItemClickListener() {
+            dlg.setOnDialogItemClickListener(new OnCommonDialogItemClickListener() {
 
                 @Override
-                public void onItemClickListener(int which) {
+                public void onDialogItemClick(int position) {
                     // TODO Auto-generated method stub
-                    mSeatText.setText(mSeatOptions.get(which));
+                    mSeatText.setText(mSeatOptions.get(position));
                 }
             });
             dlg.show();
