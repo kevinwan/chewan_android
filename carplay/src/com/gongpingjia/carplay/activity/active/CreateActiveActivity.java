@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import net.duohuo.dhroid.net.DhNet;
-import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.net.upload.FileInfo;
@@ -34,7 +33,6 @@ import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.PhotoState;
 import com.gongpingjia.carplay.bean.User;
-import com.gongpingjia.carplay.util.MD5Util;
 import com.gongpingjia.carplay.util.Utils;
 import com.gongpingjia.carplay.view.NestedGridView;
 import com.gongpingjia.carplay.view.dialog.CommonDialog;
@@ -160,52 +158,32 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
         mFinishInviteBtn = (Button) findViewById(R.id.btn_finish_invite);
         mPhotoGridView = (NestedGridView) findViewById(R.id.gv_photo);
 
-        DhNet net = new DhNet(API.login);
-        net.addParam("phone", "18951650020");
-        net.addParam("password", MD5Util.string2MD5("123456"));
-        net.doPost(new NetTask(self) {
+        // 获取可用座位数
+        mDhNet = new DhNet(API.availableSeat + mUser.getUserId() + "/seats?token=" + mUser.getToken());
+        mDhNet.doGet(new NetTask(self) {
 
             @Override
             public void doInUI(Response response, Integer transfer) {
                 // TODO Auto-generated method stub
                 if (response.isSuccess()) {
-                    JSONObject jo = response.jSONFrom("data");
-                    User user = User.getInstance();
-                    user.setUserId(JSONUtil.getString(jo, "userId"));
-                    user.setToken(JSONUtil.getString(jo, "token"));
-                    showToast("登陆成功");
-                    // 获取可用座位数
-                    mDhNet = new DhNet(API.availableSeat + mUser.getUserId() + "/seats?token=" + mUser.getToken());
-                    mDhNet.doGet(new NetTask(self) {
-
-                        @Override
-                        public void doInUI(Response response, Integer transfer) {
-                            // TODO Auto-generated method stub
-                            if (response.isSuccess()) {
-                                JSONObject json = response.jSONFrom("data");
-                                try {
-                                    if (json.getInt("isAuthenticated") == 1) {
-                                        // 认证车主
-                                        int minSeat = json.getInt("minValue");
-                                        int maxSeat = json.getInt("maxValue");
-                                        for (int i = minSeat; i <= maxSeat; i++) {
-                                            mSeatOptions.add(String.valueOf(i));
-                                        }
-                                    } else {
-                                        // 未认证
-                                        mSeatHintText.setText("邀请人数");
-                                        mSeatOptions.add("1");
-                                        mSeatOptions.add("2");
-                                    }
-                                } catch (JSONException e) {
-                                    // TODO Auto-generated catch block
-                                    e.printStackTrace();
-                                }
+                    JSONObject json = response.jSONFrom("data");
+                    try {
+                        if (json.getInt("isAuthenticated") == 1) {
+                            // 认证车主
+                            int minSeat = json.getInt("minValue");
+                            int maxSeat = json.getInt("maxValue");
+                            for (int i = minSeat; i <= maxSeat; i++) {
+                                mSeatOptions.add(String.valueOf(i));
                             }
+                        } else {
+                            // 未认证
+                            mSeatHintText.setText("邀请人数");
+                            mSeatOptions.add("1");
+                            mSeatOptions.add("2");
                         }
-                    });
-                } else {
-                    showToast(response.msg);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
@@ -330,6 +308,13 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                 showToast("请选择活动");
                 return;
             }
+            if (mPicIds.size() == 0) {
+                showToast("请至少选择一张图片");
+                return;
+            }
+            if (mDescriptionText.getText().equals("")) {
+
+            }
             if (mDestimationText.getText().toString().length() == 0) {
                 showToast("请选择目的地");
                 return;
@@ -339,8 +324,8 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                 return;
             }
 
-            User user = User.getInstance();
-            mDhNet = new DhNet(API.createActive + "userId=" + user.getUserId() + "&token=" + user.getToken());
+            // 获取可用的座位数
+            mDhNet = new DhNet(API.createActive + "userId=" + mUser.getUserId() + "&token=" + mUser.getToken());
             mDhNet.addParam("type", mTypeText.getText().toString());
             mDhNet.addParam("introduction", mDescriptionText.getText().toString());
             JSONArray array = new JSONArray(mPicIds);

@@ -95,7 +95,7 @@
         <activity android:name=".activity.my.PersonDetailActivity" >
         </activity>
         <activity
-            android:name=".activity.active.EditActiveActivity"
+            android:name=".activity.active.CreateActiveActivity"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

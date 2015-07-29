@@ -111,7 +111,11 @@ public class MapActivity extends CarPlayBaseActivity implements OnMarkerClickLis
                     Intent it = new Intent();
                     it.putExtra("city", mAddress.getCity());
                     it.putExtra("destination", mAddress.getFormatAddress());
-                    it.putExtra("location", mSearchEdit.getText().toString());
+                    if (!mSearchEdit.getText().toString().equals("")) {
+                        it.putExtra("location", mSearchEdit.getText().toString());
+                    } else {
+                        it.putExtra("location", mAddress.getDistrict());
+                    }
                     setResult(RESULT_OK, it);
                     self.finish();
                 } else {
