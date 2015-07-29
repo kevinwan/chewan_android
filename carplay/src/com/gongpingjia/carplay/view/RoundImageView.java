@@ -18,6 +18,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.gongpingjia.carplay.activity.my.MyPerSonDetailActivity;
 import com.gongpingjia.carplay.activity.my.PersonDetailActivity;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.manage.UserInfoManage;
@@ -100,7 +101,8 @@ public class RoundImageView extends ImageView
                         User user = User.getInstance();
                         if (user.getUserId().equals(v.getTag().toString()))
                         {
-                            
+                            Intent it = new Intent(mContext, MyPerSonDetailActivity.class);
+                            mContext.startActivity(it);
                         }
                         else
                         {

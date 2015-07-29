@@ -140,33 +140,7 @@ public class ActiveAdapter extends NetJSONAdapter
         }
         ViewUtil.bindView(holder.addressT, "地点: " + JSONUtil.getString(jo, "location"));
         ViewUtil.bindNetImage(holder.headI, JSONUtil.getString(creater, "photo"), "optionsDefault");
-        // holder.headI.setOnClickListener(new OnClickListener()
-        // {
-        //
-        // @Override
-        // public void onClick(final View v)
-        // {
-        // UserInfoManage manager = UserInfoManage.getInstance();
-        // manager.checkLogin((Activity)mContext, new LoginCallBack()
-        // {
-        //
-        // @Override
-        // public void onisLogin()
-        // {
-        // JSONObject jo = mVaules.get(position);
-        // // Intent it = new Intent(mContext, PersonDetailActivity.class);
-        // // it.putExtra("userId", JSONUtil.getString(creater, ""));
-        // // mContext.startActivity(it);
-        // }
-        //
-        // @Override
-        // public void onLoginFail()
-        // {
-        //
-        // }
-        // });
-        // }
-        // });
+        holder.headI.setTag(JSONUtil.getString(creater, "userId"));
         
         ViewUtil.bindView(holder.statusT, JSONUtil.getString(jo, "pay"));
         String pay = JSONUtil.getString(jo, "pay");

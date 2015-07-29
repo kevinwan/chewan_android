@@ -81,15 +81,16 @@ public class SplashActivity extends CarPlayBaseActivity
                     user.setSeatNumber(JSONUtil.getInt(jo, "seatNumber"));
                     user.setIsAuthenticated(JSONUtil.getInt(jo, "isAuthenticated"));
                     user.setLogin(true);
-                    if (per.isFirst == 0)
-                    {
-                        first();
-                        
-                    }
-                    else
-                    {
-                        notFirst();
-                    }
+                }
+                
+                if (per.isFirst == 0)
+                {
+                    first();
+                    
+                }
+                else
+                {
+                    notFirst();
                 }
             }
         });

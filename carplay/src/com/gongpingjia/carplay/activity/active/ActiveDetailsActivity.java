@@ -26,6 +26,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
@@ -64,6 +65,8 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements OnClic
     User user;
     
     View headlayoutV;
+    
+    TextView joinT;
     
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -146,7 +149,7 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements OnClic
         });
     }
     
-    private void bindHeadView(JSONObject headJo)
+    private void bindHeadView(final JSONObject headJo)
     {
         JSONObject createrJo = JSONUtil.getJSONObject(headJo, "organizer");
         
@@ -159,9 +162,11 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements OnClic
                 public void onClick(View arg0)
                 {
                     Intent it = new Intent(ActiveDetailsActivity.this, EditActiveActivity.class);
+                    it.putExtra("json", headJo.toString());
                     startActivity(it);
                 }
             });
+            
         }
         else
         {
@@ -189,7 +194,9 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements OnClic
                 }
             });
         }
-        
+        joinT = (TextView)headV.findViewById(R.id.join);
+        joinT.setOnClickListener(this);
+        activeRelative(headJo);
         ViewUtil.bindView(headV.findViewById(R.id.name), JSONUtil.getString(createrJo, "nickname"));
         ViewUtil.bindView(headV.findViewById(R.id.drive_age), JSONUtil.getString(createrJo, "carModel") + ","
             + JSONUtil.getString(createrJo, "drivingExperience") + "年驾龄");
@@ -250,6 +257,29 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements OnClic
         headUtil.AddChild();
     }
     
+    // 活动与登陆者的关系
+    private void activeRelative(JSONObject jo)
+    {
+        int isOrganizer = JSONUtil.getInt(jo, "isOrganizer");
+        int isMember = JSONUtil.getInt(jo, "isMember");
+        if (isOrganizer == 1)
+        {
+            joinT.setText("管理");
+        }
+        else
+        {
+            if (isMember == 1)
+            {
+                joinT.setText("查看");
+            }
+            else
+            {
+                joinT.setText("我也要玩");
+            }
+        }
+        joinT.setVisibility(View.VISIBLE);
+    }
+    
     public void comment()
     {
         String commentContent = comment_contentE.getText().toString();
@@ -305,6 +335,7 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements OnClic
     @Override
     public void onClick(View v)
     {
+        Intent it;
         switch (v.getId())
         {
             case R.id.release:
@@ -312,15 +343,59 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements OnClic
                 break;
             
             case R.id.headlayout:
-                Intent it = new Intent(self, ActiveMembersActivity.class);
+                it = new Intent(self, ActiveMembersActivity.class);
                 it.putExtra("activityId", activityId);
                 it.putExtra("isJoin", true);
                 startActivity(it);
                 break;
             
+            case R.id.join:
+                if (joinT.getText().equals("管理"))
+                {
+                    it = new Intent(self, MyActiveMembersManageActivity.class);
+                    it.putExtra("activityId", activityId);
+                    it.putExtra("isJoin", true);
+                    startActivity(it);
+                }
+                else if (joinT.getText().toString().equals("查看"))
+                {
+                    it = new Intent(self, ActiveMembersActivity.class);
+                    it.putExtra("activityId", activityId);
+                    it.putExtra("isJoin", true);
+                    startActivity(it);
+                }
+                else
+                {
+                    joinActive();
+                }
+                break;
+            
             default:
                 break;
         }
+    }
+    
+    /**
+     * 加入活动
+     */
+    private void joinActive()
+    {
+        DhNet net =
+            new DhNet(API.CWBaseurl + "/activity/" + activityId + "/join?userId=" + user.getUserId() + "&token="
+                + user.getToken());
+        net.doPost(new NetTask(self)
+        {
+            
+            @Override
+            public void doInUI(Response response, Integer transfer)
+            {
+                if (response.isSuccess())
+                {
+                    findViewById(R.id.bottom_bar).setVisibility(View.GONE);
+                    showToast("已提交加入活动申请,等待管理员审核!");
+                }
+            }
+        });
     }
     
 }
