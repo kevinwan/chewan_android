@@ -3,6 +3,8 @@
  */
 package com.gongpingjia.carplay;
 
+import org.json.JSONObject;
+
 import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
@@ -25,6 +27,12 @@ public class KmlGlobalCodeHandler implements GlobalCodeHandler
     @Override
     public void hanlder(Context context, Response response)
     {
+        
+        JSONObject jo = response.jSON();
+        if (!JSONUtil.getBoolean(jo, "success"))
+        {
+            IocContainer.getShare().get(IDialog.class).showToastLong(context, JSONUtil.getString(jo, "msg"));
+        }
         if (!response.isSuccess())
         {
             IocContainer.getShare().get(IDialog.class).showToastLong(context, response.getMsg());
