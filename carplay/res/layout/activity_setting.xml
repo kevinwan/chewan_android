@@ -35,9 +35,9 @@
             android:id="@+id/img"
             android:layout_width="25dp"
             android:layout_height="18dp"
-            android:layout_marginRight="5dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
             android:src="@drawable/right_btn" />
 
         <TextView
@@ -70,9 +70,9 @@
         <ImageView
             android:layout_width="25dp"
             android:layout_height="18dp"
-            android:layout_marginRight="5dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
             android:src="@drawable/right_btn" />
 
         <TextView
@@ -103,11 +103,11 @@
             android:src="@drawable/about_us" />
 
         <ImageView
-             android:layout_width="25dp"
+            android:layout_width="25dp"
             android:layout_height="18dp"
-            android:layout_marginRight="5dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
             android:src="@drawable/right_btn" />
 
         <TextView
@@ -129,7 +129,7 @@
 
         <ImageView
             android:id="@+id/versions"
-           style="@style/icon_style"
+            style="@style/icon_style"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_centerVertical="true"
@@ -140,9 +140,9 @@
         <ImageView
             android:layout_width="25dp"
             android:layout_height="18dp"
-            android:layout_marginRight="5dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
             android:src="@drawable/right_btn" />
 
         <TextView
@@ -175,9 +175,9 @@
         <ImageView
             android:layout_width="25dp"
             android:layout_height="18dp"
-            android:layout_marginRight="5dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
             android:src="@drawable/right_btn" />
 
         <TextView
@@ -195,12 +195,13 @@
     <Button
         android:id="@+id/setting_quit"
         android:layout_width="match_parent"
-        android:layout_height="41dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
+        android:layout_height="45dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
         android:layout_marginTop="25dp"
         android:background="@drawable/button_radian"
+        android:text="退出登录"
         android:textColor="@color/white"
-        android:text="退出登录" />
+        android:textSize="@dimen/text_medium" />
 
 </LinearLayout>

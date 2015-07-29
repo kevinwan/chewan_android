@@ -114,26 +114,46 @@ public class PicLayoutUtil
         {
             drawCount = count + 1;
         }
-        for (int i = 0; i < drawCount; i++)
+        
+        if (drawCount == headMax)
         {
-            try
+            for (int i = 0; i < drawCount; i++)
             {
-                if (i == drawCount - 1)
+                try
                 {
-                    layout.addView(createCountTextView(count), params);
+                    if (i == drawCount - 1)
+                    {
+                        layout.addView(createCountTextView(count), params);
+                    }
+                    else
+                    {
+                        layout.addView(createHeadImageView(data.getJSONObject(i)), params);
+                    }
+                    
                 }
-                else
+                catch (JSONException e)
+                {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < drawCount; i++)
+            {
+                try
                 {
                     layout.addView(createHeadImageView(data.getJSONObject(i)), params);
                 }
-                
-            }
-            catch (JSONException e)
-            {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                catch (JSONException e)
+                {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
             }
         }
+        
     }
     
     /**
@@ -174,6 +194,7 @@ public class PicLayoutUtil
         text.setBackgroundResource(R.drawable.head2);
         text.setGravity(Gravity.CENTER);
         text.setTextColor(mContext.getResources().getColor(R.color.white));
+        text.setVisibility(View.GONE);
         return text;
     }
     
@@ -190,61 +211,55 @@ public class PicLayoutUtil
         {
             drawcount = jsa.length() + 1;
         }
-        for (int i = 0; i < drawcount; i++)
+        
+        if (drawcount == headMax)
         {
-            try
+            for (int i = 0; i < drawcount; i++)
             {
-                if (i == drawcount - 1)
+                try
                 {
-                    System.out.println("汇总");
-                    TextView text = (TextView)layout.getChildAt(headMax - 1);
-                    // text.setText(jsa.length() + "");
-                    
-                    text.setText(jsa.length() + "");
+                    if (i == drawcount - 1)
+                    {
+                        TextView text = (TextView)layout.getChildAt(headMax - 1);
+                        text.setText(jsa.length() + "");
+                        text.setVisibility(View.VISIBLE);
+                    }
+                    else
+                    {
+                        JSONObject jo = jsa.getJSONObject(i);
+                        RoundImageView img = (RoundImageView)layout.getChildAt(i);
+                        ViewUtil.bindNetImage(img, JSONUtil.getString(jo, "photo"), "optionsDefault");
+                        img.setTag(JSONUtil.getString(jo, "userId"));
+                        img.setVisibility(View.VISIBLE);
+                    }
                 }
-                else
+                catch (JSONException e)
+                {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < drawcount; i++)
+            {
+                try
                 {
                     JSONObject jo = jsa.getJSONObject(i);
                     RoundImageView img = (RoundImageView)layout.getChildAt(i);
                     ViewUtil.bindNetImage(img, JSONUtil.getString(jo, "photo"), "optionsDefault");
                     img.setTag(JSONUtil.getString(jo, "userId"));
-                    // img.setOnClickListener(new OnClickListener()
-                    // {
-                    //
-                    // @Override
-                    // public void onClick(final View v)
-                    // {
-                    // UserInfoManage manager = UserInfoManage.getInstance();
-                    // manager.checkLogin((Activity)mContext, new LoginCallBack()
-                    // {
-                    //
-                    // @Override
-                    // public void onisLogin()
-                    // {
-                    // ImageView i = (ImageView)v;
-                    // Intent it = new Intent(mContext, PersonDetailActivity.class);
-                    // it.putExtra("userId", i.getTag().toString());
-                    // mContext.startActivity(it);
-                    // }
-                    //
-                    // @Override
-                    // public void onLoginFail()
-                    // {
-                    // // TODO Auto-generated method stub
-                    //
-                    // }
-                    // });
-                    // }
-                    // });
                     img.setVisibility(View.VISIBLE);
                 }
-            }
-            catch (JSONException e)
-            {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                catch (JSONException e)
+                {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
             }
         }
+        
     }
     
     /** 加载网络图片 */

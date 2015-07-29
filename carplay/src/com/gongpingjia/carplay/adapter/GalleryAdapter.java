@@ -1,17 +1,9 @@
 package com.gongpingjia.carplay.adapter;
 
-import net.duohuo.dhroid.net.DhNet;
-import net.duohuo.dhroid.net.JSONUtil;
-import net.duohuo.dhroid.net.NetTask;
-import net.duohuo.dhroid.net.Response;
-import net.duohuo.dhroid.net.cache.CachePolicy;
 import net.duohuo.dhroid.util.ViewUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.gongpingjia.carplay.R;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -19,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+
+import com.gongpingjia.carplay.R;
 
 public class GalleryAdapter extends BaseAdapter
 {

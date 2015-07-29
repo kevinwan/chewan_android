@@ -7,6 +7,7 @@ import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.my.PersonDetailActivity;
 import com.gongpingjia.carplay.manage.UserInfoManage;
 import com.gongpingjia.carplay.manage.UserInfoManage.LoginCallBack;
+import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.util.PicLayoutUtil;
 import com.gongpingjia.carplay.view.RoundImageView;
 
@@ -115,9 +116,8 @@ public class ActiveAdapter extends NetJSONAdapter
         
         ViewUtil.bindView(holder.ageT, JSONUtil.getString(creater, "age"));
         ViewUtil.bindView(holder.tv_publish_timeT, JSONUtil.getString(jo, "publishTime"), "neartime");
-        ViewUtil.bindNetImage(holder.car_logoI, JSONUtil.getString(creater, "carBrandLogo"), "optionsDefault");
-        ViewUtil.bindView(holder.drive_ageT,
-            JSONUtil.getString(creater, "carModel") + "," + JSONUtil.getString(creater, "drivingExperience") + "年驾龄");
+        
+        CarPlayUtil.bindDriveAge(creater, holder.car_logoI, holder.drive_ageT);
         
         ViewUtil.bindView(holder.contentT, JSONUtil.getString(jo, "introduction"));
         JSONArray picJsa = JSONUtil.getJSONArray(jo, "cover");

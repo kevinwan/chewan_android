@@ -6,7 +6,7 @@
     android:orientation="vertical" >
 
     <LinearLayout
-        android:id="@+id/seat_des"
+        android:id="@+id/seat_layout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="13dp"
@@ -17,13 +17,11 @@
 
         <TextView
             android:id="@+id/seat_des"
-            style="@style/text_grey_small"
-            android:text="共8个座位,  还剩" />
+            style="@style/text_grey_small" />
 
         <TextView
             android:id="@+id/seat_count"
             style="@style/text_grey_small"
-            android:text="8个"
             android:textColor="@color/text_orange" />
 
         <TextView

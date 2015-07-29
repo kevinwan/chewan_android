@@ -1,6 +1,6 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="match_parent"
+    android:layout_height="fill_parent"
     android:layout_marginLeft="14dp"
     android:layout_marginRight="14dp"
     android:background="@drawable/white_fillet_button"
@@ -9,23 +9,26 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:gravity="center"
         android:orientation="vertical" >
 
-        <ImageView
+        <com.gongpingjia.carplay.view.RoundImageView
             android:id="@+id/head"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/head5" />
+            android:background="@drawable/room" />
 
         <LinearLayout
+            android:id="@+id/age_layout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:gravity="center"
-            android:orientation="horizontal" >
+            android:orientation="horizontal"
+            android:visibility="gone" >
 
             <TextView
                 android:id="@+id/name"
@@ -40,7 +43,7 @@
                 android:background="@drawable/woman" >
 
                 <TextView
-                    android:id="@+id/person_age"
+                    android:id="@+id/age"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -53,11 +56,10 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/txt"
+            android:id="@+id/des"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="虚位以待..."
             android:textColor="@color/text_orange"
             android:textSize="@dimen/text_medium" />
 
@@ -85,9 +87,8 @@
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/button_zc_bg"
-                android:text="拉下座位"
                 android:textColor="@color/white" />
         </LinearLayout>
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>
