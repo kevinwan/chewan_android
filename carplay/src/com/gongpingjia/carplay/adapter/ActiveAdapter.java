@@ -1,15 +1,17 @@
 package com.gongpingjia.carplay.adapter;
 
+import net.duohuo.dhroid.adapter.NetJSONAdapter;
+import net.duohuo.dhroid.dialog.IDialog;
+import net.duohuo.dhroid.ioc.IocContainer;
+import net.duohuo.dhroid.net.DhNet;
+import net.duohuo.dhroid.net.JSONUtil;
+import net.duohuo.dhroid.net.NetTask;
+import net.duohuo.dhroid.net.Response;
+import net.duohuo.dhroid.util.DhUtil;
+import net.duohuo.dhroid.util.ViewUtil;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import com.gongpingjia.carplay.R;
-import com.gongpingjia.carplay.activity.my.PersonDetailActivity;
-import com.gongpingjia.carplay.manage.UserInfoManage;
-import com.gongpingjia.carplay.manage.UserInfoManage.LoginCallBack;
-import com.gongpingjia.carplay.util.CarPlayUtil;
-import com.gongpingjia.carplay.util.PicLayoutUtil;
-import com.gongpingjia.carplay.view.RoundImageView;
 
 import android.app.Activity;
 import android.content.Context;
@@ -17,15 +19,26 @@ import android.content.Intent;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import net.duohuo.dhroid.adapter.NetJSONAdapter;
-import net.duohuo.dhroid.net.JSONUtil;
-import net.duohuo.dhroid.util.DhUtil;
-import net.duohuo.dhroid.util.ViewUtil;
+import android.widget.Toast;
+
+import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.activity.active.ActiveMembersActivity;
+import com.gongpingjia.carplay.activity.active.MyActiveMembersManageActivity;
+import com.gongpingjia.carplay.activity.msg.MsgFragment;
+import com.gongpingjia.carplay.api.API;
+import com.gongpingjia.carplay.bean.User;
+import com.gongpingjia.carplay.manage.UserInfoManage;
+import com.gongpingjia.carplay.manage.UserInfoManage.LoginCallBack;
+import com.gongpingjia.carplay.util.CarPlayUtil;
+import com.gongpingjia.carplay.util.PicLayoutUtil;
+import com.gongpingjia.carplay.view.RoundImageView;
+import com.gongpingjia.carplay.view.dialog.CarSeatSelectDialog;
+import com.gongpingjia.carplay.view.dialog.CarSeatSelectDialog.OnSelectResultListener;
 
 public class ActiveAdapter extends NetJSONAdapter
 {
@@ -66,7 +79,7 @@ public class ActiveAdapter extends NetJSONAdapter
     @Override
     public View getView(final int position, View convertView, ViewGroup parent)
     {
-        ViewHolder holder;
+        final ViewHolder holder;
         int type = getItemViewType(position);
         // TODO Auto-generated method stub
         if (convertView == null)
@@ -89,6 +102,7 @@ public class ActiveAdapter extends NetJSONAdapter
             holder.ageT = (TextView)convertView.findViewById(R.id.age);
             holder.drive_ageT = (TextView)convertView.findViewById(R.id.drive_age);
             holder.seat_count_allT = (TextView)convertView.findViewById(R.id.seat_count_all);
+            holder.member_layoutV = convertView.findViewById(R.id.member_layout);
             convertView.setTag(holder);
             PicLayoutUtil picUtil = new PicLayoutUtil(mContext, type, 5, holder.piclayoutV, piclayoutWidth);
             picUtil.addMoreChild();
@@ -101,8 +115,137 @@ public class ActiveAdapter extends NetJSONAdapter
             holder = (ViewHolder)convertView.getTag();
         }
         
-        JSONObject jo = mVaules.get(position);
+        final JSONObject jo = mVaules.get(position);
         final JSONObject creater = JSONUtil.getJSONObject(jo, "organizer");
+        
+        int isOrganizer = JSONUtil.getInt(jo, "isOrganizer");
+        int isMember = JSONUtil.getInt(jo, "isMember");
+        final long startTime = JSONUtil.getLong(jo, "start");
+        if (isOrganizer == 1)
+        {
+            holder.joinT.setText("管理");
+        }
+        else
+        {
+            if (isMember == 1)
+            {
+                holder.joinT.setText("查看");
+            }
+            else
+            {
+                holder.joinT.setText("我也要玩");
+            }
+        }
+        holder.joinT.setVisibility(View.VISIBLE);
+        final String activityId = JSONUtil.getString(jo, "activityId");
+        holder.joinT.setOnClickListener(new OnClickListener()
+        {
+            
+            @Override
+            public void onClick(View v)
+            {
+                User user = User.getInstance();
+                if (user.isLogin)
+                {
+                    Intent it;
+                    if (holder.joinT.getText().equals("管理"))
+                    {
+                        it = new Intent(mContext, MyActiveMembersManageActivity.class);
+                        it.putExtra("activityId", activityId);
+                        it.putExtra("isJoin", true);
+                        mContext.startActivity(it);
+                    }
+                    else if (holder.joinT.getText().toString().equals("已加入"))
+                    {
+                        it = new Intent(mContext, ActiveMembersActivity.class);
+                        it.putExtra("activityId", activityId);
+                        it.putExtra("isJoin", true);
+                        mContext.startActivity(it);
+                    }
+                    else
+                    {
+                        CarSeatSelectDialog dialog = new CarSeatSelectDialog(mContext);
+                        dialog.setOnSelectResultListener(new OnSelectResultListener()
+                        {
+                            
+                            @Override
+                            public void click(int seatCount)
+                            {
+                                joinActive(activityId, seatCount);
+                            }
+                        });
+                        dialog.show();
+                    }
+                }
+                else
+                {
+                    UserInfoManage.getInstance().checkLogin((Activity)mContext, new LoginCallBack()
+                    {
+                        
+                        @Override
+                        public void onisLogin()
+                        {
+                            refreshDialog();
+                        }
+                        
+                        @Override
+                        public void onLoginFail()
+                        {
+                            // TODO Auto-generated method stub
+                            
+                        }
+                    });
+                }
+            }
+        });
+        holder.member_layoutV.setOnClickListener(new OnClickListener()
+        {
+            
+            @Override
+            public void onClick(View v)
+            {
+                User user = User.getInstance();
+                Intent it;
+                if (user.isLogin())
+                {
+                    int isMember = JSONUtil.getInt(jo, "isMember");
+                    if (holder.joinT.getText().equals("管理"))
+                    {
+                        it = new Intent(mContext, MyActiveMembersManageActivity.class);
+                        it.putExtra("activityId", activityId);
+                        it.putExtra("isJoin", isMember == 1 ? true : false);
+                        mContext.startActivity(it);
+                    }
+                    else
+                    {
+                        it = new Intent(mContext, ActiveMembersActivity.class);
+                        it.putExtra("activityId", activityId);
+                        it.putExtra("startTime", startTime);
+                        it.putExtra("isJoin", isMember == 1 ? true : false);
+                        mContext.startActivity(it);
+                    }
+                }
+                else
+                {
+                    UserInfoManage.getInstance().checkLogin((Activity)mContext, new LoginCallBack()
+                    {
+                        
+                        @Override
+                        public void onisLogin()
+                        {
+                            refreshDialog();
+                        }
+                        
+                        @Override
+                        public void onLoginFail()
+                        {
+                            // TODO Auto-generated method stub
+                            
+                        }
+                    });
+                }
+            }
+        });
         ViewUtil.bindView(holder.nameT, JSONUtil.getString(creater, "nickname"));
         
         if (JSONUtil.getString(creater, "gender").equals("男"))
@@ -178,5 +321,31 @@ public class ActiveAdapter extends NetJSONAdapter
         
         TextView ageT, drive_ageT, seat_count_allT;
         
+        View member_layoutV;
+        
+    }
+    
+    /**
+     * 加入活动
+     */
+    private void joinActive(String activityId, int seatCount)
+    {
+        User user = User.getInstance();
+        DhNet net =
+            new DhNet(API.CWBaseurl + "/activity/" + activityId + "/join?userId=" + user.getUserId() + "&token="
+                + user.getToken());
+        net.addParam("seat", seatCount);
+        net.doPost(new NetTask(mContext)
+        {
+            
+            @Override
+            public void doInUI(Response response, Integer transfer)
+            {
+                if (response.isSuccess())
+                {
+                    IocContainer.getShare().get(IDialog.class).showToastShort(mContext, "已提交加入活动申请,等待管理员审核!");
+                }
+            }
+        });
     }
 }

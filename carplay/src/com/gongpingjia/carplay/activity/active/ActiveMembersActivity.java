@@ -1,8 +1,5 @@
 package com.gongpingjia.carplay.activity.active;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import net.duohuo.dhroid.adapter.FieldMap;
 import net.duohuo.dhroid.adapter.NetJSONAdapter;
 import net.duohuo.dhroid.net.DhNet;
@@ -10,6 +7,10 @@ import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.util.ViewUtil;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,8 @@ import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.util.CarSeatUtil;
 import com.gongpingjia.carplay.util.CarSeatUtil.OnSeatClickListener;
 import com.gongpingjia.carplay.view.RoundImageView;
+import com.gongpingjia.carplay.view.dialog.ActiveMsgDialog;
+import com.gongpingjia.carplay.view.dialog.ActiveMsgDialog.OnClickResultListener;
 import com.gongpingjia.carplay.view.dialog.SeatDialog;
 import com.gongpingjia.carplay.view.dialog.SeatDialog.OnGradResultListener;
 
@@ -56,6 +59,8 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements OnClic
     
     TextView quite_desT;
     
+    long startTime;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -70,7 +75,7 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements OnClic
         setTitle("参与成员");
         user = User.getInstance();
         activityId = getIntent().getStringExtra("activityId");
-        
+        startTime = getIntent().getLongExtra("startTime", 0);
         isJoin = getIntent().getBooleanExtra("isJoin", false);
         quitB = (Button)findViewById(R.id.quit);
         quitB.setOnClickListener(this);
@@ -102,12 +107,12 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements OnClic
             public void onHeadClick(JSONObject headJo)
             {
             }
-
+            
             @Override
             public void seatCount(int totalCount, int emptyCount)
             {
-                cardesT.setText("共"+totalCount+"个座位,   还剩下");
-                seat_countT.setText(emptyCount+"");
+                cardesT.setText("共" + totalCount + "个座位,   还剩下");
+                seat_countT.setText(emptyCount + "");
             }
         });
         listV = (ListView)findViewById(R.id.listview);
@@ -227,7 +232,26 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements OnClic
         switch (v.getId())
         {
             case R.id.quit:
-                quiteActive();
+                long currentTime = System.currentTimeMillis();
+                ActiveMsgDialog dialog;
+                if (startTime != 0 && currentTime - startTime > 1000 * 60 * 60 * 6)
+                {
+                    dialog = new ActiveMsgDialog(self, "确定退出活动?");
+                    dialog.setOnClickResultListener(new OnClickResultListener()
+                    {
+                        
+                        @Override
+                        public void onclick()
+                        {
+                            quiteActive();
+                        }
+                    });
+                }
+                else
+                {
+                    dialog = new ActiveMsgDialog(self, "距离活动开始还有6小时", "您无法退出活动");
+                }
+                dialog.show();
                 break;
             case R.id.join:
                 joinActive();

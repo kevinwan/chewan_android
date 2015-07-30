@@ -18,6 +18,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -36,9 +37,11 @@ import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.PhotoState;
 import com.gongpingjia.carplay.bean.User;
+import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.util.Utils;
 import com.gongpingjia.carplay.view.NestedGridView;
 import com.gongpingjia.carplay.view.dialog.CommonDialog;
+import com.gongpingjia.carplay.view.dialog.DateTimePickerDialog;
 import com.gongpingjia.carplay.view.dialog.CommonDialog.OnCommonDialogItemClickListener;
 import com.gongpingjia.carplay.view.dialog.DateDialog;
 import com.gongpingjia.carplay.view.dialog.DateDialog.OnDateResultListener;
@@ -280,7 +283,7 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
         int id = v.getId();
         Intent it = null;
         CommonDialog dlg = null;
-        DateDialog date = null;
+        DateTimePickerDialog date = null;
         switch (id) {
 
         case R.id.layout_active_type:
@@ -307,30 +310,28 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
             break;
 
         case R.id.layout_start_time:
-            date = new DateDialog();
-            date.setOnDateResultListener(new OnDateResultListener() {
-
-                @Override
-                public void result(String date, long datetime, int year, int month, int day) {
-                    // TODO Auto-generated method stub
-                    mStartTimeText.setText(date);
-                    mStartTimeStamp = datetime;
+            date = new DateTimePickerDialog(self, System.currentTimeMillis());
+            date.setOnDateTimeSetListener(new DateTimePickerDialog.OnDateTimeSetListener()
+            {
+                public void OnDateTimeSet(AlertDialog dialog, long date)
+                {
+                    mStartTimeText.setText(CarPlayUtil.getStringDate(date));
+                    mStartTimeStamp = date;
                 }
             });
-            date.show(self);
+            date.show();
             break;
         case R.id.layout_end_time:
-            date = new DateDialog();
-            date.setOnDateResultListener(new OnDateResultListener() {
-
-                @Override
-                public void result(String date, long datetime, int year, int month, int day) {
-                    // TODO Auto-generated method stub
-                    mEndTimeText.setText(date);
-                    mEndTimeStamp = datetime;
+            date = new DateTimePickerDialog(self, System.currentTimeMillis());
+            date.setOnDateTimeSetListener(new DateTimePickerDialog.OnDateTimeSetListener()
+            {
+                public void OnDateTimeSet(AlertDialog dialog, long date)
+                {
+                    mEndTimeText.setText(CarPlayUtil.getStringDate(date));
+                    mEndTimeStamp = date;
                 }
             });
-            date.show(self);
+            date.show();
             break;
         case R.id.layout_fee:
             dlg = new CommonDialog(self, mFeeOptions, "请选择付费方式");

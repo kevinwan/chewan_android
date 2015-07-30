@@ -130,7 +130,8 @@
                     <TextView
                         android:id="@+id/tv_destination"
                         style="@style/text_blacklight_medium"
-                        android:singleLine="true" />
+                        android:maxLines="1"
+                        android:ellipsize="end" />
 
                     <ImageView
                         android:layout_width="18dp"

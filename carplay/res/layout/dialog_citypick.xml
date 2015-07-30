@@ -1,35 +1,36 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="@drawable/white_fillet_button" >
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="#E9E9E9"
-        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
         android:orientation="vertical" >
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="5dip" >
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp" >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dip"
+                android:layout_centerInParent="true"
                 android:text="请选择省市区"
-                android:textColor="#000000"
+                android:textColor="@color/text_black"
                 android:textSize="20sp" />
         </RelativeLayout>
+
+        <View style="@style/line_horizontal" />
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dip"
+            android:layout_marginBottom="10dp"
             android:orientation="horizontal" >
 
             <com.gongpingjia.carplay.view.wheel.WheelView
@@ -51,14 +52,36 @@
                 android:layout_weight="1" />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btn_confirm"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dip"
-            android:gravity="center"
-            android:text="确定"
-            android:textColor="#000000" />
+        <View style="@style/line_horizontal" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="42dp" >
+
+            <Button
+                android:id="@+id/cancle"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:background="@color/nothing"
+                android:gravity="center"
+                android:text="取消"
+                android:textColor="@color/text_black" />
+
+            <View style="@style/line_vertical" />
+
+            <Button
+                android:id="@+id/btn_confirm"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:background="@color/nothing"
+                android:gravity="center"
+                android:text="确定"
+                android:textColor="@color/text_black" />
+        </LinearLayout>
+
+        <View style="@style/line_horizontal" />
     </LinearLayout>
 
 </RelativeLayout>

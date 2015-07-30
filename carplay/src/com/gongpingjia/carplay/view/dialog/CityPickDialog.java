@@ -1,17 +1,17 @@
 package com.gongpingjia.carplay.view.dialog;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.data.CityDataManage;
 import com.gongpingjia.carplay.view.wheel.OnWheelChangedListener;
 import com.gongpingjia.carplay.view.wheel.WheelView;
 import com.gongpingjia.carplay.view.wheel.adapter.ArrayWheelAdapter;
-
-import android.app.AlertDialog;
-import android.content.Context;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
 public class CityPickDialog extends AlertDialog implements android.view.View.OnClickListener, OnWheelChangedListener
 {
@@ -55,6 +55,17 @@ public class CityPickDialog extends AlertDialog implements android.view.View.OnC
     
     private void initView()
     {
+        
+        Button cancleB = (Button)findViewById(R.id.cancle);
+        cancleB.setOnClickListener(new View.OnClickListener()
+        {
+            
+            @Override
+            public void onClick(View v)
+            {
+                dismiss();
+            }
+        });
         mViewProvince = (WheelView)findViewById(R.id.province);
         mViewCity = (WheelView)findViewById(R.id.city);
         mViewDistrict = (WheelView)findViewById(R.id.district);
@@ -137,7 +148,6 @@ public class CityPickDialog extends AlertDialog implements android.view.View.OnC
         switch (v.getId())
         {
             case R.id.btn_confirm:
-                
                 showSelectedResult();
                 break;
             default:

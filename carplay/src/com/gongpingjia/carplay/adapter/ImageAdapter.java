@@ -3,18 +3,15 @@ package com.gongpingjia.carplay.adapter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.List;
 
 import net.duohuo.dhroid.util.DhUtil;
-
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.Matrix;
-import android.media.ExifInterface;
+import android.text.TextUtils;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,37 +76,74 @@ public class ImageAdapter extends BaseAdapter
     }
     
     @Override
-    public View getView(int position, View convertView, ViewGroup parent)
+    public int getItemViewType(int position)
     {
-        // TODO Auto-generated method stub
         PhotoState photo = mDatas.get(position);
-        ViewHolder holder = new ViewHolder();
-        View view = mInflater.inflate(R.layout.griditem_photo, null);
-        GridView.LayoutParams params = new GridView.LayoutParams(picHeight, picHeight);
-        view.setLayoutParams(params);
-        holder.imgContent = (ImageView)view.findViewById(R.id.imgView_photo);
-        holder.imgLabel = (ImageView)view.findViewById(R.id.imgView_visible);
-        convertView = view;
-        
         if (photo.isLast())
         {
-            // 最后一张照片
-            holder.imgContent.setScaleType(ScaleType.CENTER);
-            holder.imgContent.setImageResource(R.drawable.icon_add_photo);
-            holder.imgContent.setBackgroundColor(Color.parseColor("#CCD0D9"));
-            holder.imgLabel.setVisibility(View.GONE);
+            return 0;
         }
         else
         {
-            if (photo.isChecked())
+            return 1;
+        }
+    }
+    
+    @Override
+    public int getViewTypeCount()
+    {
+        // TODO Auto-generated method stub
+        return 2;
+    }
+    
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent)
+    {
+        int type = getItemViewType(position);
+        ViewHolder holder;
+        if (convertView == null)
+        {
+            if (type == 1)
             {
-                holder.imgLabel.setVisibility(View.VISIBLE);
+                convertView = mInflater.inflate(R.layout.griditem_photo, null);
             }
             else
             {
-                holder.imgLabel.setVisibility(View.GONE);
+                convertView = mInflater.inflate(R.layout.item_imageadater_add, null);
             }
+            holder = new ViewHolder();
+            holder.imgContent = (ImageView)convertView.findViewById(R.id.imgView_photo);
+            holder.imgLabel = (ImageView)convertView.findViewById(R.id.imgView_visible);
+            convertView.setTag(holder);
+        }
+        else
+        {
+            holder = (ViewHolder)convertView.getTag();
+        }
+        PhotoState photo = mDatas.get(position);
+        // TODO Auto-generated method stub
+        GridView.LayoutParams params = new GridView.LayoutParams(picHeight, picHeight);
+        convertView.setLayoutParams(params);
+        
+        if (photo.isChecked())
+        {
+            holder.imgLabel.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            holder.imgLabel.setVisibility(View.GONE);
+        }
+        
+        if (photo.isLast())
+        {
+            holder.imgContent.setScaleType(ScaleType.CENTER);
+        }
+        else
+        {
             holder.imgContent.setScaleType(ScaleType.CENTER_CROP);
+        }
+        if (!TextUtils.isEmpty(photo.getPath()))
+        {
             if (photo.getPath().startsWith("http"))
             {
                 ImageLoader.getInstance().displayImage(photo.getPath(),

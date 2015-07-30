@@ -2,10 +2,6 @@ package com.gongpingjia.carplay.activity.main;
 
 import net.duohuo.dhroid.dialog.IDialog;
 import net.duohuo.dhroid.ioc.IocContainer;
-
-import com.gongpingjia.carplay.R;
-
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
@@ -13,6 +9,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.gongpingjia.carplay.R;
 
 public class BaseFragmentActivity extends FragmentActivity
 {

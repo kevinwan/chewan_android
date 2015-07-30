@@ -1,16 +1,18 @@
 package com.gongpingjia.carplay.util;
 
+import java.text.SimpleDateFormat;
+
 import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.util.ViewUtil;
 
 import org.json.JSONObject;
 
-import com.gongpingjia.carplay.R;
-
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.gongpingjia.carplay.R;
 
 public class CarPlayUtil
 {
@@ -40,5 +42,13 @@ public class CarPlayUtil
                 JSONUtil.getString(jo, "carModel") + "," + JSONUtil.getString(jo, "drivingExperience") + "年驾龄");
             ViewUtil.bindNetImage((ImageView)carLogoI, JSONUtil.getString(jo, "carBrandLogo"), "default");
         }
+    }
+    
+    public static String getStringDate(Long date) 
+    {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String dateString = formatter.format(date);
+        
+        return dateString;
     }
 }

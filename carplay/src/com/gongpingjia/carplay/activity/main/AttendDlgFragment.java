@@ -1,7 +1,5 @@
 package com.gongpingjia.carplay.activity.main;
 
-import com.gongpingjia.carplay.R;
-
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
@@ -9,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+
+import com.gongpingjia.carplay.R;
 
 /*
  *@author zhanglong
@@ -31,7 +31,7 @@ public class AttendDlgFragment extends DialogFragment
     {
         // TODO Auto-generated method stub
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
-        View view = inflater.inflate(R.layout.fragment_dlg_attend, container);
+        View view = inflater.inflate(R.layout.dialog_carseat_select, container);
         Button submitBtn = (Button)view.findViewById(R.id.btn_submit);
         submitBtn.setOnClickListener(new View.OnClickListener()
         {

@@ -8,13 +8,13 @@ import java.util.Map;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import android.content.res.AssetManager;
+
 import com.gongpingjia.carplay.CarPlayApplication;
 import com.gongpingjia.carplay.bean.CityModel;
 import com.gongpingjia.carplay.bean.DistrictModel;
 import com.gongpingjia.carplay.bean.ProvinceModel;
 import com.gongpingjia.carplay.service.XmlParserHandler;
-
-import android.content.res.AssetManager;
 
 public class CityDataManage
 {

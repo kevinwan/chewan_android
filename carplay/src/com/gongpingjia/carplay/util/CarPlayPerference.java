@@ -1,14 +1,6 @@
 package com.gongpingjia.carplay.util;
 
-import net.duohuo.dhroid.net.DhNet;
-import net.duohuo.dhroid.net.JSONUtil;
-import net.duohuo.dhroid.net.NetTask;
-import net.duohuo.dhroid.net.Response;
-import net.duohuo.dhroid.net.cache.CachePolicy;
 import net.duohuo.dhroid.util.Perference;
-
-import org.json.JSONObject;
-
 import android.content.Context;
 
 /**

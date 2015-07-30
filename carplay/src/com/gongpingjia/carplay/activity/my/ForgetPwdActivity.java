@@ -1,31 +1,19 @@
 package com.gongpingjia.carplay.activity.my;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
-
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.gongpingjia.carplay.R;
-import com.gongpingjia.carplay.R.id;
-import com.gongpingjia.carplay.R.layout;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
-import com.gongpingjia.carplay.activity.my.RegisterActivity.TimeCount;
 import com.gongpingjia.carplay.util.Utils;
 
 /**

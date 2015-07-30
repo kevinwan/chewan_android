@@ -1,11 +1,12 @@
 package com.gongpingjia.carplay.adapter;
 
+import net.duohuo.dhroid.adapter.NetJSONAdapter;
+import net.duohuo.dhroid.net.JSONUtil;
+import net.duohuo.dhroid.util.DhUtil;
+import net.duohuo.dhroid.util.ViewUtil;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import com.gongpingjia.carplay.R;
-import com.gongpingjia.carplay.adapter.ActiveAdapter.ViewHolder;
-import com.gongpingjia.carplay.util.PicLayoutUtil;
 
 import android.app.Activity;
 import android.content.Context;
@@ -16,10 +17,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import net.duohuo.dhroid.adapter.NetJSONAdapter;
-import net.duohuo.dhroid.net.JSONUtil;
-import net.duohuo.dhroid.util.DhUtil;
-import net.duohuo.dhroid.util.ViewUtil;
+
+import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.util.PicLayoutUtil;
 
 public class MyReleaseActiveAdapter extends NetJSONAdapter
 {

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/white_fillet_button"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp" >
+
+        <TextView
+            style="@style/text_black_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="请选择" />
+    </RelativeLayout>
+
+    <View style="@style/line_horizontal" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:gravity="center_vertical"
+        android:padding="10dp" >
+
+        <TextView
+            style="@style/text_grey_medium"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="是否愿意出车" />
+
+        <RadioGroup
+            android:id="@+id/radiogroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/radio_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="35dp"
+                android:button="@null"
+                android:drawableLeft="@drawable/radio_sex"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
+                android:text="是"
+                android:textColor="@color/text_grey"
+                android:textSize="@dimen/text_medium" />
+
+            <RadioButton
+                android:id="@+id/radio_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:checked="true"
+                android:drawableLeft="@drawable/radio_sex"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
+                android:text="否"
+                android:textColor="#FD6D53"
+                android:textSize="@dimen/text_medium" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <View style="@style/line_horizontal" />
+
+    <LinearLayout
+        android:id="@+id/seatLayout"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:gravity="center_vertical"
+        android:padding="10dp" >
+
+        <TextView
+            android:id="@+id/des"
+            style="@style/text_grey_medium"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="提供座位数" />
+
+        <TextView
+            android:id="@+id/count"
+            style="@style/text_black_medium" />
+
+        <TextView
+            style="@style/text_black_medium"
+            android:text="个" />
+    </LinearLayout>
+
+    <View style="@style/line_horizontal" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp" >
+
+        <Button
+            android:id="@+id/btn_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_zc_bg"
+            android:text="提交"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_medium" />
+    </RelativeLayout>
+
+</LinearLayout>

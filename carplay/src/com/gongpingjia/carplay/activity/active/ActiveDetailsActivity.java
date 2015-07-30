@@ -1,8 +1,5 @@
 package com.gongpingjia.carplay.activity.active;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import net.duohuo.dhroid.adapter.FieldMap;
 import net.duohuo.dhroid.adapter.NetJSONAdapter;
 import net.duohuo.dhroid.net.DhNet;
@@ -12,6 +9,10 @@ import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.util.DhUtil;
 import net.duohuo.dhroid.util.ViewUtil;
 import net.duohuo.dhroid.view.NetRefreshAndMoreListView;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -30,12 +31,13 @@ import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
-import com.gongpingjia.carplay.activity.my.LoginActivity;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.manage.UserInfoManage;
 import com.gongpingjia.carplay.manage.UserInfoManage.LoginCallBack;
 import com.gongpingjia.carplay.util.PicLayoutUtil;
+import com.gongpingjia.carplay.view.dialog.CarSeatSelectDialog;
+import com.gongpingjia.carplay.view.dialog.CarSeatSelectDialog.OnSelectResultListener;
 
 /*
  *@author zhanglong
@@ -67,6 +69,12 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements OnClic
     View headlayoutV;
     
     TextView joinT;
+    
+    long startTime;
+    
+    boolean isJoin = false;
+    
+    boolean islogin = false;
     
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -201,7 +209,7 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements OnClic
         ViewUtil.bindView(headV.findViewById(R.id.drive_age), JSONUtil.getString(createrJo, "carModel") + ","
             + JSONUtil.getString(createrJo, "drivingExperience") + "年驾龄");
         ViewUtil.bindView(headV.findViewById(R.id.content), JSONUtil.getString(headJo, "introduction"));
-        
+        ViewUtil.bindView(headV.findViewById(R.id.des), JSONUtil.getString(headJo, "introduction"));
         ViewUtil.bindNetImage((ImageView)headV.findViewById(R.id.car_logo),
             JSONUtil.getString(createrJo, "carBrandLogo"),
             "optionsDefault");
@@ -221,6 +229,8 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements OnClic
             ViewUtil.bindView(headV.findViewById(R.id.start_time), JSONUtil.getLong(headJo, "start"), "time");
         }
         
+        startTime = JSONUtil.getLong(headJo, "start");
+        
         if (JSONUtil.getLong(headJo, "end") == 0)
         {
             ViewUtil.bindView(headV.findViewById(R.id.end_time), "不确定");
@@ -231,7 +241,7 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements OnClic
             ViewUtil.bindView(headV.findViewById(R.id.end_time), JSONUtil.getLong(headJo, "end"), "time");
         }
         
-        ViewUtil.bindView(headV.findViewById(R.id.pay), JSONUtil.getString(createrJo, "pay"));
+        ViewUtil.bindView(headV.findViewById(R.id.pay), JSONUtil.getString(headJo, "pay"));
         
         View layoutSex = headV.findViewById(R.id.layout_sex);
         if (JSONUtil.getString(createrJo, "gender").equals("男"))
@@ -245,14 +255,17 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements OnClic
         ViewUtil.bindView(headV.findViewById(R.id.age), JSONUtil.getString(createrJo, "age"));
         
         JSONArray picJsa = JSONUtil.getJSONArray(headJo, "cover");
+        LinearLayout pivlayout = (LinearLayout)headV.findViewById(R.id.pic_layout);
+        pivlayout.removeAllViews();
         // holder.piclayoutV.removeAllViews();
-        PicLayoutUtil util =
-            new PicLayoutUtil(self, picJsa, 5, (LinearLayout)headV.findViewById(R.id.pic_layout), piclayoutWidth);
+        PicLayoutUtil util = new PicLayoutUtil(self, picJsa, 5, pivlayout, piclayoutWidth);
         util.addMoreChild();
         // holder.headlayoutV.removeAllViews();
         JSONArray headJsa = JSONUtil.getJSONArray(headJo, "members");
-        PicLayoutUtil headUtil =
-            new PicLayoutUtil(self, headJsa, 5, (LinearLayout)headV.findViewById(R.id.headlayout), headlayoutWidth);
+        
+        LinearLayout headlayout = (LinearLayout)headV.findViewById(R.id.headlayout);
+        headlayout.removeAllViews();
+        PicLayoutUtil headUtil = new PicLayoutUtil(self, headJsa, 5, headlayout, headlayoutWidth);
         headUtil.setHeadMaxCount(6);
         headUtil.AddChild();
     }
@@ -265,16 +278,19 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements OnClic
         if (isOrganizer == 1)
         {
             joinT.setText("管理");
+            isJoin = true;
         }
         else
         {
             if (isMember == 1)
             {
                 joinT.setText("查看");
+                isJoin = true;
             }
             else
             {
                 joinT.setText("我也要玩");
+                isJoin = false;
             }
         }
         joinT.setVisibility(View.VISIBLE);
@@ -338,35 +354,117 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements OnClic
         Intent it;
         switch (v.getId())
         {
+        
             case R.id.release:
-                comment();
+                UserInfoManage.getInstance().checkLogin((Activity)self, new LoginCallBack()
+                {
+                    
+                    @Override
+                    public void onisLogin()
+                    {
+                        comment();
+                    }
+                    
+                    @Override
+                    public void onLoginFail()
+                    {
+                        
+                    }
+                });
                 break;
             
             case R.id.headlayout:
-                it = new Intent(self, ActiveMembersActivity.class);
-                it.putExtra("activityId", activityId);
-                it.putExtra("isJoin", true);
-                startActivity(it);
-                break;
-            
-            case R.id.join:
-                if (joinT.getText().equals("管理"))
+                if (User.getInstance().isLogin())
                 {
-                    it = new Intent(self, MyActiveMembersManageActivity.class);
-                    it.putExtra("activityId", activityId);
-                    it.putExtra("isJoin", true);
-                    startActivity(it);
-                }
-                else if (joinT.getText().toString().equals("查看"))
-                {
-                    it = new Intent(self, ActiveMembersActivity.class);
-                    it.putExtra("activityId", activityId);
-                    it.putExtra("isJoin", true);
-                    startActivity(it);
+                    if (joinT.getText().equals("管理"))
+                    {
+                        it = new Intent(self, MyActiveMembersManageActivity.class);
+                        it.putExtra("activityId", activityId);
+                        it.putExtra("isJoin", isJoin);
+                        startActivity(it);
+                    }
+                    else
+                    {
+                        it = new Intent(self, ActiveMembersActivity.class);
+                        it.putExtra("activityId", activityId);
+                        it.putExtra("startTime", startTime);
+                        it.putExtra("isJoin", isJoin);
+                        startActivity(it);
+                    }
                 }
                 else
                 {
-                    joinActive();
+                    UserInfoManage.getInstance().checkLogin((Activity)self, new LoginCallBack()
+                    {
+                        
+                        @Override
+                        public void onisLogin()
+                        {
+                            getData();
+                        }
+                        
+                        @Override
+                        public void onLoginFail()
+                        {
+                            
+                        }
+                    });
+                }
+                
+                break;
+            
+            case R.id.join:
+                
+                if (User.getInstance().isLogin())
+                {
+                    
+                    if (joinT.getText().equals("管理"))
+                    {
+                        it = new Intent(self, MyActiveMembersManageActivity.class);
+                        it.putExtra("activityId", activityId);
+                        it.putExtra("isJoin", isJoin);
+                        startActivity(it);
+                    }
+                    else if (joinT.getText().toString().equals("已加入"))
+                    {
+                        it = new Intent(self, ActiveMembersActivity.class);
+                        it.putExtra("startTime", startTime);
+                        it.putExtra("activityId", activityId);
+                        it.putExtra("isJoin", isJoin);
+                        startActivity(it);
+                    }
+                    else
+                    {
+                        CarSeatSelectDialog dialog = new CarSeatSelectDialog(self);
+                        dialog.setOnSelectResultListener(new OnSelectResultListener()
+                        {
+                            
+                            @Override
+                            public void click(int seatCount)
+                            {
+                                joinActive(seatCount);
+                            }
+                        });
+                        dialog.show();
+                    }
+                }
+                else
+                {
+                    UserInfoManage.getInstance().checkLogin((Activity)self, new LoginCallBack()
+                    {
+                        
+                        @Override
+                        public void onisLogin()
+                        {
+                            getData();
+                        }
+                        
+                        @Override
+                        public void onLoginFail()
+                        {
+                            
+                        }
+                    });
                 }
                 break;
             
@@ -378,11 +476,12 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements OnClic
     /**
      * 加入活动
      */
-    private void joinActive()
+    private void joinActive(int seatCount)
     {
         DhNet net =
             new DhNet(API.CWBaseurl + "/activity/" + activityId + "/join?userId=" + user.getUserId() + "&token="
                 + user.getToken());
+        net.addParam("seat", seatCount);
         net.doPost(new NetTask(self)
         {
             

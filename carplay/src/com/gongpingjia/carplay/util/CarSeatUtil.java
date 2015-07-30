@@ -13,12 +13,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.view.RoundImageView;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class CarSeatUtil
 {
@@ -47,6 +44,10 @@ public class CarSeatUtil
         usedSeatCount = 0;
         parentV.removeAllViews();
         this.jsa = jsa;
+        if (jsa == null)
+        {
+            return;
+        }
         for (int i = 0; i < jsa.length(); i++)
         {
             try

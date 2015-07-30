@@ -3,16 +3,15 @@
  */
 package com.gongpingjia.carplay;
 
-import org.json.JSONObject;
-
-import android.content.Context;
-import android.content.Intent;
-import android.widget.Toast;
 import net.duohuo.dhroid.dialog.IDialog;
 import net.duohuo.dhroid.ioc.IocContainer;
 import net.duohuo.dhroid.net.GlobalCodeHandler;
 import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.Response;
+
+import org.json.JSONObject;
+
+import android.content.Context;
 
 /**
  * 

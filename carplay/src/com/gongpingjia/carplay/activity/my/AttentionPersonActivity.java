@@ -1,30 +1,10 @@
 package com.gongpingjia.carplay.activity.my;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.json.JSONObject;
-
-import net.duohuo.dhroid.adapter.BeanAdapter.ViewHolder;
-import net.duohuo.dhroid.adapter.INetAdapter.LoadSuccessCallBack;
 import net.duohuo.dhroid.adapter.FieldMap;
 import net.duohuo.dhroid.adapter.NetJSONAdapter;
-import net.duohuo.dhroid.net.JSONUtil;
-import net.duohuo.dhroid.net.Response;
-import net.duohuo.dhroid.util.ViewUtil;
 import net.duohuo.dhroid.view.NetRefreshAndMoreListView;
-import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;

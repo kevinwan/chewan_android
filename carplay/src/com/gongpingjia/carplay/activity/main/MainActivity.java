@@ -6,8 +6,8 @@ import java.util.Stack;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.UserManager;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -22,6 +22,8 @@ import com.gongpingjia.carplay.activity.active.CreateActiveActivity;
 import com.gongpingjia.carplay.activity.msg.MsgFragment;
 import com.gongpingjia.carplay.activity.my.MyFragment;
 import com.gongpingjia.carplay.activity.my.SettingActivity;
+import com.gongpingjia.carplay.manage.UserInfoManage;
+import com.gongpingjia.carplay.manage.UserInfoManage.LoginCallBack;
 import com.gongpingjia.carplay.view.pop.ActiveFilterPop;
 
 public class MainActivity extends BaseFragmentActivity
@@ -98,8 +100,23 @@ public class MainActivity extends BaseFragmentActivity
                             @Override
                             public void onClick(View arg0)
                             {
-                                Intent it = new Intent(MainActivity.this, CreateActiveActivity.class);
-                                startActivity(it);
+                                UserInfoManage.getInstance().checkLogin(self, new LoginCallBack()
+                                {
+                                    
+                                    @Override
+                                    public void onisLogin()
+                                    {
+                                        Intent it = new Intent(MainActivity.this, CreateActiveActivity.class);
+                                        startActivity(it);
+                                    }
+                                    
+                                    @Override
+                                    public void onLoginFail()
+                                    {
+                                        // TODO Auto-generated method stub
+                                        
+                                    }
+                                });
                             }
                         });
                         setLeftAction(R.drawable.filtrate, "筛选", new OnClickListener()
@@ -115,7 +132,22 @@ public class MainActivity extends BaseFragmentActivity
                     
                     case 1:
                         setTitle("消息");
-                        switchContent(MsgFragment.getInstance());
+                        UserInfoManage.getInstance().checkLogin(self, new LoginCallBack()
+                        {
+                            
+                            @Override
+                            public void onisLogin()
+                            {
+                                switchContent(MsgFragment.getInstance());
+                            }
+                            
+                            @Override
+                            public void onLoginFail()
+                            {
+                                // TODO Auto-generated method stub
+                                
+                            }
+                        });
                         img.setImageResource(R.drawable.msg_f);
                         setLeftAction(-2, null, new OnClickListener()
                         {

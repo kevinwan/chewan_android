@@ -1,17 +1,14 @@
 package com.gongpingjia.carplay.activity.active;
 
-import org.json.JSONObject;
-
-import net.duohuo.dhroid.adapter.FieldMap;
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
-import net.duohuo.dhroid.net.NetTask;
-import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.view.NetRefreshAndMoreListView;
+
+import org.json.JSONObject;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +22,6 @@ import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.adapter.ActiveAdapter;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.bean.ActiveParmasEB;
-import com.gongpingjia.carplay.bean.MapEB;
 import com.gongpingjia.carplay.bean.User;
 
 import de.greenrobot.event.EventBus;

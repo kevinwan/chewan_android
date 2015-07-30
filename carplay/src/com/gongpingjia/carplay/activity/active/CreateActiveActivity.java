@@ -1,16 +1,16 @@
 package com.gongpingjia.carplay.activity.active;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import net.duohuo.dhroid.dialog.IDialog;
+import net.duohuo.dhroid.ioc.IocContainer;
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.net.upload.FileInfo;
-import net.duohuo.dhroid.util.DhUtil;
 import net.duohuo.dhroid.util.PhotoUtil;
 
 import org.json.JSONArray;
@@ -18,9 +18,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.media.ExifInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,8 +28,6 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
@@ -39,12 +37,12 @@ import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.PhotoState;
 import com.gongpingjia.carplay.bean.User;
+import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.util.Utils;
 import com.gongpingjia.carplay.view.NestedGridView;
 import com.gongpingjia.carplay.view.dialog.CommonDialog;
 import com.gongpingjia.carplay.view.dialog.CommonDialog.OnCommonDialogItemClickListener;
-import com.gongpingjia.carplay.view.dialog.DateDialog;
-import com.gongpingjia.carplay.view.dialog.DateDialog.OnDateResultListener;
+import com.gongpingjia.carplay.view.dialog.DateTimePickerDialog;
 
 /***
  * 
@@ -249,153 +247,178 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
     }
     
     @Override
-    public void onClick(View v) {
+    public void onClick(View v)
+    {
         // TODO Auto-generated method stub
         int id = v.getId();
         Intent it = null;
         CommonDialog dlg = null;
-        DateDialog date = null;
-        switch (id) {
-
-        case R.id.layout_active_type:
-            dlg = new CommonDialog(self, mTypeOptions, "请选择活动");
-            dlg.setOnDialogItemClickListener(new OnCommonDialogItemClickListener() {
-
-                @Override
-                public void onDialogItemClick(int position) {
-                    // TODO Auto-generated method stub
-                    mTypeText.setText(mTypeOptions.get(position));
+        DateTimePickerDialog date = null;
+        switch (id)
+        {
+        
+            case R.id.layout_active_type:
+                dlg = new CommonDialog(self, mTypeOptions, "请选择活动");
+                dlg.setOnDialogItemClickListener(new OnCommonDialogItemClickListener()
+                {
+                    
+                    @Override
+                    public void onDialogItemClick(int position)
+                    {
+                        // TODO Auto-generated method stub
+                        mTypeText.setText(mTypeOptions.get(position));
+                    }
+                });
+                dlg.show();
+                break;
+            
+            case R.id.layout_description:
+                it = new Intent(self, ActiveDescriptionActivity.class);
+                startActivityForResult(it, REQUEST_DESCRIPTION);
+                break;
+            
+            case R.id.layout_destination:
+                it = new Intent(self, MapActivity.class);
+                startActivityForResult(it, REQUEST_DESTINATION);
+                break;
+            
+            case R.id.layout_start_time:
+                date = new DateTimePickerDialog(self, System.currentTimeMillis());
+                date.setOnDateTimeSetListener(new DateTimePickerDialog.OnDateTimeSetListener()
+                {
+                    public void OnDateTimeSet(AlertDialog dialog, long date)
+                    {
+                        mStartTimeText.setText(CarPlayUtil.getStringDate(date));
+                        mStartTimeStamp = date;
+                    }
+                });
+                date.show();
+                break;
+            case R.id.layout_end_time:
+                date = new DateTimePickerDialog(self, System.currentTimeMillis());
+                date.setOnDateTimeSetListener(new DateTimePickerDialog.OnDateTimeSetListener()
+                {
+                    public void OnDateTimeSet(AlertDialog dialog, long date)
+                    {
+                        mEndTimeText.setText(CarPlayUtil.getStringDate(date));
+                        mEndTimeStamp = date;
+                    }
+                });
+                date.show();
+                break;
+            case R.id.layout_fee:
+                dlg = new CommonDialog(self, mFeeOptions, "请选择付费方式");
+                dlg.setOnDialogItemClickListener(new OnCommonDialogItemClickListener()
+                {
+                    
+                    @Override
+                    public void onDialogItemClick(int position)
+                    {
+                        // TODO Auto-generated method stub
+                        mFeeText.setText(mFeeOptions.get(position));
+                    }
+                });
+                dlg.show();
+                break;
+            case R.id.layout_seats:
+                if (mSeatOptions.size() == 0)
+                {
+                    IocContainer.getShare().get(IDialog.class).showToastLong(self, "正在加载可提供座位的数量,请稍等!");
+                    return;
                 }
-            });
-            dlg.show();
-            break;
-
-        case R.id.layout_description:
-            it = new Intent(self, ActiveDescriptionActivity.class);
-            startActivityForResult(it, REQUEST_DESCRIPTION);
-            break;
-
-        case R.id.layout_destination:
-            it = new Intent(self, MapActivity.class);
-            startActivityForResult(it, REQUEST_DESTINATION);
-            break;
-
-        case R.id.layout_start_time:
-            date = new DateDialog();
-            date.setOnDateResultListener(new OnDateResultListener() {
-
-                @Override
-                public void result(String date, long datetime, int year, int month, int day) {
-                    // TODO Auto-generated method stub
-                    mStartTimeText.setText(date);
-                    mStartTimeStamp = datetime;
+                dlg = new CommonDialog(self, mSeatOptions, "请选择提供座位数");
+                dlg.setOnDialogItemClickListener(new OnCommonDialogItemClickListener()
+                {
+                    
+                    @Override
+                    public void onDialogItemClick(int position)
+                    {
+                        // TODO Auto-generated method stub
+                        mSeatText.setText(mSeatOptions.get(position));
+                    }
+                });
+                dlg.show();
+                break;
+            
+            case R.id.btn_finish:
+                if (mTypeText.getText().toString().equals(""))
+                {
+                    showToast("请选择活动");
+                    return;
                 }
-            });
-            date.show(self);
-            break;
-        case R.id.layout_end_time:
-            date = new DateDialog();
-            date.setOnDateResultListener(new OnDateResultListener() {
-
-                @Override
-                public void result(String date, long datetime, int year, int month, int day) {
-                    // TODO Auto-generated method stub
-                    mEndTimeText.setText(date);
-                    mEndTimeStamp = datetime;
+                if (mPicIds.size() == 0)
+                {
+                    showToast("请至少选择一张图片");
+                    return;
                 }
-            });
-            date.show(self);
-            break;
-        case R.id.layout_fee:
-            dlg = new CommonDialog(self, mFeeOptions, "请选择付费方式");
-            dlg.setOnDialogItemClickListener(new OnCommonDialogItemClickListener() {
-
-                @Override
-                public void onDialogItemClick(int position) {
-                    // TODO Auto-generated method stub
-                    mFeeText.setText(mFeeOptions.get(position));
+                if (mDescriptionText.getText().equals(""))
+                {
+                    
                 }
-            });
-            dlg.show();
-            break;
-        case R.id.layout_seats:
-            dlg = new CommonDialog(self, mSeatOptions, "请选择提供座位数");
-            dlg.setOnDialogItemClickListener(new OnCommonDialogItemClickListener() {
-
-                @Override
-                public void onDialogItemClick(int position) {
-                    // TODO Auto-generated method stub
-                    mSeatText.setText(mSeatOptions.get(position));
+                if (mDestimationText.getText().toString().length() == 0)
+                {
+                    showToast("请选择目的地");
+                    return;
                 }
-            });
-            dlg.show();
-            break;
-
-        case R.id.btn_finish:
-            if (mTypeText.getText().toString().equals("")) {
-                showToast("请选择活动");
-                return;
-            }
-            if (mPicIds.size() == 0) {
-                showToast("请至少选择一张图片");
-                return;
-            }
-            if (mDescriptionText.getText().equals("")) {
-
-            }
-            if (mDestimationText.getText().toString().length() == 0) {
-                showToast("请选择目的地");
-                return;
-            }
-            if (mSeatText.getText().toString().length() == 0) {
-                showToast("请提供座位数");
-                return;
-            }
-
-            // 获取可用的座位数
-            mDhNet = new DhNet(API.createActive + "userId=" + mUser.getUserId() + "&token=" + mUser.getToken());
-            mDhNet.addParam("type", mTypeText.getText().toString());
-            mDhNet.addParam("introduction", mDescriptionText.getText().toString());
-            JSONArray array = new JSONArray(mPicIds);
-            mDhNet.addParam("cover", array);
-            mDhNet.addParam("location", mLocation);
-            mDhNet.addParam("city", mCity);
-            mDhNet.addParam("address", mDestimationText.getText().toString());
-            mDhNet.addParam("start", mStartTimeStamp);
-            mDhNet.addParam("pay", mFeeText.getText().toString());
-            mDhNet.addParam("seat", mSeatText.getText().toString());
-            if (mEndTimeStamp != 0) {
-                mDhNet.addParam("end", mEndTimeStamp);
-            }
-
-            Map<String, Object> params = mDhNet.getParams();
-            for (String key : params.keySet()) {
-                Log.e("tag", key + ": " + params.get(key));
-            }
-            mDhNet.doPostInDialog(new NetTask(this) {
-
-                @Override
-                public void doInUI(Response response, Integer transfer) {
-                    // TODO Auto-generated method stub
-                    if (response.isSuccess()) {
-                        showToast("发布成功");
-                    } else {
-                        try {
-                            Log.e("err", response.jSON().getString("errmsg"));
-                        } catch (JSONException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
+                if (mSeatText.getText().toString().length() == 0)
+                {
+                    showToast("请提供座位数");
+                    return;
+                }
+                
+                // 获取可用的座位数
+                mDhNet = new DhNet(API.createActive + "userId=" + mUser.getUserId() + "&token=" + mUser.getToken());
+                mDhNet.addParam("type", mTypeText.getText().toString());
+                mDhNet.addParam("introduction", mDescriptionText.getText().toString());
+                JSONArray array = new JSONArray(mPicIds);
+                mDhNet.addParam("cover", array);
+                mDhNet.addParam("location", mLocation);
+                mDhNet.addParam("city", mCity);
+                mDhNet.addParam("address", mDestimationText.getText().toString());
+                mDhNet.addParam("start", mStartTimeStamp);
+                mDhNet.addParam("pay", mFeeText.getText().toString());
+                mDhNet.addParam("seat", mSeatText.getText().toString());
+                if (mEndTimeStamp != 0)
+                {
+                    mDhNet.addParam("end", mEndTimeStamp);
+                }
+                
+                Map<String, Object> params = mDhNet.getParams();
+                for (String key : params.keySet())
+                {
+                    Log.e("tag", key + ": " + params.get(key));
+                }
+                mDhNet.doPostInDialog(new NetTask(this)
+                {
+                    
+                    @Override
+                    public void doInUI(Response response, Integer transfer)
+                    {
+                        // TODO Auto-generated method stub
+                        if (response.isSuccess())
+                        {
+                            showToast("发布成功");
+                        }
+                        else
+                        {
+                            try
+                            {
+                                Log.e("err", response.jSON().getString("errmsg"));
+                            }
+                            catch (JSONException e)
+                            {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            }
                         }
                     }
-                }
-            });
-            break;
-        case R.id.btn_finish_invite:
-
-            break;
+                });
+                break;
+            case R.id.btn_finish_invite:
+                
+                break;
         }
     }
-
     
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
@@ -420,7 +443,7 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                     Bitmap btp1 = PhotoUtil.getLocalImage(new File(mCurPath));
                     String newPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg").getAbsolutePath();
                     int degree = PhotoUtil.getBitmapDegree(mCurPath);
-                    PhotoUtil.saveLocalImage(btp1, new File(newPath),degree);
+                    PhotoUtil.saveLocalImage(btp1, new File(newPath), degree);
                     btp1.recycle();
                     upLoadPic(newPath);
                     // PhotoUtil.onPhotoFromCamera(self, Constant.ZOOM_PIC, mCurPath, 1, 1, 1000);

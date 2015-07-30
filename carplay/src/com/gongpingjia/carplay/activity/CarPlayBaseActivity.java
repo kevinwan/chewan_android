@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
-import com.gongpingjia.carplay.util.CarPlayPerference;
 
 public abstract class CarPlayBaseActivity extends BaseActivity
 {

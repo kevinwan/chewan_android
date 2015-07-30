@@ -1,12 +1,13 @@
 package com.gongpingjia.carplay.activity.main;
 
-import org.json.JSONObject;
-
 import net.duohuo.dhroid.ioc.IocContainer;
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
+
+import org.json.JSONObject;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,7 +18,6 @@ import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.CarPlayPerference;
-import com.gongpingjia.carplay.util.MD5Util;
 
 public class SplashActivity extends CarPlayBaseActivity
 {

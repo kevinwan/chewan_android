@@ -8,10 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,17 +18,8 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
-import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
-import com.gongpingjia.carplay.R.id;
-import com.gongpingjia.carplay.activity.my.PersonDetailActivity;
-import com.gongpingjia.carplay.manage.UserInfoManage;
-import com.gongpingjia.carplay.manage.UserInfoManage.LoginCallBack;
 import com.gongpingjia.carplay.view.RoundImageView;
-import com.google.gson.JsonArray;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
 
 public class PicLayoutUtil
 {

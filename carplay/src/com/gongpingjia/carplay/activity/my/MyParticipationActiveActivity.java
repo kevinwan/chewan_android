@@ -1,7 +1,6 @@
 package com.gongpingjia.carplay.activity.my;
 
 import net.duohuo.dhroid.view.NetRefreshAndMoreListView;
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.gongpingjia.carplay.R;

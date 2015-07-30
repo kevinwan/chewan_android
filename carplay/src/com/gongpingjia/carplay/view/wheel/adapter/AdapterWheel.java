@@ -16,9 +16,9 @@
 
 package com.gongpingjia.carplay.view.wheel.adapter;
 
-import com.gongpingjia.carplay.view.wheel.WheelAdapter;
-
 import android.content.Context;
+
+import com.gongpingjia.carplay.view.wheel.WheelAdapter;
 
 /**
  * Adapter class for old wheel adapter (deprecated WheelAdapter class).

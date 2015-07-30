@@ -1,8 +1,5 @@
 package com.gongpingjia.carplay.activity.my;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
@@ -10,15 +7,19 @@ import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.util.ViewUtil;
 import net.duohuo.dhroid.view.DotLinLayout;
 import net.duohuo.dhroid.view.NetRefreshAndMoreListView;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemSelectedListener;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
@@ -237,13 +238,60 @@ public class PersonDetailActivity extends CarPlayBaseActivity implements OnClick
         }
     }
     
+    /** 关注人 */
+    private void attention(String userid)
+    {
+        DhNet net = new DhNet(API.CWBaseurl + "/user/" + user.getUserId() + "/listen?&token=" + user.getToken());
+        net.addParam("targetUserId", userid);
+        net.doPost(new NetTask(self)
+        {
+            
+            @Override
+            public void doInUI(Response response, Integer transfer)
+            {
+                if (response.isSuccess())
+                {
+                    showToast("关注成功!");
+                    attentionT.setText("取消关注");
+                }
+            }
+        });
+    }
+    
+    /** 关注人 */
+    private void cancleAttention(String userid)
+    {
+        DhNet net = new DhNet(API.CWBaseurl + "/user/" + user.getUserId() + "/unlisten?&token=" + user.getToken());
+        net.addParam("targetUserId", userid);
+        net.doPost(new NetTask(self)
+        {
+            
+            @Override
+            public void doInUI(Response response, Integer transfer)
+            {
+                if (response.isSuccess())
+                {
+                    showToast("取消关注成功!");
+                    attentionT.setText("关注");
+                }
+            }
+        });
+    }
+    
     @Override
     public void onClick(View v)
     {
         switch (v.getId())
         {
             case R.id.attention:
-                
+                if (attentionT.getText().toString().equals("关注"))
+                {
+                    attention(userId);
+                }
+                else
+                {
+                    cancleAttention(userId);
+                }
                 break;
             
             default:

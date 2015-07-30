@@ -1,17 +1,11 @@
 package com.gongpingjia.carplay.activity.my;
 
-import net.duohuo.dhroid.adapter.BeanAdapter;
 import net.duohuo.dhroid.adapter.FieldMap;
 import net.duohuo.dhroid.adapter.NetJSONAdapter;
-import net.duohuo.dhroid.net.DhNet;
-import net.duohuo.dhroid.net.NetTask;
-import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.view.NetRefreshAndMoreListView;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;

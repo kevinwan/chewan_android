@@ -1,12 +1,12 @@
 package com.gongpingjia.carplay.view;
 
-import com.gongpingjia.carplay.R;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.widget.TextView;
+
+import com.gongpingjia.carplay.R;
 
 /**
  * 加载中Dialog

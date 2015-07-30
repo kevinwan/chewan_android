@@ -2,11 +2,6 @@ package com.gongpingjia.carplay.view.dialog;
 
 import java.io.File;
 
-import com.gongpingjia.carplay.R;
-import com.gongpingjia.carplay.api.Constant;
-import com.nineoldandroids.animation.AnimatorSet;
-import com.nineoldandroids.animation.ObjectAnimator;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -18,6 +13,11 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+
+import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.api.Constant;
+import com.nineoldandroids.animation.AnimatorSet;
+import com.nineoldandroids.animation.ObjectAnimator;
 
 public class PhotoSelectDialog extends AlertDialog implements android.view.View.OnClickListener
 {

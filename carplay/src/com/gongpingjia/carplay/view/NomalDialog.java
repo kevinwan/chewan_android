@@ -1,22 +1,19 @@
 package com.gongpingjia.carplay.view;
 
-import com.gongpingjia.carplay.R;
-
-import android.app.Dialog;
-import android.content.Context;
-import android.graphics.Color;
-import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.LinearLayout.LayoutParams;
-import android.widget.ListAdapter;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
 import net.duohuo.dhroid.dialog.DialogCallBack;
 import net.duohuo.dhroid.dialog.DialogImpl;
 import net.duohuo.dhroid.ioc.IocContainer;
 import net.duohuo.dhroid.util.ViewUtil;
+import android.app.Dialog;
+import android.content.Context;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListAdapter;
+import android.widget.Toast;
+
+import com.gongpingjia.carplay.R;
 
 public class NomalDialog extends DialogImpl
 {
