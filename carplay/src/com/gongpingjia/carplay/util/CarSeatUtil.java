@@ -57,7 +57,7 @@ public class CarSeatUtil
                 parentV.addView(childV);
                 
                 ImageView carLogo = (ImageView)childV.findViewById(R.id.logo);
-                ViewUtil.bindNetImage(carLogo, JSONUtil.getString(carJo, "carBrandLogo"), "default");
+                ViewUtil.bindNetImage(carLogo, JSONUtil.getString(carJo, "carBrandLogo"), "carlogo");
                 ViewUtil.bindView(childV.findViewById(R.id.name), JSONUtil.getString(carJo, "carModel"));
                 
                 final String carId = JSONUtil.getString(carJo, "carId");
@@ -97,7 +97,7 @@ public class CarSeatUtil
                     RoundImageView headI = (RoundImageView)seatChild.findViewById(R.id.head);
                     ImageView seatI = (ImageView)seatChild.findViewById(R.id.seat);
                     seatI.setImageResource(R.drawable.icon_seat_white);
-                    ViewUtil.bindNetImage(headI, JSONUtil.getString(userJo, "photo"), "default");
+                    ViewUtil.bindNetImage(headI, JSONUtil.getString(userJo, "photo"), "head");
                     // 不可以去掉
                     headI.setOnClickListener(new OnClickListener()
                     {

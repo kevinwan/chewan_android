@@ -5,364 +5,370 @@
     android:background="@color/white"
     tools:context="com.gongpingjia.carplay.MyActivity" >
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical" >
 
-        <ImageView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="210dp"
-            android:src="@color/text_grey" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical" >
 
-            <LinearLayout
-                android:id="@+id/logined"
+            <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="95dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="188dp"
-                android:orientation="horizontal"
-                android:visibility="gone" >
+                android:layout_height="210dp"
+                android:src="@color/text_grey" />
 
-                <com.gongpingjia.carplay.view.RoundImageView
-                    android:id="@+id/head"
-                    android:layout_width="59dp"
-                    android:layout_height="59dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
 
                 <LinearLayout
+                    android:id="@+id/logined"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="95dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="32dp"
-                    android:orientation="vertical" >
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="188dp"
+                    android:orientation="horizontal"
+                    android:visibility="gone" >
+
+                    <com.gongpingjia.carplay.view.RoundImageView
+                        android:id="@+id/head"
+                        android:layout_width="59dp"
+                        android:layout_height="59dp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical" >
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="32dp"
+                        android:orientation="vertical" >
 
-                        <TextView
-                            android:id="@+id/nickname"
-                            style="@style/text_blue_medium" />
-
-                        <RelativeLayout
-                            android:id="@+id/gender"
-                            android:layout_width="40dp"
-                            android:layout_height="17dp"
-                            android:layout_marginLeft="7dp"
-                            android:background="@drawable/woman" >
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical" >
 
                             <TextView
-                                android:id="@+id/age"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
-                                android:layout_centerVertical="true"
-                                android:layout_marginRight="4dp"
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/text_smaller" />
-                        </RelativeLayout>
+                                android:id="@+id/nickname"
+                                style="@style/text_blue_medium" />
+
+                            <RelativeLayout
+                                android:id="@+id/gender"
+                                android:layout_width="40dp"
+                                android:layout_height="17dp"
+                                android:layout_marginLeft="7dp"
+                                android:background="@drawable/woman" >
+
+                                <TextView
+                                    android:id="@+id/age"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginRight="4dp"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/text_smaller" />
+                            </RelativeLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center_vertical" >
+
+                            <com.gongpingjia.carplay.view.RoundImageView
+                                android:id="@+id/carBrandLogo"
+                                android:layout_width="12dp"
+                                android:layout_height="12dp"
+                                android:layout_marginRight="7dp" />
+
+                            <TextView
+                                android:id="@+id/carModel"
+                                style="@style/text_grey_smaller" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/notlogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="95dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="210dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal" >
+
+                    <ImageView
+                        android:layout_width="59dp"
+                        android:layout_height="59dp"
+                        android:src="@drawable/my_n" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="12dp"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            style="@style/text_black_medium"
+                            android:text="未登录" />
+
+                        <TextView
+                            style="@style/text_grey_small"
+                            android:layout_marginTop="10dp"
+                            android:text="风吹鸡蛋壳,财去人安乐" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center_vertical" >
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical|right"
+                        android:orientation="vertical" >
 
-                        <com.gongpingjia.carplay.view.RoundImageView
-                            android:id="@+id/carBrandLogo"
-                            android:layout_width="12dp"
-                            android:layout_height="12dp"
-                            android:layout_marginRight="7dp" />
-
-                        <TextView
-                            android:id="@+id/carModel"
-                            style="@style/text_grey_smaller" />
+                        <Button
+                            android:id="@+id/login"
+                            style="@style/text_white_medium"
+                            android:layout_width="65dp"
+                            android:layout_height="35dp"
+                            android:background="@drawable/button_yanzheng_bg"
+                            android:text="登录" />
                     </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/notlogin"
-                android:layout_width="match_parent"
-                android:layout_height="95dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="210dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal" >
-
-                <ImageView
-                    android:layout_width="59dp"
-                    android:layout_height="59dp"
-                    android:src="@drawable/my_n" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="12dp"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical" >
-
-                    <TextView
-                        style="@style/text_black_medium"
-                        android:text="未登录" />
-
-                    <TextView
-                        style="@style/text_grey_small"
-                        android:layout_marginTop="10dp"
-                        android:text="风吹鸡蛋壳,财去人安乐" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical|right"
-                    android:orientation="vertical" >
-
-                    <Button
-                        android:id="@+id/login"
-                        style="@style/text_white_medium"
-                        android:layout_width="65dp"
-                        android:layout_height="35dp"
-                        android:background="@drawable/button_yanzheng_bg"
-                        android:text="登录" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <View
-                style="@style/line"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="80dp" >
-
-                <LinearLayout
-                    android:id="@+id/my_release"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical" >
-
-                    <TextView
-                        android:id="@+id/postNumber"
-                        style="@style/text_grey_medium"
-                        android:text="0" />
-
-                    <TextView
-                        style="@style/text_grey_small"
-                        android:layout_marginTop="4dp"
-                        android:text="我的发布" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="1px"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginTop="15dp"
-                    android:background="@color/black" />
-
-                <LinearLayout
-                    android:id="@+id/my_attention"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical" >
-
-                    <TextView
-                        android:id="@+id/subscribeNumber"
-                        style="@style/text_grey_medium"
-                        android:text="0" />
-
-                    <TextView
-                        style="@style/text_grey_small"
-                        android:layout_marginTop="4dp"
-                        android:text="我的关注" />
                 </LinearLayout>
 
                 <View
                     style="@style/line"
-                    android:layout_width="1px"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginTop="15dp"
-                    android:background="@color/black" />
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp" />
 
                 <LinearLayout
-                    android:id="@+id/my_participation"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical" >
+                    android:layout_height="80dp" >
 
-                    <TextView
-                        android:id="@+id/joinNumber"
-                        style="@style/text_grey_medium"
-                        android:text="0" />
+                    <LinearLayout
+                        android:id="@+id/my_release"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical" >
 
-                    <TextView
-                        style="@style/text_grey_small"
-                        android:layout_marginTop="4dp"
-                        android:text="我的参与" />
+                        <TextView
+                            android:id="@+id/postNumber"
+                            style="@style/text_grey_medium"
+                            android:text="0" />
+
+                        <TextView
+                            style="@style/text_grey_small"
+                            android:layout_marginTop="4dp"
+                            android:text="我的发布" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1px"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="15dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@color/black" />
+
+                    <LinearLayout
+                        android:id="@+id/my_attention"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:id="@+id/subscribeNumber"
+                            style="@style/text_grey_medium"
+                            android:text="0" />
+
+                        <TextView
+                            style="@style/text_grey_small"
+                            android:layout_marginTop="4dp"
+                            android:text="我的关注" />
+                    </LinearLayout>
+
+                    <View
+                        style="@style/line"
+                        android:layout_width="1px"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="15dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@color/black" />
+
+                    <LinearLayout
+                        android:id="@+id/my_participation"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:id="@+id/joinNumber"
+                            style="@style/text_grey_medium"
+                            android:text="0" />
+
+                        <TextView
+                            style="@style/text_grey_small"
+                            android:layout_marginTop="4dp"
+                            android:text="我的参与" />
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
 
-            <View style="@style/line" />
-
-            <LinearLayout
-                android:id="@+id/people_concerned"
-                style="@style/linearlayout" >
-
-                <ImageView
-                    style="@style/icon_style_small"
-                    android:src="@drawable/my_attention" />
-
-                <TextView
-                    style="@style/text_black_medium"
-                    android:text="我关注的人" />
+                <View style="@style/line" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="58dp"
-                    android:gravity="right|center_vertical"
-                    android:orientation="horizontal" >
+                    android:id="@+id/people_concerned"
+                    style="@style/linearlayout" >
 
                     <ImageView
-                        android:layout_width="18dp"
-                        android:layout_height="25dp"
-                        android:src="@drawable/right_btn" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <View style="@style/line" />
-
-            <LinearLayout
-                android:id="@+id/owners_certification"
-                style="@style/linearlayout" >
-
-                <ImageView
-                    style="@style/icon_style_small"
-                    android:src="@drawable/my_approve" />
-
-                <TextView
-                    style="@style/text_black_medium"
-                    android:text="车主认证" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="right|center_vertical"
-                    android:orientation="horizontal" >
+                        style="@style/icon_style_small"
+                        android:src="@drawable/my_attention" />
 
                     <TextView
-                        style="@style/text_blacklight_small"
-                        android:layout_width="wrap_content"
+                        style="@style/text_black_medium"
+                        android:text="我关注的人" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="58dp"
-                        android:layout_marginRight="5dp"
-                        android:gravity="center_vertical"
-                        android:text="已认证" />
+                        android:gravity="right|center_vertical"
+                        android:orientation="horizontal" >
 
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp" />
-
-                    <ImageView
-                        android:layout_width="18dp"
-                        android:layout_height="25dp"
-                        android:src="@drawable/right_btn" />
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="25dp"
+                            android:src="@drawable/right_btn" />
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
 
-            <View style="@style/line" />
-
-            <LinearLayout
-                android:id="@+id/carchat"
-                style="@style/linearlayout" >
-
-                <ImageView
-                    style="@style/icon_style_small"
-                    android:src="@drawable/my_carplay" />
-
-                <TextView
-                    style="@style/text_black_medium"
-                    android:text="玩转车聊" />
+                <View style="@style/line" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="58dp"
-                    android:gravity="right|center_vertical"
-                    android:orientation="horizontal" >
+                    android:id="@+id/owners_certification"
+                    style="@style/linearlayout" >
 
                     <ImageView
-                        android:layout_width="18dp"
-                        android:layout_height="25dp"
-                        android:src="@drawable/right_btn" />
-                    <!-- </LinearLayout> -->
+                        style="@style/icon_style_small"
+                        android:src="@drawable/my_approve" />
+
+                    <TextView
+                        style="@style/text_black_medium"
+                        android:text="车主认证" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right|center_vertical"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            style="@style/text_blacklight_small"
+                            android:layout_width="wrap_content"
+                            android:layout_height="58dp"
+                            android:layout_marginRight="5dp"
+                            android:gravity="center_vertical"
+                            android:text="已认证" />
+
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp" />
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="25dp"
+                            android:src="@drawable/right_btn" />
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
 
-            <View style="@style/line" />
-
-            <LinearLayout style="@style/linearlayout" >
-
-                <ImageView
-                    style="@style/icon_style_small"
-                    android:src="@drawable/my_about" />
-
-                <TextView
-                    style="@style/text_black_medium"
-                    android:text="关于我们" />
+                <View style="@style/line" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="58dp"
-                    android:gravity="right|center_vertical"
-                    android:orientation="horizontal" >
+                    android:id="@+id/carchat"
+                    style="@style/linearlayout" >
 
                     <ImageView
-                        android:layout_width="18dp"
-                        android:layout_height="25dp"
-                        android:src="@drawable/right_btn" />
+                        style="@style/icon_style_small"
+                        android:src="@drawable/my_carplay" />
+
+                    <TextView
+                        style="@style/text_black_medium"
+                        android:text="玩转车聊" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="58dp"
+                        android:gravity="right|center_vertical"
+                        android:orientation="horizontal" >
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="25dp"
+                            android:src="@drawable/right_btn" />
+                        <!-- </LinearLayout> -->
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
 
-            <View style="@style/line" />
+                <View style="@style/line" />
 
-            <LinearLayout style="@style/linearlayout" >
-
-                <ImageView
-                    style="@style/icon_style_small"
-                    android:src="@drawable/my_edit" />
-
-                <TextView
-                    style="@style/text_black_medium"
-                    android:text="编辑资料" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="58dp"
-                    android:gravity="right|center_vertical"
-                    android:orientation="horizontal" >
+                <LinearLayout style="@style/linearlayout" >
 
                     <ImageView
-                        android:layout_width="18dp"
-                        android:layout_height="25dp"
-                        android:src="@drawable/right_btn" />
+                        style="@style/icon_style_small"
+                        android:src="@drawable/my_about" />
+
+                    <TextView
+                        style="@style/text_black_medium"
+                        android:text="关于我们" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="58dp"
+                        android:gravity="right|center_vertical"
+                        android:orientation="horizontal" >
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="25dp"
+                            android:src="@drawable/right_btn" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View style="@style/line" />
+
+                <LinearLayout style="@style/linearlayout" >
+
+                    <ImageView
+                        style="@style/icon_style_small"
+                        android:src="@drawable/my_edit" />
+
+                    <TextView
+                        style="@style/text_black_medium"
+                        android:text="编辑资料" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="58dp"
+                        android:gravity="right|center_vertical"
+                        android:orientation="horizontal" >
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="25dp"
+                            android:src="@drawable/right_btn" />
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-    </RelativeLayout>
+        </RelativeLayout>
+    </LinearLayout>
 
 </ScrollView>

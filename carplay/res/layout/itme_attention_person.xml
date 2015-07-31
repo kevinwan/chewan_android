@@ -18,7 +18,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="9dp"
-            android:src="@drawable/head2" />
+            android:src="@drawable/head_icon" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -37,16 +37,14 @@
                 <TextView
                     android:id="@+id/person_name"
                     style="@style/text_black_medium"
-                    android:layout_marginTop="5dp"
-                    android:text="淘气小布丁" />
+                    android:layout_marginTop="5dp" />
 
                 <RelativeLayout
                     android:id="@+id/person_sex"
                     android:layout_width="32dp"
                     android:layout_height="18dp"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginTop="7dp"
-                    android:background="@drawable/woman" >
+                    android:layout_marginTop="7dp" >
 
                     <TextView
                         android:id="@+id/person_age"
@@ -54,11 +52,9 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:text="23"
-                        android:textColor="@color/white"
                         android:layout_marginRight="2dp"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/text_smaller" />
-
                 </RelativeLayout>
             </LinearLayout>
 
@@ -73,15 +69,13 @@
                     android:id="@+id/car_img"
                     android:layout_width="10dp"
                     android:layout_height="10dp"
-                    android:layout_marginBottom="5dp"
-                    android:src="@drawable/head2" />
+                    android:layout_marginBottom="5dp" />
 
                 <TextView
                     android:id="@+id/car_age"
                     style="@style/text_grey_smaller"
                     android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:text="X6,  8年驾龄" />
+                    android:layout_marginLeft="5dp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -109,7 +103,5 @@
         android:layout_width="fill_parent"
         android:layout_height="1px"
         android:background="#e6e9ed" />
-
-   
 
 </LinearLayout>

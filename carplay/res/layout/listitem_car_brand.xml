@@ -10,7 +10,6 @@
         android:layout_height="wrap_content"
         android:background="@color/bg_grey"
         android:padding="5dp"
-        android:text="A"
         android:textColor="@color/text_black"
         android:visibility="gone" />
 
@@ -24,14 +23,12 @@
         <ImageView
             android:id="@+id/imgView_car_logo"
             android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/head_icon" />
+            android:layout_height="30dp"/>
 
         <TextView
             android:id="@+id/tv_brand_name"
             style="@style/text_black_medium"
-            android:layout_marginLeft="10dp"
-            android:text="大众" />
+            android:layout_marginLeft="10dp" />
     </LinearLayout>
 
 </LinearLayout>

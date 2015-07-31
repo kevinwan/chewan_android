@@ -212,10 +212,10 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements OnClic
         ViewUtil.bindView(headV.findViewById(R.id.des), JSONUtil.getString(headJo, "introduction"));
         ViewUtil.bindNetImage((ImageView)headV.findViewById(R.id.car_logo),
             JSONUtil.getString(createrJo, "carBrandLogo"),
-            "optionsDefault");
+            "head");
         ViewUtil.bindNetImage((ImageView)headV.findViewById(R.id.head),
             JSONUtil.getString(createrJo, "photo"),
-            "optionsDefault");
+            "head");
         ViewUtil.bindView(headV.findViewById(R.id.publish_time), JSONUtil.getLong(headJo, "publishTime"), "neartime");
         
         ViewUtil.bindView(headV.findViewById(R.id.address), JSONUtil.getString(headJo, "location"));

@@ -59,6 +59,16 @@ public class PersonDetailActivity extends CarPlayBaseActivity implements OnClick
     
     TextView attentionT;
     
+    public static final int RELEASE = 1;
+    
+    public static final int JOIN = 2;
+    
+    public static final int ATTENTION = 3;
+    
+    View emptyV;
+    
+    int type;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -75,6 +85,7 @@ public class PersonDetailActivity extends CarPlayBaseActivity implements OnClick
         headV = LayoutInflater.from(self).inflate(R.layout.head_user_details, null);
         tab = (LinearLayout)headV.findViewById(R.id.tab);
         headI = (RoundImageView)headV.findViewById(R.id.head);
+        emptyV = headV.findViewById(R.id.empty);
         listV = (NetRefreshAndMoreListView)findViewById(R.id.listview);
         listV.addHeaderView(headV);
         gallery = (CarPlayGallery)headV.findViewById(R.id.gallery);
@@ -120,20 +131,35 @@ public class PersonDetailActivity extends CarPlayBaseActivity implements OnClick
                     {
                         case 0:
                             listV.setAdapter(releaseAdapter);
+                            type = RELEASE;
+                            bindEmptyView(emptyV, type);
                             break;
                         
                         case 2:
                             listV.setAdapter(attentionAdapter);
+                            type = ATTENTION;
+                            bindEmptyView(emptyV, type);
                             break;
                         
                         case 4:
                             listV.setAdapter(joinAdapter);
+                            type = JOIN;
+                            bindEmptyView(emptyV, type);
                             break;
                         
                         default:
                             break;
                     }
+                    if (listV.getAdapter().getCount() == 3)
+                    {
+                        emptyV.setVisibility(View.VISIBLE);
+                    }
+                    else
+                    {
+                        emptyV.setVisibility(View.GONE);
+                    }
                 }
+                
             });
         }
         
@@ -156,7 +182,7 @@ public class PersonDetailActivity extends CarPlayBaseActivity implements OnClick
                     JSONObject jo = response.jSONFromData();
                     int isSubscribed = JSONUtil.getInt(jo, "isSubscribed");
                     ViewUtil.bindView(attentionT, isSubscribed == 1 ? "取消关注" : "关注");
-                    ViewUtil.bindNetImage(headI, JSONUtil.getString(jo, "photo"), "default");
+                    ViewUtil.bindNetImage(headI, JSONUtil.getString(jo, "photo"), "head");
                     ViewUtil.bindView(headV.findViewById(R.id.nickname), JSONUtil.getString(jo, "nickname"));
                     ViewUtil.bindView(headV.findViewById(R.id.drive_age), JSONUtil.getString(jo, "carModel") + ","
                         + JSONUtil.getString(jo, "drivingExperience") + "年驾龄");
@@ -164,7 +190,7 @@ public class PersonDetailActivity extends CarPlayBaseActivity implements OnClick
                     
                     ViewUtil.bindNetImage((ImageView)headV.findViewById(R.id.car_logo),
                         JSONUtil.getString(jo, "carBrandLogo"),
-                        "optionsDefault");
+                        "carlogo");
                     
                     ViewUtil.bindView(headV.findViewById(R.id.releaseCount), JSONUtil.getString(jo, "postNumber"));
                     ViewUtil.bindView(headV.findViewById(R.id.attention_count),
@@ -297,5 +323,31 @@ public class PersonDetailActivity extends CarPlayBaseActivity implements OnClick
             default:
                 break;
         }
+    }
+    
+    private void bindEmptyView(View emptyV, final int type)
+    {
+        
+        switch (type)
+        {
+            case RELEASE:
+                ViewUtil.bindView(findViewById(R.id.btn_submit), "发布活动");
+                ViewUtil.bindView(findViewById(R.id.msg), "您还没有发布任何活动,赶紧添加吧!");
+                break;
+            
+            case JOIN:
+                ViewUtil.bindView(findViewById(R.id.btn_submit), "添加关注");
+                ViewUtil.bindView(findViewById(R.id.msg), "您还没有添加任何关注,赶紧添加吧!");
+                break;
+            
+            case ATTENTION:
+                ViewUtil.bindView(findViewById(R.id.btn_submit), "参与活动");
+                ViewUtil.bindView(findViewById(R.id.msg), "您还没有参与任何活动,赶紧参与吧!");
+                break;
+            
+            default:
+                break;
+        }
+
     }
 }

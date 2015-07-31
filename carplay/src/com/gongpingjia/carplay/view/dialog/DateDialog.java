@@ -35,7 +35,6 @@ public class DateDialog
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         View view = View.inflate(context, R.layout.time_dialog, null);
         datePicker = (DatePicker)view.findViewById(R.id.date_picker);
-        timePicker = (TimePicker)view.findViewById(R.id.time_picker);
         timePicker.setIs24HourView(true);
         // datePicker.setMaxDate(maxDate)
         bendi = System.currentTimeMillis();

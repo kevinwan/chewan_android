@@ -123,6 +123,7 @@ public class CityPickDialog extends AlertDialog implements android.view.View.OnC
         }
         mViewDistrict.setViewAdapter(new ArrayWheelAdapter<String>(mContext, areas));
         mViewDistrict.setCurrentItem(0);
+        mCurrentDistrictName = CityDataManage.mDistrictDatasMap.get(mCurrentCityName)[0];
     }
     
     /**

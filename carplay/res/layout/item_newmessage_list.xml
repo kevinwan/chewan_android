@@ -17,7 +17,7 @@
             android:id="@+id/head"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:src="@drawable/head2" />
+            android:src="@drawable/head_icon" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,8 +33,7 @@
 
                 <TextView
                     android:id="@+id/name"
-                    style="@style/text_black_medium"
-                    android:text="半夜偷西瓜" />
+                    style="@style/text_black_medium" />
 
                 <RelativeLayout
                     android:id="@+id/sex"
@@ -50,7 +49,6 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="2dp"
-                        android:text="23"
                         android:textColor="@color/white"
                         android:textSize="@dimen/text_smaller" />
                 </RelativeLayout>
@@ -70,8 +68,7 @@
 
                 <TextView
                     android:id="@+id/drive_age"
-                    style="@style/text_grey_small"
-                    android:text="california, 12年驾龄" />
+                    style="@style/text_grey_small"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

@@ -14,7 +14,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignParentRight="true"
-        android:background="@drawable/head3" />
+        android:background="@drawable/head_icon" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -33,20 +33,17 @@
             <RelativeLayout
                 android:layout_width="35dp"
                 android:layout_height="17dp"
-                android:background="@drawable/woman"
                 android:gravity="center_vertical" >
 
                 <TextView
                     style="@style/text_white_small"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="2dp"
-                    android:text="21" />
+                    android:layout_marginRight="2dp" />
             </RelativeLayout>
 
             <TextView
                 style="@style/text_black_small"
-                android:layout_marginLeft="5dp"
-                android:text="亲亲宝贝" />
+                android:layout_marginLeft="5dp"/>
         </LinearLayout>
 
         <TextView
@@ -55,8 +52,7 @@
             android:layout_gravity="right"
             android:layout_marginTop="5dp"
             android:background="@drawable/bg_msg_green"
-            android:padding="5dp"
-            android:text="就这么愉快的决定啦" />
+            android:padding="5dp" />
     </LinearLayout>
 
 </RelativeLayout>

@@ -40,7 +40,7 @@ public class CarPlayUtil
             carLogoI.setVisibility(View.VISIBLE);
             ViewUtil.bindView(driveAgeT,
                 JSONUtil.getString(jo, "carModel") + "," + JSONUtil.getString(jo, "drivingExperience") + "年驾龄");
-            ViewUtil.bindNetImage((ImageView)carLogoI, JSONUtil.getString(jo, "carBrandLogo"), "default");
+            ViewUtil.bindNetImage((ImageView)carLogoI, JSONUtil.getString(jo, "carBrandLogo"), "carlogo");
         }
     }
     

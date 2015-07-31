@@ -88,7 +88,7 @@ public class SeatDialog extends AlertDialog
             ViewUtil.bindView(findViewById(R.id.des), "占座中...");
             ViewUtil.bindView(findViewById(R.id.name), JSONUtil.getString(memberJo, "nickname"));
             ViewUtil.bindView(findViewById(R.id.age), JSONUtil.getString(memberJo, "age"));
-            ViewUtil.bindNetImage((ImageView)findViewById(R.id.head), JSONUtil.getString(memberJo, "photo"), "default");
+            ViewUtil.bindNetImage((ImageView)findViewById(R.id.head), JSONUtil.getString(memberJo, "photo"), "head");
             CarPlayUtil.bindSexView(JSONUtil.getString(memberJo, "gender"), findViewById(R.id.person_sex));
         }
         else

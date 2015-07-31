@@ -37,14 +37,12 @@
 
             <TextView
                 android:id="@+id/tv_suggestion_name"
-                style="@style/text_black_medium"
-                android:text="徐庄软件园" />
+                style="@style/text_black_medium" />
 
             <TextView
                 android:id="@+id/tv_suggestion_details"
                 style="@style/text_grey_small"
-                android:layout_marginTop="5dp"
-                android:text="徐庄软件园" />
+                android:layout_marginTop="5dp" />
         </LinearLayout>
     </RelativeLayout>
 

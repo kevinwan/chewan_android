@@ -47,8 +47,6 @@ public class MainActivity extends BaseFragmentActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
-        initTab();
-        setTab(0);
     }
     
     public void initView()
@@ -58,6 +56,8 @@ public class MainActivity extends BaseFragmentActivity
         tabV = (LinearLayout)findViewById(R.id.tab);
         activeFilterPop = ActiveFilterPop.getInstance(self);
         titleBar = findViewById(R.id.titlebar);
+        initTab();
+        setTab(0);
     }
     
     private void initTab()
@@ -209,19 +209,6 @@ public class MainActivity extends BaseFragmentActivity
                     default:
                         break;
                 }
-            }
-        }
-    }
-    
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK)
-        {
-            if (requestCode == ActiveFilterPop.Location)
-            {
-                
             }
         }
     }

@@ -12,8 +12,7 @@
         style="@style/text_blacklight_medium"
         android:layout_marginLeft="18dp"
         android:layout_marginRight="18dp"
-        android:layout_marginTop="20dp"
-        android:text="突然好想去怀柔吃烤鱼,有车的小伙伴们赶紧来报名,一起来一场说走就走的旅行~ " />
+        android:layout_marginTop="20dp" />
     
     
     <View style="@style/line"

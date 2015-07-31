@@ -18,7 +18,6 @@
             android:layout_marginRight="3dp"
             android:layout_marginTop="1dp"
             android:gravity="right"
-            android:text="05.28"
             android:textColor="@color/text_blue_light" />
 
         <RelativeLayout
@@ -64,8 +63,7 @@
 
             <TextView
                 android:id="@+id/content"
-                style="@style/text_black_medium"
-                android:text="突然好怀念吃烤鱼,有车的小伙伴赶紧来报名,一起来一场说走就走的旅行..." />
+                style="@style/text_black_medium" />
 
             <LinearLayout
                 android:id="@+id/piclayout"
@@ -83,8 +81,7 @@
                     android:id="@+id/date"
                     style="@style/text_blacklight_small"
                     android:drawableLeft="@drawable/icon_my_time"
-                    android:drawablePadding="3dp"
-                    android:text="5月29日" />
+                    android:drawablePadding="3dp" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -98,16 +95,14 @@
                         android:drawableLeft="@drawable/icon_my_location"
                         android:drawablePadding="3dp"
                         android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="CBD万达影院" />
+                        android:maxLines="1" />
                 </LinearLayout>
 
                 <TextView
                     android:id="@+id/pay_type"
                     style="@style/text_blacklight_small"
                     android:drawableLeft="@drawable/icon_my_money"
-                    android:drawablePadding="3dp"
-                    android:text="我请客" />
+                    android:drawablePadding="3dp" />
             </LinearLayout>
 
             <LinearLayout

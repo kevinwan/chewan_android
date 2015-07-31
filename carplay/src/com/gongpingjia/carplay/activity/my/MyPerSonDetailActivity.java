@@ -140,7 +140,7 @@ public class MyPerSonDetailActivity extends CarPlayBaseActivity implements OnCli
                 nicknameT.setText(nickname);
                 ageT.setText(age);
                 
-                ViewUtil.bindNetImage(headI, photo, CarPlayValueFix.optionsDefault.toString());
+                ViewUtil.bindNetImage(headI, photo, "head");
                 
                 if (TextUtils.isEmpty(carModel))
                 {
@@ -158,7 +158,7 @@ public class MyPerSonDetailActivity extends CarPlayBaseActivity implements OnCli
                 else
                 {
                     carBrandLogoI.setVisibility(View.VISIBLE);
-                    ViewUtil.bindNetImage(carBrandLogoI, carBrandLogo, CarPlayValueFix.optionsDefault.toString());
+                    ViewUtil.bindNetImage(carBrandLogoI, carBrandLogo, "carlogo");
                 }
                 
                 if (gender.equals("男"))

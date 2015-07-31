@@ -1,14 +1,18 @@
 package com.gongpingjia.carplay.activity.active;
 
+import net.duohuo.dhroid.adapter.NetJSONAdapter;
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.view.NetRefreshAndMoreListView;
+import net.duohuo.dhroid.view.NetRefreshAndMoreListView.OnEmptyDataListener;
 
 import org.json.JSONObject;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +20,12 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.adapter.ActiveAdapter;
+import com.gongpingjia.carplay.adapter.SimplePageAdapter;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.bean.ActiveParmasEB;
 import com.gongpingjia.carplay.bean.User;
@@ -30,10 +36,6 @@ public class ActiveListFragment extends Fragment
 {
     View mainV;
     
-    NetRefreshAndMoreListView listV;
-    
-    ActiveAdapter adapter;
-    
     static ActiveListFragment instance;
     
     User user;
@@ -41,6 +43,16 @@ public class ActiveListFragment extends Fragment
     DhNet net;
     
     LinearLayout topTab;
+    
+    ViewPager page;
+    
+    View HotV, NearV, NewV;
+    
+    LayoutInflater mLayoutInflater;
+    
+    NetRefreshAndMoreListView hotListV, nearListV, newListV;
+    
+    NetJSONAdapter hotAdapter, newAdapter, nearAdapter;
     
     public static ActiveListFragment getInstance()
     {
@@ -64,43 +76,161 @@ public class ActiveListFragment extends Fragment
     
     private void initView()
     {
+        mLayoutInflater = LayoutInflater.from(getActivity());
         topTab = (LinearLayout)mainV.findViewById(R.id.top_tab);
         initTopTab();
         user = User.getInstance();
-        listV = (NetRefreshAndMoreListView)mainV.findViewById(R.id.listview);
-        listV.setOnItemClickListener(new OnItemClickListener()
+        page = (ViewPager)mainV.findViewById(R.id.page);
+        page.setOnPageChangeListener(new OnPageChangeListener()
+        {
+            
+            @Override
+            public void onPageSelected(int index)
+            {
+                setTopTab(index);
+            }
+            
+            @Override
+            public void onPageScrolled(int arg0, float arg1, int arg2)
+            {
+                // TODO Auto-generated method stub
+                
+            }
+            
+            @Override
+            public void onPageScrollStateChanged(int arg0)
+            {
+                // TODO Auto-generated method stub
+                
+            }
+        });
+        
+        HotV = mLayoutInflater.inflate(R.layout.include_refresh_listview, null);
+        NearV = mLayoutInflater.inflate(R.layout.include_refresh_listview, null);
+        NewV = mLayoutInflater.inflate(R.layout.include_refresh_listview, null);
+        hotListV = (NetRefreshAndMoreListView)HotV.findViewById(R.id.listview);
+        newListV = (NetRefreshAndMoreListView)NewV.findViewById(R.id.listview);
+        nearListV = (NetRefreshAndMoreListView)NearV.findViewById(R.id.listview);
+        hotListV.setOnEmptyDataListener(new OnEmptyDataListener()
+        {
+            
+            @Override
+            public void onEmpty(boolean showeEptyView)
+            {
+                HotV.findViewById(R.id.empty).setVisibility(showeEptyView ? View.VISIBLE : View.GONE);
+            }
+        });
+        
+        nearListV.setOnEmptyDataListener(new OnEmptyDataListener()
+        {
+            
+            @Override
+            public void onEmpty(boolean showeEptyView)
+            {
+                NearV.findViewById(R.id.empty).setVisibility(showeEptyView ? View.VISIBLE : View.GONE);
+            }
+        });
+        
+        newListV.setOnEmptyDataListener(new OnEmptyDataListener()
+        {
+            
+            @Override
+            public void onEmpty(boolean showeEptyView)
+            {
+                NewV.findViewById(R.id.empty).setVisibility(showeEptyView ? View.VISIBLE : View.GONE);
+            }
+        });
+        
+        hotListV.setOnItemClickListener(new OnItemClickListener()
         {
             
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3)
             {
-                JSONObject jo = (JSONObject)adapter.getItem(position - 1);
+                JSONObject jo = (JSONObject)hotAdapter.getItem(position - 1);
                 Intent it = new Intent(getActivity(), ActiveDetailsActivity.class);
                 it.putExtra("activityId", JSONUtil.getString(jo, "activityId"));
                 startActivity(it);
             }
         });
-        adapter = new ActiveAdapter(API.activeList, getActivity(), R.layout.item_active_list);
         
-        adapter.addparam("key", "hot");
-        adapter.addparam("userId", user.getUserId());
-        adapter.addparam("token", user.getToken());
-        adapter.addparam("city", "南京");
-        adapter.addparam("district", "");
-        adapter.addparam("type", "");
-        adapter.addparam("gender", "");
-        adapter.addparam("authenticate", "");
-        adapter.addparam("carLevel", "");
+        newListV.setOnItemClickListener(new OnItemClickListener()
+        {
+            
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3)
+            {
+                JSONObject jo = (JSONObject)newAdapter.getItem(position - 1);
+                Intent it = new Intent(getActivity(), ActiveDetailsActivity.class);
+                it.putExtra("activityId", JSONUtil.getString(jo, "activityId"));
+                startActivity(it);
+            }
+        });
         
-        adapter.fromWhat("data");
-        listV.setAdapter(adapter);
-        adapter.showNext();
+        nearListV.setOnItemClickListener(new OnItemClickListener()
+        {
+            
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3)
+            {
+                JSONObject jo = (JSONObject)nearAdapter.getItem(position - 1);
+                Intent it = new Intent(getActivity(), ActiveDetailsActivity.class);
+                it.putExtra("activityId", JSONUtil.getString(jo, "activityId"));
+                startActivity(it);
+            }
+        });
+        SimplePageAdapter adapter = new SimplePageAdapter(HotV, NearV, NewV);
+        page.setAdapter(adapter);
+        buildAdapter();
     }
     
-    public void changeData(String key)
+    private void buildAdapter()
     {
-        adapter.addparam("key", key);
-        adapter.refreshDialog();
+        hotAdapter = new ActiveAdapter(API.activeList, getActivity(), R.layout.item_active_list);
+        hotAdapter.addparam("key", "hot");
+        hotAdapter.addparam("userId", user.getUserId());
+        hotAdapter.addparam("token", user.getToken());
+        hotAdapter.addparam("city", "南京");
+        hotAdapter.addparam("district", "");
+        hotAdapter.addparam("type", "");
+        hotAdapter.addparam("gender", "");
+        hotAdapter.addparam("authenticate", "");
+        hotAdapter.addparam("carLevel", "");
+        hotAdapter.fromWhat("data");
+        hotListV.setAdapter(hotAdapter);
+        hotAdapter.showNext();
+        
+        nearAdapter = new ActiveAdapter(API.activeList, getActivity(), R.layout.item_active_list);
+        nearAdapter.addparam("key", "hot");
+        nearAdapter.addparam("userId", user.getUserId());
+        nearAdapter.addparam("token", user.getToken());
+        nearAdapter.addparam("city", "南京");
+        nearAdapter.addparam("district", "");
+        nearAdapter.addparam("type", "");
+        nearAdapter.addparam("gender", "");
+        nearAdapter.addparam("authenticate", "");
+        nearAdapter.addparam("carLevel", "");
+        nearAdapter.fromWhat("data");
+        nearListV.setAdapter(hotAdapter);
+        nearAdapter.showNext();
+        
+        newAdapter = new ActiveAdapter(API.activeList, getActivity(), R.layout.item_active_list);
+        newAdapter.addparam("key", "hot");
+        newAdapter.addparam("userId", user.getUserId());
+        newAdapter.addparam("token", user.getToken());
+        newAdapter.addparam("city", "南京");
+        newAdapter.addparam("district", "");
+        newAdapter.addparam("type", "");
+        newAdapter.addparam("gender", "");
+        newAdapter.addparam("authenticate", "");
+        newAdapter.addparam("carLevel", "");
+        newAdapter.fromWhat("data");
+        newListV.setAdapter(hotAdapter);
+        newAdapter.showNext();
+    }
+    
+    public void getData(String key, ListView listV, NetJSONAdapter adapter)
+    {
     }
     
     private void initTopTab()
@@ -116,6 +246,7 @@ public class ActiveListFragment extends Fragment
                 public void onClick(View arg0)
                 {
                     setTopTab(index);
+                    page.setCurrentItem(index);
                 }
             });
         }
@@ -132,23 +263,23 @@ public class ActiveListFragment extends Fragment
             {
                 text.setTextColor(getResources().getColor(R.color.text_orange));
                 img.setVisibility(View.VISIBLE);
-                switch (index)
-                {
-                    case 0:
-                        changeData("hot");
-                        break;
-                    
-                    case 1:
-                        changeData("nearby");
-                        break;
-                    
-                    case 2:
-                        changeData("latest");
-                        break;
-                    
-                    default:
-                        break;
-                }
+                // switch (index)
+                // {
+                // case 0:
+                // changeData("hot");
+                // break;
+                //
+                // case 1:
+                // changeData("nearby");
+                // break;
+                //
+                // case 2:
+                // changeData("latest");
+                // break;
+                //
+                // default:
+                // break;
+                // }
             }
             else
             {
@@ -161,13 +292,29 @@ public class ActiveListFragment extends Fragment
     /** 接受ActiveFilterPop的选择事件 */
     public void onEventMainThread(ActiveParmasEB pa)
     {
-        adapter.addparam("city", pa.getCity());
-        adapter.addparam("district", pa.getDistrict());
-        adapter.addparam("type", pa.getActiveType());
-        adapter.addparam("gender", pa.getGender());
-        adapter.addparam("authenticate", pa.getAuthenticate());
-        adapter.addparam("carLevel", pa.getCarLevel());
-        adapter.refreshDialog();
+        hotAdapter.addparam("city", pa.getCity());
+        hotAdapter.addparam("district", pa.getDistrict());
+        hotAdapter.addparam("type", pa.getActiveType());
+        hotAdapter.addparam("gender", pa.getGender());
+        hotAdapter.addparam("authenticate", pa.getAuthenticate());
+        hotAdapter.addparam("carLevel", pa.getCarLevel());
+        hotAdapter.refreshDialog();
+        
+        nearAdapter.addparam("city", pa.getCity());
+        nearAdapter.addparam("district", pa.getDistrict());
+        nearAdapter.addparam("type", pa.getActiveType());
+        nearAdapter.addparam("gender", pa.getGender());
+        nearAdapter.addparam("authenticate", pa.getAuthenticate());
+        nearAdapter.addparam("carLevel", pa.getCarLevel());
+        nearAdapter.refreshDialog();
+        
+        newAdapter.addparam("city", pa.getCity());
+        newAdapter.addparam("district", pa.getDistrict());
+        newAdapter.addparam("type", pa.getActiveType());
+        newAdapter.addparam("gender", pa.getGender());
+        newAdapter.addparam("authenticate", pa.getAuthenticate());
+        newAdapter.addparam("carLevel", pa.getCarLevel());
+        newAdapter.refreshDialog();
     }
     
     @Override

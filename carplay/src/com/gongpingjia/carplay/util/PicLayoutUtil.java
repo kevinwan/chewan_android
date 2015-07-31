@@ -216,7 +216,7 @@ public class PicLayoutUtil
                     {
                         JSONObject jo = jsa.getJSONObject(i);
                         RoundImageView img = (RoundImageView)layout.getChildAt(i);
-                        ViewUtil.bindNetImage(img, JSONUtil.getString(jo, "photo"), "optionsDefault");
+                        ViewUtil.bindNetImage(img, JSONUtil.getString(jo, "photo"), "head");
                         img.setTag(JSONUtil.getString(jo, "userId"));
                         img.setVisibility(View.VISIBLE);
                     }
@@ -236,7 +236,7 @@ public class PicLayoutUtil
                 {
                     JSONObject jo = jsa.getJSONObject(i);
                     RoundImageView img = (RoundImageView)layout.getChildAt(i);
-                    ViewUtil.bindNetImage(img, JSONUtil.getString(jo, "photo"), "optionsDefault");
+                    ViewUtil.bindNetImage(img, JSONUtil.getString(jo, "photo"), "head");
                     img.setTag(JSONUtil.getString(jo, "userId"));
                     img.setVisibility(View.VISIBLE);
                 }
@@ -253,24 +253,66 @@ public class PicLayoutUtil
     /** 加载网络图片 */
     public void BindImageView(LinearLayout layout, JSONArray jsa)
     {
-        
+        int lastChildCount = 0;
         for (int i = 0; i < layout.getChildCount(); i++)
         {
-            try
+            LinearLayout lc = (LinearLayout)layout.getChildAt(i);
+            if (i == 0)
             {
-                JSONObject jo = jsa.getJSONObject(i);
-                LinearLayout lc = (LinearLayout)layout.getChildAt(i);
-                for (int j = 0; j < lc.getChildCount(); j++)
+                try
                 {
-                    ImageView img = (ImageView)lc.getChildAt(j);
-                    ViewUtil.bindNetImage(img, JSONUtil.getString(jo, "thumbnail_pic"), "optionsDefault");
-                    
+                    for (int j = 0; j < lc.getChildCount(); j++)
+                    {
+                        JSONObject jo = jsa.getJSONObject(j);
+                        ImageView img = (ImageView)lc.getChildAt(j);
+                        ViewUtil.bindNetImage(img, JSONUtil.getString(jo, "thumbnail_pic"), "default");
+                        lastChildCount = lc.getChildCount();
+                        
+                    }
+                }
+                catch (JSONException e)
+                {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
                 }
             }
-            catch (JSONException e)
+            
+            if (i == 1)
             {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                try
+                {
+                    for (int j = 0; j < lc.getChildCount(); j++)
+                    {
+                        JSONObject jo = jsa.getJSONObject(lastChildCount + j);
+                        ImageView img = (ImageView)lc.getChildAt(j);
+                        ViewUtil.bindNetImage(img, JSONUtil.getString(jo, "thumbnail_pic"), "default");
+                        lastChildCount += lc.getChildCount();
+                        
+                    }
+                }
+                catch (JSONException e)
+                {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+            
+            if (i == 2)
+            {
+                try
+                {
+                    for (int j = 0; j < lc.getChildCount(); j++)
+                    {
+                        JSONObject jo = jsa.getJSONObject(lastChildCount + j);
+                        ImageView img = (ImageView)lc.getChildAt(j);
+                        ViewUtil.bindNetImage(img, JSONUtil.getString(jo, "thumbnail_pic"), "default");
+                    }
+                }
+                catch (JSONException e)
+                {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -372,7 +414,7 @@ public class PicLayoutUtil
         img.setLayoutParams(params);
         if (type == 1)
         {
-            ViewUtil.bindNetImage(img, JSONUtil.getString(jo, "photo"), "optionsDefault");
+            ViewUtil.bindNetImage(img, JSONUtil.getString(jo, "photo"), "head");
             img.setTag(JSONUtil.getString(jo, "userId"));
             // img.setOnClickListener(new OnClickListener()
             // {
@@ -418,7 +460,7 @@ public class PicLayoutUtil
         img.setLayoutParams(params);
         if (type == 1)
         {
-            ViewUtil.bindNetImage(img, JSONUtil.getString(jo, "thumbnail_pic"), "optionsDefault");
+            ViewUtil.bindNetImage(img, JSONUtil.getString(jo, "thumbnail_pic"), "default");
         }
         img.setScaleType(ScaleType.FIT_XY);
         img.setOnClickListener(new OnClickListener()
@@ -448,7 +490,7 @@ public class PicLayoutUtil
             if (type == 1)
             {
                 JSONObject jo = data.getJSONObject(0);
-                ViewUtil.bindNetImage(img, JSONUtil.getString(jo, "thumbnail_pic"), "optionsDefault");
+                ViewUtil.bindNetImage(img, JSONUtil.getString(jo, "thumbnail_pic"), "default");
             }
             child.addView(img, params);
             img.setScaleType(ScaleType.FIT_XY);

@@ -282,11 +282,12 @@ public class ActiveAdapter extends NetJSONAdapter
             ViewUtil.bindView(holder.timeT, JSONUtil.getLong(jo, "start"), "time");
         }
         ViewUtil.bindView(holder.addressT, "地点: " + JSONUtil.getString(jo, "location"));
-        ViewUtil.bindNetImage(holder.headI, JSONUtil.getString(creater, "photo"), "optionsDefault");
+        ViewUtil.bindNetImage(holder.headI, JSONUtil.getString(creater, "photo"), "head");
         holder.headI.setTag(JSONUtil.getString(creater, "userId"));
         
         ViewUtil.bindView(holder.statusT, JSONUtil.getString(jo, "pay"));
         String pay = JSONUtil.getString(jo, "pay");
+        holder.statusT.setVisibility(View.VISIBLE);
         if (pay.equals("我请客"))
         {
             holder.statusT.setBackgroundResource(R.drawable.button_radian);

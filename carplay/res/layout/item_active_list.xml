@@ -17,7 +17,8 @@
         <com.gongpingjia.carplay.view.RoundImageView
             android:id="@+id/head"
             android:layout_width="59dp"
-            android:layout_height="59dp" />
+            android:layout_height="59dp"
+            android:background="@drawable/head_icon" />
 
         <TextView
             android:id="@+id/status"
@@ -28,7 +29,7 @@
             android:paddingLeft="6dp"
             android:paddingRight="6dp"
             android:paddingTop="2dp"
-            android:text="我请客" />
+            android:visibility="gone" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -38,13 +39,11 @@
             <TextView
                 android:id="@+id/seat_count"
                 style="@style/text_grey_smaller"
-                android:text="3"
                 android:textColor="@color/text_orange" />
 
             <TextView
                 android:id="@+id/seat_count_all"
-                style="@style/text_grey_smaller"
-                android:text="/5座" />
+                style="@style/text_grey_smaller" />
         </LinearLayout>
     </LinearLayout>
 
@@ -69,8 +68,7 @@
 
                 <TextView
                     android:id="@+id/name"
-                    style="@style/text_blue_medium"
-                    android:text="淘气小布丁" />
+                    style="@style/text_blue_medium" />
 
                 <RelativeLayout
                     android:id="@+id/layout_sex"
@@ -86,7 +84,6 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="2dp"
-                        android:text="23"
                         android:textColor="@color/white"
                         android:textSize="12sp" />
                 </RelativeLayout>
@@ -98,8 +95,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_weight="1"
-                    android:gravity="right"
-                    android:text="1小时前" />
+                    android:gravity="right" />
             </LinearLayout>
 
             <LinearLayout
@@ -113,21 +109,18 @@
                 <com.gongpingjia.carplay.view.RoundImageView
                     android:id="@+id/car_logo"
                     android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:src="@drawable/head2" />
+                    android:layout_height="15dp" />
 
                 <TextView
                     android:id="@+id/drive_age"
                     style="@style/text_grey_small"
-                    android:layout_marginLeft="5dp"
-                    android:text="X6,  8年驾龄" />
+                    android:layout_marginLeft="5dp" />
             </LinearLayout>
 
             <TextView
                 android:id="@+id/content"
                 style="@style/text_black_medium"
-                android:layout_marginTop="8dp"
-                android:text="突然好怀念吃烤鱼,有车的小伙伴赶紧来报名,一起来一场说走就走的旅行..." />
+                android:layout_marginTop="8dp" />
 
             <LinearLayout
                 android:id="@+id/piclayout"
@@ -148,13 +141,11 @@
                 <TextView
                     android:id="@+id/time"
                     style="@style/text_blacklight_small"
-                    android:layout_weight="1"
-                    android:text="5月29日 9:30" />
+                    android:layout_weight="1" />
 
                 <TextView
                     android:id="@+id/address"
-                    style="@style/text_blacklight_small"
-                    android:text="地点: 怀柔雁荡山" />
+                    style="@style/text_blacklight_small" />
             </LinearLayout>
 
             <LinearLayout

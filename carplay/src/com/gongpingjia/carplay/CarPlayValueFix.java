@@ -15,24 +15,33 @@ public class CarPlayValueFix implements ValueFix
     
     static Map<String, DisplayImageOptions> imageOptions;
     
-    public static DisplayImageOptions optionsDefault, headOptions;
+    public static DisplayImageOptions optionsDefault, headOptions, carLogoOptions;
     static
     {
         imageOptions = new HashMap<String, DisplayImageOptions>();
-        optionsDefault = new DisplayImageOptions.Builder()
-        // .showImageForEmptyUri(R.drawable.moren_bg)
-        // .showStubImage(R.drawable.moren_bg).cacheInMemory()
-        .cacheOnDisc()
-            .build();
-        imageOptions.put("default", optionsDefault);
-        
-        headOptions =
-            new DisplayImageOptions.Builder().showImageForEmptyUri(R.drawable.head2)
-                .showStubImage(R.drawable.head2)
+        optionsDefault =
+            new DisplayImageOptions.Builder().showImageForEmptyUri(R.drawable.img_loading_faild)
+                .showStubImage(R.drawable.img_loading)
                 .cacheInMemory()
                 .cacheOnDisc()
                 .build();
+        imageOptions.put("default", optionsDefault);
+        
+        headOptions = new DisplayImageOptions.Builder()
+        // .showImageForEmptyUri(R.drawable.head2)
+        // .showStubImage(R.drawable.head2)
+        .cacheInMemory()
+            .cacheOnDisc()
+            .build();
         imageOptions.put("head", headOptions);
+        
+        carLogoOptions = new DisplayImageOptions.Builder()
+        // .showImageForEmptyUri(R.drawable.head2)
+        // .showStubImage(R.drawable.head2)
+        .cacheInMemory()
+            .cacheOnDisc()
+            .build();
+        imageOptions.put("carlogo", carLogoOptions);
         
     }
     

@@ -18,7 +18,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="9dp"
-            android:src="@drawable/head2" />
+            android:src="@drawable/head_icon" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -37,8 +37,7 @@
                 <TextView
                     android:id="@+id/participate_name"
                     style="@style/text_black_medium"
-                    android:layout_marginTop="5dp"
-                    android:text="淘气小布丁" />
+                    android:layout_marginTop="5dp" />
 
                 <RelativeLayout
                     android:id="@+id/participate_sex"
@@ -55,7 +54,6 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="4dp"
-                        android:text="23"
                         android:textColor="@color/white"
                         android:textSize="@dimen/text_smaller" />
                 </RelativeLayout>
@@ -65,8 +63,7 @@
                     android:layout_width="13dp"
                     android:layout_height="13dp"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginTop="8dp"
-                    android:src="@drawable/head2" />
+                    android:layout_marginTop="8dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -79,8 +76,7 @@
                 <TextView
                     android:id="@+id/participate_txt"
                     style="@style/text_grey_small"
-                    android:layout_marginBottom="5dp"
-                    android:text="想加入昆明湖一日游活动" />
+                    android:layout_marginBottom="5dp" />
 
                 <TextView
                     android:id="@+id/gender_txt"
@@ -119,7 +115,6 @@
             android:layout_below="@+id/button_agree"
             android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
-            android:text="3"
             android:textColor="@color/text_grey"
             android:textSize="@dimen/text_smaller" />
     </RelativeLayout>

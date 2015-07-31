@@ -480,7 +480,7 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
                     
                     if (mPhotoStates.size() != 9)
                     {
-                        mPhotoStates.remove(mPhotoStates.size() - 1);
+                        mPhotoStates.remove(mPhotoStates.size() - 2);
                     }
                     else
                     {

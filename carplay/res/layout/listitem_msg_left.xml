@@ -13,7 +13,7 @@
         android:id="@+id/imgView_avatar"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:background="@drawable/head2" />
+        android:background="@drawable/head_icon" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,23 +29,20 @@
 
             <TextView
                 android:id="@+id/tv_nickname"
-                style="@style/text_black_small"
-                android:text="淘气小布丁" />
+                style="@style/text_black_small" />
 
             <RelativeLayout
                 android:id="@+id/layout_sex"
                 android:layout_width="35dp"
                 android:layout_height="17dp"
                 android:layout_marginLeft="5dp"
-                android:background="@drawable/man"
                 android:gravity="center_vertical" >
 
                 <TextView
                     android:id="@+id/tv_user_age"
                     style="@style/text_white_small"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="2dp"
-                    android:text="23" />
+                    android:layout_marginRight="2dp" />
             </RelativeLayout>
         </LinearLayout>
 
@@ -54,8 +51,7 @@
             style="@style/text_black_medium"
             android:layout_marginTop="5dp"
             android:background="@drawable/bg_msg_white"
-            android:padding="8dp"
-            android:text="周末去哪吃呢?" />
+            android:padding="8dp" />
     </LinearLayout>
 
 </LinearLayout>

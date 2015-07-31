@@ -14,6 +14,7 @@ import android.widget.ListAdapter;
 import android.widget.Toast;
 
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.view.dialog.NetErrorDialog;
 
 public class NomalDialog extends DialogImpl
 {
@@ -36,6 +37,7 @@ public class NomalDialog extends DialogImpl
     @Override
     public Dialog showDialog(Context context, String title, String msg, DialogCallBack dialogCallBack)
     {
+        
         return showDialog(context, 0, title, msg, dialogCallBack);
     }
     
@@ -44,7 +46,6 @@ public class NomalDialog extends DialogImpl
     {
         if (!TextUtils.isEmpty(msg))
         {
-            
             Toast toast = IocContainer.getShare().get(Toast.class);
             toast.setDuration(Toast.LENGTH_SHORT);
             View toastV = LayoutInflater.from(context).inflate(R.layout.toast_view, null);
@@ -83,6 +84,14 @@ public class NomalDialog extends DialogImpl
     {
         return super.showAdapterDialoge(context, title, adapter, itemClickListener);
         
+    }
+    
+    public Dialog showErrorDialog(Context context, String title, String msg, DialogCallBack callback)
+    {
+        NetErrorDialog dialog = new NetErrorDialog(context, title, msg);
+        dialog.show();
+        
+        return dialog;
     }
     
 }

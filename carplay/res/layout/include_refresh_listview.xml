@@ -26,21 +26,27 @@
         android:orientation="vertical"
         android:visibility="gone" >
 
-        <ImageView
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="70dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingBottom="20dp"
+            android:paddingTop="20dp" >
 
-        <TextView
-            style="@style/text_grey_small"
-            android:layout_marginTop="6dp"
-            android:text="暂无车源"
-            android:textSize="@dimen/text_medium" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_net" />
 
-        <TextView
-            style="@style/text_grey_small"
-            android:layout_marginTop="1dp"
-            android:text="NO CAR"
-            android:textSize="9sp" />
+            <TextView
+                android:id="@+id/msg"
+                style="@style/text_grey_small"
+                android:layout_marginTop="12dp"
+                android:text="暂无数据" />
+        </LinearLayout>
     </LinearLayout>
 
 </RelativeLayout>

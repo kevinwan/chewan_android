@@ -34,7 +34,7 @@
         android:layout_below="@id/imgView_head"
         android:layout_marginLeft="12dp"
         android:layout_marginTop="-30dp"
-        android:src="@drawable/head2" />
+        android:src="@drawable/head_icon" />
 
     <LinearLayout
         android:id="@+id/layout_info"
@@ -62,8 +62,7 @@
 
                 <TextView
                     android:id="@+id/nickname"
-                    style="@style/text_blue_medium"
-                    android:text="淘气小布丁" />
+                    style="@style/text_blue_medium" />
 
                 <RelativeLayout
                     android:id="@+id/layout_sex"
@@ -79,7 +78,6 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="2dp"
-                        android:text="23"
                         android:textColor="@color/white"
                         android:textSize="12sp" />
                 </RelativeLayout>
@@ -101,8 +99,7 @@
                 <TextView
                     android:id="@+id/drive_age"
                     style="@style/text_grey_small"
-                    android:layout_marginLeft="5dp"
-                    android:text="X6,  8年驾龄" />
+                    android:layout_marginLeft="5dp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -115,11 +112,11 @@
             android:gravity="center"
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
-            android:text="关注"
             android:textColor="@color/white" />
     </LinearLayout>
 
     <RelativeLayout
+        android:id="@+id/tab_layout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/layout_info" >
@@ -142,7 +139,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="32"
                     android:textColor="@color/text_red"
                     android:textSize="@dimen/text_medium" />
 
@@ -176,8 +172,7 @@
                 <TextView
                     android:id="@+id/attention_count"
                     style="@style/text_grey_medium"
-                    android:layout_marginTop="10dp"
-                    android:text="64" />
+                    android:layout_marginTop="10dp" />
 
                 <TextView
                     style="@style/text_grey_small"
@@ -207,8 +202,7 @@
                 <TextView
                     android:id="@+id/active_count"
                     style="@style/text_grey_medium"
-                    android:layout_marginTop="10dp"
-                    android:text="71" />
+                    android:layout_marginTop="10dp" />
 
                 <TextView
                     style="@style/text_grey_small"
@@ -228,5 +222,46 @@
             style="@style/line_horizontal"
             android:layout_alignParentBottom="true" />
     </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tab_layout"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="70dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingBottom="20dp"
+            android:paddingTop="20dp" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_net" />
+
+            <TextView
+                android:id="@+id/msg"
+                style="@style/text_grey_small"
+                android:layout_marginTop="12dp" />
+
+            <Button
+                android:id="@+id/btn_submit"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:background="@drawable/button_zc_bg"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_medium"
+                android:visibility="gone" />
+        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>

@@ -18,7 +18,7 @@
         android:layout_height="30dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:background="@drawable/head2" />
+        android:background="@drawable/head_icon" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -34,15 +34,13 @@
 
             <TextView
                 android:id="@+id/tv_nickname"
-                style="@style/text_blue_medium"
-                android:text="半夜偷西瓜" />
+                style="@style/text_blue_medium" />
 
             <RelativeLayout
                 android:id="@+id/layout_sex"
                 android:layout_width="35dp"
                 android:layout_height="17dp"
-                android:layout_marginLeft="5dp"
-                android:background="@drawable/man" >
+                android:layout_marginLeft="5dp" >
 
                 <TextView
                     android:id="@+id/age"
@@ -50,7 +48,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="2dp"
-                    android:text="23"
                     android:textColor="@color/white" />
             </RelativeLayout>
 
@@ -68,16 +65,14 @@
                 <TextView
                     android:id="@+id/tv_publish_time"
                     style="@style/text_grey_small"
-                    android:layout_marginLeft="5dp"
-                    android:text="1小时前" />
+                    android:layout_marginLeft="5dp" />
             </LinearLayout>
         </LinearLayout>
 
         <TextView
             android:id="@+id/tv_comment_content"
             style="@style/text_black_medium"
-            android:padding="5dp"
-            android:text="哎，为啥只限妹子？这种大片不应该跟好基友一起去看的吗？" />
+            android:padding="5dp" />
     </LinearLayout>
 
 </LinearLayout>

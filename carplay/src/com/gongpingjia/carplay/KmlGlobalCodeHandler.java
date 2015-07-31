@@ -12,6 +12,7 @@ import net.duohuo.dhroid.net.Response;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 /**
  * 
@@ -28,9 +29,32 @@ public class KmlGlobalCodeHandler implements GlobalCodeHandler
     {
         
         JSONObject jo = response.jSON();
-        if (!JSONUtil.getBoolean(jo, "success"))
+        if (!TextUtils.isEmpty(JSONUtil.getString(jo, "success")))
         {
-            IocContainer.getShare().get(IDialog.class).showToastLong(context, JSONUtil.getString(jo, "msg"));
+            if (JSONUtil.getString(jo, "success").equals("false"))
+            {
+                String code = JSONUtil.getString(jo, "code");
+                String title = "";
+                String msg = "";
+                if (code.equals("timeout"))
+                {
+                    title = "网络超时";
+                    msg = "亲,您的网络不给力,连接已超时~";
+                }
+                else if (code.equals("netError") || code.equals("netErrorButCache"))
+                {
+                    title = "网络太慢";
+                    msg = "网络太慢,请换个好点的网络试试~";
+                }
+                else if (code.equals("noNetError"))
+                {
+                    title = "网络错误";
+                    msg = "当前网络不可用,请检查网络哦~";
+                }
+                
+                IocContainer.getShare().get(IDialog.class).showToastLong(context, msg);
+                // IocContainer.getShare().get(IDialog.class).showErrorDialog(context, title, msg, null);
+            }
         }
         if (!response.isSuccess())
         {
@@ -52,5 +76,4 @@ public class KmlGlobalCodeHandler implements GlobalCodeHandler
             // }
         }
     }
-    
 }
