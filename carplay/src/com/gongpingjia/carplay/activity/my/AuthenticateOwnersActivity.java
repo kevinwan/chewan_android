@@ -46,8 +46,6 @@ public class AuthenticateOwnersActivity extends CarPlayBaseActivity implements O
     
     User user;
     
-    PhotoSelectDialog photoDialog;
-    
     String mPhotoPath;
     
     public static final int MODEL = 1;
@@ -60,6 +58,9 @@ public class AuthenticateOwnersActivity extends CarPlayBaseActivity implements O
     
     Button submitB;
     
+    // 图片缓存根目录
+    private File mCacheDir;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -70,6 +71,8 @@ public class AuthenticateOwnersActivity extends CarPlayBaseActivity implements O
     @Override
     public void initView()
     {
+        mCacheDir = new File(getExternalCacheDir(), "CarPlay");
+        mCacheDir.mkdirs();
         setTitle("车主认证");
         setRightAction("跳过", -1, new OnClickListener()
         {
@@ -88,16 +91,6 @@ public class AuthenticateOwnersActivity extends CarPlayBaseActivity implements O
         picI = (ImageView)findViewById(R.id.pic);
         picI.setOnClickListener(this);
         user = User.getInstance();
-        photoDialog = new PhotoSelectDialog(self);
-        photoDialog.setOnStateChangeListener(new OnStateChangeListener()
-        {
-            
-            @Override
-            public void close(String photoPath)
-            {
-                mPhotoPath = photoPath;
-            }
-        });
         
         drivingExperienceE = (EditText)findViewById(R.id.drivingExperience);
         submitB = (Button)findViewById(R.id.submit);
@@ -176,7 +169,8 @@ public class AuthenticateOwnersActivity extends CarPlayBaseActivity implements O
                 break;
             
             case R.id.pic:
-                photoDialog.show();
+                mPhotoPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg").getAbsolutePath();
+                PhotoUtil.getPhoto(self, Constant.TAKE_PHOTO, Constant.PICK_PHOTO, new File(mPhotoPath));
                 break;
             
             case R.id.submit:
@@ -195,7 +189,9 @@ public class AuthenticateOwnersActivity extends CarPlayBaseActivity implements O
             switch (requestCode)
             {
                 case Constant.TAKE_PHOTO:
-                    PhotoUtil.onPhotoFromCamera(self, Constant.ZOOM_PIC, mPhotoPath, 1, 1, 1000);
+                    String newPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg").getAbsolutePath();
+                    String path = PhotoUtil.onPhotoFromCamera(self, Constant.ZOOM_PIC, mPhotoPath, 1, 1, 1000, newPath);
+                    mPhotoPath = path;
                     break;
                 case Constant.PICK_PHOTO:
                     PhotoUtil.onPhotoFromPick(self, Constant.ZOOM_PIC, mPhotoPath, data, 1, 1, 1000);

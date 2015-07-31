@@ -16,7 +16,7 @@ import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
  * @author wang
  * @date 2015-7-16 上午9:21:59
  */
-public class PersonalDataActivity extends CarPlayBaseActivity implements OnClickListener
+public class EditPersonalInfoActivity extends CarPlayBaseActivity implements OnClickListener
 {
     RelativeLayout personal_city, personal_driving_years, personal_head, personal_nickname, personal_sex;
     
@@ -24,15 +24,13 @@ public class PersonalDataActivity extends CarPlayBaseActivity implements OnClick
     
     TextView nickname_txt, sex_txt, driving_years_txt, city_txt;
     
-    private PersonalDataActivity mySelf = this;
+    private EditPersonalInfoActivity mySelf = this;
     
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.personal_data);
-        
-        
     }
     
     @Override
@@ -64,7 +62,7 @@ public class PersonalDataActivity extends CarPlayBaseActivity implements OnClick
     @Override
     public void initView()
     {
-    	personal_city = (RelativeLayout)findViewById(R.id.personal_city);
+        personal_city = (RelativeLayout)findViewById(R.id.personal_city);
         personal_driving_years = (RelativeLayout)findViewById(R.id.personal_driving_years);
         personal_head = (RelativeLayout)findViewById(R.id.personal_head);
         personal_nickname = (RelativeLayout)findViewById(R.id.personal_nickname);

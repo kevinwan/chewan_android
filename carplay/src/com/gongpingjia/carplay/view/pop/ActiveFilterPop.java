@@ -161,7 +161,7 @@ public class ActiveFilterPop extends PopupWindow implements OnClickListener {
     private void getSelectResult() {
         String gender = "";
 
-        Integer authenticate = null;
+        Integer authenticate = 3;
 
         String carLevel = "";
         if (genderRG.getCheckedRadioButtonId() != -1) {
