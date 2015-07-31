@@ -25,6 +25,10 @@ public class ActiveDescriptionActivity extends CarPlayBaseActivity {
         setContentView(R.layout.activity_active_description);
 
         mDesEdit = (EditText) findViewById(R.id.et_description);
+        String from = getIntent().getStringExtra("description");
+        if (from != null && from.length() != 0) {
+            mDesEdit.setText(from);
+        }
 
         setTitle("活动介绍");
         setRightAction("确定 ", -1, new View.OnClickListener() {
