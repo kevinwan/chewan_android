@@ -273,6 +273,7 @@ public class BasicMessageActivity extends CarPlayBaseActivity implements OnClick
                     User user = User.getInstance();
                     user.setToken(JSONUtil.getString(jo, "token"));
                     user.setUserId(JSONUtil.getString(jo, "userId"));
+                    user.setLogin(true);
                     
                     Intent it = new Intent(self, AuthenticateOwnersActivity.class);
                     startActivityForResult(it, AuthenticateOwners);

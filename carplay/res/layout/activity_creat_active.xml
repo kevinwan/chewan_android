@@ -6,7 +6,9 @@
     android:orientation="vertical"
     tools:context="com.gongpingjia.carplay.activity.active.CreateActiveActivity" >
 
-    <include layout="@layout/include_title_bar" />
+    <include
+        android:id="@+id/title_bar"
+        layout="@layout/include_title_bar" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -130,8 +132,8 @@
                     <TextView
                         android:id="@+id/tv_destination"
                         style="@style/text_blacklight_medium"
-                        android:maxLines="1"
-                        android:ellipsize="end" />
+                        android:ellipsize="end"
+                        android:maxLines="1" />
 
                     <ImageView
                         android:layout_width="18dp"

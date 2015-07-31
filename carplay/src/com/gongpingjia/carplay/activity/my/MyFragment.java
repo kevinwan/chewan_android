@@ -9,6 +9,7 @@ import net.duohuo.dhroid.view.NetRefreshAndMoreListView;
 
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -28,6 +29,8 @@ import com.gongpingjia.carplay.activity.msg.PlayCarChatActivity;
 import com.gongpingjia.carplay.adapter.ActiveAdapter;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.bean.User;
+import com.gongpingjia.carplay.manage.UserInfoManage;
+import com.gongpingjia.carplay.manage.UserInfoManage.LoginCallBack;
 import com.gongpingjia.carplay.view.RoundImageView;
 
 public class MyFragment extends Fragment implements OnClickListener
@@ -45,7 +48,7 @@ public class MyFragment extends Fragment implements OnClickListener
     /** 我的关注,我的发布,我的参与 三个点击区域的View */
     View my_attentionV, my_releaseV, my_participationV;
     
-    LinearLayout carchat, owners_certification, people_concerned;
+    LinearLayout carchat, owners_certification, people_concerned, editdata;
     
     User user;
     
@@ -108,6 +111,7 @@ public class MyFragment extends Fragment implements OnClickListener
         carchat = (LinearLayout)mainV.findViewById(R.id.carchat);
         people_concerned = (LinearLayout)mainV.findViewById(R.id.people_concerned);
         owners_certification = (LinearLayout)mainV.findViewById(R.id.owners_certification);
+        editdata = (LinearLayout)mainV.findViewById(R.id.editdata);
         
         loginBtn.setOnClickListener(this);
         my_attentionV.setOnClickListener(this);
@@ -116,6 +120,7 @@ public class MyFragment extends Fragment implements OnClickListener
         carchat.setOnClickListener(this);
         people_concerned.setOnClickListener(this);
         owners_certification.setOnClickListener(this);
+        editdata.setOnClickListener(this);
         
         // 未登录
         if (TextUtils.isEmpty(user.getUserId()))
@@ -156,7 +161,7 @@ public class MyFragment extends Fragment implements OnClickListener
                 nicknameT.setText(nickname);
                 ageT.setText(age);
                 
-                ViewUtil.bindNetImage(headI, photo, "head");
+                ViewUtil.bindNetImage(headI, photo, CarPlayValueFix.optionsDefault.toString());
                 
                 if (TextUtils.isEmpty(carModel))
                 {
@@ -174,7 +179,7 @@ public class MyFragment extends Fragment implements OnClickListener
                 else
                 {
                     carBrandLogoI.setVisibility(View.VISIBLE);
-                    ViewUtil.bindNetImage(carBrandLogoI, carBrandLogo, "carlogo");
+                    ViewUtil.bindNetImage(carBrandLogoI, carBrandLogo, CarPlayValueFix.optionsDefault.toString());
                 }
                 
                 if (gender.equals("男"))
@@ -226,6 +231,25 @@ public class MyFragment extends Fragment implements OnClickListener
             case R.id.login:
                 it = new Intent(getActivity(), LoginActivity.class);
                 startActivityForResult(it, LOGINCODE);
+                break;
+            case R.id.editdata:
+                UserInfoManage.getInstance().checkLogin(getActivity(), new LoginCallBack()
+                {
+                    
+                    @Override
+                    public void onisLogin()
+                    {
+                        Intent it = new Intent(getActivity(), EditPersonalInfoActivity.class);
+                        startActivity(it);
+                    }
+                    
+                    @Override
+                    public void onLoginFail()
+                    {
+                        
+                    }
+                });
+                
                 break;
             default:
                 break;

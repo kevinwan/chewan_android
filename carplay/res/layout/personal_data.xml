@@ -6,175 +6,188 @@
     android:orientation="vertical" >
 
     <include layout="@layout/include_title_bar" />
-    <RelativeLayout
-        android:id="@+id/personal_head"
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp" >
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp" >
 
         <TextView
             style="@style/text_grey_medium"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="17dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
             android:text="头像" />
 
-        <ImageView
-            android:id="@+id/img"
-            android:layout_width="25dp"
-            android:layout_height="18dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
-            android:src="@drawable/right_btn" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center_vertical|right"
+            android:orientation="horizontal" >
 
-        <com.gongpingjia.carplay.view.RoundImageView
-            android:id="@+id/head_img"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="3dp"
-            android:layout_toLeftOf="@+id/img"
-            android:src="@drawable/head5" />
-    </RelativeLayout>
+            <!-- <ImageView -->
+            <com.gongpingjia.carplay.view.RoundImageView
+                android:id="@+id/head"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="3dp"
+                android:layout_toLeftOf="@+id/img"
+                 />
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="25dp"
+                android:src="@drawable/right_btn" />
+        </LinearLayout>
+    </LinearLayout>
 
     <View
         android:layout_width="fill_parent"
         android:layout_height="1px"
         android:background="#e6e9ed" />
 
-    <RelativeLayout
-        android:id="@+id/personal_nickname"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp" >
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp" >
 
         <TextView
             style="@style/text_grey_medium"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="17dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
             android:text="昵称" />
 
-        <TextView
-            android:id="@+id/nickname_txt"
+        <EditText
+            android:id="@+id/nickname"
             style="@style/text_blacklight_medium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/img"
-            android:text="半夜偷西瓜" />
-
-        <ImageView
-            android:id="@+id/img"
-            android:layout_width="25dp"
-            android:layout_height="18dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
-            android:src="@drawable/right_btn" />
-    </RelativeLayout>
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/nothing"
+            android:gravity="center_vertical|right"
+            android:hint="请输入昵称" />
+    </LinearLayout>
 
     <View
         android:layout_width="fill_parent"
         android:layout_height="1px"
         android:background="#e6e9ed" />
 
-    <RelativeLayout
-        android:id="@+id/personal_sex"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp" >
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp" >
 
         <TextView
             style="@style/text_grey_medium"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="17dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
             android:text="性别" />
 
-        <TextView
-            android:id="@+id/sex_txt"
-            style="@style/text_blacklight_medium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/img"
-            android:text="男" />
+        <RadioGroup
+            android:id="@+id/tab"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center_vertical|right"
+            android:orientation="horizontal" >
 
-        <ImageView
-            android:id="@+id/img"
-            android:layout_width="25dp"
-            android:layout_height="18dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
-            android:src="@drawable/right_btn" />
-    </RelativeLayout>
+            <RadioButton
+                android:id="@+id/tab_left"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="20dp"
+                android:button="@null"
+                android:checked="true"
+                android:drawableLeft="@drawable/radio_sex"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
+                android:text="男"
+                android:textColor="#FD6D53"
+                android:textSize="@dimen/text_medium" />
+
+            <RadioButton
+                android:id="@+id/tab_right"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:button="@null"
+                android:drawableLeft="@drawable/radio_sex"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
+                android:text="女"
+                android:textColor="@color/text_grey"
+                android:textSize="@dimen/text_medium" />
+        </RadioGroup>
+    </LinearLayout>
 
     <View
         android:layout_width="fill_parent"
         android:layout_height="1px"
         android:background="#e6e9ed" />
 
-    <RelativeLayout
-        android:id="@+id/personal_driving_years"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp" >
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:orientation="horizontal" >
 
         <TextView
             style="@style/text_grey_medium"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="17dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
             android:text="驾龄" />
 
-        <TextView
-            android:id="@+id/driving_years_txt"
+        <EditText
+            android:id="@+id/carage"
             style="@style/text_blacklight_medium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/img"
-            android:text="12年" />
-
-        <ImageView
-            android:id="@+id/img"
-            android:layout_width="25dp"
-            android:layout_height="18dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
-            android:src="@drawable/right_btn" />
-    </RelativeLayout>
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/nothing"
+            android:gravity="center_vertical|right"
+            android:inputType="number"
+            android:hint="请输入驾龄(数字0~20)" />
+       
+    </LinearLayout>
 
     <View
         android:layout_width="fill_parent"
         android:layout_height="1px"
         android:background="#e6e9ed" />
 
-    <RelativeLayout
-        android:id="@+id/personal_city"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp" >
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp" >
 
         <TextView
             style="@style/text_grey_medium"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="17dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
             android:text="地区" />
 
-        <TextView
-            android:id="@+id/city_txt"
-            style="@style/text_blacklight_medium"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/img"
-            android:text="北京海淀区" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center_vertical|right"
+            android:orientation="horizontal" >
 
-        <ImageView
-            android:id="@+id/img"
-            android:layout_width="25dp"
-            android:layout_height="18dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
-            android:src="@drawable/right_btn" />
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/city"
+                style="@style/text_blacklight_small"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:gravity="center_vertical|right" />
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="25dp"
+                android:src="@drawable/right_btn" />
+        </LinearLayout>
+    </LinearLayout>
 
     <View
         android:layout_width="fill_parent"
