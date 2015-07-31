@@ -66,7 +66,7 @@ public class BasicMessageActivity extends CarPlayBaseActivity implements OnClick
     
     private String mPhotoPath;
     
-    PhotoSelectDialog photoDialog;
+    // PhotoSelectDialog photoDialog;
     
     DateDialog dateDialog;
     
@@ -80,6 +80,9 @@ public class BasicMessageActivity extends CarPlayBaseActivity implements OnClick
     
     public static final int AuthenticateOwners = 1;
     
+    // 图片缓存根目录
+    private File mCacheDir;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -92,17 +95,18 @@ public class BasicMessageActivity extends CarPlayBaseActivity implements OnClick
     public void initView()
     {
         setTitle("注册");
-        photoDialog = new PhotoSelectDialog(self);
-        photoDialog.setOnStateChangeListener(new OnStateChangeListener()
-        {
-            
-            @Override
-            public void close(String photoPath)
-            {
-                mPhotoPath = photoPath;
-            }
-        });
-        
+        // photoDialog = new PhotoSelectDialog(self);
+        // photoDialog.setOnStateChangeListener(new OnStateChangeListener()
+        // {
+        //
+        // @Override
+        // public void close(String photoPath)
+        // {
+        // mPhotoPath = photoPath;
+        // }
+        // });
+        mCacheDir = new File(getExternalCacheDir(), "CarPlay");
+        mCacheDir.mkdirs();
         dateDialog = new DateDialog();
         dateDialog.setOnDateResultListener(new OnDateResultListener()
         {
@@ -169,7 +173,9 @@ public class BasicMessageActivity extends CarPlayBaseActivity implements OnClick
         switch (arg0.getId())
         {
             case R.id.head:
-                photoDialog.show();
+                mPhotoPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg").getAbsolutePath();
+                PhotoUtil.getPhoto(self, Constant.TAKE_PHOTO, Constant.PICK_PHOTO, new File(mPhotoPath));
+                // photoDialog.show();
                 break;
             case R.id.age:
                 dateDialog.show(self);
@@ -282,7 +288,9 @@ public class BasicMessageActivity extends CarPlayBaseActivity implements OnClick
             switch (requestCode)
             {
                 case Constant.TAKE_PHOTO:
-                    PhotoUtil.onPhotoFromCamera(self, Constant.ZOOM_PIC, mPhotoPath, 1, 1, 1000);
+                    String newPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg").getAbsolutePath();
+                    String path = PhotoUtil.onPhotoFromCamera(self, Constant.ZOOM_PIC, mPhotoPath, 1, 1, 1000, newPath);
+                    mPhotoPath = path;
                     break;
                 case Constant.PICK_PHOTO:
                     PhotoUtil.onPhotoFromPick(self, Constant.ZOOM_PIC, mPhotoPath, data, 1, 1, 1000);
