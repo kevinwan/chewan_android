@@ -9,6 +9,7 @@ import net.duohuo.dhroid.view.NetRefreshAndMoreListView;
 
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -28,6 +29,8 @@ import com.gongpingjia.carplay.activity.msg.PlayCarChatActivity;
 import com.gongpingjia.carplay.adapter.ActiveAdapter;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.bean.User;
+import com.gongpingjia.carplay.manage.UserInfoManage;
+import com.gongpingjia.carplay.manage.UserInfoManage.LoginCallBack;
 import com.gongpingjia.carplay.view.RoundImageView;
 
 public class MyFragment extends Fragment implements OnClickListener {
@@ -43,7 +46,7 @@ public class MyFragment extends Fragment implements OnClickListener {
 	/** 我的关注,我的发布,我的参与 三个点击区域的View */
 	View my_attentionV, my_releaseV, my_participationV;
 
-	LinearLayout carchat, owners_certification, people_concerned;
+	LinearLayout carchat, owners_certification, people_concerned, editdata;
 
 	User user;
 
@@ -88,10 +91,10 @@ public class MyFragment extends Fragment implements OnClickListener {
 		ageT = (TextView) mainV.findViewById(R.id.age);
 		carModelT = (TextView) mainV.findViewById(R.id.carModel);
 		genderR = (RelativeLayout) mainV.findViewById(R.id.gender);
-		
-		postNumberT=(TextView) mainV.findViewById(R.id.postNumber);
-		subscribeNumberT=(TextView) mainV.findViewById(R.id.subscribeNumber);
-		joinNumberT=(TextView) mainV.findViewById(R.id.joinNumber);
+
+		postNumberT = (TextView) mainV.findViewById(R.id.postNumber);
+		subscribeNumberT = (TextView) mainV.findViewById(R.id.subscribeNumber);
+		joinNumberT = (TextView) mainV.findViewById(R.id.joinNumber);
 
 		my_attentionV = mainV.findViewById(R.id.my_attention);
 		my_releaseV = mainV.findViewById(R.id.my_release);
@@ -101,6 +104,7 @@ public class MyFragment extends Fragment implements OnClickListener {
 				.findViewById(R.id.people_concerned);
 		owners_certification = (LinearLayout) mainV
 				.findViewById(R.id.owners_certification);
+		editdata = (LinearLayout) mainV.findViewById(R.id.editdata);
 
 		loginBtn.setOnClickListener(this);
 		my_attentionV.setOnClickListener(this);
@@ -109,8 +113,9 @@ public class MyFragment extends Fragment implements OnClickListener {
 		carchat.setOnClickListener(this);
 		people_concerned.setOnClickListener(this);
 		owners_certification.setOnClickListener(this);
-		
-		//未登录
+		editdata.setOnClickListener(this);
+
+		// 未登录
 		if (TextUtils.isEmpty(user.getUserId())) {
 			loginedLl.setVisibility(View.GONE);
 			notloginLl.setVisibility(View.VISIBLE);
@@ -139,9 +144,10 @@ public class MyFragment extends Fragment implements OnClickListener {
 				String photo = JSONUtil.getString(jo, "photo");
 				String carBrandLogo = JSONUtil.getString(jo, "carBrandLogo");
 				String gender = JSONUtil.getString(jo, "gender");
-				String postNumber=JSONUtil.getString(jo, "postNumber");
-				String subscribeNumber=JSONUtil.getString(jo, "subscribeNumber");
-				String joinNumber=JSONUtil.getString(jo, "joinNumber");
+				String postNumber = JSONUtil.getString(jo, "postNumber");
+				String subscribeNumber = JSONUtil.getString(jo,
+						"subscribeNumber");
+				String joinNumber = JSONUtil.getString(jo, "joinNumber");
 
 				nicknameT.setText(nickname);
 				ageT.setText(age);
@@ -169,7 +175,7 @@ public class MyFragment extends Fragment implements OnClickListener {
 					genderR.setBackgroundResource(R.drawable.man);
 				else
 					genderR.setBackgroundResource(R.drawable.woman);
-				
+
 				postNumberT.setText(postNumber);
 				subscribeNumberT.setText(subscribeNumber);
 				joinNumberT.setText(joinNumber);
@@ -212,6 +218,24 @@ public class MyFragment extends Fragment implements OnClickListener {
 		case R.id.login:
 			it = new Intent(getActivity(), LoginActivity.class);
 			startActivityForResult(it, LOGINCODE);
+			break;
+		case R.id.editdata:
+			UserInfoManage.getInstance().checkLogin(getActivity(),
+					new LoginCallBack() {
+
+						@Override
+						public void onisLogin() {
+							Intent it = new Intent(getActivity(),
+									EditPersonalInfoActivity.class);
+							startActivity(it);
+						}
+
+						@Override
+						public void onLoginFail() {
+
+						}
+					});
+
 			break;
 		default:
 			break;

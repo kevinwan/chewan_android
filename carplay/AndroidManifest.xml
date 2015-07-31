@@ -74,6 +74,8 @@
         </activity>
         <activity android:name=".activity.my.MyReleaseActiveActivity" >
         </activity>
+        <activity android:name="com.gongpingjia.carplay.activity.my.EditPersonalInfoActivity" >
+        </activity>
         <activity android:name=".activity.main.GuidanceActivity" >
         </activity>
         <activity android:name=".activity.active.EventIntroduceActivity" >

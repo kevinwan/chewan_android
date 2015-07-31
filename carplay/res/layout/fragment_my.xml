@@ -340,7 +340,9 @@
 
             <View style="@style/line" />
 
-            <LinearLayout style="@style/linearlayout" >
+            <LinearLayout 
+                android:id="@+id/editdata"
+                style="@style/linearlayout" >
 
                 <ImageView
                     style="@style/icon_style_small"
