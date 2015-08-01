@@ -1,6 +1,8 @@
 package com.gongpingjia.carplay.activity.my;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
@@ -17,7 +19,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -32,7 +36,6 @@ import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.User;
-import com.gongpingjia.carplay.data.CityDataManage;
 import com.gongpingjia.carplay.view.RoundImageView;
 import com.gongpingjia.carplay.view.dialog.CityPickDialog;
 import com.gongpingjia.carplay.view.dialog.CityPickDialog.OnPickResultListener;
@@ -51,27 +54,31 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 
 	/** 昵称 */
 	private EditText nicknameT = null;
-
+	private String nickname;
 	/** 性别 */
 	private RadioGroup sexR = null;
-
+	private String gender;
+	
 	/** 选择城市 */
 	private TextView cityT = null;
-	String mProvice, mCity, mDistrict;
+	private String mProvice, mCity, mDistrict;
 
 	/** 车龄 */
 	private EditText carageT = null;
+	private String drivingExperience;
 
 	/** 图片缓存根目录 */
 	private File mCacheDir;
 
-	CityPickDialog cityDialog;
+	private CityPickDialog cityDialog;
 
 	private String mPhotoPath;
 
-	String photoUid;
+	private String photoUid;
 
 	private User mUser = User.getInstance();
+	
+	private Map<String,Boolean> map=new HashMap<String, Boolean>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -88,11 +95,17 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 
 				@Override
 				public void onClick(View arg0) {
-					modification();
+					//如果没有改动 直接关闭本页
+					if (isModify()) {
+						modification();
+					}else {
+						finish();
+					}
+					
 				}
 			});
 		}
-
+		map.put("flag", false);
 		mCacheDir = new File(getExternalCacheDir(), "CarPlay");
 		mCacheDir.mkdirs();
 
@@ -105,39 +118,34 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 				mProvice = provice;
 				mCity = city;
 				mDistrict = district;
+				map.put("flag", true);
 			}
 		});
 
 		headI = (RoundImageView) findViewById(R.id.head);
-		nicknameT = (EditText) findViewById(R.id.nickname);
 		sexR = (RadioGroup) findViewById(R.id.tab);
-		carageT = (EditText) findViewById(R.id.carage);
 		cityT = (TextView) findViewById(R.id.city);
+		nicknameT = (EditText) findViewById(R.id.nickname);
+		carageT = (EditText) findViewById(R.id.carage);
 		
-		sexR.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(RadioGroup arg0, int arg1) {
-				setSex(arg1);
-			}
-		});
-
 		headI.setOnClickListener(this);
 		cityT.setOnClickListener(this);
-		
 		getMyDetails();
 
 	}
 	
-	private void setSex(int x){
-		for (int i = 0; i < sexR.getChildCount(); i++) {
-			RadioButton rb=(RadioButton) sexR.getChildAt(i);
-			rb.setTextColor(Color.parseColor("#aab2bd"));
+	/** 判断资料是否有改动 */
+	private boolean isModify(){
+		String sex = sexR.getCheckedRadioButtonId() == R.id.tab_left ? "男"
+				: "女";
+		String name=nicknameT.getText().toString();
+		String carage=carageT.getText().toString();
+		if (map.get("flag")||!name.equals(nickname)||!carage.equals(drivingExperience)||!sex.equals(gender)) {
+			return true;
 		}
-		RadioButton rb2=(RadioButton) sexR.findViewById(x);
-		rb2.setTextColor(Color.parseColor("#FD6D53"));
-		rb2.setChecked(true);
+		return false;
 	}
-
+	
 	/** 获取个人资料 */
 	private void getMyDetails() {
 		DhNet net = new DhNet(API.CWBaseurl + "/user/" + mUser.getUserId()
@@ -149,17 +157,18 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 			public void doInUI(Response response, Integer transfer) {
 				JSONObject jo = response.jSONFromData();
 
-				String nickname = JSONUtil.getString(jo, "nickname");
-				String drivingExperience = JSONUtil.getString(jo,
+				nickname = JSONUtil.getString(jo, "nickname");
+				drivingExperience = JSONUtil.getString(jo,
 						"drivingExperience");
 				String photo = JSONUtil.getString(jo, "photo");
-				String gender = JSONUtil.getString(jo, "gender");
+				gender = JSONUtil.getString(jo, "gender");
 				mProvice= JSONUtil.getString(jo, "province");
 				mCity= JSONUtil.getString(jo, "city");
 				mDistrict= JSONUtil.getString(jo, "district");
 				 cityT.setText(mProvice + mCity + mDistrict);
 				nicknameT.setText(nickname);
-				setSex(gender.equals("男") ? R.id.tab_left : R.id.tab_right);
+				RadioButton rb=(RadioButton) sexR.findViewById(gender.equals("男") ? R.id.tab_left : R.id.tab_right);
+				rb.setChecked(true);
 				carageT.setText(drivingExperience);
 				ViewUtil.bindNetImage(headI, photo,
 						CarPlayValueFix.optionsDefault.toString());
@@ -182,7 +191,6 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 		case R.id.city:
 			cityDialog.show();
 			break;
-
 		default:
 			break;
 		}
@@ -275,7 +283,11 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 		
 		 if (keyCode == KeyEvent.KEYCODE_BACK
                  && event.getRepeatCount() == 0) {
-			 modification();
+			 if (isModify()) {
+					modification();
+				}else {
+					finish();
+				}
 			 return true;
          }
 		return super.onKeyDown(keyCode, event);

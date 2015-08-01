@@ -3,5 +3,4 @@
 
     <item android:drawable="@drawable/sex_unchecked_n" android:state_checked="false"></item>
     <item android:drawable="@drawable/sex_checked_f" android:state_checked="true"></item>
-	
 </selector>
