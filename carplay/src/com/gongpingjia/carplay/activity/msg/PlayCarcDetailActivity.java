@@ -19,11 +19,14 @@ public class PlayCarcDetailActivity extends CarPlayBaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_play_carc_detail);
+		
 		Intent intent = getIntent();
 		String content = intent.getStringExtra("detail");
+		String title = intent.getStringExtra("title");
 		TextView textView = (TextView) findViewById(R.id.detail_txt);
 
 		textView.setText(content);
+		setTitle(title);
 	}
 
 	@Override
