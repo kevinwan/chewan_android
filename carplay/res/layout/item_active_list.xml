@@ -102,7 +102,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
+                android:layout_marginTop="5dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal" >
@@ -110,30 +110,31 @@
                 <com.gongpingjia.carplay.view.RoundImageView
                     android:id="@+id/car_logo"
                     android:layout_width="15dp"
-                    android:layout_height="15dp" />
+                    android:layout_height="15dp"
+                    android:layout_marginRight="5dp" />
 
                 <TextView
                     android:id="@+id/drive_age"
-                    style="@style/text_grey_small"
-                    android:layout_marginLeft="5dp" />
+                    style="@style/text_grey_small" />
             </LinearLayout>
 
             <TextView
                 android:id="@+id/content"
                 style="@style/text_black_medium"
-                android:layout_marginTop="8dp" />
+                android:layout_marginTop="6dp" />
 
             <LinearLayout
                 android:id="@+id/piclayout"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:orientation="vertical" >
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp" >
+                android:layout_marginTop="-2dp" >
 
                 <TextView
                     style="@style/text_blacklight_small"
@@ -141,19 +142,23 @@
 
                 <TextView
                     android:id="@+id/time"
-                    style="@style/text_blacklight_small"
-                    android:layout_weight="1" />
+                    style="@style/text_blacklight_small" />
 
                 <TextView
                     android:id="@+id/address"
-                    style="@style/text_blacklight_small" />
+                    style="@style/text_blacklight_small"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:gravity="right"
+                    android:maxLines="1" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/member_layout"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
+                android:layout_marginTop="6dp"
                 android:background="@color/tab_grey_bg"
                 android:gravity="center_vertical"
                 android:padding="8dp" >
@@ -169,14 +174,14 @@
 
                 <TextView
                     android:id="@+id/join"
-                    android:layout_width="75dp"
-                    android:layout_height="30dp"
+                    android:layout_width="77dp"
+                    android:layout_height="32dp"
                     android:layout_marginLeft="10dp"
                     android:background="@drawable/button_yanzheng_bg"
                     android:gravity="center"
                     android:text="我也要玩"
                     android:textColor="@color/white"
-                    android:textSize="15sp"
+                    android:textSize="16sp"
                     android:visibility="gone" />
             </LinearLayout>
         </LinearLayout>

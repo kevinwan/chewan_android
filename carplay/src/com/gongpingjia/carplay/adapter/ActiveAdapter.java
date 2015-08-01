@@ -58,7 +58,7 @@ public class ActiveAdapter extends NetJSONAdapter
         Display display = ((Activity)context).getWindowManager().getDefaultDisplay();
         int width = display.getWidth();
         piclayoutWidth = width - DhUtil.dip2px(context, 59 + 12 * 2 + 10);
-        headlayoutWidth = piclayoutWidth - DhUtil.dip2px(context, 75 + 10 + 8 * 2);
+        headlayoutWidth = piclayoutWidth - DhUtil.dip2px(context, 77 + 10 + 8 * 2);
     }
     
     @Override

@@ -132,6 +132,7 @@ public class MainActivity extends BaseFragmentActivity
                     
                     case 1:
                         setTitle("消息");
+                        setRightVISIBLEOrGone(View.GONE);
                         UserInfoManage.getInstance().checkLogin(self, new LoginCallBack()
                         {
                             

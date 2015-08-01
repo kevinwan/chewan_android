@@ -42,7 +42,7 @@ public class MyReleaseActiveAdapter extends NetJSONAdapter
         int width = display.getWidth();
         piclayoutWidth = width - DhUtil.dip2px(context, 46 + 3 + 3 + 6 + 10 + 12);
         headlayoutWidth =
-            piclayoutWidth - DhUtil.dip2px(context, 75) - DhUtil.dip2px(context, 10) - DhUtil.dip2px(context, 8) * 2;
+            piclayoutWidth - DhUtil.dip2px(context, 77) - DhUtil.dip2px(context, 10) - DhUtil.dip2px(context, 8) * 2;
     }
     
     @Override

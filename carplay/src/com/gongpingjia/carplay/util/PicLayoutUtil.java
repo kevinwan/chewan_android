@@ -261,12 +261,12 @@ public class PicLayoutUtil
             {
                 try
                 {
+                    lastChildCount = lc.getChildCount();
                     for (int j = 0; j < lc.getChildCount(); j++)
                     {
                         JSONObject jo = jsa.getJSONObject(j);
                         ImageView img = (ImageView)lc.getChildAt(j);
                         ViewUtil.bindNetImage(img, JSONUtil.getString(jo, "thumbnail_pic"), "default");
-                        lastChildCount = lc.getChildCount();
                         
                     }
                 }
@@ -286,9 +286,9 @@ public class PicLayoutUtil
                         JSONObject jo = jsa.getJSONObject(lastChildCount + j);
                         ImageView img = (ImageView)lc.getChildAt(j);
                         ViewUtil.bindNetImage(img, JSONUtil.getString(jo, "thumbnail_pic"), "default");
-                        lastChildCount += lc.getChildCount();
                         
                     }
+                    lastChildCount += lc.getChildCount();
                 }
                 catch (JSONException e)
                 {

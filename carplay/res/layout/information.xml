@@ -11,7 +11,8 @@
         android:layout_height="80dp"
         android:background="@drawable/bg_s"
         android:gravity="center_vertical"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:paddingRight="15dp" >
 
         <ImageView
             android:id="@+id/leave_comments_img"
@@ -23,45 +24,53 @@
             android:src="@drawable/comment" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/leave_comments_img"
             android:orientation="vertical" >
 
-            <TextView
-                style="@style/text_black_medium"
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="新的留言" />
+                android:gravity="center_vertical" >
 
-            <TextView
-                style="@style/text_grey_small"
+                <TextView
+                    style="@style/text_black_medium"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="新的留言" />
+
+                <TextView
+                    android:id="@+id/apply_for_time"
+                    style="@style/text_grey_smaller"
+                    android:text="10:23" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/normsg_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="包接送吗？" />
-        </LinearLayout>
+                android:orientation="horizontal" >
 
-        <LinearLayout
-            android:layout_width="35dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:gravity="center_horizontal"
-            android:orientation="vertical" >
+                <TextView
+                    android:id="@+id/normsg_content"
+                    style="@style/text_grey_small"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:paddingRight="5dp"
+                    android:text="包接送吗？" />
 
-            <TextView
-                android:id="@+id/comment_time"
-                style="@style/text_grey_smaller"
-                android:layout_marginTop="16dp"
-                android:text="8:23" />
-
-            <TextView
-                android:id="@+id/comment_num"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginTop="7dp"
-                android:gravity="center"
-                android:text="2"
-                android:textColor="@color/white" />
+                <com.gongpingjia.carplay.view.BadgeView
+                    android:id="@+id/normal_msg_cout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_small" />
+            </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
 
@@ -73,7 +82,8 @@
         android:layout_height="80dp"
         android:background="@drawable/bg_s"
         android:gravity="center_vertical"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:paddingRight="15dp" >
 
         <ImageView
             android:id="@+id/apply_for_img"
@@ -85,19 +95,33 @@
             android:src="@drawable/apply_for" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/apply_for_img"
             android:orientation="vertical" >
 
-            <TextView
-                style="@style/text_black_medium"
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="活动参与申请" />
+                android:gravity="center_vertical" >
+
+                <TextView
+                    style="@style/text_black_medium"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="活动参与申请" />
+
+                <TextView
+                    android:id="@+id/apply_for_time"
+                    style="@style/text_grey_smaller"
+                    android:text="10:23" />
+            </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:id="@+id/applicationmsg_layout"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
                 android:orientation="horizontal" >
@@ -110,35 +134,23 @@
                     android:textSize="@dimen/text_small" />
 
                 <TextView
+                    android:id="@+id/applicationmsg_content"
                     style="@style/text_grey_small"
+                    android:layout_width="0dp"
                     android:layout_marginLeft="3dp"
+                    android:layout_weight="1"
                     android:ellipsize="end"
+                    android:paddingRight="5dp"
                     android:text="您已成功加入南京一日游..." />
+
+                <com.gongpingjia.carplay.view.BadgeView
+                    android:id="@+id/application_msg_cout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_small" />
             </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="35dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:gravity="center_horizontal"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/apply_for_time"
-                style="@style/text_grey_smaller"
-                android:layout_marginTop="18dp"
-                android:text="10:23" />
-
-            <TextView
-                android:id="@+id/apply_for_num"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:text="5"
-                android:textColor="@color/white" />
         </LinearLayout>
     </RelativeLayout>
 

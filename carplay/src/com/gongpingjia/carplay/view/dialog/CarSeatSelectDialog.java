@@ -15,6 +15,7 @@ import org.json.JSONObject;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -94,6 +95,13 @@ public class CarSeatSelectDialog extends BaseAlertDialog
             {
                 if (onSelectResultListener != null)
                 {
+                    if (TextUtils.isEmpty(countT.getText().toString()))
+                    {
+                        IocContainer.getShare()
+                            .get(IDialog.class)
+                            .showToastShort(mContext, "请选择" + desT.getText().toString());
+                        return;
+                    }
                     onSelectResultListener.click(Integer.parseInt(countT.getText().toString()));
                 }
                 dismiss();
