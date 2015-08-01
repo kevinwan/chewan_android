@@ -446,5 +446,4 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 			}
 		});
 	}
-
 }

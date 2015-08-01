@@ -20,6 +20,7 @@ import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.active.ActiveListFragment;
 import com.gongpingjia.carplay.activity.active.CreateActiveActivity;
 import com.gongpingjia.carplay.activity.msg.MsgFragment;
+import com.gongpingjia.carplay.activity.my.ManageAlbumActivity;
 import com.gongpingjia.carplay.activity.my.MyFragment;
 import com.gongpingjia.carplay.activity.my.SettingActivity;
 import com.gongpingjia.carplay.manage.UserInfoManage;
@@ -180,8 +181,8 @@ public class MainActivity extends BaseFragmentActivity
                             @Override
                             public void onClick(View arg0)
                             {
-                                // Intent it = new Intent(MainActivity.this, EditCarmeraActivity.class);
-                                // startActivity(it);
+                                 Intent it = new Intent(MainActivity.this, ManageAlbumActivity.class);
+                                 startActivity(it);
                             }
                         });
                         break;

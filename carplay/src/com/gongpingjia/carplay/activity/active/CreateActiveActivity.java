@@ -23,7 +23,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -53,11 +52,8 @@ import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
 import com.umeng.socialize.controller.listener.SocializeListeners.SnsPostListener;
 import com.umeng.socialize.media.UMImage;
-import com.umeng.socialize.media.UMediaObject;
 import com.umeng.socialize.sso.QZoneSsoHandler;
-import com.umeng.socialize.sso.SinaSsoHandler;
 import com.umeng.socialize.sso.SmsHandler;
-import com.umeng.socialize.sso.TencentWBSsoHandler;
 import com.umeng.socialize.sso.UMQQSsoHandler;
 import com.umeng.socialize.sso.UMSsoHandler;
 import com.umeng.socialize.weixin.controller.UMWXHandler;
@@ -137,14 +133,6 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
 
     // 微信朋友圈
     private UMWXHandler wxCircleHandler;
-
-    // qq好友分享
-    private UMQQSsoHandler qqSsoHandler;
-
-    // qq空间分享
-    private QZoneSsoHandler qZoneSsoHandler;
-
-    private SmsHandler smsHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
