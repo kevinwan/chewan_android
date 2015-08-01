@@ -33,8 +33,9 @@
 
             <View style="@style/line" />
 
-            <LinearLayout style="@style/linearlayout" 
-                android:background="@drawable/bg_s">
+            <LinearLayout
+                style="@style/linearlayout"
+                android:background="@drawable/bg_s" >
 
                 <ImageView
                     style="@style/icon_style_small"
@@ -113,8 +114,8 @@
 
             <LinearLayout
                 android:id="@+id/layout_destination"
-                android:background="@drawable/bg_s"
-                style="@style/linearlayout" >
+                style="@style/linearlayout"
+                android:background="@drawable/bg_s" >
 
                 <ImageView
                     style="@style/icon_style_small"
@@ -146,8 +147,8 @@
 
             <LinearLayout
                 android:id="@+id/layout_start_time"
-                android:background="@drawable/bg_s"
-                style="@style/linearlayout" >
+                style="@style/linearlayout"
+                android:background="@drawable/bg_s" >
 
                 <ImageView
                     style="@style/icon_style_small"
@@ -176,8 +177,8 @@
 
             <LinearLayout
                 android:id="@+id/layout_end_time"
-                android:background="@drawable/bg_s"
-                style="@style/linearlayout" >
+                style="@style/linearlayout"
+                android:background="@drawable/bg_s" >
 
                 <ImageView
                     style="@style/icon_style_small"
@@ -207,8 +208,8 @@
 
             <LinearLayout
                 android:id="@+id/layout_fee"
-                android:background="@drawable/bg_s"
-                style="@style/linearlayout" >
+                style="@style/linearlayout"
+                android:background="@drawable/bg_s" >
 
                 <ImageView
                     style="@style/icon_style_small"

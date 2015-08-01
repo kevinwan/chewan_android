@@ -34,4 +34,9 @@ public class API {
 
     public static final String editActive = CWBaseurl + "/activity/";
 
+    // 上传到相册
+    public static final String uploadAlbum = CWBaseurl + "/user/";
+
+    public static final String editAlbum = CWBaseurl + "/user/";
+
 }

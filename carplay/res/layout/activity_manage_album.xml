@@ -12,6 +12,7 @@
         android:id="@+id/gv_photo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:clipToPadding="false"
         android:gravity="center"
         android:horizontalSpacing="10dp"

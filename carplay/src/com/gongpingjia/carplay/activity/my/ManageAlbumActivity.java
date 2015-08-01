@@ -11,6 +11,7 @@ import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.net.upload.FileInfo;
 import net.duohuo.dhroid.util.PhotoUtil;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -18,12 +19,14 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
@@ -64,7 +67,7 @@ public class ManageAlbumActivity extends CarPlayBaseActivity implements OnClickL
 
     private ImageView mLeftImage;
 
-    User mUser = User.getInstance();
+    static User mUser = User.getInstance();
 
     private boolean isEditable = false;
 
@@ -76,53 +79,85 @@ public class ManageAlbumActivity extends CarPlayBaseActivity implements OnClickL
 
         setTitle("相册管理");
         setRightAction("编辑", -1, this);
-
         mRightText = (TextView) findViewById(R.id.right_text);
         mRightImage = (ImageView) findViewById(R.id.right_icon);
         mLeftText = (TextView) findViewById(R.id.left_text);
         mLeftImage = (ImageView) findViewById(R.id.back);
 
-        mLeftImage.setOnClickListener(this);
-        mLeftText.setOnClickListener(this);
-        mRightText.setOnClickListener(this);
-        mRightImage.setOnClickListener(this);
-
         mCacheDir = new File(getExternalCacheDir(), "CarPlay");
         mCacheDir.mkdirs();
+        mLeftImage.setOnClickListener(ManageAlbumActivity.this);
+        mLeftText.setOnClickListener(ManageAlbumActivity.this);
+        mRightText.setOnClickListener(ManageAlbumActivity.this);
+        mRightImage.setOnClickListener(ManageAlbumActivity.this);
 
-        mPhotoStates = new ArrayList<PhotoState>();
         mLastPhotoState = new PhotoState();
         mLastPhotoState.setChecked(false);
         mLastPhotoState.setLast(true);
-        mPhotoStates.add(mLastPhotoState);
 
-        mPicIds = new ArrayList<String>();
-
-        mPhotoAdapter = new ImageAdapter(this, mPhotoStates);
-        mPhotoGridView.setAdapter(mPhotoAdapter);
-
-        mPhotoGridView.setOnItemClickListener(new OnItemClickListener() {
+        DhNet net = new DhNet(API.CWBaseurl + "/user/" + mUser.getUserId() + "/info?userId=" + mUser.getUserId()
+                + "&token=" + mUser.getToken());
+        net.doGetInDialog("加载相册中", new NetTask(self) {
 
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // TODO Auto-generated method stub
-                if (mPhotoStates.get(position).isLast()) {
-                    mCurPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg").getAbsolutePath();
-                    PhotoUtil.getPhoto(self, Constant.TAKE_PHOTO, Constant.PICK_PHOTO, new File(mCurPath));
-                } else {
-                    if (isEditable) {
-                        if (mPhotoStates.get(position).isChecked()) {
-                            view.findViewById(R.id.imgView_visible).setVisibility(View.GONE);
-                            mPhotoStates.get(position).setChecked(false);
-                        } else {
-                            view.findViewById(R.id.imgView_visible).setVisibility(View.VISIBLE);
-                            mPhotoStates.get(position).setChecked(true);
+            public void doInUI(Response response, Integer transfer) {
+                if (response.isSuccess()) {
+                    JSONObject data = response.jSONFrom("data");
+                    try {
+                        JSONArray array = data.getJSONArray("albumPhotos");
+                        if (array != null) {
+                            mPhotoStates = new ArrayList<PhotoState>();
+                            mPicIds = new ArrayList<String>();
+
+                            for (int i = 0; i < array.length(); i++) {
+                                PhotoState state = new PhotoState();
+                                state.setChecked(false);
+                                state.setPath(array.getJSONObject(i).getString("thumbnail_pic"));
+                                state.setLast(false);
+                                // mPicIds.add(array.getJSONObject(i).getString(""));
+                                mPhotoStates.add(state);
+                            }
+                            if (mPhotoStates.size() < 9) {
+                                mPhotoStates.add(mLastPhotoState);
+                            }
+
+                            mPhotoAdapter = new ImageAdapter(ManageAlbumActivity.this, mPhotoStates);
+                            mPhotoGridView.setAdapter(mPhotoAdapter);
+                            mPhotoGridView.setOnItemClickListener(new OnItemClickListener() {
+
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                    // TODO Auto-generated method stubF
+                                    if (mPhotoStates.get(position).isLast()) {
+                                        mCurPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg")
+                                                .getAbsolutePath();
+                                        PhotoUtil.getPhoto(self, Constant.TAKE_PHOTO, Constant.PICK_PHOTO, new File(
+                                                mCurPath));
+                                    } else {
+                                        if (isEditable) {
+                                            if (mPhotoStates.get(position).isChecked()) {
+                                                view.findViewById(R.id.imgView_visible).setVisibility(View.GONE);
+                                                mPhotoStates.get(position).setChecked(false);
+                                            } else {
+                                                view.findViewById(R.id.imgView_visible).setVisibility(View.VISIBLE);
+                                                mPhotoStates.get(position).setChecked(true);
+                                            }
+                                            mPhotoAdapter.notifyDataSetChanged();
+                                        }
+                                    }
+                                }
+                            });
                         }
-                        mPhotoAdapter.notifyDataSetChanged();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
+
+                } else {
+                    showToast("获取相册失败");
                 }
             }
         });
+
     }
 
     @Override
@@ -171,9 +206,32 @@ public class ManageAlbumActivity extends CarPlayBaseActivity implements OnClickL
                         iterator.remove();
                     }
                 }
-                mPhotoAdapter.notifyDataSetChanged();
+                DhNet dhNet = new DhNet(API.editAlbum + mUser.getUserId() + "/album/photos?token=" + mUser.getToken());
+                dhNet.addParam("photos", new JSONArray(mPicIds));
+                dhNet.doPostInDialog("删除中", new NetTask(self) {
+
+                    @Override
+                    public void doInUI(Response response, Integer transfer) {
+                        if (response.isSuccess()) {
+                            showToast("删除成功");
+                            isEditable = false;
+                            mLeftText.setVisibility(View.GONE);
+                            mLeftImage.setVisibility(View.VISIBLE);
+                            mRightImage.setVisibility(View.GONE);
+                            mRightText.setVisibility(View.VISIBLE);
+
+                            if (!mPhotoStates.get(mPhotoStates.size() - 1).isLast()) {
+                                mPhotoStates.add(mLastPhotoState);
+                            }
+                            mPhotoAdapter.notifyDataSetChanged();
+                        } else {
+                            showToast("删除失败，请重试");
+                        }
+                    }
+                });
+
             } else {
-                showToast("不可编辑");
+                showToast("请点击右上角编辑文字");
             }
             break;
         case R.id.right_text:
@@ -183,8 +241,13 @@ public class ManageAlbumActivity extends CarPlayBaseActivity implements OnClickL
                 mRightImage.setVisibility(View.VISIBLE);
                 mRightImage.setBackground(getResources().getDrawable(R.drawable.action_delete));
                 mLeftImage.setVisibility(View.GONE);
+
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT);
+                lp.setMargins(20, 0, 0, 0);
                 mLeftText.setText("取消");
                 mLeftText.setVisibility(View.VISIBLE);
+                mLeftText.setLayoutParams(lp);
             }
             break;
         case R.id.left_text:
@@ -196,13 +259,17 @@ public class ManageAlbumActivity extends CarPlayBaseActivity implements OnClickL
                 mRightText.setVisibility(View.VISIBLE);
                 mRightImage.setVisibility(View.GONE);
                 mRightText.setText("编辑");
+
+                for (PhotoState state : mPhotoStates) {
+                    state.setChecked(false);
+                }
+                mPhotoAdapter.notifyDataSetChanged();
             }
             break;
         case R.id.back:
             this.finish();
             break;
         }
-
     }
 
     private void upLoadPic(String path) {
@@ -217,7 +284,8 @@ public class ManageAlbumActivity extends CarPlayBaseActivity implements OnClickL
         }
         mPhotoAdapter.notifyDataSetChanged();
 
-        DhNet net = new DhNet(API.uploadPictures + "userId=" + mUser.getUserId() + "&token=" + mUser.getToken());
+        DhNet net = new DhNet(API.uploadAlbum + mUser.getUserId() + "/album/upload?token=" + mUser.getToken());
+        Log.e("url", net.getUrl());
         net.upload(new FileInfo("attach", new File(mCurPath)), new NetTask(self) {
 
             @Override
@@ -243,4 +311,5 @@ public class ManageAlbumActivity extends CarPlayBaseActivity implements OnClickL
             }
         });
     }
+
 }

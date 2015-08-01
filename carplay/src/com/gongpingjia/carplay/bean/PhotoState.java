@@ -40,4 +40,10 @@ public class PhotoState {
         this.isLast = isLast;
     }
 
+    @Override
+    public String toString() {
+        return "PhotoState [path=" + path + ", isLast=" + isLast + ", isChecked=" + isChecked + "]";
+    }
+
+    
 }
