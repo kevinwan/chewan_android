@@ -2,14 +2,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-   	android:orientation="vertical" >
-   	<include layout="@layout/include_title_bar"/>
+    android:orientation="vertical" >
 
-    <TextView
-       android:id="@+id/detail_txt"
-       android:layout_marginLeft="5dp"
-       android:layout_marginRight="5dp"
-       style="@style/text_black_medium"
-        />
+    <include layout="@layout/include_title_bar" />
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+             android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/detail_txt"
+                style="@style/text_black_medium"
+                />
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
