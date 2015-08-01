@@ -156,6 +156,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="@drawable/bg_s"
                         android:gravity="center"
                         android:orientation="vertical" >
 
@@ -182,6 +183,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="@drawable/bg_s"
                         android:gravity="center"
                         android:orientation="vertical" >
 
@@ -209,6 +211,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="@drawable/bg_s"
                         android:gravity="center"
                         android:orientation="vertical" >
 
@@ -228,7 +231,8 @@
 
                 <LinearLayout
                     android:id="@+id/people_concerned"
-                    style="@style/linearlayout" >
+                    style="@style/linearlayout"
+                    android:background="@drawable/bg_s" >
 
                     <ImageView
                         style="@style/icon_style_small"
@@ -255,7 +259,8 @@
 
                 <LinearLayout
                     android:id="@+id/owners_certification"
-                    style="@style/linearlayout" >
+                    style="@style/linearlayout"
+                    android:background="@drawable/bg_s" >
 
                     <ImageView
                         style="@style/icon_style_small"
@@ -294,7 +299,8 @@
 
                 <LinearLayout
                     android:id="@+id/carchat"
-                    style="@style/linearlayout" >
+                    style="@style/linearlayout"
+                    android:background="@drawable/bg_s" >
 
                     <ImageView
                         style="@style/icon_style_small"
@@ -320,7 +326,9 @@
 
                 <View style="@style/line" />
 
-                <LinearLayout style="@style/linearlayout" >
+                <LinearLayout
+                    style="@style/linearlayout"
+                    android:background="@drawable/bg_s" >
 
                     <ImageView
                         style="@style/icon_style_small"
@@ -346,9 +354,11 @@
                 <View style="@style/line" />
 
                 <LinearLayout style="@style/linearlayout" />
-            <LinearLayout 
-                android:id="@+id/editdata"
-                style="@style/linearlayout" >
+
+                <LinearLayout
+                    android:id="@+id/editdata"
+                    style="@style/linearlayout"
+                    android:background="@drawable/bg_s" >
 
                     <ImageView
                         style="@style/icon_style_small"

@@ -32,11 +32,13 @@
             <LinearLayout
                 android:id="@+id/seat_layout"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content"
+                 >
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/bg_s"
                     android:layout_marginLeft="15dp" >
 
                     <ImageView
@@ -59,6 +61,7 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/bg_s"
                     android:layout_marginLeft="15dp" >
 
                     <ImageView
@@ -81,6 +84,7 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/bg_s"
                     android:layout_marginLeft="15dp" >
 
                     <ImageView
@@ -103,6 +107,7 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/bg_s"
                     android:layout_marginLeft="15dp" >
 
                     <ImageView
@@ -125,6 +130,7 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/bg_s"
                     android:layout_marginLeft="15dp" >
 
                     <ImageView
@@ -147,6 +153,7 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/bg_s"
                     android:layout_marginLeft="15dp" >
 
                     <ImageView
@@ -169,6 +176,7 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/bg_s"
                     android:layout_marginLeft="15dp" >
 
                     <ImageView

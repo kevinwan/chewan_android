@@ -3,14 +3,16 @@ package com.gongpingjia.carplay.view.dialog;
 import net.duohuo.dhroid.util.ViewUtil;
 
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.view.BaseAlertDialog;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 
-public class ActiveMsgDialog extends AlertDialog
+public class ActiveMsgDialog extends BaseAlertDialog
 {
     
     String msg = "";
@@ -65,6 +67,8 @@ public class ActiveMsgDialog extends AlertDialog
                 dismiss();
             }
         });
+        
+        Window window = getWindow();
     }
     
     public OnClickResultListener getOnClickResultListener()

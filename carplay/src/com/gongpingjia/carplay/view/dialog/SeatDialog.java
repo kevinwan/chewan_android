@@ -14,6 +14,7 @@ import android.widget.ImageView;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.util.CarPlayUtil;
+import com.gongpingjia.carplay.view.BaseAlertDialog;
 
 /**
  * 成员管理 弹出框
@@ -21,7 +22,7 @@ import com.gongpingjia.carplay.util.CarPlayUtil;
  * @author wang
  * 
  */
-public class SeatDialog extends AlertDialog
+public class SeatDialog extends BaseAlertDialog
 {
     
     Context context;

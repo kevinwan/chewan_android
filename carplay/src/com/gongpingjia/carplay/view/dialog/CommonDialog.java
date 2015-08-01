@@ -58,6 +58,8 @@ public class CommonDialog {
         });
         builder.setView(content);
         mDialog = builder.create();
+        Window window = mDialog.getWindow();
+        window.setWindowAnimations(R.style.mystyle);
         mDialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         mDialog.show();
     }

@@ -70,7 +70,7 @@ public class GuidanceActivity extends CarPlayBaseActivity {
 				public void onClick(View arg0) {
 					Intent intent=new Intent(self,MainActivity.class);
 					startActivity(intent);
-					self.finish();
+					finishWithoutAnim();
 				}
 			});
 	}

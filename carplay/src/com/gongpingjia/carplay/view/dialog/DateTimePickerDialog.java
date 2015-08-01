@@ -8,10 +8,11 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.text.format.DateUtils;
 
+import com.gongpingjia.carplay.view.BaseAlertDialog;
 import com.gongpingjia.carplay.view.DateTimePicker;
 import com.gongpingjia.carplay.view.DateTimePicker.OnDateTimeChangedListener;
 
-public class DateTimePickerDialog extends AlertDialog implements OnClickListener
+public class DateTimePickerDialog extends BaseAlertDialog implements OnClickListener
 {
     private DateTimePicker mDateTimePicker;
     

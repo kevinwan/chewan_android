@@ -19,7 +19,9 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <LinearLayout style="@style/linearlayout" >
+            <LinearLayout
+                style="@style/linearlayout"
+                android:background="@drawable/bg_s" >
 
                 <ImageView
                     style="@style/icon_style_small"
@@ -54,6 +56,7 @@
 
             <LinearLayout
                 style="@style/linearlayout"
+                android:background="@drawable/bg_s"
                 android:orientation="vertical" >
 
                 <LinearLayout
@@ -112,7 +115,8 @@
 
             <LinearLayout
                 android:id="@+id/layout_destination"
-                style="@style/linearlayout" >
+                style="@style/linearlayout"
+                android:background="@drawable/bg_s" >
 
                 <ImageView
                     style="@style/icon_style_small"
@@ -144,7 +148,9 @@
 
             <View style="@style/line" />
 
-            <LinearLayout style="@style/linearlayout" >
+            <LinearLayout
+                style="@style/linearlayout"
+                android:background="@drawable/bg_s" >
 
                 <ImageView
                     style="@style/icon_style_small"
@@ -178,7 +184,9 @@
 
             <View style="@style/line" />
 
-            <LinearLayout style="@style/linearlayout" >
+            <LinearLayout
+                style="@style/linearlayout"
+                android:background="@drawable/bg_s" >
 
                 <ImageView
                     style="@style/icon_style_small"
@@ -215,7 +223,8 @@
 
             <LinearLayout
                 android:id="@+id/layout_fee"
-                style="@style/linearlayout" >
+                style="@style/linearlayout"
+                android:background="@drawable/bg_s" >
 
                 <ImageView
                     style="@style/icon_style_small"
@@ -249,7 +258,9 @@
 
             <View style="@style/line" />
 
-            <LinearLayout style="@style/linearlayout" >
+            <LinearLayout
+                style="@style/linearlayout"
+                android:background="@drawable/bg_s" >
 
                 <ImageView
                     style="@style/icon_style_small"

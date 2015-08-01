@@ -5,6 +5,7 @@
     android:layout_marginRight="14dp"
     android:background="@drawable/white_fillet_button"
     android:gravity="center"
+    android:id="@+id/container"
     android:orientation="vertical" >
 
     <LinearLayout

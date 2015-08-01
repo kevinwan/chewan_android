@@ -198,7 +198,7 @@ public class ActiveAdapter extends NetJSONAdapter
                 }
             }
         });
-        holder.member_layoutV.setOnClickListener(new OnClickListener()
+        holder.headlayoutV.setOnClickListener(new OnClickListener()
         {
             
             @Override

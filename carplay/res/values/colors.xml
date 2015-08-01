@@ -25,5 +25,7 @@
     <color name="text_red">#fc6e51</color>
     <color name="main_tab_bg">#F6F7FB</color>
     <color name="black40">#66000000</color>
+    
+    <color name="focus_bg">#f7f7f7</color>
 
 </resources>

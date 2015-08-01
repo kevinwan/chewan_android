@@ -9,6 +9,7 @@
         android:id="@+id/leave_comments_layout"
         android:layout_width="match_parent"
         android:layout_height="80dp"
+        android:background="@drawable/bg_s"
         android:gravity="center_vertical"
         android:orientation="horizontal" >
 
@@ -64,15 +65,13 @@
         </LinearLayout>
     </RelativeLayout>
 
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1px"
-        android:background="#e6e9ed" />
+    <View style="@style/line_horizontal" />
 
     <RelativeLayout
         android:id="@+id/apply_for_layout"
         android:layout_width="match_parent"
         android:layout_height="80dp"
+        android:background="@drawable/bg_s"
         android:gravity="center_vertical"
         android:orientation="horizontal" >
 
@@ -143,9 +142,6 @@
         </LinearLayout>
     </RelativeLayout>
 
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1px"
-        android:background="#e6e9ed" />
+    <View style="@style/line_horizontal" />
 
 </LinearLayout>

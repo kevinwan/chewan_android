@@ -10,8 +10,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp" >
+        android:background="@drawable/bg_s"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp" >
 
         <TextView
             style="@style/text_grey_medium"
@@ -26,14 +27,14 @@
             android:orientation="horizontal" >
 
             <!-- <ImageView -->
+
             <com.gongpingjia.carplay.view.RoundImageView
                 android:id="@+id/head"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="3dp"
-                android:layout_toLeftOf="@+id/img"
-                 />
+                android:layout_toLeftOf="@+id/img" />
 
             <ImageView
                 android:layout_width="18dp"
@@ -146,9 +147,8 @@
             android:layout_height="60dp"
             android:background="@color/nothing"
             android:gravity="center_vertical|right"
-            android:inputType="number"
-            android:hint="请输入驾龄(数字0~20)" />
-       
+            android:hint="请输入驾龄(数字0~20)"
+            android:inputType="number" />
     </LinearLayout>
 
     <View
@@ -159,8 +159,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp" >
+        android:background="@drawable/bg_s"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp" >
 
         <TextView
             style="@style/text_grey_medium"

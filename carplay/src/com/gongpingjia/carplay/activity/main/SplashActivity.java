@@ -107,7 +107,7 @@ public class SplashActivity extends CarPlayBaseActivity
                 startActivity(intent);
                 per.isFirst = 1;
                 per.commit();
-                self.finish();
+                finishWithoutAnim();
             }
         }, 3000);
     }
@@ -121,7 +121,7 @@ public class SplashActivity extends CarPlayBaseActivity
             {
                 Intent intent = new Intent(self, MainActivity.class);
                 startActivity(intent);
-                self.finish();
+                finishWithoutAnim();
             }
         }, 3000);
     }

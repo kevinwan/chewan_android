@@ -10,6 +10,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.view.View;
+import android.view.Window;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.TimePicker;
@@ -94,6 +95,8 @@ public class DateDialog
             }
         });
         Dialog dialog = builder.create();
+        Window window = dialog.getWindow();
+        window.setWindowAnimations(R.style.mystyle);
         dialog.show();
     }
     

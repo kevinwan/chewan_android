@@ -9,11 +9,12 @@ import android.widget.Button;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.data.CityDataManage;
+import com.gongpingjia.carplay.view.BaseAlertDialog;
 import com.gongpingjia.carplay.view.wheel.OnWheelChangedListener;
 import com.gongpingjia.carplay.view.wheel.WheelView;
 import com.gongpingjia.carplay.view.wheel.adapter.ArrayWheelAdapter;
 
-public class CityPickDialog extends AlertDialog implements android.view.View.OnClickListener, OnWheelChangedListener
+public class CityPickDialog extends BaseAlertDialog implements android.view.View.OnClickListener, OnWheelChangedListener
 {
     private WheelView mViewProvince;
     

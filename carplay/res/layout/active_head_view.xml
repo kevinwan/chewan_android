@@ -17,8 +17,8 @@
             android:layout_height="50dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:background="@drawable/head_icon"
-            android:layout_marginLeft="9dp" />
+            android:layout_marginLeft="9dp"
+            android:background="@drawable/head_icon" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -81,11 +81,12 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="70dp"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
             android:gravity="center"
+            android:minWidth="50dp"
             android:orientation="horizontal" >
 
             <ImageView
@@ -135,11 +136,14 @@
 
         <TextView
             android:id="@+id/join"
-            style="@style/text_orangebg"
-            android:layout_width="wrap_content"
+            android:layout_width="75dp"
+            android:layout_height="30dp"
             android:layout_marginLeft="10dp"
+            android:background="@drawable/button_yanzheng_bg"
             android:gravity="center"
-            android:textSize="@dimen/text_medium"
+            android:text="我也要玩"
+            android:textColor="@color/white"
+            android:textSize="15sp"
             android:visibility="gone" />
     </LinearLayout>
 

@@ -35,6 +35,7 @@ import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.manage.UserInfoManage;
 import com.gongpingjia.carplay.manage.UserInfoManage.LoginCallBack;
+import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.util.PicLayoutUtil;
 import com.gongpingjia.carplay.view.dialog.CarSeatSelectDialog;
 import com.gongpingjia.carplay.view.dialog.CarSeatSelectDialog.OnSelectResultListener;
@@ -206,16 +207,11 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements OnClic
         joinT.setOnClickListener(this);
         activeRelative(headJo);
         ViewUtil.bindView(headV.findViewById(R.id.name), JSONUtil.getString(createrJo, "nickname"));
-        ViewUtil.bindView(headV.findViewById(R.id.drive_age), JSONUtil.getString(createrJo, "carModel") + ","
-            + JSONUtil.getString(createrJo, "drivingExperience") + "年驾龄");
         ViewUtil.bindView(headV.findViewById(R.id.content), JSONUtil.getString(headJo, "introduction"));
         ViewUtil.bindView(headV.findViewById(R.id.des), JSONUtil.getString(headJo, "introduction"));
-        ViewUtil.bindNetImage((ImageView)headV.findViewById(R.id.car_logo),
-            JSONUtil.getString(createrJo, "carBrandLogo"),
-            "head");
-        ViewUtil.bindNetImage((ImageView)headV.findViewById(R.id.head),
-            JSONUtil.getString(createrJo, "photo"),
-            "head");
+        
+        CarPlayUtil.bindDriveAge(createrJo, (ImageView)headV.findViewById(R.id.car_logo), (TextView)headV.findViewById(R.id.drive_age));
+        ViewUtil.bindNetImage((ImageView)headV.findViewById(R.id.head), JSONUtil.getString(createrJo, "photo"), "head");
         ViewUtil.bindView(headV.findViewById(R.id.publish_time), JSONUtil.getLong(headJo, "publishTime"), "neartime");
         
         ViewUtil.bindView(headV.findViewById(R.id.address), JSONUtil.getString(headJo, "location"));
@@ -299,11 +295,6 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements OnClic
     public void comment()
     {
         String commentContent = comment_contentE.getText().toString();
-        if (TextUtils.isEmpty(commentContent))
-        {
-            showToast("请输入评论内容!");
-            return;
-        }
         User user = User.getInstance();
         DhNet net =
             new DhNet(API.CWBaseurl + "/activity/" + activityId + "/comment?userId=" + user.getUserId() + "&token="
@@ -356,6 +347,12 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements OnClic
         {
         
             case R.id.release:
+                String commentContent = comment_contentE.getText().toString();
+                if (TextUtils.isEmpty(commentContent))
+                {
+                    showToast("请输入评论内容!");
+                    return;
+                }
                 UserInfoManage.getInstance().checkLogin((Activity)self, new LoginCallBack()
                 {
                     
