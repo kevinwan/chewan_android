@@ -96,8 +96,7 @@ public class MyReleaseActiveAdapter extends NetJSONAdapter
         
         JSONObject jo = mVaules.get(position);
         JSONObject creater = JSONUtil.getJSONObject(jo, "organizer");
-        
-        ViewUtil.bindView(holder.contentT, JSONUtil.getString(creater, "introduction"));
+        ViewUtil.bindView(holder.contentT, JSONUtil.getString(jo, "introduction"));
         JSONArray picJsa = JSONUtil.getJSONArray(jo, "cover");
         // holder.piclayoutV.removeAllViews();
         PicLayoutUtil util = new PicLayoutUtil(mContext);

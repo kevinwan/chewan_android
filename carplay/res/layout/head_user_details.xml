@@ -206,7 +206,7 @@
 
                 <TextView
                     style="@style/text_grey_small"
-                    android:text="TA的活动" />
+                    android:text="TA的参与" />
 
                 <View
                     android:id="@+id/tabline"

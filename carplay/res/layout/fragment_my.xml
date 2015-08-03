@@ -282,6 +282,7 @@
                             android:layout_height="58dp"
                             android:layout_marginRight="5dp"
                             android:gravity="center_vertical"
+                            android:visibility="invisible"
                             android:text="已认证" />
 
                         <ImageView
