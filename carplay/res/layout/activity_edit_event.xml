@@ -84,7 +84,7 @@
 
                     <ImageView
                         style="@style/icon_style_small"
-                        android:src="@drawable/e_content" />
+                        android:src="@drawable/e_introduce" />
 
                     <TextView
                         style="@style/text_grey_medium"

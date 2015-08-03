@@ -13,7 +13,6 @@
         android:layout_height="100dp"
         android:background="@color/nothing"
         android:gravity="top"
-        android:hint="不少于20字不大于140字"
         android:padding="15dp"
         android:textColor="@color/text_grey"
         android:textSize="@dimen/text_medium" />

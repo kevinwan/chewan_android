@@ -59,8 +59,13 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:text="昵称" />
+         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center_vertical|right"
+            android:orientation="horizontal" >
 
-        <EditText
+          <EditText
             android:id="@+id/nickname"
             style="@style/text_blacklight_medium"
             android:layout_width="match_parent"
@@ -68,6 +73,14 @@
             android:background="@color/nothing"
             android:gravity="center_vertical|right"
             android:hint="请输入昵称" />
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="25dp"
+                android:src="@drawable/right_btn" />
+        </LinearLayout>
+		
+     
     </LinearLayout>
 
     <View
@@ -86,6 +99,7 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:text="性别" />
+        
 
         <RadioGroup
             android:id="@+id/tab"
@@ -132,6 +146,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
+        android:gravity="center_vertical"
         android:orientation="horizontal" >
 
         <TextView
@@ -140,7 +155,13 @@
             android:gravity="center_vertical"
             android:text="驾龄" />
 
-        <EditText
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center_vertical|right"
+            android:orientation="horizontal" >
+
+             <EditText
             android:id="@+id/carage"
             style="@style/text_blacklight_medium"
             android:layout_width="match_parent"
@@ -149,6 +170,14 @@
             android:gravity="center_vertical|right"
             android:hint="请输入驾龄(数字0~20)"
             android:inputType="number" />
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="25dp"
+                android:src="@drawable/right_btn" />
+        </LinearLayout>
+       
+        
     </LinearLayout>
 
     <View

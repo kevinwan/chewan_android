@@ -168,7 +168,7 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 				nicknameT.setText(nickname);
 				RadioButton rb=(RadioButton) sexR.findViewById(gender.equals("男") ? R.id.tab_left : R.id.tab_right);
 				rb.setChecked(true);
-				carageT.setText(drivingExperience);
+				carageT.setText(drivingExperience+"年");
 				ViewUtil.bindNetImage(headI, photo,
 						CarPlayValueFix.optionsDefault.toString());
 			}
@@ -202,6 +202,9 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 		if (TextUtils.isEmpty(nickname)) {
 			showToast("用户名不能为空!");
 			return;
+		}
+		if (carage.contains("年")) {
+			carage=carage.replace("年", "");
 		}
 		try {
 			drivingExperience = Integer.parseInt(carage);
