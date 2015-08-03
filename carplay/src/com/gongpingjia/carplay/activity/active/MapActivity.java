@@ -98,7 +98,6 @@ public class MapActivity extends CarPlayBaseActivity implements OnMarkerClickLis
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
                 Intent it = new Intent(self, SearchPlaceActivity.class);
                 self.startActivityForResult(it, REQUEST_KEY);
             }
@@ -159,6 +158,12 @@ public class MapActivity extends CarPlayBaseActivity implements OnMarkerClickLis
         // 地址编码
         mGeoSearch = new GeocodeSearch(this);
         mGeoSearch.setOnGeocodeSearchListener(this);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mMapView.onSaveInstanceState(outState);
     }
 
     @Override
@@ -234,7 +239,6 @@ public class MapActivity extends CarPlayBaseActivity implements OnMarkerClickLis
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        // TODO Auto-generated method stub
         mCurLatLng = marker.getPosition();
         LatLonPoint latLonPoint = new LatLonPoint(mCurLatLng.latitude, mCurLatLng.longitude);
         RegeocodeQuery query = new RegeocodeQuery(latLonPoint, 200, GeocodeSearch.AMAP);// 第一个参数表示一个Latlng，第二参数表示范围多少米，第三个参数表示是火系坐标系还是GPS原生坐标系
@@ -305,7 +309,7 @@ public class MapActivity extends CarPlayBaseActivity implements OnMarkerClickLis
     }
 
     @Override
-    public void onGeocodeSearched(GeocodeResult arg0, int arg1) {
+    public void onGeocodeSearched(GeocodeResult result, int arg1) {
         // TODO Auto-generated method stub
     }
 
@@ -317,8 +321,10 @@ public class MapActivity extends CarPlayBaseActivity implements OnMarkerClickLis
             if (result != null && result.getRegeocodeAddress() != null
                     && result.getRegeocodeAddress().getFormatAddress() != null) {
                 mAddress = result.getRegeocodeAddress();
+                aMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mCurLatLng, 15));
                 mLocTitleText.setText(mAddress.getDistrict());
                 mLocDesText.setText(mAddress.getFormatAddress());
+
                 Log.e("tag",
                         mAddress.getBuilding() + " " + mAddress.getNeighborhood() + " " + mAddress.getTownship() + " "
                                 + mAddress.getBusinessAreas() + " " + mAddress.getRoads() + " "
