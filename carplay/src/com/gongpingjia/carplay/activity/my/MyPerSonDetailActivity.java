@@ -53,7 +53,8 @@ public class MyPerSonDetailActivity extends CarPlayBaseActivity implements
 	/** 我的关注,我的发布,我的参与 三个点击区域的View */
 	View my_attentionV, my_releaseV, my_participationV;
 
-	LinearLayout carchat, owners_certification, people_concerned;
+	LinearLayout carchat, owners_certification, people_concerned, editdata,
+			feedback_layoutV;
 
 	User user;
 
@@ -87,6 +88,7 @@ public class MyPerSonDetailActivity extends CarPlayBaseActivity implements
 	@Override
 	public void initView() {
 
+		setTitle("我的详情");
 		loginedLl = (LinearLayout) findViewById(R.id.logined);
 		notloginLl = (LinearLayout) findViewById(R.id.notlogin);
 		loginBtn = (Button) findViewById(R.id.login);
@@ -107,7 +109,8 @@ public class MyPerSonDetailActivity extends CarPlayBaseActivity implements
 		carchat = (LinearLayout) findViewById(R.id.carchat);
 		people_concerned = (LinearLayout) findViewById(R.id.people_concerned);
 		owners_certification = (LinearLayout) findViewById(R.id.owners_certification);
-
+		editdata = (LinearLayout) findViewById(R.id.editdata);
+		feedback_layoutV = (LinearLayout) findViewById(R.id.feedback_layout);
 		loginBtn.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -122,6 +125,8 @@ public class MyPerSonDetailActivity extends CarPlayBaseActivity implements
 		carchat.setOnClickListener(this);
 		people_concerned.setOnClickListener(this);
 		owners_certification.setOnClickListener(this);
+		editdata.setOnClickListener(this);
+		feedback_layoutV.setOnClickListener(this);
 		user = User.getInstance();
 		loginedLl.setVisibility(View.VISIBLE);
 		notloginLl.setVisibility(View.GONE);

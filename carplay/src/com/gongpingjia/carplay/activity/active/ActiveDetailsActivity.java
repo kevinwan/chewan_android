@@ -38,6 +38,7 @@ import com.gongpingjia.carplay.manage.UserInfoManage;
 import com.gongpingjia.carplay.manage.UserInfoManage.LoginCallBack;
 import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.util.PicLayoutUtil;
+import com.gongpingjia.carplay.view.RoundImageView;
 import com.gongpingjia.carplay.view.dialog.CarSeatSelectDialog;
 import com.gongpingjia.carplay.view.dialog.CarSeatSelectDialog.OnSelectResultListener;
 
@@ -129,11 +130,16 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 				} else {
 					layout_sexV.setBackgroundResource(R.drawable.woman);
 				}
+
+				RoundImageView headI = (RoundImageView) itemV
+						.findViewById(R.id.imgView_avatar);
+				ViewUtil.bindNetImage(headI, JSONUtil.getString(jo1, "photo"),
+						"head");
+				headI.setTag(JSONUtil.getString(jo1, "userId"));
 				return o;
 			}
 		});
 		mJsonAdapter.addField("nickname", R.id.tv_nickname);
-		mJsonAdapter.addField("photo", R.id.imgView_avatar);
 		mJsonAdapter.addField("publishTime", R.id.tv_publish_time, "neartime");
 		mJsonAdapter.addField("age", R.id.age);
 		mJsonAdapter.fromWhat("data");
@@ -173,8 +179,10 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 		CarPlayUtil.bindDriveAge(createrJo,
 				(ImageView) headV.findViewById(R.id.car_logo),
 				(TextView) headV.findViewById(R.id.drive_age));
-		ViewUtil.bindNetImage((ImageView) headV.findViewById(R.id.head),
-				JSONUtil.getString(createrJo, "photo"), "head");
+		RoundImageView headI = (RoundImageView) headV.findViewById(R.id.head);
+		ViewUtil.bindNetImage(headI, JSONUtil.getString(createrJo, "photo"),
+				"head");
+		headI.setTag(JSONUtil.getString(createrJo, "userId"));
 		ViewUtil.bindView(headV.findViewById(R.id.publish_time),
 				JSONUtil.getLong(headJo, "publishTime"), "neartime");
 

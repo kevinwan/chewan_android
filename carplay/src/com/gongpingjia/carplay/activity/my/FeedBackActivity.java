@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
@@ -94,6 +95,7 @@ public class FeedBackActivity extends CarPlayBaseActivity implements
 
 	private void uploadPic(String path) {
 		Bitmap bmp = PhotoUtil.getLocalImage(new File(path));
+		picI.setScaleType(ScaleType.FIT_XY);
 		picI.setImageBitmap(bmp);
 		DhNet net = new DhNet(API.CWBaseurl + "/feedback/upload");
 		net.upload(new FileInfo("attach", new File(path)), new NetTask(self) {
@@ -104,7 +106,8 @@ public class FeedBackActivity extends CarPlayBaseActivity implements
 					JSONObject jo = response.jSONFromData();
 					photoId = JSONUtil.getString(jo, "photoId");
 				} else {
-					picI.setImageBitmap(null);
+					picI.setScaleType(ScaleType.CENTER);
+					picI.setImageResource(R.drawable.feedback_camera);
 				}
 			}
 		});

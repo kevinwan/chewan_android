@@ -14,13 +14,19 @@
         android:gravity="center_vertical"
         android:orientation="horizontal" >
 
-        <ImageView
-            android:id="@+id/pic"
+        <LinearLayout
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:layout_marginLeft="12dp"
-            android:background="@drawable/feedback_camera"
-            android:scaleType="fitXY" />
+            android:background="#CCD0D9" >
+
+            <ImageView
+                android:id="@+id/pic"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:scaleType="center"
+                android:src="@drawable/feedback_camera" />
+        </LinearLayout>
 
         <TextView
             style="@style/text_grey_medium"

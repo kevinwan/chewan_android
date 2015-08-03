@@ -89,14 +89,20 @@
                         android:textSize="12sp" />
                 </RelativeLayout>
 
+                <View 
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="5dp"
+                    />
+                
                 <TextView
                     android:id="@+id/tv_publish_time"
                     style="@style/text_grey_small"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:layout_weight="1"
-                    android:gravity="right" />
+                    android:drawableLeft="@drawable/icon_time"
+                    android:drawablePadding="5dp" />
             </LinearLayout>
 
             <LinearLayout
