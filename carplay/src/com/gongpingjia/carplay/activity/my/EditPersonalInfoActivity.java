@@ -127,7 +127,6 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 		cityT = (TextView) findViewById(R.id.city);
 		nicknameT = (EditText) findViewById(R.id.nickname);
 		carageT = (EditText) findViewById(R.id.carage);
-		
 		headI.setOnClickListener(this);
 		cityT.setOnClickListener(this);
 		getMyDetails();
