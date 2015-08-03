@@ -632,7 +632,7 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
         }
         mImageAdapter.notifyDataSetChanged();
         DhNet net = new DhNet(API.uploadPictures + "userId=" + mUser.getUserId() + "&token=" + mUser.getToken());
-        net.upload(new FileInfo("attach", new File(mCurPath)), new NetTask(self) {
+        net.upload(new FileInfo("attach", new File(path)), new NetTask(self) {
 
             @Override
             public void doInUI(Response response, Integer transfer) {

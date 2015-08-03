@@ -286,7 +286,7 @@ public class ManageAlbumActivity extends CarPlayBaseActivity implements OnClickL
 
         DhNet net = new DhNet(API.uploadAlbum + mUser.getUserId() + "/album/upload?token=" + mUser.getToken());
         Log.e("url", net.getUrl());
-        net.upload(new FileInfo("attach", new File(mCurPath)), new NetTask(self) {
+        net.upload(new FileInfo("attach", new File(path)), new NetTask(self) {
 
             @Override
             public void doInUI(Response response, Integer transfer) {

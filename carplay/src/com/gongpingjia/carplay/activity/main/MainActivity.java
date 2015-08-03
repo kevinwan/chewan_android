@@ -165,7 +165,7 @@ public class MainActivity extends BaseFragmentActivity
                         setTitle("我的");
                         switchContent(MyFragment.getInstance());
                         img.setImageResource(R.drawable.my_f);
-                        setLeftAction(R.drawable.icon_setting, "设置", new OnClickListener()
+                        setLeftAction(R.drawable.icon_setting, null, new OnClickListener()
                         {
                             
                             @Override

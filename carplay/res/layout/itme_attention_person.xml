@@ -12,7 +12,7 @@
         android:orientation="horizontal" >
 
         <com.gongpingjia.carplay.view.RoundImageView
-            android:id="@+id/comment_img"
+            android:id="@+id/head"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignParentLeft="true"
@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/comment_img"
+            android:layout_toRightOf="@id/head"
             android:orientation="vertical" >
 
             <LinearLayout
@@ -91,7 +91,7 @@
                 android:id="@+id/person_cancel"
                 android:layout_width="match_parent"
                 android:layout_height="26dp"
-                android:background="@drawable/button_yanzheng_bg_normal"
+                android:background="@drawable/button_yanzheng_bg"
                 android:gravity="center"
                 android:text="取消关注"
                 android:textColor="@color/white"

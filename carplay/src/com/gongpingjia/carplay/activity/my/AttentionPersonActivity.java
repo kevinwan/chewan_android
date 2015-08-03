@@ -1,14 +1,27 @@
 package com.gongpingjia.carplay.activity.my;
 
+import org.json.JSONObject;
+
+import net.duohuo.dhroid.adapter.BeanAdapter.InViewClickListener;
 import net.duohuo.dhroid.adapter.FieldMap;
 import net.duohuo.dhroid.adapter.NetJSONAdapter;
+import net.duohuo.dhroid.net.DhNet;
+import net.duohuo.dhroid.net.JSONUtil;
+import net.duohuo.dhroid.net.NetTask;
+import net.duohuo.dhroid.net.Response;
+import net.duohuo.dhroid.util.ViewUtil;
 import net.duohuo.dhroid.view.NetRefreshAndMoreListView;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.api.API;
+import com.gongpingjia.carplay.bean.User;
+import com.gongpingjia.carplay.util.CarPlayUtil;
+import com.gongpingjia.carplay.view.RoundImageView;
 
 /**
  * 
@@ -18,63 +31,79 @@ import com.gongpingjia.carplay.api.API;
  */
 
 public class AttentionPersonActivity extends CarPlayBaseActivity {
-    NetJSONAdapter adapter;
+	NetJSONAdapter adapter;
 
-    NetRefreshAndMoreListView listView;
+	NetRefreshAndMoreListView listView;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_attention_person);
+	User user;
 
-    }
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_attention_person);
 
-    @Override
-    public void initView() {
-        setTitle("我关注的人");
-        listView = (NetRefreshAndMoreListView) findViewById(R.id.listview);
-        adapter = new NetJSONAdapter(API.allCarData, self, R.layout.itme_attention_person);
-        adapter.addparam("source", "personal");
-        adapter.addparam("city", "哈尔滨");
-        adapter.addparam("brand", "");
-        adapter.addparam("model", "");
-        adapter.addparam("price", "");
-        adapter.addparam("year", "");
-        adapter.addparam("sort", "");
-        adapter.addparam("mile", "");
-        adapter.fromWhat("car_list");
-        adapter.addField("title", R.id.car_age);
-        adapter.addField("thumbnail", R.id.car_img, "carpic");
-        adapter.addField(new FieldMap("mile", R.id.person_name) {
+	}
 
-            @Override
-            public Object fix(View itemV, Integer position, Object o, Object jo) {
+	@Override
+	public void initView() {
+		setTitle("我关注的人");
+		user = User.getInstance();
+		listView = (NetRefreshAndMoreListView) findViewById(R.id.listview);
+		String url = API.CWBaseurl + "/user" + user.getUserId()
+				+ "/listen?token=" + user.getToken();
+		adapter = new NetJSONAdapter(url, self, R.layout.itme_attention_person);
+		adapter.fromWhat("data");
+		adapter.addField("age", R.id.age);
+		adapter.addField(new FieldMap("nickname", R.id.person_name) {
 
-                return "淘气小布丁" ;
-            }
+			@Override
+			public Object fix(View itemV, Integer position, Object o, Object jo) {
+				JSONObject data = (JSONObject) jo;
+				RoundImageView headI = (RoundImageView) itemV
+						.findViewById(R.id.head);
+				ViewUtil.bindNetImage(headI, JSONUtil.getString(data, "photo"),
+						"head");
+				headI.setTag(JSONUtil.getString(data, "userId"));
+				View sexBg = itemV.findViewById(R.id.person_sex);
+				CarPlayUtil.bindSexView(JSONUtil.getString(data, "gender"),
+						sexBg);
+				CarPlayUtil.bindDriveAge(data,
+						(ImageView) itemV.findViewById(R.id.car_img),
+						(TextView) itemV.findViewById(R.id.car_age));
+				return o;
+			}
 
-        });
-         adapter.addField(new FieldMap("price", R.id.person_age)
-         {
-        
-         @Override
-         public Object fix(View itemV, Integer position, Object o, Object jo)
-         {
-         return  "23" ;
-         }
-         });
+		});
 
-         adapter.addField(new FieldMap("title", R.id.car_age)
-         {
-        
-         @Override
-         public Object fix(View itemV, Integer position, Object o, Object jo)
-         {
-         return "x6    ,  8年驾龄" ;
-         }
-         });
+		adapter.setOnInViewClickListener(R.id.person_cancel,
+				new InViewClickListener() {
 
-        listView.setAdapter(adapter);
-        adapter.showNextInDialog();
-    }
+					@Override
+					public void OnClickListener(View parentV, View v,
+							Integer position, Object values) {
+						JSONObject jo = (JSONObject) adapter.getItem(position);
+						cancleAttention(JSONUtil.getString(jo, "userId"));
+					}
+				});
+
+		listView.setAdapter(adapter);
+		adapter.showNextInDialog();
+	}
+
+	/** 取消关注人 */
+	private void cancleAttention(String userid) {
+		DhNet net = new DhNet(API.CWBaseurl + "/user/" + user.getUserId()
+				+ "/unlisten?&token=" + user.getToken());
+		net.addParam("targetUserId", userid);
+		net.doPost(new NetTask(self) {
+
+			@Override
+			public void doInUI(Response response, Integer transfer) {
+				if (response.isSuccess()) {
+					showToast("取消关注成功!");
+					adapter.refreshDialog();
+				}
+			}
+		});
+	}
 }

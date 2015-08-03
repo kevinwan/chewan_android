@@ -15,10 +15,28 @@
             android:layout_height="match_parent"
             android:orientation="vertical" >
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="210dp"
-                android:src="@color/text_grey" />
+            <RelativeLayout
+                android:id="@+id/imgView_head"
+                android:layout_width="fill_parent"
+                android:layout_height="200dp" >
+
+                <com.gongpingjia.carplay.view.CarPlayGallery
+                    android:id="@+id/gallery"
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:background="@color/text_black_light"
+                    android:fadingEdgeLength="0dp"
+                    android:spacing="5dp"
+                    android:unselectedAlpha="128" />
+
+                <net.duohuo.dhroid.view.DotLinLayout
+                    android:id="@+id/dots"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="6dp" />
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -327,6 +345,7 @@
                 <View style="@style/line" />
 
                 <LinearLayout
+                    android:id="@+id/feedback_layout"
                     style="@style/linearlayout"
                     android:background="@drawable/bg_s" >
 
@@ -336,7 +355,7 @@
 
                     <TextView
                         style="@style/text_black_medium"
-                        android:text="关于我们" />
+                        android:text="意见反馈" />
 
                     <LinearLayout
                         android:layout_width="match_parent"

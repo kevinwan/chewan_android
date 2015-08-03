@@ -78,12 +78,13 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 
 	boolean islogin = false;
 
+	TextView rightTitleT;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_active_details);
-
 	}
 
 	@Override
@@ -94,6 +95,7 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 		piclayoutWidth = width - DhUtil.dip2px(self, 10 + 10);
 		headlayoutWidth = piclayoutWidth - DhUtil.dip2px(self, 80 + 8 * 2 + 10);
 		setTitle("活动详情");
+		rightTitleT = (TextView) findViewById(R.id.right_text);
 		// /activity/$activityId/subscribe?
 		activityId = getIntent().getStringExtra("activityId");
 		mListView = (NetRefreshAndMoreListView) findViewById(R.id.listview);
@@ -158,41 +160,6 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 
 	private void bindHeadView(final JSONObject headJo) {
 		JSONObject createrJo = JSONUtil.getJSONObject(headJo, "organizer");
-
-		if (JSONUtil.getString(createrJo, "userId").equals(user.getUserId())) {
-			setRightAction("编辑活动", -1, new OnClickListener() {
-
-				@Override
-				public void onClick(View arg0) {
-					Intent it = new Intent(ActiveDetailsActivity.this,
-							EditActiveActivity.class);
-					it.putExtra("json", headJo.toString());
-					startActivity(it);
-				}
-			});
-
-		} else {
-
-			setRightAction("关注", -1, new OnClickListener() {
-
-				@Override
-				public void onClick(View arg0) {
-					UserInfoManage.getInstance().checkLogin(self,
-							new LoginCallBack() {
-
-								@Override
-								public void onisLogin() {
-									attention();
-								}
-
-								@Override
-								public void onLoginFail() {
-
-								}
-							});
-				}
-			});
-		}
 		joinT = (TextView) headV.findViewById(R.id.join);
 		joinT.setOnClickListener(this);
 		activeRelative(headJo);
@@ -242,6 +209,49 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 		}
 		ViewUtil.bindView(headV.findViewById(R.id.age),
 				JSONUtil.getString(createrJo, "age"));
+
+		if (JSONUtil.getString(createrJo, "userId").equals(user.getUserId())) {
+			rightTitleT.setText("编辑活动");
+
+		} else {
+			int isSubscribed = JSONUtil.getInt(headJo, "isSubscribed");
+			rightTitleT.setText(isSubscribed == 0 ? "关注" : "取消关注");
+		}
+
+		rightTitleT.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (user.isLogin()) {
+					if (rightTitleT.getText().toString().equals("编辑活动")) {
+						Intent it = new Intent(ActiveDetailsActivity.this,
+								EditActiveActivity.class);
+						it.putExtra("json", headJo.toString());
+						startActivity(it);
+					} else if (rightTitleT.getText().toString().equals("关注")) {
+						attention();
+					} else {
+						cancleattention();
+					}
+				} else {
+					UserInfoManage.getInstance().checkLogin(self,
+							new LoginCallBack() {
+
+								@Override
+								public void onisLogin() {
+									getData();
+								}
+
+								@Override
+								public void onLoginFail() {
+
+								}
+							});
+				}
+			}
+		});
+
+		rightTitleT.setVisibility(View.VISIBLE);
 
 		JSONArray picJsa = JSONUtil.getJSONArray(headJo, "cover");
 		LinearLayout pivlayout = (LinearLayout) headV
@@ -305,6 +315,7 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 		});
 	}
 
+	/** 关注活动 */
 	private void attention() {
 		DhNet net = new DhNet(API.CWBaseurl + "/activity/" + activityId
 				+ "/subscribe?userId=" + user.getUserId() + "&token="
@@ -315,7 +326,24 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 			public void doInUI(Response response, Integer transfer) {
 				if (response.isSuccess()) {
 					showToast("关注成功!");
-					setRightVISIBLEOrGone(View.GONE);
+					rightTitleT.setText("取消关注");
+				}
+			}
+		});
+	}
+
+	/** 关注活动 */
+	private void cancleattention() {
+		DhNet net = new DhNet(API.CWBaseurl + "/activity/" + activityId
+				+ "/unsubscribe?userId=" + user.getUserId() + "&token="
+				+ user.getToken());
+		net.doPostInDialog(new NetTask(self) {
+
+			@Override
+			public void doInUI(Response response, Integer transfer) {
+				if (response.isSuccess()) {
+					showToast("取消关注成功!");
+					rightTitleT.setText("关注");
 				}
 			}
 		});
