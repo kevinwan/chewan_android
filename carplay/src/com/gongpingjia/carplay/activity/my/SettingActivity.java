@@ -2,6 +2,7 @@ package com.gongpingjia.carplay.activity.my;
 
 import java.io.File;
 
+import net.duohuo.dhroid.ioc.IocContainer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
+import com.gongpingjia.carplay.util.CarPlayPerference;
 import com.gongpingjia.carplay.util.FileUtil;
 import com.gongpingjia.carplay.util.FileUtil.UNIT_SACLE;
 
@@ -75,7 +77,7 @@ public class SettingActivity extends CarPlayBaseActivity implements OnClickListe
             Toast.makeText(mySelf, "喜欢鼓励", Toast.LENGTH_SHORT).show();
             break;
         case R.id.setting_about_us:
-            it = new Intent(this,AboutUsActivity.class);
+            it = new Intent(this, AboutUsActivity.class);
             startActivity(it);
             break;
         case R.id.setting_versions:
@@ -85,14 +87,12 @@ public class SettingActivity extends CarPlayBaseActivity implements OnClickListe
             Toast.makeText(mySelf, "当前版本", Toast.LENGTH_SHORT).show();
             break;
         case R.id.setting_quit:
-            Toast.makeText(mySelf, "退出登录", Toast.LENGTH_SHORT).show();
-            // QiangZuoDialog dialog = new QiangZuoDialog(mySelf,"虚位以待...");
-            // dialog.UnmannedDialog();
-            // QiangZuoDialog dialog = new
-            // QiangZuoDialog(mySelf,"浮世年华","23",R.drawable.head5,R.drawable.woman,"占座中...");
-            // dialog.SomeoneDialog();
-            // Intent intent = new Intent(mySelf, LoginActivity.class);
-            // startActivity(intent);
+            it = new Intent(this, LoginActivity.class);
+            startActivity(it);
+            CarPlayPerference preference = IocContainer.getShare().get(CarPlayPerference.class);
+            preference.load();
+            preference.setPassword("");
+            preference.commit();
             break;
 
         default:

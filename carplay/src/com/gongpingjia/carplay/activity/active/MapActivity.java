@@ -5,6 +5,7 @@ import java.util.List;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -121,8 +122,13 @@ public class MapActivity extends CarPlayBaseActivity implements OnMarkerClickLis
                     } else {
                         it.putExtra("location", mAddress.getDistrict());
                     }
-
-                    
+                    if (mCurLatLng != null) {
+                        it.putExtra("longitude", mCurLatLng.longitude);
+                        it.putExtra("latitude", mCurLatLng.latitude);
+                    } else {
+                        showToast("请选择准确位置");
+                        return;
+                    }
                     setResult(RESULT_OK, it);
                     self.finish();
                     MapEB map = new MapEB();
@@ -153,7 +159,6 @@ public class MapActivity extends CarPlayBaseActivity implements OnMarkerClickLis
         // 地址编码
         mGeoSearch = new GeocodeSearch(this);
         mGeoSearch.setOnGeocodeSearchListener(this);
-
     }
 
     @Override
@@ -264,7 +269,6 @@ public class MapActivity extends CarPlayBaseActivity implements OnMarkerClickLis
     @Override
     public void onProviderDisabled(String provider) {
         // TODO Auto-generated method stub
-
     }
 
     @Override
@@ -276,6 +280,7 @@ public class MapActivity extends CarPlayBaseActivity implements OnMarkerClickLis
             mMarkerOptions.title(location.getPoiName());
             mMarkerOptions.snippet(location.getDistrict());
             aMap.addMarker(mMarkerOptions);
+
             if (mIsFirstLocate) {
                 mCurLatLng = new LatLng(location.getLatitude(), location.getLongitude());
                 mLocDesText.setText(location.getStreet());
@@ -302,7 +307,6 @@ public class MapActivity extends CarPlayBaseActivity implements OnMarkerClickLis
     @Override
     public void onGeocodeSearched(GeocodeResult arg0, int arg1) {
         // TODO Auto-generated method stub
-
     }
 
     // 地址编码
@@ -315,6 +319,10 @@ public class MapActivity extends CarPlayBaseActivity implements OnMarkerClickLis
                 mAddress = result.getRegeocodeAddress();
                 mLocTitleText.setText(mAddress.getDistrict());
                 mLocDesText.setText(mAddress.getFormatAddress());
+                Log.e("tag",
+                        mAddress.getBuilding() + " " + mAddress.getNeighborhood() + " " + mAddress.getTownship() + " "
+                                + mAddress.getBusinessAreas() + " " + mAddress.getRoads() + " "
+                                + mAddress.getStreetNumber());
             } else {
                 showToast("没有结果");
             }
