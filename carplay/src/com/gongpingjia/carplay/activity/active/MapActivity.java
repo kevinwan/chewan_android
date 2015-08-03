@@ -115,12 +115,8 @@ public class MapActivity extends CarPlayBaseActivity implements OnMarkerClickLis
                     it.putExtra("city", mAddress.getCity());
                     it.putExtra("province", mAddress.getProvince());
                     it.putExtra("district", mAddress.getDistrict());
-                    it.putExtra("destination", mAddress.getFormatAddress());
-                    if (!mSearchEdit.getText().toString().equals("")) {
-                        it.putExtra("location", mSearchEdit.getText().toString());
-                    } else {
-                        it.putExtra("location", mAddress.getDistrict());
-                    }
+                    it.putExtra("address", mAddress.getFormatAddress());
+                    it.putExtra("location", mLocTitleText.getText().toString());
                     if (mCurLatLng != null) {
                         it.putExtra("longitude", mCurLatLng.longitude);
                         it.putExtra("latitude", mCurLatLng.latitude);
@@ -139,6 +135,7 @@ public class MapActivity extends CarPlayBaseActivity implements OnMarkerClickLis
                 }
             }
         });
+        showProgressDialog("正在查找中...");
     }
 
     public void setUpMap() {
@@ -186,7 +183,6 @@ public class MapActivity extends CarPlayBaseActivity implements OnMarkerClickLis
 
     @Override
     protected void onDestroy() {
-        // TODO Auto-generated method stub
         mMapView.onDestroy();
         if (mLocationManager != null) {
             mLocationManager.removeUpdates(this);
@@ -207,13 +203,21 @@ public class MapActivity extends CarPlayBaseActivity implements OnMarkerClickLis
         hidenProgressDialog();
         if (rCode == 0) {
             if (result != null && result.getQuery() != null) {
-                // 搜索poi的结果
-                if (result.getQuery().equals(mQuery)) {// 是否同一条
+                if (result.getQuery().equals(mQuery)) {
+                    // 是否同一条
                     List<PoiItem> poiItems = result.getPois();
                     // 当搜索不到poi item数据时，会返回含有搜索关键字的城市信息
                     List<SuggestionCity> suggestionCities = result.getSearchSuggestionCitys();
                     if (poiItems != null && poiItems.size() > 0) {
                         aMap.clear();
+
+                        LatLonPoint firstPoint = poiItems.get(0).getLatLonPoint();
+                        aMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(firstPoint.getLatitude(),
+                                firstPoint.getLongitude()), 15));
+                        poiItems.get(0).getLatLonPoint();
+                        mLocTitleText.setText(poiItems.get(0).getTitle());
+                        mLocDesText.setText(mAddress.getFormatAddress());
+
                         PoiOverlay poiOverlay = new PoiOverlay(aMap, poiItems);
                         poiOverlay.removeFromMap();
                         poiOverlay.addToMap();
@@ -248,31 +252,26 @@ public class MapActivity extends CarPlayBaseActivity implements OnMarkerClickLis
 
     @Override
     public void initView() {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void onLocationChanged(Location location) {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void onProviderEnabled(String provider) {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void onProviderDisabled(String provider) {
-        // TODO Auto-generated method stub
     }
 
     @Override
@@ -287,11 +286,7 @@ public class MapActivity extends CarPlayBaseActivity implements OnMarkerClickLis
 
             if (mIsFirstLocate) {
                 mCurLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-                mLocDesText.setText(location.getStreet());
-                aMap.moveCamera(CameraUpdateFactory.changeLatLng(ll));
-                aMap.moveCamera(CameraUpdateFactory.zoomTo(18));
                 mIsFirstLocate = false;
-
                 LatLonPoint latLonPoint = new LatLonPoint(ll.latitude, ll.longitude);
                 RegeocodeQuery query = new RegeocodeQuery(latLonPoint, 200, GeocodeSearch.AMAP);// 第一个参数表示一个Latlng，第二参数表示范围多少米，第三个参数表示是火系坐标系还是GPS原生坐标系
                 mGeoSearch.getFromLocationAsyn(query);// 设置同步逆地理编码请求
@@ -310,25 +305,25 @@ public class MapActivity extends CarPlayBaseActivity implements OnMarkerClickLis
 
     @Override
     public void onGeocodeSearched(GeocodeResult result, int arg1) {
-        // TODO Auto-generated method stub
+
     }
 
-    // 地址编码
+    // 逆地址编码
     @Override
     public void onRegeocodeSearched(RegeocodeResult result, int rCode) {
-        // TODO Auto-generated method stub
+        hidenProgressDialog();
         if (rCode == 0) {
             if (result != null && result.getRegeocodeAddress() != null
                     && result.getRegeocodeAddress().getFormatAddress() != null) {
                 mAddress = result.getRegeocodeAddress();
-                aMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mCurLatLng, 15));
-                mLocTitleText.setText(mAddress.getDistrict());
-                mLocDesText.setText(mAddress.getFormatAddress());
 
-                Log.e("tag",
-                        mAddress.getBuilding() + " " + mAddress.getNeighborhood() + " " + mAddress.getTownship() + " "
-                                + mAddress.getBusinessAreas() + " " + mAddress.getRoads() + " "
-                                + mAddress.getStreetNumber());
+                mQuery = new PoiSearch.Query(mAddress.getFormatAddress(), "", "");// 全国搜索
+                mQuery.setPageSize(1);// 每页查询1个
+                mQuery.setPageNum(0);// 设置查第一页
+
+                mPoiSearch = new PoiSearch(MapActivity.this, mQuery);
+                mPoiSearch.setOnPoiSearchListener(MapActivity.this);
+                mPoiSearch.searchPOIAsyn();
             } else {
                 showToast("没有结果");
             }

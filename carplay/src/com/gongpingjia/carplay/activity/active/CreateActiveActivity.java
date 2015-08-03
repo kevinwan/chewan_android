@@ -108,6 +108,8 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
 
     private String mLocation;
 
+    private String mAddress;
+
     private double mLatitude, mLongitude;
 
     // 开始时间默认为当前的时间戳
@@ -149,21 +151,6 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
         // 微信好友
         wxHandler = new UMWXHandler(this, sAppId, sAppSecret);
         wxHandler.addToSocialSDK();
-        //
-        // // qq好友,参数2为开发者在QQ互联申请的APP ID,参数3为开发者在QQ互联申请的APP kEY
-        // qqSsoHandler = new UMQQSsoHandler(this, "", "");
-        // qqSsoHandler.addToSocialSDK();
-        // // qq空间,同上
-        // qZoneSsoHandler = new QZoneSsoHandler(this, "", "");
-        // qZoneSsoHandler.addToSocialSDK();
-        //
-        // // 短信
-        // smsHandler = new SmsHandler();
-        // smsHandler.addToSocialSDK();
-        //
-        // // 设置新浪SSO handler
-        // mController.getConfig().setSsoHandler(new SinaSsoHandler());
-        // mController.getConfig().setSsoHandler(new TencentWBSsoHandler());
     }
 
     @Override
@@ -463,6 +450,8 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
             if (mEndTimeStamp != 0) {
                 mDhNet.addParam("end", mEndTimeStamp);
             }
+            mDhNet.addParam("latitude", mLatitude);
+            mDhNet.addParam("longitude", mLongitude);
             mDhNet.doPostInDialog(new NetTask(this) {
 
                 @Override
@@ -597,11 +586,12 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                 break;
 
             case REQUEST_DESTINATION:
-                mDestimationText.setText(data.getStringExtra("destination"));
+                mDestimationText.setText(data.getStringExtra("location"));
                 mCity = data.getStringExtra("city");
                 mLocation = data.getStringExtra("location");
                 mLatitude = data.getDoubleExtra("latitude", 0);
                 mLongitude = data.getDoubleExtra("longitude", 0);
+                mAddress = data.getStringExtra("address");
                 break;
             case Constant.TAKE_PHOTO:
                 Bitmap btp1 = PhotoUtil.getLocalImage(new File(mCurPath));
