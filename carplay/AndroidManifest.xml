@@ -112,6 +112,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.my.AboutUsActivity" >
+        </activity>
 
         <!-- 分享编辑页 -->
         <activity

@@ -11,6 +11,7 @@ import net.duohuo.dhroid.view.NetRefreshAndMoreListView;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,11 +24,15 @@ import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
+import com.gongpingjia.carplay.activity.active.CreateActiveActivity;
+import com.gongpingjia.carplay.activity.main.MainActivity;
 import com.gongpingjia.carplay.adapter.ActiveAdapter;
 import com.gongpingjia.carplay.adapter.GalleryAdapter;
 import com.gongpingjia.carplay.adapter.MyReleaseActiveAdapter;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.bean.User;
+import com.gongpingjia.carplay.manage.UserInfoManage;
+import com.gongpingjia.carplay.manage.UserInfoManage.LoginCallBack;
 import com.gongpingjia.carplay.view.CarPlayGallery;
 import com.gongpingjia.carplay.view.RoundImageView;
 
@@ -78,6 +83,21 @@ public class PersonDetailActivity extends CarPlayBaseActivity implements
 	@Override
 	public void initView() {
 		setTitle("他的详情");
+		setRightAction("举报", -1, new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				UserInfoManage.getInstance().checkLogin(self,
+						new LoginCallBack() {
+							@Override
+							public void onisLogin() {
+							}
+
+							@Override
+							public void onLoginFail() {
+							}
+						});
+			}
+		});
 		user = User.getInstance();
 		userId = getIntent().getStringExtra("userId");
 		headV = LayoutInflater.from(self).inflate(R.layout.head_user_details,

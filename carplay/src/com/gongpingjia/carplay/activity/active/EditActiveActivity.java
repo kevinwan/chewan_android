@@ -43,7 +43,11 @@ import com.gongpingjia.carplay.view.NestedGridView;
 import com.gongpingjia.carplay.view.dialog.CommonDialog;
 import com.gongpingjia.carplay.view.dialog.CommonDialog.OnCommonDialogItemClickListener;
 import com.gongpingjia.carplay.view.dialog.DateTimePickerDialog;
-
+/**
+ * 编辑活动
+ * @author Administrator
+ *
+ */
 public class EditActiveActivity extends CarPlayBaseActivity implements OnClickListener {
 
     private static final int REQUEST_DESCRIPTION = 1;
@@ -92,7 +96,7 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
     private String mActiveId;
 
     User mUser;
-
+    String introduction;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -208,7 +212,7 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
                 JSONObject data = new JSONObject(json);
                 mActiveId = data.getString("activityId");
                 String location = data.getString("location");
-                String introduction = data.getString("introduction");
+                 introduction = data.getString("introduction");
                 Log.e("tag", mActiveId);
                 long startTime = data.getLong("start");
                 long endTime = data.getLong("end");
@@ -219,7 +223,7 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
                 mEndTimeStamp = endTime;
                 mLocation = location;
 
-                SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd HH:mm");
+                SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日  HH:mm");
                 mDescriptionText.setText(introduction);
                 mTypeText.setText(type);
                 mFeeText.setText(pay);
@@ -278,6 +282,7 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
 
         case R.id.layout_description:
             it = new Intent(self, ActiveDescriptionActivity.class);
+            it.putExtra("intr", introduction);
             startActivityForResult(it, REQUEST_DESCRIPTION);
             break;
 

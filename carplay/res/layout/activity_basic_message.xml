@@ -84,7 +84,7 @@
                         android:drawablePadding="5dp"
                         android:gravity="center_vertical"
                         android:text="男"
-                        android:textColor="#FD6D53"
+                        android:textColor="@color/coach_text_s"
                         android:textSize="@dimen/text_medium" />
 
                     <RadioButton
@@ -96,7 +96,7 @@
                         android:drawablePadding="5dp"
                         android:gravity="center_vertical"
                         android:text="女"
-                        android:textColor="@color/text_grey"
+                        android:textColor="@color/coach_text_s"
                         android:textSize="@dimen/text_medium" />
                 </RadioGroup>
             </LinearLayout>

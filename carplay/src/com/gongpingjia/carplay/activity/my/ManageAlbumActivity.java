@@ -86,14 +86,13 @@ public class ManageAlbumActivity extends CarPlayBaseActivity implements OnClickL
 
         mCacheDir = new File(getExternalCacheDir(), "CarPlay");
         mCacheDir.mkdirs();
-        mLeftImage.setOnClickListener(ManageAlbumActivity.this);
-        mLeftText.setOnClickListener(ManageAlbumActivity.this);
-        mRightText.setOnClickListener(ManageAlbumActivity.this);
-        mRightImage.setOnClickListener(ManageAlbumActivity.this);
 
         mLastPhotoState = new PhotoState();
         mLastPhotoState.setChecked(false);
         mLastPhotoState.setLast(true);
+
+        mPhotoStates = new ArrayList<PhotoState>();
+        mPicIds = new ArrayList<String>();
 
         DhNet net = new DhNet(API.CWBaseurl + "/user/" + mUser.getUserId() + "/info?userId=" + mUser.getUserId()
                 + "&token=" + mUser.getToken());
@@ -102,19 +101,23 @@ public class ManageAlbumActivity extends CarPlayBaseActivity implements OnClickL
             @Override
             public void doInUI(Response response, Integer transfer) {
                 if (response.isSuccess()) {
+
+                    mLeftImage.setOnClickListener(ManageAlbumActivity.this);
+                    mLeftText.setOnClickListener(ManageAlbumActivity.this);
+                    mRightText.setOnClickListener(ManageAlbumActivity.this);
+                    mRightImage.setOnClickListener(ManageAlbumActivity.this);
+
+                    Log.e("tag", response.plain());
                     JSONObject data = response.jSONFrom("data");
                     try {
                         JSONArray array = data.getJSONArray("albumPhotos");
                         if (array != null) {
-                            mPhotoStates = new ArrayList<PhotoState>();
-                            mPicIds = new ArrayList<String>();
-
                             for (int i = 0; i < array.length(); i++) {
                                 PhotoState state = new PhotoState();
                                 state.setChecked(false);
                                 state.setPath(array.getJSONObject(i).getString("thumbnail_pic"));
                                 state.setLast(false);
-                                // mPicIds.add(array.getJSONObject(i).getString(""));
+                                mPicIds.add(array.getJSONObject(i).getString("photoId"));
                                 mPhotoStates.add(state);
                             }
                             if (mPhotoStates.size() < 9) {

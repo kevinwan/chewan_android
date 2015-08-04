@@ -74,16 +74,7 @@
                         style="@style/text_grey_medium"
                         android:text="请输入活动介绍" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="right" >
-
-                        <ImageView
-                            android:layout_width="18dp"
-                            android:layout_height="25dp"
-                            android:src="@drawable/right_btn" />
-                    </LinearLayout>
+                    
                 </LinearLayout>
 
                 <TextView
@@ -91,7 +82,7 @@
                     style="@style/text_blacklight_small"
                     android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="8dp"
                     android:lineSpacingExtra="1.5dp" />
             </LinearLayout>
 
@@ -306,7 +297,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:layout_weight="1"
-                    android:background="#f1f1f1"
+                    android:background="@drawable/gray_fillet_button"
                     android:text="完成"
                     android:textColor="@color/text_black_light"
                     android:textSize="@dimen/text_small" />

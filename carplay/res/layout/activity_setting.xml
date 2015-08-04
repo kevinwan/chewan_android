@@ -23,7 +23,7 @@
             android:src="@drawable/clear" />
 
         <TextView
-            android:id="@+id/clear_txt"
+            android:id="@+id/tv_cache_size"
             style="@style/text_grey_medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

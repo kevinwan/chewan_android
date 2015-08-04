@@ -17,14 +17,15 @@ import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 public class ActiveDescriptionActivity extends CarPlayBaseActivity {
 
     private EditText mDesEdit;
-
+    Intent intent = new Intent();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_active_description);
-
+        String intr = getIntent().getStringExtra("intr");
         mDesEdit = (EditText) findViewById(R.id.et_description);
+        mDesEdit.setText(intr);
         String from = getIntent().getStringExtra("description");
         if (from != null && from.length() != 0) {
             mDesEdit.setText(from);
@@ -38,7 +39,7 @@ public class ActiveDescriptionActivity extends CarPlayBaseActivity {
                 // TODO Auto-generated method stub
                 String des = mDesEdit.getText().toString();
                 if (!TextUtils.isEmpty(des) && des.length() > 20 && des.length() < 140) {
-                    Intent intent = new Intent();
+                   
                     intent.putExtra("des", des);
                     setResult(RESULT_OK, intent);
                     finish();
