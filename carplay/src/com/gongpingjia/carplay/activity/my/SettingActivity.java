@@ -58,7 +58,7 @@ public class SettingActivity extends CarPlayBaseActivity implements OnClickListe
         setting_at_versions.setOnClickListener(this);
         setting_btn.setOnClickListener(this);
         mCacheFile = new File(getExternalCacheDir(), "CarPlay");
-        mSizeText.setText(String.valueOf(FileUtil.getFileOrPathSize(mCacheFile, UNIT_SACLE.M)) + " M");
+        mSizeText.setText(String.valueOf(FileUtil.getFileOrDirSize(mCacheFile, UNIT_SACLE.M)) + " M");
     }
 
     @Override

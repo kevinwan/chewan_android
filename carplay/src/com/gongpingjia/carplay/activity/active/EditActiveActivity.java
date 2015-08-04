@@ -43,10 +43,12 @@ import com.gongpingjia.carplay.view.NestedGridView;
 import com.gongpingjia.carplay.view.dialog.CommonDialog;
 import com.gongpingjia.carplay.view.dialog.CommonDialog.OnCommonDialogItemClickListener;
 import com.gongpingjia.carplay.view.dialog.DateTimePickerDialog;
+
 /**
  * 编辑活动
+ * 
  * @author Administrator
- *
+ * 
  */
 public class EditActiveActivity extends CarPlayBaseActivity implements OnClickListener {
 
@@ -96,7 +98,15 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
     private String mActiveId;
 
     User mUser;
+
     String introduction;
+
+    double mLatitude;
+
+    double mLongitude;
+
+    String mAddress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -212,7 +222,7 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
                 JSONObject data = new JSONObject(json);
                 mActiveId = data.getString("activityId");
                 String location = data.getString("location");
-                 introduction = data.getString("introduction");
+                introduction = data.getString("introduction");
                 Log.e("tag", mActiveId);
                 long startTime = data.getLong("start");
                 long endTime = data.getLong("end");
@@ -349,6 +359,11 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
             if (!mDestimationText.getText().toString().equals(mLocation)) {
                 mDhNet.addParam("address", mDestimationText.getText().toString());
             }
+
+            if (mLatitude != 0 || mLongitude != 0) {
+                mDhNet.addParam("latitude", mLatitude);
+                mDhNet.addParam("longitude", mLongitude);
+            }
             mDhNet.addParam("start", mStartTimeStamp);
             mDhNet.addParam("pay", mFeeText.getText().toString());
             if (mEndTimeStamp != 0) {
@@ -364,9 +379,9 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
 
                 @Override
                 public void doInUI(Response response, Integer transfer) {
-                    // TODO Auto-generated method stub
                     if (response.isSuccess()) {
                         showToast("修改成功");
+                        self.finish();
                     } else {
                         try {
                             Log.e("err", response.jSON().getString("errmsg"));
@@ -392,9 +407,12 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
                 break;
 
             case REQUEST_DESTINATION:
-                mDestimationText.setText(data.getStringExtra("destination"));
+                mDestimationText.setText(data.getStringExtra("location"));
                 mCity = data.getStringExtra("city");
                 mLocation = data.getStringExtra("location");
+                mLatitude = data.getDoubleExtra("latitude", 0);
+                mLongitude = data.getDoubleExtra("longitude", 0);
+                mAddress = data.getStringExtra("address");
                 break;
             case Constant.TAKE_PHOTO:
                 Bitmap btp1 = PhotoUtil.getLocalImage(new File(mCurPath));
