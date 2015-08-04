@@ -126,22 +126,22 @@
                         android:src="@drawable/head_icon" />
 
                     <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="12dp"
-                            android:gravity="center_vertical"
-                            android:orientation="vertical" >
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="12dp"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical" >
 
-                            <TextView
-                                style="@style/text_blue_medium"
-                                android:layout_marginTop="23dp"
-                                android:text="未登录" />
+                        <TextView
+                            style="@style/text_blue_medium"
+                            android:layout_marginTop="23dp"
+                            android:text="未登录" />
 
-                            <TextView
-                                style="@style/text_grey_small"
-                                android:layout_marginTop="7dp"
-                                android:text="个人信息" />
-                        </LinearLayout>
+                        <TextView
+                            style="@style/text_grey_small"
+                            android:layout_marginTop="7dp"
+                            android:text="个人信息" />
+                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -245,6 +245,8 @@
                             android:text="我的参与" />
                     </LinearLayout>
                 </LinearLayout>
+
+                <View style="@style/line" />
 
                 <LinearLayout
                     android:id="@+id/people_concerned"
