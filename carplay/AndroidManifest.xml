@@ -105,6 +105,8 @@
         <activity android:name=".activity.active.EditActiveActivity" />
         <activity android:name=".activity.my.BasicMessageActivity" />
         <activity android:name=".activity.my.FeedBackActivity" />
+        <activity android:name=".activity.my.VersionIntroActivity" >
+        </activity>
         <activity android:name=".activity.main.SplashActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

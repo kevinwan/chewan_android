@@ -83,7 +83,8 @@ public class SettingActivity extends CarPlayBaseActivity implements OnClickListe
             startActivity(it);
             break;
         case R.id.setting_versions:
-            Toast.makeText(mySelf, "版本介绍", Toast.LENGTH_SHORT).show();
+            it = new Intent(this, VersionIntroActivity.class);
+            startActivity(it);
             break;
         case R.id.setting_at_versions:
             Toast.makeText(mySelf, "当前版本", Toast.LENGTH_SHORT).show();

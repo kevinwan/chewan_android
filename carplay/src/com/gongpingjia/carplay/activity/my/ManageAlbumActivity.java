@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -107,7 +108,6 @@ public class ManageAlbumActivity extends CarPlayBaseActivity implements OnClickL
                     mRightText.setOnClickListener(ManageAlbumActivity.this);
                     mRightImage.setOnClickListener(ManageAlbumActivity.this);
 
-                    Log.e("tag", response.plain());
                     JSONObject data = response.jSONFrom("data");
                     try {
                         JSONArray array = data.getJSONArray("albumPhotos");
@@ -115,7 +115,8 @@ public class ManageAlbumActivity extends CarPlayBaseActivity implements OnClickL
                             for (int i = 0; i < array.length(); i++) {
                                 PhotoState state = new PhotoState();
                                 state.setChecked(false);
-                                state.setPath(array.getJSONObject(i).getString("thumbnail_pic"));
+                                state.setPath(array.getJSONObject(i).getString("thumbnail_pic")
+                                        + "?imageMogr2/thumbnail/!50p");
                                 state.setLast(false);
                                 mPicIds.add(array.getJSONObject(i).getString("photoId"));
                                 mPhotoStates.add(state);
@@ -150,7 +151,33 @@ public class ManageAlbumActivity extends CarPlayBaseActivity implements OnClickL
                                     }
                                 }
                             });
+
+                            mPhotoGridView.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+                                @SuppressLint("NewApi")
+                                @Override
+                                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                                    if (!mPhotoStates.get(position).isLast()) {
+                                        isEditable = true;
+                                        mRightText.setVisibility(View.GONE);
+                                        mRightImage.setVisibility(View.VISIBLE);
+                                        mRightImage.setBackground(getResources().getDrawable(R.drawable.action_delete));
+                                        mLeftImage.setVisibility(View.GONE);
+                                        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                                                LinearLayout.LayoutParams.MATCH_PARENT,
+                                                LinearLayout.LayoutParams.WRAP_CONTENT);
+                                        lp.setMargins(20, 0, 0, 0);
+                                        mLeftText.setText("取消");
+                                        mLeftText.setVisibility(View.VISIBLE);
+                                        mLeftText.setLayoutParams(lp);
+                                        mPhotoStates.get(position).setChecked(true);
+                                        mPhotoAdapter.notifyDataSetChanged();
+                                    }
+                                    return true;
+                                }
+                            });
                         }
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
