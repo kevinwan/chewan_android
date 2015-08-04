@@ -76,7 +76,7 @@
         </activity>
         <activity android:name=".activity.my.MyReleaseActiveActivity" >
         </activity>
-        <activity android:name="com.gongpingjia.carplay.activity.my.EditPersonalInfoActivity" >
+        <activity android:name=".activity.my.EditPersonalInfoActivity" >
         </activity>
         <activity android:name=".activity.main.GuidanceActivity" >
         </activity>
@@ -151,6 +151,10 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity android:name=".activity.msg.PlayCarcDetailActivity" >
+        </activity>
+        <activity
+            android:name=".TermsActivity"
+            android:label="@string/title_activity_terms" >
         </activity>
     </application>
 

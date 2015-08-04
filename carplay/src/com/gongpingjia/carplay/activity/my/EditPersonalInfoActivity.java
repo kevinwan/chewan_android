@@ -139,6 +139,9 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 				: "女";
 		String name=nicknameT.getText().toString();
 		String carage=carageT.getText().toString();
+		if (carage.contains("年")) {
+			carage=carage.replace("年", "");
+		}
 		if (map.get("flag")||!name.equals(nickname)||!carage.equals(drivingExperience)||!sex.equals(gender)) {
 			return true;
 		}

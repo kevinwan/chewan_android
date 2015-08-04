@@ -49,7 +49,7 @@
                     android:layout_height="95dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginTop="188dp"
+                    android:layout_marginTop="176dp"
                     android:orientation="horizontal"
                     android:visibility="gone" >
 
@@ -118,31 +118,31 @@
                     android:layout_height="95dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginTop="210dp"
-                    android:gravity="center_vertical"
+                    android:layout_marginTop="176dp"
                     android:orientation="horizontal" >
 
                     <ImageView
                         android:layout_width="59dp"
                         android:layout_height="59dp"
-                        android:src="@drawable/my_n" />
+                        android:src="@drawable/head_icon" />
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="12dp"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical" >
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="12dp"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical" >
 
-                        <TextView
-                            style="@style/text_black_medium"
-                            android:text="未登录" />
+                            <TextView
+                                style="@style/text_blue_medium"
+                                android:layout_marginTop="23dp"
+                                android:text="未登录" />
 
-                        <TextView
-                            style="@style/text_grey_small"
-                            android:layout_marginTop="10dp"
-                            android:text="风吹鸡蛋壳,财去人安乐" />
-                    </LinearLayout>
+                            <TextView
+                                style="@style/text_grey_small"
+                                android:layout_marginTop="7dp"
+                                android:text="个人信息" />
+                        </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -153,8 +153,10 @@
                         <Button
                             android:id="@+id/login"
                             style="@style/text_white_medium"
-                            android:layout_width="65dp"
+                            android:layout_width="68dp"
                             android:layout_height="35dp"
+                            android:layout_marginRight="7dp"
+                            android:layout_marginTop="23dp"
                             android:background="@drawable/button_yanzheng_bg"
                             android:text="登录" />
                     </LinearLayout>
@@ -244,8 +246,6 @@
                             android:text="我的参与" />
                     </LinearLayout>
                 </LinearLayout>
-
-                <View style="@style/line" />
 
                 <LinearLayout
                     android:id="@+id/people_concerned"

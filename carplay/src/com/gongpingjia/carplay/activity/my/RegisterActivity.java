@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.TermsActivity;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.util.MD5Util;
@@ -101,7 +102,8 @@ public class RegisterActivity extends CarPlayBaseActivity implements OnClickList
                 nextStep();
                 break;
             case R.id.cwfwtk:
-                
+                Intent intent=new Intent(self,TermsActivity.class);
+                startActivity(intent);
                 break;
             
             default:
