@@ -594,19 +594,36 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                 mAddress = data.getStringExtra("address");
                 break;
             case Constant.TAKE_PHOTO:
-                Bitmap btp1 = PhotoUtil.getLocalImage(new File(mCurPath));
                 String newPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg").getAbsolutePath();
-                int degree = PhotoUtil.getBitmapDegree(mCurPath);
-                PhotoUtil.saveLocalImage(btp1, new File(newPath), degree);
-                btp1.recycle();
-                upLoadPic(newPath);
+                String path = PhotoUtil.onPhotoFromCamera(self, Constant.ZOOM_PIC, mCurPath, 3, 2, 1000, newPath);
+                mCurPath = path;
                 break;
             case Constant.PICK_PHOTO:
-                Bitmap btp = PhotoUtil.checkImage(self, data);
-                PhotoUtil.saveLocalImage(btp, new File(mCurPath));
-                btp.recycle();
+                PhotoUtil.onPhotoFromPick(self, Constant.ZOOM_PIC, mCurPath, data, 1, 1, 1000);
+                break;
+            case Constant.ZOOM_PIC:
                 upLoadPic(mCurPath);
                 break;
+
+            // case Constant.TAKE_PHOTO:
+            // Bitmap btp1 = PhotoUtil.getLocalImage(new File(mCurPath));
+            // String newPath = new File(mCacheDir, System.currentTimeMillis() +
+            // ".jpg").getAbsolutePath();
+            // int degree = PhotoUtil.getBitmapDegree(mCurPath);
+            // PhotoUtil.saveLocalImage(btp1, new File(newPath), degree);
+            // btp1.recycle();
+            // upLoadPic(newPath);
+            // // PhotoUtil.onPhotoFromCamera(self, Constant.ZOOM_PIC,
+            // // mCurPath, 1, 1, 1000);
+            // break;
+            // case Constant.PICK_PHOTO:
+            // Bitmap btp = PhotoUtil.checkImage(self, data);
+            // PhotoUtil.saveLocalImage(btp, new File(mCurPath));
+            // upLoadPic(mCurPath);
+            // // PhotoUtil.onPhotoFromPick(self, Constant.ZOOM_PIC, mCurPath,
+            // // data, 1, 1, 1000);
+            // break;
+
             }
         }
     }
