@@ -2,9 +2,11 @@ package com.gongpingjia.carplay.activity.my;
 
 import java.io.File;
 
+import net.duohuo.dhroid.activity.ActivityTack;
 import net.duohuo.dhroid.ioc.IocContainer;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -88,11 +90,13 @@ public class SettingActivity extends CarPlayBaseActivity implements OnClickListe
             break;
         case R.id.setting_quit:
             it = new Intent(this, LoginActivity.class);
+            it.putExtra("action", "logout");
             startActivity(it);
             CarPlayPerference preference = IocContainer.getShare().get(CarPlayPerference.class);
             preference.load();
             preference.setPassword("");
             preference.commit();
+            Log.e("tag", "update user info");
             break;
 
         default:
@@ -103,7 +107,6 @@ public class SettingActivity extends CarPlayBaseActivity implements OnClickListe
     @Override
     public void initView() {
         // TODO Auto-generated method stub
-
     }
 
 }

@@ -60,7 +60,10 @@ public class LoginActivity extends CarPlayBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        ActivityTack.getInstanse().finishOthers(this);
+        String action = getIntent().getStringExtra("action");
+        if (action != null && action.equals("logout")) {
+            ActivityTack.getInstanse().finishOthers(this);
+        }
     }
 
     @Override
