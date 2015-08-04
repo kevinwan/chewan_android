@@ -30,7 +30,6 @@
                         android:id="@+id/gallery"
                         android:layout_width="match_parent"
                         android:layout_height="fill_parent"
-                        android:background="@color/text_black_light"
                         android:fadingEdgeLength="0dp"
                         android:spacing="5dp"
                         android:unselectedAlpha="128" />

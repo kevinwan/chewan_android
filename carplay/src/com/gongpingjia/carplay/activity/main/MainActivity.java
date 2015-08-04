@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Stack;
 
 import net.duohuo.dhroid.activity.ActivityTack;
+import net.duohuo.dhroid.ioc.IocContainer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -24,6 +25,7 @@ import com.gongpingjia.carplay.activity.my.MyFragment;
 import com.gongpingjia.carplay.activity.my.SettingActivity;
 import com.gongpingjia.carplay.manage.UserInfoManage;
 import com.gongpingjia.carplay.manage.UserInfoManage.LoginCallBack;
+import com.gongpingjia.carplay.util.CarPlayPerference;
 import com.gongpingjia.carplay.view.pop.ActiveFilterPop;
 
 public class MainActivity extends BaseFragmentActivity {
@@ -40,6 +42,8 @@ public class MainActivity extends BaseFragmentActivity {
 
 	View titleBar;
 
+	CarPlayPerference per;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -55,6 +59,23 @@ public class MainActivity extends BaseFragmentActivity {
 		titleBar = findViewById(R.id.titlebar);
 		initTab();
 		setTab(0);
+
+		per = IocContainer.getShare().get(CarPlayPerference.class);
+		per.load();
+		if (per.isShowMainGuilde == 0) {
+			findViewById(R.id.guide).setVisibility(View.VISIBLE);
+		}
+
+		findViewById(R.id.know).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				per.load();
+				per.isShowMainGuilde = 1;
+				per.commit();
+				findViewById(R.id.guide).setVisibility(View.GONE);
+			}
+		});
 	}
 
 	private void initTab() {

@@ -24,8 +24,8 @@
             android:divider="@color/nothing"
             android:dividerHeight="0dp"
             android:fadingEdge="none"
-            android:paddingBottom="120dp"
-            android:listSelector="@android:color/transparent" />
+            android:listSelector="@android:color/transparent"
+            android:paddingBottom="120dp" />
 
         <LinearLayout
             android:id="@+id/empty"
@@ -101,5 +101,32 @@
             android:text="活动开始前6个小时无法退出"
             android:visibility="invisible" />
     </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/guide"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scrollbars="none"
+        android:visibility="gone" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="630dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/first_member" />
+
+            <Button
+                android:id="@+id/know"
+                android:layout_width="200dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="70dp"
+                android:layout_marginTop="280dp"
+                android:background="@color/nothing" />
+        </RelativeLayout>
+    </ScrollView>
 
 </RelativeLayout>

@@ -1,5 +1,6 @@
 package com.gongpingjia.carplay.activity.my;
 
+import net.duohuo.dhroid.util.ViewUtil;
 import net.duohuo.dhroid.view.NetRefreshAndMoreListView;
 import net.duohuo.dhroid.view.NetRefreshAndMoreListView.OnEmptyDataListener;
 import android.os.Bundle;
@@ -39,6 +40,8 @@ public class MyReleaseActiveActivity extends CarPlayBaseActivity
             @Override
             public void onEmpty(boolean showeEptyView)
             {
+            	ViewUtil.bindView(findViewById(R.id.icon_msg), R.drawable.no_release);
+            	ViewUtil.bindView(findViewById(R.id.msg), "您还没有发布任何活动,赶紧添加吧!");
                 findViewById(R.id.empty).setVisibility(showeEptyView ? View.VISIBLE : View.GONE);
             }
         });

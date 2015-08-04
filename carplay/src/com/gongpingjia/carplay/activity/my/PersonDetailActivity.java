@@ -328,17 +328,20 @@ public class PersonDetailActivity extends CarPlayBaseActivity implements
 
 		switch (type) {
 		case RELEASE:
-			ViewUtil.bindView(findViewById(R.id.btn_submit), "发布活动");
+//			ViewUtil.bindView(findViewById(R.id.btn_submit), "发布活动");
+			ViewUtil.bindView(findViewById(R.id.icon_msg), R.drawable.no_release);
 			ViewUtil.bindView(findViewById(R.id.msg), "您还没有发布任何活动,赶紧添加吧!");
 			break;
 
 		case JOIN:
-			ViewUtil.bindView(findViewById(R.id.btn_submit), "添加关注");
+//			ViewUtil.bindView(findViewById(R.id.btn_submit), "添加关注");
+			ViewUtil.bindView(findViewById(R.id.icon_msg), R.drawable.no_attention);
 			ViewUtil.bindView(findViewById(R.id.msg), "您还没有添加任何关注,赶紧添加吧!");
 			break;
 
 		case ATTENTION:
-			ViewUtil.bindView(findViewById(R.id.btn_submit), "参与活动");
+//			ViewUtil.bindView(findViewById(R.id.btn_submit), "参与活动");
+			ViewUtil.bindView(findViewById(R.id.icon_msg), R.drawable.no_join);
 			ViewUtil.bindView(findViewById(R.id.msg), "您还没有参与任何活动,赶紧参与吧!");
 			break;
 

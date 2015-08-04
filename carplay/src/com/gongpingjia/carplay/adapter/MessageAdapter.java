@@ -22,12 +22,7 @@ import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.cache.CachePolicy;
 import net.duohuo.dhroid.util.ViewUtil;
 
-public class MessageAdapter extends PSAdapter {
-	public MessageAdapter(Context context, int mResource) {
-		super(context, mResource);
-		mLayoutInflater = LayoutInflater.from(context);
-		this.mResource = mResource;
-	}
+public class MessageAdapter extends NetJSONAdapter {
 
 	LayoutInflater mLayoutInflater;
 
@@ -35,6 +30,12 @@ public class MessageAdapter extends PSAdapter {
 
 	/** 是否显示勾选按钮 */
 	boolean showcheck = false;
+
+	public MessageAdapter(String api, Context context, int mResource) {
+		super(api, context, mResource);
+		mLayoutInflater = LayoutInflater.from(context);
+		this.mResource = mResource;
+	}
 
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
@@ -53,9 +54,10 @@ public class MessageAdapter extends PSAdapter {
 			holder = (ViewHolder) convertView.getTag();
 		}
 
-		Message msg = (Message) getItem(position);
+		JSONObject jo = (JSONObject) getItem(position);
+
 		holder.checkI.setVisibility(showcheck ? View.VISIBLE : View.GONE);
-		Boolean ischeck = msg.getIscheck();
+		Boolean ischeck = JSONUtil.getBoolean(jo, "ischeck");
 		if (ischeck) {
 			holder.checkI.setImageResource(R.drawable.img_check_f);
 		} else {
@@ -66,23 +68,29 @@ public class MessageAdapter extends PSAdapter {
 
 			@Override
 			public void onClick(View v) {
-				Message msg = (Message) getItem(position);
-				msg.setIscheck(!msg.getIscheck());
+				JSONObject jo = (JSONObject) getItem(position);
+				try {
+					jo.put("ischeck", !jo.getBoolean("ischeck"));
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				notifyDataSetChanged();
 			}
 		});
 		holder.checkI.setVisibility(showcheck ? View.VISIBLE : View.GONE);
 
-		if (msg.getGender().equals("男")) {
+		if (JSONUtil.getString(jo, "gender").equals("男")) {
 			holder.sexV.setBackgroundResource(R.drawable.man);
 		} else {
 			holder.sexV.setBackgroundResource(R.drawable.woman);
 		}
-		ViewUtil.bindNetImage(holder.headI, msg.getPhoto(), "head");
-		holder.headI.setTag(msg.getUserId());
-		ViewUtil.bindView(holder.ageT, msg.getAge());
-		ViewUtil.bindView(holder.nameT, msg.getNickname());
-		ViewUtil.bindView(holder.contentT, msg.getContent());
+		ViewUtil.bindNetImage(holder.headI, JSONUtil.getString(jo, "photo"),
+				"head");
+		holder.headI.setTag(JSONUtil.getString(jo, "userId"));
+		ViewUtil.bindView(holder.ageT, JSONUtil.getString(jo, "age"));
+		ViewUtil.bindView(holder.nameT, JSONUtil.getString(jo, "nickname"));
+		ViewUtil.bindView(holder.contentT, JSONUtil.getString(jo, "content"));
 
 		return convertView;
 	}
@@ -97,7 +105,7 @@ public class MessageAdapter extends PSAdapter {
 
 		List<Message> msgList = new ArrayList<Message>();
 		for (int i = 0; i < mVaules.size(); i++) {
-			Message msg = (Message) mVaules.get(i);
+			Message msg = (Message) getTItem(i);
 			if (msg.getIscheck()) {
 				msgList.add(msg);
 			}
@@ -106,12 +114,19 @@ public class MessageAdapter extends PSAdapter {
 		return msgList;
 	}
 
+	/**
+	 * 清楚选择的数据
+	 */
 	public void checkAll(boolean check) {
 		for (int i = 0; i < mVaules.size(); i++) {
-			Message msg = (Message) mVaules.get(i);
-			msg.setIscheck(check);
+			JSONObject jo = mVaules.get(i);
+			try {
+				jo.put("ischeck", check);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		notifyDataSetChanged();
 	}
 
 	/**
@@ -119,8 +134,13 @@ public class MessageAdapter extends PSAdapter {
 	 */
 	public void cleanCheck() {
 		for (int i = 0; i < mVaules.size(); i++) {
-			Message msg = (Message) mVaules.get(i);
-			msg.setIscheck(false);
+			JSONObject jo = mVaules.get(i);
+			try {
+				jo.put("ischeck", false);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 

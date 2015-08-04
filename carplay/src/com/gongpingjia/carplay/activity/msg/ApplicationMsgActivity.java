@@ -16,10 +16,7 @@ import android.content.ContentValues;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
@@ -33,13 +30,7 @@ import com.gongpingjia.carplay.util.CarPlayPerference;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 
-/***
- * 新的留言页面 hqh
- * 
- * @author Administrator
- * 
- */
-public class NewMessageActivity extends CarPlayBaseActivity implements
+public class ApplicationMsgActivity extends CarPlayBaseActivity implements
 		OnClickListener {
 
 	NetRefreshAndMoreListView listView;
@@ -60,8 +51,6 @@ public class NewMessageActivity extends CarPlayBaseActivity implements
 	List<Message> dataList;
 
 	CarPlayPerference per;
-
-	ImageView backI;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -88,10 +77,10 @@ public class NewMessageActivity extends CarPlayBaseActivity implements
 				findViewById(R.id.guide).setVisibility(View.GONE);
 			}
 		});
-		backI = (ImageView) findViewById(R.id.back);
-		setTitle("新的留言");
+
+		setTitle("系统消息");
+		setLeftAction(-2, null, null);
 		leftTitleT = (TextView) findViewById(R.id.left_text);
-		leftTitleT.setText("全选");
 		leftTitleT.setPadding(DhUtil.dip2px(self, 12), 0, 0, 0);
 		leftTitleT.setOnClickListener(new OnClickListener() {
 
@@ -104,7 +93,6 @@ public class NewMessageActivity extends CarPlayBaseActivity implements
 					leftTitleT.setText("全选");
 					mJsonAdapter.checkAll(false);
 				}
-				mJsonAdapter.notifyDataSetChanged();
 			}
 		});
 		rightTitleT = (TextView) findViewById(R.id.right_text);
@@ -119,33 +107,28 @@ public class NewMessageActivity extends CarPlayBaseActivity implements
 				rightTitleT.setVisibility(View.GONE);
 				delB.setVisibility(View.GONE);
 				mJsonAdapter.cleanCheck();
-				backI.setVisibility(View.VISIBLE);
 			}
 		});
 
 		delB = (Button) findViewById(R.id.del);
 		delB.setOnClickListener(this);
 		listView = (NetRefreshAndMoreListView) findViewById(R.id.listview);
-		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
-
-			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				mJsonAdapter.showCheck(true);
-				rightTitleT.setVisibility(View.VISIBLE);
-				leftTitleT.setVisibility(View.VISIBLE);
-				delB.setVisibility(View.VISIBLE);
-				backI.setVisibility(View.GONE);
-				return false;
-			}
-		});
-		User user = User.getInstance();
-		String url = API.CWBaseurl + "/user/" + user.getUserId()
-				+ "/message/list?token=" + user.getToken() + "&type=" + type;
-		mJsonAdapter = new MessageAdapter(url, self, R.layout.item_message_list);
-		mJsonAdapter.fromWhat("data");
-		listView.setAdapter(mJsonAdapter);
+		// String url = API.CWBaseurl + "/user/" + user.getUserId()
+		// + "/message/list?token=" + user.getToken() + "&type=" + type;
+		// mJsonAdapter = new MessageAdapter(url, self,
+		// R.layout.item_message_list);
+		// mJsonAdapter.fromWhat("data");
+		// listView.setAdapter(mJsonAdapter);
 		// getData();
+		// daoHelper = IocContainer.getShare().get(DaoHelper.class);
+		// OrmLiteSqliteOpenHelper ormLitedaoHelper =
+		// IocContainer.getShare().get(
+		// OrmLiteSqliteOpenHelper.class);
+		// try {
+		// msgDao = ormLitedaoHelper.getDao(Message.class);
+		// } catch (SQLException e) {
+		// e.printStackTrace();
+		// }
 		mJsonAdapter.showNextInDialog();
 	}
 
@@ -163,13 +146,29 @@ public class NewMessageActivity extends CarPlayBaseActivity implements
 	// listView.removeFootView();
 	// List<Message> MessageList = response.listFrom(
 	// Message.class, "data");
+	// ArrayList<ContentValues> list = new ArrayList<ContentValues>();
+	// for (Message msg : MessageList) {
+	// ContentValues content = new ContentValues();
+	// content.put("userId", msg.getUserId());
+	// content.put("photo", msg.getPhoto());
+	// content.put("nickname", msg.getNickname());
+	// content.put("content", msg.getContent());
+	// content.put("age", msg.getAge());
+	// content.put("gender", msg.getGender());
+	// list.add(content);
+	// }
+	//
+	// if (MessageList != null && MessageList.size() > 0) {
+	// daoHelper.insertAll("message", list);
+	// }
 	//
 	// try {
-	// if (MessageList == null || MessageList.size() == 0) {
+	// dataList = msgDao.queryForAll();
+	// if (dataList == null || dataList.size() == 0) {
 	// emptyV.setVisibility(View.VISIBLE);
 	// } else {
 	// mJsonAdapter.clear();
-	// mJsonAdapter.addAll(MessageList);
+	// mJsonAdapter.addAll(dataList);
 	// emptyV.setVisibility(View.GONE);
 	// }
 	// } catch (SQLException e) {
@@ -180,7 +179,7 @@ public class NewMessageActivity extends CarPlayBaseActivity implements
 	// }
 	// }
 	// });
-	//
+
 	// }
 
 	@Override

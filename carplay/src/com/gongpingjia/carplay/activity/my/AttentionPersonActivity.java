@@ -49,7 +49,7 @@ public class AttentionPersonActivity extends CarPlayBaseActivity {
 		setTitle("我关注的人");
 		user = User.getInstance();
 		listView = (NetRefreshAndMoreListView) findViewById(R.id.listview);
-		String url = API.CWBaseurl + "/user" + user.getUserId()
+		String url = API.CWBaseurl + "/user/" + user.getUserId()
 				+ "/listen?token=" + user.getToken();
 		adapter = new NetJSONAdapter(url, self, R.layout.itme_attention_person);
 		adapter.fromWhat("data");

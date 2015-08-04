@@ -44,6 +44,21 @@ public class CarPlayPerference extends Perference {
 	// 第一次登陆
 	public int isFirst = 0;
 
+	// 是否展示新手指导提示
+	public int isShowMainGuilde = 0;
+
+	// 是否展示新手指导提示
+	public int isShowPhotoGuilde = 0;
+
+	// 是否展示新手指导提示
+	public int isShowMessageGuilde = 0;
+
+	// 是否展示新手指导提示
+	public int isShowDetailGuilde = 0;
+
+	// 是否展示新手指导提示
+	public int isShowMemberGuilde = 0;
+
 	public String getUid() {
 		return uid;
 	}
@@ -200,5 +215,46 @@ public class CarPlayPerference extends Perference {
 	public void setIsFirst(int isFirst) {
 		this.isFirst = isFirst;
 	}
+
+	public int getIsShowMainGuilde() {
+		return isShowMainGuilde;
+	}
+
+	public void setIsShowMainGuilde(int isShowMainGuilde) {
+		this.isShowMainGuilde = isShowMainGuilde;
+	}
+
+	public int getIsShowPhotoGuilde() {
+		return isShowPhotoGuilde;
+	}
+
+	public void setIsShowPhotoGuilde(int isShowPhotoGuilde) {
+		this.isShowPhotoGuilde = isShowPhotoGuilde;
+	}
+
+	public int getIsShowMessageGuilde() {
+		return isShowMessageGuilde;
+	}
+
+	public void setIsShowMessageGuilde(int isShowMessageGuilde) {
+		this.isShowMessageGuilde = isShowMessageGuilde;
+	}
+
+	public int getIsShowDetailGuilde() {
+		return isShowDetailGuilde;
+	}
+
+	public void setIsShowDetailGuilde(int isShowDetailGuilde) {
+		this.isShowDetailGuilde = isShowDetailGuilde;
+	}
+
+	public int getIsShowMemberGuilde() {
+		return isShowMemberGuilde;
+	}
+
+	public void setIsShowMemberGuilde(int isShowMemberGuilde) {
+		this.isShowMemberGuilde = isShowMemberGuilde;
+	}
+	
 
 }

@@ -37,132 +37,137 @@ import com.gongpingjia.carplay.util.Utils;
  */
 public class LoginActivity extends CarPlayBaseActivity {
 
-    // 手机号
-    private EditText PhoneNumEditText;
+	// 手机号
+	private EditText PhoneNumEditText;
 
-    // 密码
-    private EditText PasswordEditText;
+	// 密码
+	private EditText PasswordEditText;
 
-    // 登录
-    private Button LoginButton;
+	// 登录
+	private Button LoginButton;
 
-    // 注册
-    private LinearLayout login_register;
+	// 注册
+	private LinearLayout login_register;
 
-    // 忘记密码
-    private TextView login_forgetpsw;
+	// 忘记密码
+	private TextView login_forgetpsw;
 
-    public static final int Register = 1;
+	public static final int Register = 1;
 
-    public static LoginCallBack loginCall;
+	public static LoginCallBack loginCall;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        ActivityTack.getInstanse().finishOthers(this);
-    }
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_login);
+	}
 
-    @Override
-    public void initView() {
-        PhoneNumEditText = (EditText) findViewById(R.id.ed_login_phone);
-        PasswordEditText = (EditText) findViewById(R.id.ed_login_password);
-        LoginButton = (Button) findViewById(R.id.button_login);
-        LoginButton.setOnClickListener(new View.OnClickListener() {
+	@Override
+	public void initView() {
+		PhoneNumEditText = (EditText) findViewById(R.id.ed_login_phone);
+		PasswordEditText = (EditText) findViewById(R.id.ed_login_password);
+		LoginButton = (Button) findViewById(R.id.button_login);
+		LoginButton.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View arg0) {
-                Utils.autoCloseKeyboard(self, arg0);
-                final String strPhoneNum = PhoneNumEditText.getText().toString();
-                final String strPassword = PasswordEditText.getText().toString();
-                if (TextUtils.isEmpty(strPhoneNum)) {
-                    Toast.makeText(self, "手机号码不能为空", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (!Utils.isValidMobilePhoneNumber(strPhoneNum)) {
-                    Toast.makeText(self, "手机格式错误", Toast.LENGTH_SHORT).show();
-                    return;
+			@Override
+			public void onClick(View arg0) {
+				Utils.autoCloseKeyboard(self, arg0);
+				final String strPhoneNum = PhoneNumEditText.getText()
+						.toString();
+				final String strPassword = PasswordEditText.getText()
+						.toString();
+				if (TextUtils.isEmpty(strPhoneNum)) {
+					Toast.makeText(self, "手机号码不能为空", Toast.LENGTH_SHORT).show();
+					return;
+				}
+				if (!Utils.isValidMobilePhoneNumber(strPhoneNum)) {
+					Toast.makeText(self, "手机格式错误", Toast.LENGTH_SHORT).show();
+					return;
 
-                }
-                if (TextUtils.isEmpty(strPassword)) {
-                    Toast.makeText(self, "请输入密码", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+				}
+				if (TextUtils.isEmpty(strPassword)) {
+					Toast.makeText(self, "请输入密码", Toast.LENGTH_SHORT).show();
+					return;
+				}
 
-                DhNet net = new DhNet(API.login);
-                net.addParam("phone", strPhoneNum);
-                net.addParam("password", MD5Util.string2MD5(strPassword));
-                net.doPost(new NetTask(self) {
+				DhNet net = new DhNet(API.login);
+				net.addParam("phone", strPhoneNum);
+				net.addParam("password", MD5Util.string2MD5(strPassword));
+				net.doPost(new NetTask(self) {
 
-                    @Override
-                    public void doInUI(Response response, Integer transfer) {
-                        if (response.isSuccess()) {
-                            JSONObject jo = response.jSONFrom("data");
-                            User user = User.getInstance();
-                            user.setUserId(JSONUtil.getString(jo, "userId"));
-                            user.setToken(JSONUtil.getString(jo, "token"));
-                            user.setBrand(JSONUtil.getString(jo, "brand"));
-                            user.setBrandLogo(JSONUtil.getString(jo, "brandLogo"));
-                            user.setModel(JSONUtil.getString(jo, "model"));
-                            user.setSeatNumber(JSONUtil.getInt(jo, "seatNumber"));
-                            user.setIsAuthenticated(JSONUtil.getInt(jo, "isAuthenticated"));
-                            user.setLogin(true);
-                            CarPlayPerference per = IocContainer.getShare().get(CarPlayPerference.class);
-                            per.phone = strPhoneNum;
-                            per.password = MD5Util.string2MD5(strPassword);
-                            per.commit();
-                            self.finish();
+					@Override
+					public void doInUI(Response response, Integer transfer) {
+						if (response.isSuccess()) {
+							JSONObject jo = response.jSONFrom("data");
+							User user = User.getInstance();
+							user.setUserId(JSONUtil.getString(jo, "userId"));
+							user.setToken(JSONUtil.getString(jo, "token"));
+							user.setBrand(JSONUtil.getString(jo, "brand"));
+							user.setBrandLogo(JSONUtil.getString(jo,
+									"brandLogo"));
+							user.setModel(JSONUtil.getString(jo, "model"));
+							user.setSeatNumber(JSONUtil
+									.getInt(jo, "seatNumber"));
+							user.setIsAuthenticated(JSONUtil.getInt(jo,
+									"isAuthenticated"));
+							user.setLogin(true);
+							CarPlayPerference per = IocContainer.getShare()
+									.get(CarPlayPerference.class);
+							per.phone = strPhoneNum;
+							per.password = MD5Util.string2MD5(strPassword);
+							per.commit();
+							self.finish();
 
-                        }
-                    }
-                });
-            }
-        });
-        // 忘记密码
-        login_forgetpsw = (TextView) findViewById(R.id.login_forgetpsw);
-        login_forgetpsw.setOnClickListener(new View.OnClickListener() {
+						}
+					}
+				});
+			}
+		});
+		// 忘记密码
+		login_forgetpsw = (TextView) findViewById(R.id.login_forgetpsw);
+		login_forgetpsw.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View arg0) {
-                Intent intent = new Intent(self, ForgetPwdActivity.class);
-                startActivity(intent);
-            }
-        });
-        // 注册
-        login_register = (LinearLayout) findViewById(R.id.login_register);
-        login_register.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				Intent intent = new Intent(self, ForgetPwdActivity.class);
+				startActivity(intent);
+			}
+		});
+		// 注册
+		login_register = (LinearLayout) findViewById(R.id.login_register);
+		login_register.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View arg0) {
-                Intent intent = new Intent(self, RegisterActivity.class);
-                startActivityForResult(intent, Register);
+			@Override
+			public void onClick(View arg0) {
+				Intent intent = new Intent(self, RegisterActivity.class);
+				startActivityForResult(intent, Register);
 
-            }
-        });
+			}
+		});
 
-    }
+	}
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == Register) {
-                finish();
-            }
-        }
-    }
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode == Activity.RESULT_OK) {
+			if (requestCode == Register) {
+				finish();
+			}
+		}
+	}
 
-    @Override
-    public void finish() {
-        super.finish();
-        if (loginCall != null) {
-            if (User.getInstance().isLogin()) {
-                loginCall.onisLogin();
-            } else {
-                loginCall.onLoginFail();
-            }
-        }
-        loginCall = null;
-    }
+	@Override
+	public void finish() {
+		super.finish();
+		if (loginCall != null) {
+			if (User.getInstance().isLogin()) {
+				loginCall.onisLogin();
+			} else {
+				loginCall.onLoginFail();
+			}
+		}
+		loginCall = null;
+	}
 
 }

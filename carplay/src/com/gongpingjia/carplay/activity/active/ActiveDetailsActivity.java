@@ -2,6 +2,7 @@ package com.gongpingjia.carplay.activity.active;
 
 import net.duohuo.dhroid.adapter.FieldMap;
 import net.duohuo.dhroid.adapter.NetJSONAdapter;
+import net.duohuo.dhroid.ioc.IocContainer;
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
@@ -36,6 +37,7 @@ import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.manage.UserInfoManage;
 import com.gongpingjia.carplay.manage.UserInfoManage.LoginCallBack;
+import com.gongpingjia.carplay.util.CarPlayPerference;
 import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.util.PicLayoutUtil;
 import com.gongpingjia.carplay.view.RoundImageView;
@@ -81,6 +83,8 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 
 	TextView rightTitleT;
 
+	CarPlayPerference per;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -90,6 +94,23 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 
 	@Override
 	public void initView() {
+
+		per = IocContainer.getShare().get(CarPlayPerference.class);
+		per.load();
+		if (per.isShowDetailGuilde == 0) {
+			findViewById(R.id.guide).setVisibility(View.VISIBLE);
+		}
+
+		findViewById(R.id.know).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				per.load();
+				per.isShowDetailGuilde = 1;
+				per.commit();
+				findViewById(R.id.guide).setVisibility(View.GONE);
+			}
+		});
 		user = User.getInstance();
 		Display display = getWindowManager().getDefaultDisplay();
 		int width = display.getWidth();

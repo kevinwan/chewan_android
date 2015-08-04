@@ -13,7 +13,6 @@
             android:id="@+id/gallery"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
-            android:background="@color/text_black_light"
             android:fadingEdgeLength="0dp"
             android:spacing="5dp"
             android:unselectedAlpha="128" />
@@ -240,9 +239,10 @@
             android:gravity="center_horizontal"
             android:orientation="vertical"
             android:paddingBottom="20dp"
-            android:paddingTop="20dp" >
+            android:paddingTop="50dp" >
 
             <ImageView
+                android:id="@+id/icon_msg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/icon_net" />

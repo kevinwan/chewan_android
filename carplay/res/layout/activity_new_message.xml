@@ -6,59 +6,15 @@
     android:orientation="vertical"
     tools:context="com.gongpingjia.carplay.activity.msg.NewMessageActivity" >
 
-    <include layout="@layout/include_title_bar" />
-
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
 
-        <net.duohuo.dhroid.view.RefreshAndMoreListView
-            android:id="@+id/listview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="50dp"
-            android:background="@color/nothing"
-            android:cacheColorHint="#00000000"
-            android:clipToPadding="false"
-            android:divider="@color/nothing"
-            android:dividerHeight="1dp"
-            android:fadingEdge="none"
-            android:listSelector="@android:color/transparent"
-            android:paddingBottom="80dp" />
+        <include layout="@layout/include_title_bar" />
 
-        <LinearLayout
-            android:id="@+id/empty"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="160dp"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:visibility="gone" >
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="70dp"
-                android:layout_marginRight="70dp"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"
-                android:paddingBottom="20dp"
-                android:paddingTop="20dp" >
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/icon_net" />
-
-                <TextView
-                    android:id="@+id/msg"
-                    style="@style/text_grey_small"
-                    android:layout_marginTop="12dp"
-                    android:text="暂无数据" />
-            </LinearLayout>
-        </LinearLayout>
-    </RelativeLayout>
+        <include layout="@layout/include_refresh_listview" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/del"
@@ -70,5 +26,32 @@
         android:textColor="@color/white"
         android:textSize="@dimen/text_medium"
         android:visibility="gone" />
+
+    <ScrollView
+        android:id="@+id/guide"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scrollbars="none"
+        android:visibility="gone" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="630dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/first_message" />
+
+            <Button
+                android:id="@+id/know"
+                android:layout_width="200dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="320dp"
+                android:background="@color/nothing" />
+        </RelativeLayout>
+    </ScrollView>
 
 </RelativeLayout>
