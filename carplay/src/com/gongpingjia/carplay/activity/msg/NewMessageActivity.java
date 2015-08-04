@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
@@ -56,6 +57,7 @@ public class NewMessageActivity extends CarPlayBaseActivity implements
 	View emptyV;
 
 	List<Message> dataList;
+	ImageView leftTitler;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +75,8 @@ public class NewMessageActivity extends CarPlayBaseActivity implements
 		}
 		setLeftAction(-2, null, null);
 		leftTitleT = (TextView) findViewById(R.id.left_text);
+		leftTitler = (ImageView) findViewById(R.id.back);
+		leftTitler.setVisibility(View.VISIBLE);
 		leftTitleT.setPadding(DhUtil.dip2px(self, 12), 0, 0, 0);
 		leftTitleT.setOnClickListener(new OnClickListener() {
 
@@ -96,6 +100,7 @@ public class NewMessageActivity extends CarPlayBaseActivity implements
 			public void onClick(View v) {
 				if (rightTitleT.getText().toString().equals("编辑")) {
 					leftTitleT.setVisibility(View.VISIBLE);
+					leftTitler.setVisibility(View.GONE);
 					leftTitleT.setText("全选");
 					rightTitleT.setText("取消");
 					mJsonAdapter.showCheck(true);
@@ -107,6 +112,7 @@ public class NewMessageActivity extends CarPlayBaseActivity implements
 					leftTitleT.setVisibility(View.GONE);
 					leftTitleT.setText("全选");
 					rightTitleT.setText("编辑");
+					leftTitler.setVisibility(View.VISIBLE);
 					delB.setVisibility(View.GONE);
 					mJsonAdapter.cleanCheck();
 				}

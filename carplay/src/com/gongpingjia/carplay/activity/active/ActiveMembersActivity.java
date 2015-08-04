@@ -33,7 +33,11 @@ import com.gongpingjia.carplay.view.dialog.ActiveMsgDialog;
 import com.gongpingjia.carplay.view.dialog.ActiveMsgDialog.OnClickResultListener;
 import com.gongpingjia.carplay.view.dialog.SeatDialog;
 import com.gongpingjia.carplay.view.dialog.SeatDialog.OnGradResultListener;
-
+/**
+ * 参与成员
+ * @author Administrator
+ *
+ */
 public class ActiveMembersActivity extends CarPlayBaseActivity implements OnClickListener
 {
     View headV;
