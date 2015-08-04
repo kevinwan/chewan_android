@@ -76,7 +76,7 @@
         </activity>
         <activity android:name=".activity.my.MyReleaseActiveActivity" >
         </activity>
-        <activity android:name="com.gongpingjia.carplay.activity.my.EditPersonalInfoActivity" >
+        <activity android:name=".activity.my.EditPersonalInfoActivity" >
         </activity>
         <activity android:name=".activity.main.GuidanceActivity" >
         </activity>
@@ -105,6 +105,8 @@
         <activity android:name=".activity.active.EditActiveActivity" />
         <activity android:name=".activity.my.BasicMessageActivity" />
         <activity android:name=".activity.my.FeedBackActivity" />
+        <activity android:name=".activity.my.VersionIntroActivity" >
+        </activity>
         <activity android:name=".activity.main.SplashActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -149,6 +151,10 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity android:name=".activity.msg.PlayCarcDetailActivity" >
+        </activity>
+        <activity
+            android:name=".TermsActivity"
+            android:label="@string/title_activity_terms" >
         </activity>
     </application>
 

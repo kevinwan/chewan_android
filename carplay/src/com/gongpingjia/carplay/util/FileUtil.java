@@ -17,7 +17,7 @@ public class FileUtil {
         B, KB, M, G
     }
 
-    public static long getFileOrPathSize(File file, UNIT_SACLE scale) {
+    public static long getFileOrDirSize(File file, UNIT_SACLE scale) {
         long size = 0;
         if (file.exists()) {
             if (file.isDirectory()) {

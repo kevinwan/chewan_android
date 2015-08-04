@@ -60,7 +60,6 @@ public class SearchPlaceActivity extends CarPlayBaseActivity implements TextWatc
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // TODO Auto-generated method stub
                 String key = mDatas.get(position).getStyleName().toString();
                 Intent it = new Intent();
                 it.putExtra("key", key);

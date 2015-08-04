@@ -2,9 +2,11 @@ package com.gongpingjia.carplay.activity.my;
 
 import java.io.File;
 
+import net.duohuo.dhroid.activity.ActivityTack;
 import net.duohuo.dhroid.ioc.IocContainer;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -58,7 +60,7 @@ public class SettingActivity extends CarPlayBaseActivity implements OnClickListe
         setting_at_versions.setOnClickListener(this);
         setting_btn.setOnClickListener(this);
         mCacheFile = new File(getExternalCacheDir(), "CarPlay");
-        mSizeText.setText(String.valueOf(FileUtil.getFileOrPathSize(mCacheFile, UNIT_SACLE.M)) + " M");
+        mSizeText.setText(String.valueOf(FileUtil.getFileOrDirSize(mCacheFile, UNIT_SACLE.M)) + " M");
     }
 
     @Override
@@ -81,18 +83,21 @@ public class SettingActivity extends CarPlayBaseActivity implements OnClickListe
             startActivity(it);
             break;
         case R.id.setting_versions:
-            Toast.makeText(mySelf, "版本介绍", Toast.LENGTH_SHORT).show();
+            it = new Intent(this, VersionIntroActivity.class);
+            startActivity(it);
             break;
         case R.id.setting_at_versions:
             Toast.makeText(mySelf, "当前版本", Toast.LENGTH_SHORT).show();
             break;
         case R.id.setting_quit:
             it = new Intent(this, LoginActivity.class);
+            it.putExtra("action", "logout");
             startActivity(it);
             CarPlayPerference preference = IocContainer.getShare().get(CarPlayPerference.class);
             preference.load();
             preference.setPassword("");
             preference.commit();
+            Log.e("tag", "update user info");
             break;
 
         default:
@@ -103,7 +108,6 @@ public class SettingActivity extends CarPlayBaseActivity implements OnClickListe
     @Override
     public void initView() {
         // TODO Auto-generated method stub
-
     }
 
 }

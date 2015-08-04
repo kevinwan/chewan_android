@@ -66,7 +66,7 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 	TextView quite_desT;
 
 	long startTime;
-	
+
 	CarPlayPerference per;
 
 	@Override
@@ -77,9 +77,8 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 	}
 
 	@Override
-	public void initView()
-	{
-		
+	public void initView() {
+
 		per = IocContainer.getShare().get(CarPlayPerference.class);
 		per.load();
 		if (per.isShowMemberGuilde == 0) {
@@ -96,7 +95,7 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 				findViewById(R.id.guide).setVisibility(View.GONE);
 			}
 		});
-		
+
 		setTitle("参与成员");
 		user = User.getInstance();
 		activityId = getIntent().getStringExtra("activityId");

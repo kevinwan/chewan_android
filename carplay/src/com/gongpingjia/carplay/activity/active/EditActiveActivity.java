@@ -494,4 +494,5 @@ public class EditActiveActivity extends CarPlayBaseActivity implements
 			}
 		});
 	}
+
 }
