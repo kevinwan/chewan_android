@@ -29,7 +29,6 @@ import android.widget.Toast;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.active.ActiveMembersActivity;
 import com.gongpingjia.carplay.activity.active.MyActiveMembersManageActivity;
-import com.gongpingjia.carplay.activity.msg.MsgFragment;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.manage.UserInfoManage;
@@ -131,7 +130,7 @@ public class ActiveAdapter extends NetJSONAdapter {
 			if (isMember == 1) {
 				holder.joinT.setText("查看");
 			} else {
-				holder.joinT.setText("我也要玩");
+				holder.joinT.setText("我要去玩");
 			}
 		}
 		holder.joinT.setVisibility(View.VISIBLE);
@@ -155,17 +154,23 @@ public class ActiveAdapter extends NetJSONAdapter {
 						it.putExtra("activityId", activityId);
 						it.putExtra("isJoin", true);
 						mContext.startActivity(it);
-					} else {
-						CarSeatSelectDialog dialog = new CarSeatSelectDialog(
-								mContext);
-						dialog.setOnSelectResultListener(new OnSelectResultListener() {
+					} else if (holder.joinT.getText().equals("我要去玩")) {
+						if (user.getIsAuthenticated() == 1) {
+							CarSeatSelectDialog dialog = new CarSeatSelectDialog(
+									mContext);
+							dialog.setOnSelectResultListener(new OnSelectResultListener() {
 
-							@Override
-							public void click(int seatCount) {
-								joinActive(activityId, seatCount);
-							}
-						});
-						dialog.show();
+								@Override
+								public void click(int seatCount) {
+									joinActive(activityId, seatCount);
+								}
+							});
+							dialog.show();
+						} else {
+							joinActive(activityId, 0);
+						}
+					} else {
+
 					}
 				} else {
 					UserInfoManage.getInstance().checkLogin(

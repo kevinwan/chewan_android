@@ -176,6 +176,7 @@ public class MyActiveMembersManageActivity extends CarPlayBaseActivity {
 				JSONObject jo = (JSONObject) adapter.getItem(index);
 				switch (index) {
 				case 0:
+					
 					deleteMember(JSONUtil.getString(jo, "userId"));
 					break;
 				}

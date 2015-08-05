@@ -133,6 +133,7 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 
 			@Override
 			public void onRefresh() {
+				System.out.println("1111111111");
 				getData();
 			}
 		});
@@ -315,7 +316,7 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 				joinT.setText("查看");
 				isJoin = true;
 			} else {
-				joinT.setText("我也要玩");
+				joinT.setText("我要去玩");
 				isJoin = false;
 			}
 		}
@@ -452,16 +453,21 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 					it.putExtra("activityId", activityId);
 					it.putExtra("isJoin", isJoin);
 					startActivity(it);
-				} else {
-					CarSeatSelectDialog dialog = new CarSeatSelectDialog(self);
-					dialog.setOnSelectResultListener(new OnSelectResultListener() {
+				} else if (joinT.getText().equals("我要去玩")) {
+					if (user.getIsAuthenticated() == 1) {
+						CarSeatSelectDialog dialog = new CarSeatSelectDialog(
+								self);
+						dialog.setOnSelectResultListener(new OnSelectResultListener() {
 
-						@Override
-						public void click(int seatCount) {
-							joinActive(seatCount);
-						}
-					});
-					dialog.show();
+							@Override
+							public void click(int seatCount) {
+								joinActive(seatCount);
+							}
+						});
+						dialog.show();
+					} else {
+						joinActive(0);
+					}
 				}
 			} else {
 				UserInfoManage.getInstance().checkLogin((Activity) self,

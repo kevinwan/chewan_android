@@ -154,7 +154,9 @@ public class PersonDetailActivity extends CarPlayBaseActivity implements
 					int position, long arg3) {
 
 				if (position >= galleryCount) {
-					position = position % galleryCount;
+					if (galleryCount != 0) {
+						position = position % galleryCount;
+					}
 				}
 				dotLinLayout.setCurrentFocus(position);
 			}

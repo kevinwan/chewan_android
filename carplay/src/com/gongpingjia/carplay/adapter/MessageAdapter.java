@@ -101,8 +101,10 @@ public class MessageAdapter extends NetJSONAdapter {
 			holder.agreeT.setVisibility(View.GONE);
 		} else {
 			String remarks = JSONUtil.getString(jo, "remarks");
-			holder.agreeT.setText(remarks);
-			if (remarks.equals("同意")) {
+			String type = JSONUtil.getString(jo, "type");
+			if (remarks.equals("") && type.equals("活动申请处理")) {
+				holder.agreeT.setVisibility(View.VISIBLE);
+				holder.agreeT.setText("同意");
 				holder.agreeT
 						.setBackgroundResource(R.drawable.button_yanzheng_bg);
 				holder.agreeT.setOnClickListener(new OnClickListener() {
@@ -110,13 +112,16 @@ public class MessageAdapter extends NetJSONAdapter {
 					@Override
 					public void onClick(View v) {
 						JSONObject jo = (JSONObject) getItem(position);
-						agree(JSONUtil.getString(jo, "messageId"));
+						agree(JSONUtil.getString(jo, "applicationId"));
 					}
 				});
-			} else {
+			} else if(remarks.equals("已同意") && type.equals("活动申请处理")){
+				holder.agreeT.setVisibility(View.VISIBLE);
+				holder.agreeT.setText(remarks);
 				holder.agreeT.setBackgroundResource(R.drawable.button_grey_bg);
+			} else {
+				holder.agreeT.setVisibility(View.GONE);
 			}
-			holder.agreeT.setVisibility(View.VISIBLE);
 		}
 
 		if (JSONUtil.getString(jo, "gender").equals("男")) {

@@ -54,7 +54,7 @@ public class AttentionPersonActivity extends CarPlayBaseActivity {
 		adapter = new NetJSONAdapter(url, self, R.layout.itme_attention_person);
 		adapter.fromWhat("data");
 		adapter.addField("age", R.id.age);
-		adapter.addField(new FieldMap("nickname", R.id.person_name) {
+		adapter.addField(new FieldMap("nickname", R.id.name) {
 
 			@Override
 			public Object fix(View itemV, Integer position, Object o, Object jo) {
@@ -64,7 +64,7 @@ public class AttentionPersonActivity extends CarPlayBaseActivity {
 				ViewUtil.bindNetImage(headI, JSONUtil.getString(data, "photo"),
 						"head");
 				headI.setTag(JSONUtil.getString(data, "userId"));
-				View sexBg = itemV.findViewById(R.id.person_sex);
+				View sexBg = itemV.findViewById(R.id.layout_sex);
 				CarPlayUtil.bindSexView(JSONUtil.getString(data, "gender"),
 						sexBg);
 				CarPlayUtil.bindDriveAge(data,

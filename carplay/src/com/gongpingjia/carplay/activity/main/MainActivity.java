@@ -3,8 +3,14 @@ package com.gongpingjia.carplay.activity.main;
 import java.util.List;
 import java.util.Stack;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import net.duohuo.dhroid.activity.ActivityTack;
 import net.duohuo.dhroid.ioc.IocContainer;
+import net.duohuo.dhroid.net.DhNet;
+import net.duohuo.dhroid.net.NetTask;
+import net.duohuo.dhroid.net.Response;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -23,6 +29,8 @@ import com.gongpingjia.carplay.activity.msg.MsgFragment;
 import com.gongpingjia.carplay.activity.my.ManageAlbumActivity;
 import com.gongpingjia.carplay.activity.my.MyFragment;
 import com.gongpingjia.carplay.activity.my.SettingActivity;
+import com.gongpingjia.carplay.api.API;
+import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.manage.UserInfoManage;
 import com.gongpingjia.carplay.manage.UserInfoManage.LoginCallBack;
 import com.gongpingjia.carplay.util.CarPlayPerference;
@@ -49,6 +57,7 @@ public class MainActivity extends BaseFragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		initView();
+		isAuthen();
 	}
 
 	public void initView() {
@@ -183,9 +192,27 @@ public class MainActivity extends BaseFragmentActivity {
 
 								@Override
 								public void onClick(View arg0) {
-									Intent it = new Intent(MainActivity.this,
-											ManageAlbumActivity.class);
-									startActivity(it);
+									UserInfoManage.getInstance().checkLogin(
+											self, new LoginCallBack() {
+
+												@Override
+												public void onisLogin() {
+													// TODO Auto-generated
+													// method stub
+													Intent it = new Intent(
+															MainActivity.this,
+															ManageAlbumActivity.class);
+													startActivity(it);
+
+												}
+
+												@Override
+												public void onLoginFail() {
+													// TODO Auto-generated
+													// method stub
+
+												}
+											});
 								}
 							});
 					break;
@@ -239,6 +266,32 @@ public class MainActivity extends BaseFragmentActivity {
 			t.commitAllowingStateLoss();
 
 		} catch (Exception e) {
+		}
+	}
+
+	private void isAuthen() {
+		User user = User.getInstance();
+		if (user.isLogin()) {
+			DhNet mDhNet = new DhNet(API.availableSeat + user.getUserId()
+					+ "/seats?token=" + user.getToken());
+			mDhNet.doGet(new NetTask(self) {
+
+				@Override
+				public void doInUI(Response response, Integer transfer) {
+					// TODO Auto-generated method stub
+					if (response.isSuccess()) {
+						JSONObject json = response.jSONFrom("data");
+						try {
+							User user = User.getInstance();
+							user.setIsAuthenticated(json
+									.getInt("isAuthenticated"));
+							// 认证车主
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			});
 		}
 	}
 

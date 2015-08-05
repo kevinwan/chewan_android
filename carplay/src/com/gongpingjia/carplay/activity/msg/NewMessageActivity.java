@@ -65,7 +65,6 @@ public class NewMessageActivity extends CarPlayBaseActivity implements
 	DaoHelper daoHelper;
 
 	List<Message> dataList;
-	ImageView leftTitler;
 
 	CarPlayPerference per;
 
@@ -104,8 +103,6 @@ public class NewMessageActivity extends CarPlayBaseActivity implements
 		}
 		leftTitleT = (TextView) findViewById(R.id.left_text);
 		leftTitleT.setText("全选");
-		leftTitler = (ImageView) findViewById(R.id.back);
-		leftTitler.setVisibility(View.VISIBLE);
 		leftTitleT.setPadding(DhUtil.dip2px(self, 12), 0, 0, 0);
 		leftTitleT.setOnClickListener(new OnClickListener() {
 
@@ -128,30 +125,13 @@ public class NewMessageActivity extends CarPlayBaseActivity implements
 			@Override
 			public void onClick(View v) {
 				mJsonAdapter.showCheck(false);
-				leftTitleT.setVisibility(View.GONE);
 				leftTitleT.setText("全选");
 				rightTitleT.setVisibility(View.GONE);
 				delB.setVisibility(View.GONE);
 				mJsonAdapter.cleanCheck();
 				backI.setVisibility(View.VISIBLE);
-				if (rightTitleT.getText().toString().equals("编辑")) {
-					leftTitleT.setVisibility(View.VISIBLE);
-					leftTitler.setVisibility(View.GONE);
-					leftTitleT.setText("全选");
-					rightTitleT.setText("取消");
-					mJsonAdapter.showCheck(true);
-					if (dataList != null && dataList.size() != 0) {
-						delB.setVisibility(View.VISIBLE);
-					}
-				} else {
-					mJsonAdapter.showCheck(false);
-					leftTitleT.setVisibility(View.GONE);
-					leftTitleT.setText("全选");
-					rightTitleT.setText("编辑");
-					leftTitler.setVisibility(View.VISIBLE);
-					delB.setVisibility(View.GONE);
-					mJsonAdapter.cleanCheck();
-				}
+				mJsonAdapter.showCheck(false);
+				leftTitleT.setVisibility(View.GONE);
 			}
 		});
 
@@ -262,6 +242,13 @@ public class NewMessageActivity extends CarPlayBaseActivity implements
 			public void doInUI(Response response, Integer transfer) {
 				if (response.isSuccess()) {
 					showToast("删除成功!");
+					leftTitleT.setVisibility(View.GONE);
+					leftTitleT.setText("全选");
+					backI
+					.setVisibility(View.VISIBLE);
+					delB.setVisibility(View.GONE);
+					mJsonAdapter.showCheck(false);
+					rightTitleT.setVisibility(View.GONE);
 					mJsonAdapter.refresh();
 				}
 			}

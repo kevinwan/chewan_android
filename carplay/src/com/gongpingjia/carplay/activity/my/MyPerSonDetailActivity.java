@@ -30,6 +30,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
+import com.gongpingjia.carplay.activity.main.MainActivity;
 import com.gongpingjia.carplay.activity.msg.PlayCarChatActivity;
 import com.gongpingjia.carplay.adapter.ActiveAdapter;
 import com.gongpingjia.carplay.adapter.GalleryAdapter;
@@ -99,6 +100,17 @@ public class MyPerSonDetailActivity extends CarPlayBaseActivity implements
 	public void initView() {
 
 		setTitle("我的详情");
+		setRightAction(null, R.drawable.icon_camera, new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated
+				// method stub
+				Intent it = new Intent(self, ManageAlbumActivity.class);
+				startActivity(it);
+
+			}
+		});
 		loginedLl = (LinearLayout) findViewById(R.id.logined);
 		notloginLl = (LinearLayout) findViewById(R.id.notlogin);
 		loginBtn = (Button) findViewById(R.id.login);
@@ -151,7 +163,9 @@ public class MyPerSonDetailActivity extends CarPlayBaseActivity implements
 					int position, long arg3) {
 
 				if (position >= galleryCount) {
-					position = position % galleryCount;
+					if (galleryCount != 0) {
+						position = position % galleryCount;
+					}
 				}
 				dotLinLayout.setCurrentFocus(position);
 			}
@@ -160,13 +174,13 @@ public class MyPerSonDetailActivity extends CarPlayBaseActivity implements
 			public void onNothingSelected(AdapterView<?> arg0) {
 			}
 		});
-		getMyDetails();
 		// 未登录
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
+		getMyDetails();
 		mTimer = new Timer();
 		mTimer.schedule(new TimerTask() {
 			@Override

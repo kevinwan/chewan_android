@@ -49,12 +49,15 @@ public class GalleryAdapter extends BaseAdapter {
 
 	@Override
 	public Object getItem(int position) {
+
 		Object o = null;
-		try {
-			o = jsa.get(position % jsa.length());
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if (jsa != null && jsa.length() != 0) {
+			try {
+				o = jsa.get(position % jsa.length());
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return o;
 	}
