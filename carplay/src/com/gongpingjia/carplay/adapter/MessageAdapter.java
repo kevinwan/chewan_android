@@ -3,34 +3,30 @@ package com.gongpingjia.carplay.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.duohuo.dhroid.adapter.NetJSONAdapter;
+import net.duohuo.dhroid.net.DhNet;
+import net.duohuo.dhroid.net.JSONUtil;
+import net.duohuo.dhroid.net.NetTask;
+import net.duohuo.dhroid.net.Response;
+import net.duohuo.dhroid.util.ViewUtil;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.gongpingjia.carplay.R;
-import com.gongpingjia.carplay.api.API;
-import com.gongpingjia.carplay.bean.Message;
-import com.gongpingjia.carplay.bean.User;
-
 import android.content.Context;
-import android.graphics.Color;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.InputMethodManager;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import net.duohuo.dhroid.adapter.NetJSONAdapter;
-import net.duohuo.dhroid.adapter.PSAdapter;
-import net.duohuo.dhroid.net.DhNet;
-import net.duohuo.dhroid.net.JSONUtil;
-import net.duohuo.dhroid.net.NetTask;
-import net.duohuo.dhroid.net.Response;
-import net.duohuo.dhroid.net.cache.CachePolicy;
-import net.duohuo.dhroid.util.ViewUtil;
+
+import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.api.API;
+import com.gongpingjia.carplay.bean.User;
 
 public class MessageAdapter extends NetJSONAdapter {
 

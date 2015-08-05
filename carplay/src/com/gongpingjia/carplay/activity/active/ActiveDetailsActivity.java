@@ -133,7 +133,6 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 
 			@Override
 			public void onRefresh() {
-				System.out.println("1111111111");
 				getData();
 			}
 		});
@@ -242,7 +241,11 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 				JSONUtil.getString(createrJo, "age"));
 
 		if (JSONUtil.getString(createrJo, "userId").equals(user.getUserId())) {
-			rightTitleT.setText("编辑活动");
+			if (JSONUtil.getInt(headJo, "isModified") == 1) {
+				rightTitleT.setVisibility(View.GONE);
+			} else {
+				rightTitleT.setText("编辑活动");
+			}
 
 		} else {
 			int isSubscribed = JSONUtil.getInt(headJo, "isSubscribed");

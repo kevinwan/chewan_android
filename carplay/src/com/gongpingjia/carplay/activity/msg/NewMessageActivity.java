@@ -99,7 +99,7 @@ public class NewMessageActivity extends CarPlayBaseActivity implements
 		if (type.equals("comment")) {
 			setTitle("新的留言");
 		} else {
-			setTitle("系统消息");
+			setTitle("活动消息");
 		}
 		leftTitleT = (TextView) findViewById(R.id.left_text);
 		leftTitleT.setText("全选");
@@ -159,13 +159,14 @@ public class NewMessageActivity extends CarPlayBaseActivity implements
 				Intent it = null;
 				JSONObject jo = (JSONObject) mJsonAdapter.getItem(position - 1);
 				if (type.equals("comment")) {
+
 					it = new Intent(self, ActiveDetailsActivity.class);
 					it.putExtra("activityId",
 							JSONUtil.getString(jo, "activityId"));
+					startActivity(it);
 				} else {
 
 				}
-				startActivity(it);
 			}
 		});
 		User user = User.getInstance();
@@ -244,8 +245,7 @@ public class NewMessageActivity extends CarPlayBaseActivity implements
 					showToast("删除成功!");
 					leftTitleT.setVisibility(View.GONE);
 					leftTitleT.setText("全选");
-					backI
-					.setVisibility(View.VISIBLE);
+					backI.setVisibility(View.VISIBLE);
 					delB.setVisibility(View.GONE);
 					mJsonAdapter.showCheck(false);
 					rightTitleT.setVisibility(View.GONE);
