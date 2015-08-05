@@ -17,17 +17,12 @@ import org.json.JSONObject;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.gongpingjia.carplay.CarPlayValueFix;
@@ -56,8 +51,7 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 	private EditText nicknameT = null;
 	private String nickname;
 	/** 性别 */
-	private RadioGroup sexR = null;
-	private String gender;
+	private TextView sexT = null;
 	
 	/** 选择城市 */
 	private TextView cityT = null;
@@ -123,7 +117,7 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 		});
 
 		headI = (RoundImageView) findViewById(R.id.head);
-		sexR = (RadioGroup) findViewById(R.id.tab);
+		sexT = (TextView) findViewById(R.id.sex);
 		cityT = (TextView) findViewById(R.id.city);
 		nicknameT = (EditText) findViewById(R.id.nickname);
 		carageT = (EditText) findViewById(R.id.carage);
@@ -135,14 +129,15 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 	
 	/** 判断资料是否有改动 */
 	private boolean isModify(){
-		String sex = sexR.getCheckedRadioButtonId() == R.id.tab_left ? "男"
-				: "女";
 		String name=nicknameT.getText().toString();
 		String carage=carageT.getText().toString();
 		if (carage.contains("年")) {
 			carage=carage.replace("年", "");
 		}
-		if (map.get("flag")||!name.equals(nickname)||!carage.equals(drivingExperience)||!sex.equals(gender)) {
+		if (TextUtils.isEmpty(name)) {
+			return false;
+		}
+		if (map.get("flag")||!name.equals(nickname)||!carage.equals(drivingExperience)) {
 			return true;
 		}
 		return false;
@@ -163,14 +158,13 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 				drivingExperience = JSONUtil.getString(jo,
 						"drivingExperience");
 				String photo = JSONUtil.getString(jo, "photo");
-				gender = JSONUtil.getString(jo, "gender");
+				String gender = JSONUtil.getString(jo, "gender");
 				mProvice= JSONUtil.getString(jo, "province");
 				mCity= JSONUtil.getString(jo, "city");
 				mDistrict= JSONUtil.getString(jo, "district");
 				 cityT.setText(mProvice + mCity + mDistrict);
 				nicknameT.setText(nickname);
-				RadioButton rb=(RadioButton) sexR.findViewById(gender.equals("男") ? R.id.tab_left : R.id.tab_right);
-				rb.setChecked(true);
+				sexT.setText(gender);
 				carageT.setText(drivingExperience+"年");
 				ViewUtil.bindNetImage(headI, photo,
 						CarPlayValueFix.optionsDefault.toString());
@@ -199,13 +193,9 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 	}
 
 	private void modification() {
-		String nickname = nicknameT.getText().toString();
+		String nickname=nicknameT.getText().toString();
 		String carage = carageT.getText().toString().trim();
 		int drivingExperience;
-		if (TextUtils.isEmpty(nickname)) {
-			showToast("用户名不能为空!");
-			return;
-		}
 		if (carage.contains("年")) {
 			carage=carage.replace("年", "");
 		}
@@ -220,12 +210,9 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 			return;
 		}
 
-		String gender = sexR.getCheckedRadioButtonId() == R.id.tab_left ? "男"
-				: "女";
 		DhNet net = new DhNet(API.availableSeat + mUser.getUserId()
 				+ "/info?token=" + mUser.getToken());
 		net.addParam("nickname", nickname);
-		net.addParam("gender", gender);
 		net.addParam("drivingExperience", drivingExperience);
 		net.addParam("province", mProvice);
 		net.addParam("city", mCity);

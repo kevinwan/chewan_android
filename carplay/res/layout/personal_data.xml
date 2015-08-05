@@ -101,7 +101,7 @@
             android:text="性别" />
         
 
-        <RadioGroup
+        <!-- <RadioGroup
             android:id="@+id/tab"
             android:layout_width="match_parent"
             android:layout_height="60dp"
@@ -133,7 +133,14 @@
                 android:text="女"
                 android:textColor="@color/coach_text_s"
                 android:textSize="@dimen/text_medium" />
-        </RadioGroup>
+        </RadioGroup> -->
+        <TextView 
+            android:id="@+id/sex"
+            style="@style/text_black_medium"
+            android:layout_width="fill_parent"
+            android:layout_height="60dp"
+            android:gravity="center_vertical|right"
+            />
     </LinearLayout>
 
     <View
