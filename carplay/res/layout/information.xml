@@ -60,9 +60,9 @@
                     style="@style/text_grey_small"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:paddingRight="5dp"
-                     android:ellipsize="end"
+                    android:ellipsize="end"
                     android:maxLines="1"
+                    android:paddingRight="5dp"
                     android:text="包接送吗？" />
 
                 <com.gongpingjia.carplay.view.BadgeView
