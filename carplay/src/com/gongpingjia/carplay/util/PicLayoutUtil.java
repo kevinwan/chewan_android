@@ -196,12 +196,16 @@ public class PicLayoutUtil {
 		} else {
 			for (int i = 0; i < drawcount; i++) {
 				try {
-					JSONObject jo = jsa.getJSONObject(i);
 					RoundImageView img = (RoundImageView) layout.getChildAt(i);
-					ViewUtil.bindNetImage(img, JSONUtil.getString(jo, "photo"),
-							"head");
-					img.setTag(JSONUtil.getString(jo, "userId"));
-					img.setVisibility(View.VISIBLE);
+					JSONObject jo = jsa.getJSONObject(i);
+					if (jo == null) {
+						img.setVisibility(View.GONE);
+					} else {
+						ViewUtil.bindNetImage(img,
+								JSONUtil.getString(jo, "photo"), "head");
+						img.setTag(JSONUtil.getString(jo, "userId"));
+						img.setVisibility(View.VISIBLE);
+					}
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
