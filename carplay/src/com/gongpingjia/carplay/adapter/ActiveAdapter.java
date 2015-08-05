@@ -128,7 +128,7 @@ public class ActiveAdapter extends NetJSONAdapter {
 			holder.joinT.setText("管理");
 		} else {
 			if (isMember == 1) {
-				holder.joinT.setText("查看");
+				holder.joinT.setText("已加入");
 			} else {
 				holder.joinT.setText("我要去玩");
 			}

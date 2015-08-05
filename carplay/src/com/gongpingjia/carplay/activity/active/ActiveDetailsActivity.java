@@ -313,7 +313,7 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 			isJoin = true;
 		} else {
 			if (isMember == 1) {
-				joinT.setText("查看");
+				joinT.setText("已加入");
 				isJoin = true;
 			} else {
 				joinT.setText("我要去玩");

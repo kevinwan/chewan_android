@@ -12,6 +12,10 @@ import com.gongpingjia.carplay.bean.Message;
 import com.gongpingjia.carplay.bean.User;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -115,7 +119,7 @@ public class MessageAdapter extends NetJSONAdapter {
 						agree(JSONUtil.getString(jo, "applicationId"));
 					}
 				});
-			} else if(remarks.equals("已同意") && type.equals("活动申请处理")){
+			} else if (remarks.equals("已同意") && type.equals("活动申请处理")) {
 				holder.agreeT.setVisibility(View.VISIBLE);
 				holder.agreeT.setText(remarks);
 				holder.agreeT.setBackgroundResource(R.drawable.button_grey_bg);
@@ -123,6 +127,15 @@ public class MessageAdapter extends NetJSONAdapter {
 				holder.agreeT.setVisibility(View.GONE);
 			}
 		}
+
+		String content;
+		// if()
+		// SpannableStringBuilder style = new SpannableStringBuilder(strs);
+		// style.setSpan(new ForegroundColorSpan(Color.RED), start, end,
+		// Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+		// style.setSpan(new ForegroundColorSpan(Color.RED), 7, 9,
+		// Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+		// holder.contentT.setText(style);
 
 		if (JSONUtil.getString(jo, "gender").equals("男")) {
 			holder.sexV.setBackgroundResource(R.drawable.man);
