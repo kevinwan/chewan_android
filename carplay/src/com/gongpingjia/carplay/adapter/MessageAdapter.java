@@ -70,6 +70,7 @@ public class MessageAdapter extends NetJSONAdapter {
 			holder.headI = (ImageView) convertView.findViewById(R.id.head);
 			holder.sexV = convertView.findViewById(R.id.sex);
 			holder.agreeT = (TextView) convertView.findViewById(R.id.agree);
+			holder.countT = (TextView) convertView.findViewById(R.id.count);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
@@ -100,14 +101,16 @@ public class MessageAdapter extends NetJSONAdapter {
 			}
 		});
 		holder.checkI.setVisibility(showcheck ? View.VISIBLE : View.GONE);
-
+		String msgtype = JSONUtil.getString(jo, "type");
 		if (type.equals("comment")) {
+			holder.countT.setVisibility(View.GONE);
 			holder.agreeT.setVisibility(View.GONE);
 		} else {
 			String remarks = JSONUtil.getString(jo, "remarks");
-			String type = JSONUtil.getString(jo, "type");
-			if (remarks.equals("") && type.equals("活动申请处理")) {
+			String seatcontent = "提供" + JSONUtil.getInt(jo, "seat") + "座位";
+			if (remarks.equals("") && msgtype.equals("活动申请处理")) {
 				holder.agreeT.setVisibility(View.VISIBLE);
+				holder.countT.setVisibility(View.VISIBLE);
 				holder.agreeT.setText("同意");
 				holder.agreeT
 						.setBackgroundResource(R.drawable.button_yanzheng_bg);
@@ -119,23 +122,56 @@ public class MessageAdapter extends NetJSONAdapter {
 						agree(JSONUtil.getString(jo, "applicationId"));
 					}
 				});
-			} else if (remarks.equals("已同意") && type.equals("活动申请处理")) {
+
+				SpannableStringBuilder style = new SpannableStringBuilder(
+						seatcontent);
+				style.setSpan(new ForegroundColorSpan(mContext.getResources()
+						.getColor(R.color.text_orange)), 2, seatcontent.length() - 2,
+						Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+				holder.countT.setText(style);
+
+			} else if (remarks.equals("已同意") && msgtype.equals("活动申请处理")) {
 				holder.agreeT.setVisibility(View.VISIBLE);
 				holder.agreeT.setText(remarks);
 				holder.agreeT.setBackgroundResource(R.drawable.button_grey_bg);
+				holder.countT.setVisibility(View.VISIBLE);
+				SpannableStringBuilder style = new SpannableStringBuilder(
+						seatcontent);
+				style.setSpan(new ForegroundColorSpan(mContext.getResources()
+						.getColor(R.color.text_orange)), 2, seatcontent.length() - 2,
+						Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+				holder.countT.setText(style);
 			} else {
 				holder.agreeT.setVisibility(View.GONE);
+				holder.countT.setVisibility(View.GONE);
 			}
 		}
 
-		String content;
-		// if()
-		// SpannableStringBuilder style = new SpannableStringBuilder(strs);
-		// style.setSpan(new ForegroundColorSpan(Color.RED), start, end,
-		// Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-		// style.setSpan(new ForegroundColorSpan(Color.RED), 7, 9,
-		// Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
-		// holder.contentT.setText(style);
+		String newcontent = null;
+		String content = JSONUtil.getString(jo, "content");
+		if (!msgtype.equals("留言")) {
+			if (msgtype.equals("车主认证")) {
+				newcontent = "您提交的" + content;
+			} else if (msgtype.equals("活动邀请")) {
+				newcontent = "邀请您加入" + content + "活动";
+			} else if (msgtype.equals("活动申请结果")) {
+				newcontent = "活动申请: " + content + "已同意";
+			} else if (msgtype.equals("活动申请处理")) {
+				newcontent = "想加入" + content + "活动";
+			}
+			int start = newcontent.indexOf(content);
+			SpannableStringBuilder style = new SpannableStringBuilder(
+					newcontent);
+			style.setSpan(new ForegroundColorSpan(mContext.getResources()
+					.getColor(R.color.text_blue_light)), start, start + content.length(),
+					Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+			// style.setSpan(new ForegroundColorSpan(Color.RED), 0, start,
+			// Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+			holder.contentT.setText(style);
+		} else {
+			ViewUtil.bindView(holder.contentT,
+					JSONUtil.getString(jo, "content"));
+		}
 
 		if (JSONUtil.getString(jo, "gender").equals("男")) {
 			holder.sexV.setBackgroundResource(R.drawable.man);
@@ -147,7 +183,6 @@ public class MessageAdapter extends NetJSONAdapter {
 		holder.headI.setTag(JSONUtil.getString(jo, "userId"));
 		ViewUtil.bindView(holder.ageT, JSONUtil.getString(jo, "age"));
 		ViewUtil.bindView(holder.nameT, JSONUtil.getString(jo, "nickname"));
-		ViewUtil.bindView(holder.contentT, JSONUtil.getString(jo, "content"));
 
 		return convertView;
 	}
@@ -228,5 +263,7 @@ public class MessageAdapter extends NetJSONAdapter {
 		View sexV;
 
 		TextView agreeT;
+
+		TextView countT;
 	}
 }

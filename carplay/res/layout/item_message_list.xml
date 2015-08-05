@@ -71,21 +71,37 @@
             <TextView
                 android:id="@+id/content"
                 style="@style/text_grey_small"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="8dp"
                 android:ellipsize="end"
                 android:maxLines="1" />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/agree"
-            style="@style/text_white_medium"
-            android:layout_width="60dp"
-            android:layout_height="32dp"
-            android:background="@drawable/button_yanzheng_bg"
-            android:gravity="center"
-            android:text="同意"
-            android:textSize="16sp"
-            android:visibility="gone" />
+        <LinearLayout
+            android:id="@+id/agree_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/agree"
+                style="@style/text_white_medium"
+                android:layout_width="60dp"
+                android:layout_height="32dp"
+                android:background="@drawable/button_yanzheng_bg"
+                android:gravity="center"
+                android:text="同意"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="4dp"
+                android:text="提供0座位"
+                android:textColor="@color/text_grey"
+                android:textSize="@dimen/text_smaller" />
+        </LinearLayout>
     </LinearLayout>
 
     <View
