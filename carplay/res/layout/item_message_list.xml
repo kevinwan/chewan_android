@@ -7,10 +7,12 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="85dp"
+        android:layout_height="wrap_content"
         android:layout_marginRight="10dp"
         android:gravity="center_vertical"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:paddingBottom="15dp"
+        android:paddingTop="12dp" >
 
         <ImageView
             android:id="@+id/check"
@@ -31,9 +33,10 @@
             android:src="@drawable/head_icon" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
+            android:layout_weight="1"
             android:gravity="center_vertical"
             android:orientation="vertical" >
 
@@ -68,8 +71,20 @@
             <TextView
                 android:id="@+id/content"
                 style="@style/text_grey_small"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="10dp"
+                android:ellipsize="end"
+                android:maxLines="1" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/agree"
+            style="@style/text_white_medium"
+            android:layout_width="60dp"
+            android:layout_height="34dp"
+            android:background="@drawable/button_yanzheng_bg"
+            android:gravity="center"
+            android:text="同意"
+            android:visibility="gone" />
     </LinearLayout>
 
     <View

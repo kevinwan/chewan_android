@@ -57,7 +57,7 @@ public class CarSeatUtil
                 parentV.addView(childV);
                 
                 ImageView carLogo = (ImageView)childV.findViewById(R.id.logo);
-                ViewUtil.bindNetImage(carLogo, JSONUtil.getString(carJo, "carBrandLogo"), "carlogo");
+                ViewUtil.bindNetImage(carLogo, JSONUtil.getString(carJo, "carBrandLogo"), "carbiglogo");
                 ViewUtil.bindView(childV.findViewById(R.id.name), JSONUtil.getString(carJo, "carModel"));
                 
                 final String carId = JSONUtil.getString(carJo, "carId");

@@ -1,5 +1,8 @@
 package com.gongpingjia.carplay.activity.my;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
@@ -13,6 +16,7 @@ import org.json.JSONObject;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -79,6 +83,12 @@ public class MyPerSonDetailActivity extends CarPlayBaseActivity implements
 
 	CarPlayGallery gallery;
 
+	Timer mTimer;
+
+	int currentPosition = 200;
+
+	int galleryCount;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -138,17 +148,50 @@ public class MyPerSonDetailActivity extends CarPlayBaseActivity implements
 		gallery.setOnItemSelectedListener(new OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
-					int current, long arg3) {
-				dotLinLayout.setCurrentFocus(current);
+					int position, long arg3) {
+
+				if (position >= galleryCount) {
+					position = position % galleryCount;
+				}
+				dotLinLayout.setCurrentFocus(position);
 			}
 
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
 			}
 		});
-
 		getMyDetails();
 		// 未登录
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		mTimer = new Timer();
+		mTimer.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				handler.sendEmptyMessage(0);
+			}
+		}, 0, 10 * 1000);
+	}
+
+	@Override
+	protected void onStop() {
+		// TODO Auto-generated method stub
+		super.onStop();
+		if (mTimer != null) {
+			mTimer.cancel();
+		}
+	}
+
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		if (mTimer != null) {
+			mTimer.cancel();
+		}
 	}
 
 	/** 获取个人资料 */
@@ -213,14 +256,16 @@ public class MyPerSonDetailActivity extends CarPlayBaseActivity implements
 	}
 
 	private void bingGallery(JSONArray jsa) {
-		int count = jsa.length();
-		if (count > 0) {
-			dotLinLayout.setDotCount(count);
-			dotLinLayout.setCurrentFocus(count / 2);
-			gallery.setSelection(count / 2);
+		galleryCount = jsa.length();
+		if (galleryCount > 0) {
+			dotLinLayout.setDotCount(galleryCount);
+			dotLinLayout.setCurrentFocus(galleryCount / 2);
+			gallery.setSelection(galleryCount / 2);
 		}
 		GalleryAdapter adapter = new GalleryAdapter(self, jsa);
 		gallery.setAdapter(adapter);
+		gallery.setSelection(200);
+		currentPosition = 200;
 	}
 
 	@Override
@@ -285,5 +330,12 @@ public class MyPerSonDetailActivity extends CarPlayBaseActivity implements
 			}
 		});
 	}
+
+	Handler handler = new Handler() {
+		public void handleMessage(android.os.Message msg) {
+			currentPosition = currentPosition + 1;
+			gallery.setSelection(currentPosition);
+		};
+	};
 
 }

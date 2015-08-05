@@ -22,7 +22,8 @@
             <ImageView
                 android:id="@+id/logo"
                 android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_height="30dp"
+                android:src="@drawable/car_default" />
 
             <TextView
                 android:id="@+id/name"
@@ -32,14 +33,13 @@
             <LinearLayout
                 android:id="@+id/seat_layout"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                 >
+                android:layout_height="wrap_content" >
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_s"
-                    android:layout_marginLeft="15dp" >
+                    android:layout_marginLeft="15dp"
+                    android:background="@drawable/bg_s" >
 
                     <ImageView
                         android:id="@+id/seat"
@@ -61,8 +61,8 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_s"
-                    android:layout_marginLeft="15dp" >
+                    android:layout_marginLeft="15dp"
+                    android:background="@drawable/bg_s" >
 
                     <ImageView
                         android:id="@+id/seat"
@@ -84,8 +84,8 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_s"
-                    android:layout_marginLeft="15dp" >
+                    android:layout_marginLeft="15dp"
+                    android:background="@drawable/bg_s" >
 
                     <ImageView
                         android:id="@+id/seat"
@@ -107,8 +107,8 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_s"
-                    android:layout_marginLeft="15dp" >
+                    android:layout_marginLeft="15dp"
+                    android:background="@drawable/bg_s" >
 
                     <ImageView
                         android:id="@+id/seat"
@@ -130,8 +130,8 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_s"
-                    android:layout_marginLeft="15dp" >
+                    android:layout_marginLeft="15dp"
+                    android:background="@drawable/bg_s" >
 
                     <ImageView
                         android:id="@+id/seat"
@@ -153,8 +153,8 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_s"
-                    android:layout_marginLeft="15dp" >
+                    android:layout_marginLeft="15dp"
+                    android:background="@drawable/bg_s" >
 
                     <ImageView
                         android:id="@+id/seat"
@@ -176,8 +176,8 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_s"
-                    android:layout_marginLeft="15dp" >
+                    android:layout_marginLeft="15dp"
+                    android:background="@drawable/bg_s" >
 
                     <ImageView
                         android:id="@+id/seat"

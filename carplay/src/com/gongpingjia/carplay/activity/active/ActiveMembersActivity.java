@@ -128,7 +128,7 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 				if (isJoin) {
 					showGradDialog(carId, childPosition);
 				} else {
-					joinActive();
+					showToast("请先加入活动!");
 				}
 			}
 

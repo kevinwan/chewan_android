@@ -11,6 +11,7 @@
 
         <com.gongpingjia.carplay.view.CarPlayGallery
             android:id="@+id/gallery"
+             android:background="@color/tab_grey_bg"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
             android:fadingEdgeLength="0dp"

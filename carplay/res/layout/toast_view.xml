@@ -14,12 +14,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:paddingBottom="6dp"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
-            android:paddingTop="6dp"
+            android:paddingBottom="15dp"
+            android:paddingLeft="42dp"
+            android:paddingRight="42dp"
+            android:paddingTop="15dp"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_medium" />
+            android:textSize="@dimen/text_small" />
     </LinearLayout>
 
 </LinearLayout>

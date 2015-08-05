@@ -99,7 +99,7 @@ public class MyActiveMembersManageActivity extends CarPlayBaseActivity {
 
 			@Override
 			public void onSeatClick(String carId, int childPosition) {
-				showGradDialog(carId, childPosition);
+				// showGradDialog(carId, childPosition);
 			}
 
 			@Override

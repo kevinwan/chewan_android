@@ -172,7 +172,8 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 
 	public void getData() {
 		DhNet net = new DhNet(API.CWBaseurl + "/activity/" + activityId
-				+ "/info");
+				+ "/info?userId=" + user.getUserId() + "&token="
+				+ user.getToken());
 		net.doGetInDialog(new NetTask(self) {
 
 			@Override

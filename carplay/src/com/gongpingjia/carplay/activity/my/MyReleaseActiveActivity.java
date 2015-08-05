@@ -1,13 +1,20 @@
 package com.gongpingjia.carplay.activity.my;
 
+import org.json.JSONObject;
+
+import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.util.ViewUtil;
 import net.duohuo.dhroid.view.NetRefreshAndMoreListView;
 import net.duohuo.dhroid.view.NetRefreshAndMoreListView.OnEmptyDataListener;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
+import com.gongpingjia.carplay.activity.active.ActiveDetailsActivity;
 import com.gongpingjia.carplay.adapter.MyReleaseActiveAdapter;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.bean.User;
@@ -45,6 +52,17 @@ public class MyReleaseActiveActivity extends CarPlayBaseActivity
                 findViewById(R.id.empty).setVisibility(showeEptyView ? View.VISIBLE : View.GONE);
             }
         });
+        listV.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				JSONObject jo = (JSONObject) adapter.getItem(position - 1);
+				Intent it = new Intent(self, ActiveDetailsActivity.class);
+				it.putExtra("activityId", JSONUtil.getString(jo, "activityId"));
+				startActivity(it);
+			}
+		});
         adapter =
             new MyReleaseActiveAdapter(API.CWBaseurl + "/user/" + user.getUserId() + "/post?userId=" + user.getUserId()
                 + "&token=" + user.getToken(), self, R.layout.item_myrelease_active);

@@ -42,6 +42,7 @@ public class MsgFragment extends Fragment {
 
 	Timer mTimer;
 
+
 	public static MsgFragment getInstance() {
 		if (instance == null) {
 			instance = new MsgFragment();

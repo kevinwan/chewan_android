@@ -4,8 +4,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import net.duohuo.dhroid.ioc.IocContainer;
 import net.duohuo.dhroid.net.DhNet;
+import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.util.DhUtil;
@@ -13,10 +17,12 @@ import net.duohuo.dhroid.view.NetRefreshAndMoreListView;
 import net.duohuo.dhroid.view.RefreshAndMoreListView;
 import net.duohuo.dhroid.view.RefreshAndMoreListView.OnRefreshListener;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -24,6 +30,7 @@ import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
+import com.gongpingjia.carplay.activity.active.ActiveDetailsActivity;
 import com.gongpingjia.carplay.adapter.MessageAdapter;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.bean.Message;
@@ -72,7 +79,7 @@ public class NewMessageActivity extends CarPlayBaseActivity implements
 
 	@Override
 	public void initView() {
-
+		type = getIntent().getStringExtra("type");
 		per = IocContainer.getShare().get(CarPlayPerference.class);
 		per.load();
 		if (per.isShowMessageGuilde == 0) {
@@ -90,7 +97,11 @@ public class NewMessageActivity extends CarPlayBaseActivity implements
 			}
 		});
 		backI = (ImageView) findViewById(R.id.back);
-		setTitle("新的留言");
+		if (type.equals("comment")) {
+			setTitle("新的留言");
+		} else {
+			setTitle("系统消息");
+		}
 		leftTitleT = (TextView) findViewById(R.id.left_text);
 		leftTitleT.setText("全选");
 		leftTitler = (ImageView) findViewById(R.id.back);
@@ -160,10 +171,28 @@ public class NewMessageActivity extends CarPlayBaseActivity implements
 				return false;
 			}
 		});
+		listView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Intent it = null;
+				JSONObject jo = (JSONObject) mJsonAdapter.getItem(position - 1);
+				if (type.equals("comment")) {
+					it = new Intent(self, ActiveDetailsActivity.class);
+					it.putExtra("activityId",
+							JSONUtil.getString(jo, "activityId"));
+				} else {
+
+				}
+				startActivity(it);
+			}
+		});
 		User user = User.getInstance();
 		String url = API.CWBaseurl + "/user/" + user.getUserId()
 				+ "/message/list?token=" + user.getToken() + "&type=" + type;
-		mJsonAdapter = new MessageAdapter(url, self, R.layout.item_message_list);
+		mJsonAdapter = new MessageAdapter(url, self,
+				R.layout.item_message_list, type);
 		mJsonAdapter.fromWhat("data");
 		listView.setAdapter(mJsonAdapter);
 		// getData();
@@ -208,12 +237,35 @@ public class NewMessageActivity extends CarPlayBaseActivity implements
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.del:
-			// del();
+			deleteMessage();
 			break;
 
 		default:
 			break;
 		}
+	}
+
+	private void deleteMessage() {
+		List<String> delList = mJsonAdapter.getCheckMessage();
+		if (delList.size() == 0) {
+			showToast("请选择需要删除的消息!");
+			return;
+		}
+		JSONArray jsa = new JSONArray(delList);
+		User user = User.getInstance();
+		DhNet net = new DhNet(API.CWBaseurl + "/message/remove?userId="
+				+ user.getUserId() + "&token=" + user.getToken());
+		net.addParam("messages", jsa);
+		net.doPostInDialog("删除中...", new NetTask(self) {
+
+			@Override
+			public void doInUI(Response response, Integer transfer) {
+				if (response.isSuccess()) {
+					showToast("删除成功!");
+					mJsonAdapter.refresh();
+				}
+			}
+		});
 	}
 
 	// private void del() {

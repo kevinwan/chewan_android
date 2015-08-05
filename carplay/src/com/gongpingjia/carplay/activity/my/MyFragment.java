@@ -1,5 +1,8 @@
 package com.gongpingjia.carplay.activity.my;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
@@ -14,12 +17,17 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
+import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -78,6 +86,12 @@ public class MyFragment extends Fragment implements OnClickListener {
 	DotLinLayout dotLinLayout;
 
 	CarPlayGallery gallery;
+
+	Timer galleryTimer;
+
+	int currentPosition = 200;
+
+	int galleryCount = 0;
 
 	public static MyFragment getInstance() {
 		if (instance == null) {
@@ -157,8 +171,12 @@ public class MyFragment extends Fragment implements OnClickListener {
 		gallery.setOnItemSelectedListener(new OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
-					int current, long arg3) {
-				dotLinLayout.setCurrentFocus(current);
+					int position, long arg3) {
+
+				if (position >= galleryCount) {
+					position = position % galleryCount;
+				}
+				dotLinLayout.setCurrentFocus(position);
 			}
 
 			@Override
@@ -230,14 +248,16 @@ public class MyFragment extends Fragment implements OnClickListener {
 	}
 
 	private void bingGallery(JSONArray jsa) {
-		int count = jsa.length();
-		if (count > 0) {
-			dotLinLayout.setDotCount(count);
-			dotLinLayout.setCurrentFocus(count / 2);
-			gallery.setSelection(count / 2);
+		galleryCount = jsa.length();
+		if (galleryCount > 0) {
+			dotLinLayout.setDotCount(galleryCount);
+			dotLinLayout.setCurrentFocus(galleryCount / 2);
+			gallery.setSelection(galleryCount / 2);
 		}
 		GalleryAdapter adapter = new GalleryAdapter(getActivity(), jsa);
 		gallery.setAdapter(adapter);
+		gallery.setSelection(200);
+		currentPosition = 200;
 	}
 
 	@Override
@@ -321,6 +341,37 @@ public class MyFragment extends Fragment implements OnClickListener {
 			notloginLl.setVisibility(View.GONE);
 			getMyDetails();
 		}
+
+		galleryTimer = new Timer();
+		galleryTimer.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				handler.sendEmptyMessage(0);
+			}
+		}, 0, 10 * 1000);
 	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		if (galleryTimer != null) {
+			galleryTimer.cancel();
+		}
+	}
+
+	@Override
+	public void onDetach() {
+		super.onDetach();
+		if (galleryTimer != null) {
+			galleryTimer.cancel();
+		}
+	}
+
+	Handler handler = new Handler() {
+		public void handleMessage(android.os.Message msg) {
+			currentPosition = currentPosition + 1;
+			gallery.setSelection(currentPosition);
+		};
+	};
 
 }

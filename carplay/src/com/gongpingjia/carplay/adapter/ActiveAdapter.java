@@ -136,12 +136,6 @@ public class ActiveAdapter extends NetJSONAdapter {
 		}
 		holder.joinT.setVisibility(View.VISIBLE);
 
-		if (position == 0) {
-			int[] location = new int[2];
-			holder.joinT.getLocationOnScreen(location);
-			int y = location[1];
-			System.out.println("y......................" + y);
-		}
 		final String activityId = JSONUtil.getString(jo, "activityId");
 		holder.joinT.setOnClickListener(new OnClickListener() {
 

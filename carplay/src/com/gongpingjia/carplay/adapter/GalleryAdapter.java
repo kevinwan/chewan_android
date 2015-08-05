@@ -34,19 +34,24 @@ public class GalleryAdapter extends BaseAdapter {
 
 	@Override
 	public int getCount() {
-		if (jsa == null) {
-			return 0;
-		} else {
-			return jsa.length();
-
-		}
+		return Integer.MAX_VALUE;
 	}
+
+	// @Override
+	// public int getCount() {
+	// if (jsa == null) {
+	// return 0;
+	// } else {
+	// return jsa.length();
+	//
+	// }
+	// }
 
 	@Override
 	public Object getItem(int position) {
 		Object o = null;
 		try {
-			o = jsa.get(position);
+			o = jsa.get(position % jsa.length());
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
