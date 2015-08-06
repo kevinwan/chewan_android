@@ -76,6 +76,7 @@ public class ActiveListFragment extends Fragment {
 		mLayoutInflater = LayoutInflater.from(getActivity());
 		topTab = (LinearLayout) mainV.findViewById(R.id.top_tab);
 		initTopTab();
+		setTopTab(0);
 		user = User.getInstance();
 		page = (ViewPager) mainV.findViewById(R.id.page);
 		page.setOnPageChangeListener(new OnPageChangeListener() {
@@ -227,9 +228,6 @@ public class ActiveListFragment extends Fragment {
 		newAdapter.fromWhat("data");
 		newListV.setAdapter(newAdapter);
 		newAdapter.showNext();
-	}
-
-	public void getData(String key, ListView listV, NetJSONAdapter adapter) {
 	}
 
 	private void initTopTab() {

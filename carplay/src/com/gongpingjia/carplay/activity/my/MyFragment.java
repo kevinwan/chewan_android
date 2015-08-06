@@ -346,7 +346,7 @@ public class MyFragment extends Fragment implements OnClickListener {
 	public void onResume() {
 		super.onResume();
 		// 已登录
-		if (!TextUtils.isEmpty(user.getUserId())) {
+		if (user.isLogin()) {
 			loginedLl.setVisibility(View.VISIBLE);
 			notloginLl.setVisibility(View.GONE);
 			getMyDetails();

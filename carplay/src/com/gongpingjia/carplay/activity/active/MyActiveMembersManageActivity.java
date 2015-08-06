@@ -141,8 +141,8 @@ public class MyActiveMembersManageActivity extends CarPlayBaseActivity {
 
 				ViewUtil.bindView(itemV.findViewById(R.id.age),
 						JSONUtil.getString(itemjo, "age"));
-				ViewUtil.bindView(itemV.findViewById(R.id.name),
-						JSONUtil.getString(itemjo, "nickname"));
+				// ViewUtil.bindView(itemV.findViewById(R.id.name),
+				// JSONUtil.getString(itemjo, "nickname"));
 				CarPlayUtil.bindDriveAge(itemjo,
 						(ImageView) itemV.findViewById(R.id.car_logo),
 						(TextView) itemV.findViewById(R.id.drive_age));
