@@ -100,7 +100,7 @@
                 android:layout_weight="1"
                 android:background="@color/nothing"
                 android:gravity="center_vertical"
-                android:hint="请输入密码"
+                android:hint="密码6-16位数字和字母组合"
                 android:inputType="textPassword"
                 android:singleLine="true"
                 android:textColorHint="@color/text_grey" />

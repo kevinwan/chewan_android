@@ -117,14 +117,14 @@ public class RegisterActivity extends CarPlayBaseActivity implements OnClickList
         final String strPhone = phoneEt.getText().toString();
         if (TextUtils.isEmpty(strPhone))
         {
-            showToast("请输入手机号码");
+            showToast("手机号不能为空");
             return;
         }
         else
         {
             if (!Utils.isValidMobilePhoneNumber(strPhone))
             {
-                showToast("请输入正确的手机号码");
+                showToast("手机格式错误");
                 return;
             }
         }
@@ -132,21 +132,21 @@ public class RegisterActivity extends CarPlayBaseActivity implements OnClickList
         final String strCaptcha = codeEt.getText().toString();
         if (TextUtils.isEmpty(strCaptcha))
         {
-            showToast("请输入验证码");
+            showToast("验证码不能为空哦");
             return;
         }
         
         final String strPassword = pswdEt.getText().toString();
         if (TextUtils.isEmpty(strPassword))
         {
-            showToast("请输入密码");
+            showToast("密码不能为空哦");
             return;
         }
         else
         {
             if (strPassword.length() < 6 || strPassword.length() > 16)
             {
-                showToast("密码长度应在6-16之间，请重新输入");
+                showToast("密码必须为6-16位数字和字母组合");
                 return;
             }
         }
@@ -170,14 +170,14 @@ public class RegisterActivity extends CarPlayBaseActivity implements OnClickList
         final String strPhone = phoneEt.getText().toString();
         if (TextUtils.isEmpty(strPhone))
         {
-            showToast("请输入手机号码");
+            showToast("手机号不能为空");
             return;
         }
         else
         {
             if (!Utils.isValidMobilePhoneNumber(strPhone))
             {
-                showToast("请输入正确的手机号码");
+                showToast("手机格式错误");
                 return;
             }
         }
