@@ -92,6 +92,8 @@ public class MyActiveMembersManageActivity extends CarPlayBaseActivity {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_active_members);
+        
+        setupShare();
 
         setRightAction("邀请", -1, new View.OnClickListener() {
 
