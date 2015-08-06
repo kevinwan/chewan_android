@@ -245,11 +245,13 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 				rightTitleT.setVisibility(View.GONE);
 			} else {
 				rightTitleT.setText("编辑活动");
+				rightTitleT.setVisibility(View.VISIBLE);
 			}
 
 		} else {
 			int isSubscribed = JSONUtil.getInt(headJo, "isSubscribed");
 			rightTitleT.setText(isSubscribed == 0 ? "关注" : "取消关注");
+			rightTitleT.setVisibility(View.VISIBLE);
 		}
 
 		rightTitleT.setOnClickListener(new OnClickListener() {
@@ -284,8 +286,6 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 				}
 			}
 		});
-
-		rightTitleT.setVisibility(View.VISIBLE);
 
 		JSONArray picJsa = JSONUtil.getJSONArray(headJo, "cover");
 		LinearLayout pivlayout = (LinearLayout) headV

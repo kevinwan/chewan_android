@@ -145,7 +145,7 @@ public class PicLayoutUtil {
 
 	private TextView createCountTextView(int count) {
 		TextView text = new TextView(mContext);
-		text.setBackgroundResource(R.drawable.head2);
+		text.setBackgroundResource(R.drawable.head_grey);
 		text.setGravity(Gravity.CENTER);
 		text.setTextColor(mContext.getResources().getColor(R.color.white));
 		text.setText(count + "");
@@ -154,7 +154,7 @@ public class PicLayoutUtil {
 
 	private TextView createCountTextView() {
 		TextView text = new TextView(mContext);
-		text.setBackgroundResource(R.drawable.head2);
+		text.setBackgroundResource(R.drawable.head_grey);
 		text.setGravity(Gravity.CENTER);
 		text.setTextColor(mContext.getResources().getColor(R.color.white));
 		text.setVisibility(View.GONE);
@@ -197,10 +197,9 @@ public class PicLayoutUtil {
 			for (int i = 0; i < drawcount; i++) {
 				try {
 					RoundImageView img = (RoundImageView) layout.getChildAt(i);
-					JSONObject jo = jsa.getJSONObject(i);
-					if (jo == null) {
-						img.setVisibility(View.GONE);
-					} else {
+					img.setVisibility(View.GONE);
+					for (int j = 0; j < jsa.length(); j++) {
+						JSONObject jo = jsa.getJSONObject(i);
 						ViewUtil.bindNetImage(img,
 								JSONUtil.getString(jo, "photo"), "head");
 						img.setTag(JSONUtil.getString(jo, "userId"));

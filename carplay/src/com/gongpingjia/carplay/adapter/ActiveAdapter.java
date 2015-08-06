@@ -149,11 +149,13 @@ public class ActiveAdapter extends NetJSONAdapter {
 						it.putExtra("activityId", activityId);
 						it.putExtra("isJoin", true);
 						mContext.startActivity(it);
+
 					} else if (holder.joinT.getText().toString().equals("已加入")) {
 						it = new Intent(mContext, ActiveMembersActivity.class);
 						it.putExtra("activityId", activityId);
 						it.putExtra("isJoin", true);
 						mContext.startActivity(it);
+
 					} else if (holder.joinT.getText().equals("我要去玩")) {
 						if (user.getIsAuthenticated() == 1) {
 							CarSeatSelectDialog dialog = new CarSeatSelectDialog(
@@ -165,9 +167,11 @@ public class ActiveAdapter extends NetJSONAdapter {
 									joinActive(activityId, seatCount);
 								}
 							});
+
 							dialog.show();
 						} else {
 							joinActive(activityId, 0);
+
 						}
 					} else {
 
