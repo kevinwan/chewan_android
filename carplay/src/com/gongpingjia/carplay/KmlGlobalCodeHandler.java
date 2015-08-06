@@ -21,6 +21,7 @@ import android.text.TextUtils;
  */
 public class KmlGlobalCodeHandler implements GlobalCodeHandler
 {
+	
     
     Long time = 0l;
     

@@ -14,7 +14,7 @@
             android:layout_height="match_parent"
             android:background="#CCD0D9"
             android:scaleType="center"
-            android:src="@drawable/icon_add_photo" />
+            android:src="@drawable/icon_camera_add" />
 
         <ImageView
             android:id="@+id/imgView_visible"

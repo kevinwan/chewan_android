@@ -103,7 +103,6 @@ public class ImageAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         PhotoState photo = mDatas.get(position);
-        // TODO Auto-generated method stub
         GridView.LayoutParams params = new GridView.LayoutParams(picHeight, picHeight);
         convertView.setLayoutParams(params);
 
