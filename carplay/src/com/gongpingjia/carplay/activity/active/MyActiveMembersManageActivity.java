@@ -49,6 +49,7 @@ import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
 import com.umeng.socialize.controller.listener.SocializeListeners.SnsPostListener;
 import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.weixin.controller.UMWXHandler;
 import com.umeng.socialize.weixin.media.CircleShareContent;
 import com.umeng.socialize.weixin.media.WeiXinShareContent;
 
@@ -74,6 +75,17 @@ public class MyActiveMembersManageActivity extends CarPlayBaseActivity {
 
     // umeng分享
     private UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.share");
+
+    // 微信id
+    static String sAppId = "wx4c127cf07bd7d80b";
+
+    static String sAppSecret = "315ce754c5a1096c5188b4b69a7b9f04";
+
+    // 微信好友
+    private UMWXHandler wxHandler;
+
+    // 微信朋友圈
+    private UMWXHandler wxCircleHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,6 +175,16 @@ public class MyActiveMembersManageActivity extends CarPlayBaseActivity {
                 popWin.showAsDropDown(findViewById(R.id.title_bar));
             }
         });
+    }
+
+    private void setupShare() {
+        // 微信朋友圈
+        wxCircleHandler = new UMWXHandler(this, sAppId, sAppSecret);
+        wxCircleHandler.setToCircle(true);
+        wxCircleHandler.addToSocialSDK();
+        // 微信好友
+        wxHandler = new UMWXHandler(this, sAppId, sAppSecret);
+        wxHandler.addToSocialSDK();
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.gongpingjia.carplay.activity.active;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -20,7 +21,6 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,7 +29,9 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -135,6 +137,10 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
     // 微信朋友圈
     private UMWXHandler wxCircleHandler;
 
+    private boolean isEditable = false;
+
+    private ImageView mDelImgView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -208,6 +214,37 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
         mFinishInviteBtn = (Button) findViewById(R.id.btn_finish_invite);
         mPhotoGridView = (NestedGridView) findViewById(R.id.gv_photo);
 
+        mDelImgView = (ImageView) findViewById(R.id.right_icon);
+        mDelImgView.setImageResource(R.drawable.action_delete);
+        mDelImgView.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                if (isEditable) {
+                    boolean any = false;
+                    Iterator<PhotoState> iterator = mPhotoStates.iterator();
+                    while (iterator.hasNext()) {
+                        PhotoState state = iterator.next();
+                        if (state.isChecked()) {
+                            any = true;
+                            int index = mPhotoStates.indexOf(state);
+                            mPicIds.remove(index);
+                            iterator.remove();
+                        }
+                    }
+                    if (!any) {
+                        showToast("请至少选择一张图片");
+                        return;
+                    } else {
+                        mImageAdapter.notifyDataSetChanged();
+                        isEditable = false;
+                        mDelImgView.setVisibility(View.GONE);
+                    }
+                }
+            }
+        });
+
         // 获取可用座位数
         mDhNet = new DhNet(API.availableSeat + mUser.getUserId() + "/seats?token=" + mUser.getToken());
         mDhNet.doGet(new NetTask(self) {
@@ -250,6 +287,21 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
 
         mPhotoGridView.setAdapter(mImageAdapter);
 
+        mPhotoGridView.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                // TODO Auto-generated method stub
+                if (!isEditable && !mPhotoStates.get(position).isLast()) {
+                    isEditable = true;
+                    mDelImgView.setVisibility(View.VISIBLE);
+                    mPhotoStates.get(position).setChecked(true);
+                    mImageAdapter.notifyDataSetChanged();
+                }
+                return true;
+            }
+        });
+
         mPhotoGridView.setOnItemClickListener(new OnItemClickListener() {
 
             @Override
@@ -258,12 +310,14 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                     mCurPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg").getAbsolutePath();
                     PhotoUtil.getPhoto(self, Constant.TAKE_PHOTO, Constant.PICK_PHOTO, new File(mCurPath));
                 } else {
-                    mPicIds.remove(position);
-                    mPhotoStates.remove(position);
-                    if (mPhotoStates.size() == 8 && !mPhotoStates.get(7).isLast()) {
-                        mPhotoStates.add(mLastPhoto);
+                    if (isEditable) {
+                        if (mPhotoStates.get(position).isChecked()) {
+                            mPhotoStates.get(position).setChecked(false);
+                        } else {
+                            mPhotoStates.get(position).setChecked(true);
+                        }
+                        mImageAdapter.notifyDataSetChanged();
                     }
-                    mImageAdapter.notifyDataSetChanged();
                 }
             }
         });
@@ -632,7 +686,7 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
     private void upLoadPic(String path) {
         mPhotoStates.remove(mPhotoStates.size() - 1);
         PhotoState state = new PhotoState();
-        state.setChecked(true);
+        state.setChecked(false);
         state.setLast(false);
         state.setPath(path);
         mPhotoStates.add(state);
