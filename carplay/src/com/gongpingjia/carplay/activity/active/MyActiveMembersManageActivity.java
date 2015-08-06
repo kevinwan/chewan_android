@@ -173,13 +173,8 @@ public class MyActiveMembersManageActivity extends CarPlayBaseActivity {
 		listV.setOnMenuItemClickListener(new OnMenuItemClickListener() {
 			@Override
 			public void onMenuItemClick(int position, SwipeMenu menu, int index) {
-				JSONObject jo = (JSONObject) adapter.getItem(index);
-				switch (index) {
-				case 0:
-					
-					deleteMember(JSONUtil.getString(jo, "userId"));
-					break;
-				}
+				JSONObject jo = (JSONObject) adapter.getItem(position);
+				deleteMember(JSONUtil.getString(jo, "userId"));
 			}
 		});
 

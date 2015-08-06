@@ -3,6 +3,7 @@ package com.gongpingjia.carplay.activity.my;
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -31,7 +32,7 @@ public class ForgetPwdActivity extends CarPlayBaseActivity implements
 	Button button_forget_verification;
 	TimeCount time;
 	String strPhone;
-
+	public static final int Forgetpwd = 2;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -107,8 +108,7 @@ public class ForgetPwdActivity extends CarPlayBaseActivity implements
 			Intent intent = new Intent(self, PwdNextActivity.class);
 			intent.putExtra("PhoneNum", strPhone);
 			intent.putExtra("Verification", strVerification);
-			startActivity(intent);
-			self.finish();
+			startActivityForResult(intent, Forgetpwd);
 			// }else{
 			// showToast(response.result);
 			// }
@@ -151,6 +151,18 @@ public class ForgetPwdActivity extends CarPlayBaseActivity implements
 			break;
 		}
 
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode == Activity.RESULT_OK) {
+			if (requestCode == Forgetpwd) {
+				Intent intent=new Intent(self,LoginActivity.class);
+				setResult(Activity.RESULT_OK, intent);
+				finish();
+			}
+		}
 	}
 
 }

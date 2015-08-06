@@ -294,11 +294,11 @@ public class MyFragment extends Fragment implements OnClickListener {
 									MyParticipationActiveActivity.class);
 							startActivity(it);
 							break;
-						case R.id.carchat:
-							it = new Intent(getActivity(),
-									PlayCarChatActivity.class);
-							startActivity(it);
-							break;
+//						case R.id.carchat:
+//							it = new Intent(getActivity(),
+//									PlayCarChatActivity.class);
+//							startActivity(it);
+//							break;
 						case R.id.people_concerned:
 							it = new Intent(getActivity(),
 									AttentionPersonActivity.class);
@@ -329,9 +329,19 @@ public class MyFragment extends Fragment implements OnClickListener {
 
 					@Override
 					public void onLoginFail() {
-
+						
 					}
 				});
+		switch (v.getId()) {
+		case R.id.carchat:
+			Intent it = new Intent(getActivity(),
+					PlayCarChatActivity.class);
+			startActivity(it);
+			break;
+
+		default:
+			break;
+		}
 	}
 
 	@Override

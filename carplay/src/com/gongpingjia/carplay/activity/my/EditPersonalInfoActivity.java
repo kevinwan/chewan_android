@@ -202,11 +202,11 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 		try {
 			drivingExperience = Integer.parseInt(carage);
 		} catch (Exception e) {
-			showToast("请输入0~20数字");
+			showToast("驾龄格式不正确");
 			return;
 		}
 		if (drivingExperience < 0 || drivingExperience > 20) {
-			showToast("请输入0~20数字");
+			showToast("驾龄为0~20数字");
 			return;
 		}
 
@@ -222,10 +222,10 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 			@Override
 			public void doInUI(Response response, Integer transfer) {
 				if (response.isSuccess()) {
-					showToast("修改成功");
+					showToast("修改信息成功");
 					finish();
 				} else {
-					showToast("修改失败");
+					showToast("修改信息失败");
 				}
 			}
 		});

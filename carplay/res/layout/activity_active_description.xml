@@ -14,6 +14,7 @@
         android:background="@color/nothing"
         android:gravity="top"
         android:padding="15dp"
+        android:hint="介绍越详细越容易吸引人哟~"
         android:textColor="@color/text_grey"
         android:textSize="@dimen/text_medium" />
 
