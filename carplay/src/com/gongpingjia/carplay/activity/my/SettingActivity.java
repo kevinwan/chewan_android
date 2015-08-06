@@ -2,9 +2,11 @@ package com.gongpingjia.carplay.activity.my;
 
 import java.io.File;
 
-import net.duohuo.dhroid.activity.ActivityTack;
 import net.duohuo.dhroid.ioc.IocContainer;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,7 +15,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
@@ -37,7 +38,7 @@ public class SettingActivity extends CarPlayBaseActivity implements
 
 	TextView title;
 
-	TextView mSizeText;
+	TextView mSizeText, mVersionText;
 
 	private SettingActivity mySelf = this;
 
@@ -55,6 +56,9 @@ public class SettingActivity extends CarPlayBaseActivity implements
 		setting_btn = (Button) findViewById(R.id.setting_quit);
 		title = (TextView) findViewById(R.id.title);
 		title.setText("设置");
+
+		mVersionText = (TextView) findViewById(R.id.tv_version);
+		mVersionText.setText(getAppVersion());
 
 		mSizeText = (TextView) findViewById(R.id.tv_cache_size);
 		setting_clear.setOnClickListener(this);
@@ -100,7 +104,6 @@ public class SettingActivity extends CarPlayBaseActivity implements
 			startActivity(it);
 			break;
 		case R.id.setting_at_versions:
-			Toast.makeText(mySelf, "当前版本", Toast.LENGTH_SHORT).show();
 			break;
 		case R.id.setting_quit:
 			it = new Intent(this, LoginActivity.class);
@@ -123,6 +126,21 @@ public class SettingActivity extends CarPlayBaseActivity implements
 	@Override
 	public void initView() {
 		// TODO Auto-generated method stub
+	}
+
+	public String getAppVersion() {
+		String version = "获取失败";
+		PackageManager pkgManager = getPackageManager();
+		try {
+			PackageInfo pkgInfo = pkgManager.getPackageInfo(
+					this.getPackageName(), 0);
+			version = pkgInfo.versionName;
+		} catch (NameNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return version;
+
 	}
 
 }
