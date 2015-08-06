@@ -53,6 +53,7 @@ public class LoginActivity extends CarPlayBaseActivity {
 	private TextView login_forgetpsw;
 
 	public static final int Register = 1;
+	public static final int Forgetpwd = 2;
 
 	public static LoginCallBack loginCall;
 
@@ -81,16 +82,16 @@ public class LoginActivity extends CarPlayBaseActivity {
 				final String strPassword = PasswordEditText.getText()
 						.toString();
 				if (TextUtils.isEmpty(strPhoneNum)) {
-					Toast.makeText(self, "手机号码不能为空", Toast.LENGTH_SHORT).show();
+					showToast("手机号码不能为空");
 					return;
 				}
 				if (!Utils.isValidMobilePhoneNumber(strPhoneNum)) {
-					Toast.makeText(self, "手机格式错误", Toast.LENGTH_SHORT).show();
+					showToast("手机格式错误");
 					return;
 
 				}
 				if (TextUtils.isEmpty(strPassword)) {
-					Toast.makeText(self, "请输入密码", Toast.LENGTH_SHORT).show();
+					showToast("密码不能为空哦");
 					return;
 				}
 
@@ -134,7 +135,7 @@ public class LoginActivity extends CarPlayBaseActivity {
 			@Override
 			public void onClick(View arg0) {
 				Intent intent = new Intent(self, ForgetPwdActivity.class);
-				startActivity(intent);
+				startActivityForResult(intent, Forgetpwd);
 			}
 		});
 		// 注册
@@ -156,6 +157,9 @@ public class LoginActivity extends CarPlayBaseActivity {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (resultCode == Activity.RESULT_OK) {
 			if (requestCode == Register) {
+				finish();
+			}
+			if (requestCode == Forgetpwd) {
 				finish();
 			}
 		}

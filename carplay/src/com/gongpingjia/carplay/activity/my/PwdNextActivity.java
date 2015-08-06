@@ -8,6 +8,7 @@ import net.duohuo.dhroid.net.Response;
 
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -63,6 +64,11 @@ public class PwdNextActivity extends CarPlayBaseActivity {
 				if (TextUtils.isEmpty(strpwd)) {
 					showToast("密码不能为空");
 				}
+				if (strpwd.length() < 6 || strpwd.length() > 16)
+	            {
+	                showToast("密码长度应在6-16之间，请重新输入");
+	                return;
+	            }
 				DhNet net = new DhNet(API.newPassword);
 				net.addParam("phone", phone);
 				System.out.println(phone+code+strpwd);
@@ -75,21 +81,27 @@ public class PwdNextActivity extends CarPlayBaseActivity {
 						if (response.isSuccess()) {
 							JSONObject jo = response.jSONFrom("data");
 							User user = User.getInstance();
-							user.setUserId(JSONUtil.getString(jo, "userId"));
-							user.setToken(JSONUtil.getString(jo, "token"));
-
+							//JSONUtil.getString(jo, "userId")
+							//JSONUtil.getString(jo, "token")
+							user.setUserId("");
+							user.setToken("");
+							
 							CarPlayPerference per = IocContainer.getShare()
 									.get(CarPlayPerference.class);
-							per.phone = phone;
-							per.password = strpwd;
+							per.phone = "";
+							per.password = "";
 							per.commit();
-							Intent intent = new Intent(self,
-									LoginActivity.class);
-							startActivity(intent);
-							self.finish();
-
+							
+							Intent intent=new Intent(self,ForgetPwdActivity.class);
+							
+							setResult(Activity.RESULT_OK, intent);
+							
+							Intent it=new Intent(self,LoginActivity.class);
+							it.putExtra("action", "logout");
+							startActivity(it);
+							finish();
 						} else {
-							showToast(response.result);
+							showToast("该用户不存在");
 						}
 
 					}

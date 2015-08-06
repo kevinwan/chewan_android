@@ -38,7 +38,6 @@ public class SplashActivity extends CarPlayBaseActivity
     {
         per = IocContainer.getShare().get(CarPlayPerference.class);
         per.load();
-        
         if (!TextUtils.isEmpty(per.phone) && !TextUtils.isEmpty(per.password))
         {
             login();
