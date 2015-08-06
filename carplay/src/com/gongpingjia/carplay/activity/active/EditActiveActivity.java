@@ -20,7 +20,6 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -344,6 +343,7 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
             }
             if (mPicIds.size() == 0) {
                 showToast("请至少选择一张图片");
+                return;
             }
             User user = User.getInstance();
             mDhNet = new DhNet(API.editActive + mActiveId + "/info?userId=" + user.getUserId() + "&token="
@@ -383,6 +383,7 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
                         showToast("修改成功");
                         self.finish();
                     } else {
+                        showToast("修改异常请重试");
                         try {
                             Log.e("err", response.jSON().getString("errmsg"));
                         } catch (JSONException e) {

@@ -44,17 +44,20 @@
             android:gravity="center_vertical"
             android:padding="10dp" >
 
-            <Button
-                android:id="@+id/btn_select"
+            <TextView
+                android:id="@+id/tv_select"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="选定" />
+                android:layout_centerInParent="true"
+                android:text="选定"
+                android:textColor="@color/text_red"
+                android:textSize="@dimen/text_medium" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/btn_select"
+                android:layout_toLeftOf="@id/tv_select"
                 android:orientation="vertical" >
 
                 <TextView

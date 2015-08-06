@@ -43,7 +43,7 @@
                 android:layout_toLeftOf="@id/tv_search"
                 android:background="@drawable/edit_normal"
                 android:drawableRight="@drawable/action_cancel"
-                android:padding="5dp" />
+                android:padding="8dp" />
         </RelativeLayout>
     </LinearLayout>
 

@@ -55,12 +55,12 @@
             <View style="@style/line" />
 
             <LinearLayout
+                android:id="@+id/layout_description"
                 style="@style/linearlayout"
                 android:background="@drawable/bg_s"
                 android:orientation="vertical" >
 
                 <LinearLayout
-                    android:id="@+id/layout_description"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:gravity="bottom"

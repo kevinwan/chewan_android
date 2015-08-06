@@ -72,7 +72,7 @@ public class MapActivity extends CarPlayBaseActivity implements OnMarkerClickLis
 
     private TextView mLocTitleText;
 
-    private Button mSelectBtn;
+    private TextView mSelectText;
 
     private GeocodeSearch mGeoSearch;
 
@@ -103,12 +103,11 @@ public class MapActivity extends CarPlayBaseActivity implements OnMarkerClickLis
         });
 
         // 选定位置
-        mSelectBtn = (Button) findViewById(R.id.btn_select);
-        mSelectBtn.setOnClickListener(new View.OnClickListener() {
+        mSelectText = (TextView) findViewById(R.id.tv_select);
+        mSelectText.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
                 if (mAddress != null) {
                     Intent it = new Intent();
                     it.putExtra("city", mAddress.getCity());

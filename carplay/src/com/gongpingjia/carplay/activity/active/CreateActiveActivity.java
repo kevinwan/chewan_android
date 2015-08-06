@@ -356,19 +356,20 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                 showToast("请选择活动");
                 return;
             }
+            if (mDescriptionText.getText().toString().equals("")) {
+                showToast("请输入活动描述");
+                return;
+            }
             if (mPicIds.size() == 0) {
                 showToast("请至少选择一张图片");
                 return;
-            }
-            if (mDescriptionText.getText().equals("")) {
-
             }
             if (mDestimationText.getText().toString().length() == 0) {
                 showToast("请选择目的地");
                 return;
             }
-            if (mSeatText.getText().toString().length() == 0) {
-                showToast("请提供座位数");
+            if (mSeatText.getText().toString().length() == 0 || mSeatText.getText().toString().equals("0")) {
+                showToast("请选择座位数");
                 return;
             }
 
