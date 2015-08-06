@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
+import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.CarPlayPerference;
 import com.gongpingjia.carplay.util.FileUtil;
 import com.gongpingjia.carplay.util.FileUtil.UNIT_SACLE;
@@ -110,6 +111,7 @@ public class SettingActivity extends CarPlayBaseActivity implements
 			preference.load();
 			preference.setPassword("");
 			preference.commit();
+			User.getInstance().setLogin(false);
 			Log.e("tag", "update user info");
 			break;
 

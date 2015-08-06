@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,89 +30,107 @@ import com.gongpingjia.carplay.view.BadgeView;
  */
 public class FragmentMsgAdapter extends BaseAdapter {
 
-    private LayoutInflater mInflater;
+	private LayoutInflater mInflater;
 
-    private Context mContext;
+	private Context mContext;
 
-    BadgeView normalMsgBadgeT, applicationMsgBadgeT;
+	BadgeView normalMsgBadgeT, applicationMsgBadgeT;
 
-    TextView applicationmsg_contentT, normsg_contentT;
+	TextView applicationmsg_contentT, normsg_contentT;
 
-    View aaplication_layoutV, normsg_layoutV;
-    
-    JSONObject jo;
+	View aaplication_layoutV, normsg_layoutV;
 
-    public FragmentMsgAdapter(Context context) {
-        mContext = context;
-        mInflater = LayoutInflater.from(context);
-    }
+	JSONObject jo;
 
-    @Override
-    public int getCount() {
-        return 1;
-    }
+	public FragmentMsgAdapter(Context context) {
+		mContext = context;
+		mInflater = LayoutInflater.from(context);
+	}
 
-    @Override
-    public Object getItem(int position) {
-        return null;
-    }
+	@Override
+	public int getCount() {
+		return 1;
+	}
 
-    @Override
-    public long getItemId(int position) {
-        return 0;
-    }
+	@Override
+	public Object getItem(int position) {
+		return null;
+	}
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-         View view = mInflater.inflate(R.layout.information, null);
-        RelativeLayout leave_comments_layout = (RelativeLayout) view.findViewById(R.id.leave_comments_layout);
-        leave_comments_layout.setOnClickListener(new View.OnClickListener() {
+	@Override
+	public long getItemId(int position) {
+		return 0;
+	}
 
-            @Override
-            public void onClick(View arg0) {
-                Intent intent = new Intent(mContext, NewMessageActivity.class);
-                intent.putExtra("type", "comment");
-                mContext.startActivity(intent);
+	@Override
+	public View getView(int position, View convertView, ViewGroup parent) {
+		View view = mInflater.inflate(R.layout.information, null);
+		RelativeLayout leave_comments_layout = (RelativeLayout) view
+				.findViewById(R.id.leave_comments_layout);
+		leave_comments_layout.setOnClickListener(new View.OnClickListener() {
 
-            }
-        });
-        RelativeLayout apply_for_layout = (RelativeLayout) view.findViewById(R.id.apply_for_layout);
-        apply_for_layout.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				Intent intent = new Intent(mContext, NewMessageActivity.class);
+				intent.putExtra("type", "comment");
+				mContext.startActivity(intent);
 
-            @Override
-            public void onClick(View arg0) {
-                Intent intent = new Intent(mContext, NewMessageActivity.class);
-                intent.putExtra("type", "application");
-                mContext.startActivity(intent);
-            }
-        });
-        int bgcolor = mContext.getResources().getColor(R.color.text_orange);
-        applicationmsg_contentT = (TextView) view.findViewById(R.id.applicationmsg_content);
-        normsg_contentT = (TextView) view.findViewById(R.id.normsg_content);
-        normalMsgBadgeT = (BadgeView) view.findViewById(R.id.normal_msg_cout);
-        normalMsgBadgeT.setBadgeBackgroundColor(bgcolor);
-        applicationMsgBadgeT = (BadgeView) view.findViewById(R.id.application_msg_cout);
-        applicationMsgBadgeT.setBadgeBackgroundColor(bgcolor);
-        
-        if(jo!=null) {
-            JSONObject commentJo = JSONUtil.getJSONObject(jo, "comment");
-            normalMsgBadgeT.setVisibility(JSONUtil.getInt(commentJo, "count") == 0 ? View.GONE : View.VISIBLE);
-            normsg_contentT.setText(JSONUtil.getString(commentJo, "content"));
-            normalMsgBadgeT.setText(JSONUtil.getString(commentJo, "count"));
+			}
+		});
+		RelativeLayout apply_for_layout = (RelativeLayout) view
+				.findViewById(R.id.apply_for_layout);
+		apply_for_layout.setOnClickListener(new View.OnClickListener() {
 
-            JSONObject applicationJo = JSONUtil.getJSONObject(jo, "application");
-            applicationMsgBadgeT.setVisibility(JSONUtil.getInt(applicationJo, "count") == 0 ? View.GONE
-                    : View.VISIBLE);
-            applicationmsg_contentT.setText(JSONUtil.getString(applicationJo, "content"));
-            applicationMsgBadgeT.setText(JSONUtil.getString(applicationJo, "count"));
-        }
-        
-        return view;
-    }
-    
-    public void setData (JSONObject jo) {
-        this.jo  =jo;
-        notifyDataSetChanged();
-    }
+			@Override
+			public void onClick(View arg0) {
+				Intent intent = new Intent(mContext, NewMessageActivity.class);
+				intent.putExtra("type", "application");
+				mContext.startActivity(intent);
+			}
+		});
+		int bgcolor = mContext.getResources().getColor(R.color.text_orange);
+		applicationmsg_contentT = (TextView) view
+				.findViewById(R.id.applicationmsg_content);
+		normsg_contentT = (TextView) view.findViewById(R.id.normsg_content);
+		normalMsgBadgeT = (BadgeView) view.findViewById(R.id.normal_msg_cout);
+		normalMsgBadgeT.setBadgeBackgroundColor(bgcolor);
+		applicationMsgBadgeT = (BadgeView) view
+				.findViewById(R.id.application_msg_cout);
+		applicationMsgBadgeT.setBadgeBackgroundColor(bgcolor);
+
+		if (jo != null) {
+			JSONObject commentJo = JSONUtil.getJSONObject(jo, "comment");
+			normalMsgBadgeT
+					.setVisibility(JSONUtil.getInt(commentJo, "count") == 0 ? View.GONE
+							: View.VISIBLE);
+			if (TextUtils.isEmpty(JSONUtil.getString(commentJo, "content"))) {
+				normsg_contentT.setText("暂时还没有新消息");
+			} else {
+				normsg_contentT.setText(JSONUtil
+						.getString(commentJo, "content"));
+			}
+			normalMsgBadgeT.setText(JSONUtil.getString(commentJo, "count"));
+
+			JSONObject applicationJo = JSONUtil
+					.getJSONObject(jo, "application");
+			applicationMsgBadgeT.setVisibility(JSONUtil.getInt(applicationJo,
+					"count") == 0 ? View.GONE : View.VISIBLE);
+			if (TextUtils.isEmpty(JSONUtil.getString(applicationJo, "content"))) {
+				applicationmsg_contentT.setText("暂时还没有新消息");
+			} else {
+				applicationmsg_contentT.setText(JSONUtil.getString(
+						applicationJo, "content"));
+			}
+			applicationMsgBadgeT.setText(JSONUtil.getString(applicationJo,
+					"count"));
+		}
+
+		return view;
+	}
+
+	public void setData(JSONObject jo) {
+		this.jo = jo;
+		notifyDataSetChanged();
+	}
 
 }

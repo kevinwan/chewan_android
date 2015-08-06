@@ -177,12 +177,13 @@ public class ActiveListFragment extends Fragment {
 	}
 
 	private void buildAdapter() {
+		UserLocation location = UserLocation.getInstance();
 		hotAdapter = new ActiveAdapter(API.activeList, getActivity(),
 				R.layout.item_active_list);
 		hotAdapter.addparam("key", "hot");
 		hotAdapter.addparam("userId", user.getUserId());
 		hotAdapter.addparam("token", user.getToken());
-		hotAdapter.addparam("city", "南京");
+		hotAdapter.addparam("city", location.getCity());
 		hotAdapter.addparam("district", "");
 		hotAdapter.addparam("type", "");
 		hotAdapter.addparam("gender", "");
@@ -192,13 +193,15 @@ public class ActiveListFragment extends Fragment {
 		hotListV.setAdapter(hotAdapter);
 		hotAdapter.showNext();
 
-		UserLocation location = UserLocation.getInstance();
+		System.out.println("经纬度:" + location.getLongitude() + "味道"
+				+ location.getLatitude());
+
 		nearAdapter = new ActiveAdapter(API.activeList, getActivity(),
 				R.layout.item_active_list);
-		nearAdapter.addparam("key", "hot");
+		nearAdapter.addparam("key", "nearby");
 		nearAdapter.addparam("userId", user.getUserId());
 		nearAdapter.addparam("token", user.getToken());
-		nearAdapter.addparam("city", "南京");
+		nearAdapter.addparam("city", location.getCity());
 		nearAdapter.addparam("district", "");
 		nearAdapter.addparam("type", "");
 		nearAdapter.addparam("gender", "");
@@ -207,22 +210,22 @@ public class ActiveListFragment extends Fragment {
 		nearAdapter.addparam("longitude", location.getLongitude());
 		nearAdapter.addparam("latitude", location.getLatitude());
 		nearAdapter.fromWhat("data");
-		nearListV.setAdapter(hotAdapter);
+		nearListV.setAdapter(nearAdapter);
 		nearAdapter.showNext();
 
 		newAdapter = new ActiveAdapter(API.activeList, getActivity(),
 				R.layout.item_active_list);
-		newAdapter.addparam("key", "hot");
+		newAdapter.addparam("key", "latest");
 		newAdapter.addparam("userId", user.getUserId());
 		newAdapter.addparam("token", user.getToken());
-		newAdapter.addparam("city", "南京");
+		newAdapter.addparam("city", location.getCity());
 		newAdapter.addparam("district", "");
 		newAdapter.addparam("type", "");
 		newAdapter.addparam("gender", "");
 		newAdapter.addparam("authenticate", "");
 		newAdapter.addparam("carLevel", "");
 		newAdapter.fromWhat("data");
-		newListV.setAdapter(hotAdapter);
+		newListV.setAdapter(newAdapter);
 		newAdapter.showNext();
 	}
 

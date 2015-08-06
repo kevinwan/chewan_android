@@ -6,6 +6,7 @@ import net.duohuo.dhroid.dialog.IDialog;
 import net.duohuo.dhroid.ioc.Instance.InstanceScope;
 import net.duohuo.dhroid.ioc.IocContainer;
 import net.duohuo.dhroid.net.GlobalCodeHandler;
+import net.duohuo.dhroid.util.UserLocation;
 import android.app.Application;
 
 import com.gongpingjia.carplay.data.CityDataManage;
@@ -42,6 +43,7 @@ public class CarPlayApplication extends Application {
 		Const.response_success = "result";
 		Const.response_msg = "errmsg";
 		Const.response_result_status = "0";
+		Const.netadapter_no_more = "已加载全部数据";
 		Const.postType = 2;
 		IocContainer.getShare().initApplication(this);
 		IocContainer.getShare().bind(CarPlayValueFix.class).to(ValueFix.class)
@@ -64,8 +66,7 @@ public class CarPlayApplication extends Application {
 				.discCacheFileNameGenerator(new Md5FileNameGenerator()).build();
 		ImageLoader.getInstance().init(imageconfig);
 
-		CityDataManage.initProvinceDatas();
-		// UserLocation.getInstance().init(getApplicationContext());
+		UserLocation.getInstance().init(getApplicationContext());
 
 	}
 

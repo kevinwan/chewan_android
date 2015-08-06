@@ -129,8 +129,10 @@ public class ActiveAdapter extends NetJSONAdapter {
 		} else {
 			if (isMember == 1) {
 				holder.joinT.setText("已加入");
-			} else {
+			} else if (isMember == 0) {
 				holder.joinT.setText("我要去玩");
+			} else {
+				holder.joinT.setText("申请中");
 			}
 		}
 		holder.joinT.setVisibility(View.VISIBLE);

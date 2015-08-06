@@ -6,12 +6,15 @@ import java.util.Stack;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import net.duohuo.dhroid.activity.ActivityTack;
 import net.duohuo.dhroid.ioc.IocContainer;
 import net.duohuo.dhroid.net.DhNet;
+import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -58,6 +61,7 @@ public class MainActivity extends BaseFragmentActivity {
 		setContentView(R.layout.activity_main);
 		initView();
 		isAuthen();
+		// updateApp();
 	}
 
 	public void initView() {
@@ -102,9 +106,31 @@ public class MainActivity extends BaseFragmentActivity {
 	}
 
 	private void setTab(int index) {
+
+		if (index == 1) {
+			if (!User.getInstance().isLogin()) {
+				UserInfoManage.getInstance().checkLogin(self,
+						new LoginCallBack() {
+
+							@Override
+							public void onisLogin() {
+								setTab(1);
+							}
+
+							@Override
+							public void onLoginFail() {
+							}
+						});
+			}
+		}
+
+		if (index == 1 && !User.getInstance().isLogin()) {
+			return;
+		}
+
 		for (int i = 0; i < tabV.getChildCount(); i++) {
 			View childV = tabV.getChildAt(i);
-			ImageView img = (ImageView) childV.findViewById(R.id.img);
+			final ImageView img = (ImageView) childV.findViewById(R.id.img);
 			TextView text = (TextView) childV.findViewById(R.id.text);
 			if (index == i) {
 				text.setTextColor(getResources().getColor(
@@ -150,20 +176,8 @@ public class MainActivity extends BaseFragmentActivity {
 				case 1:
 					setTitle("消息");
 					setRightVISIBLEOrGone(View.GONE);
-					UserInfoManage.getInstance().checkLogin(self,
-							new LoginCallBack() {
+					switchContent(MsgFragment.getInstance());
 
-								@Override
-								public void onisLogin() {
-									switchContent(MsgFragment.getInstance());
-								}
-
-								@Override
-								public void onLoginFail() {
-									// TODO Auto-generated method stub
-
-								}
-							});
 					img.setImageResource(R.drawable.msg_f);
 					setLeftAction(-2, null, new OnClickListener() {
 
@@ -208,8 +222,6 @@ public class MainActivity extends BaseFragmentActivity {
 
 												@Override
 												public void onLoginFail() {
-													// TODO Auto-generated
-													// method stub
 
 												}
 											});
@@ -293,6 +305,62 @@ public class MainActivity extends BaseFragmentActivity {
 				}
 			});
 		}
+	}
+
+	public void updateApp() {
+		final String mCurrentVersion = getAppVersion();
+		DhNet net = new DhNet(API.update);
+		net.doGet(new NetTask(self) {
+
+			@Override
+			public void doInUI(Response response, Integer transfer) {
+				if (response.isSuccess()) {
+					JSONObject jo = response.jSON();
+					String version = JSONUtil.getString(jo, "version");
+					if (0 < version.compareTo(mCurrentVersion)) {
+						showUpdateDialog(jo);
+					}
+				}
+			}
+		});
+	}
+
+	private String getAppVersion() {
+		String versionName = null;
+		try {
+			String pkName = this.getPackageName();
+			versionName = this.getPackageManager().getPackageInfo(pkName, 0).versionName;
+
+		} catch (Exception e) {
+			return null;
+		}
+		return versionName;
+	}
+
+	private void showUpdateDialog(final JSONObject jo) {
+		Builder builder = new Builder(this);
+		builder.setTitle("发现新版本 " + JSONUtil.getString(jo, "version"));
+		builder.setMessage(JSONUtil.getString(jo, "remarks"));
+		builder.setPositiveButton("立即更新",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+						Intent it = new Intent(Intent.ACTION_VIEW);
+						Uri uri = Uri.parse(JSONUtil.getString(jo, "url"));
+						it.setData(uri);
+						startActivity(it);
+					}
+
+				});
+		builder.setNegativeButton("以后再说",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+					}
+				});
+		builder.create().show();
 	}
 
 }

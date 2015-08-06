@@ -148,7 +148,7 @@ public class NewMessageActivity extends CarPlayBaseActivity implements
 				leftTitleT.setVisibility(View.VISIBLE);
 				delB.setVisibility(View.VISIBLE);
 				backI.setVisibility(View.GONE);
-				return false;
+				return true;
 			}
 		});
 		listView.setOnItemClickListener(new OnItemClickListener() {

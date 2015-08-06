@@ -31,6 +31,7 @@ import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.User;
+import com.gongpingjia.carplay.data.CityDataManage;
 import com.gongpingjia.carplay.view.RoundImageView;
 import com.gongpingjia.carplay.view.dialog.CityPickDialog;
 import com.gongpingjia.carplay.view.dialog.CityPickDialog.OnPickResultListener;
@@ -52,7 +53,7 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 	private String nickname;
 	/** 性别 */
 	private TextView sexT = null;
-	
+
 	/** 选择城市 */
 	private TextView cityT = null;
 	private String mProvice, mCity, mDistrict;
@@ -71,13 +72,14 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 	private String photoUid;
 
 	private User mUser = User.getInstance();
-	
-	private Map<String,Boolean> map=new HashMap<String, Boolean>();
+
+	private Map<String, Boolean> map = new HashMap<String, Boolean>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.personal_data);
+		CityDataManage.initProvinceDatas();
 	}
 
 	@Override
@@ -89,13 +91,13 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 
 				@Override
 				public void onClick(View arg0) {
-					//如果没有改动 直接关闭本页
+					// 如果没有改动 直接关闭本页
 					if (isModify()) {
 						modification();
-					}else {
+					} else {
 						finish();
 					}
-					
+
 				}
 			});
 		}
@@ -126,23 +128,24 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 		getMyDetails();
 
 	}
-	
+
 	/** 判断资料是否有改动 */
-	private boolean isModify(){
-		String name=nicknameT.getText().toString();
-		String carage=carageT.getText().toString();
+	private boolean isModify() {
+		String name = nicknameT.getText().toString();
+		String carage = carageT.getText().toString();
 		if (carage.contains("年")) {
-			carage=carage.replace("年", "");
+			carage = carage.replace("年", "");
 		}
 		if (TextUtils.isEmpty(name)) {
 			return false;
 		}
-		if (map.get("flag")||!name.equals(nickname)||!carage.equals(drivingExperience)) {
+		if (map.get("flag") || !name.equals(nickname)
+				|| !carage.equals(drivingExperience)) {
 			return true;
 		}
 		return false;
 	}
-	
+
 	/** 获取个人资料 */
 	private void getMyDetails() {
 		DhNet net = new DhNet(API.CWBaseurl + "/user/" + mUser.getUserId()
@@ -155,24 +158,21 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 				JSONObject jo = response.jSONFromData();
 
 				nickname = JSONUtil.getString(jo, "nickname");
-				drivingExperience = JSONUtil.getString(jo,
-						"drivingExperience");
+				drivingExperience = JSONUtil.getString(jo, "drivingExperience");
 				String photo = JSONUtil.getString(jo, "photo");
 				String gender = JSONUtil.getString(jo, "gender");
-				mProvice= JSONUtil.getString(jo, "province");
-				mCity= JSONUtil.getString(jo, "city");
-				mDistrict= JSONUtil.getString(jo, "district");
-				 cityT.setText(mProvice + mCity + mDistrict);
+				mProvice = JSONUtil.getString(jo, "province");
+				mCity = JSONUtil.getString(jo, "city");
+				mDistrict = JSONUtil.getString(jo, "district");
+				cityT.setText(mProvice + mCity + mDistrict);
 				nicknameT.setText(nickname);
 				sexT.setText(gender);
-				carageT.setText(drivingExperience+"年");
+				carageT.setText(drivingExperience + "年");
 				ViewUtil.bindNetImage(headI, photo,
 						CarPlayValueFix.optionsDefault.toString());
 			}
 		});
 
-		
-		
 	}
 
 	@Override
@@ -193,11 +193,11 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 	}
 
 	private void modification() {
-		String nickname=nicknameT.getText().toString();
+		String nickname = nicknameT.getText().toString();
 		String carage = carageT.getText().toString().trim();
 		int drivingExperience;
 		if (carage.contains("年")) {
-			carage=carage.replace("年", "");
+			carage = carage.replace("年", "");
 		}
 		try {
 			drivingExperience = Integer.parseInt(carage);
@@ -241,7 +241,7 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 				if (response.isSuccess()) {
 					JSONObject jo = response.jSONFromData();
 					photoUid = JSONUtil.getString(jo, "photoId");
-				} 
+				}
 			}
 		});
 	}
@@ -269,21 +269,19 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 			}
 		}
 	}
-	
+
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		
-		 if (keyCode == KeyEvent.KEYCODE_BACK
-                 && event.getRepeatCount() == 0) {
-			 if (isModify()) {
-					modification();
-				}else {
-					finish();
-				}
-			 return true;
-         }
+
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+			if (isModify()) {
+				modification();
+			} else {
+				finish();
+			}
+			return true;
+		}
 		return super.onKeyDown(keyCode, event);
 	}
-	
 
 }
