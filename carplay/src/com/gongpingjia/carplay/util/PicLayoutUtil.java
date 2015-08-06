@@ -194,13 +194,13 @@ public class PicLayoutUtil {
 				}
 			}
 		} else {
-			for (int i = 0; i < drawcount; i++) {
+			for (int i = 0; i < headMax; i++) {
 				try {
-					RoundImageView img = (RoundImageView) layout.getChildAt(i);
+					View img = (View) layout.getChildAt(i);
 					img.setVisibility(View.GONE);
 					for (int j = 0; j < jsa.length(); j++) {
 						JSONObject jo = jsa.getJSONObject(i);
-						ViewUtil.bindNetImage(img,
+						ViewUtil.bindNetImage((RoundImageView) img,
 								JSONUtil.getString(jo, "photo"), "head");
 						img.setTag(JSONUtil.getString(jo, "userId"));
 						img.setVisibility(View.VISIBLE);
