@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/img"
-            android:text="大于300M" />
+            android:text="0M" />
 
         <ImageView
             android:id="@+id/img"
@@ -172,13 +172,15 @@
             android:layout_marginRight="10dp"
             android:src="@drawable/at_versions" />
 
-        <ImageView
-            android:layout_width="25dp"
-            android:layout_height="18dp"
+        <TextView
+            android:id="@+id/tv_version"
+            style="@style/text_grey_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
-            android:src="@drawable/right_btn" />
+            android:layout_marginRight="10dp"
+            android:text="1.0" />
 
         <TextView
             style="@style/text_black_medium"
