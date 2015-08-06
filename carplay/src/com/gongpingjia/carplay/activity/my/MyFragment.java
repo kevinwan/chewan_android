@@ -149,7 +149,15 @@ public class MyFragment extends Fragment implements OnClickListener {
 		my_attentionV.setOnClickListener(this);
 		my_releaseV.setOnClickListener(this);
 		my_participationV.setOnClickListener(this);
-		carchat.setOnClickListener(this);
+		carchat.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				Intent it = new Intent(getActivity(), PlayCarChatActivity.class);
+				startActivity(it);
+
+			}
+		});
 		people_concerned.setOnClickListener(this);
 		owners_certification.setOnClickListener(this);
 		editdata.setOnClickListener(this);
@@ -174,7 +182,7 @@ public class MyFragment extends Fragment implements OnClickListener {
 					int position, long arg3) {
 
 				if (position >= galleryCount) {
-					if(galleryCount!=0) {
+					if (galleryCount != 0) {
 						position = position % galleryCount;
 					}
 				}
@@ -294,11 +302,11 @@ public class MyFragment extends Fragment implements OnClickListener {
 									MyParticipationActiveActivity.class);
 							startActivity(it);
 							break;
-//						case R.id.carchat:
-//							it = new Intent(getActivity(),
-//									PlayCarChatActivity.class);
-//							startActivity(it);
-//							break;
+						// case R.id.carchat:
+						// it = new Intent(getActivity(),
+						// PlayCarChatActivity.class);
+						// startActivity(it);
+						// break;
 						case R.id.people_concerned:
 							it = new Intent(getActivity(),
 									AttentionPersonActivity.class);
@@ -329,19 +337,9 @@ public class MyFragment extends Fragment implements OnClickListener {
 
 					@Override
 					public void onLoginFail() {
-						
 					}
 				});
-		switch (v.getId()) {
-		case R.id.carchat:
-			Intent it = new Intent(getActivity(),
-					PlayCarChatActivity.class);
-			startActivity(it);
-			break;
 
-		default:
-			break;
-		}
 	}
 
 	@Override
