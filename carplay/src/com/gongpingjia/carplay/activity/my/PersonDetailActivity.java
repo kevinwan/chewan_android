@@ -148,6 +148,15 @@ public class PersonDetailActivity extends CarPlayBaseActivity implements
 
 		attentionT = (TextView) headV.findViewById(R.id.attention);
 		attentionT.setOnClickListener(this);
+		gallery.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Intent it = new Intent(self, ManageAlbumActivity.class);
+				startActivity(it);
+			}
+		});
 		gallery.setOnItemSelectedListener(new OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1,

@@ -1,12 +1,17 @@
 package com.gongpingjia.carplay.activity.my;
 
+import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import net.duohuo.dhroid.dialog.IDialog;
+import net.duohuo.dhroid.ioc.IocContainer;
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
+import net.duohuo.dhroid.net.upload.FileInfo;
+import net.duohuo.dhroid.util.PhotoUtil;
 import net.duohuo.dhroid.util.ViewUtil;
 import net.duohuo.dhroid.view.DotLinLayout;
 import net.duohuo.dhroid.view.NetRefreshAndMoreListView;
@@ -18,6 +23,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -25,6 +31,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 import com.gongpingjia.carplay.CarPlayValueFix;
@@ -35,6 +42,7 @@ import com.gongpingjia.carplay.activity.msg.PlayCarChatActivity;
 import com.gongpingjia.carplay.adapter.ActiveAdapter;
 import com.gongpingjia.carplay.adapter.GalleryAdapter;
 import com.gongpingjia.carplay.api.API;
+import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.manage.UserInfoManage;
 import com.gongpingjia.carplay.manage.UserInfoManage.LoginCallBack;
@@ -90,6 +98,10 @@ public class MyPerSonDetailActivity extends CarPlayBaseActivity implements
 
 	int galleryCount;
 
+	File mCacheDir;
+
+	String tempPath;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -106,8 +118,12 @@ public class MyPerSonDetailActivity extends CarPlayBaseActivity implements
 			public void onClick(View arg0) {
 				// TODO Auto-generated
 				// method stub
-				Intent it = new Intent(self, ManageAlbumActivity.class);
-				startActivity(it);
+				mCacheDir = new File(getExternalCacheDir(), "CarPlay");
+				mCacheDir.mkdirs();
+				tempPath = new File(mCacheDir, System.currentTimeMillis()
+						+ ".jpg").getAbsolutePath();
+				PhotoUtil.getPhoto(self, Constant.TAKE_PHOTO,
+						Constant.PICK_PHOTO, new File(tempPath));
 
 			}
 		});
@@ -156,7 +172,15 @@ public class MyPerSonDetailActivity extends CarPlayBaseActivity implements
 		gallery = (CarPlayGallery) findViewById(R.id.gallery);
 		dotLinLayout = (DotLinLayout) findViewById(R.id.dots);
 		dotLinLayout.setDotImage(R.drawable.dot_n, R.drawable.dot_f);
+		gallery.setOnItemClickListener(new OnItemClickListener() {
 
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Intent it = new Intent(self, ManageAlbumActivity.class);
+				startActivity(it);
+			}
+		});
 		gallery.setOnItemSelectedListener(new OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
@@ -341,6 +365,66 @@ public class MyPerSonDetailActivity extends CarPlayBaseActivity implements
 			@Override
 			public void onLoginFail() {
 
+			}
+		});
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode == RESULT_OK) {
+			switch (requestCode) {
+			case Constant.TAKE_PHOTO:
+				String newPath = new File(mCacheDir, System.currentTimeMillis()
+						+ ".jpg").getAbsolutePath();
+				String path = PhotoUtil.onPhotoFromCamera(self,
+						Constant.ZOOM_PIC, tempPath, 3, 2, 1000, newPath);
+				tempPath = path;
+				break;
+			case Constant.PICK_PHOTO:
+				PhotoUtil.onPhotoFromPick(self, Constant.ZOOM_PIC, tempPath,
+						data, 1, 1, 1000);
+				break;
+			case Constant.ZOOM_PIC:
+				upLoadPic(tempPath);
+				break;
+
+			// case Constant.PICK_PHOTO:
+			// Bitmap btp = PhotoUtil.checkImage(self, data);
+			// PhotoUtil.saveLocalImage(btp, new File(mCurPath));
+			// btp.recycle();
+			// upLoadPic(mCurPath);
+			// break;
+			// case Constant.TAKE_PHOTO:
+			// Bitmap btp1 = PhotoUtil.getLocalImage(new File(mCurPath));
+			// String newPath = new File(mCacheDir, System.currentTimeMillis()
+			// + ".jpg").getAbsolutePath();
+			// int degree = PhotoUtil.getBitmapDegree(mCurPath);
+			// PhotoUtil.saveLocalImage(btp1, new File(newPath), degree);
+			// btp1.recycle();
+			// upLoadPic(newPath);
+			// break;
+			}
+		}
+	}
+
+	private void upLoadPic(String path) {
+		User user = User.getInstance();
+		DhNet net = new DhNet(API.uploadAlbum + user.getUserId()
+				+ "/album/upload?token=" + user.getToken());
+		Log.e("url", net.getUrl());
+		net.upload(new FileInfo("attach", new File(path)), new NetTask(self) {
+
+			@Override
+			public void doInUI(Response response, Integer transfer) {
+				if (response.isSuccess()) {
+					IocContainer.getShare().get(IDialog.class)
+							.showToastShort(self, "图片上传成功!");
+					Intent it = new Intent(self, ManageAlbumActivity.class);
+					it.putExtra("tempPath", tempPath);
+					startActivity(it);
+				}
 			}
 		});
 	}

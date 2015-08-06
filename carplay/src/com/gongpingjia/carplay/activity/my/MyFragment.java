@@ -29,6 +29,7 @@ import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -37,6 +38,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 
 import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.activity.main.MainActivity;
 import com.gongpingjia.carplay.activity.msg.PlayCarChatActivity;
 import com.gongpingjia.carplay.adapter.ActiveAdapter;
 import com.gongpingjia.carplay.adapter.GalleryAdapter;
@@ -175,7 +177,15 @@ public class MyFragment extends Fragment implements OnClickListener {
 		gallery = (CarPlayGallery) mainV.findViewById(R.id.gallery);
 		dotLinLayout = (DotLinLayout) mainV.findViewById(R.id.dots);
 		dotLinLayout.setDotImage(R.drawable.dot_n, R.drawable.dot_f);
+		gallery.setOnItemClickListener(new OnItemClickListener() {
 
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Intent it = new Intent(getActivity(), ManageAlbumActivity.class);
+				startActivity(it);
+			}
+		});
 		gallery.setOnItemSelectedListener(new OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
