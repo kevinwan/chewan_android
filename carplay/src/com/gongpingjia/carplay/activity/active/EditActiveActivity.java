@@ -357,9 +357,10 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
                 mDhNet.addParam("city", mCity);
             }
             if (!mDestimationText.getText().toString().equals(mLocation)) {
-                mDhNet.addParam("address", mDestimationText.getText().toString());
+                mDhNet.addParam("address", mAddress);
                 mDhNet.addParam("province", mProvince);
                 mDhNet.addParam("district", mDistrict);
+                mDhNet.addParam("location", mDestimationText.getText().toString());
             }
 
             if (mLatitude != 0 || mLongitude != 0) {
