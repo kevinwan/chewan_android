@@ -104,7 +104,7 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
 
     double mLongitude;
 
-    String mAddress;
+    String mAddress, mProvince, mDistrict;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -358,6 +358,8 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
             }
             if (!mDestimationText.getText().toString().equals(mLocation)) {
                 mDhNet.addParam("address", mDestimationText.getText().toString());
+                mDhNet.addParam("province", mProvince);
+                mDhNet.addParam("district", mDistrict);
             }
 
             if (mLatitude != 0 || mLongitude != 0) {
@@ -414,6 +416,8 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
                 mLatitude = data.getDoubleExtra("latitude", 0);
                 mLongitude = data.getDoubleExtra("longitude", 0);
                 mAddress = data.getStringExtra("address");
+                mProvince = data.getStringExtra("province");
+                mDistrict = data.getStringExtra("district");
                 break;
             case Constant.TAKE_PHOTO:
                 String newPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg").getAbsolutePath();

@@ -106,7 +106,7 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
 
     private List<String> mSeatOptions;
 
-    private String mCity;
+    private String mCity, mProvince, mDistrict;
 
     private String mLocation;
 
@@ -500,6 +500,8 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
             mDhNet.addParam("city", mCity);
             mDhNet.addParam("address", mDestimationText.getText().toString());
             mDhNet.addParam("start", mStartTimeStamp);
+            mDhNet.addParam("province", mProvince);
+            mDhNet.addParam("district", mDistrict);
             mDhNet.addParam("pay", mFeeText.getText().toString());
             mDhNet.addParam("seat", mSeatText.getText().toString());
             if (mEndTimeStamp != 0) {
@@ -647,6 +649,8 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                 mLatitude = data.getDoubleExtra("latitude", 0);
                 mLongitude = data.getDoubleExtra("longitude", 0);
                 mAddress = data.getStringExtra("address");
+                mProvince = data.getStringExtra("province");
+                mDistrict = data.getStringExtra("district");
                 break;
             case Constant.TAKE_PHOTO:
                 String newPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg").getAbsolutePath();
