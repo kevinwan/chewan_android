@@ -188,6 +188,11 @@ public class BasicMessageActivity extends CarPlayBaseActivity implements
 
 	private void nextStep() {
 
+		if (TextUtils.isEmpty(mPhotoPath)) {
+			showToast("请上传头像");
+			return;
+		}
+
 		final String strnickname = nicknameT.getText().toString().trim();
 		if (TextUtils.isEmpty(strnickname)) {
 			showToast("昵称不能为空");

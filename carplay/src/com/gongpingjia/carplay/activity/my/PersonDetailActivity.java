@@ -39,6 +39,7 @@ import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.manage.UserInfoManage;
 import com.gongpingjia.carplay.manage.UserInfoManage.LoginCallBack;
+import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.view.CarPlayGallery;
 import com.gongpingjia.carplay.view.RoundImageView;
 
@@ -95,19 +96,19 @@ public class PersonDetailActivity extends CarPlayBaseActivity implements
 	@Override
 	public void initView() {
 		setTitle("他的详情");
-//		setRightAction("举报", -1, new OnClickListener() {
-//			@Override
-//			public void onClick(View arg0) {
-//				UserInfoManage.getInstance().checkLogin(self,
-//						new LoginCallBack() {
-//							@Override
-//							public void onisLogin() {
-//							}
-//
-//							@Override
-//							public void onLoginFail() {
-//							}
-//						});
+		// setRightAction("举报", -1, new OnClickListener() {
+		// @Override
+		// public void onClick(View arg0) {
+		// UserInfoManage.getInstance().checkLogin(self,
+		// new LoginCallBack() {
+		// @Override
+		// public void onisLogin() {
+		// }
+		//
+		// @Override
+		// public void onLoginFail() {
+		// }
+		// });
 		// }
 		// });
 		user = User.getInstance();
@@ -272,18 +273,27 @@ public class PersonDetailActivity extends CarPlayBaseActivity implements
 							JSONUtil.getString(jo, "photo"), "head");
 					ViewUtil.bindView(headV.findViewById(R.id.nickname),
 							JSONUtil.getString(jo, "nickname"));
-					ViewUtil.bindView(
-							headV.findViewById(R.id.drive_age),
-							JSONUtil.getString(jo, "carModel")
-									+ ","
-									+ JSONUtil.getString(jo,
-											"drivingExperience") + "年驾龄");
+
+					CarPlayUtil.bindDriveAge(jo,
+							(ImageView) headV.findViewById(R.id.car_logo),
+							(TextView) headV.findViewById(R.id.drive_age));
+
+					// ViewUtil.bindView(
+					// headV.findViewById(R.id.drive_age),
+					// JSONUtil.getString(jo, "carModel")
+					// + ","
+					// + JSONUtil.getString(jo,
+					// "drivingExperience") + "年驾龄");
 					ViewUtil.bindView(headV.findViewById(R.id.content),
 							JSONUtil.getString(jo, "introduction"));
 
-					ViewUtil.bindNetImage(
-							(ImageView) headV.findViewById(R.id.car_logo),
-							JSONUtil.getString(jo, "carBrandLogo"), "carlogo");
+					CarPlayUtil.bindSexView(JSONUtil.getString(jo, "gender"),
+							headV.findViewById(R.id.layout_sex));
+					ViewUtil.bindView(headV.findViewById(R.id.age),
+							JSONUtil.getString(jo, "age"));
+					// ViewUtil.bindNetImage(
+					// (ImageView) headV.findViewById(R.id.car_logo),
+					// JSONUtil.getString(jo, "carBrandLogo"), "carlogo");
 
 					ViewUtil.bindView(headV.findViewById(R.id.releaseCount),
 							JSONUtil.getString(jo, "postNumber"));
@@ -332,7 +342,7 @@ public class PersonDetailActivity extends CarPlayBaseActivity implements
 		}
 		GalleryAdapter adapter = new GalleryAdapter(self, jsa);
 		gallery.setAdapter(adapter);
-		if(jsa.length()>1) {
+		if (jsa.length() > 1) {
 			gallery.setSelection(200);
 			currentPosition = 200;
 		}

@@ -171,6 +171,10 @@ public class ActiveFilterPop extends PopupWindow implements OnClickListener {
             gender = grb.getText().toString();
             if (gender.equals("不限")) {
                 gender = "";
+            } else if(gender.equals("男生")) {
+            	gender= "男";
+            } else {
+            	gender= "女";
             }
         }
 
@@ -180,7 +184,7 @@ public class ActiveFilterPop extends PopupWindow implements OnClickListener {
             if (authenticateString.equals("车主")) {
                 authenticate = 1;
             } else if (authenticateString.equals("非车主")) {
-                authenticate = 2;
+                authenticate = 0;
             } else {
                 authenticate = 3;
             }

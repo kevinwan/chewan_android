@@ -35,91 +35,95 @@ import com.gongpingjia.carplay.view.BadgeView;
  */
 public class MsgFragment extends Fragment {
 
-    static MsgFragment instance;
+	static MsgFragment instance;
 
-    private RefreshAndMoreListView mRefreshListView;
+	private RefreshAndMoreListView mRefreshListView;
 
-    //
-    // BadgeView normalMsgBadgeT, applicationMsgBadgeT;
-    //
-    // TextView applicationmsg_contentT, normsg_contentT;
-    //
-    // View aaplication_layoutV, normsg_layoutV;
-    private FragmentMsgAdapter mAdapter;
+	//
+	// BadgeView normalMsgBadgeT, applicationMsgBadgeT;
+	//
+	// TextView applicationmsg_contentT, normsg_contentT;
+	//
+	// View aaplication_layoutV, normsg_layoutV;
+	private FragmentMsgAdapter mAdapter;
 
-    Timer mTimer;
+	Timer mTimer;
 
-    public static MsgFragment getInstance() {
-        if (instance == null) {
-            instance = new MsgFragment();
-        }
+	public static MsgFragment getInstance() {
+		if (instance == null) {
+			instance = new MsgFragment();
+		}
 
-        return instance;
-    }
+		return instance;
+	}
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
 
-        mAdapter = new FragmentMsgAdapter(getActivity());
-        final View view = inflater.inflate(R.layout.fragment_msg, container, false);
-        // RelativeLayout leave_comments_layout = (RelativeLayout)
-        // view.findViewById(R.id.leave_comments_layout);
+		mAdapter = new FragmentMsgAdapter(getActivity());
+		final View view = inflater.inflate(R.layout.fragment_msg, container,
+				false);
+		// RelativeLayout leave_comments_layout = (RelativeLayout)
+		// view.findViewById(R.id.leave_comments_layout);
 
-        mRefreshListView = (RefreshAndMoreListView) view.findViewById(R.id.refreshLv_msg);
-        mRefreshListView.setAdapter(mAdapter);
-        mRefreshListView.setonRefreshListener(new OnRefreshListener() {
+		mRefreshListView = (RefreshAndMoreListView) view
+				.findViewById(R.id.refreshLv_msg);
+		mRefreshListView.setAdapter(mAdapter);
+		mRefreshListView.setonRefreshListener(new OnRefreshListener() {
 
-            @Override
-            public void onRefresh() {
-                getMsgCount();
-            }
-        });
-        return view;
-    }
+			@Override
+			public void onRefresh() {
+				getMsgCount();
+			}
+		});
+		return view;
+	}
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        mTimer = new Timer();
-        mTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                getMsgCount();
+	@Override
+	public void onResume() {
+		super.onResume();
+		mTimer = new Timer();
+		mTimer.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				getMsgCount();
 
-            }
-        }, 0, 30 * 60 * 1000);
-    }
+			}
+		}, 0, 30 * 60 * 1000);
+	}
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        if (mTimer != null) {
-            mTimer.cancel();
-        }
-    }
+	@Override
+	public void onDetach() {
+		super.onDetach();
+		if (mTimer != null) {
+			mTimer.cancel();
+		}
+	}
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (mTimer != null) {
-            mTimer.cancel();
-        }
-    }
+	@Override
+	public void onStop() {
+		super.onStop();
+		if (mTimer != null) {
+			mTimer.cancel();
+		}
+	}
 
-    private void getMsgCount() {
-        User user = User.getInstance();
-        DhNet net = new DhNet(API.CWBaseurl + "/user/" + user.getUserId() + "/message/count?token=" + user.getToken());
-        net.doGet(new NetTask(getActivity()) {
+	private void getMsgCount() {
+		User user = User.getInstance();
+		DhNet net = new DhNet(API.CWBaseurl + "/user/" + user.getUserId()
+				+ "/message/count?token=" + user.getToken());
+		net.doGet(new NetTask(getActivity()) {
 
-            @Override
-            public void doInUI(Response response, Integer transfer) {
-                if (response.isSuccess()) {
-                    mRefreshListView.onRefreshComplete();
-                    mRefreshListView.removeFootView();
-                    JSONObject jo = response.jSONFromData();
-                    mAdapter.setData(jo);
-                }
-            }
-        });
-    }
+			@Override
+			public void doInUI(Response response, Integer transfer) {
+				if (response.isSuccess()) {
+					mRefreshListView.onRefreshComplete();
+					mRefreshListView.removeFootView();
+					JSONObject jo = response.jSONFromData();
+					mAdapter.setData(jo);
+				}
+			}
+		});
+	}
 }

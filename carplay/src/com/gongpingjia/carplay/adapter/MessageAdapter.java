@@ -115,15 +115,15 @@ public class MessageAdapter extends NetJSONAdapter {
 					@Override
 					public void onClick(View v) {
 						JSONObject jo = (JSONObject) getItem(position);
-						agree(JSONUtil.getString(jo, "applicationId"));
+						agree(JSONUtil.getString(jo, "applicationId"), jo);
 					}
 				});
 
 				SpannableStringBuilder style = new SpannableStringBuilder(
 						seatcontent);
 				style.setSpan(new ForegroundColorSpan(mContext.getResources()
-						.getColor(R.color.text_orange)), 2, seatcontent.length() - 2,
-						Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+						.getColor(R.color.text_orange)), 2, seatcontent
+						.length() - 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 				holder.countT.setText(style);
 
 			} else if (remarks.equals("已同意") && msgtype.equals("活动申请处理")) {
@@ -134,8 +134,8 @@ public class MessageAdapter extends NetJSONAdapter {
 				SpannableStringBuilder style = new SpannableStringBuilder(
 						seatcontent);
 				style.setSpan(new ForegroundColorSpan(mContext.getResources()
-						.getColor(R.color.text_orange)), 2, seatcontent.length() - 2,
-						Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+						.getColor(R.color.text_orange)), 2, seatcontent
+						.length() - 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 				holder.countT.setText(style);
 			} else {
 				holder.agreeT.setVisibility(View.GONE);
@@ -159,7 +159,8 @@ public class MessageAdapter extends NetJSONAdapter {
 			SpannableStringBuilder style = new SpannableStringBuilder(
 					newcontent);
 			style.setSpan(new ForegroundColorSpan(mContext.getResources()
-					.getColor(R.color.text_blue_light)), start, start + content.length(),
+					.getColor(R.color.text_blue_light)), start,
+					start + content.length(),
 					Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 			// style.setSpan(new ForegroundColorSpan(Color.RED), 0, start,
 			// Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
@@ -231,7 +232,7 @@ public class MessageAdapter extends NetJSONAdapter {
 		}
 	}
 
-	private void agree(String messageId) {
+	private void agree(String messageId, final JSONObject jo) {
 		User user = User.getInstance();
 		DhNet net = new DhNet(API.CWBaseurl + "/application/" + messageId
 				+ "/process?userId=" + user.getUserId() + "&token="
@@ -242,7 +243,15 @@ public class MessageAdapter extends NetJSONAdapter {
 			@Override
 			public void doInUI(Response response, Integer transfer) {
 				if (response.isSuccess()) {
-					refreshDialog();
+					try {
+						jo.put("remarks", "已同意");
+						jo.put("type", "活动申请处理");
+						notifyDataSetChanged();
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					// refreshDialog();
 				}
 			}
 		});
