@@ -95,21 +95,21 @@ public class PersonDetailActivity extends CarPlayBaseActivity implements
 	@Override
 	public void initView() {
 		setTitle("他的详情");
-		setRightAction("举报", -1, new OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				UserInfoManage.getInstance().checkLogin(self,
-						new LoginCallBack() {
-							@Override
-							public void onisLogin() {
-							}
-
-							@Override
-							public void onLoginFail() {
-							}
-						});
-			}
-		});
+//		setRightAction("举报", -1, new OnClickListener() {
+//			@Override
+//			public void onClick(View arg0) {
+//				UserInfoManage.getInstance().checkLogin(self,
+//						new LoginCallBack() {
+//							@Override
+//							public void onisLogin() {
+//							}
+//
+//							@Override
+//							public void onLoginFail() {
+//							}
+//						});
+		// }
+		// });
 		user = User.getInstance();
 		userId = getIntent().getStringExtra("userId");
 		headV = LayoutInflater.from(self).inflate(R.layout.head_user_details,
