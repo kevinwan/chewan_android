@@ -113,7 +113,7 @@
                     android:button="@null"
                     android:gravity="center"
                     android:text="男生"
-                    android:textColor="@color/text_grey"
+                    android:textColor="@color/pop_active_text"
                     android:textSize="@dimen/text_small" />
 
                 <RadioButton
@@ -125,7 +125,7 @@
                     android:button="@null"
                     android:gravity="center"
                     android:text="女生"
-                    android:textColor="@color/text_grey"
+                    android:textColor="@color/pop_active_text"
                     android:textSize="@dimen/text_small" />
 
                 <RadioButton
@@ -137,7 +137,7 @@
                     android:button="@null"
                     android:gravity="center"
                     android:text="不限"
-                    android:textColor="@color/text_grey"
+                    android:textColor="@color/pop_active_text"
                     android:textSize="@dimen/text_small" />
             </RadioGroup>
 
@@ -162,7 +162,7 @@
                     android:button="@null"
                     android:gravity="center"
                     android:text="车主"
-                    android:textColor="@color/text_grey"
+                    android:textColor="@color/pop_active_text"
                     android:textSize="@dimen/text_small" />
 
                 <RadioButton
@@ -174,7 +174,7 @@
                     android:button="@null"
                     android:gravity="center"
                     android:text="非车主"
-                    android:textColor="@color/text_grey"
+                    android:textColor="@color/pop_active_text"
                     android:textSize="@dimen/text_small" />
 
                 <RadioButton
@@ -186,12 +186,12 @@
                     android:button="@null"
                     android:gravity="center"
                     android:text="不限"
-                    android:textColor="@color/text_grey"
+                    android:textColor="@color/pop_active_text"
                     android:textSize="@dimen/text_small" />
             </RadioGroup>
 
             <TextView
-                style="@style/text_grey_medium"
+                style="@style/text_grey_small"
                 android:layout_marginTop="15dp"
                 android:text="您对出行车辆的要求" />
 
@@ -212,7 +212,7 @@
                     android:button="@null"
                     android:gravity="center"
                     android:text="一般"
-                    android:textColor="@color/text_grey"
+                    android:textColor="@color/pop_active_text"
                     android:textSize="@dimen/text_small" />
 
                 <RadioButton
@@ -224,7 +224,7 @@
                     android:button="@null"
                     android:gravity="center"
                     android:text="好车"
-                    android:textColor="@color/text_grey"
+                    android:textColor="@color/pop_active_text"
                     android:textSize="@dimen/text_small" />
 
                 <RadioButton
@@ -236,7 +236,7 @@
                     android:button="@null"
                     android:gravity="center"
                     android:text="不限"
-                    android:textColor="@color/text_grey"
+                    android:textColor="@color/pop_active_text"
                     android:textSize="@dimen/text_small" />
             </RadioGroup>
         </LinearLayout>

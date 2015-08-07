@@ -49,8 +49,8 @@
                 android:background="@null"
                 android:gravity="right|center"
                 android:inputType="number"
-                android:text=" "
-                android:textColor="@color/text_black_light" />
+                android:textColor="@color/text_black_light"
+                 />
 
             <ImageView
                 android:layout_width="25dp"
@@ -82,7 +82,7 @@
 
             <TextView
                 android:id="@+id/model"
-                style="@style/text_blacklight_small"
+                style="@style/text_blacklight_medium"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical|right" />

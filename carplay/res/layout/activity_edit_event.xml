@@ -57,7 +57,7 @@
                         style="@style/text_blacklight_medium"
                         android:layout_width="wrap_content"
                         android:layout_height="60dp"
-                        android:layout_marginRight="5dp"
+                        android:layout_marginRight="3dp"
                         android:gravity="center_vertical"
                         android:text="看电影" />
 
@@ -105,8 +105,11 @@
 
                 <TextView
                     android:id="@+id/tv_description"
-                    style="@style/text_blacklight_small"
-                    android:layout_margin="10dp"
+                    style="@style/text_blacklight_medium"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="26dp"
+                    android:paddingRight="22dp"
                     android:lineSpacingExtra="1.5dp" />
             </LinearLayout>
 
@@ -123,7 +126,7 @@
 
                 <TextView
                     style="@style/text_grey_medium"
-                    android:text="请选择目的地" />
+                    android:text="目的地" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -134,6 +137,7 @@
                     <TextView
                         android:id="@+id/tv_destination"
                         style="@style/text_blacklight_medium"
+                        android:layout_marginRight="10dp"
                         android:singleLine="true" />
 
                     <ImageView
@@ -169,6 +173,7 @@
                         style="@style/text_blacklight_medium"
                         android:layout_width="wrap_content"
                         android:layout_height="60dp"
+                        android:layout_marginRight="26dp"
                         android:gravity="center_vertical" />
                 </LinearLayout>
             </LinearLayout>
@@ -199,6 +204,7 @@
                         style="@style/text_blacklight_medium"
                         android:layout_width="wrap_content"
                         android:layout_height="60dp"
+                        android:paddingRight="26dp"
                         android:gravity="center_vertical"
                         android:text="不确定" />
                 </LinearLayout>
@@ -230,6 +236,7 @@
                         style="@style/text_blacklight_medium"
                         android:layout_width="wrap_content"
                         android:layout_height="60dp"
+                        android:paddingRight="26dp"
                         android:gravity="center_vertical"
                         android:text="AA制" />
                 </LinearLayout>

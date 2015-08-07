@@ -192,11 +192,12 @@
                     </LinearLayout>
 
                     <View
-                        android:layout_width="1px"
+                        android:layout_width="1.5px"
                         android:layout_height="match_parent"
                         android:layout_marginBottom="15dp"
                         android:layout_marginTop="15dp"
-                        android:background="@color/black" />
+                        android:background="@color/text_grey"
+                         />
 
                     <LinearLayout
                         android:id="@+id/my_attention"
@@ -219,12 +220,11 @@
                     </LinearLayout>
 
                     <View
-                        style="@style/line"
-                        android:layout_width="1px"
+                        android:layout_width="1.5px"
                         android:layout_height="match_parent"
                         android:layout_marginBottom="15dp"
                         android:layout_marginTop="15dp"
-                        android:background="@color/black" />
+                        android:background="@color/text_grey" />
 
                     <LinearLayout
                         android:id="@+id/my_participation"
