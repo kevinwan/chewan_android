@@ -11,6 +11,7 @@ import net.duohuo.dhroid.util.DhUtil;
 import net.duohuo.dhroid.util.ViewUtil;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.graphics.Color;
@@ -87,13 +88,16 @@ public class MyActiveMembersManageActivity extends CarPlayBaseActivity {
     // 微信朋友圈
     private UMWXHandler wxCircleHandler;
 
+    private String mShareContent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_active_members);
-        
+
         setupShare();
+        mShareContent = getIntent().getStringExtra("shareContent");
 
         setRightAction("邀请", -1, new View.OnClickListener() {
 
@@ -102,79 +106,88 @@ public class MyActiveMembersManageActivity extends CarPlayBaseActivity {
                 // TODO Auto-generated method stub
                 View shareView = LayoutInflater.from(self).inflate(R.layout.pop_share, null);
 
-                final UMImage image = new UMImage(
-                        self,
-                        "http://cwapi.gongpingjia.com/v1/user/846de312-306c-4916-91c1-a5e69b158014/message/count?token=750dd49c-6129-4a9a-9558-27fa74fc4ce7");
+                if (mShareContent != null) {
+                    try {
+                        JSONObject json = new JSONObject(mShareContent);
+                        final String shareContent = json.getString("shareContent");
+                        final String shareTitle = json.getString("shareTitle");
+                        final String shareUrl = json.getString("shareUrl");
+                        final UMImage image = new UMImage(self, json.getString("imgUrl"));
 
-                final PopupWindow popWin = new PopupWindow(shareView, LayoutParams.MATCH_PARENT,
-                        LayoutParams.MATCH_PARENT);
-                // 分享到微信朋友
-                shareView.findViewById(R.id.layout_share_weixin).setOnClickListener(new View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View v) {
-                        // TODO Auto-generated method stub
-                        WeiXinShareContent wxContent = new WeiXinShareContent();
-                        wxContent.setTargetUrl("http://cwapi.gongpingjia.com/?activityId=XXXX");
-                        wxContent.setTitle("title");
-                        wxContent.setShareContent("content");
-                        wxContent.setShareImage(image);
-                        mController.setShareMedia(wxContent);
-                        mController.postShare(self, SHARE_MEDIA.WEIXIN, new SnsPostListener() {
+                        final PopupWindow popWin = new PopupWindow(shareView, LayoutParams.MATCH_PARENT,
+                                LayoutParams.MATCH_PARENT);
+                        // 分享到微信朋友
+                        shareView.findViewById(R.id.layout_share_weixin).setOnClickListener(new View.OnClickListener() {
 
                             @Override
-                            public void onStart() {
+                            public void onClick(View v) {
+                                // TODO Auto-generated method stub
+                                WeiXinShareContent wxContent = new WeiXinShareContent();
+                                wxContent.setTargetUrl(shareUrl);
+                                wxContent.setTitle(shareTitle);
+                                wxContent.setShareContent(shareContent);
+                                wxContent.setShareImage(image);
+                                mController.setShareMedia(wxContent);
+                                mController.postShare(self, SHARE_MEDIA.WEIXIN, new SnsPostListener() {
 
-                            }
+                                    @Override
+                                    public void onStart() {
 
-                            @Override
-                            public void onComplete(SHARE_MEDIA arg0, int arg1, SocializeEntity arg2) {
-                                popWin.dismiss();
-                            }
-                        });
-                    }
-                });
+                                    }
 
-                // 分享到朋友圈
-                shareView.findViewById(R.id.layout_share_wxcircle).setOnClickListener(new View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View v) {
-                        // TODO Auto-generated method stub
-                        CircleShareContent ccContent = new CircleShareContent();
-                        ccContent.setTargetUrl("http://cwapi.gongpingjia.com/?activityId=XXXX");
-                        ccContent.setShareContent("content");
-                        ccContent.setTitle("title");
-                        ccContent.setShareImage(image);
-                        mController.setShareMedia(ccContent);
-
-                        mController.postShare(self, SHARE_MEDIA.WEIXIN_CIRCLE, new SnsPostListener() {
-
-                            @Override
-                            public void onStart() {
-                            }
-
-                            @Override
-                            public void onComplete(SHARE_MEDIA arg0, int arg1, SocializeEntity arg2) {
-                                popWin.dismiss();
+                                    @Override
+                                    public void onComplete(SHARE_MEDIA arg0, int arg1, SocializeEntity arg2) {
+                                        popWin.dismiss();
+                                    }
+                                });
                             }
                         });
-                    }
-                });
 
-                shareView.setOnClickListener(new View.OnClickListener() {
+                        // 分享到朋友圈
+                        shareView.findViewById(R.id.layout_share_wxcircle).setOnClickListener(
+                                new View.OnClickListener() {
 
-                    @Override
-                    public void onClick(View v) {
-                        // TODO Auto-generated method stub
-                        switch (v.getId()) {
-                        case R.id.layout_bg:
-                            popWin.dismiss();
-                            break;
-                        }
+                                    @Override
+                                    public void onClick(View v) {
+                                        // TODO Auto-generated method stub
+                                        CircleShareContent ccContent = new CircleShareContent();
+                                        ccContent.setTargetUrl(shareUrl);
+                                        ccContent.setShareContent(shareContent);
+                                        ccContent.setTitle(shareTitle);
+                                        ccContent.setShareImage(image);
+                                        mController.setShareMedia(ccContent);
+
+                                        mController.postShare(self, SHARE_MEDIA.WEIXIN_CIRCLE, new SnsPostListener() {
+
+                                            @Override
+                                            public void onStart() {
+                                            }
+
+                                            @Override
+                                            public void onComplete(SHARE_MEDIA arg0, int arg1, SocializeEntity arg2) {
+                                                popWin.dismiss();
+                                            }
+                                        });
+                                    }
+                                });
+
+                        shareView.setOnClickListener(new View.OnClickListener() {
+
+                            @Override
+                            public void onClick(View v) {
+                                // TODO Auto-generated method stub
+                                switch (v.getId()) {
+                                case R.id.layout_bg:
+                                    popWin.dismiss();
+                                    break;
+                                }
+                            }
+                        });
+                        popWin.showAsDropDown(findViewById(R.id.title_bar));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                });
-                popWin.showAsDropDown(findViewById(R.id.title_bar));
+                }
             }
         });
     }

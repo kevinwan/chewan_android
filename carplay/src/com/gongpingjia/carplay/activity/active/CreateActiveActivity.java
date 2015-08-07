@@ -513,22 +513,14 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
 
                 @Override
                 public void doInUI(Response response, Integer transfer) {
-                    // TODO Auto-generated method stub
                     if (response.isSuccess()) {
                         showToast("创建成功");
                         JSONObject json = response.jSONFrom("data");
                         try {
-                            StringBuilder sb = new StringBuilder();
-                            sb.append("开始时间:").append(mStartTimeText.getText().toString() + "\n");
-                            sb.append("目的地:").append(mDestimationText.getText().toString() + "\n");
-                            sb.append("费用:").append(mFeeText.getText().toString());
-                            final String shareContent = sb.toString();
+                            final String shareContent = json.getString("shareContent");
                             final String shareTitle = json.getString("shareTitle");
                             final String shareUrl = json.getString("shareUrl");
-                            // 缩略图地址
-                            final UMImage image = new UMImage(
-                                    self,
-                                    "http://cwapi.gongpingjia.com/v1/user/846de312-306c-4916-91c1-a5e69b158014/message/count?token=750dd49c-6129-4a9a-9558-27fa74fc4ce7");
+                            final UMImage image = new UMImage(self, json.getString("imgUrl"));
                             View shareView = LayoutInflater.from(self).inflate(R.layout.pop_share, null);
 
                             final PopupWindow popWin = new PopupWindow(shareView, LayoutParams.MATCH_PARENT,
@@ -541,7 +533,7 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                                         public void onClick(View v) {
                                             // TODO Auto-generated method stub
                                             WeiXinShareContent wxContent = new WeiXinShareContent();
-                                            wxContent.setTargetUrl("http://cwapi.gongpingjia.com/?activityId=XXXX");
+                                            wxContent.setTargetUrl(shareUrl);
                                             wxContent.setTitle(shareTitle);
                                             wxContent.setShareContent(shareContent);
                                             wxContent.setShareImage(image);
@@ -556,6 +548,7 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                                                 @Override
                                                 public void onComplete(SHARE_MEDIA arg0, int arg1, SocializeEntity arg2) {
                                                     popWin.dismiss();
+                                                    self.finish();
                                                 }
                                             });
                                         }
@@ -569,7 +562,7 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                                         public void onClick(View v) {
                                             // TODO Auto-generated method stub
                                             CircleShareContent ccContent = new CircleShareContent();
-                                            ccContent.setTargetUrl("http://cwapi.gongpingjia.com/?activityId=XXXX");
+                                            ccContent.setTargetUrl(shareUrl);
                                             ccContent.setShareContent(shareContent);
                                             ccContent.setTitle(shareTitle);
                                             ccContent.setShareImage(image);
@@ -586,6 +579,7 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                                                         public void onComplete(SHARE_MEDIA arg0, int arg1,
                                                                 SocializeEntity arg2) {
                                                             popWin.dismiss();
+                                                            self.finish();
                                                         }
                                                     });
                                         }
@@ -594,16 +588,16 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
 
                                 @Override
                                 public void onClick(View v) {
-                                    // TODO Auto-generated method stub
                                     popWin.dismiss();
+                                    self.finish();
                                 }
                             });
                             shareView.findViewById(R.id.layout_bg).setOnClickListener(new View.OnClickListener() {
 
                                 @Override
                                 public void onClick(View v) {
-                                    // TODO Auto-generated method stub
                                     popWin.dismiss();
+                                    self.finish();
                                 }
                             });
                             popWin.showAsDropDown(findViewById(R.id.title_bar));
