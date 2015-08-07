@@ -29,6 +29,7 @@ import com.gongpingjia.carplay.adapter.ActiveAdapter;
 import com.gongpingjia.carplay.adapter.SimplePageAdapter;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.bean.ActiveParmasEB;
+import com.gongpingjia.carplay.bean.LoginEB;
 import com.gongpingjia.carplay.bean.User;
 
 import de.greenrobot.event.EventBus;
@@ -283,7 +284,11 @@ public class ActiveListFragment extends Fragment {
 		hotAdapter.addparam("district", pa.getDistrict());
 		hotAdapter.addparam("type", pa.getActiveType());
 		hotAdapter.addparam("gender", pa.getGender());
-		hotAdapter.addparam("authenticate", pa.getAuthenticate());
+		if (pa.getAuthenticate() == 3) {
+			hotAdapter.addparam("authenticate", "");
+		} else {
+			hotAdapter.addparam("authenticate", pa.getAuthenticate());
+		}
 		hotAdapter.addparam("carLevel", pa.getCarLevel());
 		hotAdapter.refreshDialog();
 
@@ -291,7 +296,11 @@ public class ActiveListFragment extends Fragment {
 		nearAdapter.addparam("district", pa.getDistrict());
 		nearAdapter.addparam("type", pa.getActiveType());
 		nearAdapter.addparam("gender", pa.getGender());
-		nearAdapter.addparam("authenticate", pa.getAuthenticate());
+		if (pa.getAuthenticate() == 3) {
+			nearAdapter.addparam("authenticate", "");
+		} else {
+			nearAdapter.addparam("authenticate", pa.getAuthenticate());
+		}
 		nearAdapter.addparam("carLevel", pa.getCarLevel());
 		nearAdapter.refreshDialog();
 
@@ -299,9 +308,30 @@ public class ActiveListFragment extends Fragment {
 		newAdapter.addparam("district", pa.getDistrict());
 		newAdapter.addparam("type", pa.getActiveType());
 		newAdapter.addparam("gender", pa.getGender());
-		newAdapter.addparam("authenticate", pa.getAuthenticate());
+		if (pa.getAuthenticate() == 3) {
+			newAdapter.addparam("authenticate", "");
+		} else {
+			newAdapter.addparam("authenticate", pa.getAuthenticate());
+		}
 		newAdapter.addparam("carLevel", pa.getCarLevel());
 		newAdapter.refreshDialog();
+	}
+
+	/** 接受ActiveFilterPop的选择事件 */
+	public void onEventMainThread(LoginEB login) {
+		if (login.islogin) {
+			hotAdapter.addparam("userId", user.getUserId());
+			hotAdapter.addparam("token", user.getToken());
+			hotAdapter.refresh();
+
+			nearAdapter.addparam("userId", user.getUserId());
+			nearAdapter.addparam("token", user.getToken());
+			nearAdapter.refresh();
+
+			newAdapter.addparam("userId", user.getUserId());
+			newAdapter.addparam("token", user.getToken());
+			newAdapter.refresh();
+		}
 	}
 
 	@Override

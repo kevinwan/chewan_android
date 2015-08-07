@@ -79,7 +79,7 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 
 	User user;
 
-	View headlayoutV;
+	LinearLayout headlayoutV;
 
 	TextView joinT;
 
@@ -100,6 +100,7 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_active_details);
+		EventBus.getDefault().register(this);
 	}
 
 	@Override
@@ -136,7 +137,7 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 		releaseB.setOnClickListener(this);
 		comment_contentE = (EditText) findViewById(R.id.comment_content);
 		headV = mInflater.inflate(R.layout.active_head_view, null);
-		headlayoutV = headV.findViewById(R.id.headlayout);
+		headlayoutV = (LinearLayout) headV.findViewById(R.id.headlayout);
 		headlayoutV.setOnClickListener(this);
 		mListView.addHeaderView(headV);
 		mListView.setonRefreshListener(new OnRefreshListener() {
@@ -308,11 +309,9 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 		// holder.headlayoutV.removeAllViews();
 		JSONArray headJsa = JSONUtil.getJSONArray(headJo, "members");
 
-		LinearLayout headlayout = (LinearLayout) headV
-				.findViewById(R.id.headlayout);
-		headlayout.removeAllViews();
+		headlayoutV.removeAllViews();
 		PicLayoutUtil headUtil = new PicLayoutUtil(self, headJsa, 5,
-				headlayout, headlayoutWidth);
+				headlayoutV, headlayoutWidth);
 		headUtil.setHeadMaxCount(6);
 		headUtil.AddChild();
 	}
@@ -426,8 +425,10 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 		case R.id.headlayout:
 			if (User.getInstance().isLogin()) {
 				if (joinT.getText().equals("管理")) {
+					JSONObject shareJo = getShareContent(headJo);
 					it = new Intent(self, MyActiveMembersManageActivity.class);
 					it.putExtra("activityId", activityId);
+					it.putExtra("shareContent", shareJo.toString());
 					it.putExtra("isJoin", isJoin);
 					startActivity(it);
 				} else {
@@ -528,8 +529,8 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 			public void doInUI(Response response, Integer transfer) {
 				if (response.isSuccess()) {
 					showToast("已提交加入活动申请,等待管理员审核!");
-					joinT.setText("申请中");
-					joinT.setBackgroundResource(R.drawable.btn_grey_dark_bg);
+					// joinT.setText("申请中");
+					// joinT.setBackgroundResource(R.drawable.btn_grey_dark_bg);
 					JoinEB join = new JoinEB();
 					join.setActivityId(activityId);
 					join.setIsMember(2);
@@ -589,6 +590,27 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 			} else if (isMember == 0) {
 				joinT.setText("我要去玩");
 				isJoin = false;
+
+				try {
+					JSONArray newjsa = new JSONArray();
+					JSONArray headJsa = JSONUtil
+							.getJSONArray(headJo, "members");
+					for (int i = 0; i < headJsa.length(); i++) {
+						JSONObject headJo = (JSONObject) headJsa.get(i);
+						if (!JSONUtil.getString(headJo, "userId").equals(
+								User.getInstance().getUserId())) {
+							newjsa.put(headJo);
+						}
+					}
+					headlayoutV.removeAllViews();
+					PicLayoutUtil headUtil = new PicLayoutUtil(self, newjsa, 5,
+							headlayoutV, headlayoutWidth);
+					headUtil.setHeadMaxCount(6);
+					headUtil.AddChild();
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			} else {
 				joinT.setText("申请中");
 				isJoin = false;
@@ -605,8 +627,9 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 			picjo = picJsa.getJSONObject(0);
 			String imgUrl = JSONUtil.getString(picjo, "thumbnail_pic");
 
-			String shareTitle = JSONUtil.getString(jo, "nickname") + "邀请您参加"
-					+ JSONUtil.getString(jo, "introduction") + "活动";
+			JSONObject userJo = JSONUtil.getJSONObject(jo, "organizer");
+			String shareTitle = JSONUtil.getString(userJo, "nickname")
+					+ "邀请您参加" + JSONUtil.getString(jo, "introduction") + "活动";
 			long time = JSONUtil.getLong(jo, "start");
 			String startTime = CarPlayValueFix.getStandardTime(time, "MM月dd日 ");
 			String shareContent = "开始时间: " + startTime + "\n目的地: "

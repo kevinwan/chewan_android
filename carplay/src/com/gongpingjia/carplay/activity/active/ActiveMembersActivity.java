@@ -261,7 +261,7 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 		case R.id.quit:
 			long currentTime = System.currentTimeMillis();
 			ActiveMsgDialog dialog;
-			if (startTime != 0 && currentTime - startTime > 1000 * 60 * 60 * 6) {
+			if (startTime != 0 && startTime - currentTime > 1000 * 60 * 60 * 6) {
 				dialog = new ActiveMsgDialog(self, "确定退出活动?");
 				dialog.setOnClickResultListener(new OnClickResultListener() {
 

@@ -72,7 +72,7 @@
                     android:background="@drawable/man" >
 
                     <TextView
-                        android:id="@+id/user_age"
+                        android:id="@+id/age"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -93,8 +93,7 @@
                 <ImageView
                     android:id="@+id/car_logo"
                     android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:src="@drawable/head2" />
+                    android:layout_height="10dp" />
 
                 <TextView
                     android:id="@+id/drive_age"

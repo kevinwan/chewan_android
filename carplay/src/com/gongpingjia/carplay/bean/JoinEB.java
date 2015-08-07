@@ -5,6 +5,8 @@ public class JoinEB {
 
 	public int isMember;
 
+	public String headUrl;
+
 	public String getActivityId() {
 		return activityId;
 	}
@@ -20,6 +22,13 @@ public class JoinEB {
 	public void setIsMember(int isMember) {
 		this.isMember = isMember;
 	}
-	
+
+	public String getHeadUrl() {
+		return headUrl;
+	}
+
+	public void setHeadUrl(String headUrl) {
+		this.headUrl = headUrl;
+	}
 
 }

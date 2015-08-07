@@ -162,10 +162,12 @@ public class ActiveAdapter extends NetJSONAdapter {
 				if (user.isLogin) {
 					Intent it;
 					if (holder.joinT.getText().equals("管理")) {
+						JSONObject shareJo = getShareContent(jo);
 						it = new Intent(mContext,
 								MyActiveMembersManageActivity.class);
 						it.putExtra("activityId", activityId);
 						it.putExtra("isJoin", true);
+						it.putExtra("shareContent", shareJo.toString());
 						mContext.startActivity(it);
 
 					} else if (holder.joinT.getText().toString().equals("已加入")) {
@@ -391,6 +393,19 @@ public class ActiveAdapter extends NetJSONAdapter {
 						join.getActivityId())) {
 					try {
 						jo.put("isMember", join.getIsMember());
+						if (join.getIsMember() == 0) {
+							JSONArray newjsa = new JSONArray();
+							JSONArray headJsa = JSONUtil.getJSONArray(jo,
+									"members");
+							for (int i = 0; i < headJsa.length(); i++) {
+								JSONObject headJo = (JSONObject) headJsa.get(i);
+								if (!JSONUtil.getString(headJo, "userId")
+										.equals(User.getInstance().getUserId())) {
+									newjsa.put(headJo);
+								}
+							}
+							jo.put("members", newjsa);
+						}
 						notifyDataSetChanged();
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
@@ -409,9 +424,9 @@ public class ActiveAdapter extends NetJSONAdapter {
 		try {
 			picjo = picJsa.getJSONObject(0);
 			String imgUrl = JSONUtil.getString(picjo, "thumbnail_pic");
-
-			String shareTitle = JSONUtil.getString(jo, "nickname") + "邀请您参加"
-					+ JSONUtil.getString(jo, "introduction") + "活动";
+			JSONObject userJo = JSONUtil.getJSONObject(jo, "organizer");
+			String shareTitle = JSONUtil.getString(userJo, "nickname")
+					+ "邀请您参加" + JSONUtil.getString(jo, "introduction") + "活动";
 			long time = JSONUtil.getLong(jo, "start");
 			String startTime = CarPlayValueFix.getStandardTime(time, "MM月dd日 ");
 			String shareContent = "开始时间: " + startTime + "\n目的地: "

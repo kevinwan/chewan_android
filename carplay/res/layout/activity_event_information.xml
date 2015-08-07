@@ -75,8 +75,7 @@
             <ImageView
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:layout_marginRight="3dp"
-                android:src="@drawable/head3" />
+                android:layout_marginRight="3dp" />
 
             <TextView
                 style="@style/text_black_medium"
@@ -132,8 +131,7 @@
                 android:layout_height="25dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginLeft="14dp"
-                android:layout_marginTop="5dp"
-                android:src="@drawable/head3" />
+                android:layout_marginTop="5dp" />
     </LinearLayout>
  <View style="@style/line" />
 

@@ -24,11 +24,14 @@ import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.activity.main.MainActivity;
 import com.gongpingjia.carplay.api.API;
+import com.gongpingjia.carplay.bean.LoginEB;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.manage.UserInfoManage.LoginCallBack;
 import com.gongpingjia.carplay.util.CarPlayPerference;
 import com.gongpingjia.carplay.util.MD5Util;
 import com.gongpingjia.carplay.util.Utils;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * 登录页面
@@ -131,6 +134,10 @@ public class LoginActivity extends CarPlayBaseActivity {
 							} else {
 								self.finish();
 							}
+
+							LoginEB loginEB = new LoginEB();
+							loginEB.setIslogin(true);
+							EventBus.getDefault().post(loginEB);
 
 						}
 					}
