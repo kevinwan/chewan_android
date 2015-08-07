@@ -13,6 +13,7 @@ import net.duohuo.dhroid.view.INetRefreshAndMorelistView.OnRefreshListener;
 import net.duohuo.dhroid.view.NetRefreshAndMoreListView;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
@@ -460,20 +461,24 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 					it.putExtra("isJoin", isJoin);
 					startActivity(it);
 				} else if (joinT.getText().equals("我要去玩")) {
-					if (user.getIsAuthenticated() == 1) {
-						CarSeatSelectDialog dialog = new CarSeatSelectDialog(
-								self);
-						dialog.setOnSelectResultListener(new OnSelectResultListener() {
 
-							@Override
-							public void click(int seatCount) {
-								joinActive(seatCount);
-							}
-						});
-						dialog.show();
-					} else {
-						joinActive(0);
-					}
+					isAuthen();
+
+					// if (user.getIsAuthenticated() == 1) {
+					// CarSeatSelectDialog dialog = new CarSeatSelectDialog(
+					// self);
+					// dialog.setOnSelectResultListener(new
+					// OnSelectResultListener() {
+					//
+					// @Override
+					// public void click(int seatCount) {
+					// joinActive(seatCount);
+					// }
+					// });
+					// dialog.show();
+					// } else {
+					// joinActive(0);
+					// }
 				}
 			} else {
 				UserInfoManage.getInstance().checkLogin((Activity) self,
@@ -510,8 +515,47 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 			@Override
 			public void doInUI(Response response, Integer transfer) {
 				if (response.isSuccess()) {
-					findViewById(R.id.bottom_bar).setVisibility(View.GONE);
 					showToast("已提交加入活动申请,等待管理员审核!");
+				}
+			}
+		});
+	}
+
+	private void isAuthen() {
+		User user = User.getInstance();
+		DhNet mDhNet = new DhNet(API.availableSeat + user.getUserId()
+				+ "/seats?token=" + user.getToken());
+		mDhNet.doGet(new NetTask(self) {
+
+			@Override
+			public void doInUI(Response response, Integer transfer) {
+				// TODO Auto-generated method stub
+				if (response.isSuccess()) {
+					JSONObject json = response.jSONFrom("data");
+					try {
+						User user = User.getInstance();
+						user.setIsAuthenticated(json.getInt("isAuthenticated"));
+
+						if (user.getIsAuthenticated() == 1) {
+							CarSeatSelectDialog dialog = new CarSeatSelectDialog(
+									self);
+							dialog.setOnSelectResultListener(new OnSelectResultListener() {
+
+								@Override
+								public void click(int seatCount) {
+									joinActive(seatCount);
+								}
+							});
+
+							dialog.show();
+						} else {
+							joinActive(0);
+
+						}
+						// 认证车主
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		});

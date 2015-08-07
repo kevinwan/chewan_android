@@ -226,7 +226,7 @@ public class ManageAlbumActivity extends CarPlayBaseActivity implements OnClickL
                 mCurPath = path;
                 break;
             case Constant.PICK_PHOTO:
-                PhotoUtil.onPhotoFromPick(self, Constant.ZOOM_PIC, mCurPath, data, 1, 1, 1000);
+                PhotoUtil.onPhotoFromPick(self, Constant.ZOOM_PIC, mCurPath, data, 3, 2, 1000);
                 break;
             case Constant.ZOOM_PIC:
                 upLoadPic(mCurPath);

@@ -401,7 +401,7 @@ public class MainActivity extends BaseFragmentActivity {
 				break;
 			case Constant.PICK_PHOTO:
 				PhotoUtil.onPhotoFromPick(self, Constant.ZOOM_PIC, tempPath,
-						data, 1, 1, 1000);
+						data, 3, 2, 1000);
 				break;
 			case Constant.ZOOM_PIC:
 				upLoadPic(tempPath);

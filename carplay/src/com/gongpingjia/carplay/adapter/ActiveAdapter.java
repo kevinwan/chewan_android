@@ -11,6 +11,7 @@ import net.duohuo.dhroid.util.DhUtil;
 import net.duohuo.dhroid.util.ViewUtil;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
@@ -159,22 +160,7 @@ public class ActiveAdapter extends NetJSONAdapter {
 						mContext.startActivity(it);
 
 					} else if (holder.joinT.getText().equals("我要去玩")) {
-						if (user.getIsAuthenticated() == 1) {
-							CarSeatSelectDialog dialog = new CarSeatSelectDialog(
-									mContext);
-							dialog.setOnSelectResultListener(new OnSelectResultListener() {
-
-								@Override
-								public void click(int seatCount) {
-									joinActive(activityId, seatCount);
-								}
-							});
-
-							dialog.show();
-						} else {
-							joinActive(activityId, 0);
-
-						}
+						isAuthen(activityId);
 					} else {
 
 					}
@@ -326,6 +312,46 @@ public class ActiveAdapter extends NetJSONAdapter {
 				if (response.isSuccess()) {
 					IocContainer.getShare().get(IDialog.class)
 							.showToastShort(mContext, "已提交加入活动申请,等待管理员审核!");
+				}
+			}
+		});
+	}
+
+	private void isAuthen(final String activityId) {
+		User user = User.getInstance();
+		DhNet mDhNet = new DhNet(API.availableSeat + user.getUserId()
+				+ "/seats?token=" + user.getToken());
+		mDhNet.doGet(new NetTask(mContext) {
+
+			@Override
+			public void doInUI(Response response, Integer transfer) {
+				// TODO Auto-generated method stub
+				if (response.isSuccess()) {
+					JSONObject json = response.jSONFrom("data");
+					try {
+						User user = User.getInstance();
+						user.setIsAuthenticated(json.getInt("isAuthenticated"));
+
+						if (user.getIsAuthenticated() == 1) {
+							CarSeatSelectDialog dialog = new CarSeatSelectDialog(
+									mContext);
+							dialog.setOnSelectResultListener(new OnSelectResultListener() {
+
+								@Override
+								public void click(int seatCount) {
+									joinActive(activityId, seatCount);
+								}
+							});
+
+							dialog.show();
+						} else {
+							joinActive(activityId, 0);
+
+						}
+						// 认证车主
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		});
