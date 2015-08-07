@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
@@ -73,6 +74,7 @@ public class ActiveFilterPop extends PopupWindow implements OnClickListener {
         // 设置此参数获得焦点，否则无法点击
         pop.setFocusable(true);
         pop.setAnimationStyle(R.style.PopupMenu);
+        pop.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         initView();
     }
 

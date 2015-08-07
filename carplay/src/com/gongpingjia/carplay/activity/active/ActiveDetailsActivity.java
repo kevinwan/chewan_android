@@ -1,7 +1,10 @@
 package com.gongpingjia.carplay.activity.active;
 
+import java.util.Iterator;
+
 import net.duohuo.dhroid.adapter.FieldMap;
 import net.duohuo.dhroid.adapter.NetJSONAdapter;
+import net.duohuo.dhroid.ioc.InjectUtil;
 import net.duohuo.dhroid.ioc.IocContainer;
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
@@ -32,9 +35,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.api.API;
+import com.gongpingjia.carplay.bean.JoinEB;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.manage.UserInfoManage;
 import com.gongpingjia.carplay.manage.UserInfoManage.LoginCallBack;
@@ -44,6 +49,8 @@ import com.gongpingjia.carplay.util.PicLayoutUtil;
 import com.gongpingjia.carplay.view.RoundImageView;
 import com.gongpingjia.carplay.view.dialog.CarSeatSelectDialog;
 import com.gongpingjia.carplay.view.dialog.CarSeatSelectDialog.OnSelectResultListener;
+
+import de.greenrobot.event.EventBus;
 
 /*
  *@author zhanglong
@@ -85,6 +92,8 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 	TextView rightTitleT;
 
 	CarPlayPerference per;
+
+	JSONObject headJo;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -180,7 +189,7 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 			@Override
 			public void doInUI(Response response, Integer transfer) {
 				if (response.isSuccess()) {
-					JSONObject headJo = response.jSONFromData();
+					headJo = response.jSONFromData();
 					bindHeadView(headJo);
 				}
 			}
@@ -325,6 +334,7 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 			} else {
 				joinT.setText("申请中");
 				isJoin = false;
+				joinT.setBackgroundResource(R.drawable.btn_grey_dark_bg);
 			}
 		}
 		joinT.setVisibility(View.VISIBLE);
@@ -450,9 +460,11 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 			if (User.getInstance().isLogin()) {
 
 				if (joinT.getText().equals("管理")) {
+					JSONObject shareJo = getShareContent(headJo);
 					it = new Intent(self, MyActiveMembersManageActivity.class);
 					it.putExtra("activityId", activityId);
 					it.putExtra("isJoin", isJoin);
+					it.putExtra("shareContent", shareJo.toString());
 					startActivity(it);
 				} else if (joinT.getText().toString().equals("已加入")) {
 					it = new Intent(self, ActiveMembersActivity.class);
@@ -516,6 +528,12 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 			public void doInUI(Response response, Integer transfer) {
 				if (response.isSuccess()) {
 					showToast("已提交加入活动申请,等待管理员审核!");
+					joinT.setText("申请中");
+					joinT.setBackgroundResource(R.drawable.btn_grey_dark_bg);
+					JoinEB join = new JoinEB();
+					join.setActivityId(activityId);
+					join.setIsMember(2);
+					EventBus.getDefault().post(join);
 				}
 			}
 		});
@@ -559,5 +577,55 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 				}
 			}
 		});
+	}
+
+	/** 接受加入或者退出活动事件 */
+	public void onEventMainThread(JoinEB join) {
+		if (activityId.equals(join.getActivityId())) {
+			int isMember = join.getIsMember();
+			if (isMember == 1) {
+				joinT.setText("已加入");
+				isJoin = true;
+			} else if (isMember == 0) {
+				joinT.setText("我要去玩");
+				isJoin = false;
+			} else {
+				joinT.setText("申请中");
+				isJoin = false;
+				joinT.setBackgroundResource(R.drawable.btn_grey_dark_bg);
+			}
+		}
+	}
+
+	public JSONObject getShareContent(JSONObject jo) {
+		JSONArray picJsa = JSONUtil.getJSONArray(jo, "cover");
+		JSONObject picjo;
+		JSONObject shareJo = new JSONObject();
+		try {
+			picjo = picJsa.getJSONObject(0);
+			String imgUrl = JSONUtil.getString(picjo, "thumbnail_pic");
+
+			String shareTitle = JSONUtil.getString(jo, "nickname") + "邀请您参加"
+					+ JSONUtil.getString(jo, "introduction") + "活动";
+			long time = JSONUtil.getLong(jo, "start");
+			String startTime = CarPlayValueFix.getStandardTime(time, "MM月dd日 ");
+			String shareContent = "开始时间: " + startTime + "\n目的地: "
+					+ JSONUtil.getString(jo, "location") + "\n费用: "
+					+ JSONUtil.getString(jo, "pay");
+			String shareUrl = API.share + "share.html?code="
+					+ JSONUtil.getString(jo, "activityId");
+
+			shareJo.put("imgUrl", imgUrl);
+			shareJo.put("shareTitle", shareTitle);
+			shareJo.put("shareContent", shareContent);
+			shareJo.put("shareUrl", shareUrl);
+			shareJo.put("activityId", JSONUtil.getString(jo, "activityId"));
+
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return shareJo;
 	}
 }

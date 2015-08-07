@@ -19,6 +19,7 @@ import net.duohuo.dhroid.view.RefreshAndMoreListView.OnRefreshListener;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -165,7 +166,12 @@ public class NewMessageActivity extends CarPlayBaseActivity implements
 							JSONUtil.getString(jo, "activityId"));
 					startActivity(it);
 				} else {
-
+					String activityId = JSONUtil.getString(jo, "activityId");
+					if (!TextUtils.isEmpty(activityId)) {
+						it = new Intent(self, ActiveDetailsActivity.class);
+						it.putExtra("activityId", activityId);
+						startActivity(it);
+					}
 				}
 			}
 		});

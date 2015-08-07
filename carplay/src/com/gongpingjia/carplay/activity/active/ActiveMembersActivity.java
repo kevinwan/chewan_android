@@ -29,6 +29,7 @@ import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.activity.my.MyPerSonDetailActivity;
 import com.gongpingjia.carplay.activity.my.PersonDetailActivity;
 import com.gongpingjia.carplay.api.API;
+import com.gongpingjia.carplay.bean.JoinEB;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.CarPlayPerference;
 import com.gongpingjia.carplay.util.CarPlayUtil;
@@ -39,6 +40,8 @@ import com.gongpingjia.carplay.view.dialog.ActiveMsgDialog;
 import com.gongpingjia.carplay.view.dialog.ActiveMsgDialog.OnClickResultListener;
 import com.gongpingjia.carplay.view.dialog.SeatDialog;
 import com.gongpingjia.carplay.view.dialog.SeatDialog.OnGradResultListener;
+
+import de.greenrobot.event.EventBus;
 
 public class ActiveMembersActivity extends CarPlayBaseActivity implements
 		OnClickListener {
@@ -293,6 +296,10 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 			public void doInUI(Response response, Integer transfer) {
 				if (response.isSuccess()) {
 					showToast("退出活动成功");
+					JoinEB join = new JoinEB();
+					join.setActivityId(activityId);
+					join.setIsMember(0);
+					EventBus.getDefault().post(join);
 					initQuitAndJoinButton(false);
 					adapter.refresh();
 					getData();
@@ -314,6 +321,10 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 			public void doInUI(Response response, Integer transfer) {
 				if (response.isSuccess()) {
 					findViewById(R.id.bottom_bar).setVisibility(View.GONE);
+					JoinEB join = new JoinEB();
+					join.setActivityId(activityId);
+					join.setIsMember(2);
+					EventBus.getDefault().post(join);
 					showToast("已提交加入活动申请,等待管理员审核!");
 				}
 			}

@@ -72,16 +72,18 @@ public class AuthenticateOwnersActivity extends CarPlayBaseActivity implements
 		mCacheDir = new File(getExternalCacheDir(), "CarPlay");
 		mCacheDir.mkdirs();
 		setTitle("车主认证");
-		setRightAction("跳过", -1, new OnClickListener() {
+		String type = getIntent().getStringExtra("type");
+		if (TextUtils.isEmpty(type)) {
+			setRightAction("跳过", -1, new OnClickListener() {
 
-			@Override
-			public void onClick(View arg0) {
-				Intent it = getIntent();
-				setResult(Activity.RESULT_OK, it);
-				finish();
-
-			}
-		});
+				@Override
+				public void onClick(View arg0) {
+					Intent it = getIntent();
+					setResult(Activity.RESULT_OK, it);
+					finish();
+				}
+			});
+		}
 		modelT = (TextView) findViewById(R.id.model);
 		modelT.setOnClickListener(this);
 		picI = (ImageView) findViewById(R.id.pic);

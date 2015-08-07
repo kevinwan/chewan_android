@@ -34,6 +34,13 @@ public class GalleryAdapter extends BaseAdapter {
 
 	@Override
 	public int getCount() {
+
+		if (jsa == null || jsa.length() == 0) {
+			return 0;
+		}
+		if (jsa.length() == 1) {
+			return 1;
+		}
 		return Integer.MAX_VALUE;
 	}
 

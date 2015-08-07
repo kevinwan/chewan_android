@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
+import com.umeng.analytics.MobclickAgent;
 
 public class BaseFragmentActivity extends FragmentActivity {
     public IDialog dialoger;
@@ -142,4 +143,18 @@ public class BaseFragmentActivity extends FragmentActivity {
         super.finish();
     }
 
+    
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+    
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
 }

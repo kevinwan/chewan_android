@@ -302,8 +302,10 @@ public class MyPerSonDetailActivity extends CarPlayBaseActivity implements
 		}
 		GalleryAdapter adapter = new GalleryAdapter(self, jsa);
 		gallery.setAdapter(adapter);
-		gallery.setSelection(200);
-		currentPosition = 200;
+		if (jsa.length() > 1) {
+			gallery.setSelection(200);
+			currentPosition = 200;
+		}
 	}
 
 	@Override
@@ -344,6 +346,7 @@ public class MyPerSonDetailActivity extends CarPlayBaseActivity implements
 					break;
 				case R.id.owners_certification:
 					it = new Intent(self, AuthenticateOwnersActivity.class);
+					it.putExtra("type", "my");
 					startActivity(it);
 					break;
 

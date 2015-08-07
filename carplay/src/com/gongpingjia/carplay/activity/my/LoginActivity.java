@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
+import com.gongpingjia.carplay.activity.main.MainActivity;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.manage.UserInfoManage.LoginCallBack;
@@ -98,7 +99,7 @@ public class LoginActivity extends CarPlayBaseActivity {
 				DhNet net = new DhNet(API.login);
 				net.addParam("phone", strPhoneNum);
 				net.addParam("password", MD5Util.string2MD5(strPassword));
-				net.doPost(new NetTask(self) {
+				net.doPostInDialog("登录中...", new NetTask(self) {
 
 					@Override
 					public void doInUI(Response response, Integer transfer) {
@@ -121,7 +122,15 @@ public class LoginActivity extends CarPlayBaseActivity {
 							per.phone = strPhoneNum;
 							per.password = MD5Util.string2MD5(strPassword);
 							per.commit();
-							self.finish();
+
+							String action = getIntent()
+									.getStringExtra("action");
+							if (action != null && action.equals("logout")) {
+								Intent it = new Intent(self, MainActivity.class);
+								startActivity(it);
+							} else {
+								self.finish();
+							}
 
 						}
 					}

@@ -1,5 +1,7 @@
 package com.gongpingjia.carplay.adapter;
 
+import java.util.Iterator;
+
 import net.duohuo.dhroid.adapter.NetJSONAdapter;
 import net.duohuo.dhroid.dialog.IDialog;
 import net.duohuo.dhroid.ioc.IocContainer;
@@ -27,10 +29,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.active.ActiveMembersActivity;
 import com.gongpingjia.carplay.activity.active.MyActiveMembersManageActivity;
 import com.gongpingjia.carplay.api.API;
+import com.gongpingjia.carplay.bean.ActiveParmasEB;
+import com.gongpingjia.carplay.bean.JoinEB;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.manage.UserInfoManage;
 import com.gongpingjia.carplay.manage.UserInfoManage.LoginCallBack;
@@ -39,6 +44,8 @@ import com.gongpingjia.carplay.util.PicLayoutUtil;
 import com.gongpingjia.carplay.view.RoundImageView;
 import com.gongpingjia.carplay.view.dialog.CarSeatSelectDialog;
 import com.gongpingjia.carplay.view.dialog.CarSeatSelectDialog.OnSelectResultListener;
+
+import de.greenrobot.event.EventBus;
 
 public class ActiveAdapter extends NetJSONAdapter {
 	LayoutInflater mLayoutInflater;
@@ -59,6 +66,8 @@ public class ActiveAdapter extends NetJSONAdapter {
 		piclayoutWidth = width - DhUtil.dip2px(context, 59 + 12 * 2 + 10);
 		headlayoutWidth = piclayoutWidth
 				- DhUtil.dip2px(context, 77 + 10 + 8 * 2);
+
+		EventBus.getDefault().register(this);
 	}
 
 	@Override
@@ -127,13 +136,19 @@ public class ActiveAdapter extends NetJSONAdapter {
 		final long startTime = JSONUtil.getLong(jo, "start");
 		if (isOrganizer == 1) {
 			holder.joinT.setText("管理");
+			holder.joinT.setBackgroundResource(R.drawable.button_yanzheng_bg);
 		} else {
 			if (isMember == 1) {
 				holder.joinT.setText("已加入");
+				holder.joinT
+						.setBackgroundResource(R.drawable.button_yanzheng_bg);
 			} else if (isMember == 0) {
 				holder.joinT.setText("我要去玩");
+				holder.joinT
+						.setBackgroundResource(R.drawable.button_yanzheng_bg);
 			} else {
 				holder.joinT.setText("申请中");
+				holder.joinT.setBackgroundResource(R.drawable.btn_grey_dark_bg);
 			}
 		}
 		holder.joinT.setVisibility(View.VISIBLE);
@@ -160,7 +175,7 @@ public class ActiveAdapter extends NetJSONAdapter {
 						mContext.startActivity(it);
 
 					} else if (holder.joinT.getText().equals("我要去玩")) {
-						isAuthen(activityId);
+						isAuthen(activityId, jo);
 					} else {
 
 					}
@@ -191,10 +206,12 @@ public class ActiveAdapter extends NetJSONAdapter {
 				if (user.isLogin()) {
 					int isMember = JSONUtil.getInt(jo, "isMember");
 					if (holder.joinT.getText().equals("管理")) {
+						JSONObject shareJo = getShareContent(jo);
 						it = new Intent(mContext,
 								MyActiveMembersManageActivity.class);
 						it.putExtra("activityId", activityId);
 						it.putExtra("isJoin", isMember == 1 ? true : false);
+						it.putExtra("shareContent", shareJo.toString());
 						mContext.startActivity(it);
 					} else {
 						it = new Intent(mContext, ActiveMembersActivity.class);
@@ -299,7 +316,8 @@ public class ActiveAdapter extends NetJSONAdapter {
 	/**
 	 * 加入活动
 	 */
-	private void joinActive(String activityId, int seatCount) {
+	private void joinActive(String activityId, int seatCount,
+			final JSONObject jo) {
 		User user = User.getInstance();
 		DhNet net = new DhNet(API.CWBaseurl + "/activity/" + activityId
 				+ "/join?userId=" + user.getUserId() + "&token="
@@ -312,12 +330,19 @@ public class ActiveAdapter extends NetJSONAdapter {
 				if (response.isSuccess()) {
 					IocContainer.getShare().get(IDialog.class)
 							.showToastShort(mContext, "已提交加入活动申请,等待管理员审核!");
+					try {
+						jo.put("isMember", 2);
+						notifyDataSetChanged();
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 		});
 	}
 
-	private void isAuthen(final String activityId) {
+	private void isAuthen(final String activityId, final JSONObject jo) {
 		User user = User.getInstance();
 		DhNet mDhNet = new DhNet(API.availableSeat + user.getUserId()
 				+ "/seats?token=" + user.getToken());
@@ -339,13 +364,13 @@ public class ActiveAdapter extends NetJSONAdapter {
 
 								@Override
 								public void click(int seatCount) {
-									joinActive(activityId, seatCount);
+									joinActive(activityId, seatCount, jo);
 								}
 							});
 
 							dialog.show();
 						} else {
-							joinActive(activityId, 0);
+							joinActive(activityId, 0, jo);
 
 						}
 						// 认证车主
@@ -355,5 +380,57 @@ public class ActiveAdapter extends NetJSONAdapter {
 				}
 			}
 		});
+	}
+
+	/** 接受加入或者退出活动事件 */
+	public void onEventMainThread(JoinEB join) {
+		if (mVaules != null && mVaules.size() != 0) {
+			for (Iterator iterator = mVaules.iterator(); iterator.hasNext();) {
+				JSONObject jo = (JSONObject) iterator.next();
+				if (JSONUtil.getString(jo, "activityId").equals(
+						join.getActivityId())) {
+					try {
+						jo.put("isMember", join.getIsMember());
+						notifyDataSetChanged();
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+
+			}
+		}
+	}
+
+	public JSONObject getShareContent(JSONObject jo) {
+		JSONArray picJsa = JSONUtil.getJSONArray(jo, "cover");
+		JSONObject picjo;
+		JSONObject shareJo = new JSONObject();
+		try {
+			picjo = picJsa.getJSONObject(0);
+			String imgUrl = JSONUtil.getString(picjo, "thumbnail_pic");
+
+			String shareTitle = JSONUtil.getString(jo, "nickname") + "邀请您参加"
+					+ JSONUtil.getString(jo, "introduction") + "活动";
+			long time = JSONUtil.getLong(jo, "start");
+			String startTime = CarPlayValueFix.getStandardTime(time, "MM月dd日 ");
+			String shareContent = "开始时间: " + startTime + "\n目的地: "
+					+ JSONUtil.getString(jo, "location") + "\n费用: "
+					+ JSONUtil.getString(jo, "pay");
+			String shareUrl = API.share + "share.html?code="
+					+ JSONUtil.getString(jo, "activityId");
+
+			shareJo.put("imgUrl", imgUrl);
+			shareJo.put("shareTitle", shareTitle);
+			shareJo.put("shareContent", shareContent);
+			shareJo.put("shareUrl", shareUrl);
+			shareJo.put("activityId", JSONUtil.getString(jo, "activityId"));
+
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return shareJo;
 	}
 }

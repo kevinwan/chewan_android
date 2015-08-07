@@ -72,7 +72,7 @@ public class MainActivity extends BaseFragmentActivity {
 		setContentView(R.layout.activity_main);
 		initView();
 		isAuthen();
-		// updateApp();
+		updateApp();
 	}
 
 	public void initView() {
@@ -338,7 +338,7 @@ public class MainActivity extends BaseFragmentActivity {
 			@Override
 			public void doInUI(Response response, Integer transfer) {
 				if (response.isSuccess()) {
-					JSONObject jo = response.jSON();
+					JSONObject jo = response.jSONFromData();
 					String version = JSONUtil.getString(jo, "version");
 					if (0 < version.compareTo(mCurrentVersion)) {
 						showUpdateDialog(jo);
@@ -381,6 +381,9 @@ public class MainActivity extends BaseFragmentActivity {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						dialog.dismiss();
+						if (JSONUtil.getInt(jo, "forceUpgrade") == 1) {
+							finish();
+						}
 					}
 				});
 		builder.create().show();

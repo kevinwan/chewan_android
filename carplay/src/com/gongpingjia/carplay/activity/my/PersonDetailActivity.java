@@ -332,8 +332,10 @@ public class PersonDetailActivity extends CarPlayBaseActivity implements
 		}
 		GalleryAdapter adapter = new GalleryAdapter(self, jsa);
 		gallery.setAdapter(adapter);
-		gallery.setSelection(200);
-		currentPosition = 200;
+		if(jsa.length()>1) {
+			gallery.setSelection(200);
+			currentPosition = 200;
+		}
 	}
 
 	private void setTab(int index) {

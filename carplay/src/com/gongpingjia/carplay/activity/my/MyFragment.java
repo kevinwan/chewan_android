@@ -276,8 +276,10 @@ public class MyFragment extends Fragment implements OnClickListener {
 		}
 		GalleryAdapter adapter = new GalleryAdapter(getActivity(), jsa);
 		gallery.setAdapter(adapter);
-		gallery.setSelection(200);
-		currentPosition = 200;
+		if (jsa.length() > 1) {
+			gallery.setSelection(200);
+			currentPosition = 200;
+		}
 	}
 
 	@Override
@@ -325,6 +327,7 @@ public class MyFragment extends Fragment implements OnClickListener {
 						case R.id.owners_certification:
 							it = new Intent(getActivity(),
 									AuthenticateOwnersActivity.class);
+							it.putExtra("type", "my");
 							startActivity(it);
 							break;
 

@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -115,7 +116,7 @@ public class CarTypeSelectActivity extends CarPlayBaseActivity {
 		// 弹出window
 		mPopWindow = new PopupWindow(mPopView, LayoutParams.MATCH_PARENT,
 				LayoutParams.MATCH_PARENT);
-
+		mPopWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 		// 请求主页面所有车型
 		mBrands = new ArrayList<BrandDetails>();
 		mDatas = new ArrayList<CarBrand>();

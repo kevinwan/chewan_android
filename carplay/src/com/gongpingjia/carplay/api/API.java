@@ -1,11 +1,8 @@
 package com.gongpingjia.carplay.api;
 
 public class API {
-	public static final String Baseurl = "http://api7.gongpingjia.com/";
 
 	public static final String CWBaseurl = "http://cwapi.gongpingjia.com/v1";
-
-	public static final String allCarData = Baseurl + "/mobile/buy/car/search/";
 
 	public static final String allCarBrands = "http://cwapi.gongpingjia.com/v1/car/brand";
 
@@ -40,6 +37,8 @@ public class API {
 
 	public static final String editAlbum = CWBaseurl + "/user/";
 
-	public static final String update = CWBaseurl + "/version?product=android";
+	public static final String update = "http://cwapi.gongpingjia.com/version";
+
+	public static final String share = "http://cwapi.gongpingjia.com/";
 
 }

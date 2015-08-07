@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
+import com.umeng.analytics.MobclickAgent;
 
 public abstract class CarPlayBaseActivity extends BaseActivity {
 	public IDialog dialoger;
@@ -219,5 +220,17 @@ public abstract class CarPlayBaseActivity extends BaseActivity {
 			progressdialog.dismiss();
 		}
 	}
+	
 
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
 }

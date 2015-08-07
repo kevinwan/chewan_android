@@ -114,7 +114,10 @@ public class SettingActivity extends CarPlayBaseActivity implements
 			preference.load();
 			preference.setPassword("");
 			preference.commit();
-			User.getInstance().setLogin(false);
+			User user = User.getInstance();
+			user.setLogin(false);
+			user.setUserId("");
+			user.setToken("");
 			Log.e("tag", "update user info");
 			break;
 
