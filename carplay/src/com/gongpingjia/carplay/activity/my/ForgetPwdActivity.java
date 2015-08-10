@@ -53,12 +53,6 @@ public class ForgetPwdActivity extends CarPlayBaseActivity implements
 
 	}
 
-	/**
-	 * 发送验证码定时器
-	 * 
-	 * @author Administrator
-	 * 
-	 */
 	class TimeCount extends CountDownTimer {
 		public TimeCount(long millisInFuture, long countDownInterval) {
 			super(millisInFuture, countDownInterval);
@@ -132,6 +126,7 @@ public class ForgetPwdActivity extends CarPlayBaseActivity implements
 
 			DhNet codeNet = new DhNet("http://cwapi.gongpingjia.com/v1/phone/"
 					+ strPhone + "/verification");
+			codeNet.addParam("type", 1);
 			codeNet.doGetInDialog(new NetTask(self) {
 
 				@Override

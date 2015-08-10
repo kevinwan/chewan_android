@@ -29,7 +29,7 @@
             <EditText
                 android:id="@+id/phone"
                 style="@style/text_black_small"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="55dp"
                 android:layout_weight="1"
                 android:background="@color/nothing"
@@ -119,13 +119,12 @@
                 android:gravity="center" >
 
                 <CheckBox
-                     android:id="@+id/checked"
+                    android:id="@+id/checked"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
+                    android:background="@drawable/cheack_zc"
                     android:button="@null"
-                    android:checked="true"
-                    android:background="@drawable/cheack_zc" />
-
+                    android:checked="true" />
             </LinearLayout>
 
             <TextView
