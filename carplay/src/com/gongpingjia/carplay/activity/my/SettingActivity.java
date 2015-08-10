@@ -57,6 +57,9 @@ public class SettingActivity extends CarPlayBaseActivity implements
 		title = (TextView) findViewById(R.id.title);
 		title.setText("设置");
 
+		setting_btn.setVisibility(User.getInstance().isLogin() ? View.VISIBLE
+				: View.GONE);
+
 		mVersionText = (TextView) findViewById(R.id.tv_version);
 		mVersionText.setText(getAppVersion());
 

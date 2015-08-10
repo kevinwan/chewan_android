@@ -9,6 +9,7 @@ import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.net.upload.FileInfo;
 import net.duohuo.dhroid.util.PhotoUtil;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.content.Intent;
@@ -79,7 +80,15 @@ public class FeedBackActivity extends CarPlayBaseActivity implements
 
 		DhNet net = new DhNet(API.CWBaseurl + "/user/" + user.getUserId()
 				+ "/feedback/submit?token=" + user.getToken());
-		net.addParam("photo", photoId);
+
+		if (!TextUtils.isEmpty(photoId)) {
+			JSONArray jsa = new JSONArray();
+			jsa.put(photoId);
+			net.addParam("photos", jsa);
+		} else {
+			net.addParam("photos", "");
+		}
+		// net.addParam("photos", photoId);
 		net.addParam("content", content);
 		net.doPostInDialog("提交中...", new NetTask(self) {
 
