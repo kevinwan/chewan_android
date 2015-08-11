@@ -9,6 +9,7 @@
     <include layout="@layout/include_title_bar" />
 
     <LinearLayout
+        android:id="@+id/layout_passwd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
@@ -72,17 +73,17 @@
         </LinearLayout>
 
         <View style="@style/line" />
-
-        <Button
-            android:id="@+id/button_new_pwd"
-            style="@style/text_white_medium"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/button_zc_bg"
-            android:text="完成" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/button_new_pwd"
+        style="@style/text_white_medium"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_zc_bg"
+        android:text="完成" />
 
 </LinearLayout>

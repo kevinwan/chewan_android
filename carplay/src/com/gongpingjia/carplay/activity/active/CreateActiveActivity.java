@@ -393,7 +393,7 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                 IocContainer.getShare().get(IDialog.class).showToastLong(self, "正在加载可提供座位的数量,请稍等!");
                 return;
             }
-            dlg = new CommonDialog(self, mSeatOptions, "请选择提供座位数");
+            dlg = new CommonDialog(self, mSeatOptions, "请选择提供空座数");
             dlg.setOnDialogItemClickListener(new OnCommonDialogItemClickListener() {
 
                 @Override
@@ -423,7 +423,7 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                 return;
             }
             if (mSeatText.getText().toString().length() == 0 || mSeatText.getText().toString().equals("0")) {
-                showToast("请选择座位数");
+                showToast("请选择空座数");
                 return;
             }
 
@@ -486,7 +486,7 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                 return;
             }
             if (mSeatText.getText().toString().length() == 0) {
-                showToast("请提供座位数");
+                showToast("请提供空座数");
                 return;
             }
 
@@ -517,6 +517,7 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                         showToast("创建成功");
                         JSONObject json = response.jSONFrom("data");
                         try {
+                            final String activeId = json.getString("activityId");
                             final String shareContent = json.getString("shareContent");
                             final String shareTitle = json.getString("shareTitle");
                             final String shareUrl = json.getString("shareUrl");
@@ -547,6 +548,11 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
 
                                                 @Override
                                                 public void onComplete(SHARE_MEDIA arg0, int arg1, SocializeEntity arg2) {
+                                                    if (!activeId.equals("")) {
+                                                        Intent it = new Intent(self, ActiveDetailsActivity.class);
+                                                        it.putExtra("activityId", activeId);
+                                                        startActivity(it);
+                                                    }
                                                     popWin.dismiss();
                                                     self.finish();
                                                 }
@@ -578,6 +584,12 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                                                         @Override
                                                         public void onComplete(SHARE_MEDIA arg0, int arg1,
                                                                 SocializeEntity arg2) {
+                                                            if (!activeId.equals("")) {
+                                                                Intent it = new Intent(self,
+                                                                        ActiveDetailsActivity.class);
+                                                                it.putExtra("activityId", activeId);
+                                                                startActivity(it);
+                                                            }
                                                             popWin.dismiss();
                                                             self.finish();
                                                         }
@@ -589,6 +601,11 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                                 @Override
                                 public void onClick(View v) {
                                     popWin.dismiss();
+                                    if (!activeId.equals("")) {
+                                        Intent it = new Intent(self, ActiveDetailsActivity.class);
+                                        it.putExtra("activityId", activeId);
+                                        startActivity(it);
+                                    }
                                     self.finish();
                                 }
                             });
@@ -597,6 +614,11 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                                 @Override
                                 public void onClick(View v) {
                                     popWin.dismiss();
+                                    if (!activeId.equals("")) {
+                                        Intent it = new Intent(self, ActiveDetailsActivity.class);
+                                        it.putExtra("activityId", activeId);
+                                        startActivity(it);
+                                    }
                                     self.finish();
                                 }
                             });

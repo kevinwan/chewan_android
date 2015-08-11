@@ -21,6 +21,8 @@ import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.CarPlayPerference;
 import com.gongpingjia.carplay.util.MD5Util;
+import com.nineoldandroids.animation.AnimatorSet;
+import com.nineoldandroids.animation.ObjectAnimator;
 
 /**
  * 找回密码(设置新密码)页面 hqh
@@ -41,6 +43,8 @@ public class PwdNextActivity extends CarPlayBaseActivity {
     // 验证码
     private String code;
 
+    private View mLayoutPasswd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +58,7 @@ public class PwdNextActivity extends CarPlayBaseActivity {
         ed_new_pwd = (EditText) findViewById(R.id.ed_new_pwd);
         mConfirmEdit = (EditText) findViewById(R.id.et_confirm_passwd);
         button_new_pwd = (Button) findViewById(R.id.button_new_pwd);
+        mLayoutPasswd = findViewById(R.id.layout_passwd);
         Intent intent = getIntent();
         // 手機號
         phone = intent.getStringExtra("PhoneNum");
@@ -74,6 +79,11 @@ public class PwdNextActivity extends CarPlayBaseActivity {
                 }
                 if (!confirmPwd.equals(strpwd)) {
                     showToast("两次输入密码不一致，请重新输入");
+                    AnimatorSet animator = new AnimatorSet();
+                    animator.setDuration(500);
+                    animator.playTogether(ObjectAnimator.ofFloat(mLayoutPasswd, "translationX", 0, 25, -25, 25, -25,
+                            15, -15, 6, -6, 0));
+                    animator.start();
                     return;
                 }
                 DhNet net = new DhNet(API.newPassword);
@@ -115,5 +125,4 @@ public class PwdNextActivity extends CarPlayBaseActivity {
             }
         });
     }
-
 }
