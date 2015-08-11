@@ -103,7 +103,7 @@ public class MessageAdapter extends NetJSONAdapter {
 			holder.agreeT.setVisibility(View.GONE);
 		} else {
 			String remarks = JSONUtil.getString(jo, "remarks");
-			String seatcontent = "提供" + JSONUtil.getInt(jo, "seat") + "座位";
+			String seatcontent = "提供" + JSONUtil.getInt(jo, "seat") + "空座";
 			if (remarks.equals("") && msgtype.equals("活动申请处理")) {
 				holder.agreeT.setVisibility(View.VISIBLE);
 				holder.countT.setVisibility(View.VISIBLE);

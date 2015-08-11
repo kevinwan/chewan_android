@@ -175,7 +175,7 @@
 
                 <TextView
                     style="@style/text_grey_small"
-                    android:text="TA的关注" />
+                    android:text="TA的收藏" />
 
                 <View
                     android:id="@+id/tabline"
