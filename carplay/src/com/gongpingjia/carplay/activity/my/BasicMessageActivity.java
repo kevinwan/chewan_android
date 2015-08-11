@@ -295,17 +295,6 @@ public class BasicMessageActivity extends CarPlayBaseActivity implements
 		});
 
 	}
-
-	private void setCanceleable(boolean b) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	private void setCanceble(boolean b) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == RESULT_OK) {
 			switch (requestCode) {
