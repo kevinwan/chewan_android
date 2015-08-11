@@ -14,31 +14,26 @@ import net.duohuo.dhroid.view.NetRefreshAndMoreListView;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.ScaleAnimation;
-import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemSelectedListener;
 
 import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
-import com.gongpingjia.carplay.activity.main.MainActivity;
 import com.gongpingjia.carplay.activity.msg.PlayCarChatActivity;
 import com.gongpingjia.carplay.adapter.ActiveAdapter;
 import com.gongpingjia.carplay.adapter.GalleryAdapter;
@@ -84,6 +79,8 @@ public class MyFragment extends Fragment implements OnClickListener {
 
 	/** 发布数,关注数,参与数 */
 	TextView postNumberT, subscribeNumberT, joinNumberT;
+	
+	ImageView unLogheadI;
 
 	DotLinLayout dotLinLayout;
 
@@ -139,6 +136,7 @@ public class MyFragment extends Fragment implements OnClickListener {
 		editdata = (LinearLayout) mainV.findViewById(R.id.editdata);
 		feedback_layoutV = (LinearLayout) mainV
 				.findViewById(R.id.feedback_layout);
+		unLogheadI=(ImageView) mainV.findViewById(R.id.notlogin_head);
 
 		loginBtn.setOnClickListener(new OnClickListener() {
 
@@ -160,11 +158,20 @@ public class MyFragment extends Fragment implements OnClickListener {
 
 			}
 		});
+		headI.setOnClickListener(this);
 		people_concerned.setOnClickListener(this);
 		owners_certification.setOnClickListener(this);
 		editdata.setOnClickListener(this);
-		feedback_layoutV.setOnClickListener(this);
+		feedback_layoutV.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				Intent it = new Intent(getActivity(), FeedBackActivity.class);
+				startActivity(it);
+			}
+		});
 
+		gallery = (CarPlayGallery) mainV.findViewById(R.id.gallery);
 		// 未登录
 		if (TextUtils.isEmpty(user.getUserId())) {
 			loginedLl.setVisibility(View.GONE);
@@ -172,9 +179,11 @@ public class MyFragment extends Fragment implements OnClickListener {
 			postNumberT.setText("0");
 			subscribeNumberT.setText("0");
 			joinNumberT.setText("0");
+			unLogheadI.setVisibility(View.VISIBLE);
+			gallery.setVisibility(View.GONE);
 		}
 
-		gallery = (CarPlayGallery) mainV.findViewById(R.id.gallery);
+		
 		dotLinLayout = (DotLinLayout) mainV.findViewById(R.id.dots);
 		dotLinLayout.setDotImage(R.drawable.dot_n, R.drawable.dot_f);
 		gallery.setOnItemClickListener(new OnItemClickListener() {
@@ -262,7 +271,7 @@ public class MyFragment extends Fragment implements OnClickListener {
 				JSONArray albumPhotosJsa = JSONUtil.getJSONArray(jo,
 						"albumPhotos");
 				bingGallery(albumPhotosJsa);
-
+				
 			}
 		});
 	}
@@ -280,6 +289,16 @@ public class MyFragment extends Fragment implements OnClickListener {
 			gallery.setSelection(200);
 			currentPosition = 200;
 		}
+		
+		if (jsa.length() != 0) {
+			unLogheadI.setVisibility(View.GONE);
+			gallery.setVisibility(View.VISIBLE);
+		}
+		else{
+			unLogheadI.setVisibility(View.VISIBLE);
+			gallery.setVisibility(View.GONE);
+		}
+		
 	}
 
 	@Override
@@ -292,11 +311,11 @@ public class MyFragment extends Fragment implements OnClickListener {
 						Intent it;
 						switch (v.getId()) {
 
-						// case R.id.login:
-						// it = new Intent(getActivity(), LoginActivity.class);
-						// startActivityForResult(it, LOGINCODE);
-						// break;
-
+						case R.id.head:
+							it = new Intent(getActivity(),
+									EditPersonalInfoActivity.class);
+							startActivity(it);
+							break;
 						case R.id.my_attention:
 							it = new Intent(getActivity(),
 									MyAttentionActiveActivity.class);
@@ -314,11 +333,6 @@ public class MyFragment extends Fragment implements OnClickListener {
 									MyParticipationActiveActivity.class);
 							startActivity(it);
 							break;
-						// case R.id.carchat:
-						// it = new Intent(getActivity(),
-						// PlayCarChatActivity.class);
-						// startActivity(it);
-						// break;
 						case R.id.people_concerned:
 							it = new Intent(getActivity(),
 									AttentionPersonActivity.class);
@@ -331,11 +345,6 @@ public class MyFragment extends Fragment implements OnClickListener {
 							startActivity(it);
 							break;
 
-						case R.id.feedback_layout:
-							it = new Intent(getActivity(),
-									FeedBackActivity.class);
-							startActivity(it);
-							break;
 						case R.id.editdata:
 							it = new Intent(getActivity(),
 									EditPersonalInfoActivity.class);

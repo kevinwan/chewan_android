@@ -273,7 +273,7 @@ public class ActiveAdapter extends NetJSONAdapter {
 					"time");
 		}
 		ViewUtil.bindView(holder.addressT,
-				"地点: " + JSONUtil.getString(jo, "location"));
+				 JSONUtil.getString(jo, "location"));
 		ViewUtil.bindNetImage(holder.headI,
 				JSONUtil.getString(creater, "photo"), "head");
 		holder.headI.setTag(JSONUtil.getString(creater, "userId"));
