@@ -516,9 +516,8 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                     if (response.isSuccess()) {
                         showToast("创建成功");
                         JSONObject json = response.jSONFrom("data");
-                        String activeId = "";
                         try {
-                            activeId = json.getString("acitvityId");
+                            final String activeId = json.getString("activityId");
                             final String shareContent = json.getString("shareContent");
                             final String shareTitle = json.getString("shareTitle");
                             final String shareUrl = json.getString("shareUrl");
@@ -549,7 +548,13 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
 
                                                 @Override
                                                 public void onComplete(SHARE_MEDIA arg0, int arg1, SocializeEntity arg2) {
+                                                    if (!activeId.equals("")) {
+                                                        Intent it = new Intent(self, ActiveDetailsActivity.class);
+                                                        it.putExtra("activityId", activeId);
+                                                        startActivity(it);
+                                                    }
                                                     popWin.dismiss();
+                                                    self.finish();
                                                 }
                                             });
                                         }
@@ -579,7 +584,14 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                                                         @Override
                                                         public void onComplete(SHARE_MEDIA arg0, int arg1,
                                                                 SocializeEntity arg2) {
+                                                            if (!activeId.equals("")) {
+                                                                Intent it = new Intent(self,
+                                                                        ActiveDetailsActivity.class);
+                                                                it.putExtra("activityId", activeId);
+                                                                startActivity(it);
+                                                            }
                                                             popWin.dismiss();
+                                                            self.finish();
                                                         }
                                                     });
                                         }
@@ -589,6 +601,12 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                                 @Override
                                 public void onClick(View v) {
                                     popWin.dismiss();
+                                    if (!activeId.equals("")) {
+                                        Intent it = new Intent(self, ActiveDetailsActivity.class);
+                                        it.putExtra("activityId", activeId);
+                                        startActivity(it);
+                                    }
+                                    self.finish();
                                 }
                             });
                             shareView.findViewById(R.id.layout_bg).setOnClickListener(new View.OnClickListener() {
@@ -596,18 +614,19 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                                 @Override
                                 public void onClick(View v) {
                                     popWin.dismiss();
+                                    if (!activeId.equals("")) {
+                                        Intent it = new Intent(self, ActiveDetailsActivity.class);
+                                        it.putExtra("activityId", activeId);
+                                        startActivity(it);
+                                    }
+                                    self.finish();
                                 }
                             });
                             popWin.showAsDropDown(findViewById(R.id.title_bar));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        if (!activeId.equals("")) {
-                            Intent it = new Intent(self, ActiveDetailsActivity.class);
-                            it.putExtra("activityId", activeId);
-                            startActivity(it);
-                        }
-                        self.finish();
+
                     } else {
                         try {
                             Log.e("err", response.jSON().getString("errmsg"));

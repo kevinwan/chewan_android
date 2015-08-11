@@ -124,7 +124,8 @@ public class SearchPlaceActivity extends CarPlayBaseActivity implements TextWatc
                         int start = name.toLowerCase().indexOf(key.toLowerCase());
                         int end = start + key.length();
                         if (start != -1) {
-                            sb.setSpan(new ForegroundColorSpan(Color.RED), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                            sb.setSpan(new ForegroundColorSpan(Color.parseColor("#47D1D4")), start, end,
+                                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                         }
                         sug.setStyleName(sb);
                         mDatas.add(sug);
