@@ -73,17 +73,14 @@
                     <TextView
                         style="@style/text_grey_medium"
                         android:text="请输入活动介绍" />
-
-                    
                 </LinearLayout>
 
                 <TextView
                     android:id="@+id/tv_description"
-                    style="@style/text_blacklight_small"
+                    style="@style/text_blacklight_medium"
                     android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="8dp"
-                    android:lineSpacingExtra="1.5dp" />
+                    android:layout_marginTop="8dp" />
             </LinearLayout>
 
             <View style="@style/line" />
