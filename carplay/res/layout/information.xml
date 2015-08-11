@@ -45,7 +45,7 @@
                 <TextView
                     android:id="@+id/normal_time"
                     style="@style/text_grey_smaller"
-                    android:text="10:23" />
+                    android:text="" />
             </LinearLayout>
 
             <LinearLayout
@@ -118,7 +118,7 @@
                 <TextView
                     android:id="@+id/application_time"
                     style="@style/text_grey_smaller"
-                    android:text="10:23" />
+                    android:text="" />
             </LinearLayout>
 
             <LinearLayout

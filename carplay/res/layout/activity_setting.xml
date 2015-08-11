@@ -204,6 +204,7 @@
         android:background="@drawable/button_radian"
         android:text="退出登录"
         android:textColor="@color/white"
-        android:textSize="@dimen/text_medium" />
+        android:textSize="@dimen/text_medium"
+        android:visibility="gone" />
 
 </LinearLayout>

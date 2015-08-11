@@ -31,6 +31,7 @@ import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -74,7 +75,7 @@ public class MyFragment extends Fragment implements OnClickListener {
 	Button loginBtn;
 
 	/** 头像,车logo */
-	RoundImageView headI, carBrandLogoI;
+	RoundImageView headI, carBrandLogoI,carlogo;
 
 	/** 昵称,年龄,车型+车龄 */
 	TextView nicknameT, ageT, carModelT;
@@ -83,7 +84,7 @@ public class MyFragment extends Fragment implements OnClickListener {
 	RelativeLayout genderR;
 
 	/** 发布数,关注数,参与数 */
-	TextView postNumberT, subscribeNumberT, joinNumberT;
+	TextView postNumberT, subscribeNumberT, joinNumberT,attestation_txt;
 
 	DotLinLayout dotLinLayout;
 
@@ -114,6 +115,7 @@ public class MyFragment extends Fragment implements OnClickListener {
 
 	private void initView() {
 		user = User.getInstance();
+		attestation_txt = (TextView) mainV.findViewById(R.id.attestation_txt);
 		loginedLl = (LinearLayout) mainV.findViewById(R.id.logined);
 		notloginLl = (LinearLayout) mainV.findViewById(R.id.notlogin);
 		loginBtn = (Button) mainV.findViewById(R.id.login);
@@ -123,7 +125,7 @@ public class MyFragment extends Fragment implements OnClickListener {
 		ageT = (TextView) mainV.findViewById(R.id.age);
 		carModelT = (TextView) mainV.findViewById(R.id.carModel);
 		genderR = (RelativeLayout) mainV.findViewById(R.id.gender);
-
+		 carlogo = (RoundImageView) mainV.findViewById(R.id.carlogo);
 		postNumberT = (TextView) mainV.findViewById(R.id.postNumber);
 		subscribeNumberT = (TextView) mainV.findViewById(R.id.subscribeNumber);
 		joinNumberT = (TextView) mainV.findViewById(R.id.joinNumber);
@@ -247,8 +249,12 @@ public class MyFragment extends Fragment implements OnClickListener {
 					carBrandLogoI.setVisibility(View.GONE);
 				} else {
 					carBrandLogoI.setVisibility(View.VISIBLE);
+					attestation_txt.setVisibility(View.VISIBLE);
 					ViewUtil.bindNetImage(carBrandLogoI, carBrandLogo,
 							CarPlayValueFix.optionsDefault.toString());
+					ViewUtil.bindNetImage(carlogo, carBrandLogo,
+							CarPlayValueFix.optionsDefault.toString());
+					
 				}
 
 				if (gender.equals("男"))

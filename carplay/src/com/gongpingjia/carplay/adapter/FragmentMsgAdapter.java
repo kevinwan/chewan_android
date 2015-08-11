@@ -1,5 +1,7 @@
 package com.gongpingjia.carplay.adapter;
 
+import java.text.SimpleDateFormat;
+
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
@@ -36,7 +38,7 @@ public class FragmentMsgAdapter extends BaseAdapter {
 
 	BadgeView normalMsgBadgeT, applicationMsgBadgeT;
 
-	TextView applicationmsg_contentT, normsg_contentT;
+	TextView applicationmsg_contentT, normsg_contentT,normal_timeT,application_timeT;
 
 	View aaplication_layoutV, normsg_layoutV;
 
@@ -97,17 +99,24 @@ public class FragmentMsgAdapter extends BaseAdapter {
 		applicationMsgBadgeT = (BadgeView) view
 				.findViewById(R.id.application_msg_cout);
 		applicationMsgBadgeT.setBadgeBackgroundColor(bgcolor);
+		
+		normal_timeT=(TextView) view.findViewById(R.id.normal_time);
+		application_timeT=(TextView) view.findViewById(R.id.application_time);
 
 		if (jo != null) {
+			SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
+	        
 			JSONObject commentJo = JSONUtil.getJSONObject(jo, "comment");
 			normalMsgBadgeT
 					.setVisibility(JSONUtil.getInt(commentJo, "count") == 0 ? View.GONE
 							: View.VISIBLE);
 			if (TextUtils.isEmpty(JSONUtil.getString(commentJo, "content"))) {
 				normsg_contentT.setText("暂时还没有新消息");
+				normal_timeT.setText("");
 			} else {
 				normsg_contentT.setText(JSONUtil
 						.getString(commentJo, "content"));
+				normal_timeT.setText(""+formatter.format(System.currentTimeMillis()));
 			}
 			normalMsgBadgeT.setText(JSONUtil.getString(commentJo, "count"));
 
@@ -117,12 +126,17 @@ public class FragmentMsgAdapter extends BaseAdapter {
 					"count") == 0 ? View.GONE : View.VISIBLE);
 			if (TextUtils.isEmpty(JSONUtil.getString(applicationJo, "content"))) {
 				applicationmsg_contentT.setText("暂时还没有新消息");
+				application_timeT.setText("");
 			} else {
 				applicationmsg_contentT.setText(JSONUtil.getString(
 						applicationJo, "content"));
+				application_timeT.setText(""+formatter.format(System.currentTimeMillis()));
 			}
 			applicationMsgBadgeT.setText(JSONUtil.getString(applicationJo,
 					"count"));
+		
+			
+			
 		}
 
 		return view;

@@ -55,371 +55,404 @@ import com.umeng.socialize.weixin.media.CircleShareContent;
 import com.umeng.socialize.weixin.media.WeiXinShareContent;
 
 public class MyActiveMembersManageActivity extends CarPlayBaseActivity {
-    SwipeMenuListView listV;
+	SwipeMenuListView listV;
+
+	PSAdapter adapter;
 
-    PSAdapter adapter;
-
-    View headV;
-
-    String activityId;
-
-    LinearLayout carLayoutV;
-
-    CarSeatUtil carUtil;
-
-    User user;
-
-    /** 拉下座位 立即抢座 Dialog */
-    SeatDialog pullDownDialog, grabDialog;
-
-    CarPlayPerference per;
-
-    // umeng分享
-    private UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.share");
-
-    // 微信id
-    static String sAppId = "wx4c127cf07bd7d80b";
-
-    static String sAppSecret = "315ce754c5a1096c5188b4b69a7b9f04";
-
-    // 微信好友
-    private UMWXHandler wxHandler;
-
-    // 微信朋友圈
-    private UMWXHandler wxCircleHandler;
-
-    private String mShareContent;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_active_members);
-
-        setupShare();
-        mShareContent = getIntent().getStringExtra("shareContent");
-
-        setRightAction("邀请", -1, new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                View shareView = LayoutInflater.from(self).inflate(R.layout.pop_share, null);
-
-                if (mShareContent != null) {
-                    try {
-                        JSONObject json = new JSONObject(mShareContent);
-                        final String shareContent = json.getString("shareContent");
-                        final String shareTitle = json.getString("shareTitle");
-                        final String shareUrl = json.getString("shareUrl");
-                        final UMImage image = new UMImage(self, json.getString("imgUrl"));
-
-                        final PopupWindow popWin = new PopupWindow(shareView, LayoutParams.MATCH_PARENT,
-                                LayoutParams.MATCH_PARENT);
-                        // 分享到微信朋友
-                        shareView.findViewById(R.id.layout_share_weixin).setOnClickListener(new View.OnClickListener() {
-
-                            @Override
-                            public void onClick(View v) {
-                                // TODO Auto-generated method stub
-                                WeiXinShareContent wxContent = new WeiXinShareContent();
-                                wxContent.setTargetUrl(shareUrl);
-                                wxContent.setTitle(shareTitle);
-                                wxContent.setShareContent(shareContent);
-                                wxContent.setShareImage(image);
-                                mController.setShareMedia(wxContent);
-                                mController.postShare(self, SHARE_MEDIA.WEIXIN, new SnsPostListener() {
-
-                                    @Override
-                                    public void onStart() {
-
-                                    }
-
-                                    @Override
-                                    public void onComplete(SHARE_MEDIA arg0, int arg1, SocializeEntity arg2) {
-                                        popWin.dismiss();
-                                    }
-                                });
-                            }
-                        });
-
-                        // 分享到朋友圈
-                        shareView.findViewById(R.id.layout_share_wxcircle).setOnClickListener(
-                                new View.OnClickListener() {
-
-                                    @Override
-                                    public void onClick(View v) {
-                                        // TODO Auto-generated method stub
-                                        CircleShareContent ccContent = new CircleShareContent();
-                                        ccContent.setTargetUrl(shareUrl);
-                                        ccContent.setShareContent(shareContent);
-                                        ccContent.setTitle(shareTitle);
-                                        ccContent.setShareImage(image);
-                                        mController.setShareMedia(ccContent);
-
-                                        mController.postShare(self, SHARE_MEDIA.WEIXIN_CIRCLE, new SnsPostListener() {
-
-                                            @Override
-                                            public void onStart() {
-                                            }
-
-                                            @Override
-                                            public void onComplete(SHARE_MEDIA arg0, int arg1, SocializeEntity arg2) {
-                                                popWin.dismiss();
-                                            }
-                                        });
-                                    }
-                                });
-
-                        shareView.setOnClickListener(new View.OnClickListener() {
-
-                            @Override
-                            public void onClick(View v) {
-                                // TODO Auto-generated method stub
-                                switch (v.getId()) {
-                                case R.id.layout_bg:
-                                    popWin.dismiss();
-                                    break;
-                                }
-                            }
-                        });
-                        popWin.showAsDropDown(findViewById(R.id.title_bar));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
-    }
-
-    private void setupShare() {
-        // 微信朋友圈
-        wxCircleHandler = new UMWXHandler(this, sAppId, sAppSecret);
-        wxCircleHandler.setToCircle(true);
-        wxCircleHandler.addToSocialSDK();
-        // 微信好友
-        wxHandler = new UMWXHandler(this, sAppId, sAppSecret);
-        wxHandler.addToSocialSDK();
-    }
-
-    @Override
-    public void initView() {
-        per = IocContainer.getShare().get(CarPlayPerference.class);
-        per.load();
-        if (per.isShowMemberGuilde == 0) {
-            findViewById(R.id.guide).setVisibility(View.VISIBLE);
-        }
-
-        findViewById(R.id.know).setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                per.load();
-                per.isShowMemberGuilde = 1;
-                per.commit();
-                findViewById(R.id.guide).setVisibility(View.GONE);
-            }
-        });
-
-        setTitle("成员管理");
-        user = User.getInstance();
-        activityId = getIntent().getStringExtra("activityId");
-        headV = LayoutInflater.from(self).inflate(R.layout.head_active_members, null);
-        carLayoutV = (LinearLayout) headV.findViewById(R.id.car_layout);
-        carUtil = new CarSeatUtil(self, carLayoutV);
-        carUtil.setOnSeatClickListener(new OnSeatClickListener() {
-
-            @Override
-            public void onSeatClick(String carId, int childPosition) {
-                // showGradDialog(carId, childPosition);
-            }
-
-            @Override
-            public void onHeadClick(JSONObject headJo) {
-                showRemoveSeatMemberDialog(headJo);
-            }
-
-            @Override
-            public void seatCount(int totalCount, int emptyCount) {
-                // TODO Auto-generated method stub
-
-            }
-        });
-
-        listV = (SwipeMenuListView) findViewById(R.id.listView);
-        listV.removeFootView();
-        listV.addHeaderView(headV);
-
-        adapter = new PSAdapter(self, R.layout.item_newmessage_list);
-        adapter.addField(new FieldMap("nickname", R.id.name) {
-
-            @Override
-            public Object fix(View itemV, Integer position, Object o, Object jo) {
-                JSONObject itemjo = (JSONObject) jo;
-
-                RoundImageView headI = (RoundImageView) itemV.findViewById(R.id.head);
-                ViewUtil.bindNetImage(headI, JSONUtil.getString(itemjo, "photo"), "default");
-                headI.setTag(JSONUtil.getString(itemjo, "userId"));
-
-                View sexBg = itemV.findViewById(R.id.sex);
-
-                if (JSONUtil.getString(itemjo, "gender").equals("男")) {
-                    sexBg.setBackgroundResource(R.drawable.man);
-                } else {
-                    sexBg.setBackgroundResource(R.drawable.woman);
-                }
-
-                ViewUtil.bindView(itemV.findViewById(R.id.age), JSONUtil.getString(itemjo, "age"));
-                ViewUtil.bindView(itemV.findViewById(R.id.name), JSONUtil.getString(itemjo, "nickname"));
-                CarPlayUtil.bindDriveAge(itemjo, (ImageView) itemV.findViewById(R.id.car_logo),
-                        (TextView) itemV.findViewById(R.id.drive_age));
-                // TODO Auto-generated method stub
-                return o;
-            }
-        });
-        listV.setAdapter(adapter);
-
-        SwipeMenuCreator creator = new SwipeMenuCreator() {
-
-            @Override
-            public void create(SwipeMenu menu) {
-                SwipeMenuItem openItem = new SwipeMenuItem(getApplicationContext());
-                openItem.setBackground(new ColorDrawable(getResources().getColor(R.color.text_orange)));
-                openItem.setWidth(DhUtil.dip2px(self, 90));
-                openItem.setTitle("删除");
-                openItem.setTitleSize(18);
-                openItem.setTitleColor(Color.WHITE);
-                menu.addMenuItem(openItem);
-
-            }
-        };
-        listV.setMenuCreator(creator);
-
-        listV.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-            @Override
-            public void onMenuItemClick(int position, SwipeMenu menu, int index) {
-                JSONObject jo = (JSONObject) adapter.getItem(position);
-                deleteMember(JSONUtil.getString(jo, "userId"));
-            }
-        });
-
-        listV.setonRefreshListener(new OnRefreshListener() {
-
-            @Override
-            public void onRefresh() {
-                getData();
-            }
-        });
-        pullDownDialog = new SeatDialog(self);
-        grabDialog = new SeatDialog(self);
-        getData();
-    }
-
-    private void getData() {
-        DhNet net = new DhNet(API.CWBaseurl + "/activity/" + activityId + "/members?userId=" + user.getUserId()
-                + "&token=" + user.getToken());
-        net.doGetInDialog(new NetTask(self) {
-
-            @Override
-            public void doInUI(Response response, Integer transfer) {
-                adapter.clear();
-                JSONArray jsa = response.jSONArrayFrom("data.members");
-                adapter.addAll(jsa);
-                JSONArray carJsa = response.jSONArrayFrom("data.cars");
-                carUtil.addCar(carJsa);
-
-                listV.onRefreshComplete();
-                listV.removeFootView();
-            }
-        });
-    }
-
-    /**
-     * 移除成员
-     * 
-     */
-    private void deleteMember(String userId) {
-        DhNet net = new DhNet(API.CWBaseurl + "/activity/" + activityId + "/member/remove?userId=" + user.getUserId()
-                + "&token=" + user.getToken());
-        net.addParam("member", userId);
-        net.doPostInDialog(new NetTask(self) {
-
-            @Override
-            public void doInUI(Response response, Integer transfer) {
-                if (response.isSuccess()) {
-                    showToast("成员移除成功!");
-                    getData();
-                }
-            }
-        });
-    }
-
-    /** 拉下座位弹框 */
-    private void showRemoveSeatMemberDialog(JSONObject memberJo) {
-
-        pullDownDialog.setOnPullDownResultListener(new OnPullDownResultListener() {
-
-            @Override
-            public void click(String userid) {
-                removeSeatMember(userid);
-            }
-        });
-        pullDownDialog.show();
-        pullDownDialog.setData(memberJo);
-    }
-
-    /** 抢座弹框 */
-    private void showGradDialog(String carId, int seatIndex) {
-        grabDialog.setOnGradResultListener(new OnGradResultListener() {
-
-            @Override
-            public void click(String carId, int seatIndex) {
-                gradSeat(carId, seatIndex);
-            }
-        });
-        grabDialog.show();
-        grabDialog.setSeatData(carId, seatIndex);
-    }
-
-    /**
-     * 
-     * 拉下座位
-     */
-    private void removeSeatMember(String userId) {
-        DhNet net = new DhNet(API.CWBaseurl + "/activity/" + activityId + "/seat/return?userId=" + user.getUserId()
-                + "&token=" + user.getToken());
-        net.addParam("member", userId);
-        net.doPostInDialog(new NetTask(self) {
-
-            @Override
-            public void doInUI(Response response, Integer transfer) {
-                if (response.isSuccess()) {
-                    showToast("成员移除成功!");
-                    getData();
-                }
-            }
-        });
-    }
-
-    /**
-     * 
-     * 抢座
-     */
-    private void gradSeat(String carId, int seatIndex) {
-        DhNet net = new DhNet(API.CWBaseurl + "/activity/" + activityId + "/seat/take?userId=" + user.getUserId()
-                + "&token=" + user.getToken());
-        net.addParam("carId", carId);
-        net.addParam("seatIndex", seatIndex);
-        net.doPostInDialog(new NetTask(self) {
-
-            @Override
-            public void doInUI(Response response, Integer transfer) {
-                if (response.isSuccess()) {
-                    showToast("抢座成功!");
-                    getData();
-                }
-            }
-        });
-    }
+	View headV;
+
+	String activityId;
+
+	LinearLayout carLayoutV;
+
+	CarSeatUtil carUtil;
+
+	User user;
+
+	/** 拉下座位 立即抢座 Dialog */
+	SeatDialog pullDownDialog, grabDialog;
+
+	CarPlayPerference per;
+
+	// umeng分享
+	private UMSocialService mController = UMServiceFactory
+			.getUMSocialService("com.umeng.share");
+
+	// 微信id
+	static String sAppId = "wx4c127cf07bd7d80b";
+
+	static String sAppSecret = "315ce754c5a1096c5188b4b69a7b9f04";
+
+	// 微信好友
+	private UMWXHandler wxHandler;
+
+	// 微信朋友圈
+	private UMWXHandler wxCircleHandler;
+
+	private String mShareContent;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_my_active_members);
+
+		setupShare();
+		mShareContent = getIntent().getStringExtra("shareContent");
+
+		setRightAction("邀请", -1, new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				View shareView = LayoutInflater.from(self).inflate(
+						R.layout.pop_share, null);
+
+				if (mShareContent != null) {
+					try {
+						JSONObject json = new JSONObject(mShareContent);
+						final String shareContent = json
+								.getString("shareContent");
+						final String shareTitle = json.getString("shareTitle");
+						final String shareUrl = json.getString("shareUrl");
+						final UMImage image = new UMImage(self, json
+								.getString("imgUrl"));
+
+						final PopupWindow popWin = new PopupWindow(shareView,
+								LayoutParams.MATCH_PARENT,
+								LayoutParams.MATCH_PARENT);
+						// 分享到微信朋友
+						shareView.findViewById(R.id.layout_share_weixin)
+								.setOnClickListener(new View.OnClickListener() {
+
+									@Override
+									public void onClick(View v) {
+										// TODO Auto-generated method stub
+										WeiXinShareContent wxContent = new WeiXinShareContent();
+										wxContent.setTargetUrl(shareUrl);
+										wxContent.setTitle(shareTitle);
+										wxContent.setShareContent(shareContent);
+										wxContent.setShareImage(image);
+										mController.setShareMedia(wxContent);
+										mController.postShare(self,
+												SHARE_MEDIA.WEIXIN,
+												new SnsPostListener() {
+
+													@Override
+													public void onStart() {
+
+													}
+
+													@Override
+													public void onComplete(
+															SHARE_MEDIA arg0,
+															int arg1,
+															SocializeEntity arg2) {
+														popWin.dismiss();
+													}
+												});
+									}
+								});
+
+						// 分享到朋友圈
+						shareView.findViewById(R.id.layout_share_wxcircle)
+								.setOnClickListener(new View.OnClickListener() {
+
+									@Override
+									public void onClick(View v) {
+										// TODO Auto-generated method stub
+										CircleShareContent ccContent = new CircleShareContent();
+										ccContent.setTargetUrl(shareUrl);
+										ccContent.setShareContent(shareContent);
+										ccContent.setTitle(shareTitle);
+										ccContent.setShareImage(image);
+										mController.setShareMedia(ccContent);
+
+										mController.postShare(self,
+												SHARE_MEDIA.WEIXIN_CIRCLE,
+												new SnsPostListener() {
+
+													@Override
+													public void onStart() {
+													}
+
+													@Override
+													public void onComplete(
+															SHARE_MEDIA arg0,
+															int arg1,
+															SocializeEntity arg2) {
+														popWin.dismiss();
+													}
+												});
+									}
+								});
+
+						shareView
+								.setOnClickListener(new View.OnClickListener() {
+
+									@Override
+									public void onClick(View v) {
+										// TODO Auto-generated method stub
+										switch (v.getId()) {
+										case R.id.layout_bg:
+											popWin.dismiss();
+											break;
+										}
+									}
+								});
+						popWin.showAsDropDown(findViewById(R.id.title_bar));
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+	}
+
+	private void setupShare() {
+		// 微信朋友圈
+		wxCircleHandler = new UMWXHandler(this, sAppId, sAppSecret);
+		wxCircleHandler.setToCircle(true);
+		wxCircleHandler.addToSocialSDK();
+		// 微信好友
+		wxHandler = new UMWXHandler(this, sAppId, sAppSecret);
+		wxHandler.addToSocialSDK();
+	}
+
+	@Override
+	public void initView() {
+		per = IocContainer.getShare().get(CarPlayPerference.class);
+		per.load();
+		if (per.isShowMemberGuilde == 0) {
+			findViewById(R.id.guide).setVisibility(View.VISIBLE);
+		}
+
+		findViewById(R.id.know).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				per.load();
+				per.isShowMemberGuilde = 1;
+				per.commit();
+				findViewById(R.id.guide).setVisibility(View.GONE);
+			}
+		});
+
+		setTitle("成员管理");
+		user = User.getInstance();
+		activityId = getIntent().getStringExtra("activityId");
+		headV = LayoutInflater.from(self).inflate(R.layout.head_active_members,
+				null);
+		carLayoutV = (LinearLayout) headV.findViewById(R.id.car_layout);
+		carUtil = new CarSeatUtil(self, carLayoutV);
+		carUtil.setOnSeatClickListener(new OnSeatClickListener() {
+
+			@Override
+			public void onSeatClick(String carId, int childPosition) {
+				// showGradDialog(carId, childPosition);
+			}
+
+			@Override
+			public void onHeadClick(JSONObject headJo) {
+				if (!User.getInstance().getUserId()
+						.equals(JSONUtil.getString(headJo, "userId"))) {
+					showRemoveSeatMemberDialog(headJo);
+				}
+			}
+
+			@Override
+			public void seatCount(int totalCount, int emptyCount) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		listV = (SwipeMenuListView) findViewById(R.id.listView);
+		listV.removeFootView();
+		listV.addHeaderView(headV);
+
+		adapter = new PSAdapter(self, R.layout.item_newmessage_list);
+		adapter.addField(new FieldMap("nickname", R.id.name) {
+
+			@Override
+			public Object fix(View itemV, Integer position, Object o, Object jo) {
+				JSONObject itemjo = (JSONObject) jo;
+
+				RoundImageView headI = (RoundImageView) itemV
+						.findViewById(R.id.head);
+				ViewUtil.bindNetImage(headI,
+						JSONUtil.getString(itemjo, "photo"), "default");
+				headI.setTag(JSONUtil.getString(itemjo, "userId"));
+
+				View sexBg = itemV.findViewById(R.id.sex);
+
+				if (JSONUtil.getString(itemjo, "gender").equals("男")) {
+					sexBg.setBackgroundResource(R.drawable.man);
+				} else {
+					sexBg.setBackgroundResource(R.drawable.woman);
+				}
+
+				ViewUtil.bindView(itemV.findViewById(R.id.age),
+						JSONUtil.getString(itemjo, "age"));
+				ViewUtil.bindView(itemV.findViewById(R.id.name),
+						JSONUtil.getString(itemjo, "nickname"));
+				CarPlayUtil.bindDriveAge(itemjo,
+						(ImageView) itemV.findViewById(R.id.car_logo),
+						(TextView) itemV.findViewById(R.id.drive_age));
+				// TODO Auto-generated method stub
+				return o;
+			}
+		});
+		listV.setAdapter(adapter);
+
+		SwipeMenuCreator creator = new SwipeMenuCreator() {
+
+			@Override
+			public void create(SwipeMenu menu) {
+				SwipeMenuItem openItem = new SwipeMenuItem(
+						getApplicationContext());
+				openItem.setBackground(new ColorDrawable(getResources()
+						.getColor(R.color.text_orange)));
+				openItem.setWidth(DhUtil.dip2px(self, 90));
+				openItem.setTitle("删除");
+				openItem.setTitleSize(18);
+				openItem.setTitleColor(Color.WHITE);
+				menu.addMenuItem(openItem);
+
+			}
+		};
+		listV.setMenuCreator(creator);
+
+		listV.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+			@Override
+			public void onMenuItemClick(int position, SwipeMenu menu, int index) {
+				JSONObject jo = (JSONObject) adapter.getItem(position);
+				deleteMember(JSONUtil.getString(jo, "userId"));
+			}
+		});
+
+		listV.setonRefreshListener(new OnRefreshListener() {
+
+			@Override
+			public void onRefresh() {
+				getData();
+			}
+		});
+		pullDownDialog = new SeatDialog(self);
+		grabDialog = new SeatDialog(self);
+		getData();
+	}
+
+	private void getData() {
+		DhNet net = new DhNet(API.CWBaseurl + "/activity/" + activityId
+				+ "/members?userId=" + user.getUserId() + "&token="
+				+ user.getToken());
+		net.doGetInDialog(new NetTask(self) {
+
+			@Override
+			public void doInUI(Response response, Integer transfer) {
+				adapter.clear();
+				JSONArray jsa = response.jSONArrayFrom("data.members");
+				adapter.addAll(jsa);
+				JSONArray carJsa = response.jSONArrayFrom("data.cars");
+				carUtil.addCar(carJsa);
+
+				listV.onRefreshComplete();
+				listV.removeFootView();
+			}
+		});
+	}
+
+	/**
+	 * 移除成员
+	 * 
+	 */
+	private void deleteMember(String userId) {
+		DhNet net = new DhNet(API.CWBaseurl + "/activity/" + activityId
+				+ "/member/remove?userId=" + user.getUserId() + "&token="
+				+ user.getToken());
+		net.addParam("member", userId);
+		net.doPostInDialog(new NetTask(self) {
+
+			@Override
+			public void doInUI(Response response, Integer transfer) {
+				if (response.isSuccess()) {
+					showToast("成员移除成功!");
+					getData();
+				}
+			}
+		});
+	}
+
+	/** 拉下座位弹框 */
+	private void showRemoveSeatMemberDialog(JSONObject memberJo) {
+
+		pullDownDialog
+				.setOnPullDownResultListener(new OnPullDownResultListener() {
+
+					@Override
+					public void click(String userid) {
+						removeSeatMember(userid);
+					}
+				});
+		pullDownDialog.show();
+		pullDownDialog.setData(memberJo);
+	}
+
+	/** 抢座弹框 */
+	private void showGradDialog(String carId, int seatIndex) {
+		grabDialog.setOnGradResultListener(new OnGradResultListener() {
+
+			@Override
+			public void click(String carId, int seatIndex) {
+				gradSeat(carId, seatIndex);
+			}
+		});
+		grabDialog.show();
+		grabDialog.setSeatData(carId, seatIndex);
+	}
+
+	/**
+	 * 
+	 * 拉下座位
+	 */
+	private void removeSeatMember(String userId) {
+		DhNet net = new DhNet(API.CWBaseurl + "/activity/" + activityId
+				+ "/seat/return?userId=" + user.getUserId() + "&token="
+				+ user.getToken());
+		net.addParam("member", userId);
+		net.doPostInDialog(new NetTask(self) {
+
+			@Override
+			public void doInUI(Response response, Integer transfer) {
+				if (response.isSuccess()) {
+					showToast("成员移除成功!");
+					getData();
+				}
+			}
+		});
+	}
+
+	/**
+	 * 
+	 * 抢座
+	 */
+	private void gradSeat(String carId, int seatIndex) {
+		DhNet net = new DhNet(API.CWBaseurl + "/activity/" + activityId
+				+ "/seat/take?userId=" + user.getUserId() + "&token="
+				+ user.getToken());
+		net.addParam("carId", carId);
+		net.addParam("seatIndex", seatIndex);
+		net.doPostInDialog(new NetTask(self) {
+
+			@Override
+			public void doInUI(Response response, Integer transfer) {
+				if (response.isSuccess()) {
+					showToast("抢座成功!");
+					getData();
+				}
+			}
+		});
+	}
 
 }
