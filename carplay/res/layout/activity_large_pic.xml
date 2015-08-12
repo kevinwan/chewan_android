@@ -5,6 +5,12 @@
     android:background="@color/black"
     tools:context="com.gongpingjia.carplay.activity.main.LargePICActivity" >
 
+   <View
+        android:id="@+id/back"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/nothing" />
+
     <TextView
         android:id="@+id/pictitle"
         style="@style/text_white_small"
@@ -17,11 +23,10 @@
         android:id="@+id/gallery"
         android:layout_width="match_parent"
         android:layout_height="300dp"
+        android:layout_centerInParent="true"
         android:background="@color/tab_grey_bg"
         android:fadingEdgeLength="0dp"
         android:spacing="5dp"
-        android:unselectedAlpha="128"
-        android:layout_centerInParent="true"
-         />
+        android:unselectedAlpha="128" />
 
 </RelativeLayout>
