@@ -66,14 +66,16 @@
 
                 <ImageView
                     android:id="@+id/car_img"
-                    android:layout_width="13dp"
-                    android:layout_height="13dp" />
+                    android:layout_width="30dp"
+                    android:layout_height="25dp"
+                     />
 
                 <TextView
                     android:id="@+id/car_age"
-                    style="@style/text_grey_smaller"
+                    style="@style/text_grey_small"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginTop="2dp"
                     android:layout_marginLeft="4dp" />
             </LinearLayout>
         </LinearLayout>

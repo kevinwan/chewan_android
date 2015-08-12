@@ -267,7 +267,7 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 
 		} else {
 			int isSubscribed = JSONUtil.getInt(headJo, "isSubscribed");
-			rightTitleT.setText(isSubscribed == 0 ? "关注" : "取消关注");
+			rightTitleT.setText(isSubscribed == 0 ? "收藏" : "取消收藏");
 			rightTitleT.setVisibility(View.VISIBLE);
 		}
 
@@ -281,7 +281,7 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 								EditActiveActivity.class);
 						it.putExtra("json", headJo.toString());
 						startActivity(it);
-					} else if (rightTitleT.getText().toString().equals("关注")) {
+					} else if (rightTitleT.getText().toString().equals("收藏")) {
 						attention();
 					} else {
 						cancleattention();
@@ -378,8 +378,8 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 			@Override
 			public void doInUI(Response response, Integer transfer) {
 				if (response.isSuccess()) {
-					showToast("关注成功!");
-					rightTitleT.setText("取消关注");
+					showToast("收藏成功!");
+					rightTitleT.setText("取消收藏");
 				}
 			}
 		});
@@ -395,8 +395,8 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 			@Override
 			public void doInUI(Response response, Integer transfer) {
 				if (response.isSuccess()) {
-					showToast("取消关注成功!");
-					rightTitleT.setText("关注");
+					showToast("取消收藏成功!");
+					rightTitleT.setText("收藏");
 				}
 			}
 		});

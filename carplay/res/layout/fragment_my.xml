@@ -18,8 +18,15 @@
             <RelativeLayout
                 android:id="@+id/imgView_head"
                 android:layout_width="fill_parent"
-                android:layout_height="200dp" >
-
+                android:layout_height="200dp"
+                >
+                <ImageView 
+                    android:id="@+id/notlogin_head"
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/my_bg"
+                    />
                 <com.gongpingjia.carplay.view.CarPlayGallery
                     android:id="@+id/gallery"
                     android:layout_width="match_parent"
@@ -27,6 +34,7 @@
                     android:background="@color/tab_grey_bg"
                     android:fadingEdgeLength="0dp"
                     android:spacing="5dp"
+                    android:visibility="gone"
                     android:unselectedAlpha="128" />
 
                 <net.duohuo.dhroid.view.DotLinLayout
@@ -216,7 +224,7 @@
                         <TextView
                             style="@style/text_grey_small"
                             android:layout_marginTop="4dp"
-                            android:text="我的关注" />
+                            android:text="我的收藏" />
                     </LinearLayout>
 
                     <View
@@ -297,7 +305,8 @@
                         android:orientation="horizontal" >
 
                         <TextView
-                            style="@style/text_blacklight_small"
+                            android:id="@+id/attestation_txt"
+                            style="@style/text_black_small"
                             android:layout_width="wrap_content"
                             android:layout_height="58dp"
                             android:layout_marginRight="5dp"
@@ -305,9 +314,11 @@
                             android:text="已认证"
                             android:visibility="invisible" />
 
-                        <ImageView
-                            android:layout_width="25dp"
-                            android:layout_height="25dp" />
+                        <com.gongpingjia.carplay.view.RoundImageView
+                            android:id="@+id/carlogo"
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:layout_marginRight="5dp" />
 
                         <ImageView
                             android:layout_width="18dp"

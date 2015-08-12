@@ -89,12 +89,11 @@
                         android:textSize="12sp" />
                 </RelativeLayout>
 
-                <View 
+                <View
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="5dp"
-                    />
-                
+                    android:layout_weight="1" />
+
                 <TextView
                     android:id="@+id/tv_publish_time"
                     style="@style/text_grey_small"
@@ -140,24 +139,42 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="-2dp" >
+                android:layout_marginTop="-2dp"
+                android:orientation="horizontal" >
 
-                <TextView
-                    style="@style/text_blacklight_small"
-                    android:text="时间: " />
-
-                <TextView
-                    android:id="@+id/time"
-                    style="@style/text_blacklight_small" />
-
-                <TextView
-                    android:id="@+id/address"
-                    style="@style/text_blacklight_small"
-                    android:layout_marginLeft="5dp"
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:ellipsize="end"
-                    android:gravity="right"
-                    android:maxLines="1" />
+                    android:orientation="horizontal" >
+
+                    <ImageView
+                        style="@style/icon_style_small"
+                        android:src="@drawable/e_start" />
+
+                    <TextView
+                        android:id="@+id/time"
+                        style="@style/text_blacklight_small" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal" >
+
+                    <ImageView
+                        style="@style/icon_style_small"
+                        android:layout_marginLeft="5dp"
+                        android:src="@drawable/e_boum" />
+
+                    <TextView
+                        android:id="@+id/address"
+                        style="@style/text_blacklight_small"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:maxLines="1" />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout

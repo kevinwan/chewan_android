@@ -70,7 +70,7 @@ public class CarSeatSelectDialog extends BaseAlertDialog {
 						return;
 					}
 					CommonDialog dlg = new CommonDialog(mContext, mSeatOptions,
-							"请选择提供座位数");
+							"提供空座数");
 					dlg.setOnDialogItemClickListener(new OnCommonDialogItemClickListener() {
 
 						@Override
