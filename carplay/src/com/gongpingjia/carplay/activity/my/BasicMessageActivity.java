@@ -83,7 +83,6 @@ public class BasicMessageActivity extends CarPlayBaseActivity implements OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basic_message);
-        CityDataManage.initProvinceDatas();
     }
 
     @Override

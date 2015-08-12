@@ -38,8 +38,8 @@ public class CarPlayValueFix implements ValueFix {
 
 		carBigLogoOptions = new DisplayImageOptions.Builder()
 				.showImageForEmptyUri(R.drawable.car_default)
-				.showStubImage(R.drawable.car_default).cacheInMemory().cacheOnDisc()
-				.build();
+				.showStubImage(R.drawable.car_default).cacheInMemory()
+				.cacheOnDisc().build();
 		imageOptions.put("carbiglogo", carBigLogoOptions);
 
 	}
@@ -71,10 +71,16 @@ public class CarPlayValueFix implements ValueFix {
 		long currentSeconds = System.currentTimeMillis();
 		long timeGap = (currentSeconds - timestamp) / 1000;// 与现在时间相差秒�?
 		String timeStr = null;
-		if (timeGap > 24 * 60 * 60) {// 1天以�?
-			timeStr = timeGap / (24 * 60 * 60) + "天前";
-		} else if (timeGap > 60 * 60) {// 1小时-24小时
-			timeStr = timeGap / (60 * 60) + "小时前";
+		if (timeGap > 24 * 60 * 60 * 2) {// 1天以�?
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			Date date = new Date(timestamp);
+			timeStr = sdf.format(date);
+		} else if (timeGap > 60 * 60 * 24 * 1) {// 1小时-24小时
+			timeStr = "昨天";
+		} else if (timeGap > 60 * 60) {
+			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+			Date date = new Date(timestamp);
+			timeStr = sdf.format(date);
 		} else if (timeGap > 60) {// //1分钟-59分钟
 			timeStr = timeGap / 60 + "分钟前";
 		} else {// 1秒钟-59秒钟

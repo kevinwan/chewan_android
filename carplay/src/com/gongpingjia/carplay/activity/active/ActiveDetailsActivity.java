@@ -24,6 +24,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -218,7 +219,12 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 		headI.setTag(JSONUtil.getString(createrJo, "userId"));
 		ViewUtil.bindView(headV.findViewById(R.id.publish_time),
 				JSONUtil.getLong(headJo, "publishTime"), "neartime");
+		TextView addressT = (TextView) headV.findViewById(R.id.address);
+		float size = addressT.getTextSize();
 
+		if (JSONUtil.getString(headJo, "location").length() > 9) {
+			addressT.setTextSize(TypedValue.COMPLEX_UNIT_PX, size - 8);
+		}
 		ViewUtil.bindView(headV.findViewById(R.id.address),
 				JSONUtil.getString(headJo, "location"));
 

@@ -203,6 +203,8 @@ public abstract class CarPlayBaseActivity extends BaseActivity {
 			dialogcount++;
 		}
 
+		System.out.println("show" + dialogcount);
+
 		if (progressdialog == null || !progressdialog.isShowing()) {
 			progressdialog = dialoger.showProgressDialog(this, msg);
 		}
@@ -216,11 +218,11 @@ public abstract class CarPlayBaseActivity extends BaseActivity {
 		synchronized (dialogcount) {
 			dialogcount--;
 		}
+		System.out.println("hiden" + dialogcount);
 		if (dialogcount == 0) {
 			progressdialog.dismiss();
 		}
 	}
-	
 
 	@Override
 	protected void onPause() {

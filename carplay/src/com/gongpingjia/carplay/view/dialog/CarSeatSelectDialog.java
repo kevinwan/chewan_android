@@ -110,7 +110,7 @@ public class CarSeatSelectDialog extends BaseAlertDialog {
 					if (TextUtils.isEmpty(countT.getText().toString())) {
 						count = 0;
 					} else {
-						Integer.parseInt(countT.getText().toString());
+						count = Integer.parseInt(countT.getText().toString());
 					}
 					onSelectResultListener.click(count);
 				}

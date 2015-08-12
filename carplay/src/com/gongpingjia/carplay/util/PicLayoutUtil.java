@@ -96,33 +96,32 @@ public class PicLayoutUtil {
 			drawCount = count + 1;
 		}
 
-		if (drawCount == headMax) {
-			for (int i = 0; i < drawCount; i++) {
-				try {
-					if (i == drawCount - 1) {
-						layout.addView(createCountTextView(count), params);
-					} else {
-						layout.addView(
-								createHeadImageView(data.getJSONObject(i)),
-								params);
-					}
-
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		} else {
-			for (int i = 0; i < drawCount; i++) {
-				try {
+		// if (drawCount == headMax) {
+		for (int i = 0; i < drawCount; i++) {
+			try {
+				if (i == drawCount - 1) {
+					layout.addView(createCountTextView(count), params);
+				} else {
 					layout.addView(createHeadImageView(data.getJSONObject(i)),
 							params);
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
+
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
+		// } else {
+		// for (int i = 0; i < drawCount; i++) {
+		// try {
+		// layout.addView(createHeadImageView(data.getJSONObject(i)),
+		// params);
+		// } catch (JSONException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
+		// }
+		// }
 
 	}
 
@@ -171,46 +170,44 @@ public class PicLayoutUtil {
 			drawcount = jsa.length() + 1;
 		}
 
-		if (drawcount == headMax) {
-			for (int i = 0; i < drawcount; i++) {
-				try {
-					if (i == drawcount - 1) {
-						TextView text = (TextView) layout
-								.getChildAt(headMax - 1);
-						text.setText(jsa.length() + "");
-						text.setVisibility(View.VISIBLE);
-					} else {
-						JSONObject jo = jsa.getJSONObject(i);
-						RoundImageView img = (RoundImageView) layout
-								.getChildAt(i);
-						ViewUtil.bindNetImage(img,
-								JSONUtil.getString(jo, "photo"), "head");
-						img.setTag(JSONUtil.getString(jo, "userId"));
-						img.setVisibility(View.VISIBLE);
-					}
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+		// if (drawcount == headMax) {
+		for (int i = 0; i < drawcount; i++) {
+			try {
+				if (i == drawcount - 1) {
+					TextView text = (TextView) layout.getChildAt(headMax - 1);
+					text.setText(jsa.length() + "");
+					text.setVisibility(View.VISIBLE);
+				} else {
+					JSONObject jo = jsa.getJSONObject(i);
+					RoundImageView img = (RoundImageView) layout.getChildAt(i);
+					ViewUtil.bindNetImage(img, JSONUtil.getString(jo, "photo"),
+							"head");
+					img.setTag(JSONUtil.getString(jo, "userId"));
+					img.setVisibility(View.VISIBLE);
 				}
-			}
-		} else {
-			for (int i = 0; i < headMax; i++) {
-				try {
-					View img = (View) layout.getChildAt(i);
-					img.setVisibility(View.GONE);
-					for (int j = 0; j < jsa.length(); j++) {
-						JSONObject jo = jsa.getJSONObject(i);
-						ViewUtil.bindNetImage((RoundImageView) img,
-								JSONUtil.getString(jo, "photo"), "head");
-						img.setTag(JSONUtil.getString(jo, "userId"));
-						img.setVisibility(View.VISIBLE);
-					}
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
+		// } else {
+		// for (int i = 0; i < headMax; i++) {
+		// try {
+		// View img = (View) layout.getChildAt(i);
+		// img.setVisibility(View.GONE);
+		// for (int j = 0; j < jsa.length(); j++) {
+		// JSONObject jo = jsa.getJSONObject(i);
+		// ViewUtil.bindNetImage((RoundImageView) img,
+		// JSONUtil.getString(jo, "photo"), "head");
+		// img.setTag(JSONUtil.getString(jo, "userId"));
+		// img.setVisibility(View.VISIBLE);
+		// }
+		// } catch (JSONException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
+		// }
+		// }
 
 	}
 
