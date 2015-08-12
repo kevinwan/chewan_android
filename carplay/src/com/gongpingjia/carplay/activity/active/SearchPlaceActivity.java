@@ -107,7 +107,6 @@ public class SearchPlaceActivity extends CarPlayBaseActivity implements TextWatc
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        // TODO Auto-generated method stub
         final String key = s.toString().trim();
 
         Inputtips inputTips = new Inputtips(this, new InputtipsListener() {

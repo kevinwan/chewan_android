@@ -146,7 +146,6 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_creat_active);
         setupShare();
-
     }
 
     private void setupShare() {
