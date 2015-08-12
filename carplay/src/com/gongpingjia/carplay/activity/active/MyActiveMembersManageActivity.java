@@ -285,7 +285,7 @@ public class MyActiveMembersManageActivity extends CarPlayBaseActivity {
 				headI.setTag(JSONUtil.getString(itemjo, "userId"));
 
 				View sexBg = itemV.findViewById(R.id.sex);
-
+				
 				if (JSONUtil.getString(itemjo, "gender").equals("男")) {
 					sexBg.setBackgroundResource(R.drawable.man);
 				} else {
@@ -299,6 +299,17 @@ public class MyActiveMembersManageActivity extends CarPlayBaseActivity {
 				CarPlayUtil.bindDriveAge(itemjo,
 						(ImageView) itemV.findViewById(R.id.car_logo),
 						(TextView) itemV.findViewById(R.id.drive_age));
+				View seat_num = itemV.findViewById(R.id.seat_num);
+				View seatnum = itemV.findViewById(R.id.seatnum);
+				View seatnumber = itemV.findViewById(R.id.seatnumber);
+
+				ViewUtil.bindView(itemV.findViewById(R.id.seat_num),
+						JSONUtil.getInt(itemjo, "seat")+"个");
+				if (!JSONUtil.getInt(itemjo, "seat").equals(0)&&!JSONUtil.getString(itemjo, "carBrandLogo").equals("")) {
+					seat_num.setVisibility(View.VISIBLE);
+					seatnum.setVisibility(View.VISIBLE);
+					seatnumber.setVisibility(View.VISIBLE);
+				}
 				// TODO Auto-generated method stub
 				return o;
 			}
