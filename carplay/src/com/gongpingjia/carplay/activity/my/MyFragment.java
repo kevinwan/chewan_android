@@ -79,7 +79,7 @@ public class MyFragment extends Fragment implements OnClickListener {
 
 	/** 发布数,关注数,参与数 */
 	TextView postNumberT, subscribeNumberT, joinNumberT;
-	
+
 	ImageView unLogheadI;
 
 	DotLinLayout dotLinLayout;
@@ -136,7 +136,7 @@ public class MyFragment extends Fragment implements OnClickListener {
 		editdata = (LinearLayout) mainV.findViewById(R.id.editdata);
 		feedback_layoutV = (LinearLayout) mainV
 				.findViewById(R.id.feedback_layout);
-		unLogheadI=(ImageView) mainV.findViewById(R.id.notlogin_head);
+		unLogheadI = (ImageView) mainV.findViewById(R.id.notlogin_head);
 
 		loginBtn.setOnClickListener(new OnClickListener() {
 
@@ -163,7 +163,7 @@ public class MyFragment extends Fragment implements OnClickListener {
 		owners_certification.setOnClickListener(this);
 		editdata.setOnClickListener(this);
 		feedback_layoutV.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
 				Intent it = new Intent(getActivity(), FeedBackActivity.class);
@@ -172,18 +172,6 @@ public class MyFragment extends Fragment implements OnClickListener {
 		});
 
 		gallery = (CarPlayGallery) mainV.findViewById(R.id.gallery);
-		// 未登录
-		if (TextUtils.isEmpty(user.getUserId())) {
-			loginedLl.setVisibility(View.GONE);
-			notloginLl.setVisibility(View.VISIBLE);
-			postNumberT.setText("0");
-			subscribeNumberT.setText("0");
-			joinNumberT.setText("0");
-			unLogheadI.setVisibility(View.VISIBLE);
-			gallery.setVisibility(View.GONE);
-		}
-
-		
 		dotLinLayout = (DotLinLayout) mainV.findViewById(R.id.dots);
 		dotLinLayout.setDotImage(R.drawable.dot_n, R.drawable.dot_f);
 		gallery.setOnItemClickListener(new OnItemClickListener() {
@@ -212,6 +200,16 @@ public class MyFragment extends Fragment implements OnClickListener {
 			public void onNothingSelected(AdapterView<?> arg0) {
 			}
 		});
+
+		// 未登录
+		if (TextUtils.isEmpty(user.getUserId())) {
+			loginedLl.setVisibility(View.GONE);
+			notloginLl.setVisibility(View.VISIBLE);
+			postNumberT.setText("0");
+			subscribeNumberT.setText("0");
+			joinNumberT.setText("0");
+			isShowDefaultBg(true);
+		}
 	}
 
 	/** 获取个人资料 */
@@ -271,7 +269,7 @@ public class MyFragment extends Fragment implements OnClickListener {
 				JSONArray albumPhotosJsa = JSONUtil.getJSONArray(jo,
 						"albumPhotos");
 				bingGallery(albumPhotosJsa);
-				
+
 			}
 		});
 	}
@@ -289,16 +287,25 @@ public class MyFragment extends Fragment implements OnClickListener {
 			gallery.setSelection(200);
 			currentPosition = 200;
 		}
-		
+
 		if (jsa.length() != 0) {
+			isShowDefaultBg(false);
+		} else {
+			isShowDefaultBg(true);
+		}
+
+	}
+
+	public void isShowDefaultBg(boolean flag) {
+		if (!flag) {
 			unLogheadI.setVisibility(View.GONE);
 			gallery.setVisibility(View.VISIBLE);
-		}
-		else{
+			dotLinLayout.setVisibility(View.VISIBLE);
+		} else {
 			unLogheadI.setVisibility(View.VISIBLE);
 			gallery.setVisibility(View.GONE);
+			dotLinLayout.setVisibility(View.GONE);
 		}
-		
 	}
 
 	@Override

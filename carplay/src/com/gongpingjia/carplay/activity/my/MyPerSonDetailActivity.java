@@ -28,6 +28,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -88,6 +89,8 @@ public class MyPerSonDetailActivity extends CarPlayBaseActivity implements
 	/** 发布数,关注数,参与数 */
 	TextView postNumberT, subscribeNumberT, joinNumberT;
 
+	ImageView unLogheadI;
+
 	DotLinLayout dotLinLayout;
 
 	CarPlayGallery gallery;
@@ -140,6 +143,7 @@ public class MyPerSonDetailActivity extends CarPlayBaseActivity implements
 		postNumberT = (TextView) findViewById(R.id.postNumber);
 		subscribeNumberT = (TextView) findViewById(R.id.subscribeNumber);
 		joinNumberT = (TextView) findViewById(R.id.joinNumber);
+		unLogheadI = (ImageView) findViewById(R.id.notlogin_head);
 
 		my_attentionV = findViewById(R.id.my_attention);
 		my_releaseV = findViewById(R.id.my_release);
@@ -157,6 +161,7 @@ public class MyPerSonDetailActivity extends CarPlayBaseActivity implements
 				startActivityForResult(it, LOGINCODE);
 			}
 		});
+		headI.setOnClickListener(this);
 		my_attentionV.setOnClickListener(this);
 		my_releaseV.setOnClickListener(this);
 		my_participationV.setOnClickListener(this);
@@ -164,7 +169,14 @@ public class MyPerSonDetailActivity extends CarPlayBaseActivity implements
 		people_concerned.setOnClickListener(this);
 		owners_certification.setOnClickListener(this);
 		editdata.setOnClickListener(this);
-		feedback_layoutV.setOnClickListener(this);
+		feedback_layoutV.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				Intent it = new Intent(self, FeedBackActivity.class);
+				startActivity(it);
+			}
+		});
 		user = User.getInstance();
 		loginedLl.setVisibility(View.VISIBLE);
 		notloginLl.setVisibility(View.GONE);
@@ -306,6 +318,23 @@ public class MyPerSonDetailActivity extends CarPlayBaseActivity implements
 			gallery.setSelection(200);
 			currentPosition = 200;
 		}
+		if (jsa.length() != 0) {
+			isShowDefaultBg(false);
+		} else {
+			isShowDefaultBg(true);
+		}
+	}
+
+	public void isShowDefaultBg(boolean flag) {
+		if (!flag) {
+			unLogheadI.setVisibility(View.GONE);
+			gallery.setVisibility(View.VISIBLE);
+			dotLinLayout.setVisibility(View.VISIBLE);
+		} else {
+			unLogheadI.setVisibility(View.VISIBLE);
+			gallery.setVisibility(View.GONE);
+			dotLinLayout.setVisibility(View.GONE);
+		}
 	}
 
 	@Override
@@ -316,12 +345,10 @@ public class MyPerSonDetailActivity extends CarPlayBaseActivity implements
 			public void onisLogin() {
 				Intent it;
 				switch (v.getId()) {
-
-				// case R.id.login:
-				// it = new Intent(self, LoginActivity.class);
-				// startActivityForResult(it, LOGINCODE);
-				// break;
-
+				case R.id.head:
+					it = new Intent(self, EditPersonalInfoActivity.class);
+					startActivity(it);
+					break;
 				case R.id.my_attention:
 					it = new Intent(self, MyAttentionActiveActivity.class);
 					startActivity(it);
@@ -350,10 +377,6 @@ public class MyPerSonDetailActivity extends CarPlayBaseActivity implements
 					startActivity(it);
 					break;
 
-				case R.id.feedback_layout:
-					it = new Intent(self, FeedBackActivity.class);
-					startActivity(it);
-					break;
 				case R.id.editdata:
 					it = new Intent(self, EditPersonalInfoActivity.class);
 					startActivity(it);
