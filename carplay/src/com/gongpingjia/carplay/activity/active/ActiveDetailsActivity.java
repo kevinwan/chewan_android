@@ -39,6 +39,7 @@ import android.widget.TextView;
 import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
+import com.gongpingjia.carplay.activity.main.LargePICActivity;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.bean.JoinEB;
 import com.gongpingjia.carplay.bean.User;
@@ -304,14 +305,15 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 			}
 		});
 
-		JSONArray picJsa = JSONUtil.getJSONArray(headJo, "cover");
+		final JSONArray picJsa = JSONUtil.getJSONArray(headJo, "cover");
 		LinearLayout pivlayout = (LinearLayout) headV
 				.findViewById(R.id.pic_layout);
 		pivlayout.removeAllViews();
 		// holder.piclayoutV.removeAllViews();
-		PicLayoutUtil util = new PicLayoutUtil(self, picJsa, 5, pivlayout,
+		final PicLayoutUtil util = new PicLayoutUtil(self, picJsa, 5, pivlayout,
 				piclayoutWidth);
 		util.addMoreChild();
+			
 		// holder.headlayoutV.removeAllViews();
 		JSONArray headJsa = JSONUtil.getJSONArray(headJo, "members");
 
