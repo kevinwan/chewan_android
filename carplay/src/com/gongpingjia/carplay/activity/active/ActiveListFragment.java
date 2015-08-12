@@ -26,6 +26,7 @@ import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.adapter.ActiveAdapter;
+import com.gongpingjia.carplay.adapter.HotAdapter;
 import com.gongpingjia.carplay.adapter.SimplePageAdapter;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.bean.ActiveParmasEB;
@@ -53,7 +54,9 @@ public class ActiveListFragment extends Fragment {
 
 	NetRefreshAndMoreListView hotListV, nearListV, newListV;
 
-	NetJSONAdapter hotAdapter, newAdapter, nearAdapter;
+	NetJSONAdapter newAdapter, nearAdapter;
+
+	HotAdapter hotAdapter;
 
 	public static ActiveListFragment getInstance() {
 		if (instance == null) {
@@ -180,7 +183,7 @@ public class ActiveListFragment extends Fragment {
 
 	private void buildAdapter() {
 		UserLocation location = UserLocation.getInstance();
-		hotAdapter = new ActiveAdapter(API.activeList, getActivity(),
+		hotAdapter = new HotAdapter(API.activeList, getActivity(),
 				R.layout.item_active_list);
 		hotAdapter.addparam("key", "hot");
 		hotAdapter.addparam("userId", user.getUserId());

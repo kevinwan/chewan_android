@@ -79,7 +79,6 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.personal_data);
-		CityDataManage.initProvinceDatas();
 	}
 
 	@Override

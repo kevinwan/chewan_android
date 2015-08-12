@@ -11,6 +11,7 @@ import net.duohuo.dhroid.util.ViewUtil;
 import net.duohuo.dhroid.view.NetRefreshAndMoreListView;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Intent;
@@ -37,7 +38,9 @@ import com.gongpingjia.carplay.util.CarSeatUtil;
 import com.gongpingjia.carplay.util.CarSeatUtil.OnSeatClickListener;
 import com.gongpingjia.carplay.view.RoundImageView;
 import com.gongpingjia.carplay.view.dialog.ActiveMsgDialog;
+import com.gongpingjia.carplay.view.dialog.CarSeatSelectDialog;
 import com.gongpingjia.carplay.view.dialog.ActiveMsgDialog.OnClickResultListener;
+import com.gongpingjia.carplay.view.dialog.CarSeatSelectDialog.OnSelectResultListener;
 import com.gongpingjia.carplay.view.dialog.SeatDialog;
 import com.gongpingjia.carplay.view.dialog.SeatDialog.OnGradResultListener;
 
@@ -276,11 +279,52 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 			dialog.show();
 			break;
 		case R.id.join:
-			joinActive();
+
+			isAuthen();
 			break;
 		default:
 			break;
 		}
+	}
+
+	private void isAuthen() {
+		User user = User.getInstance();
+		DhNet mDhNet = new DhNet(API.availableSeat + user.getUserId()
+				+ "/seats?token=" + user.getToken());
+		mDhNet.doGet(new NetTask(self) {
+
+			@Override
+			public void doInUI(Response response, Integer transfer) {
+				// TODO Auto-generated method stub
+				if (response.isSuccess()) {
+					JSONObject json = response.jSONFrom("data");
+					try {
+						User user = User.getInstance();
+						user.setIsAuthenticated(json.getInt("isAuthenticated"));
+
+						if (user.getIsAuthenticated() == 1) {
+							CarSeatSelectDialog dialog = new CarSeatSelectDialog(
+									self);
+							dialog.setOnSelectResultListener(new OnSelectResultListener() {
+
+								@Override
+								public void click(int seatCount) {
+									joinActive(seatCount);
+								}
+							});
+
+							dialog.show();
+						} else {
+							joinActive(0);
+
+						}
+						// 认证车主
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
 	}
 
 	/**
@@ -311,10 +355,11 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 	/**
 	 * 加入活动
 	 */
-	private void joinActive() {
+	private void joinActive(int seatCount) {
 		DhNet net = new DhNet(API.CWBaseurl + "/activity/" + activityId
 				+ "/join?userId=" + user.getUserId() + "&token="
 				+ user.getToken());
+		net.addParam("seat", seatCount);
 		net.doPost(new NetTask(self) {
 
 			@Override

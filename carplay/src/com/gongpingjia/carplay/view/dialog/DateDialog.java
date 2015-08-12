@@ -42,7 +42,8 @@ public class DateDialog
         builder.setView(view);
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(bendi);
-        datePicker.init(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH), null);
+        datePicker.init(1990, 0, 1, null);
+//        datePicker.init(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH), null);
         builder.setTitle("选取时间");
         builder.setPositiveButton("确  定", new DialogInterface.OnClickListener()
         {

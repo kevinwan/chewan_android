@@ -14,32 +14,26 @@ import net.duohuo.dhroid.view.NetRefreshAndMoreListView;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.ScaleAnimation;
-import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemSelectedListener;
 
 import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
-import com.gongpingjia.carplay.activity.main.MainActivity;
 import com.gongpingjia.carplay.activity.msg.PlayCarChatActivity;
 import com.gongpingjia.carplay.adapter.ActiveAdapter;
 import com.gongpingjia.carplay.adapter.GalleryAdapter;
@@ -75,7 +69,7 @@ public class MyFragment extends Fragment implements OnClickListener {
 	Button loginBtn;
 
 	/** 头像,车logo */
-	RoundImageView headI, carBrandLogoI,carlogo;
+	RoundImageView headI, carBrandLogoI;
 
 	/** 昵称,年龄,车型+车龄 */
 	TextView nicknameT, ageT, carModelT;
@@ -84,7 +78,9 @@ public class MyFragment extends Fragment implements OnClickListener {
 	RelativeLayout genderR;
 
 	/** 发布数,关注数,参与数 */
-	TextView postNumberT, subscribeNumberT, joinNumberT,attestation_txt;
+	TextView postNumberT, subscribeNumberT, joinNumberT;
+
+	ImageView unLogheadI;
 
 	DotLinLayout dotLinLayout;
 
@@ -115,7 +111,6 @@ public class MyFragment extends Fragment implements OnClickListener {
 
 	private void initView() {
 		user = User.getInstance();
-		attestation_txt = (TextView) mainV.findViewById(R.id.attestation_txt);
 		loginedLl = (LinearLayout) mainV.findViewById(R.id.logined);
 		notloginLl = (LinearLayout) mainV.findViewById(R.id.notlogin);
 		loginBtn = (Button) mainV.findViewById(R.id.login);
@@ -125,7 +120,7 @@ public class MyFragment extends Fragment implements OnClickListener {
 		ageT = (TextView) mainV.findViewById(R.id.age);
 		carModelT = (TextView) mainV.findViewById(R.id.carModel);
 		genderR = (RelativeLayout) mainV.findViewById(R.id.gender);
-		 carlogo = (RoundImageView) mainV.findViewById(R.id.carlogo);
+
 		postNumberT = (TextView) mainV.findViewById(R.id.postNumber);
 		subscribeNumberT = (TextView) mainV.findViewById(R.id.subscribeNumber);
 		joinNumberT = (TextView) mainV.findViewById(R.id.joinNumber);
@@ -141,6 +136,7 @@ public class MyFragment extends Fragment implements OnClickListener {
 		editdata = (LinearLayout) mainV.findViewById(R.id.editdata);
 		feedback_layoutV = (LinearLayout) mainV
 				.findViewById(R.id.feedback_layout);
+		unLogheadI = (ImageView) mainV.findViewById(R.id.notlogin_head);
 
 		loginBtn.setOnClickListener(new OnClickListener() {
 
@@ -162,19 +158,18 @@ public class MyFragment extends Fragment implements OnClickListener {
 
 			}
 		});
+		headI.setOnClickListener(this);
 		people_concerned.setOnClickListener(this);
 		owners_certification.setOnClickListener(this);
 		editdata.setOnClickListener(this);
-		feedback_layoutV.setOnClickListener(this);
+		feedback_layoutV.setOnClickListener(new OnClickListener() {
 
-		// 未登录
-		if (TextUtils.isEmpty(user.getUserId())) {
-			loginedLl.setVisibility(View.GONE);
-			notloginLl.setVisibility(View.VISIBLE);
-			postNumberT.setText("0");
-			subscribeNumberT.setText("0");
-			joinNumberT.setText("0");
-		}
+			@Override
+			public void onClick(View arg0) {
+				Intent it = new Intent(getActivity(), FeedBackActivity.class);
+				startActivity(it);
+			}
+		});
 
 		gallery = (CarPlayGallery) mainV.findViewById(R.id.gallery);
 		dotLinLayout = (DotLinLayout) mainV.findViewById(R.id.dots);
@@ -205,6 +200,16 @@ public class MyFragment extends Fragment implements OnClickListener {
 			public void onNothingSelected(AdapterView<?> arg0) {
 			}
 		});
+
+		// 未登录
+		if (TextUtils.isEmpty(user.getUserId())) {
+			loginedLl.setVisibility(View.GONE);
+			notloginLl.setVisibility(View.VISIBLE);
+			postNumberT.setText("0");
+			subscribeNumberT.setText("0");
+			joinNumberT.setText("0");
+			isShowDefaultBg(true);
+		}
 	}
 
 	/** 获取个人资料 */
@@ -249,12 +254,8 @@ public class MyFragment extends Fragment implements OnClickListener {
 					carBrandLogoI.setVisibility(View.GONE);
 				} else {
 					carBrandLogoI.setVisibility(View.VISIBLE);
-					attestation_txt.setVisibility(View.VISIBLE);
 					ViewUtil.bindNetImage(carBrandLogoI, carBrandLogo,
 							CarPlayValueFix.optionsDefault.toString());
-					ViewUtil.bindNetImage(carlogo, carBrandLogo,
-							CarPlayValueFix.optionsDefault.toString());
-					
 				}
 
 				if (gender.equals("男"))
@@ -286,6 +287,25 @@ public class MyFragment extends Fragment implements OnClickListener {
 			gallery.setSelection(200);
 			currentPosition = 200;
 		}
+
+		if (jsa.length() != 0) {
+			isShowDefaultBg(false);
+		} else {
+			isShowDefaultBg(true);
+		}
+
+	}
+
+	public void isShowDefaultBg(boolean flag) {
+		if (!flag) {
+			unLogheadI.setVisibility(View.GONE);
+			gallery.setVisibility(View.VISIBLE);
+			dotLinLayout.setVisibility(View.VISIBLE);
+		} else {
+			unLogheadI.setVisibility(View.VISIBLE);
+			gallery.setVisibility(View.GONE);
+			dotLinLayout.setVisibility(View.GONE);
+		}
 	}
 
 	@Override
@@ -298,11 +318,11 @@ public class MyFragment extends Fragment implements OnClickListener {
 						Intent it;
 						switch (v.getId()) {
 
-						// case R.id.login:
-						// it = new Intent(getActivity(), LoginActivity.class);
-						// startActivityForResult(it, LOGINCODE);
-						// break;
-
+						case R.id.head:
+							it = new Intent(getActivity(),
+									EditPersonalInfoActivity.class);
+							startActivity(it);
+							break;
 						case R.id.my_attention:
 							it = new Intent(getActivity(),
 									MyAttentionActiveActivity.class);
@@ -320,11 +340,6 @@ public class MyFragment extends Fragment implements OnClickListener {
 									MyParticipationActiveActivity.class);
 							startActivity(it);
 							break;
-						// case R.id.carchat:
-						// it = new Intent(getActivity(),
-						// PlayCarChatActivity.class);
-						// startActivity(it);
-						// break;
 						case R.id.people_concerned:
 							it = new Intent(getActivity(),
 									AttentionPersonActivity.class);
@@ -337,11 +352,6 @@ public class MyFragment extends Fragment implements OnClickListener {
 							startActivity(it);
 							break;
 
-						case R.id.feedback_layout:
-							it = new Intent(getActivity(),
-									FeedBackActivity.class);
-							startActivity(it);
-							break;
 						case R.id.editdata:
 							it = new Intent(getActivity(),
 									EditPersonalInfoActivity.class);

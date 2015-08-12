@@ -26,14 +26,24 @@
                     android:layout_width="fill_parent"
                     android:layout_height="200dp" >
 
-                    <com.gongpingjia.carplay.view.CarPlayGallery
-                        android:id="@+id/gallery"
-                        android:background="@color/tab_grey_bg"
+                    <ImageView
+                        android:id="@+id/notlogin_head"
                         android:layout_width="match_parent"
                         android:layout_height="fill_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/my_bg" 
+                        android:visibility="gone"
+                        />
+
+                    <com.gongpingjia.carplay.view.CarPlayGallery
+                        android:id="@+id/gallery"
+                        android:layout_width="match_parent"
+                        android:layout_height="fill_parent"
+                        android:background="@color/tab_grey_bg"
                         android:fadingEdgeLength="0dp"
                         android:spacing="5dp"
-                        android:unselectedAlpha="128" />
+                        android:unselectedAlpha="128"
+                        />
 
                     <net.duohuo.dhroid.view.DotLinLayout
                         android:id="@+id/dots"
@@ -221,7 +231,7 @@
                             <TextView
                                 style="@style/text_grey_small"
                                 android:layout_marginTop="4dp"
-                                android:text="我的关注" />
+                                android:text="我的收藏" />
                         </LinearLayout>
 
                         <View

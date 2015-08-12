@@ -24,6 +24,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -218,7 +219,12 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 		headI.setTag(JSONUtil.getString(createrJo, "userId"));
 		ViewUtil.bindView(headV.findViewById(R.id.publish_time),
 				JSONUtil.getLong(headJo, "publishTime"), "neartime");
+		TextView addressT = (TextView) headV.findViewById(R.id.address);
+		float size = addressT.getTextSize();
 
+		if (JSONUtil.getString(headJo, "location").length() > 9) {
+			addressT.setTextSize(TypedValue.COMPLEX_UNIT_PX, size - 8);
+		}
 		ViewUtil.bindView(headV.findViewById(R.id.address),
 				JSONUtil.getString(headJo, "location"));
 
@@ -261,7 +267,7 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 
 		} else {
 			int isSubscribed = JSONUtil.getInt(headJo, "isSubscribed");
-			rightTitleT.setText(isSubscribed == 0 ? "关注" : "取消关注");
+			rightTitleT.setText(isSubscribed == 0 ? "收藏" : "取消收藏");
 			rightTitleT.setVisibility(View.VISIBLE);
 		}
 
@@ -275,7 +281,7 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 								EditActiveActivity.class);
 						it.putExtra("json", headJo.toString());
 						startActivity(it);
-					} else if (rightTitleT.getText().toString().equals("关注")) {
+					} else if (rightTitleT.getText().toString().equals("收藏")) {
 						attention();
 					} else {
 						cancleattention();
@@ -372,8 +378,8 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 			@Override
 			public void doInUI(Response response, Integer transfer) {
 				if (response.isSuccess()) {
-					showToast("关注成功!");
-					rightTitleT.setText("取消关注");
+					showToast("收藏成功!");
+					rightTitleT.setText("取消收藏");
 				}
 			}
 		});
@@ -389,8 +395,8 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 			@Override
 			public void doInUI(Response response, Integer transfer) {
 				if (response.isSuccess()) {
-					showToast("取消关注成功!");
-					rightTitleT.setText("关注");
+					showToast("取消收藏成功!");
+					rightTitleT.setText("收藏");
 				}
 			}
 		});

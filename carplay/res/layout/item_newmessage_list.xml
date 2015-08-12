@@ -69,6 +69,9 @@
                 <TextView
                     android:id="@+id/drive_age"
                     style="@style/text_grey_small"/>
+                 <TextView
+                    android:id="@+id/seat_num"
+                    style="@style/text_grey_small"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

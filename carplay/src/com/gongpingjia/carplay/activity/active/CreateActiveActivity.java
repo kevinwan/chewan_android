@@ -392,7 +392,7 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                 IocContainer.getShare().get(IDialog.class).showToastLong(self, "正在加载可提供座位的数量,请稍等!");
                 return;
             }
-            dlg = new CommonDialog(self, mSeatOptions, "请选择提供座位数");
+            dlg = new CommonDialog(self, mSeatOptions, "请选择提供空座数");
             dlg.setOnDialogItemClickListener(new OnCommonDialogItemClickListener() {
 
                 @Override
@@ -422,7 +422,7 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                 return;
             }
             if (mSeatText.getText().toString().length() == 0 || mSeatText.getText().toString().equals("0")) {
-                showToast("请选择座位数");
+                showToast("请选择空座数");
                 return;
             }
 
@@ -485,7 +485,7 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                 return;
             }
             if (mSeatText.getText().toString().length() == 0) {
-                showToast("请提供座位数");
+                showToast("请提供空座数");
                 return;
             }
 

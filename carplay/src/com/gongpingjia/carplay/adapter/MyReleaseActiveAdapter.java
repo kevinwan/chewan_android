@@ -110,10 +110,10 @@ public class MyReleaseActiveAdapter extends NetJSONAdapter {
 		PicLayoutUtil headUtil = new PicLayoutUtil(mContext);
 		headUtil.BindHeadImage(holder.headlayoutV, headJsa);
 
-		if (JSONUtil.getLong(jo, "startDate") != 0) {
+		if (JSONUtil.getLong(jo, "startDate") == 0) {
 			ViewUtil.bindView(holder.dateT, "不确定");
 		} else {
-			ViewUtil.bindView(holder.dateT, JSONUtil.getString(jo, "startDate"));
+			ViewUtil.bindView(holder.dateT, JSONUtil.getLong(jo, "startDate"),"time");
 		}
 		ViewUtil.bindView(holder.addressT,"地点: " + JSONUtil.getString(jo, "location"));
 
