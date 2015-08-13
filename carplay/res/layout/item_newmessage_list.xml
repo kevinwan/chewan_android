@@ -70,8 +70,21 @@
                     android:id="@+id/drive_age"
                     style="@style/text_grey_small"/>
                  <TextView
+                    android:id="@+id/seatnum"
+                    style="@style/text_grey_small"
+                    android:visibility="gone"
+                    android:text=",提供"/>
+                 <TextView
                     android:id="@+id/seat_num"
-                    style="@style/text_grey_small"/>
+                    style="@style/text_grey_small"
+                    android:textColor="@color/text_orange"
+                    android:visibility="gone"
+                    />
+                  <TextView
+                    android:id="@+id/seatnumber"
+                    style="@style/text_grey_small"
+                    android:visibility="gone"
+                    android:text="空座"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

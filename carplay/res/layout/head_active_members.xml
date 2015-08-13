@@ -26,7 +26,7 @@
 
         <TextView
             style="@style/text_grey_small"
-            android:text="座位" />
+            android:text="空座" />
     </LinearLayout>
 
     <LinearLayout

@@ -164,6 +164,8 @@
             android:name=".TermsActivity"
             android:label="@string/title_activity_terms" >
         </activity>
+        <activity android:name=".activity.main.LargePICActivity" >
+        </activity>
     </application>
 
 </manifest>
