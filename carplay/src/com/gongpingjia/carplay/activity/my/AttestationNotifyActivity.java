@@ -1,4 +1,4 @@
-package com.gongpingjia.carplay;
+package com.gongpingjia.carplay.activity.my;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,9 +10,16 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.R.color;
+import com.gongpingjia.carplay.R.id;
+import com.gongpingjia.carplay.R.layout;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
-import com.gongpingjia.carplay.activity.my.AuthenticateOwnersActivity;
-
+/**
+ * 车主认证通知
+ * @author Administrator
+ *
+ */
 public class AttestationNotifyActivity extends CarPlayBaseActivity {
 	TextView contentpassT,contentfailT;
 	Button nextBtn;
