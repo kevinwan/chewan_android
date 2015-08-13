@@ -166,6 +166,10 @@
         </activity>
         <activity android:name=".activity.main.LargePICActivity" >
         </activity>
+        <activity
+            android:name=".AttestationNotifyActivity"
+            android:label="@string/title_activity_attestation_notify" >
+        </activity>
     </application>
 
 </manifest>

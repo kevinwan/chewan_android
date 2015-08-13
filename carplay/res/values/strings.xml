@@ -26,5 +26,6 @@
     <string name="title_activity_play_carc_detail">PlayCarcDetailActivity</string>
     <string name="title_activity_terms">TermsActivity</string>
     <string name="title_activity_large_pic">LargePICActivity</string>
+    <string name="title_activity_attestation_notify">AttestationNotifyActivity</string>
 
 </resources>
