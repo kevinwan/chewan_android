@@ -210,7 +210,7 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 				JSONUtil.getString(headJo, "introduction"));
 		ViewUtil.bindView(headV.findViewById(R.id.des),
 				JSONUtil.getString(headJo, "introduction"));
-
+		
 		CarPlayUtil.bindDriveAge(createrJo,
 				(ImageView) headV.findViewById(R.id.car_logo),
 				(TextView) headV.findViewById(R.id.drive_age));
@@ -245,7 +245,9 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 			ViewUtil.bindView(headV.findViewById(R.id.end_time),
 					JSONUtil.getLong(headJo, "end"), "time");
 		}
-
+		ViewUtil.bindView(headV.findViewById(R.id.empty_seats),
+				JSONUtil.getString(headJo, "seatInfo"));
+		System.out.println("<<<<<<<<<123"+JSONUtil.getString(headJo, "seatInfo")+"321>>>>>>>>>>>");
 		ViewUtil.bindView(headV.findViewById(R.id.pay),
 				JSONUtil.getString(headJo, "pay"));
 
@@ -257,6 +259,7 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 		}
 		ViewUtil.bindView(headV.findViewById(R.id.age),
 				JSONUtil.getString(createrJo, "age"));
+		
 
 		if (JSONUtil.getString(createrJo, "userId").equals(user.getUserId())) {
 			if (JSONUtil.getInt(headJo, "isModified") == 1) {
