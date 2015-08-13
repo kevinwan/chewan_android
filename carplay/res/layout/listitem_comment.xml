@@ -72,8 +72,7 @@
 
         <TextView
             android:id="@+id/tv_comment_content"
-            style="@style/text_black_medium"
-            android:padding="5dp" />
+            style="@style/text_black_medium"/>
     </LinearLayout>
 
 </LinearLayout>

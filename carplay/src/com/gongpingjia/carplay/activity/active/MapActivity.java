@@ -213,7 +213,7 @@ public class MapActivity extends CarPlayBaseActivity implements
 							.getSearchSuggestionCitys();
 					if (poiItems != null && poiItems.size() > 0) {
 						aMap.clear();
-
+						
 						LatLonPoint firstPoint = poiItems.get(0)
 								.getLatLonPoint();
 						aMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
