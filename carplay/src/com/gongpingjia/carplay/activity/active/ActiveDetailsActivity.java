@@ -247,7 +247,6 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 		}
 		ViewUtil.bindView(headV.findViewById(R.id.empty_seats),
 				JSONUtil.getString(headJo, "seatInfo"));
-		System.out.println("<<<<<<<<<123"+JSONUtil.getString(headJo, "seatInfo")+"321>>>>>>>>>>>");
 		ViewUtil.bindView(headV.findViewById(R.id.pay),
 				JSONUtil.getString(headJo, "pay"));
 
