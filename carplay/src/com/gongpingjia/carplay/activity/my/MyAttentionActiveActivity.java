@@ -33,7 +33,7 @@ public class MyAttentionActiveActivity extends CarPlayBaseActivity {
 
 	@Override
 	public void initView() {
-		setTitle("我的关注");
+		setTitle("我的收藏");
 		User user = User.getInstance();
 		listV = (NetRefreshAndMoreListView) findViewById(R.id.listview);
 		listV.setOnEmptyDataListener(new OnEmptyDataListener() {

@@ -354,6 +354,8 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements OnClic
         } else {
             layoutSex.setBackgroundResource(R.drawable.woman);
         }
+        ViewUtil.bindView(headV.findViewById(R.id.empty_seats),
+                JSONUtil.getString(headJo, "seatInfo"));
         ViewUtil.bindView(headV.findViewById(R.id.age), JSONUtil.getString(createrJo, "age"));
 
         if (JSONUtil.getString(createrJo, "userId").equals(user.getUserId())) {

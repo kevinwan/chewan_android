@@ -32,6 +32,7 @@ import android.widget.TextView;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.activity.active.ActiveDetailsActivity;
+import com.gongpingjia.carplay.activity.my.AttestationNotifyActivity;
 import com.gongpingjia.carplay.adapter.MessageAdapter;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.bean.Message;
@@ -167,9 +168,25 @@ public class NewMessageActivity extends CarPlayBaseActivity implements
 					startActivity(it);
 				} else {
 					String activityId = JSONUtil.getString(jo, "activityId");
+					String type=JSONUtil.getString(jo, "type").trim();
 					if (!TextUtils.isEmpty(activityId)) {
-						it = new Intent(self, ActiveDetailsActivity.class);
-						it.putExtra("activityId", activityId);
+						
+							it = new Intent(self, ActiveDetailsActivity.class);
+							it.putExtra("activityId", activityId);
+							startActivity(it);
+						
+					}
+					if (type.equals("车主认证")) {
+						String carModel=JSONUtil.getString(jo, "carModel");
+						String rs="";
+						if(JSONUtil.getString(jo, "remarks").equals("")){
+							rs="0";
+						}else {
+							rs="1";
+						}
+						it = new Intent(self, AttestationNotifyActivity.class);
+						it.putExtra("carModel", carModel);
+						it.putExtra("result", rs);
 						startActivity(it);
 					}
 				}

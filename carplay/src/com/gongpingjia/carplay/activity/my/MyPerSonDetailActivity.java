@@ -78,7 +78,7 @@ public class MyPerSonDetailActivity extends CarPlayBaseActivity implements
 	Button loginBtn;
 
 	/** 头像,车logo */
-	RoundImageView headI, carBrandLogoI;
+	RoundImageView headI, carBrandLogoI,person_carlogo;
 
 	/** 昵称,年龄,车型+车龄 */
 	TextView nicknameT, ageT, carModelT;
@@ -88,6 +88,8 @@ public class MyPerSonDetailActivity extends CarPlayBaseActivity implements
 
 	/** 发布数,关注数,参与数 */
 	TextView postNumberT, subscribeNumberT, joinNumberT;
+	/**     是否已认证    */
+	TextView person_txt;
 
 	ImageView unLogheadI;
 
@@ -134,17 +136,18 @@ public class MyPerSonDetailActivity extends CarPlayBaseActivity implements
 		notloginLl = (LinearLayout) findViewById(R.id.notlogin);
 		loginBtn = (Button) findViewById(R.id.login);
 		headI = (RoundImageView) findViewById(R.id.head);
+		person_carlogo = (RoundImageView) findViewById(R.id.person_carlogo);
 		carBrandLogoI = (RoundImageView) findViewById(R.id.carBrandLogo);
 		nicknameT = (TextView) findViewById(R.id.nickname);
 		ageT = (TextView) findViewById(R.id.age);
 		carModelT = (TextView) findViewById(R.id.carModel);
 		genderR = (RelativeLayout) findViewById(R.id.gender);
-
+		 person_txt = (TextView) findViewById(R.id.person_txt);
 		postNumberT = (TextView) findViewById(R.id.postNumber);
 		subscribeNumberT = (TextView) findViewById(R.id.subscribeNumber);
 		joinNumberT = (TextView) findViewById(R.id.joinNumber);
 		unLogheadI = (ImageView) findViewById(R.id.notlogin_head);
-
+		
 		my_attentionV = findViewById(R.id.my_attention);
 		my_releaseV = findViewById(R.id.my_release);
 		my_participationV = findViewById(R.id.my_participation);
@@ -285,7 +288,10 @@ public class MyPerSonDetailActivity extends CarPlayBaseActivity implements
 					carBrandLogoI.setVisibility(View.GONE);
 				} else {
 					carBrandLogoI.setVisibility(View.VISIBLE);
+					person_txt.setVisibility(View.VISIBLE);
 					ViewUtil.bindNetImage(carBrandLogoI, carBrandLogo,
+							"carlogo");
+					ViewUtil.bindNetImage(person_carlogo, carBrandLogo,
 							"carlogo");
 				}
 
