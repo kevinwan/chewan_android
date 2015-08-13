@@ -24,6 +24,7 @@ public class AttestationNotifyActivity extends CarPlayBaseActivity {
 	TextView contentpassT,contentfailT;
 	Button nextBtn;
 	LinearLayout notpassL,passL;
+	String result;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -40,8 +41,8 @@ public class AttestationNotifyActivity extends CarPlayBaseActivity {
 		passL=(LinearLayout) findViewById(R.id.pass);
 		
 		Intent it=getIntent();
-		String model=it.getExtras().getString("model");
-		String result=it.getExtras().getString("result");
+		String model=it.getExtras().getString("carModel");
+		result=it.getExtras().getString("result");
 		
 		if(result.equals("0")){
 			pass(model);
@@ -53,8 +54,7 @@ public class AttestationNotifyActivity extends CarPlayBaseActivity {
 			
 			@Override
 			public void onClick(View arg0) {
-				String str=nextBtn.getText().toString();
-				if (str.equals("身份认证已经审核通过")) {
+				if (result.equals("0")) {
 					finish();
 				}else{
 					Intent intent=new Intent(self,AuthenticateOwnersActivity.class);

@@ -41,11 +41,6 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:text="新的留言" />
-
-                <TextView
-                    android:id="@+id/normal_time"
-                    style="@style/text_grey_smaller"
-                    android:text="" />
             </LinearLayout>
 
             <LinearLayout
@@ -114,11 +109,6 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:text="活动参与申请" />
-
-                <TextView
-                    android:id="@+id/application_time"
-                    style="@style/text_grey_smaller"
-                    android:text="" />
             </LinearLayout>
 
             <LinearLayout
