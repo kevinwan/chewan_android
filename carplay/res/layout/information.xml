@@ -64,16 +64,19 @@
                     android:maxLines="1"
                     android:paddingRight="5dp"
                     android:text="包接送吗？" />
-
-                <com.gongpingjia.carplay.view.BadgeView
-                    android:id="@+id/normal_msg_cout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_small"
-                    android:visibility="gone" />
             </LinearLayout>
         </LinearLayout>
+
+        <com.gongpingjia.carplay.view.BadgeView
+            android:id="@+id/normal_msg_cout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="2"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_smaller"
+            android:visibility="gone" />
     </RelativeLayout>
 
     <View style="@style/line_horizontal" />
@@ -129,32 +132,26 @@
                 android:orientation="horizontal" >
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="系统 :"
-                    android:textColor="@color/text_orange"
-                    android:textSize="@dimen/text_small" />
-
-                <TextView
                     android:id="@+id/applicationmsg_content"
                     style="@style/text_grey_small"
                     android:layout_width="0dp"
-                    android:layout_marginLeft="3dp"
                     android:layout_weight="1"
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:paddingRight="5dp"
                     android:text="您已成功加入南京一日游..." />
-
-                <com.gongpingjia.carplay.view.BadgeView
-                    android:id="@+id/application_msg_cout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_small"
-                    android:visibility="gone" />
             </LinearLayout>
         </LinearLayout>
+
+        <com.gongpingjia.carplay.view.BadgeView
+            android:id="@+id/application_msg_cout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_smaller"
+            android:visibility="gone" />
     </RelativeLayout>
 
     <View style="@style/line_horizontal" />

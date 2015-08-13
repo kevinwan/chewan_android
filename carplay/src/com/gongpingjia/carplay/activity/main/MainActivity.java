@@ -3,10 +3,13 @@ package com.gongpingjia.carplay.activity.main;
 import java.io.File;
 import java.util.List;
 import java.util.Stack;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import net.duohuo.dhroid.activity.ActivityTack;
 import net.duohuo.dhroid.dialog.IDialog;
 import net.duohuo.dhroid.ioc.IocContainer;
 import net.duohuo.dhroid.net.DhNet;
@@ -20,15 +23,18 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.active.ActiveListFragment;
@@ -39,12 +45,17 @@ import com.gongpingjia.carplay.activity.my.MyFragment;
 import com.gongpingjia.carplay.activity.my.SettingActivity;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.api.Constant;
+import com.gongpingjia.carplay.bean.ActiveParmasEB;
 import com.gongpingjia.carplay.bean.PhotoState;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.manage.UserInfoManage;
 import com.gongpingjia.carplay.manage.UserInfoManage.LoginCallBack;
+import com.gongpingjia.carplay.service.MsgService;
 import com.gongpingjia.carplay.util.CarPlayPerference;
+import com.gongpingjia.carplay.view.BadgeView;
 import com.gongpingjia.carplay.view.pop.ActiveFilterPop;
+
+import de.greenrobot.event.EventBus;
 
 public class MainActivity extends BaseFragmentActivity {
 	LinearLayout layout;
@@ -66,16 +77,37 @@ public class MainActivity extends BaseFragmentActivity {
 
 	File mCacheDir;
 
+	BadgeView msgT;
+
+	Timer mTimer;
+
+	// 消息数据
+	JSONObject dataJo;
+
+	private static boolean isExit = false;
+
+	Handler mHandler;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		EventBus.getDefault().register(this);
 		initView();
 		isAuthen();
 		updateApp();
 	}
 
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		Intent it = new Intent(this, MsgService.class);
+		startService(it);
+	}
+
 	public void initView() {
+		mHandler = new Handler();
 		slist = new Stack<Fragment>();
 		fm = getSupportFragmentManager();
 		tabV = (LinearLayout) findViewById(R.id.tab);
@@ -100,6 +132,8 @@ public class MainActivity extends BaseFragmentActivity {
 				findViewById(R.id.guide).setVisibility(View.GONE);
 			}
 		});
+
+		msgT = (BadgeView) findViewById(R.id.msg_point);
 	}
 
 	private void initTab() {
@@ -141,7 +175,8 @@ public class MainActivity extends BaseFragmentActivity {
 
 		for (int i = 0; i < tabV.getChildCount(); i++) {
 			View childV = tabV.getChildAt(i);
-			final ImageView img = (ImageView) childV.findViewById(R.id.img);
+			View imgLayout = childV.findViewById(R.id.img_layout);
+			final ImageView img = (ImageView) imgLayout.findViewById(R.id.img);
 			TextView text = (TextView) childV.findViewById(R.id.text);
 			if (index == i) {
 				text.setTextColor(getResources().getColor(
@@ -187,7 +222,7 @@ public class MainActivity extends BaseFragmentActivity {
 				case 1:
 					setTitle("消息");
 					setRightVISIBLEOrGone(View.GONE);
-					switchContent(MsgFragment.getInstance());
+					switchContent(MsgFragment.getInstance(dataJo));
 
 					img.setImageResource(R.drawable.msg_f);
 					setLeftAction(-2, null, new OnClickListener() {
@@ -229,6 +264,7 @@ public class MainActivity extends BaseFragmentActivity {
 															"CarPlay");
 													mCacheDir.mkdirs();
 													tempPath = new File(
+
 															mCacheDir,
 															System.currentTimeMillis()
 																	+ ".jpg")
@@ -450,4 +486,51 @@ public class MainActivity extends BaseFragmentActivity {
 		});
 	}
 
+	public void onEventMainThread(JSONObject jo) {
+		dataJo = jo;
+		JSONObject commentJo = JSONUtil.getJSONObject(jo, "comment");
+		int commentCount = JSONUtil.getInt(commentJo, "count");
+
+		JSONObject applicationJo = JSONUtil.getJSONObject(jo, "application");
+		int applicationCount = JSONUtil.getInt(applicationJo, "count");
+
+		if (commentCount != 0 || applicationCount != 0) {
+			msgT.setText(commentCount + applicationCount + "");
+			msgT.setVisibility(View.VISIBLE);
+		} else {
+			msgT.setVisibility(View.GONE);
+		}
+		System.out.println("消息");
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		EventBus.getDefault().unregister(this);
+	}
+
+	static public class ExitRunnable implements Runnable {
+		@Override
+		public void run() {
+			isExit = false;
+		}
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			if (!isExit) {
+				isExit = true;
+				IocContainer.getShare().get(IDialog.class)
+						.showToastShort(self, "再按一次退出程序");
+				mHandler.postDelayed(new ExitRunnable(), 2000);
+			} else {
+				Intent it = new Intent(self, MsgService.class);
+				stopService(it);
+				ActivityTack.getInstanse().exit(self);
+			}
+			return false;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
 }

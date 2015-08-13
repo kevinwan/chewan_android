@@ -20,6 +20,7 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
 
     <supports-screens
         android:largeScreens="true"
@@ -115,6 +116,10 @@
         <activity android:name=".activity.my.FeedBackActivity" />
         <activity android:name=".activity.my.VersionIntroActivity" >
         </activity>
+
+        <service android:name="com.gongpingjia.carplay.service.MsgService" >
+        </service>
+
         <activity android:name=".activity.main.SplashActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -235,7 +235,7 @@ public class ActiveFilterPop extends PopupWindow implements OnClickListener {
 			break;
 
 		case R.id.locationLayout:
-			CityPickDialog citydialog = new CityPickDialog(context);
+			CityPickDialog citydialog = new CityPickDialog(context, false);
 			citydialog.setOnPickResultListener(new OnPickResultListener() {
 
 				@Override

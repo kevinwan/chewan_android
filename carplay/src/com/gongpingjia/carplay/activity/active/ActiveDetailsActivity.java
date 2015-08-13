@@ -563,7 +563,7 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 
 						if (user.getIsAuthenticated() == 1) {
 							CarSeatSelectDialog dialog = new CarSeatSelectDialog(
-									self);
+									self,activityId);
 							dialog.setOnSelectResultListener(new OnSelectResultListener() {
 
 								@Override

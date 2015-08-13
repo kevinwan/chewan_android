@@ -73,6 +73,7 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 
 	long startTime;
 
+	
 	CarPlayPerference per;
 
 	@Override
@@ -134,7 +135,7 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 				if (isJoin) {
 					showGradDialog(carId, childPosition);
 				} else {
-					showToast("请先加入活动!");
+					showToast("加入活动才能抢座，点击底部“加入活动”吧!");
 				}
 			}
 
@@ -221,7 +222,7 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 	private void initQuitAndJoinButton(boolean isJoin) {
 		quitB.setVisibility(isJoin ? View.VISIBLE : View.GONE);
 		joinB.setVisibility(isJoin ? View.GONE : View.VISIBLE);
-		quite_desT.setVisibility(isJoin ? View.VISIBLE : View.INVISIBLE);
+		// quite_desT.setVisibility(isJoin ? View.VISIBLE : View.INVISIBLE);
 	}
 
 	private void showGradDialog(String carId, int seatIndex) {
@@ -262,20 +263,21 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.quit:
-			long currentTime = System.currentTimeMillis();
+			// long currentTime = System.currentTimeMillis();
 			ActiveMsgDialog dialog;
-			if (startTime != 0 && startTime - currentTime > 1000 * 60 * 60 * 6) {
-				dialog = new ActiveMsgDialog(self, "确定退出活动?");
-				dialog.setOnClickResultListener(new OnClickResultListener() {
+			// if (startTime != 0 && startTime - currentTime > 1000 * 60 * 60 *
+			// 6) {
+			dialog = new ActiveMsgDialog(self, "确定退出活动?");
+			dialog.setOnClickResultListener(new OnClickResultListener() {
 
-					@Override
-					public void onclick() {
-						quiteActive();
-					}
-				});
-			} else {
-				dialog = new ActiveMsgDialog(self, "距离活动开始还有6小时", "您无法退出活动");
-			}
+				@Override
+				public void onclick() {
+					quiteActive();
+				}
+			});
+			// } else {
+			// dialog = new ActiveMsgDialog(self, "距离活动开始还有6小时", "您无法退出活动");
+			// }
 			dialog.show();
 			break;
 		case R.id.join:
@@ -304,7 +306,7 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 
 						if (user.getIsAuthenticated() == 1) {
 							CarSeatSelectDialog dialog = new CarSeatSelectDialog(
-									self);
+									self,activityId);
 							dialog.setOnSelectResultListener(new OnSelectResultListener() {
 
 								@Override

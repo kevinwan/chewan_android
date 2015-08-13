@@ -49,7 +49,7 @@ public class CarPlayValueFix implements ValueFix {
 		if (o == null)
 			return null;
 		if ("time".equals(type)) {
-			return getStandardTime(Long.parseLong(o.toString()), "MM月dd日 HH:mm");
+			return getStandardTime(Long.parseLong(o.toString()), "MM-dd HH:mm");
 		} else if ("neartime".equals(type)) {
 			return converTime(Long.parseLong(o.toString()));
 		}
@@ -70,12 +70,16 @@ public class CarPlayValueFix implements ValueFix {
 	public static String converTime(long timestamp) {
 		long currentSeconds = System.currentTimeMillis();
 		long timeGap = (currentSeconds - timestamp) / 1000;// 与现在时间相差秒�?
+		Date currentDate = new Date(currentSeconds);
+		Date agoDate = new Date(timestamp);
+		int currentDay = currentDate.getDate();
+		int agoDay = agoDate.getDate();
 		String timeStr = null;
-		if (timeGap > 24 * 60 * 60 * 2) {// 1天以�?
+		if (currentDay - agoDay >= 2) {// 1天以�?
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			Date date = new Date(timestamp);
 			timeStr = sdf.format(date);
-		} else if (timeGap > 60 * 60 * 24 * 1) {// 1小时-24小时
+		} else if (currentDay - agoDay == 1) {// 1小时-24小时
 			timeStr = "昨天";
 		} else if (timeGap > 60 * 60) {
 			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");

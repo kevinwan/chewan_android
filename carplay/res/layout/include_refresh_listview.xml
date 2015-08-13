@@ -47,6 +47,17 @@
                 style="@style/text_grey_small"
                 android:layout_marginTop="12dp"
                 android:text="暂无数据" />
+
+            <Button
+                android:id="@+id/btn_submit"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:background="@drawable/button_zc_bg"
+                android:text="现在去发布"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_medium"
+                android:visibility="gone" />
         </LinearLayout>
     </LinearLayout>
 

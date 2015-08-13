@@ -171,20 +171,29 @@ public class PicLayoutUtil {
 		}
 
 		// if (drawcount == headMax) {
-		for (int i = 0; i < drawcount; i++) {
+		for (int i = 0; i < headMax; i++) {
 			try {
-				if (i == drawcount - 1) {
+				if (i == headMax - 1) {
 					TextView text = (TextView) layout.getChildAt(headMax - 1);
 					text.setText(jsa.length() + "");
 					text.setVisibility(View.VISIBLE);
 				} else {
-					JSONObject jo = jsa.getJSONObject(i);
 					RoundImageView img = (RoundImageView) layout.getChildAt(i);
-					ViewUtil.bindNetImage(img, JSONUtil.getString(jo, "photo"),
-							"head");
-					img.setTag(JSONUtil.getString(jo, "userId"));
-					img.setVisibility(View.VISIBLE);
+					img.setVisibility(View.GONE);
+					if (i < drawcount - 1) {
+						JSONObject jo = jsa.getJSONObject(i);
+						ViewUtil.bindNetImage((RoundImageView) img,
+								JSONUtil.getString(jo, "photo"), "head");
+						img.setTag(JSONUtil.getString(jo, "userId"));
+						img.setVisibility(View.VISIBLE);
+					}
 				}
+				// JSONObject jo = jsa.getJSONObject(i);
+				// ViewUtil.bindNetImage(img, JSONUtil.getString(jo,
+				// "photo"),
+				// "head");
+				// img.setTag(JSONUtil.getString(jo, "userId"));
+				// img.setVisibility(View.VISIBLE);
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

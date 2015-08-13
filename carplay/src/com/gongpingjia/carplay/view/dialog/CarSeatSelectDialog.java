@@ -45,9 +45,12 @@ public class CarSeatSelectDialog extends BaseAlertDialog {
 
 	TextView desT;
 
-	public CarSeatSelectDialog(Context context) {
+	String activityId;
+
+	public CarSeatSelectDialog(Context context, String activityId) {
 		super(context);
 		this.mContext = context;
+		this.activityId = activityId;
 		mSeatOptions = new ArrayList<String>();
 	}
 
@@ -123,7 +126,8 @@ public class CarSeatSelectDialog extends BaseAlertDialog {
 	private void getSeatCount() {
 		User user = User.getInstance();
 		DhNet net = new DhNet(API.CWBaseurl + "/user/" + user.getUserId()
-				+ "/seats?token=" + user.getToken());
+				+ "/seats?token=" + user.getToken() + "&activityId="
+				+ activityId);
 		net.doGet(new NetTask(mContext) {
 
 			@Override

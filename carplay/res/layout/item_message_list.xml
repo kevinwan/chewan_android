@@ -67,6 +67,22 @@
                         android:textColor="@color/white"
                         android:textSize="@dimen/text_smaller" />
                 </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/carlogo"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="5dp" />
+
+                <TextView
+                    android:id="@+id/time"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:textColor="@color/text_grey"
+                    android:textSize="@dimen/text_smaller"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <TextView

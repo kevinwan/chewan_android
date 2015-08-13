@@ -403,7 +403,7 @@ public class HotAdapter extends NetJSONAdapter {
 
 						if (user.getIsAuthenticated() == 1) {
 							CarSeatSelectDialog dialog = new CarSeatSelectDialog(
-									mContext);
+									mContext,activityId);
 							dialog.setOnSelectResultListener(new OnSelectResultListener() {
 
 								@Override

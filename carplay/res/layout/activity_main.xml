@@ -50,7 +50,7 @@
     <View
         android:layout_width="fill_parent"
         android:layout_height="1.5px"
-        android:background="@color/text_black_light" />
+        android:background="@drawable/main_tab_line" />
 
     <LinearLayout
         android:id="@+id/tab"
@@ -66,11 +66,17 @@
             android:gravity="center"
             android:orientation="vertical" >
 
-            <ImageView
-                android:id="@+id/img"
+            <RelativeLayout
+                android:id="@+id/img_layout"
                 android:layout_width="26dp"
-                android:layout_height="26dp"
-                android:src="@drawable/city_n" />
+                android:layout_height="26dp" >
+
+                <ImageView
+                    android:id="@+id/img"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:src="@drawable/city_n" />
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/text"
@@ -90,11 +96,27 @@
             android:gravity="center"
             android:orientation="vertical" >
 
-            <ImageView
-                android:id="@+id/img"
-                android:layout_width="26dp"
-                android:layout_height="26dp"
-                android:src="@drawable/msg_n" />
+            <RelativeLayout
+                android:id="@+id/img_layout"
+                android:layout_width="42dp"
+                android:layout_height="26dp" >
+
+                <ImageView
+                    android:id="@+id/img"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/msg_n" />
+
+                <com.gongpingjia.carplay.view.BadgeView
+                    android:id="@+id/msg_point"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="1"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_smaller" />
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/text"
@@ -114,11 +136,17 @@
             android:gravity="center"
             android:orientation="vertical" >
 
-            <ImageView
-                android:id="@+id/img"
+            <RelativeLayout
+                android:id="@+id/img_layout"
                 android:layout_width="26dp"
-                android:layout_height="26dp"
-                android:src="@drawable/my_n" />
+                android:layout_height="26dp" >
+
+                <ImageView
+                    android:id="@+id/img"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:src="@drawable/my_n" />
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/text"

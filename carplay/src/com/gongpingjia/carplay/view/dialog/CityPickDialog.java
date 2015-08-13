@@ -34,12 +34,13 @@ public class CityPickDialog extends BaseAlertDialog implements
 		super(context);
 		this.mContext = context;
 		this.showDistrict = showDistrict;
+		CityDataManage.initProvinceDatas(0);
 	}
 
 	public CityPickDialog(Context context) {
 		super(context);
 		this.mContext = context;
-		CityDataManage.initProvinceDatas();
+		CityDataManage.initProvinceDatas(1);
 	}
 
 	@Override
@@ -82,7 +83,9 @@ public class CityPickDialog extends BaseAlertDialog implements
 		mViewCity.setVisibleItems(7);
 		mViewDistrict.setVisibleItems(7);
 		updateCities();
-		updateAreas();
+		if (showDistrict) {
+			updateAreas();
+		}
 	}
 
 	@Override
@@ -91,7 +94,9 @@ public class CityPickDialog extends BaseAlertDialog implements
 		if (wheel == mViewProvince) {
 			updateCities();
 		} else if (wheel == mViewCity) {
-			updateAreas();
+			if (showDistrict) {
+				updateAreas();
+			}
 		} else if (wheel == mViewDistrict) {
 			mCurrentDistrictName = CityDataManage.mDistrictDatasMap
 					.get(mCurrentCityName)[newValue];
@@ -131,7 +136,9 @@ public class CityPickDialog extends BaseAlertDialog implements
 		mViewCity
 				.setViewAdapter(new ArrayWheelAdapter<String>(mContext, cities));
 		mViewCity.setCurrentItem(0);
-		updateAreas();
+		if (showDistrict) {
+			updateAreas();
+		}
 	}
 
 	@Override

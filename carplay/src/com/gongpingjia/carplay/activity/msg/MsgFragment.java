@@ -1,10 +1,6 @@
 package com.gongpingjia.carplay.activity.msg;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 import net.duohuo.dhroid.net.DhNet;
-import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.view.RefreshAndMoreListView;
@@ -12,20 +8,18 @@ import net.duohuo.dhroid.view.RefreshAndMoreListView.OnRefreshListener;
 
 import org.json.JSONObject;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.adapter.FragmentMsgAdapter;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.bean.User;
-import com.gongpingjia.carplay.view.BadgeView;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * 
@@ -47,20 +41,20 @@ public class MsgFragment extends Fragment {
 	// View aaplication_layoutV, normsg_layoutV;
 	private FragmentMsgAdapter mAdapter;
 
-	Timer mTimer;
+	static JSONObject dataJo;
 
-	public static MsgFragment getInstance() {
+	public static MsgFragment getInstance(JSONObject data) {
 		if (instance == null) {
 			instance = new MsgFragment();
 		}
-
+		dataJo = data;
 		return instance;
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-
+		EventBus.getDefault().register(this);
 		mAdapter = new FragmentMsgAdapter(getActivity());
 		final View view = inflater.inflate(R.layout.fragment_msg, container,
 				false);
@@ -77,36 +71,11 @@ public class MsgFragment extends Fragment {
 				getMsgCount();
 			}
 		});
+
+		if (dataJo != null) {
+			mAdapter.setData(dataJo);
+		}
 		return view;
-	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
-		mTimer = new Timer();
-		mTimer.schedule(new TimerTask() {
-			@Override
-			public void run() {
-				getMsgCount();
-
-			}
-		}, 0, 30 * 60 * 1000);
-	}
-
-	@Override
-	public void onDetach() {
-		super.onDetach();
-		if (mTimer != null) {
-			mTimer.cancel();
-		}
-	}
-
-	@Override
-	public void onStop() {
-		super.onStop();
-		if (mTimer != null) {
-			mTimer.cancel();
-		}
 	}
 
 	private void getMsgCount() {
@@ -121,9 +90,26 @@ public class MsgFragment extends Fragment {
 					mRefreshListView.onRefreshComplete();
 					mRefreshListView.removeFootView();
 					JSONObject jo = response.jSONFromData();
-					mAdapter.setData(jo);
+					EventBus.getDefault().post(jo);
 				}
 			}
 		});
 	}
+
+	@Override
+	public void onDetach() {
+		super.onDetach();
+		EventBus.getDefault().unregister(this);
+	}
+
+	public void onEventMainThread(JSONObject jo) {
+		mAdapter.setData(jo);
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		// getMsgCount();
+	}
+
 }

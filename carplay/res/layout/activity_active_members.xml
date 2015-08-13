@@ -77,7 +77,7 @@
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
             android:background="@drawable/button_zc_bg"
-            android:text="我也加入"
+            android:text="加入活动"
             android:textColor="@color/white"
             android:textSize="@dimen/text_medium"
             android:visibility="gone" />

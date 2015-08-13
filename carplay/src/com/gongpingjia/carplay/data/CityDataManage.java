@@ -72,15 +72,18 @@ public class CityDataManage {
 	 * 解析省市区的XML数据
 	 */
 
-	public static void initProvinceDatas() {
+	public static void initProvinceDatas(int type) {
 
-		if (mProvinceDatas != null) {
-			return;
-		}
 		List<ProvinceModel> provinceList = null;
 		AssetManager asset = CarPlayApplication.getInstance().getAssets();
 		try {
-			InputStream input = asset.open("province_data.xml");
+			String fileName;
+			if (type == 1) {
+				fileName = "province_data.xml";
+			} else {
+				fileName = "province_new_data.xml";
+			}
+			InputStream input = asset.open(fileName);
 			// 创建一个解析xml的工厂对象
 			SAXParserFactory spf = SAXParserFactory.newInstance();
 			// 解析xml

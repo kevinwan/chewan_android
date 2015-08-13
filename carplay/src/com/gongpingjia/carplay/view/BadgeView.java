@@ -44,11 +44,11 @@ public class BadgeView extends TextView {
 
 	public static final int CENTER_HORIZONTAL = 6;
 
-	private static final int DEFAULT_MARGIN_DIP = 5;
+	private static final float DEFAULT_MARGIN_DIP = 5;
 
-	private static final int DEFAULT_LR_PADDING_DIP = 5;
+	private static final float DEFAULT_LR_PADDING_DIP = 4.5f;
 
-	private static final int DEFAULT_CORNER_RADIUS_DIP = 10;
+	private static final int DEFAULT_CORNER_RADIUS_DIP = 12;
 
 	private static final int DEFAULT_POSITION = POSITION_TOP_RIGHT;
 
@@ -513,7 +513,7 @@ public class BadgeView extends TextView {
 		badgeBg = getDefaultBackground();
 	}
 
-	private int dipToPixels(int dip) {
+	private int dipToPixels(float dip) {
 		Resources r = getResources();
 		float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dip,
 				r.getDisplayMetrics());

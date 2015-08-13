@@ -16,6 +16,7 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -67,12 +68,23 @@ public class MessageAdapter extends NetJSONAdapter {
 			holder.sexV = convertView.findViewById(R.id.sex);
 			holder.agreeT = (TextView) convertView.findViewById(R.id.agree);
 			holder.countT = (TextView) convertView.findViewById(R.id.count);
+			holder.carLogoI = (ImageView) convertView
+					.findViewById(R.id.carlogo);
+			holder.timeT = (TextView) convertView.findViewById(R.id.time);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
 
 		JSONObject jo = (JSONObject) getItem(position);
+
+		if (!TextUtils.isEmpty(JSONUtil.getString(jo, "carBrandLogo"))) {
+			ViewUtil.bindNetImage(holder.carLogoI,
+					JSONUtil.getString(jo, "carBrandLogo"), "carlogo");
+			holder.carLogoI.setVisibility(View.VISIBLE);
+		} else {
+			holder.carLogoI.setVisibility(View.GONE);
+		}
 
 		holder.checkI.setVisibility(showcheck ? View.VISIBLE : View.GONE);
 		Boolean ischeck = JSONUtil.getBoolean(jo, "ischeck");
@@ -101,12 +113,18 @@ public class MessageAdapter extends NetJSONAdapter {
 		if (type.equals("comment")) {
 			holder.countT.setVisibility(View.GONE);
 			holder.agreeT.setVisibility(View.GONE);
+			holder.timeT.setVisibility(View.VISIBLE);
+			ViewUtil.bindView(holder.timeT,
+					JSONUtil.getString(jo, "createTime"), "neartime");
 		} else {
+			holder.timeT.setVisibility(View.GONE);
 			String remarks = JSONUtil.getString(jo, "remarks");
 			String seatcontent = "提供" + JSONUtil.getInt(jo, "seat") + "空座";
 			if (remarks.equals("") && msgtype.equals("活动申请处理")) {
 				holder.agreeT.setVisibility(View.VISIBLE);
-				holder.countT.setVisibility(View.VISIBLE);
+				holder.countT
+						.setVisibility(JSONUtil.getInt(jo, "seat") > 0 ? View.VISIBLE
+								: View.GONE);
 				holder.agreeT.setText("同意");
 				holder.agreeT
 						.setBackgroundResource(R.drawable.button_yanzheng_bg);
@@ -130,7 +148,9 @@ public class MessageAdapter extends NetJSONAdapter {
 				holder.agreeT.setVisibility(View.VISIBLE);
 				holder.agreeT.setText(remarks);
 				holder.agreeT.setBackgroundResource(R.drawable.button_grey_bg);
-				holder.countT.setVisibility(View.VISIBLE);
+				holder.countT
+						.setVisibility(JSONUtil.getInt(jo, "seat") > 0 ? View.VISIBLE
+								: View.GONE);
 				SpannableStringBuilder style = new SpannableStringBuilder(
 						seatcontent);
 				style.setSpan(new ForegroundColorSpan(mContext.getResources()
@@ -151,7 +171,7 @@ public class MessageAdapter extends NetJSONAdapter {
 			} else if (msgtype.equals("活动邀请")) {
 				newcontent = "邀请您加入" + content + "活动";
 			} else if (msgtype.equals("活动申请结果")) {
-				newcontent = "活动申请: " + content + "已同意";
+				newcontent = "活动消息: " + content + "已同意";
 			} else if (msgtype.equals("活动申请处理")) {
 				newcontent = "想加入" + content + "活动";
 			}
@@ -261,7 +281,7 @@ public class MessageAdapter extends NetJSONAdapter {
 
 		TextView nameT, ageT, contentT;
 
-		ImageView headI;
+		ImageView headI, carLogoI;
 
 		ImageView checkI;
 
@@ -269,6 +289,7 @@ public class MessageAdapter extends NetJSONAdapter {
 
 		TextView agreeT;
 
-		TextView countT;
+		TextView countT, timeT;
+
 	}
 }

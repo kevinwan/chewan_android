@@ -28,7 +28,10 @@
             <TextView
                 android:id="@+id/name"
                 style="@style/text_black_medium"
-                android:layout_marginLeft="10dp" />
+                android:layout_width="100dp"
+                android:layout_marginLeft="10dp"
+                android:ellipsize="end"
+                android:maxLines="1" />
 
             <LinearLayout
                 android:id="@+id/seat_layout"
@@ -51,8 +54,8 @@
 
                     <com.gongpingjia.carplay.view.RoundImageView
                         android:id="@+id/head"
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
                         android:layout_centerHorizontal="true"
                         android:background="@drawable/head_icon"
                         android:visibility="gone" />
@@ -74,8 +77,8 @@
 
                     <com.gongpingjia.carplay.view.RoundImageView
                         android:id="@+id/head"
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
                         android:layout_centerHorizontal="true"
                         android:background="@drawable/head_icon"
                         android:visibility="gone" />
@@ -97,8 +100,8 @@
 
                     <com.gongpingjia.carplay.view.RoundImageView
                         android:id="@+id/head"
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
                         android:layout_centerHorizontal="true"
                         android:background="@drawable/head_icon"
                         android:visibility="gone" />
@@ -120,8 +123,8 @@
 
                     <com.gongpingjia.carplay.view.RoundImageView
                         android:id="@+id/head"
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
                         android:layout_centerHorizontal="true"
                         android:background="@drawable/head_icon"
                         android:visibility="gone" />
@@ -143,8 +146,8 @@
 
                     <com.gongpingjia.carplay.view.RoundImageView
                         android:id="@+id/head"
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
                         android:layout_centerHorizontal="true"
                         android:background="@drawable/head_icon"
                         android:visibility="gone" />
@@ -166,8 +169,8 @@
 
                     <com.gongpingjia.carplay.view.RoundImageView
                         android:id="@+id/head"
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
                         android:layout_centerHorizontal="true"
                         android:background="@drawable/head_icon"
                         android:visibility="gone" />
@@ -189,8 +192,8 @@
 
                     <com.gongpingjia.carplay.view.RoundImageView
                         android:id="@+id/head"
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
                         android:layout_centerHorizontal="true"
                         android:background="@drawable/head_icon"
                         android:visibility="gone" />

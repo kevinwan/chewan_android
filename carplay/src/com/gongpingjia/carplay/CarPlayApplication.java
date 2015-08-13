@@ -8,9 +8,11 @@ import net.duohuo.dhroid.ioc.IocContainer;
 import net.duohuo.dhroid.net.GlobalCodeHandler;
 import net.duohuo.dhroid.util.UserLocation;
 import android.app.Application;
+import android.content.Intent;
 
 import com.gongpingjia.carplay.data.CityDataManage;
 import com.gongpingjia.carplay.db.DaoHelper;
+import com.gongpingjia.carplay.service.MsgService;
 import com.gongpingjia.carplay.view.NomalDialog;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -67,7 +69,6 @@ public class CarPlayApplication extends Application {
 		ImageLoader.getInstance().init(imageconfig);
 
 		UserLocation.getInstance().init(getApplicationContext());
-
 	}
 
 }

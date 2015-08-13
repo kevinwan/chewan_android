@@ -212,8 +212,7 @@ public class MapActivity extends CarPlayBaseActivity implements
 					List<SuggestionCity> suggestionCities = result
 							.getSearchSuggestionCitys();
 					if (poiItems != null && poiItems.size() > 0) {
-						aMap.clear();
-
+						// aMap.clear();
 						LatLonPoint firstPoint = poiItems.get(0)
 								.getLatLonPoint();
 						aMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
@@ -309,11 +308,12 @@ public class MapActivity extends CarPlayBaseActivity implements
 	@Override
 	public void onMapClick(LatLng ll) {
 		// TODO Auto-generated method stub
-		mCurLatLng = ll;
-		LatLonPoint latLonPoint = new LatLonPoint(ll.latitude, ll.longitude);
-		RegeocodeQuery query = new RegeocodeQuery(latLonPoint, 200,
-				GeocodeSearch.AMAP);// 第一个参数表示一个Latlng，第二参数表示范围多少米，第三个参数表示是火系坐标系还是GPS原生坐标系
-		mGeoSearch.getFromLocationAsyn(query);// 设置同步逆地理编码请求
+		 mCurLatLng = ll;
+		 LatLonPoint latLonPoint = new LatLonPoint(ll.latitude, ll.longitude);
+		 RegeocodeQuery query = new RegeocodeQuery(latLonPoint, 200,
+		 GeocodeSearch.AMAP);//
+//		 第一个参数表示一个Latlng，第二参数表示范围多少米，第三个参数表示是火系坐标系还是GPS原生坐标系
+		 mGeoSearch.getFromLocationAsyn(query);// 设置同步逆地理编码请求
 	}
 
 	@Override

@@ -10,6 +10,7 @@ import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.util.ViewUtil;
 import net.duohuo.dhroid.view.DotLinLayout;
 import net.duohuo.dhroid.view.NetRefreshAndMoreListView;
+import net.duohuo.dhroid.view.NetRefreshAndMoreListView.OnEmptyDataListener;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -149,15 +150,15 @@ public class PersonDetailActivity extends CarPlayBaseActivity implements
 
 		attentionT = (TextView) headV.findViewById(R.id.attention);
 		attentionT.setOnClickListener(this);
-		gallery.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				Intent it = new Intent(self, ManageAlbumActivity.class);
-				startActivity(it);
-			}
-		});
+		// gallery.setOnItemClickListener(new OnItemClickListener() {
+		//
+		// @Override
+		// public void onItemClick(AdapterView<?> parent, View view,
+		// int position, long id) {
+		// Intent it = new Intent(self, ManageAlbumActivity.class);
+		// startActivity(it);
+		// }
+		// });
 		gallery.setOnItemSelectedListener(new OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
@@ -316,6 +317,18 @@ public class PersonDetailActivity extends CarPlayBaseActivity implements
 				+ user.getToken(), self, R.layout.item_myrelease_active);
 		releaseAdapter.fromWhat("data");
 		listV.setAdapter(releaseAdapter);
+		listV.setOnEmptyDataListener(new OnEmptyDataListener() {
+
+			@Override
+			public void onEmpty(boolean showeEptyView) {
+				// bindEmptyView(findViewById(R.id.empty), type);
+				ViewUtil.bindView(findViewById(R.id.icon_msg),
+						R.drawable.no_release);
+				ViewUtil.bindView(findViewById(R.id.msg), "TA还没有发布任何活动!");
+				findViewById(R.id.empty).setVisibility(
+						showeEptyView ? View.VISIBLE : View.GONE);
+			}
+		});
 		releaseAdapter.showNextInDialog();
 
 		attentionAdapter = new ActiveAdapter(API.CWBaseurl + "/user/" + userId
@@ -424,18 +437,18 @@ public class PersonDetailActivity extends CarPlayBaseActivity implements
 		case RELEASE:
 			ViewUtil.bindView(findViewById(R.id.icon_msg),
 					R.drawable.no_release);
-			ViewUtil.bindView(findViewById(R.id.msg), "还没有发布任何活动,赶紧添加吧!");
+			ViewUtil.bindView(findViewById(R.id.msg), "TA还没有发布任何活动!");
 			break;
 
 		case JOIN:
 			ViewUtil.bindView(findViewById(R.id.icon_msg), R.drawable.no_join);
-			ViewUtil.bindView(findViewById(R.id.msg), "还没有参与任何活动,赶紧参与吧!");
+			ViewUtil.bindView(findViewById(R.id.msg), "TA还没有参与任何活动!");
 			break;
 
 		case ATTENTION:
 			ViewUtil.bindView(findViewById(R.id.icon_msg),
 					R.drawable.no_attention);
-			ViewUtil.bindView(findViewById(R.id.msg), "还没有添加任何关注~");
+			ViewUtil.bindView(findViewById(R.id.msg), "TA还没有添加任何关注!");
 			break;
 
 		default:

@@ -4,6 +4,7 @@
 /carplay/build
 /carplay/.classpath
 /carplay/project.properties
+/carplay/project
 /.gradle
 /dhroid/bin
 /dhroid/build
@@ -12,3 +13,4 @@
 /dhroid/.settings
 /dhroid/.svn
 /build
+carplay/project.properties
