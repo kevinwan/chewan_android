@@ -16,6 +16,9 @@ import org.json.JSONObject;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -73,7 +76,6 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 
 	long startTime;
 
-	
 	CarPlayPerference per;
 
 	@Override
@@ -180,6 +182,9 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 				headI.setTag(JSONUtil.getString(itemjo, "userId"));
 
 				View sexBg = itemV.findViewById(R.id.sex);
+				View seat_num = itemV.findViewById(R.id.seat_num);
+				View seatnum = itemV.findViewById(R.id.seatnum);
+				View seatnumber = itemV.findViewById(R.id.seatnumber);
 
 				if (JSONUtil.getString(itemjo, "gender").equals("男")) {
 					sexBg.setBackgroundResource(R.drawable.man);
@@ -194,7 +199,15 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 				CarPlayUtil.bindDriveAge(itemjo,
 						(ImageView) itemV.findViewById(R.id.car_logo),
 						(TextView) itemV.findViewById(R.id.drive_age));
-				// TODO Auto-generated method stub
+				ViewUtil.bindView(itemV.findViewById(R.id.seat_num),
+						JSONUtil.getInt(itemjo, "seat") + "个");
+				if (!JSONUtil.getInt(itemjo, "seat").equals(0)
+						&& !JSONUtil.getString(itemjo, "carBrandLogo").equals(
+								"")) {
+					seat_num.setVisibility(View.VISIBLE);
+					seatnum.setVisibility(View.VISIBLE);
+					seatnumber.setVisibility(View.VISIBLE);
+				}
 				return o;
 			}
 		});
@@ -306,7 +319,7 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 
 						if (user.getIsAuthenticated() == 1) {
 							CarSeatSelectDialog dialog = new CarSeatSelectDialog(
-									self,activityId);
+									self, activityId);
 							dialog.setOnSelectResultListener(new OnSelectResultListener() {
 
 								@Override

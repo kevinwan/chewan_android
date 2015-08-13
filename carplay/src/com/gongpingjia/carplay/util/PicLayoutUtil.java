@@ -9,6 +9,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.text.Layout;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,6 +22,7 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.activity.main.LargePICActivity;
 import com.gongpingjia.carplay.view.RoundImageView;
 
 public class PicLayoutUtil {
@@ -48,6 +52,8 @@ public class PicLayoutUtil {
 
 	/** type为1时表示直接加载,适用于详情页面,type==2表示只添加空的ImageView,不加载网络图片,用于adapter中 */
 	int type;
+
+	public static JSONArray picjsa;
 
 	/** 直接加载网络图片 */
 	public PicLayoutUtil(Context context, JSONArray jsa, int padding,
@@ -222,6 +228,7 @@ public class PicLayoutUtil {
 
 	/** 加载网络图片 */
 	public void BindImageView(LinearLayout layout, JSONArray jsa) {
+
 		int lastChildCount = 0;
 		for (int i = 0; i < layout.getChildCount(); i++) {
 			LinearLayout lc = (LinearLayout) layout.getChildAt(i);
@@ -234,6 +241,7 @@ public class PicLayoutUtil {
 						ViewUtil.bindNetImage(img,
 								JSONUtil.getString(jo, "thumbnail_pic"),
 								"default");
+						largePic(img, jsa, j);
 
 					}
 				} catch (JSONException e) {
@@ -250,7 +258,7 @@ public class PicLayoutUtil {
 						ViewUtil.bindNetImage(img,
 								JSONUtil.getString(jo, "thumbnail_pic"),
 								"default");
-
+						largePic(img, jsa, lastChildCount + j);
 					}
 					lastChildCount += lc.getChildCount();
 				} catch (JSONException e) {
@@ -267,6 +275,7 @@ public class PicLayoutUtil {
 						ViewUtil.bindNetImage(img,
 								JSONUtil.getString(jo, "thumbnail_pic"),
 								"default");
+						largePic(img, jsa, lastChildCount + j);
 					}
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
@@ -274,6 +283,50 @@ public class PicLayoutUtil {
 				}
 			}
 		}
+	}
+
+	/** 进入大图页面 */
+	private void largePic(ImageView img, final JSONArray jsa, final int index) {
+		img.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+
+				Intent it;
+				it = new Intent(mContext, LargePICActivity.class);
+				it.putExtra("index", index);
+				setPicjsa(jsa);
+				mContext.startActivity(it);
+			}
+		});
+	}
+
+	/** 进入大图页面 */
+	private void largePic(LinearLayout Linear) {
+		/** 进入大图页面 */
+		for (int i = 0; i < Linear.getChildCount(); i++) {
+			ImageView img = (ImageView) Linear.getChildAt(i);
+			final int index = i;
+			img.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View arg0) {
+
+					Intent it;
+					it = new Intent(mContext, LargePICActivity.class);
+					it.putExtra("index", index);
+					setPicjsa(data);
+					mContext.startActivity(it);
+				}
+			});
+		}
+	}
+
+	public void setPicjsa(JSONArray jsa) {
+		picjsa = jsa;
+	}
+
+	public JSONArray getPicjsa() {
+		return picjsa;
 	}
 
 	/**
@@ -433,6 +486,12 @@ public class PicLayoutUtil {
 					if (onChildClickListener != null) {
 						onChildClickListener.onclick("userid");
 					}
+
+							Intent it;
+							it = new Intent(mContext, LargePICActivity.class);
+							it.putExtra("index", 0);
+							setPicjsa(data);
+							mContext.startActivity(it);
 				}
 			});
 		} catch (JSONException e) {
@@ -453,8 +512,8 @@ public class PicLayoutUtil {
 				child = addChild(layout);
 			}
 		}
-
 		child.addView(createPicImageView(jo), params);
+		largePic(child);
 	}
 
 	private LinearLayout addChild(LinearLayout piclayout) {

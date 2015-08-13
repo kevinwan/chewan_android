@@ -1,10 +1,7 @@
 package com.gongpingjia.carplay.activity.active;
 
-import java.util.Iterator;
-
 import net.duohuo.dhroid.adapter.FieldMap;
 import net.duohuo.dhroid.adapter.NetJSONAdapter;
-import net.duohuo.dhroid.ioc.InjectUtil;
 import net.duohuo.dhroid.ioc.IocContainer;
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
@@ -23,6 +20,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.Display;
@@ -30,6 +29,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -39,6 +40,7 @@ import android.widget.TextView;
 import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
+import com.gongpingjia.carplay.activity.my.LoginActivity;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.bean.JoinEB;
 import com.gongpingjia.carplay.bean.User;
@@ -48,6 +50,8 @@ import com.gongpingjia.carplay.util.CarPlayPerference;
 import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.util.PicLayoutUtil;
 import com.gongpingjia.carplay.view.RoundImageView;
+import com.gongpingjia.carplay.view.dialog.ActiveMsgDialog;
+import com.gongpingjia.carplay.view.dialog.ActiveMsgDialog.OnClickResultListener;
 import com.gongpingjia.carplay.view.dialog.CarSeatSelectDialog;
 import com.gongpingjia.carplay.view.dialog.CarSeatSelectDialog.OnSelectResultListener;
 
@@ -94,7 +98,9 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 
 	CarPlayPerference per;
 
-	JSONObject headJo;
+	JSONObject headJo = new JSONObject();
+
+	JSONObject mCommentItem;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -148,14 +154,130 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 				getData();
 			}
 		});
+		mListView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					final int position, long id) {
+				if (position < 2) {
+					comment_contentE.setHint("给楼主留个言...");
+					return;
+				}
+				if (User.getInstance().isLogin()) {
+					mCommentItem = (JSONObject) mJsonAdapter.getItem(position
+							- mListView.getHeaderViewsCount());
+					try {
+						if (!mCommentItem.getString("userId").equals(
+								user.getUserId())) {
+							comment_contentE.setHint("@回复"
+									+ mCommentItem.getString("nickname") + ":");
+						} else {
+							showToast("不能给自己评论哦");
+						}
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				} else {
+					ActiveMsgDialog dlg = new ActiveMsgDialog(self,
+							"您还没有登陆是否去登陆？");
+					dlg.setOnClickResultListener(new OnClickResultListener() {
+
+						@Override
+						public void onclick() {
+							Intent it = new Intent(self, LoginActivity.class);
+							startActivity(it);
+						}
+					});
+					dlg.show();
+				}
+			}
+
+		});
+		mListView
+				.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+					@Override
+					public boolean onItemLongClick(AdapterView<?> parent,
+							View view, final int position, long id) {
+						if (position < 2) {
+							comment_contentE.setHint("给楼主留个言...");
+							return true;
+						}
+						final JSONObject item = (JSONObject) mJsonAdapter
+								.getItem(position
+										- mListView.getHeaderViewsCount());
+						ActiveMsgDialog dlg = new ActiveMsgDialog(self,
+								"确定删除留言？");
+						dlg.setOnClickResultListener(new OnClickResultListener() {
+
+							@Override
+							public void onclick() {
+								DhNet net = new DhNet(API.CWBaseurl
+										+ "/comment/remove?userId="
+										+ user.getUserId() + "&token="
+										+ user.getToken());
+								JSONArray params = new JSONArray();
+								try {
+									params.put(item.getString("commentId"));
+								} catch (JSONException e) {
+									e.printStackTrace();
+								}
+								net.addParam("comments", params);
+								net.doPostInDialog("", new NetTask(self) {
+
+									@Override
+									public void doInUI(Response response,
+											Integer transfer) {
+										if (response.isSuccess()) {
+											mJsonAdapter.refresh();
+											showToast("刪除成功");
+										}
+									}
+								});
+							}
+						});
+						if (User.getInstance().isLogin()) {
+							// 已经登陆
+							if (joinT.getText().toString().equals("管理")) {
+								// 管理者可以刪除任意一个留言
+								dlg.show();
+							} else {
+								// 参与者只能刪除自己的
+								try {
+									if (item.getString("userId").equals(
+											user.getUserId())) {
+										dlg.show();
+									}
+								} catch (JSONException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							}
+						} else {
+							// 沒有登陆
+							ActiveMsgDialog dlg1 = new ActiveMsgDialog(self,
+									"您还没有登陆是否去登陆？");
+							dlg1.setOnClickResultListener(new OnClickResultListener() {
+
+								@Override
+								public void onclick() {
+									Intent it = new Intent(self,
+											LoginActivity.class);
+									startActivity(it);
+								}
+							});
+							dlg1.show();
+						}
+						return true;
+					}
+				});
 		mJsonAdapter = new NetJSONAdapter(API.CWBaseurl + "/activity/"
 				+ activityId + "/comment?userId=" + user.getUserId()
 				+ "&token=" + user.getToken(), this, R.layout.listitem_comment);
-		mJsonAdapter.addField(new FieldMap("comment", R.id.tv_comment_content) {
+		mJsonAdapter.addField(new FieldMap("nickname", R.id.tv_nickname) {
 
 			@Override
 			public Object fix(View itemV, Integer position, Object o, Object jo) {
-
 				View layout_sexV = itemV.findViewById(R.id.layout_sex);
 				JSONObject jo1 = (JSONObject) jo;
 				if (JSONUtil.getString(jo1, "gender").equals("男")) {
@@ -163,7 +285,20 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 				} else {
 					layout_sexV.setBackgroundResource(R.drawable.woman);
 				}
-
+				TextView commentView = (TextView) itemV
+						.findViewById(R.id.tv_comment_content);
+				String comment = "";
+				if (!JSONUtil.getString(jo1, "replyUserId").equals("")) {
+					// 不是回复给发布者的
+					comment = "<font color='#aab2bd'>回复</font>"
+							+ "<font color='#5D9CEC'>"
+							+ JSONUtil.getString(jo1, "replyUserName")
+							+ "</font>" + ": "
+							+ JSONUtil.getString(jo1, "comment");
+				} else {
+					comment = JSONUtil.getString(jo1, "comment");
+				}
+				commentView.setText(Html.fromHtml(comment));
 				RoundImageView headI = (RoundImageView) itemV
 						.findViewById(R.id.imgView_avatar);
 				ViewUtil.bindNetImage(headI, JSONUtil.getString(jo1, "photo"),
@@ -172,7 +307,6 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 				return o;
 			}
 		});
-		mJsonAdapter.addField("nickname", R.id.tv_nickname);
 		mJsonAdapter.addField("publishTime", R.id.tv_publish_time, "neartime");
 		mJsonAdapter.addField("age", R.id.age);
 		mJsonAdapter.fromWhat("data");
@@ -254,6 +388,8 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 		} else {
 			layoutSex.setBackgroundResource(R.drawable.woman);
 		}
+		ViewUtil.bindView(headV.findViewById(R.id.empty_seats),
+				JSONUtil.getString(headJo, "seatInfo"));
 		ViewUtil.bindView(headV.findViewById(R.id.age),
 				JSONUtil.getString(createrJo, "age"));
 
@@ -304,14 +440,15 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 			}
 		});
 
-		JSONArray picJsa = JSONUtil.getJSONArray(headJo, "cover");
+		final JSONArray picJsa = JSONUtil.getJSONArray(headJo, "cover");
 		LinearLayout pivlayout = (LinearLayout) headV
 				.findViewById(R.id.pic_layout);
 		pivlayout.removeAllViews();
 		// holder.piclayoutV.removeAllViews();
-		PicLayoutUtil util = new PicLayoutUtil(self, picJsa, 5, pivlayout,
-				piclayoutWidth);
+		final PicLayoutUtil util = new PicLayoutUtil(self, picJsa, 5,
+				pivlayout, piclayoutWidth);
 		util.addMoreChild();
+
 		// holder.headlayoutV.removeAllViews();
 		JSONArray headJsa = JSONUtil.getJSONArray(headJo, "members");
 
@@ -351,7 +488,14 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 		DhNet net = new DhNet(API.CWBaseurl + "/activity/" + activityId
 				+ "/comment?userId=" + user.getUserId() + "&token="
 				+ user.getToken());
-		net.addParam("replyUserId", "");
+		try {
+			if (!comment_contentE.getHint().equals("给楼主留个言...")) {
+				net.addParam("replyUserId", mCommentItem.getString("userId"));
+			} else {
+				net.addParam("replyUserId", "");
+			}
+		} catch (JSONException e) {
+		}
 		net.addParam("comment", commentContent);
 		net.doPostInDialog("发布评论中...", new NetTask(self) {
 
@@ -517,6 +661,7 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 			break;
 
 		default:
+			comment_contentE.setHint("给楼主留个言...");
 			break;
 		}
 	}
@@ -563,7 +708,7 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 
 						if (user.getIsAuthenticated() == 1) {
 							CarSeatSelectDialog dialog = new CarSeatSelectDialog(
-									self,activityId);
+									self, activityId);
 							dialog.setOnSelectResultListener(new OnSelectResultListener() {
 
 								@Override

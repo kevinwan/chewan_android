@@ -33,6 +33,7 @@ import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.active.ActiveMembersActivity;
 import com.gongpingjia.carplay.activity.active.MyActiveMembersManageActivity;
+import com.gongpingjia.carplay.activity.main.LargePICActivity;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.bean.ActiveParmasEB;
 import com.gongpingjia.carplay.bean.JoinEB;
@@ -272,8 +273,7 @@ public class ActiveAdapter extends NetJSONAdapter {
 			ViewUtil.bindView(holder.timeT, JSONUtil.getLong(jo, "start"),
 					"time");
 		}
-		ViewUtil.bindView(holder.addressT,
-				 JSONUtil.getString(jo, "location"));
+		ViewUtil.bindView(holder.addressT, JSONUtil.getString(jo, "location"));
 		ViewUtil.bindNetImage(holder.headI,
 				JSONUtil.getString(creater, "photo"), "head");
 		holder.headI.setTag(JSONUtil.getString(creater, "userId"));

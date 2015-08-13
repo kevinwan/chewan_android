@@ -38,8 +38,7 @@ public class FragmentMsgAdapter extends BaseAdapter {
 
 	BadgeView normalMsgBadgeT, applicationMsgBadgeT;
 
-	TextView applicationmsg_contentT, normsg_contentT, normal_timeT,
-			application_timeT;
+	TextView applicationmsg_contentT, normsg_contentT;
 
 	View aaplication_layoutV, normsg_layoutV;
 
@@ -101,9 +100,6 @@ public class FragmentMsgAdapter extends BaseAdapter {
 				.findViewById(R.id.application_msg_cout);
 		applicationMsgBadgeT.setBadgeBackgroundColor(bgcolor);
 
-		normal_timeT = (TextView) view.findViewById(R.id.normal_time);
-		application_timeT = (TextView) view.findViewById(R.id.application_time);
-
 		if (jo != null) {
 			SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
 
@@ -113,11 +109,9 @@ public class FragmentMsgAdapter extends BaseAdapter {
 							: View.VISIBLE);
 			if (TextUtils.isEmpty(JSONUtil.getString(commentJo, "content"))) {
 				normsg_contentT.setText("暂无留言");
-				normal_timeT.setText("");
 			} else {
 				normsg_contentT.setText(JSONUtil
 						.getString(commentJo, "content"));
-				// normal_timeT.setText(""+formatter.format(System.currentTimeMillis()));
 			}
 			normalMsgBadgeT.setText(JSONUtil.getString(commentJo, "count"));
 
@@ -127,11 +121,9 @@ public class FragmentMsgAdapter extends BaseAdapter {
 					"count") == 0 ? View.GONE : View.VISIBLE);
 			if (TextUtils.isEmpty(JSONUtil.getString(applicationJo, "content"))) {
 				applicationmsg_contentT.setText("暂无消息");
-				application_timeT.setText("");
 			} else {
 				applicationmsg_contentT.setText(JSONUtil.getString(
 						applicationJo, "content"));
-				// application_timeT.setText(""+formatter.format(System.currentTimeMillis()));
 			}
 			applicationMsgBadgeT.setText(JSONUtil.getString(applicationJo,
 					"count"));

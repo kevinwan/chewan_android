@@ -77,9 +77,16 @@ public class FeedBackActivity extends CarPlayBaseActivity implements
 			showToast("请输入反馈内容");
 			return;
 		}
-
-		DhNet net = new DhNet(API.CWBaseurl + "/user/" + user.getUserId()
-				+ "/feedback/submit?token=" + user.getToken());
+		
+		DhNet net;
+		if (user.isLogin) {
+			net = new DhNet(API.CWBaseurl + "/user/" + user.getUserId()
+					+ "/feedback/submit?token=" + user.getToken());
+		}else{
+			net = new DhNet(API.CWBaseurl + "/user/" + 0
+					+ "/feedback/submit?token=" + "");
+		}
+		
 
 		if (!TextUtils.isEmpty(photoId)) {
 			JSONArray jsa = new JSONArray();
