@@ -346,9 +346,9 @@ public class PicLayoutUtil {
 			for (int i = 0; i < count; i++) {
 				try {
 					if (type == 1) {
-						addMorePic(data.getJSONObject(i), 1);
+						addMorePic(data.getJSONObject(i), 1, i);
 					} else {
-						addMorePic(null, 1);
+						addMorePic(null, 1, i);
 					}
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
@@ -365,9 +365,9 @@ public class PicLayoutUtil {
 			for (int i = 0; i < count; i++) {
 				try {
 					if (type == 1) {
-						addMorePic(data.getJSONObject(i), 2);
+						addMorePic(data.getJSONObject(i), 2, i);
 					} else {
-						addMorePic(null, 2);
+						addMorePic(null, 2, i);
 					}
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
@@ -444,7 +444,7 @@ public class PicLayoutUtil {
 		return img;
 	}
 
-	private ImageView createPicImageView(JSONObject jo) {
+	private ImageView createPicImageView(JSONObject jo, int index) {
 		ImageView img = new ImageView(mContext);
 		img.setLayoutParams(params);
 		if (type == 1) {
@@ -461,7 +461,7 @@ public class PicLayoutUtil {
 				}
 			}
 		});
-
+		largePic(img, data, index);
 		return img;
 	}
 
@@ -487,13 +487,14 @@ public class PicLayoutUtil {
 						onChildClickListener.onclick("userid");
 					}
 
-							Intent it;
-							it = new Intent(mContext, LargePICActivity.class);
-							it.putExtra("index", 0);
-							setPicjsa(data);
-							mContext.startActivity(it);
+					Intent it;
+					it = new Intent(mContext, LargePICActivity.class);
+					it.putExtra("index", 0);
+					setPicjsa(data);
+					mContext.startActivity(it);
 				}
 			});
+			largePic(img, data, 0);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -501,7 +502,7 @@ public class PicLayoutUtil {
 	}
 
 	/** 添加多张图片 一行2个 */
-	private void addMorePic(JSONObject jo, int horizontalMax) {
+	private void addMorePic(JSONObject jo, int horizontalMax, int index) {
 		LinearLayout child;
 		if (layout.getChildCount() == 0) {
 			child = addChild(layout);
@@ -512,8 +513,7 @@ public class PicLayoutUtil {
 				child = addChild(layout);
 			}
 		}
-		child.addView(createPicImageView(jo), params);
-		largePic(child);
+		child.addView(createPicImageView(jo, index), params);
 	}
 
 	private LinearLayout addChild(LinearLayout piclayout) {

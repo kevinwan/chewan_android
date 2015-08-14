@@ -39,7 +39,7 @@ public class CarPlayUtil {
 	}
 
 	public static String getStringDate(Long date) {
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		String dateString = formatter.format(date);
 
 		return dateString;
