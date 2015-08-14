@@ -219,7 +219,6 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
                 if (isEditable) {
                     boolean any = false;
                     Iterator<PhotoState> iterator = mPhotoStates.iterator();
@@ -236,6 +235,9 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                         showToast("请至少选择一张图片");
                         return;
                     } else {
+                        if(!mPhotoStates.get(mPhotoStates.size()-1).isLast()){
+                            mPhotoStates.add(mLastPhoto);
+                        }
                         mImageAdapter.notifyDataSetChanged();
                         isEditable = false;
                         mDelImgView.setVisibility(View.GONE);

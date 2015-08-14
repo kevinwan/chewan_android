@@ -126,6 +126,9 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
                         iterator.remove();
                     }
                 }
+                if(!mPhotoStates.get(mPhotoStates.size()-1).isLast()){
+                    mPhotoStates.add(mLastPhoto);
+                }
                 mImageAdapter.notifyDataSetChanged();
             }
         });
