@@ -111,7 +111,7 @@
                     style="@style/text_black_medium"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:text="活动参与申请" />
+                    android:text="活动消息" />
             </LinearLayout>
 
             <LinearLayout
