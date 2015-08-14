@@ -64,6 +64,8 @@ public class ActiveFilterPop extends PopupWindow implements OnClickListener {
 
 	List<String> mTypeOptions;
 
+	CityPickDialog citydialog;
+
 	public ActiveFilterPop(Activity context) {
 		EventBus.getDefault().register(this);
 		this.context = context;
@@ -80,6 +82,7 @@ public class ActiveFilterPop extends PopupWindow implements OnClickListener {
 		pop.setAnimationStyle(R.style.PopupMenu);
 		pop.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 		initView();
+
 	}
 
 	public static ActiveFilterPop getInstance(Activity context) {
@@ -141,6 +144,22 @@ public class ActiveFilterPop extends PopupWindow implements OnClickListener {
 		mTypeOptions.add("运动");
 		mTypeOptions.add("拼车");
 		mTypeOptions.add("代驾");
+
+		citydialog = new CityPickDialog(context, false);
+		citydialog.setOnPickResultListener(new OnPickResultListener() {
+
+			@Override
+			public void onResult(String provice, String city, String district) {
+				addresssT.setText(provice + city);
+				if (provice.contains("市")) {
+					mcity = provice;
+					mdistrict = city;
+				} else {
+					mcity = city;
+					mdistrict = district;
+				}
+			}
+		});
 	}
 
 	public void setAddress(String address) {
@@ -235,17 +254,6 @@ public class ActiveFilterPop extends PopupWindow implements OnClickListener {
 			break;
 
 		case R.id.locationLayout:
-			CityPickDialog citydialog = new CityPickDialog(context, false);
-			citydialog.setOnPickResultListener(new OnPickResultListener() {
-
-				@Override
-				public void onResult(String provice, String city,
-						String district) {
-					addresssT.setText(city + district);
-					mcity = city;
-					mdistrict = district;
-				}
-			});
 			citydialog.show();
 			// Intent it = new Intent(context, MapActivity.class);
 			// context.startActivityForResult(it, Location);
@@ -272,7 +280,7 @@ public class ActiveFilterPop extends PopupWindow implements OnClickListener {
 	}
 
 	public void onEventMainThread(MapEB map) {
-		addresssT.setText(map.getCity() + map.getDistrict());
+		// addresssT.setText(map.getCity() + map.getDistrict());
 	}
 
 }

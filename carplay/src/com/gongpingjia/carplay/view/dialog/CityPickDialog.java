@@ -136,6 +136,8 @@ public class CityPickDialog extends BaseAlertDialog implements
 		mViewCity
 				.setViewAdapter(new ArrayWheelAdapter<String>(mContext, cities));
 		mViewCity.setCurrentItem(0);
+		mCurrentCityName = CityDataManage.mCitisDatasMap
+				.get(mCurrentProviceName)[0];
 		if (showDistrict) {
 			updateAreas();
 		}
@@ -154,6 +156,9 @@ public class CityPickDialog extends BaseAlertDialog implements
 
 	private void showSelectedResult() {
 		if (onPickResultListener != null) {
+			int pCurrent = mViewCity.getCurrentItem();
+			mCurrentCityName = CityDataManage.mCitisDatasMap
+					.get(mCurrentProviceName)[pCurrent];
 			onPickResultListener.onResult(mCurrentProviceName,
 					mCurrentCityName, mCurrentDistrictName);
 		}
