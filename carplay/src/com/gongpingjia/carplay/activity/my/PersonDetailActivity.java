@@ -31,12 +31,14 @@ import android.widget.TextView;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.activity.active.ActiveDetailsActivity;
+import com.gongpingjia.carplay.activity.main.LargePICActivity;
 import com.gongpingjia.carplay.adapter.ActiveAdapter;
 import com.gongpingjia.carplay.adapter.GalleryAdapter;
 import com.gongpingjia.carplay.adapter.MyReleaseActiveAdapter;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.CarPlayUtil;
+import com.gongpingjia.carplay.util.PicLayoutUtil;
 import com.gongpingjia.carplay.view.CarPlayGallery;
 import com.gongpingjia.carplay.view.RoundImageView;
 
@@ -83,6 +85,10 @@ public class PersonDetailActivity extends CarPlayBaseActivity implements
 	int galleryCount;
 
 	Timer mTimer;
+	
+	ImageView unLogheadI;
+	
+	JSONArray albumPhotosJsa;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -115,6 +121,7 @@ public class PersonDetailActivity extends CarPlayBaseActivity implements
 		tab = (LinearLayout) headV.findViewById(R.id.tab);
 		headI = (RoundImageView) headV.findViewById(R.id.head);
 		emptyV = headV.findViewById(R.id.empty);
+		unLogheadI = (ImageView) headV.findViewById(R.id.notlogin_head);
 		listV = (NetRefreshAndMoreListView) findViewById(R.id.listview);
 		listV.setOnItemClickListener(new OnItemClickListener() {
 
@@ -150,15 +157,18 @@ public class PersonDetailActivity extends CarPlayBaseActivity implements
 
 		attentionT = (TextView) headV.findViewById(R.id.attention);
 		attentionT.setOnClickListener(this);
-		// gallery.setOnItemClickListener(new OnItemClickListener() {
-		//
-		// @Override
-		// public void onItemClick(AdapterView<?> parent, View view,
-		// int position, long id) {
-		// Intent it = new Intent(self, ManageAlbumActivity.class);
-		// startActivity(it);
-		// }
-		// });
+		 gallery.setOnItemClickListener(new OnItemClickListener() {
+		
+		 @Override
+		 public void onItemClick(AdapterView<?> parent, View view,
+		 int position, long id) {
+			 PicLayoutUtil layoutUtil=new PicLayoutUtil(self);
+			 layoutUtil.setPicjsa(albumPhotosJsa);
+		 Intent it = new Intent(self, LargePICActivity.class);
+		 it.putExtra("index", position);
+		 startActivity(it);
+		 }
+		 });
 		gallery.setOnItemSelectedListener(new OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
@@ -303,7 +313,7 @@ public class PersonDetailActivity extends CarPlayBaseActivity implements
 					ViewUtil.bindView(headV.findViewById(R.id.active_count),
 							JSONUtil.getString(jo, "joinNumber"));
 
-					JSONArray albumPhotosJsa = JSONUtil.getJSONArray(jo,
+					albumPhotosJsa = JSONUtil.getJSONArray(jo,
 							"albumPhotos");
 					bingGallery(albumPhotosJsa);
 				}
@@ -358,6 +368,23 @@ public class PersonDetailActivity extends CarPlayBaseActivity implements
 		if (jsa.length() > 1) {
 			gallery.setSelection(200);
 			currentPosition = 200;
+		}
+		if (jsa.length() != 0) {
+			isShowDefaultBg(false);
+		} else {
+			isShowDefaultBg(true);
+		}
+	}
+	
+	public void isShowDefaultBg(boolean flag) {
+		if (!flag) {
+			unLogheadI.setVisibility(View.GONE);
+			gallery.setVisibility(View.VISIBLE);
+			dotLinLayout.setVisibility(View.VISIBLE);
+		} else {
+			unLogheadI.setVisibility(View.VISIBLE);
+			gallery.setVisibility(View.GONE);
+			dotLinLayout.setVisibility(View.GONE);
 		}
 	}
 
