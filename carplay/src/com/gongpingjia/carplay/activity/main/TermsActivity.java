@@ -1,4 +1,4 @@
-package com.gongpingjia.carplay;
+package com.gongpingjia.carplay.activity.main;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,6 +9,10 @@ import java.io.UnsupportedEncodingException;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.R.id;
+import com.gongpingjia.carplay.R.layout;
+import com.gongpingjia.carplay.R.raw;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 
 public class TermsActivity extends CarPlayBaseActivity {

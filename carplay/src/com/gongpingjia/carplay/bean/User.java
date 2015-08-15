@@ -1,5 +1,7 @@
 package com.gongpingjia.carplay.bean;
 
+import com.gongpingjia.carplay.util.MD5Util;
+
 public class User {
 	static User user;
 
@@ -19,6 +21,8 @@ public class User {
 	int seatNumber;
 
 	public boolean isLogin = false;
+
+	public String psaaword;
 
 	public static User getInstance() {
 		if (user == null) {
@@ -89,6 +93,22 @@ public class User {
 
 	public void setLogin(boolean isLogin) {
 		this.isLogin = isLogin;
+	}
+
+	public String getChatUserId() {
+		return MD5Util.string2MD5(userId);
+	}
+	
+	public String getPsaaword() {
+		return psaaword;
+	}
+
+	public void setPsaaword(String psaaword) {
+		this.psaaword = psaaword;
+	}
+
+	public String getChatUserPassword() {
+		return psaaword;
 	}
 
 }

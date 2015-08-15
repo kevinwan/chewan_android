@@ -91,7 +91,7 @@ public class CarSeatSelectDialog extends BaseAlertDialog {
 			@Override
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
 				if (checkedId == R.id.radio_right) {
-					countT.setText("");
+					countT.setText(0 + "");
 				}
 			}
 		});

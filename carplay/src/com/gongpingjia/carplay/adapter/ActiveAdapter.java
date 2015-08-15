@@ -289,10 +289,17 @@ public class ActiveAdapter extends NetJSONAdapter {
 			holder.statusT.setBackgroundResource(R.drawable.blue_light_bg);
 		}
 
-		ViewUtil.bindView(holder.seat_countT,
-				JSONUtil.getString(jo, "holdingSeat"));
-		ViewUtil.bindView(holder.seat_count_allT,
-				"/" + JSONUtil.getString(jo, "totalSeat") + "座");
+		if (JSONUtil.getString(jo, "holdingSeat").equals(
+				JSONUtil.getString(jo, "totalSeat"))) {
+			ViewUtil.bindView(holder.seat_countT, "已满");
+			holder.seat_count_allT.setVisibility(View.GONE);
+		} else {
+			holder.seat_count_allT.setVisibility(View.VISIBLE);
+			ViewUtil.bindView(holder.seat_countT,
+					JSONUtil.getString(jo, "holdingSeat"));
+			ViewUtil.bindView(holder.seat_count_allT,
+					"/" + JSONUtil.getString(jo, "totalSeat") + "座");
+		}
 		return convertView;
 	}
 
@@ -361,7 +368,7 @@ public class ActiveAdapter extends NetJSONAdapter {
 
 						if (user.getIsAuthenticated() == 1) {
 							CarSeatSelectDialog dialog = new CarSeatSelectDialog(
-									mContext,activityId);
+									mContext, activityId);
 							dialog.setOnSelectResultListener(new OnSelectResultListener() {
 
 								@Override

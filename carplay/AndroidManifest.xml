@@ -35,7 +35,6 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
-        android:screenOrientation="portrait"
         android:theme="@style/AppTheme" >
         <meta-data
             android:name="UMENG_APPKEY"
@@ -43,7 +42,18 @@
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="427c3acc9b4358fd1fa1823194709ae3" />
+        <meta-data
+            android:name="EASEMOB_APPKEY"
+            android:value="gongpingjia#chewantest" />
 
+        <activity android:name=".activity.chat.AlertDialog" >
+        </activity>
+        <activity android:name=".activity.chat.ChatActivity" >
+        </activity>
+        <activity android:name=".activity.chat.ContextMenu" >
+        </activity>
+        <activity android:name=".activity.chat.ShowBigImage" >
+        </activity>
         <activity android:name=".activity.active.CreateActiveActivity" >
         </activity>
         <activity android:name=".activity.my.PersonalDataActivity" >
@@ -64,7 +74,8 @@
         </activity>
         <activity
             android:name=".activity.main.MainActivity"
-            android:launchMode="singleTask" >
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" >
         </activity>
         <activity android:name=".activity.PartyDetailsActivity" />
         <activity android:name=".activity.my.AuthenticateOwnersActivity" >
@@ -166,13 +177,27 @@
         <activity android:name=".activity.msg.PlayCarcDetailActivity" >
         </activity>
         <activity
-            android:name=".TermsActivity"
+            android:name="com.gongpingjia.carplay.activity.main.TermsActivity"
             android:label="@string/title_activity_terms" >
         </activity>
         <activity android:name=".activity.main.LargePICActivity" >
         </activity>
         <activity android:name=".activity.my.AttestationNotifyActivity" >
         </activity>
+
+        <service android:name="com.easemob.chat.EMChatService" />
+
+        <receiver android:name="com.easemob.chat.EMMonitorReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

@@ -4,34 +4,34 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <HorizontalScrollView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:scrollbars="none" >
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="15dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingTop="15dp" >
 
-        <LinearLayout
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/car_default" />
+
+        <TextView
+            android:id="@+id/name"
+            style="@style/text_black_medium"
+            android:layout_width="100dp"
+            android:layout_marginLeft="10dp"
+            android:ellipsize="end"
+            android:maxLines="2" />
+
+        <HorizontalScrollView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingBottom="15dp"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp"
-            android:paddingTop="15dp" >
-
-            <ImageView
-                android:id="@+id/logo"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/car_default" />
-
-            <TextView
-                android:id="@+id/name"
-                style="@style/text_black_medium"
-                android:layout_width="100dp"
-                android:layout_marginLeft="10dp"
-                android:ellipsize="end"
-                android:maxLines="1" />
+            android:scrollbars="none" >
 
             <LinearLayout
                 android:id="@+id/seat_layout"
@@ -199,8 +199,8 @@
                         android:visibility="gone" />
                 </RelativeLayout>
             </LinearLayout>
-        </LinearLayout>
-    </HorizontalScrollView>
+        </HorizontalScrollView>
+    </LinearLayout>
 
     <View style="@style/line_horizontal" />
 
