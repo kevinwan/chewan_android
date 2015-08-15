@@ -478,6 +478,7 @@ public class PicLayoutUtil {
 						JSONUtil.getString(jo, "thumbnail_pic"), "default");
 			}
 			child.addView(img, params);
+			
 			img.setScaleType(ScaleType.FIT_XY);
 			img.setOnClickListener(new OnClickListener() {
 
