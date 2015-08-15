@@ -311,7 +311,7 @@ public class MyActiveMembersManageActivity extends CarPlayBaseActivity {
 					}
 					drive_age.setText(drive_str);
 					ViewUtil.bindView(itemV.findViewById(R.id.car_age),","+
-							JSONUtil.getString(itemjo, "drivingExperience")+"年车龄");
+							JSONUtil.getString(itemjo, "drivingExperience")+"年驾龄");
 				}
 //				CarPlayUtil.bindDriveAge(itemjo,
 //						(ImageView) itemV.findViewById(R.id.car_logo),
