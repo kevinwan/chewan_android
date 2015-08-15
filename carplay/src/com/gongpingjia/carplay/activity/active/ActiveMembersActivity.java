@@ -207,7 +207,7 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 					}
 					drive_age.setText(drive_str);
 					ViewUtil.bindView(itemV.findViewById(R.id.car_age),","+
-							JSONUtil.getString(itemjo, "drivingExperience")+"年车龄");
+							JSONUtil.getString(itemjo, "drivingExperience")+"年驾龄");
 				}
 				ViewUtil.bindView(itemV.findViewById(R.id.age),
 						JSONUtil.getString(itemjo, "age"));
