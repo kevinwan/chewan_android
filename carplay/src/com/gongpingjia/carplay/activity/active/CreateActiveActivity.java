@@ -21,6 +21,7 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -238,9 +239,9 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements
 						showToast("请至少选择一张图片");
 						return;
 					} else {
-					    if(!mPhotoStates.get(mPhotoStates.size()-1).isLast()){
-                            mPhotoStates.add(mLastPhoto);
-                        }
+						if (!mPhotoStates.get(mPhotoStates.size() - 1).isLast()) {
+							mPhotoStates.add(mLastPhoto);
+						}
 						mImageAdapter.notifyDataSetChanged();
 						isEditable = false;
 						mDelImgView.setVisibility(View.GONE);
@@ -748,39 +749,39 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements
 				mProvince = data.getStringExtra("province");
 				mDistrict = data.getStringExtra("district");
 				break;
-			case Constant.TAKE_PHOTO:
-				String newPath = new File(mCacheDir, System.currentTimeMillis()
-						+ ".jpg").getAbsolutePath();
-				String path = PhotoUtil.onPhotoFromCamera(self,
-						Constant.ZOOM_PIC, mCurPath, 3, 2, 1000, newPath);
-				mCurPath = path;
-				break;
-			case Constant.PICK_PHOTO:
-				PhotoUtil.onPhotoFromPick(self, Constant.ZOOM_PIC, mCurPath,
-						data, 3, 2, 1000);
-				break;
-			case Constant.ZOOM_PIC:
-				upLoadPic(mCurPath);
-				break;
-
 			// case Constant.TAKE_PHOTO:
-			// Bitmap btp1 = PhotoUtil.getLocalImage(new File(mCurPath));
-			// String newPath = new File(mCacheDir, System.currentTimeMillis() +
-			// ".jpg").getAbsolutePath();
-			// int degree = PhotoUtil.getBitmapDegree(mCurPath);
-			// PhotoUtil.saveLocalImage(btp1, new File(newPath), degree);
-			// btp1.recycle();
-			// upLoadPic(newPath);
-			// // PhotoUtil.onPhotoFromCamera(self, Constant.ZOOM_PIC,
-			// // mCurPath, 1, 1, 1000);
+			// String newPath = new File(mCacheDir, System.currentTimeMillis()
+			// + ".jpg").getAbsolutePath();
+			// String path = PhotoUtil.onPhotoFromCamera(self,
+			// Constant.ZOOM_PIC, mCurPath, 3, 2, 1000, newPath);
+			// mCurPath = path;
 			// break;
 			// case Constant.PICK_PHOTO:
-			// Bitmap btp = PhotoUtil.checkImage(self, data);
-			// PhotoUtil.saveLocalImage(btp, new File(mCurPath));
-			// upLoadPic(mCurPath);
-			// // PhotoUtil.onPhotoFromPick(self, Constant.ZOOM_PIC, mCurPath,
-			// // data, 1, 1, 1000);
+			// PhotoUtil.onPhotoFromPick(self, Constant.ZOOM_PIC, mCurPath,
+			// data, 3, 2, 1000);
 			// break;
+			// case Constant.ZOOM_PIC:
+			// upLoadPic(mCurPath);
+			// break;
+
+			case Constant.TAKE_PHOTO:
+				Bitmap btp1 = PhotoUtil.getLocalImage(new File(mCurPath));
+				String newPath = new File(mCacheDir, System.currentTimeMillis()
+						+ ".jpg").getAbsolutePath();
+				int degree = PhotoUtil.getBitmapDegree(mCurPath);
+				PhotoUtil.saveLocalImage(btp1, new File(newPath), degree);
+				btp1.recycle();
+				upLoadPic(newPath);
+				// PhotoUtil.onPhotoFromCamera(self, Constant.ZOOM_PIC,
+				// mCurPath, 1, 1, 1000);
+				break;
+			case Constant.PICK_PHOTO:
+				Bitmap btp = PhotoUtil.checkImage(self, data);
+				PhotoUtil.saveLocalImage(btp, new File(mCurPath));
+				upLoadPic(mCurPath);
+				// PhotoUtil.onPhotoFromPick(self, Constant.ZOOM_PIC, mCurPath,
+				// data, 1, 1, 1000);
+				break;
 
 			}
 		}
