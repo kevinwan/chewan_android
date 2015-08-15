@@ -18,6 +18,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -174,13 +175,17 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 			@Override
 			public Object fix(View itemV, Integer position, Object o, Object jo) {
 				JSONObject itemjo = (JSONObject) jo;
-
+				ImageView car_logo = (ImageView) itemV.findViewById(R.id.car_logo);
+				TextView drive_age = (TextView) itemV.findViewById(R.id.drive_age);
 				RoundImageView headI = (RoundImageView) itemV
 						.findViewById(R.id.head);
 				ViewUtil.bindNetImage(headI,
 						JSONUtil.getString(itemjo, "photo"), "default");
+				ViewUtil.bindNetImage(car_logo,
+						JSONUtil.getString(itemjo, "carBrandLogo"), "carlogo");
 				headI.setTag(JSONUtil.getString(itemjo, "userId"));
-
+				
+				View car_age = itemV.findViewById(R.id.car_age);
 				View sexBg = itemV.findViewById(R.id.sex);
 				View seat_num = itemV.findViewById(R.id.seat_num);
 				View seatnum = itemV.findViewById(R.id.seatnum);
@@ -191,14 +196,28 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 				} else {
 					sexBg.setBackgroundResource(R.drawable.woman);
 				}
-
+				String drive_str = JSONUtil.getString(itemjo, "carModel");
+				if (TextUtils.isEmpty(JSONUtil.getString(itemjo, "carModel"))) {
+					car_age.setVisibility(View.GONE);
+					car_logo.setVisibility(View.GONE);
+					drive_age.setText("带我飞");
+				}else{
+					if (drive_str.length()>15) {
+						drive_str=drive_str.substring(0,15)+"...";
+					}
+					drive_age.setText(drive_str);
+					ViewUtil.bindView(itemV.findViewById(R.id.car_age),","+
+							JSONUtil.getString(itemjo, "drivingExperience")+"年车龄");
+				}
 				ViewUtil.bindView(itemV.findViewById(R.id.age),
 						JSONUtil.getString(itemjo, "age"));
 				ViewUtil.bindView(itemV.findViewById(R.id.name),
 						JSONUtil.getString(itemjo, "nickname"));
-				CarPlayUtil.bindDriveAge(itemjo,
-						(ImageView) itemV.findViewById(R.id.car_logo),
-						(TextView) itemV.findViewById(R.id.drive_age));
+			
+				
+//				CarPlayUtil.bindDriveAge(itemjo,
+//						(ImageView) itemV.findViewById(R.id.car_logo),
+//						(TextView) itemV.findViewById(R.id.drive_age));
 				ViewUtil.bindView(itemV.findViewById(R.id.seat_num),
 						JSONUtil.getInt(itemjo, "seat") + "个");
 				if (!JSONUtil.getInt(itemjo, "seat").equals(0)&& !JSONUtil.getString(itemjo, "carBrandLogo").equals("")) {
