@@ -20,6 +20,7 @@
             android:src="@drawable/head_icon" />
 
         <LinearLayout
+            android:id="@+id/newmessage_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"

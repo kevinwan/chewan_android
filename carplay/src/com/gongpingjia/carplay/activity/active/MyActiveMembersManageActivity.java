@@ -272,7 +272,7 @@ public class MyActiveMembersManageActivity extends CarPlayBaseActivity {
 		listV.addHeaderView(headV);
 
 		adapter = new PSAdapter(self, R.layout.item_newmessage_list);
-		adapter.addField(new FieldMap("nickname", R.id.name) {
+		adapter.addField(new FieldMap("newmessage_layout", R.id.newmessage_layout) {
 
 			@Override
 			public Object fix(View itemV, Integer position, Object o, Object jo) {
