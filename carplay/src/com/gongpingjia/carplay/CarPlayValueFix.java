@@ -25,9 +25,9 @@ public class CarPlayValueFix implements ValueFix {
 		imageOptions.put("default", optionsDefault);
 
 		headOptions = new DisplayImageOptions.Builder()
-		// .showImageForEmptyUri(R.drawable.head2)
-		// .showStubImage(R.drawable.head2)
-				.cacheInMemory().cacheOnDisc().build();
+				.showImageForEmptyUri(R.drawable.head_icon)
+				.showStubImage(R.drawable.head_icon).cacheInMemory()
+				.cacheOnDisc().build();
 		imageOptions.put("head", headOptions);
 
 		carLogoOptions = new DisplayImageOptions.Builder()
@@ -49,7 +49,8 @@ public class CarPlayValueFix implements ValueFix {
 		if (o == null)
 			return null;
 		if ("time".equals(type)) {
-			return getStandardTime(Long.parseLong(o.toString()), "yyyy-MM-dd HH:mm");
+			return getStandardTime(Long.parseLong(o.toString()),
+					"yyyy-MM-dd HH:mm");
 		} else if ("neartime".equals(type)) {
 			return converTime(Long.parseLong(o.toString()));
 		}

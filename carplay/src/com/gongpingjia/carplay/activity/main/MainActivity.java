@@ -21,6 +21,7 @@ import net.duohuo.dhroid.util.PhotoUtil;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -129,7 +130,7 @@ public class MainActivity extends BaseFragmentActivity {
 				per.load();
 				per.isShowMainGuilde = 1;
 				per.commit();
-				findViewById(R.id.guide).setVisibility(View.GONE);  
+				findViewById(R.id.guide).setVisibility(View.GONE);
 			}
 		});
 
@@ -431,36 +432,36 @@ public class MainActivity extends BaseFragmentActivity {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (resultCode == RESULT_OK) {
 			switch (requestCode) {
-			case Constant.TAKE_PHOTO:
-				String newPath = new File(mCacheDir, System.currentTimeMillis()
-						+ ".jpg").getAbsolutePath();
-				String path = PhotoUtil.onPhotoFromCamera(self,
-						Constant.ZOOM_PIC, tempPath, 3, 2, 1000, newPath);
-				tempPath = path;
-				break;
-			case Constant.PICK_PHOTO:
-				PhotoUtil.onPhotoFromPick(self, Constant.ZOOM_PIC, tempPath,
-						data, 3, 2, 1000);
-				break;
-			case Constant.ZOOM_PIC:
-				upLoadPic(tempPath);
-				break;
-
-			// case Constant.PICK_PHOTO:
-			// Bitmap btp = PhotoUtil.checkImage(self, data);
-			// PhotoUtil.saveLocalImage(btp, new File(mCurPath));
-			// btp.recycle();
-			// upLoadPic(mCurPath);
-			// break;
 			// case Constant.TAKE_PHOTO:
-			// Bitmap btp1 = PhotoUtil.getLocalImage(new File(mCurPath));
 			// String newPath = new File(mCacheDir, System.currentTimeMillis()
 			// + ".jpg").getAbsolutePath();
-			// int degree = PhotoUtil.getBitmapDegree(mCurPath);
-			// PhotoUtil.saveLocalImage(btp1, new File(newPath), degree);
-			// btp1.recycle();
-			// upLoadPic(newPath);
+			// String path = PhotoUtil.onPhotoFromCamera(self,
+			// Constant.ZOOM_PIC, tempPath, 3, 2, 1000, newPath);
+			// tempPath = path;
 			// break;
+			// case Constant.PICK_PHOTO:
+			// PhotoUtil.onPhotoFromPick(self, Constant.ZOOM_PIC, tempPath,
+			// data, 3, 2, 1000);
+			// break;
+			// case Constant.ZOOM_PIC:
+			// upLoadPic(tempPath);
+			// break;
+
+			case Constant.PICK_PHOTO:
+				Bitmap btp = PhotoUtil.checkImage(self, data);
+				PhotoUtil.saveLocalImage(btp, new File(tempPath));
+				btp.recycle();
+				upLoadPic(tempPath);
+				break;
+			case Constant.TAKE_PHOTO:
+				Bitmap btp1 = PhotoUtil.getLocalImage(new File(tempPath));
+				String newPath = new File(mCacheDir, System.currentTimeMillis()
+						+ ".jpg").getAbsolutePath();
+				int degree = PhotoUtil.getBitmapDegree(tempPath);
+				PhotoUtil.saveLocalImage(btp1, new File(newPath), degree);
+				btp1.recycle();
+				upLoadPic(newPath);
+				break;
 			}
 		}
 	}

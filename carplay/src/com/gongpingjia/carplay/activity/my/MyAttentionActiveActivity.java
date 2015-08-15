@@ -41,8 +41,8 @@ public class MyAttentionActiveActivity extends CarPlayBaseActivity {
 			@Override
 			public void onEmpty(boolean showeEptyView) {
 				ViewUtil.bindView(findViewById(R.id.icon_msg),
-						R.drawable.no_attention);
-				ViewUtil.bindView(findViewById(R.id.msg), "您还没有添加任何关注,赶紧添加吧!");
+						R.drawable.icon_shoucang);
+				ViewUtil.bindView(findViewById(R.id.msg), "您还没有添加任何收藏,赶紧添加吧!");
 				findViewById(R.id.empty).setVisibility(
 						showeEptyView ? View.VISIBLE : View.GONE);
 			}

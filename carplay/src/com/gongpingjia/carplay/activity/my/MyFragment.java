@@ -69,10 +69,10 @@ public class MyFragment extends Fragment implements OnClickListener {
 	Button loginBtn;
 
 	/** 头像,车logo */
-	RoundImageView headI, carBrandLogoI,carlogo;
+	RoundImageView headI, carBrandLogoI, carlogo;
 
 	/** 昵称,年龄,车型+车龄,是非认证 */
-	TextView nicknameT, ageT, carModelT,attestation_txt;
+	TextView nicknameT, ageT, carModelT, attestation_txt;
 
 	/** 性别 */
 	RelativeLayout genderR;
@@ -121,7 +121,7 @@ public class MyFragment extends Fragment implements OnClickListener {
 		ageT = (TextView) mainV.findViewById(R.id.age);
 		carModelT = (TextView) mainV.findViewById(R.id.carModel);
 		genderR = (RelativeLayout) mainV.findViewById(R.id.gender);
-		 attestation_txt = (TextView) mainV.findViewById(R.id.attestation_txt);
+		attestation_txt = (TextView) mainV.findViewById(R.id.attestation_txt);
 		postNumberT = (TextView) mainV.findViewById(R.id.postNumber);
 		subscribeNumberT = (TextView) mainV.findViewById(R.id.subscribeNumber);
 		joinNumberT = (TextView) mainV.findViewById(R.id.joinNumber);
@@ -240,8 +240,7 @@ public class MyFragment extends Fragment implements OnClickListener {
 				nicknameT.setText(nickname);
 				ageT.setText(age);
 
-				ViewUtil.bindNetImage(headI, photo,
-						CarPlayValueFix.optionsDefault.toString());
+				ViewUtil.bindNetImage(headI, photo, "head");
 
 				if (TextUtils.isEmpty(carModel)) {
 					carModelT.setText("带我飞~");

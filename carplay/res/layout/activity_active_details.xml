@@ -7,7 +7,6 @@
         android:id="@+id/title_bar"
         layout="@layout/include_title_bar" />
 
-
     <net.duohuo.dhroid.view.NetRefreshAndMoreListView
         android:id="@+id/listview"
         android:layout_width="match_parent"
@@ -77,10 +76,13 @@
                 android:background="@color/nothing" />
         </RelativeLayout>
     </ScrollView>
-<Button
+
+    <Button
         android:id="@+id/chat"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginTop="80dp"
-        android:text="聊天" />
+        android:text="聊天"
+        android:visibility="gone" />
+
 </RelativeLayout>

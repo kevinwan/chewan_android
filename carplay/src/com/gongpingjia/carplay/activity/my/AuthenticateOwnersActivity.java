@@ -134,6 +134,8 @@ public class AuthenticateOwnersActivity extends CarPlayBaseActivity implements
 	}
 
 	private void uploadPic(String path) {
+		Bitmap bmp = PhotoUtil.getLocalImage(new File(path));
+		picI.setImageBitmap(bmp);
 		DhNet net = new DhNet(API.CWBaseurl + "/user/" + user.getUserId()
 				+ "/license/upload?token=" + user.getToken());
 		net.upload(new FileInfo("attach", new File(path)), new NetTask(self) {

@@ -487,7 +487,7 @@ public class EditActiveActivity extends CarPlayBaseActivity implements
 		PhotoState state = new PhotoState();
 		state.setChecked(true);
 		state.setLast(false);
-		state.setPath(mCurPath);
+		state.setPath(path);
 		mPhotoStates.add(state);
 		if (mPhotoStates.size() != 9) {
 			mPhotoStates.add(mLastPhoto);

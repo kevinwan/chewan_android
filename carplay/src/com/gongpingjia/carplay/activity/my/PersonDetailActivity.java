@@ -85,9 +85,9 @@ public class PersonDetailActivity extends CarPlayBaseActivity implements
 	int galleryCount;
 
 	Timer mTimer;
-	
+
 	ImageView unLogheadI;
-	
+
 	JSONArray albumPhotosJsa;
 
 	@Override
@@ -157,18 +157,18 @@ public class PersonDetailActivity extends CarPlayBaseActivity implements
 
 		attentionT = (TextView) headV.findViewById(R.id.attention);
 		attentionT.setOnClickListener(this);
-		 gallery.setOnItemClickListener(new OnItemClickListener() {
-		
-		 @Override
-		 public void onItemClick(AdapterView<?> parent, View view,
-		 int position, long id) {
-			 PicLayoutUtil layoutUtil=new PicLayoutUtil(self);
-			 layoutUtil.setPicjsa(albumPhotosJsa);
-		 Intent it = new Intent(self, LargePICActivity.class);
-		 it.putExtra("index", position);
-		 startActivity(it);
-		 }
-		 });
+		gallery.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				PicLayoutUtil layoutUtil = new PicLayoutUtil(self);
+				layoutUtil.setPicjsa(albumPhotosJsa);
+				Intent it = new Intent(self, LargePICActivity.class);
+				it.putExtra("index", position);
+				startActivity(it);
+			}
+		});
 		gallery.setOnItemSelectedListener(new OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
@@ -313,8 +313,7 @@ public class PersonDetailActivity extends CarPlayBaseActivity implements
 					ViewUtil.bindView(headV.findViewById(R.id.active_count),
 							JSONUtil.getString(jo, "joinNumber"));
 
-					albumPhotosJsa = JSONUtil.getJSONArray(jo,
-							"albumPhotos");
+					albumPhotosJsa = JSONUtil.getJSONArray(jo, "albumPhotos");
 					bingGallery(albumPhotosJsa);
 				}
 			}
@@ -375,7 +374,7 @@ public class PersonDetailActivity extends CarPlayBaseActivity implements
 			isShowDefaultBg(true);
 		}
 	}
-	
+
 	public void isShowDefaultBg(boolean flag) {
 		if (!flag) {
 			unLogheadI.setVisibility(View.GONE);
@@ -474,8 +473,8 @@ public class PersonDetailActivity extends CarPlayBaseActivity implements
 
 		case ATTENTION:
 			ViewUtil.bindView(findViewById(R.id.icon_msg),
-					R.drawable.no_attention);
-			ViewUtil.bindView(findViewById(R.id.msg), "TA还没有添加任何关注!");
+					R.drawable.icon_shoucang);
+			ViewUtil.bindView(findViewById(R.id.msg), "TA还没有添加任何收藏!");
 			break;
 
 		default:
