@@ -21,7 +21,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
-import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.Display;
@@ -181,7 +180,7 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 					try {
 						if (!mCommentItem.getString("userId").equals(
 								user.getUserId())) {
-							comment_contentE.setHint("@回复"
+							comment_contentE.setHint("回复"
 									+ mCommentItem.getString("nickname") + ":");
 						} else {
 							showToast("不能给自己评论哦");
@@ -518,6 +517,7 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 					imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
 					comment_contentE.setText("");
 					showToast("评论发布成功");
+					comment_contentE.setHint("给楼主留个言...");
 					mJsonAdapter.refresh();
 				}
 			}

@@ -201,9 +201,7 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 						(TextView) itemV.findViewById(R.id.drive_age));
 				ViewUtil.bindView(itemV.findViewById(R.id.seat_num),
 						JSONUtil.getInt(itemjo, "seat") + "个");
-				if (!JSONUtil.getInt(itemjo, "seat").equals(0)
-						&& !JSONUtil.getString(itemjo, "carBrandLogo").equals(
-								"")) {
+				if (!JSONUtil.getInt(itemjo, "seat").equals(0)&& !JSONUtil.getString(itemjo, "carBrandLogo").equals("")) {
 					seat_num.setVisibility(View.VISIBLE);
 					seatnum.setVisibility(View.VISIBLE);
 					seatnumber.setVisibility(View.VISIBLE);

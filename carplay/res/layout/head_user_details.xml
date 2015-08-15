@@ -9,14 +9,22 @@
         android:layout_width="fill_parent"
         android:layout_height="200dp" >
 
-        <com.gongpingjia.carplay.view.CarPlayGallery
-            android:id="@+id/gallery"
-             android:background="@color/tab_grey_bg"
+        <ImageView
+            android:id="@+id/notlogin_head"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/my_bg" />
+
+        <com.gongpingjia.carplay.view.CarPlayGallery
+            android:id="@+id/gallery"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:background="@color/tab_grey_bg"
             android:fadingEdgeLength="0dp"
             android:spacing="5dp"
-            android:unselectedAlpha="128" />
+            android:unselectedAlpha="128"
+            android:visibility="gone" />
 
         <net.duohuo.dhroid.view.DotLinLayout
             android:id="@+id/dots"
@@ -24,7 +32,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="6dp" />
+            android:layout_marginBottom="6dp"
+            android:visibility="gone" />
     </RelativeLayout>
 
     <com.gongpingjia.carplay.view.RoundImageView

@@ -645,7 +645,7 @@ public class Utils {
 
     public static String getDate() {
         Date date = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         return format.format(date);
     }
 }

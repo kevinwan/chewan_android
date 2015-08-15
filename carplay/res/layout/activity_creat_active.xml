@@ -257,7 +257,7 @@
                 <TextView
                     android:id="@+id/tv_seat_hint"
                     style="@style/text_grey_medium"
-                    android:text="空座数" />
+                    android:text="提供空座数" />
 
                 <LinearLayout
                     android:id="@+id/layout_seats"

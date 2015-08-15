@@ -49,7 +49,8 @@ import com.gongpingjia.carplay.view.dialog.DateTimePickerDialog;
  * @author Administrator
  * 
  */
-public class EditActiveActivity extends CarPlayBaseActivity implements OnClickListener {
+public class EditActiveActivity extends CarPlayBaseActivity implements
+        OnClickListener {
 
     private static final int REQUEST_DESCRIPTION = 1;
 
@@ -57,9 +58,11 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
 
     private Button mSaveBtn;
 
-    private View mTypeLayout, mDescriptionLayout, mDestimationLayout, mStartTimeLayout, mEndTimeLayout, mFeeLayout;
+    private View mTypeLayout, mDescriptionLayout, mDestimationLayout,
+            mStartTimeLayout, mEndTimeLayout, mFeeLayout;
 
-    private TextView mTypeText, mDescriptionText, mStartTimeText, mEndTimeText, mFeeText, mDestimationText;
+    private TextView mTypeText, mDescriptionText, mStartTimeText, mEndTimeText,
+            mFeeText, mDestimationText;
 
     private NestedGridView mPhotoGridView;
 
@@ -111,24 +114,28 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_event);
         mUser = User.getInstance();
-        setRightAction(null, R.drawable.action_delete, new View.OnClickListener() {
+        setRightAction(null, R.drawable.action_delete,
+                new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Iterator<PhotoState> iterator = mPhotoStates.iterator();
-                while (iterator.hasNext()) {
-                    PhotoState state = iterator.next();
-                    if (state.isChecked()) {
-                        // 去除图片id
-                        mPicIds.remove(mPhotoStates.indexOf(state));
-                        // 删除选中图片
-                        iterator.remove();
+                    @Override
+                    public void onClick(View v) {
+                        // TODO Auto-generated method stub
+                        Iterator<PhotoState> iterator = mPhotoStates.iterator();
+                        while (iterator.hasNext()) {
+                            PhotoState state = iterator.next();
+                            if (state.isChecked()) {
+                                // 去除图片id
+                                mPicIds.remove(mPhotoStates.indexOf(state));
+                                // 删除选中图片
+                                iterator.remove();
+                            }
+                        }
+                        if(!mPhotoStates.get(mPhotoStates.size()-1).isLast()){
+                            mPhotoStates.add(mLastPhoto);
+                        }
+                        mImageAdapter.notifyDataSetChanged();
                     }
-                }
-                mImageAdapter.notifyDataSetChanged();
-            }
-        });
+                });
     }
 
     @Override
@@ -194,10 +201,13 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
         mPhotoGridView.setOnItemClickListener(new OnItemClickListener() {
 
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view,
+                    int position, long id) {
                 if (mPhotoStates.get(position).isLast()) {
-                    mCurPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg").getAbsolutePath();
-                    PhotoUtil.getPhoto(self, Constant.TAKE_PHOTO, Constant.PICK_PHOTO, new File(mCurPath));
+                    mCurPath = new File(mCacheDir, System.currentTimeMillis()
+                            + ".jpg").getAbsolutePath();
+                    PhotoUtil.getPhoto(self, Constant.TAKE_PHOTO,
+                            Constant.PICK_PHOTO, new File(mCurPath));
                 } else {
                     if (mPhotoStates.get(position).isChecked()) {
                         mPhotoStates.get(position).setChecked(false);
@@ -232,7 +242,8 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
                 mEndTimeStamp = endTime;
                 mLocation = location;
 
-                SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日  HH:mm");
+                SimpleDateFormat format = new SimpleDateFormat(
+                        "yyyy年MM月dd日  HH:mm");
                 mDescriptionText.setText(introduction);
                 mTypeText.setText(type);
                 mFeeText.setText(pay);
@@ -345,11 +356,22 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
                 showToast("请至少选择一张图片");
                 return;
             }
+            if (mStartTimeStamp < System.currentTimeMillis()) {
+                showToast("活动开始时间不能小于当前时间");
+                return;
+            }
+            if (!mEndTimeText.getText().toString().equals("不确定")) {
+                if (mEndTimeStamp < mStartTimeStamp) {
+                    showToast("活动截止时间应大于开始时间");
+                    return;
+                }
+            }
             User user = User.getInstance();
-            mDhNet = new DhNet(API.editActive + mActiveId + "/info?userId=" + user.getUserId() + "&token="
-                    + user.getToken());
+            mDhNet = new DhNet(API.editActive + mActiveId + "/info?userId="
+                    + user.getUserId() + "&token=" + user.getToken());
             mDhNet.addParam("type", mTypeText.getText().toString());
-            mDhNet.addParam("introduction", mDescriptionText.getText().toString());
+            mDhNet.addParam("introduction", mDescriptionText.getText()
+                    .toString());
             JSONArray array = new JSONArray(mPicIds);
             mDhNet.addParam("cover", array);
             mDhNet.addParam("location", mLocation);
@@ -360,7 +382,8 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
                 mDhNet.addParam("address", mAddress);
                 mDhNet.addParam("province", mProvince);
                 mDhNet.addParam("district", mDistrict);
-                mDhNet.addParam("location", mDestimationText.getText().toString());
+                mDhNet.addParam("location", mDestimationText.getText()
+                        .toString());
             }
 
             if (mLatitude != 0 || mLongitude != 0) {
@@ -421,12 +444,15 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
                 mDistrict = data.getStringExtra("district");
                 break;
             case Constant.TAKE_PHOTO:
-                String newPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg").getAbsolutePath();
-                String path = PhotoUtil.onPhotoFromCamera(self, Constant.ZOOM_PIC, mCurPath, 3, 2, 1000, newPath);
+                String newPath = new File(mCacheDir, System.currentTimeMillis()
+                        + ".jpg").getAbsolutePath();
+                String path = PhotoUtil.onPhotoFromCamera(self,
+                        Constant.ZOOM_PIC, mCurPath, 3, 2, 1000, newPath);
                 mCurPath = path;
                 break;
             case Constant.PICK_PHOTO:
-                PhotoUtil.onPhotoFromPick(self, Constant.ZOOM_PIC, mCurPath, data, 3, 2, 1000);
+                PhotoUtil.onPhotoFromPick(self, Constant.ZOOM_PIC, mCurPath,
+                        data, 3, 2, 1000);
                 break;
             case Constant.ZOOM_PIC:
                 upLoadPic(mCurPath);
@@ -466,7 +492,8 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
             mPhotoStates.add(mLastPhoto);
         }
         mImageAdapter.notifyDataSetChanged();
-        DhNet net = new DhNet(API.uploadPictures + "userId=" + mUser.getUserId() + "&token=" + mUser.getToken());
+        DhNet net = new DhNet(API.uploadPictures + "userId="
+                + mUser.getUserId() + "&token=" + mUser.getToken());
         net.upload(new FileInfo("attach", new File(path)), new NetTask(self) {
 
             @Override
@@ -493,7 +520,8 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
                         }
                     }
                     try {
-                        showToast(response.jSON().getString("errmsg") + " 图片上传失败,请重新选择上传");
+                        showToast(response.jSON().getString("errmsg")
+                                + " 图片上传失败,请重新选择上传");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
