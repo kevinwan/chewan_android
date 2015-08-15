@@ -78,7 +78,6 @@ public class HotAdapter extends NetJSONAdapter {
 	public int getItemViewType(int position) {
 		int count;
 		if (position == 1) {
-			System.out.println("执行.........................");
 			count = 0;
 		} else {
 			JSONObject jo = mVaules.get(position);
@@ -309,7 +308,7 @@ public class HotAdapter extends NetJSONAdapter {
 						"time");
 			}
 			ViewUtil.bindView(holder.addressT,
-					"地点: " + JSONUtil.getString(jo, "location"));
+					JSONUtil.getString(jo, "location"));
 			ViewUtil.bindNetImage(holder.headI,
 					JSONUtil.getString(creater, "photo"), "head");
 			holder.headI.setTag(JSONUtil.getString(creater, "userId"));
@@ -325,10 +324,17 @@ public class HotAdapter extends NetJSONAdapter {
 				holder.statusT.setBackgroundResource(R.drawable.blue_light_bg);
 			}
 
-			ViewUtil.bindView(holder.seat_countT,
-					JSONUtil.getString(jo, "holdingSeat"));
-			ViewUtil.bindView(holder.seat_count_allT,
-					"/" + JSONUtil.getString(jo, "totalSeat") + "座");
+			if (JSONUtil.getString(jo, "holdingSeat").equals(
+					JSONUtil.getString(jo, "totalSeat"))) {
+				ViewUtil.bindView(holder.seat_countT, "已满");
+				holder.seat_count_allT.setVisibility(View.GONE);
+			} else {
+				holder.seat_count_allT.setVisibility(View.VISIBLE);
+				ViewUtil.bindView(holder.seat_countT,
+						JSONUtil.getString(jo, "holdingSeat"));
+				ViewUtil.bindView(holder.seat_count_allT,
+						"/" + JSONUtil.getString(jo, "totalSeat") + "座");
+			}
 		}
 
 		return convertView;
@@ -403,7 +409,7 @@ public class HotAdapter extends NetJSONAdapter {
 
 						if (user.getIsAuthenticated() == 1) {
 							CarSeatSelectDialog dialog = new CarSeatSelectDialog(
-									mContext,activityId);
+									mContext, activityId);
 							dialog.setOnSelectResultListener(new OnSelectResultListener() {
 
 								@Override

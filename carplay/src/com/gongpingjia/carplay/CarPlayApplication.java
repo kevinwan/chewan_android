@@ -10,6 +10,8 @@ import net.duohuo.dhroid.util.UserLocation;
 import android.app.Application;
 import android.content.Intent;
 
+import com.easemob.chat.EMChat;
+import com.gongpingjia.carplay.chat.DemoHXSDKHelper;
 import com.gongpingjia.carplay.data.CityDataManage;
 import com.gongpingjia.carplay.db.DaoHelper;
 import com.gongpingjia.carplay.service.MsgService;
@@ -27,6 +29,8 @@ public class CarPlayApplication extends Application {
 
 	public static ImageLoaderConfiguration imageconfig;
 
+	public static DemoHXSDKHelper hxSDKHelper = new DemoHXSDKHelper();
+
 	public static CarPlayApplication getInstance() {
 		return instance;
 	}
@@ -34,8 +38,8 @@ public class CarPlayApplication extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		hxSDKHelper.onInit(getApplicationContext());
 		instance = this;
-
 		Const.netadapter_page_no = "page";
 		Const.netadapter_step = "step";
 		Const.response_total = "totalRows";

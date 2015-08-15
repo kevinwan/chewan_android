@@ -129,7 +129,7 @@ public class MainActivity extends BaseFragmentActivity {
 				per.load();
 				per.isShowMainGuilde = 1;
 				per.commit();
-				findViewById(R.id.guide).setVisibility(View.GONE);
+				findViewById(R.id.guide).setVisibility(View.GONE);  
 			}
 		});
 

@@ -4,9 +4,7 @@
     android:layout_height="fill_parent"
     android:background="@drawable/white_fillet_button"
     android:gravity="center"
-    android:orientation="vertical" 
-   >
-   
+    android:orientation="vertical" >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -47,6 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="35dp"
                 android:button="@null"
+                android:checked="true"
                 android:drawableLeft="@drawable/radio_sex"
                 android:drawablePadding="5dp"
                 android:gravity="center_vertical"
@@ -59,7 +58,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:button="@null"
-                android:checked="true"
                 android:drawableLeft="@drawable/radio_sex"
                 android:drawablePadding="5dp"
                 android:gravity="center_vertical"
@@ -87,7 +85,8 @@
 
         <TextView
             android:id="@+id/count"
-            style="@style/text_black_medium" />
+            style="@style/text_black_medium"
+            android:text="0" />
 
         <TextView
             style="@style/text_black_medium"
