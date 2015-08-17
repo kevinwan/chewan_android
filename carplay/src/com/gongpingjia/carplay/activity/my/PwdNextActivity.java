@@ -104,8 +104,8 @@ public class PwdNextActivity extends CarPlayBaseActivity {
                             user.setToken("");
 
                             CarPlayPerference per = IocContainer.getShare().get(CarPlayPerference.class);
-                            per.phone = "";
-                            per.password = "";
+                            per.phone = phone;
+                            per.password = confirmPwd;
                             per.commit();
 
                             Intent intent = new Intent(self, ForgetPwdActivity.class);
