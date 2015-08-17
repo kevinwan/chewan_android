@@ -31,6 +31,7 @@ import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
+import com.gongpingjia.carplay.activity.chat.ChatActivity;
 import com.gongpingjia.carplay.activity.my.MyPerSonDetailActivity;
 import com.gongpingjia.carplay.activity.my.PersonDetailActivity;
 import com.gongpingjia.carplay.api.API;
@@ -71,13 +72,15 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 	boolean isJoin = false;
 
 	/** 退出活动按钮 */
-	Button quitB, joinB;
+	Button quitB, joinB, chatB;
 
 	TextView quite_desT;
 
 	long startTime;
 
 	CarPlayPerference per;
+
+	View quit_layoutV;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -115,7 +118,10 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 		quitB.setOnClickListener(this);
 		joinB = (Button) findViewById(R.id.join);
 		joinB.setOnClickListener(this);
+		chatB = (Button) findViewById(R.id.chat);
+		chatB.setOnClickListener(this);
 		quite_desT = (TextView) findViewById(R.id.quite_des);
+		quit_layoutV = findViewById(R.id.quit_layout);
 		initQuitAndJoinButton(isJoin);
 
 		headV = LayoutInflater.from(self).inflate(R.layout.head_active_members,
@@ -175,8 +181,10 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 			@Override
 			public Object fix(View itemV, Integer position, Object o, Object jo) {
 				JSONObject itemjo = (JSONObject) jo;
-				ImageView car_logo = (ImageView) itemV.findViewById(R.id.car_logo);
-				TextView drive_age = (TextView) itemV.findViewById(R.id.drive_age);
+				ImageView car_logo = (ImageView) itemV
+						.findViewById(R.id.car_logo);
+				TextView drive_age = (TextView) itemV
+						.findViewById(R.id.drive_age);
 				RoundImageView headI = (RoundImageView) itemV
 						.findViewById(R.id.head);
 				ViewUtil.bindNetImage(headI,
@@ -184,7 +192,7 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 				ViewUtil.bindNetImage(car_logo,
 						JSONUtil.getString(itemjo, "carBrandLogo"), "carlogo");
 				headI.setTag(JSONUtil.getString(itemjo, "userId"));
-				
+
 				View car_age = itemV.findViewById(R.id.car_age);
 				View sexBg = itemV.findViewById(R.id.sex);
 				View seat_num = itemV.findViewById(R.id.seat_num);
@@ -201,26 +209,28 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 					car_age.setVisibility(View.GONE);
 					car_logo.setVisibility(View.GONE);
 					drive_age.setText("带我飞");
-				}else{
-					if (drive_str.length()>15) {
-						drive_str=drive_str.substring(0,15)+"...";
+				} else {
+					if (drive_str.length() > 15) {
+						drive_str = drive_str.substring(0, 15) + "...";
 					}
 					drive_age.setText(drive_str);
-					ViewUtil.bindView(itemV.findViewById(R.id.car_age),","+
-							JSONUtil.getString(itemjo, "drivingExperience")+"年驾龄");
+					ViewUtil.bindView(itemV.findViewById(R.id.car_age), ","
+							+ JSONUtil.getString(itemjo, "drivingExperience")
+							+ "年驾龄");
 				}
 				ViewUtil.bindView(itemV.findViewById(R.id.age),
 						JSONUtil.getString(itemjo, "age"));
 				ViewUtil.bindView(itemV.findViewById(R.id.name),
 						JSONUtil.getString(itemjo, "nickname"));
-			
-				
-//				CarPlayUtil.bindDriveAge(itemjo,
-//						(ImageView) itemV.findViewById(R.id.car_logo),
-//						(TextView) itemV.findViewById(R.id.drive_age));
+
+				// CarPlayUtil.bindDriveAge(itemjo,
+				// (ImageView) itemV.findViewById(R.id.car_logo),
+				// (TextView) itemV.findViewById(R.id.drive_age));
 				ViewUtil.bindView(itemV.findViewById(R.id.seat_num),
 						JSONUtil.getInt(itemjo, "seat") + "个");
-				if (!JSONUtil.getInt(itemjo, "seat").equals(0)&& !JSONUtil.getString(itemjo, "carBrandLogo").equals("")) {
+				if (!JSONUtil.getInt(itemjo, "seat").equals(0)
+						&& !JSONUtil.getString(itemjo, "carBrandLogo").equals(
+								"")) {
 					seat_num.setVisibility(View.VISIBLE);
 					seatnum.setVisibility(View.VISIBLE);
 					seatnumber.setVisibility(View.VISIBLE);
@@ -250,7 +260,7 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 	}
 
 	private void initQuitAndJoinButton(boolean isJoin) {
-		quitB.setVisibility(isJoin ? View.VISIBLE : View.GONE);
+		quit_layoutV.setVisibility(isJoin ? View.VISIBLE : View.GONE);
 		joinB.setVisibility(isJoin ? View.GONE : View.VISIBLE);
 		// quite_desT.setVisibility(isJoin ? View.VISIBLE : View.INVISIBLE);
 	}
@@ -313,6 +323,14 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 		case R.id.join:
 
 			isAuthen();
+			break;
+
+		case R.id.chat:
+			Intent intent = new Intent(self, ChatActivity.class);
+			// it is group chat
+			intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
+			intent.putExtra("groupId", "94411522188509764");
+			startActivityForResult(intent, 0);
 			break;
 		default:
 			break;

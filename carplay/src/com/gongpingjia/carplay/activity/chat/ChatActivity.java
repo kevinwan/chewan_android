@@ -91,6 +91,7 @@ import com.easemob.util.PathUtil;
 import com.easemob.util.VoiceRecorder;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
+import com.gongpingjia.carplay.activity.active.ActiveInformationActivity;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.chat.DemoHXSDKHelper;
 import com.gongpingjia.carplay.chat.adapter.ExpressionAdapter;
@@ -219,6 +220,14 @@ public class ChatActivity extends CarPlayBaseActivity implements
 	 * initView
 	 */
 	public void initView() {
+		setRightAction("管理", -1, new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent it = new Intent(self, ActiveInformationActivity.class);
+				startActivity(it);
+			}
+		});
 		recordingContainer = findViewById(R.id.recording_container);
 		micImage = (ImageView) findViewById(R.id.mic_image);
 		recordingHint = (TextView) findViewById(R.id.recording_hint);
@@ -252,14 +261,15 @@ public class ChatActivity extends CarPlayBaseActivity implements
 				getResources().getDrawable(R.drawable.record_animate_04),
 				getResources().getDrawable(R.drawable.record_animate_05),
 				getResources().getDrawable(R.drawable.record_animate_06),
-				getResources().getDrawable(R.drawable.record_animate_07),
-				getResources().getDrawable(R.drawable.record_animate_08),
-				getResources().getDrawable(R.drawable.record_animate_09),
-				getResources().getDrawable(R.drawable.record_animate_10),
-				getResources().getDrawable(R.drawable.record_animate_11),
-				getResources().getDrawable(R.drawable.record_animate_12),
-				getResources().getDrawable(R.drawable.record_animate_13),
-				getResources().getDrawable(R.drawable.record_animate_14) };
+		// getResources().getDrawable(R.drawable.record_animate_07),
+		// getResources().getDrawable(R.drawable.record_animate_08),
+		// getResources().getDrawable(R.drawable.record_animate_09),
+		// getResources().getDrawable(R.drawable.record_animate_10),
+		// getResources().getDrawable(R.drawable.record_animate_11),
+		// getResources().getDrawable(R.drawable.record_animate_12),
+		// getResources().getDrawable(R.drawable.record_animate_13),
+		// getResources().getDrawable(R.drawable.record_animate_14)
+		};
 
 		// 表情list
 		reslist = getExpressionRes(35);
@@ -408,19 +418,18 @@ public class ChatActivity extends CarPlayBaseActivity implements
 				isRobot = true;
 				String nick = robotMap.get(toChatUsername).getNick();
 				if (!TextUtils.isEmpty(nick)) {
-					((TextView) findViewById(R.id.name)).setText(nick);
+					setTitle(nick);
 				} else {
-					((TextView) findViewById(R.id.name))
-							.setText(toChatUsername);
+					setTitle(toChatUsername);
 				}
 			} else {
 				UserUtils.setUserNick(toChatUsername,
-						(TextView) findViewById(R.id.name));
+						(TextView) findViewById(R.id.title));
 			}
 		} else {
 			// 群聊
-			findViewById(R.id.container_to_group).setVisibility(View.VISIBLE);
-			findViewById(R.id.container_remove).setVisibility(View.GONE);
+			// findViewById(R.id.container_to_group).setVisibility(View.VISIBLE);
+			// findViewById(R.id.container_remove).setVisibility(View.GONE);
 			findViewById(R.id.container_voice_call).setVisibility(View.GONE);
 			findViewById(R.id.container_video_call).setVisibility(View.GONE);
 			toChatUsername = getIntent().getStringExtra("groupId");
@@ -546,9 +555,9 @@ public class ChatActivity extends CarPlayBaseActivity implements
 		group = EMGroupManager.getInstance().getGroup(toChatUsername);
 
 		if (group != null) {
-			((TextView) findViewById(R.id.name)).setText(group.getGroupName());
+			setTitle(group.getGroupName());
 		} else {
-			((TextView) findViewById(R.id.name)).setText(toChatUsername);
+			setTitle(toChatUsername);
 		}
 
 		// 监听当前会话的群聊解散被T事件
@@ -557,7 +566,7 @@ public class ChatActivity extends CarPlayBaseActivity implements
 	}
 
 	protected void onChatRoomViewCreation() {
-		findViewById(R.id.container_to_group).setVisibility(View.GONE);
+		// findViewById(R.id.container_to_group).setVisibility(View.GONE);
 
 		final ProgressDialog pd = ProgressDialog
 				.show(this, "", "Joining......");
@@ -574,11 +583,9 @@ public class ChatActivity extends CarPlayBaseActivity implements
 								room = EMChatManager.getInstance().getChatRoom(
 										toChatUsername);
 								if (room != null) {
-									((TextView) findViewById(R.id.name))
-											.setText(room.getName());
+									setTitle(room.getName());
 								} else {
-									((TextView) findViewById(R.id.name))
-											.setText(toChatUsername);
+									setTitle(toChatUsername);
 								}
 								EMLog.d(TAG,
 										"join room success : " + room.getName());
@@ -1520,7 +1527,7 @@ public class ChatActivity extends CarPlayBaseActivity implements
 						if (filename != "delete_expression") { // 不是删除键，显示表情
 							// 这里用的反射，所以混淆的时候不要混淆SmileUtils这个类
 							Class clz = Class
-									.forName("com.easemob.chatuidemo.utils.SmileUtils");
+									.forName("com.gongpingjia.carplay.chat.util.SmileUtils");
 							Field field = clz.getField(filename);
 							mEditTextContent.append(SmileUtils.getSmiledText(
 									ChatActivity.this, (String) field.get(null)));
@@ -1590,7 +1597,7 @@ public class ChatActivity extends CarPlayBaseActivity implements
 	protected void onResume() {
 		super.onResume();
 		if (group != null)
-			((TextView) findViewById(R.id.name)).setText(group.getGroupName());
+			setTitle(group.getGroupName());
 		voiceCallBtn.setEnabled(true);
 		videoCallBtn.setEnabled(true);
 

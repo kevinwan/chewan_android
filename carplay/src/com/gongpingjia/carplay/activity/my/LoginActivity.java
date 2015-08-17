@@ -28,7 +28,9 @@ import android.widget.Toast;
 
 import com.easemob.EMCallBack;
 import com.easemob.chat.EMChatManager;
+import com.easemob.chat.EMGroup;
 import com.easemob.chat.EMGroupManager;
+import com.gongpingjia.carplay.CarPlayApplication;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.activity.main.MainActivity;
@@ -184,17 +186,22 @@ public class LoginActivity extends CarPlayBaseActivity {
 		loginCall = null;
 	}
 
-	private void loginHX(String currentUsername, final String currentPassword,
-			final JSONObject jo, final String phone) {
+	private void loginHX(final String currentUsername,
+			final String currentPassword, final JSONObject jo,
+			final String phone) {
 		EMChatManager.getInstance().login(currentUsername, currentPassword,
 				new EMCallBack() {
 
 					@Override
 					public void onSuccess() {
-
+						CarPlayApplication.getInstance().setUserName(
+								currentUsername);
+						CarPlayApplication.getInstance().setPassword(
+								currentPassword);
 						try {
 							// ** 第一次登录或者之前logout后再登录，加载所有本地群和回话
 							// ** manually load all local groups and
+
 							EMGroupManager.getInstance().loadAllGroups();
 							EMChatManager.getInstance().loadAllConversations();
 							// 处理好友和群组
@@ -228,6 +235,7 @@ public class LoginActivity extends CarPlayBaseActivity {
 							LoginEB loginEB = new LoginEB();
 							loginEB.setIslogin(true);
 							EventBus.getDefault().post(loginEB);
+							asyncFetchGroupsFromServer();
 						} catch (Exception e) {
 							e.printStackTrace();
 							// 取好友或者群聊失败，不让进入主页面
@@ -315,5 +323,30 @@ public class LoginActivity extends CarPlayBaseActivity {
 		UserDao dao = new UserDao(LoginActivity.this);
 		List<ChatUser> users = new ArrayList<ChatUser>(userlist.values());
 		dao.saveContactList(users);
+	}
+
+	static void asyncFetchGroupsFromServer() {
+		HXSDKHelper.getInstance().asyncFetchGroupsFromServer(new EMCallBack() {
+
+			@Override
+			public void onSuccess() {
+				HXSDKHelper.getInstance().noitifyGroupSyncListeners(true);
+
+				if (HXSDKHelper.getInstance().isContactsSyncedWithServer()) {
+					HXSDKHelper.getInstance().notifyForRecevingEvents();
+				}
+			}
+
+			@Override
+			public void onError(int code, String message) {
+				HXSDKHelper.getInstance().noitifyGroupSyncListeners(false);
+			}
+
+			@Override
+			public void onProgress(int progress, String status) {
+
+			}
+
+		});
 	}
 }
