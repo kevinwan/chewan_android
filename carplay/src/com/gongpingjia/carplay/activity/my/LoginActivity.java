@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import net.duohuo.dhroid.activity.ActivityTack;
 import net.duohuo.dhroid.ioc.IocContainer;
@@ -13,6 +12,7 @@ import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
@@ -30,7 +30,6 @@ import android.widget.Toast;
 import com.easemob.EMCallBack;
 import com.easemob.EMValueCallBack;
 import com.easemob.chat.EMChatManager;
-import com.easemob.chat.EMGroup;
 import com.easemob.chat.EMGroupManager;
 import com.gongpingjia.carplay.CarPlayApplication;
 import com.gongpingjia.carplay.R;
@@ -99,6 +98,8 @@ public class LoginActivity extends CarPlayBaseActivity implements
 	public static final int Forgetpwd = 2;
 
 	public static LoginCallBack loginCall;
+
+	private String mUid, mAvatarUrl, mNickName, mChannel = "wechat";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -313,13 +314,21 @@ public class LoginActivity extends CarPlayBaseActivity implements
 							});
 							return;
 						}
-						// 更新当前用户的nickname 此方法的作用是在ios离线推送时能够显示用户nick
+
 						boolean updatenick = EMChatManager.getInstance()
 								.updateCurrentUserNick(currentUsername.trim());
 						if (!updatenick) {
 							Log.e("LoginActivity",
 									"update current user nick fail");
 						}
+						// 更新当前用户的nickname 此方法的作用是在ios离线推送时能够显示用户nick
+						// boolean updatenick =
+						// EMChatManager.getInstance().updateCurrentUserNick(
+						// DemoApplication.currentUserNick.trim());
+						// if (!updatenick) {
+						// Log.e("LoginActivity",
+						// "update current user nick fail");
+						// }
 						// if (!LoginActivity.this.isFinishing() &&
 						// pd.isShowing()) {
 						// pd.dismiss();
@@ -416,9 +425,9 @@ public class LoginActivity extends CarPlayBaseActivity implements
 			}
 
 			@Override
-			public void onComplete(Bundle arg0, SHARE_MEDIA media) {
+			public void onComplete(Bundle value, SHARE_MEDIA media) {
+				mUid = value.getString("uid");
 				getUserInfo(media);
-				showToast("授权成功");
 			}
 
 			@Override
@@ -428,33 +437,88 @@ public class LoginActivity extends CarPlayBaseActivity implements
 		});
 	}
 
-	private void getUserInfo(SHARE_MEDIA media) {
+	private void getUserInfo(final SHARE_MEDIA media) {
 		mController.getPlatformInfo(self, media, new UMDataListener() {
 
 			@Override
 			public void onStart() {
-
 			}
 
 			@Override
 			public void onComplete(int status, Map<String, Object> info) {
 				if (status == 200 && info != null) {
-					StringBuilder sb = new StringBuilder();
-					Set<String> keys = info.keySet();
-					for (String key : keys) {
-						sb.append(key + "=" + info.get(key).toString() + "\r\n");
+					String api = API.CWBaseurl + "/sns/login";
+					switch (media) {
+					case WEIXIN:
+						mNickName = (String) info.get("nickname");
+						mAvatarUrl = (String) info.get("headimgurl");
+						mChannel = "wechat";
+						break;
+
+					case SINA:
+						mNickName = (String) info.get("screen_name");
+						mAvatarUrl = (String) info.get("profile_image_url");
+						mChannel = "sinaWeibo";
+						break;
+
+					case QQ:
+						mNickName = (String) info.get("screen_name");
+						mAvatarUrl = (String) info.get("profile_image_url");
+						mChannel = "qq";
+						break;
+
+					default:
+						break;
 					}
-					showToast(sb.toString());
-					Log.e("tag", sb.toString());
+					DhNet net = new DhNet(api);
+					String sign = MD5Util.string2MD5(mUid + mChannel
+							+ "com.gongpingjia.carplay");
+					net.addParam("username", mNickName);
+					net.addParam("url", mAvatarUrl);
+					net.addParam("uid", mUid);
+					net.addParam("channel", mChannel);
+					net.addParam("sign", sign);
+					net.doPostInDialog("登陆中...", new NetTask(self) {
+
+						@Override
+						public void doInUI(Response response, Integer transfer) {
+							if (response.isSuccess()) {
+								JSONObject json = response.jSONFrom("data");
+								if (json.has("snsUid")) {
+									Intent it = new Intent(self,
+											BasicMessageActivity.class);
+									Bundle bundle = new Bundle();
+									bundle.putString("avatarUrl", mAvatarUrl);
+									bundle.putString("nickname", mNickName);
+									bundle.putString("uid", mUid);
+									bundle.putString("channel", mChannel);
+									try {
+										bundle.putString("photoUrl",
+												json.getString("photoUrl"));
+										bundle.putString("photoId",
+												json.getString("photoId"));
+									} catch (JSONException e) {
+										e.printStackTrace();
+									}
+									it.putExtras(bundle);
+									startActivity(it);
+								} else if (json.has("userId")) {
+									showToast("登陆成功");
+									self.finish();
+								}
+							} else {
+								showToast("登陆失败");
+							}
+						}
+					});
 				} else {
-					showToast("获取用户信息失败");
+					showToast("获取用户信息失败" + status);
 				}
 			}
 		});
 	}
 
 	static void asyncFetchGroupsFromServer() {
-
 		HXSDKHelper.getInstance().asyncFetchGroupsFromServer(new EMCallBack() {
 
 			@Override
