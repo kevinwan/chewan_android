@@ -3,12 +3,8 @@ package com.gongpingjia.carplay.adapter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
-import net.duohuo.dhroid.net.NetTask;
-import net.duohuo.dhroid.net.Response;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.content.Context;
@@ -23,8 +19,6 @@ import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.msg.NewMessageActivity;
-import com.gongpingjia.carplay.api.API;
-import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.view.BadgeView;
 
 /*
@@ -118,7 +112,8 @@ public class FragmentMsgAdapter extends BaseAdapter {
 				normsg_contentT.setText(JSONUtil
 						.getString(commentJo, "content"));
 				normalTimeT.setVisibility(View.VISIBLE);
-				normalTimeT.setText(formatter.format(new Date(JSONUtil.getInt(commentJo, "createTime"))));
+				normalTimeT.setText(setTime(JSONUtil.getLong(commentJo, "createTime")));
+//				normalTimeT.setText(formatter.format(new Date(JSONUtil.getLong(commentJo, "createTime"))));
 			}
 			normalMsgBadgeT.setText(JSONUtil.getString(commentJo, "count"));
 
@@ -133,7 +128,8 @@ public class FragmentMsgAdapter extends BaseAdapter {
 				applicationmsg_contentT.setText(JSONUtil.getString(
 						applicationJo, "content"));
 				applicationTimeT.setVisibility(View.VISIBLE);
-				applicationTimeT.setText(formatter.format(new Date(JSONUtil.getInt(applicationJo, "createTime"))));
+				applicationTimeT.setText(setTime(JSONUtil.getLong(applicationJo, "createTime")));
+//				applicationTimeT.setText(formatter.format(new Date(JSONUtil.getLong(applicationJo, "createTime"))));
 			}
 			applicationMsgBadgeT.setText(JSONUtil.getString(applicationJo,
 					"count"));
@@ -141,6 +137,34 @@ public class FragmentMsgAdapter extends BaseAdapter {
 		}
 
 		return view;
+	}
+	
+	private String setTime(long time){
+		SimpleDateFormat formattime = new SimpleDateFormat("HH:mm");
+		SimpleDateFormat formatdate = new SimpleDateFormat("yyyy-MM-dd");
+		long now=System.currentTimeMillis();
+		String strtime="";
+		if(now-time<=60*1000)
+		{
+			return "刚刚";
+		}
+		if(now-time>60*1000&&now-time<60*60*1000)
+		{
+			strtime=(int)Math.floor((now-time)/60000)+"分前";
+			return strtime;
+		}
+		if(now-time>=60*60*1000&&now-time<24*60*60*1000){
+			strtime=formattime.format(new Date(time));
+			return strtime;
+		}
+		if (now-time>=24*60*60*1000&&now-time<2*24*60*60*1000) {
+			return "昨天";
+		}
+		if (now-time>=2*24*60*60*1000) {
+			strtime=formatdate.format(new Date(time));
+		}
+		
+		return strtime;
 	}
 
 	public void setData(JSONObject jo) {
