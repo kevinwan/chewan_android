@@ -210,12 +210,13 @@ public class ChatActivity extends CarPlayBaseActivity implements
 	public EMGroup group;
 	public EMChatRoom room;
 	public boolean isRobot;
-
+	String activiyId;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_chat);
 		activityInstance = this;
+		 activiyId = getIntent().getStringExtra("activityId");
 		initView();
 		setUpView();
 	}
@@ -229,6 +230,7 @@ public class ChatActivity extends CarPlayBaseActivity implements
 			@Override
 			public void onClick(View v) {
 				Intent it = new Intent(self, ActiveInformationActivity.class);
+				it.putExtra("activityId",activiyId );
 				startActivity(it);
 			}
 		});

@@ -60,5 +60,7 @@
     <color name="black_deep">#FF000000</color>
     <color name="btn_answer_pressed">#4ebcd3</color>
     <color name="btn_answer_normal">#2dafa3</color>
+    <color name="btn_chatcopy_focused">#75D2D4</color>
+    <color name="btn_chatdel_focused">#FC927D</color>
 
 </resources>
