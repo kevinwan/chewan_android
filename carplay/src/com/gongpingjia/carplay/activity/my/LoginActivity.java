@@ -28,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.easemob.EMCallBack;
+import com.easemob.EMValueCallBack;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMGroup;
 import com.easemob.chat.EMGroupManager;
@@ -313,13 +314,12 @@ public class LoginActivity extends CarPlayBaseActivity implements
 							return;
 						}
 						// 更新当前用户的nickname 此方法的作用是在ios离线推送时能够显示用户nick
-						// boolean updatenick =
-						// EMChatManager.getInstance().updateCurrentUserNick(
-						// DemoApplication.currentUserNick.trim());
-						// if (!updatenick) {
-						// Log.e("LoginActivity",
-						// "update current user nick fail");
-						// }
+						boolean updatenick = EMChatManager.getInstance()
+								.updateCurrentUserNick(currentUsername.trim());
+						if (!updatenick) {
+							Log.e("LoginActivity",
+									"update current user nick fail");
+						}
 						// if (!LoginActivity.this.isFinishing() &&
 						// pd.isShowing()) {
 						// pd.dismiss();
@@ -454,6 +454,7 @@ public class LoginActivity extends CarPlayBaseActivity implements
 	}
 
 	static void asyncFetchGroupsFromServer() {
+
 		HXSDKHelper.getInstance().asyncFetchGroupsFromServer(new EMCallBack() {
 
 			@Override

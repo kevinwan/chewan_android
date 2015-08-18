@@ -200,6 +200,10 @@ public class ChatActivity extends CarPlayBaseActivity implements
 		@Override
 		public void handleMessage(android.os.Message msg) {
 			// 切换msg切换图片
+
+			if (msg.what > 5) {
+				msg.what = 5;
+			}
 			micImage.setImageDrawable(micImages[msg.what]);
 		}
 	};
@@ -249,7 +253,7 @@ public class ChatActivity extends CarPlayBaseActivity implements
 		iv_emoticons_normal.setVisibility(View.VISIBLE);
 		iv_emoticons_checked.setVisibility(View.INVISIBLE);
 		more = findViewById(R.id.more);
-//		edittext_layout.setBackgroundResource(R.drawable.edit_normal);
+		// edittext_layout.setBackgroundResource(R.drawable.edit_normal);
 		voiceCallBtn = (ImageView) findViewById(R.id.btn_voice_call);
 		videoCallBtn = (ImageView) findViewById(R.id.btn_video_call);
 
@@ -283,26 +287,27 @@ public class ChatActivity extends CarPlayBaseActivity implements
 		edittext_layout.requestFocus();
 		voiceRecorder = new VoiceRecorder(micImageHandler);
 		buttonPressToSpeak.setOnTouchListener(new PressToSpeakListen());
-//		mEditTextContent.setOnFocusChangeListener(new OnFocusChangeListener() {
-//
-//			@Override
-//			public void onFocusChange(View v, boolean hasFocus) {
-//				if (hasFocus) {
-//					edittext_layout
-//							.setBackgroundResource(R.drawable.input_bar_bg_active);
-//				} else {
-//					edittext_layout
-//							.setBackgroundResource(R.drawable.input_bar_bg_normal);
-//				}
-//
-//			}
-//		});
+		// mEditTextContent.setOnFocusChangeListener(new OnFocusChangeListener()
+		// {
+		//
+		// @Override
+		// public void onFocusChange(View v, boolean hasFocus) {
+		// if (hasFocus) {
+		// edittext_layout
+		// .setBackgroundResource(R.drawable.input_bar_bg_active);
+		// } else {
+		// edittext_layout
+		// .setBackgroundResource(R.drawable.input_bar_bg_normal);
+		// }
+		//
+		// }
+		// });
 		mEditTextContent.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-//				edittext_layout
-//						.setBackgroundResource(R.drawable.input_bar_bg_active);
+				// edittext_layout
+				// .setBackgroundResource(R.drawable.input_bar_bg_active);
 				more.setVisibility(View.GONE);
 				iv_emoticons_normal.setVisibility(View.VISIBLE);
 				iv_emoticons_checked.setVisibility(View.INVISIBLE);
@@ -990,6 +995,7 @@ public class ChatActivity extends CarPlayBaseActivity implements
 			TextMessageBody txtBody = new TextMessageBody(content);
 			// 设置消息body
 			message.addBody(txtBody);
+			message.setAttribute("nickName", "大长腿");
 			// 设置要发给谁,用户username或者群聊groupid
 			message.setReceipt(toChatUsername);
 			// 把messgage加到conversation中
@@ -1025,6 +1031,7 @@ public class ChatActivity extends CarPlayBaseActivity implements
 			} else if (chatType == CHATTYPE_CHATROOM) {
 				message.setChatType(ChatType.ChatRoom);
 			}
+			message.setAttribute("nickName", "大长腿");
 			message.setReceipt(toChatUsername);
 			int len = Integer.parseInt(length);
 			VoiceMessageBody body = new VoiceMessageBody(new File(filePath),
@@ -1059,7 +1066,7 @@ public class ChatActivity extends CarPlayBaseActivity implements
 		} else if (chatType == CHATTYPE_CHATROOM) {
 			message.setChatType(ChatType.ChatRoom);
 		}
-
+		message.setAttribute("nickName", "大长腿");
 		message.setReceipt(to);
 		ImageMessageBody body = new ImageMessageBody(new File(filePath));
 		// 默认超过100k的图片会压缩后发给对方，可以设置成发送原图
@@ -1168,6 +1175,7 @@ public class ChatActivity extends CarPlayBaseActivity implements
 		} else if (chatType == CHATTYPE_CHATROOM) {
 			message.setChatType(ChatType.ChatRoom);
 		}
+		message.setAttribute("nickName", "大长腿");
 		LocationMessageBody locBody = new LocationMessageBody(locationAddress,
 				latitude, longitude);
 		message.addBody(locBody);
