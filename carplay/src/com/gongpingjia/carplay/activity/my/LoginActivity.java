@@ -469,7 +469,7 @@ public class LoginActivity extends CarPlayBaseActivity implements OnClickListene
                                     startActivity(it);
                                 } else if (json.has("userId")) {
                                     showToast("登陆成功");
-                                    self.finish();
+                                    // self.finish();
                                 }
                             } else {
                                 showToast("登陆失败");

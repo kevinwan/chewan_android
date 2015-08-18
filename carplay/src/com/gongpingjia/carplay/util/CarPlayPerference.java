@@ -12,249 +12,279 @@ import android.content.Context;
  */
 public class CarPlayPerference extends Perference {
 
-	public String uid;
+    public String channel;
 
-	// 用户的密码
-	public String password;
-	// 手机号
-	public String phone;
-	// 验证码
-	public String code;
-	// 性别
-	public String gender;
-	// 出生年
-	public Integer birthYear;
-	// 出生月
-	public Integer birthMonth;
-	// 出生日
-	public Integer birthday;
-	// 省份
-	public String province;
-	// 城市
-	public String city;
-	// 区域
-	public String district;
-	// 图片
-	public String photo;
-	// 昵称
-	public String nickname;
+    public String sign;
 
-	public String headUrl;
+    public String uid;
 
-	// 第一次登陆
-	public int isFirst = 0;
+    // 用户的密码
+    public String password;
 
-	// 是否展示新手指导提示
-	public int isShowMainGuilde = 0;
+    // 手机号
+    public String phone;
 
-	// 是否展示新手指导提示
-	public int isShowPhotoGuilde = 0;
+    // 验证码
+    public String code;
 
-	// 是否展示新手指导提示
-	public int isShowMessageGuilde = 0;
+    // 性别
+    public String gender;
 
-	// 是否展示新手指导提示
-	public int isShowDetailGuilde = 0;
+    // 出生年
+    public Integer birthYear;
 
-	// 是否展示新手指导提示
-	public int isShowMemberGuilde = 0;
+    // 出生月
+    public Integer birthMonth;
 
-	public String getUid() {
-		return uid;
-	}
+    // 出生日
+    public Integer birthday;
 
-	public void setUid(String uid) {
-		this.uid = uid;
-	}
+    // 省份
+    public String province;
 
-	public String settingbg;
+    // 城市
+    public String city;
 
-	// 网络更新用户信息
-	public void refreshUserInfo(Context context) {
-		// DhNet net = new DhNet(API.persondetail);
-		// net.useCache(CachePolicy.POLICY_NOCACHE);
-		// net.doGet(new NetTask(context)
-		// {
-		// @Override
-		// public void doInUI(Response response, Integer transfer)
-		// {
-		// if (response.isSuccess())
-		// {
-		// JSONObject jo = response.jSONFromData();
-		// String faceurl = JSONUtil.getString(jo, "faceurl");
-		// if (faceurl != null)
-		// {
-		// faceurl = faceurl.replace("_s.jpg", "_m.jpg");
-		// }
-		// // face = API.ImageBase + faceurl;
-		// uid = JSONUtil.getString(jo, "id");
-		// username = JSONUtil.getString(jo, "name");
-		// commit();
-		// notifyDataSetChanged();
-		// }
-		// }
-		// });
-	}
+    // 区域
+    public String district;
 
-	public String getPassword() {
-		return password;
-	}
+    // 图片
+    public String photo;
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    // 昵称
+    public String nickname;
 
-	public String getPhone() {
-		return phone;
-	}
+    public String headUrl;
 
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
+    // 第一次登陆
+    public int isFirst = 0;
 
-	public String getCode() {
-		return code;
-	}
+    // 是否展示新手指导提示
+    public int isShowMainGuilde = 0;
 
-	public void setCode(String code) {
-		this.code = code;
-	}
+    // 是否展示新手指导提示
+    public int isShowPhotoGuilde = 0;
 
-	public String getGender() {
-		return gender;
-	}
+    // 是否展示新手指导提示
+    public int isShowMessageGuilde = 0;
 
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
+    // 是否展示新手指导提示
+    public int isShowDetailGuilde = 0;
 
-	public Integer getBirthYear() {
-		return birthYear;
-	}
+    // 是否展示新手指导提示
+    public int isShowMemberGuilde = 0;
 
-	public void setBirthYear(Integer birthYear) {
-		this.birthYear = birthYear;
-	}
+    public String getUid() {
+        return uid;
+    }
 
-	public Integer getBirthMonth() {
-		return birthMonth;
-	}
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
 
-	public void setBirthMonth(Integer birthMonth) {
-		this.birthMonth = birthMonth;
-	}
+    public String settingbg;
 
-	public Integer getBirthday() {
-		return birthday;
-	}
+    // 网络更新用户信息
+    public void refreshUserInfo(Context context) {
+        // DhNet net = new DhNet(API.persondetail);
+        // net.useCache(CachePolicy.POLICY_NOCACHE);
+        // net.doGet(new NetTask(context)
+        // {
+        // @Override
+        // public void doInUI(Response response, Integer transfer)
+        // {
+        // if (response.isSuccess())
+        // {
+        // JSONObject jo = response.jSONFromData();
+        // String faceurl = JSONUtil.getString(jo, "faceurl");
+        // if (faceurl != null)
+        // {
+        // faceurl = faceurl.replace("_s.jpg", "_m.jpg");
+        // }
+        // // face = API.ImageBase + faceurl;
+        // uid = JSONUtil.getString(jo, "id");
+        // username = JSONUtil.getString(jo, "name");
+        // commit();
+        // notifyDataSetChanged();
+        // }
+        // }
+        // });
+    }
 
-	public void setBirthday(Integer birthday) {
-		this.birthday = birthday;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public String getProvince() {
-		return province;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public void setProvince(String province) {
-		this.province = province;
-	}
+    public String getPhone() {
+        return phone;
+    }
 
-	public String getCity() {
-		return city;
-	}
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
-	public void setCity(String city) {
-		this.city = city;
-	}
+    public String getCode() {
+        return code;
+    }
 
-	public String getDistrict() {
-		return district;
-	}
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-	public void setDistrict(String district) {
-		this.district = district;
-	}
+    public String getGender() {
+        return gender;
+    }
 
-	public String getPhoto() {
-		return photo;
-	}
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
 
-	public void setPhoto(String photo) {
-		this.photo = photo;
-	}
+    public Integer getBirthYear() {
+        return birthYear;
+    }
 
-	public String getNickname() {
-		return nickname;
-	}
+    public void setBirthYear(Integer birthYear) {
+        this.birthYear = birthYear;
+    }
 
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
+    public Integer getBirthMonth() {
+        return birthMonth;
+    }
 
-	public String getHeadUrl() {
-		return headUrl;
-	}
+    public void setBirthMonth(Integer birthMonth) {
+        this.birthMonth = birthMonth;
+    }
 
-	public void setHeadUrl(String headUrl) {
-		this.headUrl = headUrl;
-	}
+    public Integer getBirthday() {
+        return birthday;
+    }
 
-	public String getSettingbg() {
-		return settingbg;
-	}
+    public void setBirthday(Integer birthday) {
+        this.birthday = birthday;
+    }
 
-	public void setSettingbg(String settingbg) {
-		this.settingbg = settingbg;
-	}
+    public String getProvince() {
+        return province;
+    }
 
-	public int getIsFirst() {
-		return isFirst;
-	}
+    public void setProvince(String province) {
+        this.province = province;
+    }
 
-	public void setIsFirst(int isFirst) {
-		this.isFirst = isFirst;
-	}
+    public String getCity() {
+        return city;
+    }
 
-	public int getIsShowMainGuilde() {
-		return isShowMainGuilde;
-	}
+    public void setCity(String city) {
+        this.city = city;
+    }
 
-	public void setIsShowMainGuilde(int isShowMainGuilde) {
-		this.isShowMainGuilde = isShowMainGuilde;
-	}
+    public String getDistrict() {
+        return district;
+    }
 
-	public int getIsShowPhotoGuilde() {
-		return isShowPhotoGuilde;
-	}
+    public void setDistrict(String district) {
+        this.district = district;
+    }
 
-	public void setIsShowPhotoGuilde(int isShowPhotoGuilde) {
-		this.isShowPhotoGuilde = isShowPhotoGuilde;
-	}
+    public String getPhoto() {
+        return photo;
+    }
 
-	public int getIsShowMessageGuilde() {
-		return isShowMessageGuilde;
-	}
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
 
-	public void setIsShowMessageGuilde(int isShowMessageGuilde) {
-		this.isShowMessageGuilde = isShowMessageGuilde;
-	}
+    public String getNickname() {
+        return nickname;
+    }
 
-	public int getIsShowDetailGuilde() {
-		return isShowDetailGuilde;
-	}
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
 
-	public void setIsShowDetailGuilde(int isShowDetailGuilde) {
-		this.isShowDetailGuilde = isShowDetailGuilde;
-	}
+    public String getHeadUrl() {
+        return headUrl;
+    }
 
-	public int getIsShowMemberGuilde() {
-		return isShowMemberGuilde;
-	}
+    public void setHeadUrl(String headUrl) {
+        this.headUrl = headUrl;
+    }
 
-	public void setIsShowMemberGuilde(int isShowMemberGuilde) {
-		this.isShowMemberGuilde = isShowMemberGuilde;
-	}
-	
+    public String getSettingbg() {
+        return settingbg;
+    }
+
+    public void setSettingbg(String settingbg) {
+        this.settingbg = settingbg;
+    }
+
+    public int getIsFirst() {
+        return isFirst;
+    }
+
+    public void setIsFirst(int isFirst) {
+        this.isFirst = isFirst;
+    }
+
+    public int getIsShowMainGuilde() {
+        return isShowMainGuilde;
+    }
+
+    public void setIsShowMainGuilde(int isShowMainGuilde) {
+        this.isShowMainGuilde = isShowMainGuilde;
+    }
+
+    public int getIsShowPhotoGuilde() {
+        return isShowPhotoGuilde;
+    }
+
+    public void setIsShowPhotoGuilde(int isShowPhotoGuilde) {
+        this.isShowPhotoGuilde = isShowPhotoGuilde;
+    }
+
+    public int getIsShowMessageGuilde() {
+        return isShowMessageGuilde;
+    }
+
+    public void setIsShowMessageGuilde(int isShowMessageGuilde) {
+        this.isShowMessageGuilde = isShowMessageGuilde;
+    }
+
+    public int getIsShowDetailGuilde() {
+        return isShowDetailGuilde;
+    }
+
+    public void setIsShowDetailGuilde(int isShowDetailGuilde) {
+        this.isShowDetailGuilde = isShowDetailGuilde;
+    }
+
+    public int getIsShowMemberGuilde() {
+        return isShowMemberGuilde;
+    }
+
+    public void setIsShowMemberGuilde(int isShowMemberGuilde) {
+        this.isShowMemberGuilde = isShowMemberGuilde;
+    }
+
+    public String getChannel() {
+        return channel;
+    }
+
+    public void setChannel(String channel) {
+        this.channel = channel;
+    }
+
+    public String getSign() {
+        return sign;
+    }
+
+    public void setSign(String sign) {
+        this.sign = sign;
+    }
 
 }
