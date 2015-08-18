@@ -118,7 +118,6 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 				intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
 				intent.putExtra("groupId", "94411522188509764");
 				intent.putExtra("activityId", activityId);
-				
 				startActivityForResult(intent, 0);
 			}
 		});

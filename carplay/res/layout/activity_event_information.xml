@@ -8,6 +8,7 @@
     <include layout="@layout/include_title_bar" />
 
     <LinearLayout
+        android:id="@+id/activity_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
@@ -47,7 +48,8 @@
             style="@style/text_blacklight_medium"
             android:layout_marginLeft="14dp"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="15dp" />
+            android:layout_marginBottom="15dp" 
+            android:background="@null"/>
     </LinearLayout>
 
     <View style="@style/line" />
