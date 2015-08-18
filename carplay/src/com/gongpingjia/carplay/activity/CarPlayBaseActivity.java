@@ -207,6 +207,7 @@ public abstract class CarPlayBaseActivity extends BaseActivity {
 
 		if (progressdialog == null || !progressdialog.isShowing()) {
 			progressdialog = dialoger.showProgressDialog(this, msg);
+			System.out.print("progress dlg:"+dialoger.getClass().getSimpleName());
 		}
 		return progressdialog;
 	}

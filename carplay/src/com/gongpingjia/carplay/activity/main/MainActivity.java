@@ -108,8 +108,8 @@ public class MainActivity extends BaseFragmentActivity {
 		super.onResume();
 		Intent it = new Intent(this, MsgService.class);
 		startService(it);
-		((DemoHXSDKHelper) HXSDKHelper.getInstance()).getUserProfileManager()
-				.asyncGetCurrentUserInfo();
+//		((DemoHXSDKHelper) HXSDKHelper.getInstance()).getUserProfileManager()
+//				.asyncGetCurrentUserInfo();
 	}
 
 	public void initView() {
