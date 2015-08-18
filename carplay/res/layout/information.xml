@@ -41,6 +41,14 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:text="新的留言" />
+                <TextView
+                    android:id="@+id/normal_time"
+                    style="@style/text_grey_smaller"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="刚刚"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <LinearLayout
@@ -66,8 +74,8 @@
             android:id="@+id/normal_msg_cout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
+            android:layout_marginLeft="55dp"
+            android:layout_marginTop="15dp"
             android:text="2"
             android:textColor="@color/white"
             android:textSize="@dimen/text_smaller"
@@ -112,6 +120,14 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:text="活动消息" />
+                <TextView
+                    android:id="@+id/applicationmsg_time"
+                    style="@style/text_grey_smaller"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|right"
+                    android:text="刚刚"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <LinearLayout
@@ -137,8 +153,8 @@
             android:id="@+id/application_msg_cout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
+            android:layout_marginLeft="55dp"
+            android:layout_marginTop="15dp"
             android:textColor="@color/white"
             android:textSize="@dimen/text_smaller"
             android:visibility="gone" />
