@@ -186,7 +186,7 @@ public class ChatActivity extends CarPlayBaseActivity implements
 
 	private ImageView iv_emoticons_normal;
 	private ImageView iv_emoticons_checked;
-	private RelativeLayout edittext_layout;
+	private LinearLayout edittext_layout;
 	private ProgressBar loadmorePB;
 	private boolean isloading;
 	private final int pagesize = 20;
@@ -234,7 +234,7 @@ public class ChatActivity extends CarPlayBaseActivity implements
 		listView = (ListView) findViewById(R.id.list);
 		mEditTextContent = (PasteEditText) findViewById(R.id.et_sendmessage);
 		buttonSetModeKeyboard = findViewById(R.id.btn_set_mode_keyboard);
-		edittext_layout = (RelativeLayout) findViewById(R.id.edittext_layout);
+		edittext_layout = (LinearLayout) findViewById(R.id.edittext_layout);
 		buttonSetModeVoice = findViewById(R.id.btn_set_mode_voice);
 		buttonSend = findViewById(R.id.btn_send);
 		buttonPressToSpeak = findViewById(R.id.btn_press_to_speak);
@@ -249,7 +249,7 @@ public class ChatActivity extends CarPlayBaseActivity implements
 		iv_emoticons_normal.setVisibility(View.VISIBLE);
 		iv_emoticons_checked.setVisibility(View.INVISIBLE);
 		more = findViewById(R.id.more);
-		edittext_layout.setBackgroundResource(R.drawable.input_bar_bg_normal);
+//		edittext_layout.setBackgroundResource(R.drawable.edit_normal);
 		voiceCallBtn = (ImageView) findViewById(R.id.btn_voice_call);
 		videoCallBtn = (ImageView) findViewById(R.id.btn_video_call);
 
@@ -283,26 +283,26 @@ public class ChatActivity extends CarPlayBaseActivity implements
 		edittext_layout.requestFocus();
 		voiceRecorder = new VoiceRecorder(micImageHandler);
 		buttonPressToSpeak.setOnTouchListener(new PressToSpeakListen());
-		mEditTextContent.setOnFocusChangeListener(new OnFocusChangeListener() {
-
-			@Override
-			public void onFocusChange(View v, boolean hasFocus) {
-				if (hasFocus) {
-					edittext_layout
-							.setBackgroundResource(R.drawable.input_bar_bg_active);
-				} else {
-					edittext_layout
-							.setBackgroundResource(R.drawable.input_bar_bg_normal);
-				}
-
-			}
-		});
+//		mEditTextContent.setOnFocusChangeListener(new OnFocusChangeListener() {
+//
+//			@Override
+//			public void onFocusChange(View v, boolean hasFocus) {
+//				if (hasFocus) {
+//					edittext_layout
+//							.setBackgroundResource(R.drawable.input_bar_bg_active);
+//				} else {
+//					edittext_layout
+//							.setBackgroundResource(R.drawable.input_bar_bg_normal);
+//				}
+//
+//			}
+//		});
 		mEditTextContent.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				edittext_layout
-						.setBackgroundResource(R.drawable.input_bar_bg_active);
+//				edittext_layout
+//						.setBackgroundResource(R.drawable.input_bar_bg_active);
 				more.setVisibility(View.GONE);
 				iv_emoticons_normal.setVisibility(View.VISIBLE);
 				iv_emoticons_checked.setVisibility(View.INVISIBLE);

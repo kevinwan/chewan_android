@@ -15,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:gravity="center_vertical"
         android:orientation="vertical"
         android:paddingBottom="2dip"
         android:paddingTop="2dip" >
@@ -27,7 +28,7 @@
         <LinearLayout
             android:id="@+id/rl_bottom"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="55dp"
             android:background="#aaffffff"
             android:gravity="center_vertical"
             android:orientation="horizontal"
@@ -37,7 +38,7 @@
                 android:id="@+id/btn_set_mode_voice"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:layout_marginLeft="6dp"
+                android:layout_marginLeft="12dp"
                 android:background="@drawable/chatting_setmode_voice_btn"
                 android:onClick="setModeVoice"
                 android:visibility="visible" />
@@ -46,7 +47,7 @@
                 android:id="@+id/btn_set_mode_keyboard"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:layout_marginLeft="6dp"
+                android:layout_marginLeft="12dp"
                 android:background="@drawable/chatting_setmode_keyboard_btn"
                 android:onClick="setModeKeyboard"
                 android:visibility="gone" />
@@ -73,37 +74,42 @@
                     android:textSize="16sp" />
             </LinearLayout>
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/edittext_layout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="3dp"
+                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="6dp"
                 android:layout_marginRight="6dp"
-                android:layout_weight="1"
-                android:gravity="bottom" >
+                android:layout_weight="1" >
 
                 <com.gongpingjia.carplay.chat.view.PasteEditText
                     android:id="@+id/et_sendmessage"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="35dip"
-                    android:background="@null"
+                    android:layout_weight="1"
+                    android:background="@drawable/input_chat_bg"
                     android:maxLines="3"
-                    android:minHeight="40dp"
+                    android:minHeight="35dp"
                     android:onClick="editClick"
                     android:paddingBottom="3dp"
-                    android:paddingLeft="1dp"
+                    android:paddingLeft="4dp"
                     android:paddingRight="1dp"
                     android:paddingTop="3dp"
-                    android:textSize="18sp" />
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/text_small" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="3dp" >
 
                 <ImageView
                     android:id="@+id/iv_emoticons_normal"
-                    android:layout_width="24dip"
-                    android:layout_height="24dip"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
+                    android:layout_width="32dip"
+                    android:layout_height="32dip"
                     android:layout_gravity="center_vertical|right"
                     android:layout_margin="1dip"
                     android:scaleType="fitCenter"
@@ -112,10 +118,8 @@
 
                 <ImageView
                     android:id="@+id/iv_emoticons_checked"
-                    android:layout_width="24dip"
-                    android:layout_height="24dip"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
+                    android:layout_width="32dip"
+                    android:layout_height="32dip"
                     android:layout_gravity="center_vertical|right"
                     android:layout_margin="1dip"
                     android:scaleType="fitCenter"
@@ -140,8 +144,8 @@
                 android:background="@drawable/chat_send_btn_selector"
                 android:onClick="onClick"
                 android:text="@string/button_send"
-                android:textColor="#666666"
-                android:textSize="16sp"
+                android:textColor="@color/text_black"
+                android:textSize="@dimen/text_small"
                 android:visibility="gone" />
         </LinearLayout>
 
@@ -175,6 +179,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:paddingBottom="12dp"
+                android:paddingLeft="12dp"
                 android:visibility="gone" >
 
                 <LinearLayout
@@ -183,36 +189,6 @@
                     android:layout_marginBottom="4dp"
                     android:layout_marginTop="6dp"
                     android:weightSum="4" >
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical" >
-
-                        <RelativeLayout
-                            android:layout_width="64dp"
-                            android:layout_height="64dp" >
-
-                            <ImageView
-                                android:id="@+id/btn_take_picture"
-                                android:layout_width="56dp"
-                                android:layout_height="56dp"
-                                android:layout_centerInParent="true"
-                                android:background="@drawable/chat_takepic_selector"
-                                android:clickable="true"
-                                android:onClick="onClick"
-                                android:scaleType="fitCenter" />
-                        </RelativeLayout>
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="@string/attach_take_pic"
-                            android:textColor="#727171" />
-                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -241,6 +217,36 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text="@string/attach_picture"
+                            android:textColor="#727171" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical" >
+
+                        <RelativeLayout
+                            android:layout_width="64dp"
+                            android:layout_height="64dp" >
+
+                            <ImageView
+                                android:id="@+id/btn_take_picture"
+                                android:layout_width="56dp"
+                                android:layout_height="56dp"
+                                android:layout_centerInParent="true"
+                                android:background="@drawable/chat_takepic_selector"
+                                android:clickable="true"
+                                android:onClick="onClick"
+                                android:scaleType="fitCenter" />
+                        </RelativeLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/attach_take_pic"
                             android:textColor="#727171" />
                     </LinearLayout>
 
