@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="105dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical" >
 
         <LinearLayout
@@ -43,17 +43,18 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/activity_Introduction"
             style="@style/text_blacklight_medium"
             android:layout_marginLeft="14dp"
             android:layout_marginTop="5dp"
-            android:text="突然好想去怀柔吃鱼，有车的小伙伴们赶紧来报名，一起来一场说走就走的旅行~" />
+            android:layout_marginBottom="15dp" />
     </LinearLayout>
 
     <View style="@style/line" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal" >
 
@@ -68,19 +69,20 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:gravity="right|center_vertical"
             android:orientation="horizontal" >
 
-            <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginRight="3dp" />
+            <com.gongpingjia.carplay.view.RoundImageView
+                android:id="@+id/activity_head"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="5dp" />
 
             <TextView
+                android:id="@+id/activity_name"
                 style="@style/text_black_medium"
-                android:layout_marginRight="3dp"
-                android:text="千里走单骑" />
+                android:layout_marginRight="3dp" />
 
             <ImageView
                 android:layout_width="18dp"
@@ -94,7 +96,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="88dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical" >
 
         <LinearLayout
@@ -120,29 +122,42 @@
                 android:orientation="horizontal" >
 
                 <ImageView
-                    android:layout_width="18dp"
-                    android:layout_height="25dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"
                     android:src="@drawable/right_btn" />
             </LinearLayout>
         </LinearLayout>
-            <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginLeft="14dp"
-                android:layout_marginTop="5dp" />
-    </LinearLayout>
- <View style="@style/line" />
 
- <Button
-     style="@style/text_white_medium"
-     android:layout_width="match_parent"
-     android:layout_height="40dp"
-     android:background="@drawable/button_radian"
-     android:layout_marginLeft="14dp"
-     android:layout_marginRight="14dp"
-     android:layout_marginTop="20dp"
-     android:text="退出群聊" />
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="6dp"
+            android:gravity="center_vertical"
+            android:padding="8dp" >
+
+            <LinearLayout
+                android:id="@+id/headlayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <View style="@style/line" />
+
+    <Button
+        style="@style/text_white_medium"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_radian"
+        android:text="退出群聊" />
 
 </LinearLayout>
