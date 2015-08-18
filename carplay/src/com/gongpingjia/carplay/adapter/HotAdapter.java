@@ -32,6 +32,7 @@ import android.widget.TextView;
 
 import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.activity.active.ActiveDetailsActivity;
 import com.gongpingjia.carplay.activity.active.ActiveMembersActivity;
 import com.gongpingjia.carplay.activity.active.MyActiveMembersManageActivity;
 import com.gongpingjia.carplay.adapter.ActiveAdapter.ViewHolder;
@@ -61,7 +62,6 @@ public class HotAdapter extends NetJSONAdapter {
 
 	MiddleViewHolder middleHolder;
 
-	Context mContext;
 
 	View[] views;
 
@@ -69,7 +69,6 @@ public class HotAdapter extends NetJSONAdapter {
 
 	public HotAdapter(String api, Context context, int mResource) {
 		super(api, context, mResource);
-		mContext = context;
 		mLayoutInflater = LayoutInflater.from(context);
 		this.mResource = mResource;
 		Display display = ((Activity) context).getWindowManager()
@@ -524,7 +523,7 @@ public class HotAdapter extends NetJSONAdapter {
 				if (jsa.length() > 0) {
 					views = new View[jsa.length()];
 					for (int i = 0; i < jsa.length(); i++) {
-						JSONObject jot;
+						final JSONObject jot;
 						try {
 							jot = jsa.getJSONObject(i);
 							View leftV = mLayoutInflater.inflate(
@@ -553,7 +552,16 @@ public class HotAdapter extends NetJSONAdapter {
 									JSONUtil.getString(jot, "cover"), "cover");
 							ViewUtil.bindNetImage(pglogo,
 									JSONUtil.getString(jot, "logo"), "logo");
-
+							
+							leftV.setOnClickListener(new OnClickListener() {
+								
+								@Override
+								public void onClick(View arg0) {
+									Intent intent=new Intent(mContext,ActiveDetailsActivity.class);
+									intent.putExtra("activityId", JSONUtil.getString(jot, "activityId"));
+									mContext.startActivity(intent);
+								}
+							});
 							views[i] = leftV;
 						} catch (JSONException e) {
 							e.printStackTrace();
