@@ -91,6 +91,7 @@ import com.easemob.util.PathUtil;
 import com.easemob.util.VoiceRecorder;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
+import com.gongpingjia.carplay.activity.active.ActiveInformationActivity;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.chat.DemoHXSDKHelper;
 import com.gongpingjia.carplay.chat.adapter.ExpressionAdapter;
@@ -185,7 +186,7 @@ public class ChatActivity extends CarPlayBaseActivity implements
 
 	private ImageView iv_emoticons_normal;
 	private ImageView iv_emoticons_checked;
-	private RelativeLayout edittext_layout;
+	private LinearLayout edittext_layout;
 	private ProgressBar loadmorePB;
 	private boolean isloading;
 	private final int pagesize = 20;
@@ -219,13 +220,21 @@ public class ChatActivity extends CarPlayBaseActivity implements
 	 * initView
 	 */
 	public void initView() {
+		setRightAction("管理", -1, new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent it = new Intent(self, ActiveInformationActivity.class);
+				startActivity(it);
+			}
+		});
 		recordingContainer = findViewById(R.id.recording_container);
 		micImage = (ImageView) findViewById(R.id.mic_image);
 		recordingHint = (TextView) findViewById(R.id.recording_hint);
 		listView = (ListView) findViewById(R.id.list);
 		mEditTextContent = (PasteEditText) findViewById(R.id.et_sendmessage);
 		buttonSetModeKeyboard = findViewById(R.id.btn_set_mode_keyboard);
-		edittext_layout = (RelativeLayout) findViewById(R.id.edittext_layout);
+		edittext_layout = (LinearLayout) findViewById(R.id.edittext_layout);
 		buttonSetModeVoice = findViewById(R.id.btn_set_mode_voice);
 		buttonSend = findViewById(R.id.btn_send);
 		buttonPressToSpeak = findViewById(R.id.btn_press_to_speak);
@@ -240,7 +249,7 @@ public class ChatActivity extends CarPlayBaseActivity implements
 		iv_emoticons_normal.setVisibility(View.VISIBLE);
 		iv_emoticons_checked.setVisibility(View.INVISIBLE);
 		more = findViewById(R.id.more);
-		edittext_layout.setBackgroundResource(R.drawable.input_bar_bg_normal);
+//		edittext_layout.setBackgroundResource(R.drawable.edit_normal);
 		voiceCallBtn = (ImageView) findViewById(R.id.btn_voice_call);
 		videoCallBtn = (ImageView) findViewById(R.id.btn_video_call);
 
@@ -252,14 +261,15 @@ public class ChatActivity extends CarPlayBaseActivity implements
 				getResources().getDrawable(R.drawable.record_animate_04),
 				getResources().getDrawable(R.drawable.record_animate_05),
 				getResources().getDrawable(R.drawable.record_animate_06),
-				getResources().getDrawable(R.drawable.record_animate_07),
-				getResources().getDrawable(R.drawable.record_animate_08),
-				getResources().getDrawable(R.drawable.record_animate_09),
-				getResources().getDrawable(R.drawable.record_animate_10),
-				getResources().getDrawable(R.drawable.record_animate_11),
-				getResources().getDrawable(R.drawable.record_animate_12),
-				getResources().getDrawable(R.drawable.record_animate_13),
-				getResources().getDrawable(R.drawable.record_animate_14) };
+		// getResources().getDrawable(R.drawable.record_animate_07),
+		// getResources().getDrawable(R.drawable.record_animate_08),
+		// getResources().getDrawable(R.drawable.record_animate_09),
+		// getResources().getDrawable(R.drawable.record_animate_10),
+		// getResources().getDrawable(R.drawable.record_animate_11),
+		// getResources().getDrawable(R.drawable.record_animate_12),
+		// getResources().getDrawable(R.drawable.record_animate_13),
+		// getResources().getDrawable(R.drawable.record_animate_14)
+		};
 
 		// 表情list
 		reslist = getExpressionRes(35);
@@ -273,26 +283,26 @@ public class ChatActivity extends CarPlayBaseActivity implements
 		edittext_layout.requestFocus();
 		voiceRecorder = new VoiceRecorder(micImageHandler);
 		buttonPressToSpeak.setOnTouchListener(new PressToSpeakListen());
-		mEditTextContent.setOnFocusChangeListener(new OnFocusChangeListener() {
-
-			@Override
-			public void onFocusChange(View v, boolean hasFocus) {
-				if (hasFocus) {
-					edittext_layout
-							.setBackgroundResource(R.drawable.input_bar_bg_active);
-				} else {
-					edittext_layout
-							.setBackgroundResource(R.drawable.input_bar_bg_normal);
-				}
-
-			}
-		});
+//		mEditTextContent.setOnFocusChangeListener(new OnFocusChangeListener() {
+//
+//			@Override
+//			public void onFocusChange(View v, boolean hasFocus) {
+//				if (hasFocus) {
+//					edittext_layout
+//							.setBackgroundResource(R.drawable.input_bar_bg_active);
+//				} else {
+//					edittext_layout
+//							.setBackgroundResource(R.drawable.input_bar_bg_normal);
+//				}
+//
+//			}
+//		});
 		mEditTextContent.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				edittext_layout
-						.setBackgroundResource(R.drawable.input_bar_bg_active);
+//				edittext_layout
+//						.setBackgroundResource(R.drawable.input_bar_bg_active);
 				more.setVisibility(View.GONE);
 				iv_emoticons_normal.setVisibility(View.VISIBLE);
 				iv_emoticons_checked.setVisibility(View.INVISIBLE);
@@ -408,19 +418,18 @@ public class ChatActivity extends CarPlayBaseActivity implements
 				isRobot = true;
 				String nick = robotMap.get(toChatUsername).getNick();
 				if (!TextUtils.isEmpty(nick)) {
-					((TextView) findViewById(R.id.name)).setText(nick);
+					setTitle(nick);
 				} else {
-					((TextView) findViewById(R.id.name))
-							.setText(toChatUsername);
+					setTitle(toChatUsername);
 				}
 			} else {
 				UserUtils.setUserNick(toChatUsername,
-						(TextView) findViewById(R.id.name));
+						(TextView) findViewById(R.id.title));
 			}
 		} else {
 			// 群聊
-			findViewById(R.id.container_to_group).setVisibility(View.VISIBLE);
-			findViewById(R.id.container_remove).setVisibility(View.GONE);
+			// findViewById(R.id.container_to_group).setVisibility(View.VISIBLE);
+			// findViewById(R.id.container_remove).setVisibility(View.GONE);
 			findViewById(R.id.container_voice_call).setVisibility(View.GONE);
 			findViewById(R.id.container_video_call).setVisibility(View.GONE);
 			toChatUsername = getIntent().getStringExtra("groupId");
@@ -546,9 +555,9 @@ public class ChatActivity extends CarPlayBaseActivity implements
 		group = EMGroupManager.getInstance().getGroup(toChatUsername);
 
 		if (group != null) {
-			((TextView) findViewById(R.id.name)).setText(group.getGroupName());
+			setTitle(group.getGroupName());
 		} else {
-			((TextView) findViewById(R.id.name)).setText(toChatUsername);
+			setTitle(toChatUsername);
 		}
 
 		// 监听当前会话的群聊解散被T事件
@@ -557,7 +566,7 @@ public class ChatActivity extends CarPlayBaseActivity implements
 	}
 
 	protected void onChatRoomViewCreation() {
-		findViewById(R.id.container_to_group).setVisibility(View.GONE);
+		// findViewById(R.id.container_to_group).setVisibility(View.GONE);
 
 		final ProgressDialog pd = ProgressDialog
 				.show(this, "", "Joining......");
@@ -574,11 +583,9 @@ public class ChatActivity extends CarPlayBaseActivity implements
 								room = EMChatManager.getInstance().getChatRoom(
 										toChatUsername);
 								if (room != null) {
-									((TextView) findViewById(R.id.name))
-											.setText(room.getName());
+									setTitle(room.getName());
 								} else {
-									((TextView) findViewById(R.id.name))
-											.setText(toChatUsername);
+									setTitle(toChatUsername);
 								}
 								EMLog.d(TAG,
 										"join room success : " + room.getName());
@@ -1520,7 +1527,7 @@ public class ChatActivity extends CarPlayBaseActivity implements
 						if (filename != "delete_expression") { // 不是删除键，显示表情
 							// 这里用的反射，所以混淆的时候不要混淆SmileUtils这个类
 							Class clz = Class
-									.forName("com.easemob.chatuidemo.utils.SmileUtils");
+									.forName("com.gongpingjia.carplay.chat.util.SmileUtils");
 							Field field = clz.getField(filename);
 							mEditTextContent.append(SmileUtils.getSmiledText(
 									ChatActivity.this, (String) field.get(null)));
@@ -1590,7 +1597,7 @@ public class ChatActivity extends CarPlayBaseActivity implements
 	protected void onResume() {
 		super.onResume();
 		if (group != null)
-			((TextView) findViewById(R.id.name)).setText(group.getGroupName());
+			setTitle(group.getGroupName());
 		voiceCallBtn.setEnabled(true);
 		videoCallBtn.setEnabled(true);
 

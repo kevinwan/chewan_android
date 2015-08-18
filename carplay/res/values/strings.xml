@@ -324,5 +324,7 @@
     <string name="toast_updatenick_fail">更新昵称失败!</string>
     <string name="toast_updatephoto_success">更新头像成功!</string>
     <string name="toast_updatephoto_fail">更新头像失败!</string>
+    
+    <string name="login_forget_password"><u>忘记密码？</u></string>
 
 </resources>

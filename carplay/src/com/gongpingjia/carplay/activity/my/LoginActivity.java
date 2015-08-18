@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import net.duohuo.dhroid.activity.ActivityTack;
 import net.duohuo.dhroid.ioc.IocContainer;
@@ -20,15 +21,17 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.easemob.EMCallBack;
 import com.easemob.chat.EMChatManager;
+import com.easemob.chat.EMGroup;
 import com.easemob.chat.EMGroupManager;
+import com.gongpingjia.carplay.CarPlayApplication;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.activity.main.MainActivity;
@@ -44,6 +47,16 @@ import com.gongpingjia.carplay.manage.UserInfoManage.LoginCallBack;
 import com.gongpingjia.carplay.util.CarPlayPerference;
 import com.gongpingjia.carplay.util.MD5Util;
 import com.gongpingjia.carplay.util.Utils;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.controller.UMServiceFactory;
+import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.controller.listener.SocializeListeners.UMAuthListener;
+import com.umeng.socialize.controller.listener.SocializeListeners.UMDataListener;
+import com.umeng.socialize.exception.SocializeException;
+import com.umeng.socialize.sso.SinaSsoHandler;
+import com.umeng.socialize.sso.UMQQSsoHandler;
+import com.umeng.socialize.sso.UMSsoHandler;
+import com.umeng.socialize.weixin.controller.UMWXHandler;
 
 import de.greenrobot.event.EventBus;
 
@@ -53,7 +66,9 @@ import de.greenrobot.event.EventBus;
  * @author Administrator
  * 
  */
-public class LoginActivity extends CarPlayBaseActivity {
+
+public class LoginActivity extends CarPlayBaseActivity implements
+		OnClickListener {
 
 	// 手机号
 	private EditText PhoneNumEditText;
@@ -64,13 +79,22 @@ public class LoginActivity extends CarPlayBaseActivity {
 	// 登录
 	private Button LoginButton;
 
-	// 注册
-	private LinearLayout login_register;
+	private View mWeixinBtn, mQQBtn, mWeiboBtn;
+
+	private UMSocialService mController = UMServiceFactory
+			.getUMSocialService("com.umeng.login");
+
+	// 参数1为当前Activity， 参数2为开发者在QQ互联申请的APP ID，参数3为开发者在QQ互联申请的APP kEY.
+	UMQQSsoHandler qqSsoHandler;
+
+	// 微信平台
+	UMWXHandler wxHandler;
 
 	// 忘记密码
 	private TextView login_forgetpsw;
 
 	public static final int Register = 1;
+
 	public static final int Forgetpwd = 2;
 
 	public static LoginCallBack loginCall;
@@ -87,6 +111,37 @@ public class LoginActivity extends CarPlayBaseActivity {
 
 	@Override
 	public void initView() {
+
+		setTitle("登陆");
+		mWeixinBtn = findViewById(R.id.layout_login_weixin);
+		mWeiboBtn = findViewById(R.id.layout_login_weibo);
+		mQQBtn = findViewById(R.id.layout_login_qq);
+		mWeiboBtn.setOnClickListener(this);
+		mWeixinBtn.setOnClickListener(this);
+		mQQBtn.setOnClickListener(this);
+
+		setRightAction("注册", -1, new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(self, RegisterActivity.class);
+				startActivityForResult(intent, Register);
+			}
+		});
+
+		wxHandler = new UMWXHandler(self,
+				com.gongpingjia.carplay.api.Constant.WX_APP_KEY,
+				com.gongpingjia.carplay.api.Constant.WX_APP_SECRET);
+		qqSsoHandler = new UMQQSsoHandler(self,
+				com.gongpingjia.carplay.api.Constant.QQ_APP_ID,
+				com.gongpingjia.carplay.api.Constant.QQ_APP_KEY);
+
+		qqSsoHandler.addToSocialSDK();
+		wxHandler.addToSocialSDK();
+
+		// 设置新浪SSO handler
+		mController.getConfig().setSsoHandler(new SinaSsoHandler());
+
 		PhoneNumEditText = (EditText) findViewById(R.id.ed_login_phone);
 		PasswordEditText = (EditText) findViewById(R.id.ed_login_password);
 		LoginButton = (Button) findViewById(R.id.button_login);
@@ -145,22 +200,30 @@ public class LoginActivity extends CarPlayBaseActivity {
 			}
 		});
 		// 注册
-		login_register = (LinearLayout) findViewById(R.id.login_register);
-		login_register.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				Intent intent = new Intent(self, RegisterActivity.class);
-				startActivityForResult(intent, Register);
-
-			}
-		});
+		// login_register = (LinearLayout) findViewById(R.id.login_register);
+		// login_register.setOnClickListener(new View.OnClickListener() {
+		//
+		// @Override
+		// public void onClick(View arg0) {
+		// Intent intent = new Intent(self, RegisterActivity.class);
+		// startActivityForResult(intent, Register);
+		//
+		// }
+		// });
 
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
+
+		/** 使用SSO授权必须添加如下代码 */
+		UMSsoHandler ssoHandler = mController.getConfig().getSsoHandler(
+				requestCode);
+		if (ssoHandler != null) {
+			ssoHandler.authorizeCallBack(requestCode, resultCode, data);
+		}
+
 		if (resultCode == Activity.RESULT_OK) {
 			if (requestCode == Register) {
 				finish();
@@ -184,8 +247,9 @@ public class LoginActivity extends CarPlayBaseActivity {
 		loginCall = null;
 	}
 
-	private void loginHX(String currentUsername, final String currentPassword,
-			final JSONObject jo, final String phone) {
+	private void loginHX(final String currentUsername,
+			final String currentPassword, final JSONObject jo,
+			final String phone) {
 		EMChatManager.getInstance().login(currentUsername, currentPassword,
 				new EMCallBack() {
 
@@ -193,6 +257,11 @@ public class LoginActivity extends CarPlayBaseActivity {
 					public void onSuccess() {
 
 						try {
+
+							CarPlayApplication.getInstance().setUserName(
+									currentUsername);
+							CarPlayApplication.getInstance().setPassword(
+									currentPassword);
 							// ** 第一次登录或者之前logout后再登录，加载所有本地群和回话
 							// ** manually load all local groups and
 							EMGroupManager.getInstance().loadAllGroups();
@@ -228,6 +297,7 @@ public class LoginActivity extends CarPlayBaseActivity {
 							LoginEB loginEB = new LoginEB();
 							loginEB.setIslogin(true);
 							EventBus.getDefault().post(loginEB);
+							asyncFetchGroupsFromServer();
 						} catch (Exception e) {
 							e.printStackTrace();
 							// 取好友或者群聊失败，不让进入主页面
@@ -315,5 +385,96 @@ public class LoginActivity extends CarPlayBaseActivity {
 		UserDao dao = new UserDao(LoginActivity.this);
 		List<ChatUser> users = new ArrayList<ChatUser>(userlist.values());
 		dao.saveContactList(users);
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.layout_login_weixin:
+			doOauthVerify(SHARE_MEDIA.WEIXIN);
+			break;
+		case R.id.layout_login_weibo:
+			doOauthVerify(SHARE_MEDIA.SINA);
+			break;
+		case R.id.layout_login_qq:
+			doOauthVerify(SHARE_MEDIA.QQ);
+			break;
+		}
+	}
+
+	private void doOauthVerify(SHARE_MEDIA media) {
+		mController.doOauthVerify(self, media, new UMAuthListener() {
+
+			@Override
+			public void onStart(SHARE_MEDIA arg0) {
+
+			}
+
+			@Override
+			public void onError(SocializeException arg0, SHARE_MEDIA arg1) {
+				showToast("授权失败");
+			}
+
+			@Override
+			public void onComplete(Bundle arg0, SHARE_MEDIA media) {
+				getUserInfo(media);
+				showToast("授权成功");
+			}
+
+			@Override
+			public void onCancel(SHARE_MEDIA arg0) {
+				showToast("授权取消");
+			}
+		});
+	}
+
+	private void getUserInfo(SHARE_MEDIA media) {
+		mController.getPlatformInfo(self, media, new UMDataListener() {
+
+			@Override
+			public void onStart() {
+
+			}
+
+			@Override
+			public void onComplete(int status, Map<String, Object> info) {
+				if (status == 200 && info != null) {
+					StringBuilder sb = new StringBuilder();
+					Set<String> keys = info.keySet();
+					for (String key : keys) {
+						sb.append(key + "=" + info.get(key).toString() + "\r\n");
+					}
+					showToast(sb.toString());
+					Log.e("tag", sb.toString());
+				} else {
+					showToast("获取用户信息失败");
+				}
+			}
+		});
+	}
+
+	static void asyncFetchGroupsFromServer() {
+		HXSDKHelper.getInstance().asyncFetchGroupsFromServer(new EMCallBack() {
+
+			@Override
+			public void onSuccess() {
+				HXSDKHelper.getInstance().noitifyGroupSyncListeners(true);
+
+				if (HXSDKHelper.getInstance().isContactsSyncedWithServer()) {
+					HXSDKHelper.getInstance().notifyForRecevingEvents();
+				}
+			}
+
+			@Override
+			public void onError(int code, String message) {
+				HXSDKHelper.getInstance().noitifyGroupSyncListeners(false);
+			}
+
+			@Override
+			public void onProgress(int progress, String status) {
+
+			}
+
+		});
 	}
 }

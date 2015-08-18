@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black40"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <TextView
+        style="@style/text_white_medium"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:background="@color/theme_bg"
+        android:text="复制" />
+
+    <TextView
+        style="@style/text_white_medium"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:background="@color/text_orange"
+        android:text="删除" />
+
+</LinearLayout>

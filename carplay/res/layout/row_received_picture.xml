@@ -17,63 +17,68 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_chat_activity" >
 
-        <ImageView
+        <com.gongpingjia.carplay.view.RoundImageView
             android:id="@+id/iv_userhead"
             android:layout_width="@dimen/size_avatar"
             android:layout_height="@dimen/size_avatar"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="@dimen/margin_chat_activity"
-            android:background="@drawable/mini_avatar_shadow"
+            android:background="@drawable/head_icon"
             android:scaleType="fitXY" />
 
-        <RelativeLayout
-            android:id="@+id/row_recv_pic"
+        <LinearLayout
+            android:id="@+id/layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/margin_chat_activity"
             android:layout_toRightOf="@id/iv_userhead"
-             >
+            android:orientation="vertical" >
 
-            <ImageView
-                android:background="@drawable/chatfrom_bg"
-                android:id="@+id/iv_sendPicture"
+            <TextView
+                android:id="@+id/tv_userid"
+                style="@style/text_grey_smaller"
+                android:layout_marginBottom="2dp"
+                android:layout_marginLeft="10dp" />
+
+            <RelativeLayout
+                android:id="@+id/row_recv_pic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleType="fitCenter" />
+                android:layout_marginLeft="@dimen/margin_chat_activity"
+                android:layout_toRightOf="@id/iv_userhead" >
 
-            <LinearLayout
-                android:id="@+id/ll_loading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:gravity="center_horizontal"
-                android:orientation="vertical" >
-
-                <ProgressBar
-                    android:id="@+id/progressBar"
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
-                    android:visibility="visible" />
-
-                <TextView
-                    android:id="@+id/percentage"
+                <ImageView
+                    android:id="@+id/iv_sendPicture"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0%"
-                    android:textColor="@android:color/white"
-                    android:visibility="visible" />
-            </LinearLayout>
-        </RelativeLayout>
+                    android:background="@drawable/chatfrom_bg"
+                    android:scaleType="fitCenter" />
 
-        <TextView
-            android:id="@+id/tv_userid"
-            style="@style/chat_text_name_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/iv_userhead"
-            android:layout_toLeftOf="@id/row_recv_pic" />
+                <LinearLayout
+                    android:id="@+id/ll_loading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical" >
+
+                    <ProgressBar
+                        android:id="@+id/progressBar"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/percentage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0%"
+                        android:textColor="@android:color/white"
+                        android:visibility="visible" />
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
     </RelativeLayout>
 
 </LinearLayout>

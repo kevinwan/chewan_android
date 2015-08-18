@@ -320,7 +320,6 @@ public class ActiveListFragment extends Fragment {
 		newAdapter.refreshDialog();
 	}
 
-	/** 接受ActiveFilterPop的选择事件 */
 	public void onEventMainThread(LoginEB login) {
 		if (login.islogin) {
 			hotAdapter.addparam("userId", user.getUserId());
@@ -334,6 +333,7 @@ public class ActiveListFragment extends Fragment {
 			newAdapter.addparam("userId", user.getUserId());
 			newAdapter.addparam("token", user.getToken());
 			newAdapter.refresh();
+
 		}
 	}
 

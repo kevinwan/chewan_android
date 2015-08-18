@@ -49,6 +49,7 @@ public class BigImageAdapter extends BaseAdapter {
 		DisplayMetrics metrics = new DisplayMetrics();
 		mcontext.getWindowManager().getDefaultDisplay().getMetrics(metrics);
 		screenWidth = metrics.widthPixels;
+		System.out.println("screenWidth:" + screenWidth);
 	}
 
 	@Override
@@ -96,11 +97,11 @@ public class BigImageAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+
 		if (convertView == null) {
 			convertView = mLayoutInflater
 					.inflate(R.layout.item_big_image, null);
 		}
-
 		// ProgressBar loadLocalPb = (ProgressBar) convertView
 		// .findViewById(R.id.pb_load_local);
 		JSONObject jo = (JSONObject) getItem(position);
@@ -115,46 +116,44 @@ public class BigImageAdapter extends BaseAdapter {
 		// }
 
 		img = (ImageView) convertView.findViewById(R.id.pic);
-		ViewGroup.LayoutParams para = img.getLayoutParams();
-		para.width = screenWidth;
-		img.setLayoutParams(para);
-		ImageLoader.getInstance().displayImage(
-				JSONUtil.getString(jo, "original_pic"),
-				(ImageView) convertView.findViewById(R.id.pic),
-				CarPlayValueFix.optionsDefault, new ImageLoadingListener() {
-
-					@Override
-					public void onLoadingStarted() {
-						// TODO Auto-generated method stub
-
-					}
-
-					@Override
-					public void onLoadingFailed(FailReason failReason) {
-						// TODO Auto-generated method stub
-
-					}
-
-					@Override
-					public void onLoadingComplete(Bitmap bitmap) {
-						// TODO Auto-generated method stub
-
-						int bwidth = bitmap.getWidth();
-						int bHeight = bitmap.getHeight();
-						int height = screenWidth * bHeight / bwidth;
-						ViewGroup.LayoutParams para = img.getLayoutParams();
-						para.height = height;
-						img.setLayoutParams(para);
-					}
-
-					@Override
-					public void onLoadingCancelled() {
-						// TODO Auto-generated method stub
-
-					}
-				});
-		// ViewUtil.bindNetImage((ImageView) convertView.findViewById(R.id.pic),
-		// JSONUtil.getString(jo, "original_pic"), "default",new );
+		// ImageLoader.getInstance().displayImage(
+		// JSONUtil.getString(jo, "original_pic"),
+		// (ImageView) convertView.findViewById(R.id.pic),
+		// CarPlayValueFix.optionsDefault, new ImageLoadingListener() {
+		//
+		// @Override
+		// public void onLoadingStarted() {
+		// // TODO Auto-generated method stub
+		//
+		// }
+		//
+		// @Override
+		// public void onLoadingFailed(FailReason failReason) {
+		// // TODO Auto-generated method stub
+		// }
+		//
+		// @Override
+		// public void onLoadingComplete(Bitmap bitmap) {
+		// // TODO Auto-generated method stub
+		// if (bitmap != null) {
+		// int bwidth = bitmap.getWidth();
+		// int bHeight = bitmap.getHeight();
+		// int height = screenWidth * bHeight / bwidth;
+		// ViewGroup.LayoutParams para = img.getLayoutParams();
+		// para.width = screenWidth;
+		// para.height = height;
+		// img.setLayoutParams(para);
+		// }
+		// }
+		//
+		// @Override
+		// public void onLoadingCancelled() {
+		// // TODO Auto-generated method stub
+		//
+		// }
+		// });
+		ViewUtil.bindNetImage((ImageView) convertView.findViewById(R.id.pic),
+				JSONUtil.getString(jo, "original_pic"), "big_pic");
 		return convertView;
 	}
 
