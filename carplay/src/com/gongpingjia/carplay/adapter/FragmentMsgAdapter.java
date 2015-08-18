@@ -1,13 +1,10 @@
 package com.gongpingjia.carplay.adapter;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
-import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
-import net.duohuo.dhroid.net.NetTask;
-import net.duohuo.dhroid.net.Response;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.content.Context;
@@ -22,8 +19,6 @@ import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.msg.NewMessageActivity;
-import com.gongpingjia.carplay.api.API;
-import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.view.BadgeView;
 
 /*
@@ -38,7 +33,7 @@ public class FragmentMsgAdapter extends BaseAdapter {
 
 	BadgeView normalMsgBadgeT, applicationMsgBadgeT;
 
-	TextView applicationmsg_contentT, normsg_contentT;
+	TextView applicationmsg_contentT, normsg_contentT,normalTimeT,applicationTimeT;
 
 	View aaplication_layoutV, normsg_layoutV;
 
@@ -99,6 +94,9 @@ public class FragmentMsgAdapter extends BaseAdapter {
 		applicationMsgBadgeT = (BadgeView) view
 				.findViewById(R.id.application_msg_cout);
 		applicationMsgBadgeT.setBadgeBackgroundColor(bgcolor);
+		
+		normalTimeT=(TextView) view.findViewById(R.id.normal_time);
+		applicationTimeT=(TextView) view.findViewById(R.id.applicationmsg_time);
 
 		if (jo != null) {
 			SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
@@ -109,9 +107,13 @@ public class FragmentMsgAdapter extends BaseAdapter {
 							: View.VISIBLE);
 			if (TextUtils.isEmpty(JSONUtil.getString(commentJo, "content"))) {
 				normsg_contentT.setText("暂无留言");
+				normalTimeT.setVisibility(View.GONE);
 			} else {
 				normsg_contentT.setText(JSONUtil
 						.getString(commentJo, "content"));
+				normalTimeT.setVisibility(View.VISIBLE);
+				normalTimeT.setText(setTime(JSONUtil.getLong(commentJo, "createTime")));
+//				normalTimeT.setText(formatter.format(new Date(JSONUtil.getLong(commentJo, "createTime"))));
 			}
 			normalMsgBadgeT.setText(JSONUtil.getString(commentJo, "count"));
 
@@ -121,9 +123,13 @@ public class FragmentMsgAdapter extends BaseAdapter {
 					"count") == 0 ? View.GONE : View.VISIBLE);
 			if (TextUtils.isEmpty(JSONUtil.getString(applicationJo, "content"))) {
 				applicationmsg_contentT.setText("暂无消息");
+				applicationTimeT.setVisibility(View.GONE);
 			} else {
 				applicationmsg_contentT.setText(JSONUtil.getString(
 						applicationJo, "content"));
+				applicationTimeT.setVisibility(View.VISIBLE);
+				applicationTimeT.setText(setTime(JSONUtil.getLong(applicationJo, "createTime")));
+//				applicationTimeT.setText(formatter.format(new Date(JSONUtil.getLong(applicationJo, "createTime"))));
 			}
 			applicationMsgBadgeT.setText(JSONUtil.getString(applicationJo,
 					"count"));
@@ -131,6 +137,34 @@ public class FragmentMsgAdapter extends BaseAdapter {
 		}
 
 		return view;
+	}
+	
+	private String setTime(long time){
+		SimpleDateFormat formattime = new SimpleDateFormat("HH:mm");
+		SimpleDateFormat formatdate = new SimpleDateFormat("yyyy-MM-dd");
+		long now=System.currentTimeMillis();
+		String strtime="";
+		if(now-time<=60*1000)
+		{
+			return "刚刚";
+		}
+		if(now-time>60*1000&&now-time<60*60*1000)
+		{
+			strtime=(int)Math.floor((now-time)/60000)+"分前";
+			return strtime;
+		}
+		if(now-time>=60*60*1000&&now-time<24*60*60*1000){
+			strtime=formattime.format(new Date(time));
+			return strtime;
+		}
+		if (now-time>=24*60*60*1000&&now-time<2*24*60*60*1000) {
+			return "昨天";
+		}
+		if (now-time>=2*24*60*60*1000) {
+			strtime=formatdate.format(new Date(time));
+		}
+		
+		return strtime;
 	}
 
 	public void setData(JSONObject jo) {

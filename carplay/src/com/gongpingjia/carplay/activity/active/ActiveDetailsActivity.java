@@ -108,6 +108,7 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_active_details);
 		EventBus.getDefault().register(this);
+	
 		findViewById(R.id.chat).setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -116,6 +117,7 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 				// it is group chat
 				intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
 				intent.putExtra("groupId", "94411522188509764");
+				intent.putExtra("activityId", activityId);
 				startActivityForResult(intent, 0);
 			}
 		});

@@ -6,20 +6,22 @@
     android:gravity="center"
     android:orientation="vertical" >
 
-    <TextView
+    <Button
+        android:id="@+id/copy"
         style="@style/text_white_medium"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center"
-        android:background="@color/theme_bg"
+        android:background="@drawable/btn_chatdialog_copy"
         android:text="复制" />
 
-    <TextView
+    <Button
+        android:id="@+id/delete"
         style="@style/text_white_medium"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center"
-        android:background="@color/text_orange"
+        android:background="@drawable/btn_chatdialog_del"
         android:text="删除" />
 
 </LinearLayout>
