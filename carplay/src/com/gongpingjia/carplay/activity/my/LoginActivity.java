@@ -188,18 +188,6 @@ public class LoginActivity extends CarPlayBaseActivity implements OnClickListene
                 startActivityForResult(intent, Forgetpwd);
             }
         });
-        // 注册
-        // login_register = (LinearLayout) findViewById(R.id.login_register);
-        // login_register.setOnClickListener(new View.OnClickListener() {
-        //
-        // @Override
-        // public void onClick(View arg0) {
-        // Intent intent = new Intent(self, RegisterActivity.class);
-        // startActivityForResult(intent, Register);
-        //
-        // }
-        // });
-
     }
 
     @Override
@@ -386,9 +374,12 @@ public class LoginActivity extends CarPlayBaseActivity implements OnClickListene
             }
 
             @Override
-            public void onComplete(Bundle arg0, SHARE_MEDIA media) {
-                getUserInfo(media);
-                showToast("授权成功");
+            public void onComplete(Bundle value, SHARE_MEDIA media) {
+                if (value != null && !TextUtils.isEmpty(value.getString("uid"))) {
+                    getUserInfo(media);
+                } else {
+                    showToast("授权失败");
+                }
             }
 
             @Override
@@ -417,7 +408,7 @@ public class LoginActivity extends CarPlayBaseActivity implements OnClickListene
                     showToast(sb.toString());
                     Log.e("tag", sb.toString());
                 } else {
-                    showToast("获取用户信息失败");
+                    showToast("授权失败" + status);
                 }
             }
         });
