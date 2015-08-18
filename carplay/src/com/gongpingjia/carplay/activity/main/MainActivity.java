@@ -37,6 +37,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.easemob.EMCallBack;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.active.ActiveListFragment;
 import com.gongpingjia.carplay.activity.active.CreateActiveActivity;
@@ -49,6 +50,8 @@ import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.ActiveParmasEB;
 import com.gongpingjia.carplay.bean.PhotoState;
 import com.gongpingjia.carplay.bean.User;
+import com.gongpingjia.carplay.chat.DemoHXSDKHelper;
+import com.gongpingjia.carplay.chat.controller.HXSDKHelper;
 import com.gongpingjia.carplay.manage.UserInfoManage;
 import com.gongpingjia.carplay.manage.UserInfoManage.LoginCallBack;
 import com.gongpingjia.carplay.service.MsgService;
@@ -105,6 +108,8 @@ public class MainActivity extends BaseFragmentActivity {
 		super.onResume();
 		Intent it = new Intent(this, MsgService.class);
 		startService(it);
+		((DemoHXSDKHelper) HXSDKHelper.getInstance()).getUserProfileManager()
+				.asyncGetCurrentUserInfo();
 	}
 
 	public void initView() {
@@ -501,7 +506,6 @@ public class MainActivity extends BaseFragmentActivity {
 		} else {
 			msgT.setVisibility(View.GONE);
 		}
-		System.out.println("消息");
 	}
 
 	@Override
@@ -534,4 +538,5 @@ public class MainActivity extends BaseFragmentActivity {
 		}
 		return super.onKeyDown(keyCode, event);
 	}
+
 }

@@ -29,7 +29,9 @@ import android.widget.Toast;
 
 import com.easemob.EMCallBack;
 import com.easemob.chat.EMChatManager;
+import com.easemob.chat.EMGroup;
 import com.easemob.chat.EMGroupManager;
+import com.gongpingjia.carplay.CarPlayApplication;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.activity.main.MainActivity;
@@ -64,353 +66,415 @@ import de.greenrobot.event.EventBus;
  * @author Administrator
  * 
  */
-public class LoginActivity extends CarPlayBaseActivity implements OnClickListener {
 
-    // 手机号
-    private EditText PhoneNumEditText;
+public class LoginActivity extends CarPlayBaseActivity implements
+		OnClickListener {
 
-    // 密码
-    private EditText PasswordEditText;
+	// 手机号
+	private EditText PhoneNumEditText;
 
-    // 登录
-    private Button LoginButton;
+	// 密码
+	private EditText PasswordEditText;
 
-    private View mWeixinBtn, mQQBtn, mWeiboBtn;
+	// 登录
+	private Button LoginButton;
 
-    private UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.login");
+	private View mWeixinBtn, mQQBtn, mWeiboBtn;
 
-    // 参数1为当前Activity， 参数2为开发者在QQ互联申请的APP ID，参数3为开发者在QQ互联申请的APP kEY.
-    UMQQSsoHandler qqSsoHandler;
+	private UMSocialService mController = UMServiceFactory
+			.getUMSocialService("com.umeng.login");
 
-    // 微信平台
-    UMWXHandler wxHandler;
+	// 参数1为当前Activity， 参数2为开发者在QQ互联申请的APP ID，参数3为开发者在QQ互联申请的APP kEY.
+	UMQQSsoHandler qqSsoHandler;
 
-    // 忘记密码
-    private TextView login_forgetpsw;
+	// 微信平台
+	UMWXHandler wxHandler;
 
-    public static final int Register = 1;
+	// 忘记密码
+	private TextView login_forgetpsw;
 
-    public static final int Forgetpwd = 2;
+	public static final int Register = 1;
 
-    public static LoginCallBack loginCall;
+	public static final int Forgetpwd = 2;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        String action = getIntent().getStringExtra("action");
-        if (action != null && action.equals("logout")) {
-            ActivityTack.getInstanse().finishOthers(this);
-        }
-    }
+	public static LoginCallBack loginCall;
 
-    @Override
-    public void initView() {
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_login);
+		String action = getIntent().getStringExtra("action");
+		if (action != null && action.equals("logout")) {
+			ActivityTack.getInstanse().finishOthers(this);
+		}
+	}
 
-        setTitle("登陆");
-        mWeixinBtn = findViewById(R.id.layout_login_weixin);
-        mWeiboBtn = findViewById(R.id.layout_login_weibo);
-        mQQBtn = findViewById(R.id.layout_login_qq);
-        mWeiboBtn.setOnClickListener(this);
-        mWeixinBtn.setOnClickListener(this);
-        mQQBtn.setOnClickListener(this);
+	@Override
+	public void initView() {
 
-        setRightAction("注册", -1, new View.OnClickListener() {
+		setTitle("登陆");
+		mWeixinBtn = findViewById(R.id.layout_login_weixin);
+		mWeiboBtn = findViewById(R.id.layout_login_weibo);
+		mQQBtn = findViewById(R.id.layout_login_qq);
+		mWeiboBtn.setOnClickListener(this);
+		mWeixinBtn.setOnClickListener(this);
+		mQQBtn.setOnClickListener(this);
 
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(self, RegisterActivity.class);
-                startActivityForResult(intent, Register);
-            }
-        });
+		setRightAction("注册", -1, new View.OnClickListener() {
 
-        wxHandler = new UMWXHandler(self, com.gongpingjia.carplay.api.Constant.WX_APP_KEY,
-                com.gongpingjia.carplay.api.Constant.WX_APP_SECRET);
-        qqSsoHandler = new UMQQSsoHandler(self, com.gongpingjia.carplay.api.Constant.QQ_APP_ID,
-                com.gongpingjia.carplay.api.Constant.QQ_APP_KEY);
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(self, RegisterActivity.class);
+				startActivityForResult(intent, Register);
+			}
+		});
 
-        qqSsoHandler.addToSocialSDK();
-        wxHandler.addToSocialSDK();
+		wxHandler = new UMWXHandler(self,
+				com.gongpingjia.carplay.api.Constant.WX_APP_KEY,
+				com.gongpingjia.carplay.api.Constant.WX_APP_SECRET);
+		qqSsoHandler = new UMQQSsoHandler(self,
+				com.gongpingjia.carplay.api.Constant.QQ_APP_ID,
+				com.gongpingjia.carplay.api.Constant.QQ_APP_KEY);
 
-        // 设置新浪SSO handler
-        mController.getConfig().setSsoHandler(new SinaSsoHandler());
+		qqSsoHandler.addToSocialSDK();
+		wxHandler.addToSocialSDK();
 
-        PhoneNumEditText = (EditText) findViewById(R.id.ed_login_phone);
-        PasswordEditText = (EditText) findViewById(R.id.ed_login_password);
-        LoginButton = (Button) findViewById(R.id.button_login);
-        LoginButton.setOnClickListener(new View.OnClickListener() {
+		// 设置新浪SSO handler
+		mController.getConfig().setSsoHandler(new SinaSsoHandler());
 
-            @Override
-            public void onClick(View arg0) {
-                Utils.autoCloseKeyboard(self, arg0);
-                final String strPhoneNum = PhoneNumEditText.getText().toString();
-                final String strPassword = PasswordEditText.getText().toString();
-                if (TextUtils.isEmpty(strPhoneNum)) {
-                    showToast("手机号码不能为空");
-                    return;
-                }
-                if (!Utils.isValidMobilePhoneNumber(strPhoneNum)) {
-                    showToast("手机格式错误");
-                    return;
+		PhoneNumEditText = (EditText) findViewById(R.id.ed_login_phone);
+		PasswordEditText = (EditText) findViewById(R.id.ed_login_password);
+		LoginButton = (Button) findViewById(R.id.button_login);
+		LoginButton.setOnClickListener(new View.OnClickListener() {
 
-                }
-                if (TextUtils.isEmpty(strPassword)) {
-                    showToast("密码不能为空哦");
-                    return;
-                }
+			@Override
+			public void onClick(View arg0) {
+				Utils.autoCloseKeyboard(self, arg0);
+				final String strPhoneNum = PhoneNumEditText.getText()
+						.toString();
+				final String strPassword = PasswordEditText.getText()
+						.toString();
+				if (TextUtils.isEmpty(strPhoneNum)) {
+					showToast("手机号码不能为空");
+					return;
+				}
+				if (!Utils.isValidMobilePhoneNumber(strPhoneNum)) {
+					showToast("手机格式错误");
+					return;
 
-                DhNet net = new DhNet(API.login);
-                net.addParam("phone", strPhoneNum);
-                net.addParam("password", MD5Util.string2MD5(strPassword));
-                net.doPostInDialog("登录中...", new NetTask(self) {
+				}
+				if (TextUtils.isEmpty(strPassword)) {
+					showToast("密码不能为空哦");
+					return;
+				}
 
-                    @Override
-                    public void doInUI(Response response, Integer transfer) {
-                        if (response.isSuccess()) {
-                            JSONObject jo = response.jSONFrom("data");
+				DhNet net = new DhNet(API.login);
+				net.addParam("phone", strPhoneNum);
+				net.addParam("password", MD5Util.string2MD5(strPassword));
+				net.doPostInDialog("登录中...", new NetTask(self) {
 
-                            // 登录环信
-                            loginHX(MD5Util.string2MD5(JSONUtil.getString(jo, "userId")),
-                                    MD5Util.string2MD5(strPassword), jo, strPhoneNum);
+					@Override
+					public void doInUI(Response response, Integer transfer) {
+						if (response.isSuccess()) {
+							JSONObject jo = response.jSONFrom("data");
 
-                        }
-                    }
-                });
-            }
-        });
-        // 忘记密码
-        login_forgetpsw = (TextView) findViewById(R.id.login_forgetpsw);
-        login_forgetpsw.setOnClickListener(new View.OnClickListener() {
+							// 登录环信
+							loginHX(MD5Util.string2MD5(JSONUtil.getString(jo,
+									"userId")),
+									MD5Util.string2MD5(strPassword), jo,
+									strPhoneNum);
 
-            @Override
-            public void onClick(View arg0) {
-                Intent intent = new Intent(self, ForgetPwdActivity.class);
-                startActivityForResult(intent, Forgetpwd);
-            }
-        });
-    }
+						}
+					}
+				});
+			}
+		});
+		// 忘记密码
+		login_forgetpsw = (TextView) findViewById(R.id.login_forgetpsw);
+		login_forgetpsw.setOnClickListener(new View.OnClickListener() {
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+			@Override
+			public void onClick(View arg0) {
+				Intent intent = new Intent(self, ForgetPwdActivity.class);
+				startActivityForResult(intent, Forgetpwd);
+			}
+		});
+		// 注册
+		// login_register = (LinearLayout) findViewById(R.id.login_register);
+		// login_register.setOnClickListener(new View.OnClickListener() {
+		//
+		// @Override
+		// public void onClick(View arg0) {
+		// Intent intent = new Intent(self, RegisterActivity.class);
+		// startActivityForResult(intent, Register);
+		//
+		// }
+		// });
 
-        /** 使用SSO授权必须添加如下代码 */
-        UMSsoHandler ssoHandler = mController.getConfig().getSsoHandler(requestCode);
-        if (ssoHandler != null) {
-            ssoHandler.authorizeCallBack(requestCode, resultCode, data);
-        }
+	}
 
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == Register) {
-                finish();
-            }
-            if (requestCode == Forgetpwd) {
-                finish();
-            }
-        }
-    }
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
 
-    @Override
-    public void finish() {
-        super.finish();
-        if (loginCall != null) {
-            if (User.getInstance().isLogin()) {
-                loginCall.onisLogin();
-            } else {
-                loginCall.onLoginFail();
-            }
-        }
-        loginCall = null;
-    }
+		/** 使用SSO授权必须添加如下代码 */
+		UMSsoHandler ssoHandler = mController.getConfig().getSsoHandler(
+				requestCode);
+		if (ssoHandler != null) {
+			ssoHandler.authorizeCallBack(requestCode, resultCode, data);
+		}
 
-    private void loginHX(String currentUsername, final String currentPassword, final JSONObject jo, final String phone) {
-        EMChatManager.getInstance().login(currentUsername, currentPassword, new EMCallBack() {
+		if (resultCode == Activity.RESULT_OK) {
+			if (requestCode == Register) {
+				finish();
+			}
+			if (requestCode == Forgetpwd) {
+				finish();
+			}
+		}
+	}
 
-            @Override
-            public void onSuccess() {
+	@Override
+	public void finish() {
+		super.finish();
+		if (loginCall != null) {
+			if (User.getInstance().isLogin()) {
+				loginCall.onisLogin();
+			} else {
+				loginCall.onLoginFail();
+			}
+		}
+		loginCall = null;
+	}
 
-                try {
-                    // ** 第一次登录或者之前logout后再登录，加载所有本地群和回话
-                    // ** manually load all local groups and
-                    EMGroupManager.getInstance().loadAllGroups();
-                    EMChatManager.getInstance().loadAllConversations();
-                    // 处理好友和群组
-                    initializeContacts();
-                    User user = User.getInstance();
-                    user.setUserId(JSONUtil.getString(jo, "userId"));
-                    user.setToken(JSONUtil.getString(jo, "token"));
-                    user.setBrand(JSONUtil.getString(jo, "brand"));
-                    user.setBrandLogo(JSONUtil.getString(jo, "brandLogo"));
-                    user.setModel(JSONUtil.getString(jo, "model"));
-                    user.setPsaaword(currentPassword);
-                    user.setSeatNumber(JSONUtil.getInt(jo, "seatNumber"));
-                    user.setIsAuthenticated(JSONUtil.getInt(jo, "isAuthenticated"));
-                    CarPlayPerference per = IocContainer.getShare().get(CarPlayPerference.class);
-                    per.phone = phone;
-                    per.password = currentPassword;
-                    per.commit();
-                    String action = getIntent().getStringExtra("action");
-                    if (action != null && action.equals("logout")) {
-                        Intent it = new Intent(self, MainActivity.class);
-                        startActivity(it);
-                    } else {
-                        self.finish();
-                    }
-                    User.getInstance().setLogin(true);
-                    LoginEB loginEB = new LoginEB();
-                    loginEB.setIslogin(true);
-                    EventBus.getDefault().post(loginEB);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    // 取好友或者群聊失败，不让进入主页面
-                    runOnUiThread(new Runnable() {
-                        public void run() {
-                            DemoHXSDKHelper.getInstance().logout(true, null);
-                            Toast.makeText(getApplicationContext(), R.string.login_failure_failed, 1).show();
-                        }
-                    });
-                    return;
-                }
-                // 更新当前用户的nickname 此方法的作用是在ios离线推送时能够显示用户nick
-                // boolean updatenick =
-                // EMChatManager.getInstance().updateCurrentUserNick(
-                // DemoApplication.currentUserNick.trim());
-                // if (!updatenick) {
-                // Log.e("LoginActivity",
-                // "update current user nick fail");
-                // }
-                // if (!LoginActivity.this.isFinishing() &&
-                // pd.isShowing()) {
-                // pd.dismiss();
-                // }
-                // 进入主页面
+	private void loginHX(final String currentUsername,
+			final String currentPassword, final JSONObject jo,
+			final String phone) {
+		EMChatManager.getInstance().login(currentUsername, currentPassword,
+				new EMCallBack() {
 
-            }
+					@Override
+					public void onSuccess() {
 
-            @Override
-            public void onProgress(int progress, String status) {
-            }
+						try {
 
-            @Override
-            public void onError(final int code, final String message) {
-                // if (!progressShow) {
-                // return;
-                // }
-                runOnUiThread(new Runnable() {
-                    public void run() {
-                        // pd.dismiss();
-                        showToast("登录失败:" + message);
-                        // Toast.makeText(
-                        // getApplicationContext(),
-                        // getString(R.string.Login_failed)
-                        // + message, Toast.LENGTH_SHORT)
-                        // .show();
-                    }
-                });
-            }
-        });
+							CarPlayApplication.getInstance().setUserName(
+									currentUsername);
+							CarPlayApplication.getInstance().setPassword(
+									currentPassword);
+							// ** 第一次登录或者之前logout后再登录，加载所有本地群和回话
+							// ** manually load all local groups and
+							EMGroupManager.getInstance().loadAllGroups();
+							EMChatManager.getInstance().loadAllConversations();
+							// 处理好友和群组
+							initializeContacts();
+							User user = User.getInstance();
+							user.setUserId(JSONUtil.getString(jo, "userId"));
+							user.setToken(JSONUtil.getString(jo, "token"));
+							user.setBrand(JSONUtil.getString(jo, "brand"));
+							user.setBrandLogo(JSONUtil.getString(jo,
+									"brandLogo"));
+							user.setModel(JSONUtil.getString(jo, "model"));
+							user.setPsaaword(currentPassword);
+							user.setSeatNumber(JSONUtil
+									.getInt(jo, "seatNumber"));
+							user.setIsAuthenticated(JSONUtil.getInt(jo,
+									"isAuthenticated"));
+							CarPlayPerference per = IocContainer.getShare()
+									.get(CarPlayPerference.class);
+							per.phone = phone;
+							per.password = currentPassword;
+							per.commit();
+							String action = getIntent()
+									.getStringExtra("action");
+							if (action != null && action.equals("logout")) {
+								Intent it = new Intent(self, MainActivity.class);
+								startActivity(it);
+							} else {
+								self.finish();
+							}
+							User.getInstance().setLogin(true);
+							LoginEB loginEB = new LoginEB();
+							loginEB.setIslogin(true);
+							EventBus.getDefault().post(loginEB);
+							asyncFetchGroupsFromServer();
+						} catch (Exception e) {
+							e.printStackTrace();
+							// 取好友或者群聊失败，不让进入主页面
+							runOnUiThread(new Runnable() {
+								public void run() {
+									DemoHXSDKHelper.getInstance().logout(true,
+											null);
+									Toast.makeText(getApplicationContext(),
+											R.string.login_failure_failed, 1)
+											.show();
+								}
+							});
+							return;
+						}
+						// 更新当前用户的nickname 此方法的作用是在ios离线推送时能够显示用户nick
+						// boolean updatenick =
+						// EMChatManager.getInstance().updateCurrentUserNick(
+						// DemoApplication.currentUserNick.trim());
+						// if (!updatenick) {
+						// Log.e("LoginActivity",
+						// "update current user nick fail");
+						// }
+						// if (!LoginActivity.this.isFinishing() &&
+						// pd.isShowing()) {
+						// pd.dismiss();
+						// }
+						// 进入主页面
 
-    }
+					}
 
-    private void initializeContacts() {
-        Map<String, ChatUser> userlist = new HashMap<String, ChatUser>();
-        // 添加user"申请与通知"
-        ChatUser newFriends = new ChatUser();
-        newFriends.setUsername(Constant.NEW_FRIENDS_USERNAME);
-        String strChat = getResources().getString(R.string.Application_and_notify);
-        newFriends.setNick(strChat);
+					@Override
+					public void onProgress(int progress, String status) {
+					}
 
-        userlist.put(Constant.NEW_FRIENDS_USERNAME, newFriends);
-        // 添加"群聊"
-        ChatUser groupUser = new ChatUser();
-        String strGroup = getResources().getString(R.string.group_chat);
-        groupUser.setUsername(Constant.GROUP_USERNAME);
-        groupUser.setNick(strGroup);
-        groupUser.setHeader("");
-        userlist.put(Constant.GROUP_USERNAME, groupUser);
+					@Override
+					public void onError(final int code, final String message) {
+						// if (!progressShow) {
+						// return;
+						// }
+						runOnUiThread(new Runnable() {
+							public void run() {
+								// pd.dismiss();
+								showToast("登录失败:" + message);
+								// Toast.makeText(
+								// getApplicationContext(),
+								// getString(R.string.Login_failed)
+								// + message, Toast.LENGTH_SHORT)
+								// .show();
+							}
+						});
+					}
+				});
 
-        // 添加"Robot"
-        ChatUser robotUser = new ChatUser();
-        String strRobot = getResources().getString(R.string.robot_chat);
-        robotUser.setUsername(Constant.CHAT_ROBOT);
-        robotUser.setNick(strRobot);
-        robotUser.setHeader("");
-        userlist.put(Constant.CHAT_ROBOT, robotUser);
+	}
 
-        // 存入内存
-        ((DemoHXSDKHelper) HXSDKHelper.getInstance()).setContactList(userlist);
-        // 存入db
-        UserDao dao = new UserDao(LoginActivity.this);
-        List<ChatUser> users = new ArrayList<ChatUser>(userlist.values());
-        dao.saveContactList(users);
-    }
+	private void initializeContacts() {
+		Map<String, ChatUser> userlist = new HashMap<String, ChatUser>();
+		// 添加user"申请与通知"
+		ChatUser newFriends = new ChatUser();
+		newFriends.setUsername(Constant.NEW_FRIENDS_USERNAME);
+		String strChat = getResources().getString(
+				R.string.Application_and_notify);
+		newFriends.setNick(strChat);
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-        case R.id.layout_login_weixin:
-            doOauthVerify(SHARE_MEDIA.WEIXIN);
-            break;
-        case R.id.layout_login_weibo:
-            doOauthVerify(SHARE_MEDIA.SINA);
-            break;
-        case R.id.layout_login_qq:
-            doOauthVerify(SHARE_MEDIA.QQ);
-            break;
-        }
-    }
+		userlist.put(Constant.NEW_FRIENDS_USERNAME, newFriends);
+		// 添加"群聊"
+		ChatUser groupUser = new ChatUser();
+		String strGroup = getResources().getString(R.string.group_chat);
+		groupUser.setUsername(Constant.GROUP_USERNAME);
+		groupUser.setNick(strGroup);
+		groupUser.setHeader("");
+		userlist.put(Constant.GROUP_USERNAME, groupUser);
 
-    private void doOauthVerify(SHARE_MEDIA media) {
-        mController.doOauthVerify(self, media, new UMAuthListener() {
+		// 添加"Robot"
+		ChatUser robotUser = new ChatUser();
+		String strRobot = getResources().getString(R.string.robot_chat);
+		robotUser.setUsername(Constant.CHAT_ROBOT);
+		robotUser.setNick(strRobot);
+		robotUser.setHeader("");
+		userlist.put(Constant.CHAT_ROBOT, robotUser);
 
-            @Override
-            public void onStart(SHARE_MEDIA arg0) {
+		// 存入内存
+		((DemoHXSDKHelper) HXSDKHelper.getInstance()).setContactList(userlist);
+		// 存入db
+		UserDao dao = new UserDao(LoginActivity.this);
+		List<ChatUser> users = new ArrayList<ChatUser>(userlist.values());
+		dao.saveContactList(users);
+	}
 
-            }
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.layout_login_weixin:
+			doOauthVerify(SHARE_MEDIA.WEIXIN);
+			break;
+		case R.id.layout_login_weibo:
+			doOauthVerify(SHARE_MEDIA.SINA);
+			break;
+		case R.id.layout_login_qq:
+			doOauthVerify(SHARE_MEDIA.QQ);
+			break;
+		}
+	}
 
-            @Override
-            public void onError(SocializeException arg0, SHARE_MEDIA arg1) {
-                showToast("授权失败");
-            }
+	private void doOauthVerify(SHARE_MEDIA media) {
+		mController.doOauthVerify(self, media, new UMAuthListener() {
 
-            @Override
-            public void onComplete(Bundle value, SHARE_MEDIA media) {
-                if (value != null && !TextUtils.isEmpty(value.getString("uid"))) {
-                    getUserInfo(media);
-                } else {
-                    showToast("授权失败");
-                }
-            }
+			@Override
+			public void onStart(SHARE_MEDIA arg0) {
 
-            @Override
-            public void onCancel(SHARE_MEDIA arg0) {
-                showToast("授权取消");
-            }
-        });
-    }
+			}
 
-    private void getUserInfo(SHARE_MEDIA media) {
-        mController.getPlatformInfo(self, media, new UMDataListener() {
+			@Override
+			public void onError(SocializeException arg0, SHARE_MEDIA arg1) {
+				showToast("授权失败");
+			}
 
-            @Override
-            public void onStart() {
+			@Override
+			public void onComplete(Bundle arg0, SHARE_MEDIA media) {
+				getUserInfo(media);
+				showToast("授权成功");
+			}
 
-            }
+			@Override
+			public void onCancel(SHARE_MEDIA arg0) {
+				showToast("授权取消");
+			}
+		});
+	}
 
-            @Override
-            public void onComplete(int status, Map<String, Object> info) {
-                if (status == 200 && info != null) {
-                    StringBuilder sb = new StringBuilder();
-                    Set<String> keys = info.keySet();
-                    for (String key : keys) {
-                        sb.append(key + "=" + info.get(key).toString() + "\r\n");
-                    }
-                    showToast(sb.toString());
-                    Log.e("tag", sb.toString());
-                } else {
-                    showToast("授权失败" + status);
-                }
-            }
-        });
-    }
+	private void getUserInfo(SHARE_MEDIA media) {
+		mController.getPlatformInfo(self, media, new UMDataListener() {
+
+			@Override
+			public void onStart() {
+
+			}
+
+			@Override
+			public void onComplete(int status, Map<String, Object> info) {
+				if (status == 200 && info != null) {
+					StringBuilder sb = new StringBuilder();
+					Set<String> keys = info.keySet();
+					for (String key : keys) {
+						sb.append(key + "=" + info.get(key).toString() + "\r\n");
+					}
+					showToast(sb.toString());
+					Log.e("tag", sb.toString());
+				} else {
+					showToast("获取用户信息失败");
+				}
+			}
+		});
+	}
+
+	static void asyncFetchGroupsFromServer() {
+		HXSDKHelper.getInstance().asyncFetchGroupsFromServer(new EMCallBack() {
+
+			@Override
+			public void onSuccess() {
+				HXSDKHelper.getInstance().noitifyGroupSyncListeners(true);
+
+				if (HXSDKHelper.getInstance().isContactsSyncedWithServer()) {
+					HXSDKHelper.getInstance().notifyForRecevingEvents();
+				}
+			}
+
+			@Override
+			public void onError(int code, String message) {
+				HXSDKHelper.getInstance().noitifyGroupSyncListeners(false);
+			}
+
+			@Override
+			public void onProgress(int progress, String status) {
+
+			}
+
+		});
+	}
 }

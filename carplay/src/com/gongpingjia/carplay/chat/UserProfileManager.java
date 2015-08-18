@@ -10,6 +10,7 @@ import com.easemob.chat.EMChat;
 import com.easemob.chat.EMChatManager;
 import com.gongpingjia.carplay.chat.bean.ChatUser;
 import com.gongpingjia.carplay.chat.controller.HXSDKHelper.HXSyncListener;
+import com.gongpingjia.carplay.chat.pars.ParseManager;
 import com.gongpingjia.carplay.chat.utils.HXPreferenceUtils;
 
 public class UserProfileManager {
@@ -126,44 +127,46 @@ public class UserProfileManager {
 		return currentUser;
 	}
 
-	// public boolean updateParseNickName(final String nickname) {
-	// boolean isSuccess =
-	// ParseManager.getInstance().updateParseNickName(nickname);
-	// if (isSuccess) {
-	// setCurrentUserNick(nickname);
-	// }
-	// return isSuccess;
-	// }
+	public boolean updateParseNickName(final String nickname) {
+		boolean isSuccess = ParseManager.getInstance().updateParseNickName(
+				nickname);
+		if (isSuccess) {
+			setCurrentUserNick(nickname);
+		}
+		return isSuccess;
+	}
 
-	// public String uploadUserAvatar(byte[] data) {
-	// String avatarUrl = ParseManager.getInstance().uploadParseAvatar(data);
-	// if (avatarUrl != null) {
-	// setCurrentUserAvatar(avatarUrl);
-	// }
-	// return avatarUrl;
-	// }
-	//
-	// public void asyncGetCurrentUserInfo() {
-	// ParseManager.getInstance().asyncGetCurrentUserInfo(new
-	// EMValueCallBack<ChatUser>() {
-	//
-	// @Override
-	// public void onSuccess(ChatUser value) {
-	// setCurrentUserNick(value.getNick());
-	// setCurrentUserAvatar(value.getAvatar());
-	// }
-	//
-	// @Override
-	// public void onError(int error, String errorMsg) {
-	//
-	// }
-	// });
-	//
-	// }
-	// public void asyncGetUserInfo(final String username,final
-	// EMValueCallBack<ChatUser> callback){
-	// ParseManager.getInstance().asyncGetUserInfo(username, callback);
-	// }
+	public String uploadUserAvatar(byte[] data) {
+		String avatarUrl = ParseManager.getInstance().uploadParseAvatar(data);
+		if (avatarUrl != null) {
+			setCurrentUserAvatar(avatarUrl);
+		}
+		return avatarUrl;
+	}
+
+	public void asyncGetCurrentUserInfo() {
+		ParseManager.getInstance().asyncGetCurrentUserInfo(
+				new EMValueCallBack<ChatUser>() {
+
+					@Override
+					public void onSuccess(ChatUser value) {
+						setCurrentUserNick(value.getNick());
+						setCurrentUserAvatar(value.getAvatar());
+					}
+
+					@Override
+					public void onError(int error, String errorMsg) {
+
+					}
+				});
+
+	}
+
+	public void asyncGetUserInfo(final String username,
+			final EMValueCallBack<ChatUser> callback) {
+		ParseManager.getInstance().asyncGetUserInfo(username, callback);
+	}
+
 	private void setCurrentUserNick(String nickname) {
 		getCurrentUserInfo().setNick(nickname);
 		HXPreferenceUtils.getInstance().setCurrentUserNick(nickname);
