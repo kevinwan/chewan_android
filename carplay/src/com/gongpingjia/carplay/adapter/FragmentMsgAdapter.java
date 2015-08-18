@@ -99,8 +99,6 @@ public class FragmentMsgAdapter extends BaseAdapter {
 		applicationTimeT=(TextView) view.findViewById(R.id.applicationmsg_time);
 
 		if (jo != null) {
-			SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
-
 			JSONObject commentJo = JSONUtil.getJSONObject(jo, "comment");
 			normalMsgBadgeT
 					.setVisibility(JSONUtil.getInt(commentJo, "count") == 0 ? View.GONE

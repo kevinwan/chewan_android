@@ -53,11 +53,11 @@ public class ActiveInformationActivity extends CarPlayBaseActivity implements
 	private static final int REQUEST_DESCRIPTION = 1;
 
 	User user;
-
+	//活动ID
 	String activityId;
 
 	LinearLayout headlayoutV, activity_edit;
-
+	//是否为创建者
 	int id;
 
 	JSONObject headJo = new JSONObject();
@@ -90,8 +90,6 @@ public class ActiveInformationActivity extends CarPlayBaseActivity implements
 
 	JSONArray picJsa;
 
-	 //上传图片返回的id
-	 private List<String> mPicIds;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -122,7 +120,6 @@ public class ActiveInformationActivity extends CarPlayBaseActivity implements
 				showToast("举报");
 			}
 		});
-		 mPicIds = new ArrayList<String>();
 		getData();
 
 	}
@@ -138,28 +135,27 @@ public class ActiveInformationActivity extends CarPlayBaseActivity implements
 				if (response.isSuccess()) {
 					headJo = response.jSONFromData();
 					id = JSONUtil.getInt(headJo, "isOrganizer");
-					type = JSONUtil.getString(headJo, "type");
-					intro = JSONUtil.getString(headJo, "introduction");
-					location = JSONUtil.getString(headJo, "location");
-					address = JSONUtil.getString(headJo, "address");
-					province = JSONUtil.getString(headJo, "province");
-					city = JSONUtil.getString(headJo, "city");
-					district = JSONUtil.getString(headJo, "district");
-					pay = JSONUtil.getString(headJo, "pay");
-					longitude = JSONUtil.getDouble(headJo, "longitude");
-					latitude = JSONUtil.getDouble(headJo, "latitude");
-					start = JSONUtil.getLong(headJo, "start");
-					end = JSONUtil.getLong(headJo, "end");
-					picJsa = JSONUtil.getJSONArray(headJo, "cover");
-					JSONArray picJsa = JSONUtil.getJSONArray(headJo, "cover");
-					
+					// type = JSONUtil.getString(headJo, "type");
+					// intro = JSONUtil.getString(headJo, "introduction");
+					// location = JSONUtil.getString(headJo, "location");
+					// address = JSONUtil.getString(headJo, "address");
+					// province = JSONUtil.getString(headJo, "province");
+					// city = JSONUtil.getString(headJo, "city");
+					// district = JSONUtil.getString(headJo, "district");
+					// pay = JSONUtil.getString(headJo, "pay");
+					// longitude = JSONUtil.getDouble(headJo, "longitude");
+					// latitude = JSONUtil.getDouble(headJo, "latitude");
+					// start = JSONUtil.getLong(headJo, "start");
+					// end = JSONUtil.getLong(headJo, "end");
+					// picJsa = JSONUtil.getJSONArray(headJo, "cover");
+					// JSONArray picJsa = JSONUtil.getJSONArray(headJo,
+					// "cover");
 					bindHeadView(headJo);
 
 				}
 			}
 		});
 	}
-	
 
 	private void bindHeadView(final JSONObject headJo) {
 		JSONObject createrJo = JSONUtil.getJSONObject(headJo, "organizer");
@@ -181,7 +177,6 @@ public class ActiveInformationActivity extends CarPlayBaseActivity implements
 
 	}
 
-	// 活动与登陆者的关系
 	private void activeRelative(JSONObject jo) {
 		int isOrganizer = JSONUtil.getInt(jo, "isOrganizer");
 		int isMember = JSONUtil.getInt(jo, "isMember");
@@ -288,58 +283,6 @@ public class ActiveInformationActivity extends CarPlayBaseActivity implements
 			switch (requestCode) {
 			case REQUEST_DESCRIPTION:
 				activity_Introduction.setText(data.getStringExtra("des"));
-//				User user = User.getInstance();
-//				mDhNet = new DhNet(API.editActive + activityId
-//						+ "/info?userId=" + user.getUserId() + "&token="
-//						+ user.getToken());
-//				mDhNet.addParam("type", type);
-//				mDhNet.addParam("introduction", intro);
-//				JSONArray array = new JSONArray(mPicIds);
-//				mDhNet.addParam("cover", array);
-//				mDhNet.addParam("location", location);
-//				if (city != null) {
-//					mDhNet.addParam("city", city);
-//				}
-//				if (!location.equals(location)) {
-//					mDhNet.addParam("address", address);
-//					mDhNet.addParam("province", province);
-//					mDhNet.addParam("district", district);
-//					mDhNet.addParam("location", location);
-//				}
-//
-//				if (latitude != 0 || longitude != 0) {
-//					mDhNet.addParam("latitude", latitude);
-//					mDhNet.addParam("longitude", longitude);
-//				}
-//				mDhNet.addParam("start", start);
-//				mDhNet.addParam("pay", pay);
-//				if (end != 0) {
-//					mDhNet.addParam("end", end);
-//				}
-//
-//				Log.e("tag", "url:" + mDhNet.getUrl());
-//				Map<String, Object> params = mDhNet.getParams();
-//				for (String key : params.keySet()) {
-//					Log.e("tag", key + ": " + params.get(key));
-//				}
-//				mDhNet.doPostInDialog(new NetTask(this) {
-//
-//					@Override
-//					public void doInUI(Response response, Integer transfer) {
-//						if (response.isSuccess()) {
-//							showToast("修改成功");
-//							self.finish();
-//						} else {
-//							showToast("修改异常请重试");
-//							try {
-//								Log.e("err", response.jSON()
-//										.getString("errmsg"));
-//							} catch (JSONException e) {
-//								e.printStackTrace();
-//							}
-//						}
-//					}
-//				});
 				break;
 
 			default:

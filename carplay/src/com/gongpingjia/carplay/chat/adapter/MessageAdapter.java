@@ -408,8 +408,11 @@ public class MessageAdapter extends BaseAdapter {
 							.findViewById(R.id.tv_userid);
 					holder.iv_read_status = (ImageView) convertView
 							.findViewById(R.id.iv_unread_voice);
+					holder.voiceLayoutV = convertView
+							.findViewById(R.id.voice_layout);
 				} catch (Exception e) {
 				}
+
 			} else if (message.getType() == EMMessage.Type.LOCATION) {
 				try {
 					holder.iv_avatar = (ImageView) convertView
@@ -420,6 +423,7 @@ public class MessageAdapter extends BaseAdapter {
 							.findViewById(R.id.pb_sending);
 					holder.staus_iv = (ImageView) convertView
 							.findViewById(R.id.msg_status);
+
 					holder.tv_usernick = (TextView) convertView
 							.findViewById(R.id.tv_userid);
 				} catch (Exception e) {
@@ -487,10 +491,16 @@ public class MessageAdapter extends BaseAdapter {
 		if ((chatType == ChatType.GroupChat || chatType == ChatType.ChatRoom)
 				&& message.direct == EMMessage.Direct.RECEIVE) {
 			// demo里使用username代码nick
-			UserUtils.setUserNick(message.getFrom(), holder.tv_usernick);
+			// UserUtils.setUserNick(message.getFrom(), holder.tv_usernick);
+			holder.tv_usernick.setText(message.getStringAttribute("nickName",
+					""));
 		}
 		if (message.direct == EMMessage.Direct.SEND) {
-			UserUtils.setCurrentUserNick(holder.tv_usernick);
+			holder.tv_usernick.setText(message.getStringAttribute("nickName",
+					""));
+			// UserUtils.setUserNick(message.getStringAttribute("nickName", ""),
+			// holder.tv_usernick);
+			// UserUtils.setCurrentUserNick(message.);
 		}
 		// 如果是发送的消息并且不是群聊消息，显示已读textview
 		if (!(chatType == ChatType.GroupChat || chatType == ChatType.ChatRoom)
@@ -1104,9 +1114,10 @@ public class MessageAdapter extends BaseAdapter {
 		} else {
 			holder.tv.setVisibility(View.INVISIBLE);
 		}
-		holder.iv.setOnClickListener(new VoicePlayClickListener(message,
-				holder.iv, holder.iv_read_status, this, activity, username));
-		holder.iv.setOnLongClickListener(new OnLongClickListener() {
+		holder.voiceLayoutV.setOnClickListener(new VoicePlayClickListener(
+				message, holder.iv, holder.iv_read_status, this, activity,
+				username));
+		holder.voiceLayoutV.setOnLongClickListener(new OnLongClickListener() {
 			@Override
 			public boolean onLongClick(View v) {
 				activity.startActivityForResult((new Intent(activity,
@@ -1738,6 +1749,8 @@ public class MessageAdapter extends BaseAdapter {
 
 		TextView tvTitle;
 		LinearLayout tvList;
+
+		View voiceLayoutV;
 	}
 
 	/*

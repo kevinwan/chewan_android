@@ -3,10 +3,13 @@ package com.gongpingjia.carplay.activity.active;
 import net.duohuo.dhroid.adapter.NetJSONAdapter;
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
+import net.duohuo.dhroid.net.NetTask;
+import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.util.UserLocation;
 import net.duohuo.dhroid.view.NetRefreshAndMoreListView;
 import net.duohuo.dhroid.view.NetRefreshAndMoreListView.OnEmptyDataListener;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.content.Intent;
@@ -195,9 +198,22 @@ public class ActiveListFragment extends Fragment {
 		hotAdapter.addparam("authenticate", "");
 		hotAdapter.addparam("carLevel", "");
 		hotAdapter.fromWhat("data");
+		DhNet net = new DhNet(API.official);
+		net.doGetInDialog(new NetTask(getActivity()) {
+			
+			@Override
+			public void doInUI(Response response, Integer transfer) {
+				JSONArray jo = response.jSONArrayFromData();
+				if (jo!=null&&jo.length()>0) {
+					hotAdapter.setJsa(jo);
+				}
+				
+			}
+		});
+		
 		hotListV.setAdapter(hotAdapter);
 		hotAdapter.showNext();
-
+		
 		System.out.println("经纬度:" + location.getLongitude() + "味道"
 				+ location.getLatitude());
 

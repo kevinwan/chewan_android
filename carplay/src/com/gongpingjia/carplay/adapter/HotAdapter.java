@@ -1,5 +1,6 @@
 package com.gongpingjia.carplay.adapter;
 
+import java.text.SimpleDateFormat;
 import java.util.Iterator;
 
 import net.duohuo.dhroid.adapter.NetJSONAdapter;
@@ -31,6 +32,7 @@ import android.widget.TextView;
 
 import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.activity.active.ActiveDetailsActivity;
 import com.gongpingjia.carplay.activity.active.ActiveMembersActivity;
 import com.gongpingjia.carplay.activity.active.MyActiveMembersManageActivity;
 import com.gongpingjia.carplay.adapter.ActiveAdapter.ViewHolder;
@@ -60,6 +62,11 @@ public class HotAdapter extends NetJSONAdapter {
 
 	MiddleViewHolder middleHolder;
 
+
+	View[] views;
+
+	JSONArray jsa = new JSONArray();
+
 	public HotAdapter(String api, Context context, int mResource) {
 		super(api, context, mResource);
 		mLayoutInflater = LayoutInflater.from(context);
@@ -74,14 +81,23 @@ public class HotAdapter extends NetJSONAdapter {
 		EventBus.getDefault().register(this);
 	}
 
+	public void setJsa(JSONArray j) {
+		jsa = j;
+		notifyDataSetChanged();
+	}
+
 	@Override
 	public int getItemViewType(int position) {
-		int count;
+		JSONObject jo = mVaules.get(position);
+		int count=JSONUtil.getJSONArray(jo, "cover").length();
 		if (position == 1) {
-			count = 0;
-		} else {
-			JSONObject jo = mVaules.get(position);
-			count = JSONUtil.getJSONArray(jo, "cover").length();
+			if (jsa.length() > 0) {
+				count = 0;
+			} 
+//			else {
+//				JSONObject jo = mVaules.get(position);
+//				count = JSONUtil.getJSONArray(jo, "cover").length();
+//			}
 		}
 		return count;
 	}
@@ -497,17 +513,66 @@ public class HotAdapter extends NetJSONAdapter {
 		return shareJo;
 	}
 
+	/** 官方活动 */
 	private void bindViewPageAdapter() {
-		View leftV = mLayoutInflater.inflate(R.layout.item_hotview_viewpage,
-				null);
+		DhNet net = new DhNet(API.official);
+		net.doGetInDialog(new NetTask(mContext) {
 
-		View middleV = mLayoutInflater.inflate(R.layout.item_hotview_viewpage,
-				null);
+			@Override
+			public void doInUI(Response response, Integer transfer) {
+				if (jsa.length() > 0) {
+					views = new View[jsa.length()];
+					for (int i = 0; i < jsa.length(); i++) {
+						final JSONObject jot;
+						try {
+							jot = jsa.getJSONObject(i);
+							View leftV = mLayoutInflater.inflate(
+									R.layout.item_hotview_viewpage, null);
 
-		View rightV = mLayoutInflater.inflate(R.layout.item_hotview_viewpage,
-				null);
-		SimplePageAdapter middleAdapter = new SimplePageAdapter(leftV, middleV,
-				rightV);
-		middleHolder.pager.setAdapter(middleAdapter);
+							ImageView pghead = (ImageView) leftV
+									.findViewById(R.id.head);
+							ImageView pglogo = (ImageView) leftV
+									.findViewById(R.id.logo);
+							TextView pgtitle = (TextView) leftV
+									.findViewById(R.id.title);
+							TextView pgendtime = (TextView) leftV
+									.findViewById(R.id.endtime);
+							TextView pgcontent = (TextView) leftV
+									.findViewById(R.id.content);
+
+							SimpleDateFormat formatdate = new SimpleDateFormat(
+									"yyyy.MM.dd");
+							pgendtime.setText("截止时间:  "
+									+ formatdate.format(JSONUtil.getLong(jot,
+											"end")));
+							pgtitle.setText(JSONUtil.getString(jot, "title"));
+							pgcontent.setText(JSONUtil
+									.getString(jot, "content"));
+							ViewUtil.bindNetImage(pghead,
+									JSONUtil.getString(jot, "cover"), "cover");
+							ViewUtil.bindNetImage(pglogo,
+									JSONUtil.getString(jot, "logo"), "logo");
+							
+							leftV.setOnClickListener(new OnClickListener() {
+								
+								@Override
+								public void onClick(View arg0) {
+									Intent intent=new Intent(mContext,ActiveDetailsActivity.class);
+									intent.putExtra("activityId", JSONUtil.getString(jot, "activityId"));
+									mContext.startActivity(intent);
+								}
+							});
+							views[i] = leftV;
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+					}
+
+					SimplePageAdapter middleAdapter = new SimplePageAdapter(
+							views);
+					middleHolder.pager.setAdapter(middleAdapter);
+				}
+			}
+		});
 	}
 }
