@@ -40,5 +40,8 @@ public class API {
 	public static final String update = "http://cwapi.gongpingjia.com/version";
 
 	public static final String share = "http://cwapi.gongpingjia.com/";
+	
+	// 官方活动
+	public static final String official = CWBaseurl + "/official/activity/list";
 
 }
