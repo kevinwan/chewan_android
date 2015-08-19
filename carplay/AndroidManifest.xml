@@ -54,7 +54,7 @@
         </activity>
         <activity
             android:name=".activity.chat.ContextMenu"
-            android:theme="@style/Theme.CustomDialog" >
+            android:theme="@style/CustomDialog" >
         </activity>
         <activity android:name=".activity.chat.ShowBigImage" >
         </activity>

@@ -194,6 +194,8 @@ public class ChatActivity extends CarPlayBaseActivity implements
 	private Button btnMore;
 	public String playMsgId;
 
+	User user;
+
 	private SwipeRefreshLayout swipeRefreshLayout;
 
 	private Handler micImageHandler = new Handler() {
@@ -211,12 +213,14 @@ public class ChatActivity extends CarPlayBaseActivity implements
 	public EMChatRoom room;
 	public boolean isRobot;
 	String activiyId;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_chat);
 		activityInstance = this;
-		 activiyId = getIntent().getStringExtra("activityId");
+		activiyId = getIntent().getStringExtra("activityId");
+		user = User.getInstance();
 		initView();
 		setUpView();
 	}
@@ -230,7 +234,7 @@ public class ChatActivity extends CarPlayBaseActivity implements
 			@Override
 			public void onClick(View v) {
 				Intent it = new Intent(self, ActiveInformationActivity.class);
-				it.putExtra("activityId",activiyId );
+				it.putExtra("activityId", activiyId);
 				startActivity(it);
 			}
 		});
@@ -997,7 +1001,9 @@ public class ChatActivity extends CarPlayBaseActivity implements
 			TextMessageBody txtBody = new TextMessageBody(content);
 			// 设置消息body
 			message.addBody(txtBody);
-			message.setAttribute("nickName", "大长腿");
+			message.setAttribute("nickName", user.getNickName());
+			message.setAttribute("headUrl", user.getHeadUrl());
+			message.setAttribute("userId", user.getUserId());
 			// 设置要发给谁,用户username或者群聊groupid
 			message.setReceipt(toChatUsername);
 			// 把messgage加到conversation中
@@ -1033,7 +1039,9 @@ public class ChatActivity extends CarPlayBaseActivity implements
 			} else if (chatType == CHATTYPE_CHATROOM) {
 				message.setChatType(ChatType.ChatRoom);
 			}
-			message.setAttribute("nickName", "大长腿");
+			message.setAttribute("nickName", user.getNickName());
+			message.setAttribute("headUrl", user.getHeadUrl());
+			message.setAttribute("userId", user.getUserId());
 			message.setReceipt(toChatUsername);
 			int len = Integer.parseInt(length);
 			VoiceMessageBody body = new VoiceMessageBody(new File(filePath),
@@ -1068,7 +1076,9 @@ public class ChatActivity extends CarPlayBaseActivity implements
 		} else if (chatType == CHATTYPE_CHATROOM) {
 			message.setChatType(ChatType.ChatRoom);
 		}
-		message.setAttribute("nickName", "大长腿");
+		message.setAttribute("nickName", user.getNickName());
+		message.setAttribute("headUrl", user.getHeadUrl());
+		message.setAttribute("userId", user.getUserId());
 		message.setReceipt(to);
 		ImageMessageBody body = new ImageMessageBody(new File(filePath));
 		// 默认超过100k的图片会压缩后发给对方，可以设置成发送原图
@@ -1177,7 +1187,9 @@ public class ChatActivity extends CarPlayBaseActivity implements
 		} else if (chatType == CHATTYPE_CHATROOM) {
 			message.setChatType(ChatType.ChatRoom);
 		}
-		message.setAttribute("nickName", "大长腿");
+		message.setAttribute("nickName", user.getNickName());
+		message.setAttribute("headUrl", user.getHeadUrl());
+		message.setAttribute("userId", user.getUserId());
 		LocationMessageBody locBody = new LocationMessageBody(locationAddress,
 				latitude, longitude);
 		message.addBody(locBody);
