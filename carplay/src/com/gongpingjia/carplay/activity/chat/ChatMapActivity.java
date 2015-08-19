@@ -38,18 +38,18 @@ public class ChatMapActivity extends CarPlayBaseActivity implements AMapLocation
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_map);
+        setupMap(savedInstanceState);
     }
 
     @Override
     public void initView() {
-
-        setupMap();
     }
 
-    private void setupMap() {
+    private void setupMap(Bundle savedInstanceState) {
 
         Intent it = getIntent();
         mMapView = (MapView) findViewById(R.id.mapView);
+        mMapView.onCreate(savedInstanceState);
         aMap = mMapView.getMap();
 
         mMarkerOption = new MarkerOptions();
@@ -87,8 +87,7 @@ public class ChatMapActivity extends CarPlayBaseActivity implements AMapLocation
             mMarkerOption.position(ll);
             mMarkerOption.snippet(address);
             aMap.addMarker(mMarkerOption);
-
-            aMap.animateCamera(CameraUpdateFactory.newLatLng(ll));
+            aMap.animateCamera(CameraUpdateFactory.newLatLngZoom(ll, 14));
         }
     }
 
@@ -120,7 +119,28 @@ public class ChatMapActivity extends CarPlayBaseActivity implements AMapLocation
             mMarkerOption.position(ll);
             mMarkerOption.snippet(location.getAddress());
             aMap.addMarker(mMarkerOption);
+            aMap.animateCamera(CameraUpdateFactory.newLatLngZoom(ll, 14));
         }
     }
 
+    @Override
+    protected void onResume() {
+        // TODO Auto-generated method stub
+        super.onResume();
+        mMapView.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        // TODO Auto-generated method stub
+        super.onPause();
+        mMapView.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        // TODO Auto-generated method stub
+        super.onDestroy();
+        mMapView.onDestroy();
+    }
 }
