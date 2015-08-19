@@ -130,6 +130,8 @@
         <activity android:name=".activity.my.FeedBackActivity" />
         <activity android:name=".activity.my.VersionIntroActivity" >
         </activity>
+        <activity android:name=".activity.chat.ChatMapActivity" >
+        </activity>
 
         <service android:name="com.gongpingjia.carplay.service.MsgService" >
         </service>
