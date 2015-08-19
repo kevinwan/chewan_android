@@ -439,7 +439,7 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements
 				showToast("请选择空座数");
 				return;
 			}
-			if (mStartTimeStamp < System.currentTimeMillis()) {
+			if (mStartTimeStamp < System.currentTimeMillis() - 5 * 60 * 1000) {
 				showToast("活动开始时间不能小于当前时间");
 				return;
 			}

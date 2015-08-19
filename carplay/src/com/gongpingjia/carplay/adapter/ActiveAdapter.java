@@ -159,7 +159,7 @@ public class ActiveAdapter extends NetJSONAdapter {
 			}
 
 		} else {
-			holder.joinT.setText("已过期");
+			holder.joinT.setText("已结束");
 			holder.joinT.setBackgroundResource(R.drawable.btn_grey_dark_bg);
 		}
 		holder.joinT.setVisibility(View.VISIBLE);

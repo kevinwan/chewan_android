@@ -495,7 +495,7 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 				}
 			}
 		} else {
-			joinT.setText("已过期");
+			joinT.setText("已结束");
 			joinT.setBackgroundResource(R.drawable.btn_grey_dark_bg);
 		}
 		joinT.setVisibility(View.VISIBLE);
