@@ -22,6 +22,7 @@ import java.util.TimerTask;
 
 import net.duohuo.dhroid.util.ViewUtil;
 
+import org.jivesoftware.smack.Chat;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -79,6 +80,7 @@ import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.activity.chat.AlertDialog;
 import com.gongpingjia.carplay.activity.chat.ChatActivity;
+import com.gongpingjia.carplay.activity.chat.ChatMapActivity;
 import com.gongpingjia.carplay.activity.chat.ContextMenu;
 import com.gongpingjia.carplay.activity.chat.ShowBigImage;
 import com.gongpingjia.carplay.chat.Constant;
@@ -1774,12 +1776,12 @@ public class MessageAdapter extends BaseAdapter {
 
 		@Override
 		public void onClick(View v) {
-			// Intent intent;
-			// intent = new Intent(context, BaiduMapActivity.class);
-			// intent.putExtra("latitude", location.latitude);
-			// intent.putExtra("longitude", location.longitude);
-			// intent.putExtra("address", address);
-			// activity.startActivity(intent);
+			Intent intent;
+			intent = new Intent(context, ChatMapActivity.class);
+			intent.putExtra("latitude", location.latitude);
+			intent.putExtra("longitude", location.longitude);
+			intent.putExtra("address", address);
+			activity.startActivity(intent);
 		}
 
 	}
