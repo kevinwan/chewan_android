@@ -2,26 +2,35 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black40"
-    android:gravity="center"
     android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/copy"
-        style="@style/text_white_medium"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/black40"
         android:gravity="center"
-        android:background="@drawable/btn_chatdialog_copy"
-        android:text="复制" />
+        android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/delete"
-        style="@style/text_white_medium"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:gravity="center"
-        android:background="@drawable/btn_chatdialog_del"
-        android:text="删除" />
+        <Button
+            android:id="@+id/copy"
+            style="@style/text_white_medium"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/btn_chatdialog_copy"
+            android:gravity="center"
+            android:onClick="copy"
+            android:text="复制"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/delete"
+            style="@style/text_white_medium"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/btn_chatdialog_del"
+            android:gravity="center"
+            android:onClick="delete"
+            android:text="删除" />
+    </LinearLayout>
 
 </LinearLayout>

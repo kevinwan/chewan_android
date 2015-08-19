@@ -20,6 +20,10 @@ public class User {
 
 	int seatNumber;
 
+	public String nickName;
+
+	public String headUrl;
+
 	public boolean isLogin = false;
 
 	public String psaaword;
@@ -98,7 +102,7 @@ public class User {
 	public String getChatUserId() {
 		return MD5Util.string2MD5(userId);
 	}
-	
+
 	public String getPsaaword() {
 		return psaaword;
 	}
@@ -110,5 +114,22 @@ public class User {
 	public String getChatUserPassword() {
 		return psaaword;
 	}
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+
+	public String getHeadUrl() {
+		return headUrl;
+	}
+
+	public void setHeadUrl(String headUrl) {
+		this.headUrl = headUrl;
+	}
+	
 
 }

@@ -135,22 +135,32 @@ public class ActiveAdapter extends NetJSONAdapter {
 		int isOrganizer = JSONUtil.getInt(jo, "isOrganizer");
 		int isMember = JSONUtil.getInt(jo, "isMember");
 		final long startTime = JSONUtil.getLong(jo, "start");
-		if (isOrganizer == 1) {
-			holder.joinT.setText("管理");
-			holder.joinT.setBackgroundResource(R.drawable.button_yanzheng_bg);
-		} else {
-			if (isMember == 1) {
-				holder.joinT.setText("已加入");
-				holder.joinT
-						.setBackgroundResource(R.drawable.button_yanzheng_bg);
-			} else if (isMember == 0) {
-				holder.joinT.setText("我要去玩");
+
+		if (JSONUtil.getInt(jo, "isOver") == 0) {
+
+			if (isOrganizer == 1) {
+				holder.joinT.setText("管理");
 				holder.joinT
 						.setBackgroundResource(R.drawable.button_yanzheng_bg);
 			} else {
-				holder.joinT.setText("申请中");
-				holder.joinT.setBackgroundResource(R.drawable.btn_grey_dark_bg);
+				if (isMember == 1) {
+					holder.joinT.setText("已加入");
+					holder.joinT
+							.setBackgroundResource(R.drawable.button_yanzheng_bg);
+				} else if (isMember == 0) {
+					holder.joinT.setText("我要去玩");
+					holder.joinT
+							.setBackgroundResource(R.drawable.button_yanzheng_bg);
+				} else {
+					holder.joinT.setText("申请中");
+					holder.joinT
+							.setBackgroundResource(R.drawable.btn_grey_dark_bg);
+				}
 			}
+
+		} else {
+			holder.joinT.setText("已过期");
+			holder.joinT.setBackgroundResource(R.drawable.btn_grey_dark_bg);
 		}
 		holder.joinT.setVisibility(View.VISIBLE);
 

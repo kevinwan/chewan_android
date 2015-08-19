@@ -36,12 +36,13 @@
         android:text="@string/delete_message"
         android:textColor="@android:color/black"
         android:textSize="20sp" />
-	 <View
+
+    <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@android:color/darker_gray" />
 
-   <TextView
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/context_menu_item_bg"
@@ -52,4 +53,5 @@
         android:text="@string/forward"
         android:textColor="@android:color/black"
         android:textSize="20sp" />
+
 </LinearLayout>

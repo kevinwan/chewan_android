@@ -282,6 +282,8 @@ public class LoginActivity extends CarPlayBaseActivity implements
 									.getInt(jo, "seatNumber"));
 							user.setIsAuthenticated(JSONUtil.getInt(jo,
 									"isAuthenticated"));
+							user.setNickName(JSONUtil.getString(jo, "nickname"));
+							user.setHeadUrl(JSONUtil.getString(jo, "photo"));
 							CarPlayPerference per = IocContainer.getShare()
 									.get(CarPlayPerference.class);
 							per.phone = phone;
@@ -315,20 +317,14 @@ public class LoginActivity extends CarPlayBaseActivity implements
 							return;
 						}
 
+						// 更新当前用户的nickname 此方法的作用是在ios离线推送时能够显示用户nick
 						boolean updatenick = EMChatManager.getInstance()
-								.updateCurrentUserNick(currentUsername.trim());
+								.updateCurrentUserNick(
+										User.getInstance().getNickName());
 						if (!updatenick) {
 							Log.e("LoginActivity",
 									"update current user nick fail");
 						}
-						// 更新当前用户的nickname 此方法的作用是在ios离线推送时能够显示用户nick
-						// boolean updatenick =
-						// EMChatManager.getInstance().updateCurrentUserNick(
-						// DemoApplication.currentUserNick.trim());
-						// if (!updatenick) {
-						// Log.e("LoginActivity",
-						// "update current user nick fail");
-						// }
 						// if (!LoginActivity.this.isFinishing() &&
 						// pd.isShowing()) {
 						// pd.dismiss();

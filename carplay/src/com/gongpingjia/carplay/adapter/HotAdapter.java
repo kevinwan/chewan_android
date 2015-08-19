@@ -24,8 +24,8 @@ import android.support.v4.view.ViewPager;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -35,7 +35,6 @@ import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.active.ActiveDetailsActivity;
 import com.gongpingjia.carplay.activity.active.ActiveMembersActivity;
 import com.gongpingjia.carplay.activity.active.MyActiveMembersManageActivity;
-import com.gongpingjia.carplay.adapter.ActiveAdapter.ViewHolder;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.bean.JoinEB;
 import com.gongpingjia.carplay.bean.User;
@@ -61,7 +60,6 @@ public class HotAdapter extends NetJSONAdapter {
 	ViewHolder holder = null;
 
 	MiddleViewHolder middleHolder;
-
 
 	View[] views;
 
@@ -89,15 +87,15 @@ public class HotAdapter extends NetJSONAdapter {
 	@Override
 	public int getItemViewType(int position) {
 		JSONObject jo = mVaules.get(position);
-		int count=JSONUtil.getJSONArray(jo, "cover").length();
+		int count = JSONUtil.getJSONArray(jo, "cover").length();
 		if (position == 1) {
 			if (jsa.length() > 0) {
 				count = 0;
-			} 
-//			else {
-//				JSONObject jo = mVaules.get(position);
-//				count = JSONUtil.getJSONArray(jo, "cover").length();
-//			}
+			}
+			// else {
+			// JSONObject jo = mVaules.get(position);
+			// count = JSONUtil.getJSONArray(jo, "cover").length();
+			// }
 		}
 		return count;
 	}
@@ -178,24 +176,32 @@ public class HotAdapter extends NetJSONAdapter {
 			int isOrganizer = JSONUtil.getInt(jo, "isOrganizer");
 			int isMember = JSONUtil.getInt(jo, "isMember");
 			final long startTime = JSONUtil.getLong(jo, "start");
-			if (isOrganizer == 1) {
-				holder.joinT.setText("管理");
-				holder.joinT
-						.setBackgroundResource(R.drawable.button_yanzheng_bg);
-			} else {
-				if (isMember == 1) {
-					holder.joinT.setText("已加入");
-					holder.joinT
-							.setBackgroundResource(R.drawable.button_yanzheng_bg);
-				} else if (isMember == 0) {
-					holder.joinT.setText("我要去玩");
+
+			if (JSONUtil.getInt(jo, "isOver") == 0) {
+
+				if (isOrganizer == 1) {
+					holder.joinT.setText("管理");
 					holder.joinT
 							.setBackgroundResource(R.drawable.button_yanzheng_bg);
 				} else {
-					holder.joinT.setText("申请中");
-					holder.joinT
-							.setBackgroundResource(R.drawable.btn_grey_dark_bg);
+					if (isMember == 1) {
+						holder.joinT.setText("已加入");
+						holder.joinT
+								.setBackgroundResource(R.drawable.button_yanzheng_bg);
+					} else if (isMember == 0) {
+						holder.joinT.setText("我要去玩");
+						holder.joinT
+								.setBackgroundResource(R.drawable.button_yanzheng_bg);
+					} else {
+						holder.joinT.setText("申请中");
+						holder.joinT
+								.setBackgroundResource(R.drawable.btn_grey_dark_bg);
+					}
 				}
+
+			} else {
+				holder.joinT.setText("已过期");
+				holder.joinT.setBackgroundResource(R.drawable.btn_grey_dark_bg);
 			}
 			holder.joinT.setVisibility(View.VISIBLE);
 
@@ -515,64 +521,56 @@ public class HotAdapter extends NetJSONAdapter {
 
 	/** 官方活动 */
 	private void bindViewPageAdapter() {
-		DhNet net = new DhNet(API.official);
-		net.doGetInDialog(new NetTask(mContext) {
+		if (jsa != null && jsa.length() > 0) {
+			views = new View[jsa.length()];
+			for (int i = 0; i < jsa.length(); i++) {
+				final JSONObject jot;
+				try {
+					jot = jsa.getJSONObject(i);
+					View leftV = mLayoutInflater.inflate(
+							R.layout.item_hotview_viewpage, null);
 
-			@Override
-			public void doInUI(Response response, Integer transfer) {
-				if (jsa.length() > 0) {
-					views = new View[jsa.length()];
-					for (int i = 0; i < jsa.length(); i++) {
-						final JSONObject jot;
-						try {
-							jot = jsa.getJSONObject(i);
-							View leftV = mLayoutInflater.inflate(
-									R.layout.item_hotview_viewpage, null);
+					ImageView pghead = (ImageView) leftV
+							.findViewById(R.id.head);
+					ImageView pglogo = (ImageView) leftV
+							.findViewById(R.id.logo);
+					TextView pgtitle = (TextView) leftV
+							.findViewById(R.id.title);
+					TextView pgendtime = (TextView) leftV
+							.findViewById(R.id.endtime);
+					TextView pgcontent = (TextView) leftV
+							.findViewById(R.id.content);
 
-							ImageView pghead = (ImageView) leftV
-									.findViewById(R.id.head);
-							ImageView pglogo = (ImageView) leftV
-									.findViewById(R.id.logo);
-							TextView pgtitle = (TextView) leftV
-									.findViewById(R.id.title);
-							TextView pgendtime = (TextView) leftV
-									.findViewById(R.id.endtime);
-							TextView pgcontent = (TextView) leftV
-									.findViewById(R.id.content);
+					SimpleDateFormat formatdate = new SimpleDateFormat(
+							"yyyy.MM.dd");
+					pgendtime.setText("截止时间:  "
+							+ formatdate.format(JSONUtil.getLong(jot, "end")));
+					pgtitle.setText(JSONUtil.getString(jot, "title"));
+					pgcontent.setText(JSONUtil.getString(jot, "content"));
+					ViewUtil.bindNetImage(pghead,
+							JSONUtil.getString(jot, "cover"), "cover");
+					ViewUtil.bindNetImage(pglogo,
+							JSONUtil.getString(jot, "logo"), "logo");
 
-							SimpleDateFormat formatdate = new SimpleDateFormat(
-									"yyyy.MM.dd");
-							pgendtime.setText("截止时间:  "
-									+ formatdate.format(JSONUtil.getLong(jot,
-											"end")));
-							pgtitle.setText(JSONUtil.getString(jot, "title"));
-							pgcontent.setText(JSONUtil
-									.getString(jot, "content"));
-							ViewUtil.bindNetImage(pghead,
-									JSONUtil.getString(jot, "cover"), "cover");
-							ViewUtil.bindNetImage(pglogo,
-									JSONUtil.getString(jot, "logo"), "logo");
-							
-							leftV.setOnClickListener(new OnClickListener() {
-								
-								@Override
-								public void onClick(View arg0) {
-									Intent intent=new Intent(mContext,ActiveDetailsActivity.class);
-									intent.putExtra("activityId", JSONUtil.getString(jot, "activityId"));
-									mContext.startActivity(intent);
-								}
-							});
-							views[i] = leftV;
-						} catch (JSONException e) {
-							e.printStackTrace();
+					leftV.setOnClickListener(new OnClickListener() {
+
+						@Override
+						public void onClick(View arg0) {
+							Intent intent = new Intent(mContext,
+									ActiveDetailsActivity.class);
+							intent.putExtra("activityId",
+									JSONUtil.getString(jot, "activityId"));
+							mContext.startActivity(intent);
 						}
-					}
-
-					SimplePageAdapter middleAdapter = new SimplePageAdapter(
-							views);
-					middleHolder.pager.setAdapter(middleAdapter);
+					});
+					views[i] = leftV;
+				} catch (JSONException e) {
+					e.printStackTrace();
 				}
 			}
-		});
+
+			SimplePageAdapter middleAdapter = new SimplePageAdapter(views);
+			middleHolder.pager.setAdapter(middleAdapter);
+		}
 	}
 }

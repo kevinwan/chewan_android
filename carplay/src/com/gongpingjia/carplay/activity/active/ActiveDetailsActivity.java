@@ -108,7 +108,7 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_active_details);
 		EventBus.getDefault().register(this);
-	
+
 		findViewById(R.id.chat).setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -476,21 +476,27 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 	private void activeRelative(JSONObject jo) {
 		int isOrganizer = JSONUtil.getInt(jo, "isOrganizer");
 		int isMember = JSONUtil.getInt(jo, "isMember");
-		if (isOrganizer == 1) {
-			joinT.setText("管理");
-			isJoin = true;
-		} else {
-			if (isMember == 1) {
-				joinT.setText("已加入");
+
+		if (JSONUtil.getInt(jo, "isOver") == 0) {
+			if (isOrganizer == 1) {
+				joinT.setText("管理");
 				isJoin = true;
-			} else if (isMember == 0) {
-				joinT.setText("我要去玩");
-				isJoin = false;
 			} else {
-				joinT.setText("申请中");
-				isJoin = false;
-				joinT.setBackgroundResource(R.drawable.btn_grey_dark_bg);
+				if (isMember == 1) {
+					joinT.setText("已加入");
+					isJoin = true;
+				} else if (isMember == 0) {
+					joinT.setText("我要去玩");
+					isJoin = false;
+				} else {
+					joinT.setText("申请中");
+					isJoin = false;
+					joinT.setBackgroundResource(R.drawable.btn_grey_dark_bg);
+				}
 			}
+		} else {
+			joinT.setText("已过期");
+			joinT.setBackgroundResource(R.drawable.btn_grey_dark_bg);
 		}
 		joinT.setVisibility(View.VISIBLE);
 	}
