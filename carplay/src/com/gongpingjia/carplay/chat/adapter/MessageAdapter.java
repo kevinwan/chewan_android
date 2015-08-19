@@ -20,6 +20,8 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import net.duohuo.dhroid.util.ViewUtil;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -548,8 +550,11 @@ public class MessageAdapter extends BaseAdapter {
 			}
 		}
 
+		ViewUtil.bindNetImage(holder.iv_avatar,
+				message.getStringAttribute("headUrl", ""), "head");
+		holder.iv_avatar.setTag(message.getStringAttribute("userId", ""));
 		// 设置用户头像
-		setUserAvatar(message, holder.iv_avatar);
+		// setUserAvatar(message, holder.iv_avatar);
 
 		switch (message.getType()) {
 		// 根据消息type显示item

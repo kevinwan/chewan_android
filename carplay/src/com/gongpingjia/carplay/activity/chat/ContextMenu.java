@@ -13,9 +13,13 @@
  */
 package com.gongpingjia.carplay.activity.chat;
 
+import net.duohuo.dhroid.activity.ActivityTack;
+import net.duohuo.dhroid.dialog.IDialog;
+import net.duohuo.dhroid.ioc.IocContainer;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager.LayoutParams;
@@ -24,6 +28,8 @@ import android.widget.Button;
 import com.easemob.chat.EMMessage;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
+import com.gongpingjia.carplay.activity.main.MainActivity.ExitRunnable;
+import com.gongpingjia.carplay.service.MsgService;
 
 public class ContextMenu extends CarPlayBaseActivity {
 
@@ -74,50 +80,60 @@ public class ContextMenu extends CarPlayBaseActivity {
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		finish();
+		finishAnim();
 		return true;
 	}
 
 	public void copy(View view) {
 		setResult(ChatActivity.RESULT_CODE_COPY,
 				new Intent().putExtra("position", position));
-		finish();
+		finishAnim();
 	}
 
 	public void delete(View view) {
 		setResult(ChatActivity.RESULT_CODE_DELETE,
 				new Intent().putExtra("position", position));
-		finish();
+		finishAnim();
 	}
 
 	public void forward(View view) {
 		setResult(ChatActivity.RESULT_CODE_FORWARD,
 				new Intent().putExtra("position", position));
-		finish();
+		finishAnim();
 	}
 
 	public void open(View v) {
 		setResult(ChatActivity.RESULT_CODE_OPEN,
 				new Intent().putExtra("position", position));
-		finish();
+		finishAnim();
 	}
 
 	public void download(View v) {
 		setResult(ChatActivity.RESULT_CODE_DWONLOAD,
 				new Intent().putExtra("position", position));
-		finish();
+		finishAnim();
 	}
 
 	public void toCloud(View v) {
 		setResult(ChatActivity.RESULT_CODE_TO_CLOUD,
 				new Intent().putExtra("position", position));
-		finish();
+		finishAnim();
 	}
 
 	@Override
 	public void initView() {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			finishAnim();
+			return false;
+		}
+		// TODO Auto-generated method stub
+		return super.onKeyDown(keyCode, event);
 	}
 
 }

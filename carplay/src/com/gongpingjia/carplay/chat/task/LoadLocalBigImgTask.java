@@ -34,8 +34,10 @@ public class LoadLocalBigImgTask extends AsyncTask<Void, Void, Bitmap> {
 	private int height;
 	private Context context;
 
-	public LoadLocalBigImgTask(Context context,String path, PhotoView photoView,
-			ProgressBar pb, int width, int height) {
+	OnLoadResult onLoadResult;
+
+	public LoadLocalBigImgTask(Context context, String path,
+			PhotoView photoView, ProgressBar pb, int width, int height) {
 		this.context = context;
 		this.path = path;
 		this.photoView = photoView;
@@ -75,5 +77,20 @@ public class LoadLocalBigImgTask extends AsyncTask<Void, Void, Bitmap> {
 			result = BitmapFactory.decodeResource(context.getResources(),
 					R.drawable.signin_local_gallry);
 		photoView.setImageBitmap(result);
+		if (onLoadResult != null) {
+			onLoadResult.result(result);
+		}
+	}
+
+	public OnLoadResult getOnLoadResult() {
+		return onLoadResult;
+	}
+
+	public void setOnLoadResult(OnLoadResult onLoadResult) {
+		this.onLoadResult = onLoadResult;
+	}
+
+	public interface OnLoadResult {
+		void result(Bitmap result);
 	}
 }

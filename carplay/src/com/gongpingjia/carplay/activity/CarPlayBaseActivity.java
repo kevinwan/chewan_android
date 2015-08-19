@@ -152,6 +152,11 @@ public abstract class CarPlayBaseActivity extends BaseActivity {
 		super.finish();
 	}
 
+	public void finishAnim() {
+		super.finish();
+		modalOutAnim();
+	}
+
 	@SuppressLint("NewApi")
 	public void popInAnim() {
 		overridePendingTransition(R.anim.push_right_in, R.anim.push_left_out);
@@ -177,7 +182,7 @@ public abstract class CarPlayBaseActivity extends BaseActivity {
 	 * 向上推出时切换的动画 后退
 	 */
 	public void modalOutAnim() {
-		overridePendingTransition(R.anim.fade_in, R.anim.slide_down_out);
+		overridePendingTransition(R.anim.dialog_enter, R.anim.dialog_exit);
 	}
 
 	/**
@@ -207,7 +212,8 @@ public abstract class CarPlayBaseActivity extends BaseActivity {
 
 		if (progressdialog == null || !progressdialog.isShowing()) {
 			progressdialog = dialoger.showProgressDialog(this, msg);
-			System.out.print("progress dlg:"+dialoger.getClass().getSimpleName());
+			System.out.print("progress dlg:"
+					+ dialoger.getClass().getSimpleName());
 		}
 		return progressdialog;
 	}

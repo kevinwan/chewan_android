@@ -27,6 +27,7 @@ import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.widget.ProgressBar;
 
 import com.easemob.EMCallBack;
@@ -37,8 +38,10 @@ import com.easemob.util.PathUtil;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.chat.task.LoadLocalBigImgTask;
+import com.gongpingjia.carplay.chat.task.LoadLocalBigImgTask.OnLoadResult;
 import com.gongpingjia.carplay.chat.util.ImageCache;
 import com.gongpingjia.carplay.chat.view.PhotoView;
+import com.gongpingjia.carplay.view.dialog.SavePhotoDialog;
 
 /**
  * 下载显示大图
@@ -82,11 +85,19 @@ public class ShowBigImage extends CarPlayBaseActivity {
 						uri.getPath(), image, loadLocalPb,
 						ImageUtils.SCALE_IMAGE_WIDTH,
 						ImageUtils.SCALE_IMAGE_HEIGHT);
+				task.setOnLoadResult(new OnLoadResult() {
+
+					@Override
+					public void result(Bitmap result) {
+						bitmap = result;
+					}
+				});
 				if (android.os.Build.VERSION.SDK_INT > 10) {
 					task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 				} else {
 					task.execute();
 				}
+
 			} else {
 				image.setImageBitmap(bitmap);
 			}
@@ -105,6 +116,20 @@ public class ShowBigImage extends CarPlayBaseActivity {
 			@Override
 			public void onClick(View v) {
 				finish();
+			}
+		});
+
+		image.setOnLongClickListener(new OnLongClickListener() {
+
+			@Override
+			public boolean onLongClick(View v) {
+				if (image == null) {
+					return false;
+				}
+				SavePhotoDialog dialog = new SavePhotoDialog(self, bitmap,
+						R.style.CustomDialog);
+				dialog.show();
+				return false;
 			}
 		});
 	}
