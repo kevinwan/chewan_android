@@ -316,7 +316,6 @@ public class LoginActivity extends CarPlayBaseActivity implements
 							});
 							return;
 						}
-
 						// 更新当前用户的nickname 此方法的作用是在ios离线推送时能够显示用户nick
 						boolean updatenick = EMChatManager.getInstance()
 								.updateCurrentUserNick(
@@ -500,7 +499,7 @@ public class LoginActivity extends CarPlayBaseActivity implements
 									startActivity(it);
 								} else if (json.has("userId")) {
 									showToast("登陆成功");
-									self.finish();
+									// self.finish();
 								}
 							} else {
 								showToast("登陆失败");
