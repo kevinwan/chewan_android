@@ -15,6 +15,9 @@ public class CarPlayPerference extends Perference {
     public String channel;
 
     public String sign;
+    
+    //三方登陆返回的id
+    public String thirdId;
 
     public String uid;
 
@@ -109,6 +112,15 @@ public class CarPlayPerference extends Perference {
         // }
         // }
         // });
+    }
+
+    
+    public String getThirdId() {
+        return thirdId;
+    }
+
+    public void setThirdId(String thirdId) {
+        this.thirdId = thirdId;
     }
 
     public String getPassword() {

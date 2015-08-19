@@ -72,12 +72,13 @@ public class SplashActivity extends CarPlayBaseActivity {
         }
     }
 
+    // 三方登陆
     private void loginThirdParty() {
         String api = API.CWBaseurl + "/sns/login";
         DhNet net = new DhNet(api);
-        net.addParam("uid", per.uid);
+        net.addParam("uid", per.thirdId);
         net.addParam("channel", per.channel);
-        net.addParam("sign", MD5Util.string2MD5(per.uid + per.sign + "com.gongpingjia.carplay"));
+        net.addParam("sign", MD5Util.string2MD5(per.thirdId + per.channel + "com.gongpingjia.carplay"));
         net.doPostInDialog("登陆中...", new NetTask(self) {
 
             @Override
@@ -86,7 +87,6 @@ public class SplashActivity extends CarPlayBaseActivity {
                     JSONObject json = response.jSONFrom("data");
                     if (json.has("snsUid")) {
                         // 登陆失败
-                        showToast("登陆失败,请重新登陆");
                         Intent it = new Intent(self, MainActivity.class);
                         startActivity(it);
                     } else if (json.has("userId")) {
@@ -95,15 +95,23 @@ public class SplashActivity extends CarPlayBaseActivity {
                         try {
                             user.setUserId(json.getString("userId"));
                             user.setToken(json.getString("token"));
+                            user.setBrand(json.getString("brand"));
+                            user.setBrandLogo(json.getString("brandLogo"));
+                            user.setNickName(json.getString("nickname"));
+                            user.setSeatNumber(json.getInt("seatNumber"));
+                            user.setModel(json.getString("model"));
+                            User.getInstance().setLogin(true);
+                            LoginEB loginEB = new LoginEB();
+                            loginEB.setIslogin(true);
+                            EventBus.getDefault().post(loginEB);
                         } catch (JSONException e) {
-                            // TODO Auto-generated catch block
                             e.printStackTrace();
                         }
                         Intent it = new Intent(self, MainActivity.class);
                         startActivity(it);
                     }
                 } else {
-                    showToast("登陆失败,请重新登陆");
+                    // 登陆
                     Intent it = new Intent(self, MainActivity.class);
                     startActivity(it);
                 }
