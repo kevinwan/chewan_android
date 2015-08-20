@@ -82,6 +82,8 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 
 	View quit_layoutV;
 
+	String chatGroupId;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -255,6 +257,9 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 				JSONArray carJsa = response.jSONArrayFrom("data.cars");
 				carUtil.addCar(carJsa);
 
+				JSONObject data = response.jSONFromData();
+				chatGroupId = JSONUtil.getString(data, "chatGroupId");
+
 			}
 		});
 	}
@@ -329,7 +334,8 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 			Intent intent = new Intent(self, ChatActivity.class);
 			// it is group chat
 			intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
-			intent.putExtra("groupId", "94411522188509764");
+			intent.putExtra("activityId", activityId);
+			intent.putExtra("groupId", chatGroupId);
 			startActivityForResult(intent, 0);
 			break;
 		default:

@@ -46,10 +46,10 @@
         <TextView
             android:id="@+id/activity_Introduction"
             style="@style/text_blacklight_medium"
+            android:layout_marginBottom="15dp"
             android:layout_marginLeft="14dp"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="15dp" 
-            android:background="@null"/>
+            android:background="@null" />
     </LinearLayout>
 
     <View style="@style/line" />
@@ -153,6 +153,7 @@
     <View style="@style/line" />
 
     <Button
+        android:id="@+id/quite"
         style="@style/text_white_medium"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -160,6 +161,7 @@
         android:layout_marginRight="14dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/button_radian"
-        android:text="退出群聊" />
+        android:text="退出群聊"
+        android:visibility="gone" />
 
 </LinearLayout>

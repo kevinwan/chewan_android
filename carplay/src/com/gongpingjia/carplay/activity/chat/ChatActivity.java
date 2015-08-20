@@ -235,6 +235,7 @@ public class ChatActivity extends CarPlayBaseActivity implements
 			public void onClick(View v) {
 				Intent it = new Intent(self, ActiveInformationActivity.class);
 				it.putExtra("activityId", activiyId);
+				it.putExtra("groupId", toChatUsername);
 				startActivity(it);
 			}
 		});
@@ -798,6 +799,8 @@ public class ChatActivity extends CarPlayBaseActivity implements
 			iv_emoticons_checked.setVisibility(View.VISIBLE);
 			btnContainer.setVisibility(View.GONE);
 			emojiIconContainer.setVisibility(View.VISIBLE);
+			buttonPressToSpeak.setVisibility(View.GONE);
+			edittext_layout.setVisibility(View.VISIBLE);
 			hideKeyboard();
 		} else if (id == R.id.iv_emoticons_checked) { // 点击隐藏表情框
 			iv_emoticons_normal.setVisibility(View.VISIBLE);
@@ -809,6 +812,7 @@ public class ChatActivity extends CarPlayBaseActivity implements
 		} else if (id == R.id.btn_video) {
 			// 点击摄像图标
 			// Intent intent = new Intent(ChatActivity.this,
+
 			// ImageGridActivity.class);
 			// startActivityForResult(intent, REQUEST_CODE_SELECT_VIDEO);
 		} else if (id == R.id.btn_file) { // 点击文件图标
@@ -1316,6 +1320,9 @@ public class ChatActivity extends CarPlayBaseActivity implements
 		more.setVisibility(View.GONE);
 		view.setVisibility(View.GONE);
 		buttonSetModeVoice.setVisibility(View.VISIBLE);
+
+		iv_emoticons_normal.setVisibility(View.VISIBLE);
+		iv_emoticons_checked.setVisibility(View.INVISIBLE);
 		// mEditTextContent.setVisibility(View.VISIBLE);
 		mEditTextContent.requestFocus();
 		// buttonSend.setVisibility(View.VISIBLE);
@@ -1544,47 +1551,46 @@ public class ChatActivity extends CarPlayBaseActivity implements
 				try {
 					// 文字输入框可见时，才可输入表情
 					// 按住说话可见，不让输入表情
-					if (buttonSetModeKeyboard.getVisibility() != View.VISIBLE) {
+					// if (buttonSetModeKeyboard.getVisibility() !=
+					// View.VISIBLE) {
 
-						if (filename != "delete_expression") { // 不是删除键，显示表情
-							// 这里用的反射，所以混淆的时候不要混淆SmileUtils这个类
-							Class clz = Class
-									.forName("com.gongpingjia.carplay.chat.util.SmileUtils");
-							Field field = clz.getField(filename);
-							mEditTextContent.append(SmileUtils.getSmiledText(
-									ChatActivity.this, (String) field.get(null)));
-						} else { // 删除文字或者表情
-							if (!TextUtils.isEmpty(mEditTextContent.getText())) {
+					if (filename != "delete_expression") { // 不是删除键，显示表情
+						// 这里用的反射，所以混淆的时候不要混淆SmileUtils这个类
+						Class clz = Class
+								.forName("com.gongpingjia.carplay.chat.util.SmileUtils");
+						Field field = clz.getField(filename);
+						mEditTextContent.append(SmileUtils.getSmiledText(
+								ChatActivity.this, (String) field.get(null)));
+					} else { // 删除文字或者表情
+						if (!TextUtils.isEmpty(mEditTextContent.getText())) {
 
-								int selectionStart = mEditTextContent
-										.getSelectionStart();// 获取光标的位置
-								if (selectionStart > 0) {
-									String body = mEditTextContent.getText()
-											.toString();
-									String tempStr = body.substring(0,
+							int selectionStart = mEditTextContent
+									.getSelectionStart();// 获取光标的位置
+							if (selectionStart > 0) {
+								String body = mEditTextContent.getText()
+										.toString();
+								String tempStr = body.substring(0,
+										selectionStart);
+								int i = tempStr.lastIndexOf("[");// 获取最后一个表情的位置
+								if (i != -1) {
+									CharSequence cs = tempStr.substring(i,
 											selectionStart);
-									int i = tempStr.lastIndexOf("[");// 获取最后一个表情的位置
-									if (i != -1) {
-										CharSequence cs = tempStr.substring(i,
-												selectionStart);
-										if (SmileUtils.containsKey(cs
-												.toString()))
-											mEditTextContent.getEditableText()
-													.delete(i, selectionStart);
-										else
-											mEditTextContent.getEditableText()
-													.delete(selectionStart - 1,
-															selectionStart);
-									} else {
+									if (SmileUtils.containsKey(cs.toString()))
+										mEditTextContent.getEditableText()
+												.delete(i, selectionStart);
+									else
 										mEditTextContent.getEditableText()
 												.delete(selectionStart - 1,
 														selectionStart);
-									}
+								} else {
+									mEditTextContent.getEditableText().delete(
+											selectionStart - 1, selectionStart);
 								}
 							}
-
 						}
+
 					}
+					// }
 				} catch (Exception e) {
 				}
 

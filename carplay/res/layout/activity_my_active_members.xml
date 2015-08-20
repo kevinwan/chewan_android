@@ -16,7 +16,21 @@
         android:layout_marginTop="50dp"
         android:background="@color/nothing"
         android:divider="@color/nothing"
-        android:dividerHeight="1dp" />
+        android:dividerHeight="1dp"
+        android:paddingBottom="120dp" />
+
+    <Button
+        android:id="@+id/chat"
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="55dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:background="@drawable/button_zc_bg"
+        android:text="开始畅聊"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_medium" />
 
     <ScrollView
         android:id="@+id/guide"

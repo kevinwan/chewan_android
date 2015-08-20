@@ -157,4 +157,9 @@ public class BaseFragmentActivity extends FragmentActivity {
         super.onResume();
         MobclickAgent.onResume(this);
     }
+    
+    public void showToast(String msg) {
+		dialoger.showToastShort(getApplicationContext(), msg);
+	}
+    
 }
