@@ -77,11 +77,4 @@
         </RelativeLayout>
     </ScrollView>
 
-    <Button
-        android:id="@+id/chat"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="80dp"
-        android:text="聊天" />
-
 </RelativeLayout>

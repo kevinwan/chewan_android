@@ -4,10 +4,6 @@ import java.io.File;
 import java.util.List;
 import java.util.Stack;
 import java.util.Timer;
-import java.util.TimerTask;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import net.duohuo.dhroid.activity.ActivityTack;
 import net.duohuo.dhroid.dialog.IDialog;
@@ -18,6 +14,10 @@ import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.net.upload.FileInfo;
 import net.duohuo.dhroid.util.PhotoUtil;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -35,22 +35,23 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.easemob.EMCallBack;
+import com.easemob.EMConnectionListener;
+import com.easemob.EMError;
+import com.easemob.chat.EMChatManager;
+import com.easemob.chat.EMGroup;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.active.ActiveListFragment;
 import com.gongpingjia.carplay.activity.active.CreateActiveActivity;
 import com.gongpingjia.carplay.activity.msg.MsgFragment;
+import com.gongpingjia.carplay.activity.my.LoginActivity;
 import com.gongpingjia.carplay.activity.my.ManageAlbumActivity;
 import com.gongpingjia.carplay.activity.my.MyFragment;
 import com.gongpingjia.carplay.activity.my.SettingActivity;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.api.Constant;
-import com.gongpingjia.carplay.bean.ActiveParmasEB;
-import com.gongpingjia.carplay.bean.PhotoState;
 import com.gongpingjia.carplay.bean.User;
-import com.gongpingjia.carplay.chat.DemoHXSDKHelper;
 import com.gongpingjia.carplay.chat.controller.HXSDKHelper;
 import com.gongpingjia.carplay.manage.UserInfoManage;
 import com.gongpingjia.carplay.manage.UserInfoManage.LoginCallBack;
@@ -92,6 +93,12 @@ public class MainActivity extends BaseFragmentActivity {
 
 	Handler mHandler;
 
+	List<EMGroup> groupList;
+
+	private MyConnectionListener connectionListener = null;
+
+	public boolean isConflict = false;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -108,8 +115,9 @@ public class MainActivity extends BaseFragmentActivity {
 		super.onResume();
 		Intent it = new Intent(this, MsgService.class);
 		startService(it);
-//		((DemoHXSDKHelper) HXSDKHelper.getInstance()).getUserProfileManager()
-//				.asyncGetCurrentUserInfo();
+		// asyncFetchGroupsFromServer();
+		// ((DemoHXSDKHelper) HXSDKHelper.getInstance()).getUserProfileManager()
+		// .asyncGetCurrentUserInfo();
 	}
 
 	public void initView() {
@@ -140,6 +148,9 @@ public class MainActivity extends BaseFragmentActivity {
 		});
 
 		msgT = (BadgeView) findViewById(R.id.msg_point);
+
+		connectionListener = new MyConnectionListener();
+		EMChatManager.getInstance().addConnectionListener(connectionListener);
 	}
 
 	private void initTab() {
@@ -492,6 +503,32 @@ public class MainActivity extends BaseFragmentActivity {
 		});
 	}
 
+	private void getMyGroupData() {
+		LoginActivity.asyncFetchGroupsFromServer();
+		// EMGroupManager.getInstance().asyncGetGroupsFromServer(
+		// new EMValueCallBack<List<EMGroup>>() {
+		//
+		// @Override
+		// public void onSuccess(List<EMGroup> value) {
+		// // TODO Auto-generated method stub
+		//
+		// }
+		//
+		// @Override
+		// public void onError(int error, String errorMsg) {
+		// // TODO Auto-generated method stub
+		//
+		// }
+		// });
+	}
+
+	/**
+	 * 获取所有会话
+	 * 
+	 * @param context
+	 * @return +
+	 */
+
 	public void onEventMainThread(JSONObject jo) {
 		dataJo = jo;
 		JSONObject commentJo = JSONUtil.getJSONObject(jo, "comment");
@@ -505,6 +542,77 @@ public class MainActivity extends BaseFragmentActivity {
 			msgT.setVisibility(View.VISIBLE);
 		} else {
 			msgT.setVisibility(View.GONE);
+		}
+	}
+
+	public static void asyncFetchGroupsFromServer() {
+		HXSDKHelper.getInstance().asyncFetchGroupsFromServer(new EMCallBack() {
+
+			@Override
+			public void onSuccess() {
+				HXSDKHelper.getInstance().noitifyGroupSyncListeners(true);
+
+				if (HXSDKHelper.getInstance().isContactsSyncedWithServer()) {
+					HXSDKHelper.getInstance().notifyForRecevingEvents();
+				}
+
+			}
+
+			@Override
+			public void onError(int code, String message) {
+				HXSDKHelper.getInstance().noitifyGroupSyncListeners(false);
+			}
+
+			@Override
+			public void onProgress(int progress, String status) {
+
+			}
+
+		});
+	}
+
+	/**
+	 * 连接监听listener
+	 * 
+	 */
+	public class MyConnectionListener implements EMConnectionListener {
+
+		@Override
+		public void onConnected() {
+		}
+
+		@Override
+		public void onDisconnected(final int error) {
+			runOnUiThread(new Runnable() {
+
+				@Override
+				public void run() {
+					if (error == EMError.USER_REMOVED) {
+						// 显示帐号已经被移除
+						showToast("账号被移除!");
+						// showAccountRemovedDialog();
+					} else if (error == EMError.CONNECTION_CONFLICT) {
+						// 显示帐号在其他设备登陆dialog
+						showToast("账号在另一地点登陆!");
+						isConflict = true;
+						// showConflictDialog();
+					} else {
+						showToast("网络异常,请重新连接!");
+						// chatHistoryFragment.errorItem
+						// .setVisibility(View.VISIBLE);
+						// if (NetUtils.hasNetwork(MainActivity.this))
+						// chatHistoryFragment.errorText.setText(st1);
+						// else
+						// chatHistoryFragment.errorText.setText(st2);
+
+					}
+
+					Intent it = new Intent(self, LoginActivity.class);
+					startActivity(it);
+					finish();
+				}
+
+			});
 		}
 	}
 

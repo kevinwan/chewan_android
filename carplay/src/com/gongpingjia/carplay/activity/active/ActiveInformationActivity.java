@@ -1,11 +1,5 @@
 package com.gongpingjia.carplay.activity.active;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import net.duohuo.dhroid.ioc.IocContainer;
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
@@ -20,25 +14,21 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Display;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.EditText;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.easemob.chat.EMGroupManager;
 import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.activity.my.MyPerSonDetailActivity;
 import com.gongpingjia.carplay.activity.my.PersonDetailActivity;
-import com.gongpingjia.carplay.adapter.ImageAdapter;
 import com.gongpingjia.carplay.api.API;
-import com.gongpingjia.carplay.bean.PhotoState;
 import com.gongpingjia.carplay.bean.User;
-import com.gongpingjia.carplay.util.CarPlayPerference;
 import com.gongpingjia.carplay.util.PicLayoutUtil;
 import com.gongpingjia.carplay.view.RoundImageView;
 
@@ -53,11 +43,11 @@ public class ActiveInformationActivity extends CarPlayBaseActivity implements
 	private static final int REQUEST_DESCRIPTION = 1;
 
 	User user;
-	//活动ID
+	// 活动ID
 	String activityId;
 
 	LinearLayout headlayoutV, activity_edit;
-	//是否为创建者
+	// 是否为创建者
 	int id;
 
 	JSONObject headJo = new JSONObject();
@@ -90,6 +80,8 @@ public class ActiveInformationActivity extends CarPlayBaseActivity implements
 
 	JSONArray picJsa;
 
+	Button quiteB;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -99,6 +91,8 @@ public class ActiveInformationActivity extends CarPlayBaseActivity implements
 		activity_Introduction = (TextView) findViewById(R.id.activity_Introduction);
 		activity_name = (TextView) findViewById(R.id.activity_name);
 		head = (RoundImageView) findViewById(R.id.activity_head);
+		quiteB = (Button) findViewById(R.id.quite);
+		quiteB.setOnClickListener(this);
 		headlayoutV.setOnClickListener(this);
 		activity_edit.setOnClickListener(this);
 		head.setOnClickListener(this);
@@ -269,10 +263,43 @@ public class ActiveInformationActivity extends CarPlayBaseActivity implements
 			}
 			break;
 
+		case R.id.quite:
+			showProgressDialog("退出中...");
+			exitGrop();
+			break;
+
 		default:
 			break;
 		}
 
+	}
+
+	private void exitGrop() {
+		new Thread(new Runnable() {
+			public void run() {
+				try {
+					Intent it1 = getIntent();
+					EMGroupManager.getInstance().exitFromGroup(
+							it1.getStringExtra("groupId"));
+					runOnUiThread(new Runnable() {
+						public void run() {
+							hidenProgressDialog();
+							setResult(RESULT_OK);
+							finish();
+						}
+					});
+				} catch (final Exception e) {
+					runOnUiThread(new Runnable() {
+						public void run() {
+							hidenProgressDialog();
+							showToast(getResources().getString(
+									R.string.Exit_the_group_chat_failure)
+									+ " " + e.getMessage());
+						}
+					});
+				}
+			}
+		}).start();
 	}
 
 	@Override
