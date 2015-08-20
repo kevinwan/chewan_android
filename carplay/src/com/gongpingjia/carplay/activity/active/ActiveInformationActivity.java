@@ -46,7 +46,7 @@ public class ActiveInformationActivity extends CarPlayBaseActivity implements
 	// 活动ID
 	String activityId;
 
-	LinearLayout headlayoutV, activity_edit;
+	LinearLayout headlayoutV, activity_edit,acitvity_layout_head;
 	// 是否为创建者
 	int id;
 
@@ -87,6 +87,7 @@ public class ActiveInformationActivity extends CarPlayBaseActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_event_information);
 		headlayoutV = (LinearLayout) findViewById(R.id.headlayout);
+		acitvity_layout_head = (LinearLayout) findViewById(R.id.acitvity_layout_head);
 		activity_edit = (LinearLayout) findViewById(R.id.activity_edit);
 		activity_Introduction = (TextView) findViewById(R.id.activity_Introduction);
 		activity_name = (TextView) findViewById(R.id.activity_name);
@@ -95,7 +96,8 @@ public class ActiveInformationActivity extends CarPlayBaseActivity implements
 		quiteB.setOnClickListener(this);
 		headlayoutV.setOnClickListener(this);
 		activity_edit.setOnClickListener(this);
-		head.setOnClickListener(this);
+//		head.setOnClickListener(this);
+		acitvity_layout_head.setOnClickListener(this);
 	}
 
 	@Override
@@ -244,7 +246,7 @@ public class ActiveInformationActivity extends CarPlayBaseActivity implements
 				startActivity(it);
 			}
 			break;
-		case R.id.activity_head:
+		case R.id.acitvity_layout_head:
 			if (id != 0) {
 				it = new Intent(self, MyPerSonDetailActivity.class);
 				it.putExtra("userId", userid);
@@ -256,11 +258,11 @@ public class ActiveInformationActivity extends CarPlayBaseActivity implements
 			}
 			break;
 		case R.id.activity_edit:
-			if (id != 0) {
-				it = new Intent(self, ActiveDescriptionActivity.class);
-				it.putExtra("intr", activity_Introduction.getText().toString());
-				startActivityForResult(it, REQUEST_DESCRIPTION);
-			}
+//			if (id != 0) {
+//				it = new Intent(self, ActiveDescriptionActivity.class);
+//				it.putExtra("intr", activity_Introduction.getText().toString());
+//				startActivityForResult(it, REQUEST_DESCRIPTION);
+//			}
 			break;
 
 		case R.id.quite:

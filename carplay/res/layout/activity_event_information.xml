@@ -70,6 +70,7 @@
             android:text="组织者" />
 
         <LinearLayout
+            android:id="@+id/acitvity_layout_head"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:gravity="right|center_vertical"
