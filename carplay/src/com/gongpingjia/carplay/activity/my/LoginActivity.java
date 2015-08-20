@@ -101,12 +101,15 @@ public class LoginActivity extends CarPlayBaseActivity implements OnClickListene
 
     public static final int Basicmessage = 3;
 
+    private boolean isFromLogout = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         String action = getIntent().getStringExtra("action");
         if (action != null && action.equals("logout")) {
+            isFromLogout = true;
             ActivityTack.getInstanse().finishOthers(this);
         }
     }
@@ -220,6 +223,10 @@ public class LoginActivity extends CarPlayBaseActivity implements OnClickListene
         }
 
         if (resultCode == Activity.RESULT_OK) {
+            if (isFromLogout) {
+                Intent it = new Intent(self, MainActivity.class);
+                startActivity(it);
+            }
             if (requestCode == Register) {
                 finish();
             }
@@ -499,8 +506,7 @@ public class LoginActivity extends CarPlayBaseActivity implements OnClickListene
                                         e.printStackTrace();
                                     }
                                     // 从退出登陆过来
-                                    String action = getIntent().getStringExtra("action");
-                                    if (action != null && action.equals("logout")) {
+                                    if (isFromLogout) {
                                         Intent it = new Intent(self, MainActivity.class);
                                         startActivity(it);
                                     }
