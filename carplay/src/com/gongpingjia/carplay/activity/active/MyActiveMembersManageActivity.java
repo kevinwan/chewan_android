@@ -14,6 +14,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -29,6 +31,7 @@ import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
+import com.gongpingjia.carplay.activity.chat.ChatActivity;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.CarPlayPerference;
@@ -91,6 +94,10 @@ public class MyActiveMembersManageActivity extends CarPlayBaseActivity {
 	private UMWXHandler wxCircleHandler;
 
 	private String mShareContent;
+
+	Button chatB;
+
+	String chatGroupId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -228,6 +235,20 @@ public class MyActiveMembersManageActivity extends CarPlayBaseActivity {
 			findViewById(R.id.guide).setVisibility(View.VISIBLE);
 		}
 
+		chatB = (Button) findViewById(R.id.chat);
+		chatB.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(self, ChatActivity.class);
+				// it is group chat
+				intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
+				intent.putExtra("activityId", activityId);
+				intent.putExtra("groupId", chatGroupId);
+				startActivityForResult(intent, 0);
+			}
+		});
+
 		findViewById(R.id.know).setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -273,15 +294,18 @@ public class MyActiveMembersManageActivity extends CarPlayBaseActivity {
 		listV.addHeaderView(headV);
 
 		adapter = new PSAdapter(self, R.layout.item_newmessage_list);
-		adapter.addField(new FieldMap("newmessage_layout", R.id.newmessage_layout) {
+		adapter.addField(new FieldMap("newmessage_layout",
+				R.id.newmessage_layout) {
 
 			@Override
 			public Object fix(View itemV, Integer position, Object o, Object jo) {
 				JSONObject itemjo = (JSONObject) jo;
-				TextView drive_age = (TextView) itemV.findViewById(R.id.drive_age);
+				TextView drive_age = (TextView) itemV
+						.findViewById(R.id.drive_age);
 				RoundImageView headI = (RoundImageView) itemV
 						.findViewById(R.id.head);
-				ImageView car_logo = (ImageView) itemV.findViewById(R.id.car_logo);
+				ImageView car_logo = (ImageView) itemV
+						.findViewById(R.id.car_logo);
 				ViewUtil.bindNetImage(headI,
 						JSONUtil.getString(itemjo, "photo"), "default");
 				ViewUtil.bindNetImage(car_logo,
@@ -290,7 +314,7 @@ public class MyActiveMembersManageActivity extends CarPlayBaseActivity {
 
 				View sexBg = itemV.findViewById(R.id.sex);
 				View car_age = itemV.findViewById(R.id.car_age);
-				
+
 				if (JSONUtil.getString(itemjo, "gender").equals("男")) {
 					sexBg.setBackgroundResource(R.drawable.man);
 				} else {
@@ -305,25 +329,28 @@ public class MyActiveMembersManageActivity extends CarPlayBaseActivity {
 					car_age.setVisibility(View.GONE);
 					car_logo.setVisibility(View.GONE);
 					drive_age.setText("带我飞");
-				}else{
-					if (drive_str.length()>15) {
-						drive_str=drive_str.substring(0,15)+"...";
+				} else {
+					if (drive_str.length() > 15) {
+						drive_str = drive_str.substring(0, 15) + "...";
 					}
 					drive_age.setText(drive_str);
-					ViewUtil.bindView(itemV.findViewById(R.id.car_age),","+
-							JSONUtil.getString(itemjo, "drivingExperience")+"年驾龄");
+					ViewUtil.bindView(itemV.findViewById(R.id.car_age), ","
+							+ JSONUtil.getString(itemjo, "drivingExperience")
+							+ "年驾龄");
 				}
-//				CarPlayUtil.bindDriveAge(itemjo,
-//						(ImageView) itemV.findViewById(R.id.car_logo),
-//						(TextView) itemV.findViewById(R.id.drive_age));
-				
+				// CarPlayUtil.bindDriveAge(itemjo,
+				// (ImageView) itemV.findViewById(R.id.car_logo),
+				// (TextView) itemV.findViewById(R.id.drive_age));
+
 				View seat_num = itemV.findViewById(R.id.seat_num);
 				View seatnum = itemV.findViewById(R.id.seatnum);
 				View seatnumber = itemV.findViewById(R.id.seatnumber);
 
 				ViewUtil.bindView(itemV.findViewById(R.id.seat_num),
-						JSONUtil.getInt(itemjo, "seat")+"个");
-				if (!JSONUtil.getInt(itemjo, "seat").equals(0)&&!JSONUtil.getString(itemjo, "carBrandLogo").equals("")) {
+						JSONUtil.getInt(itemjo, "seat") + "个");
+				if (!JSONUtil.getInt(itemjo, "seat").equals(0)
+						&& !JSONUtil.getString(itemjo, "carBrandLogo").equals(
+								"")) {
 					seat_num.setVisibility(View.VISIBLE);
 					seatnum.setVisibility(View.VISIBLE);
 					seatnumber.setVisibility(View.VISIBLE);
@@ -380,6 +407,8 @@ public class MyActiveMembersManageActivity extends CarPlayBaseActivity {
 
 			@Override
 			public void doInUI(Response response, Integer transfer) {
+				JSONObject jo = response.jSONFromData();
+				chatGroupId = JSONUtil.getString(jo, "chatGroupId");
 				adapter.clear();
 				JSONArray jsa = response.jSONArrayFrom("data.members");
 				adapter.addAll(jsa);
