@@ -35,6 +35,8 @@ import com.easemob.util.EMLog;
 import com.easemob.util.EasyUtils;
 import com.gongpingjia.carplay.chat.controller.HXSDKHelper;
 
+import de.greenrobot.event.EventBus;
+
 /**
  * 新消息提醒class 2.1.8把新消息提示相关的api移除出sdk，方便开发者自由修改 开发者也可以继承此类实现相关的接口
  * 
@@ -125,6 +127,9 @@ public class HXNotifier {
 			return;
 		}
 
+		// EventBus.getDefault().post(message);
+		// System.out.println("发送消息");
+
 		// 判断app是否在后台
 		if (!EasyUtils.isAppRunningForeground(appContext)) {
 			EMLog.d(TAG, "app is running in backgroud");
@@ -142,6 +147,9 @@ public class HXNotifier {
 				messages.get(messages.size() - 1))) {
 			return;
 		}
+
+		// EventBus.getDefault().post(messages);
+		// System.out.println("发送消息");
 		// 判断app是否在后台
 		if (!EasyUtils.isAppRunningForeground(appContext)) {
 			EMLog.d(TAG, "app is running in backgroud");
@@ -247,10 +255,10 @@ public class HXNotifier {
 
 			if (numIncrease) {
 				// prepare latest event info section
-				if (!isForeground) {
-					notificationNum++;
-					fromUsers.add(message.getFrom());
-				}
+				// if (!isForeground) {
+				notificationNum++;
+				fromUsers.add(message.getFrom());
+				// }
 			}
 
 			int fromUsersNum = fromUsers.size();

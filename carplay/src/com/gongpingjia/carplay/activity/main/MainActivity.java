@@ -39,8 +39,11 @@ import android.widget.TextView;
 import com.easemob.EMCallBack;
 import com.easemob.EMConnectionListener;
 import com.easemob.EMError;
+import com.easemob.EMEventListener;
+import com.easemob.EMNotifierEvent;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMGroup;
+import com.easemob.chat.EMMessage;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.active.ActiveListFragment;
 import com.gongpingjia.carplay.activity.active.CreateActiveActivity;
@@ -52,6 +55,7 @@ import com.gongpingjia.carplay.activity.my.SettingActivity;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.User;
+import com.gongpingjia.carplay.chat.DemoHXSDKHelper;
 import com.gongpingjia.carplay.chat.controller.HXSDKHelper;
 import com.gongpingjia.carplay.manage.UserInfoManage;
 import com.gongpingjia.carplay.manage.UserInfoManage.LoginCallBack;
@@ -62,7 +66,8 @@ import com.gongpingjia.carplay.view.pop.ActiveFilterPop;
 
 import de.greenrobot.event.EventBus;
 
-public class MainActivity extends BaseFragmentActivity {
+public class MainActivity extends BaseFragmentActivity implements
+		EMEventListener {
 	LinearLayout layout;
 
 	LinearLayout tabV;
@@ -104,6 +109,13 @@ public class MainActivity extends BaseFragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		EventBus.getDefault().register(this);
+
+		EMChatManager.getInstance().registerEventListener(
+				this,
+				new EMNotifierEvent.Event[] {
+						EMNotifierEvent.Event.EventNewMessage,
+						EMNotifierEvent.Event.EventOfflineMessage,
+						EMNotifierEvent.Event.EventConversationListChanged });
 		initView();
 		isAuthen();
 		updateApp();
@@ -115,12 +127,16 @@ public class MainActivity extends BaseFragmentActivity {
 		super.onResume();
 		Intent it = new Intent(this, MsgService.class);
 		startService(it);
+
 		// asyncFetchGroupsFromServer();
 		// ((DemoHXSDKHelper) HXSDKHelper.getInstance()).getUserProfileManager()
 		// .asyncGetCurrentUserInfo();
 	}
 
 	public void initView() {
+		DemoHXSDKHelper sdkHelper = (DemoHXSDKHelper) DemoHXSDKHelper
+				.getInstance();
+		sdkHelper.pushActivity(this);
 		mHandler = new Handler();
 		slist = new Stack<Fragment>();
 		fm = getSupportFragmentManager();
@@ -587,29 +603,32 @@ public class MainActivity extends BaseFragmentActivity {
 
 				@Override
 				public void run() {
-					if (error == EMError.USER_REMOVED) {
-						// 显示帐号已经被移除
-						showToast("账号被移除!");
-						// showAccountRemovedDialog();
-					} else if (error == EMError.CONNECTION_CONFLICT) {
-						// 显示帐号在其他设备登陆dialog
-						showToast("账号在另一地点登陆!");
-						isConflict = true;
-						// showConflictDialog();
-					} else {
-						showToast("网络异常,请重新连接!");
-						// chatHistoryFragment.errorItem
-						// .setVisibility(View.VISIBLE);
-						// if (NetUtils.hasNetwork(MainActivity.this))
-						// chatHistoryFragment.errorText.setText(st1);
-						// else
-						// chatHistoryFragment.errorText.setText(st2);
 
+					if (!User.getInstance().isLogin()) {
+						if (error == EMError.USER_REMOVED) {
+							// 显示帐号已经被移除
+							showToast("账号被移除!");
+							// showAccountRemovedDialog();
+						} else if (error == EMError.CONNECTION_CONFLICT) {
+							// 显示帐号在其他设备登陆dialog
+							showToast("账号在另一地点登陆!");
+							isConflict = true;
+							// showConflictDialog();
+						} else {
+							showToast("网络异常,请重新连接!");
+							// chatHistoryFragment.errorItem
+							// .setVisibility(View.VISIBLE);
+							// if (NetUtils.hasNetwork(MainActivity.this))
+							// chatHistoryFragment.errorText.setText(st1);
+							// else
+							// chatHistoryFragment.errorText.setText(st2);
+
+						}
+
+						Intent it = new Intent(self, LoginActivity.class);
+						startActivity(it);
+						finish();
 					}
-
-					Intent it = new Intent(self, LoginActivity.class);
-					startActivity(it);
-					finish();
 				}
 
 			});
@@ -645,6 +664,34 @@ public class MainActivity extends BaseFragmentActivity {
 			return false;
 		}
 		return super.onKeyDown(keyCode, event);
+	}
+
+	@Override
+	public void onEvent(EMNotifierEvent event) {
+		switch (event.getEvent()) {
+		case EventNewMessage: // 普通消息
+		{
+			EMMessage message = (EMMessage) event.getData();
+
+			System.out.println("来了");
+
+			// 提示新消息
+			// HXSDKHelper.getInstance().getNotifier().onNewMsg(message);
+			EventBus.getDefault().post(message);
+			break;
+		}
+
+		case EventOfflineMessage: {
+			break;
+		}
+
+		case EventConversationListChanged: {
+			break;
+		}
+
+		default:
+			break;
+		}
 	}
 
 }

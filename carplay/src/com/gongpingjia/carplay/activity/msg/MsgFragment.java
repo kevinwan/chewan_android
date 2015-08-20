@@ -30,10 +30,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.easemob.EMError;
+import com.easemob.EMNotifierEvent;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMConversation;
 import com.easemob.chat.EMGroup;
 import com.easemob.chat.EMGroupManager;
+import com.easemob.chat.EMMessage;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.chat.ChatActivity;
 import com.gongpingjia.carplay.activity.main.MainActivity;
@@ -253,14 +255,21 @@ public class MsgFragment extends Fragment {
 		// mAdapter.setData(jo);
 	}
 
+	public void onEventMainThread(EMMessage message) {
+		System.out.println("2222223");
+		conversationList = loadConversationsWithRecentChat();
+		mAdapter.setGroupMessageData(conversationList);
+		// mAdapter.setData(jo);
+	}
+
 	@Override
 	public void onHiddenChanged(boolean hidden) {
 		super.onHiddenChanged(hidden);
 		this.hidden = hidden;
 		if (!hidden) {
 			getMsgCount();
-			conversationList = loadConversationsWithRecentChat();
-			mAdapter.setGroupMessageData(conversationList);
+			// conversationList = loadConversationsWithRecentChat();
+			// mAdapter.setGroupMessageData(conversationList);
 		}
 	}
 
@@ -306,10 +315,6 @@ public class MsgFragment extends Fragment {
 		for (Pair<Long, EMConversation> sortItem : sortList) {
 			list.add(sortItem.second);
 		}
-
-		EventBus.getDefault().post(list);
-
-		System.out.println("list" + list.toString());
 
 		return list;
 	}
