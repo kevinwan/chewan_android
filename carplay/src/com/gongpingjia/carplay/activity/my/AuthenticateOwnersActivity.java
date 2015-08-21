@@ -106,6 +106,12 @@ public class AuthenticateOwnersActivity extends CarPlayBaseActivity implements
 			return;
 		}
 
+		if (Integer.parseInt(drivingExperienceE.getText().toString()) > 20
+				|| Integer.parseInt(drivingExperienceE.getText().toString()) == 0) {
+			showToast("驾龄为0~20数字");
+			return;
+		}
+
 		if (TextUtils.isEmpty(brandName)) {
 			showToast("请选择车型品牌!");
 			return;
