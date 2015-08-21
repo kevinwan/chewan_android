@@ -143,7 +143,7 @@ public class LoginActivity extends CarPlayBaseActivity implements OnClickListene
         wxHandler.addToSocialSDK();
 
         // 设置新浪SSO handler
-        mController.getConfig().setSsoHandler(new SinaSsoHandler());
+//        mController.getConfig().setSsoHandler(new SinaSsoHandler());
 
         PhoneNumEditText = (EditText) findViewById(R.id.ed_login_phone);
         PasswordEditText = (EditText) findViewById(R.id.ed_login_password);
