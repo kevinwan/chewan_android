@@ -61,7 +61,7 @@ public class ChatMapActivity extends CarPlayBaseActivity implements AMapLocation
             mLocationManager.setGpsEnable(true);
             mLocationManager.requestLocationData(LocationProviderProxy.AMapNetwork, 20000, 10, this);
 
-            setTitle("当前位置");
+            setTitle("位置");
             setRightAction("发送", -1, new View.OnClickListener() {
 
                 @Override

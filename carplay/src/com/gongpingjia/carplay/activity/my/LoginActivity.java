@@ -115,7 +115,7 @@ public class LoginActivity extends CarPlayBaseActivity implements OnClickListene
     @Override
     public void initView() {
 
-        setTitle("登陆");
+        setTitle("登录");
         mWeixinBtn = findViewById(R.id.layout_login_weixin);
         mWeiboBtn = findViewById(R.id.layout_login_weibo);
         mQQBtn = findViewById(R.id.layout_login_qq);

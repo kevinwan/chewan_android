@@ -84,7 +84,7 @@ public class SplashActivity extends CarPlayBaseActivity {
 				"sign",
 				MD5Util.string2MD5(per.thirdId + per.channel
 						+ "com.gongpingjia.carplay"));
-		net.doPostInDialog("登陆中...", new NetTask(self) {
+		net.doPost( new NetTask(self) {
 
 			@Override
 			public void doInUI(Response response, Integer transfer) {
