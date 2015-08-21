@@ -105,7 +105,7 @@ public class PwdNextActivity extends CarPlayBaseActivity {
 
                             CarPlayPerference per = IocContainer.getShare().get(CarPlayPerference.class);
                             per.phone = phone;
-                            per.password = confirmPwd;
+                            per.password = MD5Util.string2MD5(confirmPwd);
                             per.commit();
 
                             Intent intent = new Intent(self, ForgetPwdActivity.class);

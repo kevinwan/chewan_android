@@ -25,7 +25,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="fill_parent"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/my_bg" />
+                    android:src="@drawable/my_bg"
+                    android:visibility="gone" />
 
                 <com.gongpingjia.carplay.view.CarPlayGallery
                     android:id="@+id/gallery"
@@ -85,8 +86,7 @@
                                 android:id="@+id/gender"
                                 android:layout_width="40dp"
                                 android:layout_height="17dp"
-                                android:layout_marginLeft="7dp"
-                                android:background="@drawable/woman" >
+                                android:layout_marginLeft="7dp" >
 
                                 <TextView
                                     android:id="@+id/age"
@@ -114,7 +114,9 @@
 
                             <TextView
                                 android:id="@+id/carModel"
-                                style="@style/text_grey_smaller" />
+                                style="@style/text_grey_smaller"
+                                android:ellipsize="end"
+                                android:singleLine="true" />
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
