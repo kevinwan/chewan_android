@@ -397,22 +397,25 @@ public class LoginActivity extends CarPlayBaseActivity implements OnClickListene
 
             @Override
             public void onStart(SHARE_MEDIA arg0) {
-
+                showProgressDialog("授权中...");
             }
 
             @Override
             public void onError(SocializeException arg0, SHARE_MEDIA arg1) {
+                hidenProgressDialog();
                 showToast("授权失败");
             }
 
             @Override
             public void onComplete(Bundle value, SHARE_MEDIA media) {
                 mUid = value.getString("uid");
+                hidenProgressDialog();
                 getUserInfo(media);
             }
 
             @Override
             public void onCancel(SHARE_MEDIA arg0) {
+                hidenProgressDialog();
                 showToast("授权取消");
             }
         });
@@ -423,7 +426,7 @@ public class LoginActivity extends CarPlayBaseActivity implements OnClickListene
 
             @Override
             public void onStart() {
-                showProgressDialog("加载中...");
+                showProgressDialog("跳转中...");
             }
 
             @Override
