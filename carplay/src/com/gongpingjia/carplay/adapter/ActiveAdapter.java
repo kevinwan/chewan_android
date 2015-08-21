@@ -189,6 +189,8 @@ public class ActiveAdapter extends NetJSONAdapter {
 
 					} else if (holder.joinT.getText().equals("我要去玩")) {
 						isAuthen(activityId, jo);
+					} else if (holder.joinT.getText().equals("申请中")) {
+
 					} else {
 
 					}

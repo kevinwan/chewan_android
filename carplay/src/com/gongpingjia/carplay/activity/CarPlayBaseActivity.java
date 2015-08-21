@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.chat.controller.HXSDKHelper;
 import com.umeng.analytics.MobclickAgent;
 
 public abstract class CarPlayBaseActivity extends BaseActivity {
@@ -230,6 +231,11 @@ public abstract class CarPlayBaseActivity extends BaseActivity {
 		progressdialog.dismiss();
 		// }
 	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+	}
 
 	@Override
 	protected void onPause() {
@@ -241,5 +247,6 @@ public abstract class CarPlayBaseActivity extends BaseActivity {
 	protected void onResume() {
 		super.onResume();
 		MobclickAgent.onResume(this);
+		HXSDKHelper.getInstance().getNotifier().reset();
 	}
 }

@@ -42,8 +42,10 @@ import com.easemob.EMError;
 import com.easemob.EMEventListener;
 import com.easemob.EMNotifierEvent;
 import com.easemob.chat.EMChatManager;
+import com.easemob.chat.EMConversation;
 import com.easemob.chat.EMGroup;
 import com.easemob.chat.EMMessage;
+import com.easemob.chat.EMConversation.EMConversationType;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.active.ActiveListFragment;
 import com.gongpingjia.carplay.activity.active.CreateActiveActivity;
@@ -87,7 +89,9 @@ public class MainActivity extends BaseFragmentActivity implements
 
 	File mCacheDir;
 
-	BadgeView msgT;
+	ImageView msgT;
+
+	ImageView chatPointI;
 
 	Timer mTimer;
 
@@ -110,12 +114,6 @@ public class MainActivity extends BaseFragmentActivity implements
 		setContentView(R.layout.activity_main);
 		EventBus.getDefault().register(this);
 
-		EMChatManager.getInstance().registerEventListener(
-				this,
-				new EMNotifierEvent.Event[] {
-						EMNotifierEvent.Event.EventNewMessage,
-						EMNotifierEvent.Event.EventOfflineMessage,
-						EMNotifierEvent.Event.EventConversationListChanged });
 		initView();
 		isAuthen();
 		updateApp();
@@ -127,7 +125,12 @@ public class MainActivity extends BaseFragmentActivity implements
 		super.onResume();
 		Intent it = new Intent(this, MsgService.class);
 		startService(it);
-
+		EMChatManager.getInstance().registerEventListener(
+				this,
+				new EMNotifierEvent.Event[] {
+						EMNotifierEvent.Event.EventNewMessage,
+						EMNotifierEvent.Event.EventOfflineMessage,
+						EMNotifierEvent.Event.EventConversationListChanged });
 		// asyncFetchGroupsFromServer();
 		// ((DemoHXSDKHelper) HXSDKHelper.getInstance()).getUserProfileManager()
 		// .asyncGetCurrentUserInfo();
@@ -163,8 +166,8 @@ public class MainActivity extends BaseFragmentActivity implements
 			}
 		});
 
-		msgT = (BadgeView) findViewById(R.id.msg_point);
-
+		msgT = (ImageView) findViewById(R.id.msg_point);
+		chatPointI = (ImageView) findViewById(R.id.chat_point);
 		connectionListener = new MyConnectionListener();
 		EMChatManager.getInstance().addConnectionListener(connectionListener);
 	}
@@ -519,32 +522,6 @@ public class MainActivity extends BaseFragmentActivity implements
 		});
 	}
 
-	private void getMyGroupData() {
-		LoginActivity.asyncFetchGroupsFromServer();
-		// EMGroupManager.getInstance().asyncGetGroupsFromServer(
-		// new EMValueCallBack<List<EMGroup>>() {
-		//
-		// @Override
-		// public void onSuccess(List<EMGroup> value) {
-		// // TODO Auto-generated method stub
-		//
-		// }
-		//
-		// @Override
-		// public void onError(int error, String errorMsg) {
-		// // TODO Auto-generated method stub
-		//
-		// }
-		// });
-	}
-
-	/**
-	 * 获取所有会话
-	 * 
-	 * @param context
-	 * @return +
-	 */
-
 	public void onEventMainThread(JSONObject jo) {
 		dataJo = jo;
 		JSONObject commentJo = JSONUtil.getJSONObject(jo, "comment");
@@ -554,7 +531,7 @@ public class MainActivity extends BaseFragmentActivity implements
 		int applicationCount = JSONUtil.getInt(applicationJo, "count");
 
 		if (commentCount != 0 || applicationCount != 0) {
-			msgT.setText(commentCount + applicationCount + "");
+			// msgT.setText(commentCount + applicationCount + "");
 			msgT.setVisibility(View.VISIBLE);
 		} else {
 			msgT.setVisibility(View.GONE);
@@ -604,7 +581,7 @@ public class MainActivity extends BaseFragmentActivity implements
 				@Override
 				public void run() {
 
-					if (!User.getInstance().isLogin()) {
+					if (User.getInstance().isLogin()) {
 						if (error == EMError.USER_REMOVED) {
 							// 显示帐号已经被移除
 							showToast("账号被移除!");
@@ -639,6 +616,20 @@ public class MainActivity extends BaseFragmentActivity implements
 	protected void onDestroy() {
 		super.onDestroy();
 		EventBus.getDefault().unregister(this);
+		if (connectionListener != null) {
+			EMChatManager.getInstance().removeConnectionListener(
+					connectionListener);
+		}
+	}
+
+	@Override
+	protected void onStop() {
+		EMChatManager.getInstance().unregisterEventListener(this);
+		DemoHXSDKHelper sdkHelper = (DemoHXSDKHelper) DemoHXSDKHelper
+				.getInstance();
+		sdkHelper.popActivity(this);
+
+		super.onStop();
 	}
 
 	static public class ExitRunnable implements Runnable {
@@ -671,10 +662,13 @@ public class MainActivity extends BaseFragmentActivity implements
 		switch (event.getEvent()) {
 		case EventNewMessage: // 普通消息
 		{
+
 			EMMessage message = (EMMessage) event.getData();
-
-			System.out.println("来了");
-
+			runOnUiThread(new Runnable() {
+				public void run() {
+					updateUnreadLabel();
+				}
+			});
 			// 提示新消息
 			// HXSDKHelper.getInstance().getNotifier().onNewMsg(message);
 			EventBus.getDefault().post(message);
@@ -694,4 +688,22 @@ public class MainActivity extends BaseFragmentActivity implements
 		}
 	}
 
+	public void updateUnreadLabel() {
+		int count = getUnreadMsgCountTotal();
+		System.out.println("count:" + count);
+		chatPointI.setVisibility(count > 0 ? View.VISIBLE : View.GONE);
+	}
+
+	public int getUnreadMsgCountTotal() {
+		int unreadMsgCountTotal = 0;
+		int chatroomUnreadMsgCount = 0;
+		unreadMsgCountTotal = EMChatManager.getInstance().getUnreadMsgsCount();
+		for (EMConversation conversation : EMChatManager.getInstance()
+				.getAllConversations().values()) {
+			if (conversation.getType() == EMConversationType.ChatRoom)
+				chatroomUnreadMsgCount = chatroomUnreadMsgCount
+						+ conversation.getUnreadMsgCount();
+		}
+		return unreadMsgCountTotal - chatroomUnreadMsgCount;
+	}
 }

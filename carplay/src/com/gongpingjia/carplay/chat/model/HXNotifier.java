@@ -133,7 +133,7 @@ public class HXNotifier {
 		// 判断app是否在后台
 		if (!EasyUtils.isAppRunningForeground(appContext)) {
 			EMLog.d(TAG, "app is running in backgroud");
-			sendNotification(message, true);
+			sendNotification(message, false);
 		} else {
 			sendNotification(message, true);
 
@@ -153,7 +153,7 @@ public class HXNotifier {
 		// 判断app是否在后台
 		if (!EasyUtils.isAppRunningForeground(appContext)) {
 			EMLog.d(TAG, "app is running in backgroud");
-			sendNotification(messages, true);
+			sendNotification(messages, false);
 		} else {
 			sendNotification(messages, true);
 		}
@@ -255,10 +255,10 @@ public class HXNotifier {
 
 			if (numIncrease) {
 				// prepare latest event info section
-				// if (!isForeground) {
-				notificationNum++;
-				fromUsers.add(message.getFrom());
-				// }
+				if (!isForeground) {
+					notificationNum++;
+					fromUsers.add(message.getFrom());
+				}
 			}
 
 			int fromUsersNum = fromUsers.size();
@@ -289,7 +289,7 @@ public class HXNotifier {
 			Notification notification = mBuilder.build();
 
 			if (isForeground) {
-				notificationManager.notify(foregroundNotifyID, notification);
+				// notificationManager.notify(foregroundNotifyID, notification);
 				// notificationManager.cancel(foregroundNotifyID);
 			} else {
 				notificationManager.notify(notifyID, notification);

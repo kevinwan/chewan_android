@@ -219,9 +219,9 @@ public class ChatActivity extends CarPlayBaseActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_chat);
 
-		DemoHXSDKHelper sdkHelper = (DemoHXSDKHelper) DemoHXSDKHelper
-				.getInstance();
-		sdkHelper.pushActivity(this);
+		// DemoHXSDKHelper sdkHelper = (DemoHXSDKHelper) DemoHXSDKHelper
+		// .getInstance();
+		// sdkHelper.pushActivity(this);
 		activityInstance = this;
 		activiyId = getIntent().getStringExtra("activityId");
 		user = User.getInstance();
