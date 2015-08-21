@@ -53,15 +53,15 @@
                     android:id="@+id/title"
                     style="@style/text_black_medium"
                     android:layout_width="0dp"
-                    android:layout_weight="1" />
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:singleLine="true" />
 
                 <TextView
                     android:id="@+id/time"
                     style="@style/text_grey_smaller"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:gravity="right"
-                    android:visibility="gone" />
+                    android:layout_width="wrap_content"
+                    android:gravity="right" />
             </LinearLayout>
 
             <LinearLayout
