@@ -700,7 +700,7 @@ public class MainActivity extends BaseFragmentActivity implements
 		unreadMsgCountTotal = EMChatManager.getInstance().getUnreadMsgsCount();
 		for (EMConversation conversation : EMChatManager.getInstance()
 				.getAllConversations().values()) {
-			if (conversation.getType() == EMConversationType.GroupChat)
+			if (conversation.getType() == EMConversationType.ChatRoom)
 				chatroomUnreadMsgCount = chatroomUnreadMsgCount
 						+ conversation.getUnreadMsgCount();
 		}
