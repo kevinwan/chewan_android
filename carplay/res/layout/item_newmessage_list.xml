@@ -70,9 +70,10 @@
                 <TextView
                     android:id="@+id/drive_age"
                     style="@style/text_grey_small"
-                    android:maxEms="15"
                      android:ellipsize="end"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:maxWidth="95dp"
+                     />
 
                 <TextView
                     android:id="@+id/car_age"
