@@ -614,6 +614,7 @@ public class MainActivity extends BaseFragmentActivity implements
 						}
 
 						Intent it = new Intent(self, LoginActivity.class);
+						it.putExtra("action", "logout");
 						startActivity(it);
 						finish();
 

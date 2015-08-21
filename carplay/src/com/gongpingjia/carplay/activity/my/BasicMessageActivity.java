@@ -223,6 +223,7 @@ public class BasicMessageActivity extends CarPlayBaseActivity implements
 			showToast("请设置您的年龄");
 			return;
 		}
+		
 		final String strcity = cityT.getText().toString();
 		if (TextUtils.isEmpty(strcity)) {
 			showToast("请设置您所在的城市");

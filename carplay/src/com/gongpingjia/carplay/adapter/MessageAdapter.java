@@ -56,7 +56,7 @@ public class MessageAdapter extends NetJSONAdapter {
 
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
-		ViewHolder holder;
+		final ViewHolder holder;
 		if (convertView == null) {
 			convertView = mLayoutInflater.inflate(mResource, null);
 			holder = new ViewHolder();
@@ -133,7 +133,7 @@ public class MessageAdapter extends NetJSONAdapter {
 					@Override
 					public void onClick(View v) {
 						JSONObject jo = (JSONObject) getItem(position);
-						agree(JSONUtil.getString(jo, "applicationId"), jo);
+						agree(JSONUtil.getString(jo, "applicationId"), jo,holder.agreeT);
 					}
 				});
 
@@ -148,6 +148,7 @@ public class MessageAdapter extends NetJSONAdapter {
 				holder.agreeT.setVisibility(View.VISIBLE);
 				holder.agreeT.setText(remarks);
 				holder.agreeT.setBackgroundResource(R.drawable.button_grey_bg);
+				
 				holder.countT
 						.setVisibility(JSONUtil.getInt(jo, "seat") > 0 ? View.VISIBLE
 								: View.GONE);
@@ -259,13 +260,13 @@ public class MessageAdapter extends NetJSONAdapter {
 		}
 	}
 
-	private void agree(String messageId, final JSONObject jo) {
+	private void agree(String messageId, final JSONObject jo,final TextView v) {
 		User user = User.getInstance();
 		DhNet net = new DhNet(API.CWBaseurl + "/application/" + messageId
 				+ "/process?userId=" + user.getUserId() + "&token="
 				+ user.getToken());
 		net.addParam("action", 1);
-		net.doPostInDialog("发布评论中...", new NetTask(mContext) {
+		net.doPostInDialog("加载中...", new NetTask(mContext) {
 
 			@Override
 			public void doInUI(Response response, Integer transfer) {

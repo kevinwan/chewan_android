@@ -228,10 +228,12 @@ public abstract class CarPlayBaseActivity extends BaseActivity {
 		}
 		System.out.println("hiden" + dialogcount);
 		// if (dialogcount == 0) {
-		progressdialog.dismiss();
+		if (progressdialog != null) {
+			progressdialog.dismiss();
+		}
 		// }
 	}
-	
+
 	@Override
 	protected void onStop() {
 		super.onStop();

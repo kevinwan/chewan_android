@@ -54,7 +54,9 @@ public class MsgService extends Service {
 				if (jo.getInt("result") == 0) {
 					System.out.println("发送");
 					JSONObject data = JSONUtil.getJSONObject(jo, "data");
-					EventBus.getDefault().post(data);
+					if (data != null) {
+						EventBus.getDefault().post(data);
+					}
 
 				}
 			} catch (JSONException e) {

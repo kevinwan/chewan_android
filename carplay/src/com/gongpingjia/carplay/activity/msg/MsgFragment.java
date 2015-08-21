@@ -240,7 +240,9 @@ public class MsgFragment extends Fragment {
 					mRefreshListView.onRefreshComplete();
 					mRefreshListView.removeFootView();
 					JSONObject jo = response.jSONFromData();
-					EventBus.getDefault().post(jo);
+					if(jo!=null) {
+						EventBus.getDefault().post(jo);
+					}
 				}
 			}
 		});

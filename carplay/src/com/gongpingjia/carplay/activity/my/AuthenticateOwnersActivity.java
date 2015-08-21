@@ -106,6 +106,12 @@ public class AuthenticateOwnersActivity extends CarPlayBaseActivity implements
 			return;
 		}
 
+		if (Integer.parseInt(drivingExperienceE.getText().toString()) > 20
+				|| Integer.parseInt(drivingExperienceE.getText().toString()) == 0) {
+			showToast("驾龄为0~20数字");
+			return;
+		}
+
 		if (TextUtils.isEmpty(brandName)) {
 			showToast("请选择车型品牌!");
 			return;
@@ -203,6 +209,7 @@ public class AuthenticateOwnersActivity extends CarPlayBaseActivity implements
 				Bitmap btp = PhotoUtil.checkImage(self, data);
 				PhotoUtil.saveLocalImage(btp, new File(mPhotoPath));
 				btp.recycle();
+				showProgressDialog("上传图片中...");
 				uploadPic(mPhotoPath);
 				break;
 			case Constant.TAKE_PHOTO:
@@ -212,6 +219,7 @@ public class AuthenticateOwnersActivity extends CarPlayBaseActivity implements
 				int degree = PhotoUtil.getBitmapDegree(mPhotoPath);
 				PhotoUtil.saveLocalImage(btp1, new File(newPath), degree);
 				btp1.recycle();
+				showProgressDialog("上传图片中...");
 				uploadPic(newPath);
 				break;
 
