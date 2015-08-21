@@ -12,6 +12,7 @@ import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.util.ViewUtil;
 import net.duohuo.dhroid.view.NetRefreshAndMoreListView;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -67,9 +68,25 @@ public class AttentionPersonActivity extends CarPlayBaseActivity {
 				View sexBg = itemV.findViewById(R.id.layout_sex);
 				CarPlayUtil.bindSexView(JSONUtil.getString(data, "gender"),
 						sexBg);
-				CarPlayUtil.bindDriveAge(data,
-						(ImageView) itemV.findViewById(R.id.car_img),
-						(TextView) itemV.findViewById(R.id.car_age));
+				
+				ImageView carimg=(ImageView) itemV.findViewById(R.id.car_img);
+				TextView model=(TextView) itemV.findViewById(R.id.car_model);
+				TextView age=(TextView) itemV.findViewById(R.id.car_age);
+				
+				if (TextUtils.isEmpty(JSONUtil.getString(data, "carModel"))) {
+					carimg.setVisibility(View.GONE);
+					ViewUtil.bindView(model, "带我飞~");
+				} else {
+					carimg.setVisibility(View.VISIBLE);
+					model.setText(JSONUtil.getString(data, "carModel"));
+					age.setText("," + JSONUtil.getString(data, "drivingExperience") + "年驾龄");
+					ViewUtil.bindNetImage((ImageView) carimg,
+							JSONUtil.getString(data, "carBrandLogo"), "carlogo");
+				}
+				
+//				CarPlayUtil.bindDriveAge(data,
+//						(ImageView) itemV.findViewById(R.id.car_img),
+//						(TextView) itemV.findViewById(R.id.car_age));
 				return o;
 			}
 
