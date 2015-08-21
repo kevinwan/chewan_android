@@ -217,7 +217,8 @@ public class MsgFragment extends Fragment {
 				applicationTimeT.setVisibility(View.VISIBLE);
 
 				ViewUtil.bindView(applicationTimeT,
-						JSONUtil.getLong(applicationJo, "createTime"), "neartime");
+						JSONUtil.getLong(applicationJo, "createTime"),
+						"neartime");
 				// applicationTimeT.setText(formatter.format(new
 				// Date(JSONUtil.getLong(applicationJo, "createTime"))));
 			}
@@ -225,6 +226,8 @@ public class MsgFragment extends Fragment {
 					"count"));
 		}
 	}
+	
+	
 
 	private void getMsgCount() {
 		User user = User.getInstance();
@@ -256,7 +259,6 @@ public class MsgFragment extends Fragment {
 	}
 
 	public void onEventMainThread(EMMessage message) {
-		System.out.println("2222223");
 		conversationList = loadConversationsWithRecentChat();
 		mAdapter.setGroupMessageData(conversationList);
 		// mAdapter.setData(jo);
@@ -276,6 +278,8 @@ public class MsgFragment extends Fragment {
 	@Override
 	public void onResume() {
 		super.onResume();
+		// 更新消息未读数
+		((MainActivity) getActivity()).updateUnreadLabel();
 		if (!hidden && !((MainActivity) getActivity()).isConflict) {
 
 			getMsgCount();

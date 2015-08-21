@@ -98,7 +98,7 @@
 
             <RelativeLayout
                 android:id="@+id/img_layout"
-                android:layout_width="42dp"
+                android:layout_width="30dp"
                 android:layout_height="26dp" >
 
                 <ImageView
@@ -108,14 +108,21 @@
                     android:layout_centerHorizontal="true"
                     android:src="@drawable/msg_n" />
 
-                <com.gongpingjia.carplay.view.BadgeView
+                <ImageView
                     android:id="@+id/msg_point"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
                     android:layout_alignParentRight="true"
-                    android:text="1"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_smaller" />
+                    android:src="@drawable/red_point"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/chat_point"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/red_point"
+                    android:visibility="gone" />
             </RelativeLayout>
 
             <TextView

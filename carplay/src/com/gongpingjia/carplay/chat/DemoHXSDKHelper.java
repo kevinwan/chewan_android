@@ -334,16 +334,21 @@ public class DemoHXSDKHelper extends HXSDKHelper {
 				}
 				Map<String, RobotUser> robotMap = ((DemoHXSDKHelper) HXSDKHelper
 						.getInstance()).getRobotList();
-				if (robotMap != null && robotMap.containsKey(message.getFrom())) {
-					String nick = robotMap.get(message.getFrom()).getNick();
-					if (!TextUtils.isEmpty(nick)) {
-						return nick + ": " + ticker;
-					} else {
-						return message.getFrom() + ": " + ticker;
-					}
-				} else {
-					return message.getFrom() + ": " + ticker;
-				}
+
+				String nickName = message.getStringAttribute("nickName", "");
+
+				return nickName + ": " + ticker;
+				// if (robotMap != null &&
+				// robotMap.containsKey(message.getFrom())) {
+				// String nick = robotMap.get(message.getFrom()).getNick();
+				// if (!TextUtils.isEmpty(nick)) {
+				// return nick + ": " + ticker;
+				// } else {
+				// return message.getFrom() + ": " + ticker;
+				// }
+				// } else {
+				// return message.getFrom() + ": " + ticker;
+				// }
 			}
 
 			@Override
