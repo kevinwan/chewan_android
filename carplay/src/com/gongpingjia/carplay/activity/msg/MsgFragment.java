@@ -197,7 +197,7 @@ public class MsgFragment extends Fragment {
 						.getString(commentJo, "content"));
 				normalTimeT.setVisibility(View.VISIBLE);
 				ViewUtil.bindView(normalTimeT,
-						JSONUtil.getLong(commentJo, "createTime"), "time");
+						JSONUtil.getLong(commentJo, "createTime"), "neartime");
 
 				// normalTimeT.setText(formatter.format(new
 				// Date(JSONUtil.getLong(commentJo, "createTime"))));
@@ -217,7 +217,7 @@ public class MsgFragment extends Fragment {
 				applicationTimeT.setVisibility(View.VISIBLE);
 
 				ViewUtil.bindView(applicationTimeT,
-						JSONUtil.getLong(applicationJo, "createTime"), "time");
+						JSONUtil.getLong(applicationJo, "createTime"), "neartime");
 				// applicationTimeT.setText(formatter.format(new
 				// Date(JSONUtil.getLong(applicationJo, "createTime"))));
 			}

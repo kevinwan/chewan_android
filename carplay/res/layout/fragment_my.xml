@@ -18,24 +18,23 @@
             <RelativeLayout
                 android:id="@+id/imgView_head"
                 android:layout_width="fill_parent"
-                android:layout_height="200dp"
-                >
-                <ImageView 
+                android:layout_height="200dp" >
+
+                <ImageView
                     android:id="@+id/notlogin_head"
                     android:layout_width="match_parent"
                     android:layout_height="fill_parent"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/my_bg"
-                    />
+                    android:src="@drawable/my_bg" />
+
                 <com.gongpingjia.carplay.view.CarPlayGallery
                     android:id="@+id/gallery"
                     android:layout_width="match_parent"
                     android:layout_height="fill_parent"
                     android:background="@color/tab_grey_bg"
                     android:fadingEdgeLength="0dp"
-                    android:spacing="5dp"
-                    android:visibility="gone"
-                    android:unselectedAlpha="128" />
+                    android:unselectedAlpha="128"
+                    android:visibility="gone" />
 
                 <net.duohuo.dhroid.view.DotLinLayout
                     android:id="@+id/dots"
@@ -204,8 +203,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginBottom="15dp"
                         android:layout_marginTop="15dp"
-                        android:background="@color/text_grey"
-                         />
+                        android:background="@color/text_grey" />
 
                     <LinearLayout
                         android:id="@+id/my_attention"

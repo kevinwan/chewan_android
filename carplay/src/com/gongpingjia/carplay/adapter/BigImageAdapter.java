@@ -40,16 +40,11 @@ public class BigImageAdapter extends BaseAdapter {
 	JSONArray jsa;
 
 	ImageView img;
-	int screenWidth;
 
 	public BigImageAdapter(Context context, JSONArray jsa) {
 		this.mcontext = (Activity) context;
 		mLayoutInflater = LayoutInflater.from(context);
 		this.jsa = jsa;
-		DisplayMetrics metrics = new DisplayMetrics();
-		mcontext.getWindowManager().getDefaultDisplay().getMetrics(metrics);
-		screenWidth = metrics.widthPixels;
-		System.out.println("screenWidth:" + screenWidth);
 	}
 
 	@Override
