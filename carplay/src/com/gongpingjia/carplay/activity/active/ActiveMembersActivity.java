@@ -260,6 +260,13 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 				JSONObject data = response.jSONFromData();
 				chatGroupId = JSONUtil.getString(data, "chatGroupId");
 
+				JSONObject jo = response.jSONFromData();
+				int isMember = JSONUtil.getInt(jo, "isMember");
+
+				isJoin = isMember == 1 ? true : false;
+
+				initQuitAndJoinButton(isJoin);
+
 			}
 		});
 	}

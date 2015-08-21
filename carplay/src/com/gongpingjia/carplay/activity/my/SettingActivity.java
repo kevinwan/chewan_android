@@ -15,10 +15,13 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.easemob.EMCallBack;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.bean.User;
+import com.gongpingjia.carplay.chat.DemoHXSDKHelper;
 import com.gongpingjia.carplay.util.CarPlayPerference;
 import com.gongpingjia.carplay.util.FileUtil;
 import com.gongpingjia.carplay.util.FileUtil.UNIT_SACLE;
@@ -109,20 +112,42 @@ public class SettingActivity extends CarPlayBaseActivity implements
 		case R.id.setting_at_versions:
 			break;
 		case R.id.setting_quit:
-			it = new Intent(this, LoginActivity.class);
-			it.putExtra("action", "logout");
-			startActivity(it);
-			CarPlayPerference preference = IocContainer.getShare().get(
-					CarPlayPerference.class);
-			preference.load();
-			preference.setPassword("");
-			preference.setChannel("");
-			preference.commit();
-			User user = User.getInstance();
-			user.setLogin(false);
-			user.setUserId("");
-			user.setToken("");
 			Log.e("tag", "update user info");
+			showProgressDialog("退出登录中...");
+			DemoHXSDKHelper.getInstance().logout(true, new EMCallBack() {
+
+				@Override
+				public void onSuccess() {
+					runOnUiThread(new Runnable() {
+						public void run() {
+							hidenProgressDialog();
+							Intent it = new Intent(self, LoginActivity.class);
+							it.putExtra("action", "logout");
+							startActivity(it);
+							CarPlayPerference preference = IocContainer
+									.getShare().get(CarPlayPerference.class);
+							preference.load();
+							preference.setPassword("");
+							preference.setChannel("");
+							preference.commit();
+							User user = User.getInstance();
+							user.setLogin(false);
+							user.setUserId("");
+							user.setToken("");
+						}
+					});
+				}
+
+				@Override
+				public void onProgress(int progress, String status) {
+
+				}
+
+				@Override
+				public void onError(int code, String message) {
+					hidenProgressDialog();
+				}
+			});
 			break;
 
 		default:

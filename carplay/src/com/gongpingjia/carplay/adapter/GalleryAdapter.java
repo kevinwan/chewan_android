@@ -83,7 +83,7 @@ public class GalleryAdapter extends BaseAdapter {
 		}
 		JSONObject jo = (JSONObject) getItem(position);
 		ViewUtil.bindNetImage((ImageView) convertView.findViewById(R.id.pic),
-				JSONUtil.getString(jo, "thumbnail_pic"), "default");
+				JSONUtil.getString(jo, "thumbnail_pic"), "big_pic");
 		return convertView;
 	}
 

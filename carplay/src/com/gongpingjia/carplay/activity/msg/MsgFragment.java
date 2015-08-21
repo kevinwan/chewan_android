@@ -42,6 +42,7 @@ import com.gongpingjia.carplay.activity.main.MainActivity;
 import com.gongpingjia.carplay.adapter.FragmentMsgAdapter;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.bean.User;
+import com.gongpingjia.carplay.chat.bean.GroupEB;
 import com.gongpingjia.carplay.view.BadgeView;
 
 import de.greenrobot.event.EventBus;
@@ -226,8 +227,6 @@ public class MsgFragment extends Fragment {
 					"count"));
 		}
 	}
-	
-	
 
 	private void getMsgCount() {
 		User user = User.getInstance();
@@ -264,6 +263,12 @@ public class MsgFragment extends Fragment {
 		// mAdapter.setData(jo);
 	}
 
+	public void onEventMainThread(GroupEB groupEb) {
+		conversationList = loadConversationsWithRecentChat();
+		mAdapter.setGroupMessageData(conversationList);
+		// mAdapter.setData(jo);
+	}
+
 	@Override
 	public void onHiddenChanged(boolean hidden) {
 		super.onHiddenChanged(hidden);
@@ -278,13 +283,16 @@ public class MsgFragment extends Fragment {
 	@Override
 	public void onResume() {
 		super.onResume();
+
+		conversationList = loadConversationsWithRecentChat();
+		mAdapter.setGroupMessageData(conversationList);
 		// 更新消息未读数
 		((MainActivity) getActivity()).updateUnreadLabel();
 		if (!hidden && !((MainActivity) getActivity()).isConflict) {
 
 			getMsgCount();
-			conversationList = loadConversationsWithRecentChat();
-			mAdapter.setGroupMessageData(conversationList);
+			// conversationList = loadConversationsWithRecentChat();
+			// mAdapter.setGroupMessageData(conversationList);
 		}
 	}
 

@@ -32,7 +32,7 @@
                     android:id="@+id/gallery"
                     android:layout_width="match_parent"
                     android:layout_height="fill_parent"
-                    android:background="@color/tab_grey_bg"
+                    android:background="@drawable/img_loading"
                     android:fadingEdgeLength="0dp"
                     android:unselectedAlpha="128"
                     android:visibility="gone" />

@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.List;
 import java.util.Stack;
 import java.util.Timer;
+import java.util.UUID;
 
 import net.duohuo.dhroid.activity.ActivityTack;
 import net.duohuo.dhroid.dialog.IDialog;
@@ -40,12 +41,18 @@ import com.easemob.EMCallBack;
 import com.easemob.EMConnectionListener;
 import com.easemob.EMError;
 import com.easemob.EMEventListener;
+import com.easemob.EMGroupChangeListener;
 import com.easemob.EMNotifierEvent;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMConversation;
 import com.easemob.chat.EMGroup;
+import com.easemob.chat.EMGroupManager;
 import com.easemob.chat.EMMessage;
+import com.easemob.chat.TextMessageBody;
 import com.easemob.chat.EMConversation.EMConversationType;
+import com.easemob.chat.EMMessage.ChatType;
+import com.easemob.chat.EMMessage.Type;
+import com.easemob.util.EMLog;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.active.ActiveListFragment;
 import com.gongpingjia.carplay.activity.active.CreateActiveActivity;
@@ -58,6 +65,7 @@ import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.chat.DemoHXSDKHelper;
+import com.gongpingjia.carplay.chat.bean.GroupEB;
 import com.gongpingjia.carplay.chat.controller.HXSDKHelper;
 import com.gongpingjia.carplay.manage.UserInfoManage;
 import com.gongpingjia.carplay.manage.UserInfoManage.LoginCallBack;
@@ -108,6 +116,8 @@ public class MainActivity extends BaseFragmentActivity implements
 
 	public boolean isConflict = false;
 
+	private MyGroupChangeListener groupChangeListener = null;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -137,9 +147,6 @@ public class MainActivity extends BaseFragmentActivity implements
 	}
 
 	public void initView() {
-		DemoHXSDKHelper sdkHelper = (DemoHXSDKHelper) DemoHXSDKHelper
-				.getInstance();
-		sdkHelper.pushActivity(this);
 		mHandler = new Handler();
 		slist = new Stack<Fragment>();
 		fm = getSupportFragmentManager();
@@ -170,6 +177,10 @@ public class MainActivity extends BaseFragmentActivity implements
 		chatPointI = (ImageView) findViewById(R.id.chat_point);
 		connectionListener = new MyConnectionListener();
 		EMChatManager.getInstance().addConnectionListener(connectionListener);
+		groupChangeListener = new MyGroupChangeListener();
+		// 注册群聊相关的listener
+		EMGroupManager.getInstance()
+				.addGroupChangeListener(groupChangeListener);
 	}
 
 	private void initTab() {
@@ -605,6 +616,8 @@ public class MainActivity extends BaseFragmentActivity implements
 						Intent it = new Intent(self, LoginActivity.class);
 						startActivity(it);
 						finish();
+
+						DemoHXSDKHelper.getInstance().logout(true, null);
 					}
 				}
 
@@ -620,6 +633,11 @@ public class MainActivity extends BaseFragmentActivity implements
 			EMChatManager.getInstance().removeConnectionListener(
 					connectionListener);
 		}
+
+		if (groupChangeListener != null) {
+			EMGroupManager.getInstance().removeGroupChangeListener(
+					groupChangeListener);
+		}
 	}
 
 	@Override
@@ -627,7 +645,6 @@ public class MainActivity extends BaseFragmentActivity implements
 		EMChatManager.getInstance().unregisterEventListener(this);
 		DemoHXSDKHelper sdkHelper = (DemoHXSDKHelper) DemoHXSDKHelper
 				.getInstance();
-		sdkHelper.popActivity(this);
 
 		super.onStop();
 	}
@@ -705,5 +722,67 @@ public class MainActivity extends BaseFragmentActivity implements
 						+ conversation.getUnreadMsgCount();
 		}
 		return unreadMsgCountTotal - chatroomUnreadMsgCount;
+	}
+
+	public class MyGroupChangeListener implements EMGroupChangeListener {
+
+		@Override
+		public void onInvitationReceived(String groupId, String groupName,
+				String inviter, String reason) {
+
+		}
+
+		@Override
+		public void onInvitationAccpted(String groupId, String inviter,
+				String reason) {
+
+		}
+
+		@Override
+		public void onInvitationDeclined(String groupId, String invitee,
+				String reason) {
+
+		}
+
+		@Override
+		public void onUserRemoved(String groupId, String groupName) {
+
+			// 提示用户被T了，demo省略此步骤
+			// 刷新ui
+			runOnUiThread(new Runnable() {
+				public void run() {
+					try {
+						updateUnreadLabel();
+						GroupEB eb = new GroupEB();
+						EventBus.getDefault().post(eb);
+
+					} catch (Exception e) {
+					}
+				}
+			});
+		}
+
+		@Override
+		public void onGroupDestroy(String groupId, String groupName) {
+
+		}
+
+		@Override
+		public void onApplicationReceived(String groupId, String groupName,
+				String applyer, String reason) {
+
+		}
+
+		@Override
+		public void onApplicationAccept(String groupId, String groupName,
+				String accepter) {
+
+		}
+
+		@Override
+		public void onApplicationDeclined(String groupId, String groupName,
+				String decliner, String reason) {
+			// 加群申请被拒绝，demo未实现
+		}
 	}
 }

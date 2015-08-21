@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:layout_centerInParent="true"
+        android:background="@drawable/img_loading"
         android:fadingEdgeLength="0dp"
         android:unselectedAlpha="128" />
 
