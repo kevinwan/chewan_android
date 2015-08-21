@@ -72,8 +72,9 @@
 
                 <ImageView
                     android:id="@+id/msg_state"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:layout_gravity="center_vertical"
                     android:src="@drawable/msg_state_fail_resend"
                     android:visibility="gone" />
 
@@ -81,6 +82,7 @@
                     android:id="@+id/content"
                     style="@style/text_grey_small"
                     android:layout_width="0dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:ellipsize="end"
                     android:maxLines="1"

@@ -34,6 +34,7 @@ import com.gongpingjia.carplay.adapter.HotAdapter;
 import com.gongpingjia.carplay.adapter.SimplePageAdapter;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.bean.ActiveParmasEB;
+import com.gongpingjia.carplay.bean.JoinEB;
 import com.gongpingjia.carplay.bean.LoginEB;
 import com.gongpingjia.carplay.bean.User;
 
@@ -333,6 +334,7 @@ public class ActiveListFragment extends Fragment {
 		}
 		newAdapter.addparam("carLevel", pa.getCarLevel());
 		newAdapter.refreshDialog();
+
 	}
 
 	public void onEventMainThread(LoginEB login) {

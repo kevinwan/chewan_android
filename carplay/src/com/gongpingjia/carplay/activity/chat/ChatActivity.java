@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -92,6 +93,7 @@ import com.easemob.util.VoiceRecorder;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.activity.active.ActiveInformationActivity;
+import com.gongpingjia.carplay.bean.JoinEB;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.chat.DemoHXSDKHelper;
 import com.gongpingjia.carplay.chat.adapter.ExpressionAdapter;
@@ -107,6 +109,8 @@ import com.gongpingjia.carplay.chat.utils.CommonUtils;
 import com.gongpingjia.carplay.chat.utils.UserUtils;
 import com.gongpingjia.carplay.chat.view.ExpandGridView;
 import com.gongpingjia.carplay.chat.view.PasteEditText;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * 聊天页面
@@ -1875,6 +1879,16 @@ public class ChatActivity extends CarPlayBaseActivity implements
 
 				public void run() {
 					if (toChatUsername.equals(groupId)) {
+						showToast("您已被管理员移除群聊!");
+						Intent it = getIntent();
+						setResult(Activity.RESULT_OK, it);
+						finish();
+
+						JoinEB join = new JoinEB();
+						join.setActivityId(activiyId);
+						join.setIsMember(0);
+						EventBus.getDefault().post(join);
+
 						// Toast.makeText(ChatActivity.this, st13, 1).show();
 						// if (GroupDetailsActivity.instance != null)
 						// GroupDetailsActivity.instance.finish();

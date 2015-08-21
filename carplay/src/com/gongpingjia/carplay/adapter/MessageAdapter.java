@@ -157,6 +157,13 @@ public class MessageAdapter extends NetJSONAdapter {
 						.getColor(R.color.text_orange)), 2, seatcontent
 						.length() - 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 				holder.countT.setText(style);
+				
+				holder.agreeT.setOnClickListener(new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+					}
+				});
 			} else {
 				holder.agreeT.setVisibility(View.GONE);
 				holder.countT.setVisibility(View.GONE);
