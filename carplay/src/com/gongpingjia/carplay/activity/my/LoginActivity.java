@@ -397,7 +397,7 @@ public class LoginActivity extends CarPlayBaseActivity implements OnClickListene
 
             @Override
             public void onStart(SHARE_MEDIA arg0) {
-                showProgressDialog("授权中...");
+                showProgressDialog("加載中...");
             }
 
             @Override
@@ -426,11 +426,12 @@ public class LoginActivity extends CarPlayBaseActivity implements OnClickListene
 
             @Override
             public void onStart() {
-                showProgressDialog("跳转中...");
+                showProgressDialog("正在读取信息...");
             }
 
             @Override
             public void onComplete(int status, Map<String, Object> info) {
+                hidenProgressDialog();
                 if (status == 200 && info != null) {
                     String api = API.CWBaseurl + "/sns/login";
                     switch (media) {
@@ -462,7 +463,7 @@ public class LoginActivity extends CarPlayBaseActivity implements OnClickListene
                     net.addParam("uid", mUid);
                     net.addParam("channel", mChannel);
                     net.addParam("sign", sign);
-                    net.doPostInDialog(new NetTask(self) {
+                    net.doPostInDialog("跳转中...",new NetTask(self) {
 
                         @Override
                         public void doInUI(Response response, Integer transfer) {
