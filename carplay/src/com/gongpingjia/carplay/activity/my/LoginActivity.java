@@ -28,7 +28,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.easemob.EMCallBack;
-import com.easemob.EMValueCallBack;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMGroupManager;
 import com.gongpingjia.carplay.CarPlayApplication;
@@ -53,7 +52,6 @@ import com.umeng.socialize.controller.UMSocialService;
 import com.umeng.socialize.controller.listener.SocializeListeners.UMAuthListener;
 import com.umeng.socialize.controller.listener.SocializeListeners.UMDataListener;
 import com.umeng.socialize.exception.SocializeException;
-import com.umeng.socialize.sso.SinaSsoHandler;
 import com.umeng.socialize.sso.UMQQSsoHandler;
 import com.umeng.socialize.sso.UMSsoHandler;
 import com.umeng.socialize.weixin.controller.UMWXHandler;
@@ -143,7 +141,7 @@ public class LoginActivity extends CarPlayBaseActivity implements OnClickListene
         wxHandler.addToSocialSDK();
 
         // 设置新浪SSO handler
-//        mController.getConfig().setSsoHandler(new SinaSsoHandler());
+        // mController.getConfig().setSsoHandler(new SinaSsoHandler());
 
         PhoneNumEditText = (EditText) findViewById(R.id.ed_login_phone);
         PasswordEditText = (EditText) findViewById(R.id.ed_login_password);
@@ -425,6 +423,7 @@ public class LoginActivity extends CarPlayBaseActivity implements OnClickListene
 
             @Override
             public void onStart() {
+                showProgressDialog("加载中...");
             }
 
             @Override
@@ -460,7 +459,7 @@ public class LoginActivity extends CarPlayBaseActivity implements OnClickListene
                     net.addParam("uid", mUid);
                     net.addParam("channel", mChannel);
                     net.addParam("sign", sign);
-                    net.doPostInDialog("加载中...", new NetTask(self) {
+                    net.doPostInDialog(new NetTask(self) {
 
                         @Override
                         public void doInUI(Response response, Integer transfer) {
@@ -489,22 +488,26 @@ public class LoginActivity extends CarPlayBaseActivity implements OnClickListene
                                     per.channel = mChannel;
                                     per.commit();
 
-                                    User user = User.getInstance();
-                                    try {
-                                        user.setUserId(json.getString("userId"));
-                                        user.setToken(json.getString("token"));
-                                        user.setBrand(json.getString("brand"));
-                                        user.setBrandLogo(json.getString("brandLogo"));
-                                        user.setNickName(json.getString("nickname"));
-                                        user.setSeatNumber(json.getInt("seatNumber"));
-                                        user.setModel(json.getString("model"));
-                                        User.getInstance().setLogin(true);
-                                        LoginEB loginEB = new LoginEB();
-                                        loginEB.setIslogin(true);
-                                        EventBus.getDefault().post(loginEB);
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
+                                    // User user = User.getInstance();
+                                    // try {
+                                    // user.setUserId(json.getString("userId"));
+                                    // user.setToken(json.getString("token"));
+                                    // user.setBrand(json.getString("brand"));
+                                    // user.setBrandLogo(json.getString("brandLogo"));
+                                    // user.setNickName(json.getString("nickname"));
+                                    // user.setSeatNumber(json.getInt("seatNumber"));
+                                    // user.setModel(json.getString("model"));
+                                    // User.getInstance().setLogin(true);
+                                    // LoginEB loginEB = new LoginEB();
+                                    // loginEB.setIslogin(true);
+                                    // EventBus.getDefault().post(loginEB);
+
+                                    loginHX(MD5Util.string2MD5(JSONUtil.getString(json, "userId")),
+                                            MD5Util.string2MD5(per.thirdId + per.channel + "com.gongpingjia.carplay"),
+                                            json);
+                                    // } catch (JSONException e) {
+                                    // e.printStackTrace();
+                                    // }
                                     // 从退出登陆过来
                                     if (isFromLogout) {
                                         Intent it = new Intent(self, MainActivity.class);
@@ -547,6 +550,70 @@ public class LoginActivity extends CarPlayBaseActivity implements OnClickListene
             }
 
         });
+    }
+
+    private void loginHX(String currentUsername, String currentPassword, final JSONObject jo) {
+        EMChatManager.getInstance().login(currentUsername, currentPassword, new EMCallBack() {
+
+            @Override
+            public void onSuccess() {
+
+                try {
+                    // ** 第一次登录或者之前logout后再登录，加载所有本地群和回话
+                    // ** manually load all local groups and
+                    EMGroupManager.getInstance().loadAllGroups();
+                    EMChatManager.getInstance().loadAllConversations();
+                    // 处理好友和群组
+                    initializeContacts();
+                    User user = User.getInstance();
+                    user.setUserId(JSONUtil.getString(jo, "userId"));
+                    user.setToken(JSONUtil.getString(jo, "token"));
+                    user.setBrand(JSONUtil.getString(jo, "brand"));
+                    user.setBrandLogo(JSONUtil.getString(jo, "brandLogo"));
+                    user.setModel(JSONUtil.getString(jo, "model"));
+                    user.setSeatNumber(JSONUtil.getInt(jo, "seatNumber"));
+                    user.setIsAuthenticated(JSONUtil.getInt(jo, "isAuthenticated"));
+                    user.setNickName(JSONUtil.getString(jo, "nickname"));
+                    user.setHeadUrl(JSONUtil.getString(jo, "photo"));
+                    User.getInstance().setLogin(true);
+                    LoginEB loginEB = new LoginEB();
+                    loginEB.setIslogin(true);
+                    EventBus.getDefault().post(loginEB);
+                    LoginActivity.asyncFetchGroupsFromServer();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    // 取好友或者群聊失败，不让进入主页面
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            DemoHXSDKHelper.getInstance().logout(true, null);
+                            Toast.makeText(getApplicationContext(), R.string.login_failure_failed, 1).show();
+                        }
+                    });
+                    return;
+                }
+                // 更新当前用户的nickname 此方法的作用是在ios离线推送时能够显示用户nick
+                boolean updatenick = EMChatManager.getInstance()
+                        .updateCurrentUserNick(User.getInstance().getNickName());
+                if (!updatenick) {
+                    Log.e("LoginActivity", "update current user nick fail");
+                }
+                // if (!LoginActivity.this.isFinishing() &&
+                // pd.isShowing()) {
+                // pd.dismiss();
+                // }
+                // 进入主页面
+
+            }
+
+            @Override
+            public void onProgress(int progress, String status) {
+            }
+
+            @Override
+            public void onError(final int code, final String message) {
+            }
+        });
+
     }
 
 }
