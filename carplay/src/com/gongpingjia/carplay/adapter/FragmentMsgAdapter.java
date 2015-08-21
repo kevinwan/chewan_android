@@ -1,23 +1,17 @@
 package com.gongpingjia.carplay.adapter;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
-import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.util.ViewUtil;
 
 import org.json.JSONObject;
 
 import android.content.Context;
-import android.content.Intent;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TextView.BufferType;
 
@@ -27,9 +21,7 @@ import com.easemob.chat.EMGroupManager;
 import com.easemob.chat.EMMessage;
 import com.easemob.chat.ImageMessageBody;
 import com.easemob.chat.TextMessageBody;
-import com.easemob.util.EMLog;
 import com.gongpingjia.carplay.R;
-import com.gongpingjia.carplay.activity.msg.NewMessageActivity;
 import com.gongpingjia.carplay.chat.Constant;
 import com.gongpingjia.carplay.chat.DemoHXSDKHelper;
 import com.gongpingjia.carplay.chat.controller.HXSDKHelper;
@@ -184,8 +176,10 @@ public class FragmentMsgAdapter extends BaseAdapter {
 		EMConversation conversation = conversationList.get(position);
 		String username = conversation.getUserName();
 		EMGroup group = EMGroupManager.getInstance().getGroup(username);
-		ViewUtil.bindView(convertView.findViewById(R.id.title),
-				group.getGroupName());
+		if(group!=null) {
+			ViewUtil.bindView(convertView.findViewById(R.id.title),
+					group.getGroupName());
+		}
 
 		convertView.findViewById(R.id.msg_point)
 				.setVisibility(

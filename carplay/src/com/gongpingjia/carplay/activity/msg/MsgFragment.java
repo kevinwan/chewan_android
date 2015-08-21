@@ -80,7 +80,7 @@ public class MsgFragment extends Fragment {
 
 	View headV;
 
-	List<EMConversation> conversationList;
+	List<EMConversation> conversationList = new ArrayList<EMConversation>();;
 
 	public static MsgFragment getInstance(JSONObject data) {
 		if (instance == null) {
@@ -258,12 +258,14 @@ public class MsgFragment extends Fragment {
 	}
 
 	public void onEventMainThread(EMMessage message) {
+		conversationList.clear();
 		conversationList = loadConversationsWithRecentChat();
 		mAdapter.setGroupMessageData(conversationList);
 		// mAdapter.setData(jo);
 	}
 
 	public void onEventMainThread(GroupEB groupEb) {
+		conversationList.clear();
 		conversationList = loadConversationsWithRecentChat();
 		mAdapter.setGroupMessageData(conversationList);
 		// mAdapter.setData(jo);
@@ -284,6 +286,7 @@ public class MsgFragment extends Fragment {
 	public void onResume() {
 		super.onResume();
 
+		conversationList.clear();
 		conversationList = loadConversationsWithRecentChat();
 		mAdapter.setGroupMessageData(conversationList);
 		// 更新消息未读数
@@ -308,7 +311,9 @@ public class MsgFragment extends Fragment {
 		List<Pair<Long, EMConversation>> sortList = new ArrayList<Pair<Long, EMConversation>>();
 		synchronized (conversations) {
 			for (EMConversation conversation : conversations.values()) {
-				if (conversation.getAllMessages().size() != 0) {
+				String username = conversation.getUserName();
+				EMGroup group = EMGroupManager.getInstance().getGroup(username);
+				if (conversation.getAllMessages().size() != 0 && group != null) {
 					// if(conversation.getType() !=
 					// EMConversationType.ChatRoom){
 					sortList.add(new Pair<Long, EMConversation>(conversation

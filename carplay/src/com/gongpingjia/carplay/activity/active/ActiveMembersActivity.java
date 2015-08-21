@@ -14,6 +14,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Spannable;
@@ -83,6 +84,8 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 	View quit_layoutV;
 
 	String chatGroupId;
+
+	public static final int Chat = 1001;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -343,7 +346,7 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 			intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
 			intent.putExtra("activityId", activityId);
 			intent.putExtra("groupId", chatGroupId);
-			startActivityForResult(intent, 0);
+			startActivityForResult(intent, Chat);
 			break;
 		default:
 			break;
@@ -437,6 +440,16 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 				}
 			}
 		});
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode == Activity.RESULT_OK && requestCode == Chat) {
+			isJoin = false;
+			initQuitAndJoinButton(isJoin);
+			getData();
+		}
 	}
 
 }

@@ -405,6 +405,7 @@ public class ActiveAdapter extends NetJSONAdapter {
 
 	/** 接受加入或者退出活动事件 */
 	public void onEventMainThread(JoinEB join) {
+		System.out.println("主页");
 		if (mVaules != null && mVaules.size() != 0) {
 			for (Iterator iterator = mVaules.iterator(); iterator.hasNext();) {
 				JSONObject jo = (JSONObject) iterator.next();

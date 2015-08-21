@@ -71,12 +71,23 @@
                      />
 
                 <TextView
+                    android:id="@+id/car_model"
+                    style="@style/text_grey_small"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginLeft="4dp"
+                    android:maxWidth="95dp"
+                    android:singleLine="true"
+                     />
+                <TextView
                     android:id="@+id/car_age"
                     style="@style/text_grey_small"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="2dp"
-                    android:layout_marginLeft="4dp" />
+                    android:singleLine="true"
+                     />
             </LinearLayout>
         </LinearLayout>
 
