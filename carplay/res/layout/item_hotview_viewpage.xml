@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="170dp"
-    android:background="@color/text_hui999999"
+    android:background="@color/cutline"
     android:orientation="vertical" >
 
     <ImageView
@@ -37,7 +37,7 @@
                 style="@style/text_white_small"
                 android:layout_width="match_parent"
                 android:gravity="center_vertical|right"
-                android:text="截止时间:" />
+                android:text="报名截止:" />
         </LinearLayout>
 
         <LinearLayout
