@@ -35,6 +35,7 @@ import android.widget.TextView;
 
 import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.activity.main.MainActivity;
 import com.gongpingjia.carplay.activity.msg.PlayCarChatActivity;
 import com.gongpingjia.carplay.adapter.ActiveAdapter;
 import com.gongpingjia.carplay.adapter.GalleryAdapter;
@@ -93,6 +94,8 @@ public class MyFragment extends Fragment implements OnClickListener {
 
 	int galleryCount = 0;
 
+	boolean isfirst;
+
 	public static MyFragment getInstance() {
 		if (instance == null) {
 			instance = new MyFragment();
@@ -111,6 +114,7 @@ public class MyFragment extends Fragment implements OnClickListener {
 	}
 
 	private void initView() {
+		isfirst = true;
 		user = User.getInstance();
 		loginedLl = (LinearLayout) mainV.findViewById(R.id.logined);
 		notloginLl = (LinearLayout) mainV.findViewById(R.id.notlogin);
@@ -219,13 +223,22 @@ public class MyFragment extends Fragment implements OnClickListener {
 
 	/** 获取个人资料 */
 	private void getMyDetails() {
+		if (isfirst) {
+			MainActivity activity = (MainActivity) getActivity();
+			activity.showProgressDialog("加载中");
+		}
 		DhNet net = new DhNet(API.CWBaseurl + "/user/" + user.getUserId()
 				+ "/info?userId=" + user.getUserId() + "&token="
 				+ user.getToken());
-		net.doGetInDialog(new NetTask(getActivity()) {
+		net.doGet(new NetTask(getActivity()) {
 
 			@Override
 			public void doInUI(Response response, Integer transfer) {
+				if (isfirst) {
+					MainActivity activity = (MainActivity) getActivity();
+					activity.hidenProgressDialog();
+				}
+				isfirst = false;
 				JSONObject jo = response.jSONFromData();
 
 				String nickname = JSONUtil.getString(jo, "nickname");
@@ -249,8 +262,8 @@ public class MyFragment extends Fragment implements OnClickListener {
 				if (TextUtils.isEmpty(carModel)) {
 					carModelT.setText("带我飞~");
 				} else {
-					carModelT
-							.setText(carModel + ",  " + drivingExperience + "年车龄");
+					carModelT.setText(carModel + ",  " + drivingExperience
+							+ "年车龄");
 				}
 
 				if (TextUtils.isEmpty(carBrandLogo)
