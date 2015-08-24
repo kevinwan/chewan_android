@@ -363,6 +363,7 @@ public class ChatActivity extends CarPlayBaseActivity implements
 				android.R.color.holo_green_light,
 				android.R.color.holo_orange_light,
 				android.R.color.holo_red_light);
+		
 
 		swipeRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
 

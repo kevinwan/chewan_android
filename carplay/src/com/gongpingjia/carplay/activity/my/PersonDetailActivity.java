@@ -114,6 +114,7 @@ public class PersonDetailActivity extends CarPlayBaseActivity implements
 		// });
 		// }
 		// });
+		type = RELEASE;
 		user = User.getInstance();
 		userId = getIntent().getStringExtra("userId");
 		headV = LayoutInflater.from(self).inflate(R.layout.head_user_details,

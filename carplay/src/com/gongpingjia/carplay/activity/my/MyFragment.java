@@ -23,6 +23,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -186,7 +187,7 @@ public class MyFragment extends Fragment implements OnClickListener {
 		});
 		gallery.setOnItemSelectedListener(new OnItemSelectedListener() {
 			@Override
-			public void onItemSelected(AdapterView<?> arg0, View arg1,
+			public void onItemSelected(AdapterView<?> arg0, View view,
 					int position, long arg3) {
 
 				if (position >= galleryCount) {
@@ -195,6 +196,9 @@ public class MyFragment extends Fragment implements OnClickListener {
 					}
 				}
 				dotLinLayout.setCurrentFocus(position);
+				// ImageView img = (ImageView) view.findViewById(R.id.pic);
+				// img.startAnimation(AnimationUtils.loadAnimation(getActivity(),
+				// R.anim.home_res_video_gallery_in));
 			}
 
 			@Override
@@ -412,7 +416,7 @@ public class MyFragment extends Fragment implements OnClickListener {
 	Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
 			currentPosition = currentPosition + 1;
-			gallery.setSelection(currentPosition);
+			gallery.setSelection(currentPosition, true);
 		};
 	};
 

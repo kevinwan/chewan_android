@@ -130,6 +130,7 @@ public class ActiveAdapter extends NetJSONAdapter {
 		}
 
 		final JSONObject jo = mVaules.get(position);
+
 		final JSONObject creater = JSONUtil.getJSONObject(jo, "organizer");
 
 		int isOrganizer = JSONUtil.getInt(jo, "isOrganizer");
@@ -254,7 +255,6 @@ public class ActiveAdapter extends NetJSONAdapter {
 			}
 		});
 		ViewUtil.bindView(holder.nameT, JSONUtil.getString(creater, "nickname"));
-
 		if (JSONUtil.getString(creater, "gender").equals("男")) {
 			holder.layout_sexV.setBackgroundResource(R.drawable.man);
 		} else {
