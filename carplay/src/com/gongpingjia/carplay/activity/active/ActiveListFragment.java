@@ -220,9 +220,6 @@ public class ActiveListFragment extends Fragment {
 		hotListV.setAdapter(hotAdapter);
 		hotAdapter.showNext();
 
-		System.out.println("经纬度:" + location.getLongitude() + "味道"
-				+ location.getLatitude());
-
 		nearAdapter = new ActiveAdapter(API.activeList, getActivity(),
 				R.layout.item_active_list);
 		nearAdapter.addparam("key", "nearby");
@@ -372,6 +369,8 @@ public class ActiveListFragment extends Fragment {
 				if (jo != null && jo.length() > 0) {
 					// bindViewPageAdapter(jo);
 					hotAdapter.setJsa(jo);
+				} else {
+					
 				}
 
 			}

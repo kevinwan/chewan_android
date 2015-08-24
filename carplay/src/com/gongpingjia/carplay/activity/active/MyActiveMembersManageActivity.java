@@ -354,6 +354,10 @@ public class MyActiveMembersManageActivity extends CarPlayBaseActivity {
 					seat_num.setVisibility(View.VISIBLE);
 					seatnum.setVisibility(View.VISIBLE);
 					seatnumber.setVisibility(View.VISIBLE);
+				} else {
+					seat_num.setVisibility(View.GONE);
+					seatnum.setVisibility(View.GONE);
+					seatnumber.setVisibility(View.GONE);
 				}
 				// TODO Auto-generated method stub
 				return o;

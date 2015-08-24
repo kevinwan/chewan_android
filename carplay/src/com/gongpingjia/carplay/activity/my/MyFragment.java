@@ -40,11 +40,14 @@ import com.gongpingjia.carplay.activity.msg.PlayCarChatActivity;
 import com.gongpingjia.carplay.adapter.ActiveAdapter;
 import com.gongpingjia.carplay.adapter.GalleryAdapter;
 import com.gongpingjia.carplay.api.API;
+import com.gongpingjia.carplay.bean.LoginEB;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.manage.UserInfoManage;
 import com.gongpingjia.carplay.manage.UserInfoManage.LoginCallBack;
 import com.gongpingjia.carplay.view.CarPlayGallery;
 import com.gongpingjia.carplay.view.RoundImageView;
+
+import de.greenrobot.event.EventBus;
 
 public class MyFragment extends Fragment implements OnClickListener {
 	public static final int LOGINCODE = 1;
@@ -109,6 +112,7 @@ public class MyFragment extends Fragment implements OnClickListener {
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		mainV = inflater.inflate(R.layout.fragment_my, null);
+		EventBus.getDefault().register(this);
 		initView();
 		return mainV;
 	}
@@ -389,6 +393,15 @@ public class MyFragment extends Fragment implements OnClickListener {
 					}
 				});
 
+	}
+
+	public void onEventMainThread(LoginEB login) {
+		if (login.islogin) {
+			loginedLl.setVisibility(View.VISIBLE);
+			notloginLl.setVisibility(View.GONE);
+			isfirst = true;
+			getMyDetails();
+		}
 	}
 
 	@Override

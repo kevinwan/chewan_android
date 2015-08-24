@@ -239,6 +239,10 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 					seat_num.setVisibility(View.VISIBLE);
 					seatnum.setVisibility(View.VISIBLE);
 					seatnumber.setVisibility(View.VISIBLE);
+				} else {
+					seat_num.setVisibility(View.GONE);
+					seatnum.setVisibility(View.GONE);
+					seatnumber.setVisibility(View.GONE);
 				}
 				return o;
 			}

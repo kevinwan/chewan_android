@@ -26,6 +26,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -84,17 +85,21 @@ public class HotAdapter extends NetJSONAdapter {
 	public void setJsa(JSONArray j) {
 		isRefresh = true;
 		jsa = j;
-		notifyDataSetChanged();
+		// notifyDataSetChanged();
 	}
 
 	@Override
 	public JSONObject getItem(int position) {
 		JSONObject jo = null;
 		if (jsa != null && jsa.length() > 0) {
-			if (position >= 1) {
+			if (position > 1) {
 				jo = mVaules.get(position - 1);
 			} else {
-				jo = mVaules.get(position);
+				if (position == 1) {
+					jo = null;
+				} else {
+					jo = mVaules.get(position);
+				}
 			}
 		} else {
 			jo = mVaules.get(position);
@@ -105,21 +110,17 @@ public class HotAdapter extends NetJSONAdapter {
 
 	@Override
 	public int getItemViewType(int position) {
-		JSONObject jo = mVaules.get(position);
-		int count = JSONUtil.getJSONArray(jo, "cover").length();
+		int count = 0;
 		if (position == 1) {
 			if (jsa.length() > 0) {
 				count = 0;
 			} else {
-
+				JSONObject jo = mVaules.get(position);
 				count = JSONUtil.getJSONArray(jo, "cover").length();
 			}
-			// else {
-			// JSONObject jo = mVaules.get(position);
-			// count = JSONUtil.getJSONArray(jo, "cover").length();
-			// }
 		} else {
 			if (position == 0) {
+				JSONObject jo = mVaules.get(position);
 				count = JSONUtil.getJSONArray(jo, "cover").length();
 			} else {
 				JSONObject jo1 = mVaules.get(position - 1);
@@ -127,8 +128,6 @@ public class HotAdapter extends NetJSONAdapter {
 			}
 		}
 
-		System.out.println("position:" + position);
-		System.out.println("count:" + count);
 		return count;
 	}
 
@@ -136,6 +135,15 @@ public class HotAdapter extends NetJSONAdapter {
 	public int getViewTypeCount() {
 		// TODO Auto-generated method stub
 		return 10;
+	}
+
+	@Override
+	public int getCount() {
+		if (jsa != null && jsa.length() > 0 && mVaules != null) {
+			return mVaules.size() + 1;
+		} else {
+			return 0;
+		}
 	}
 
 	@Override
@@ -149,6 +157,7 @@ public class HotAdapter extends NetJSONAdapter {
 				middleHolder = new MiddleViewHolder();
 				middleHolder.pager = (ViewPager) convertView
 						.findViewById(R.id.page);
+				// middleHolder.pager.setVisibility(View.GONE);
 				convertView.setTag(middleHolder);
 			} else {
 				convertView = mLayoutInflater.inflate(mResource, null);
@@ -203,193 +212,205 @@ public class HotAdapter extends NetJSONAdapter {
 			bindViewPageAdapter();
 		} else {
 			final JSONObject jo = getItem(position);
-			final JSONObject creater = JSONUtil.getJSONObject(jo, "organizer");
+			if (jo != null) {
+				final JSONObject creater = JSONUtil.getJSONObject(jo,
+						"organizer");
 
-			int isOrganizer = JSONUtil.getInt(jo, "isOrganizer");
-			int isMember = JSONUtil.getInt(jo, "isMember");
-			final long startTime = JSONUtil.getLong(jo, "start");
+				int isOrganizer = JSONUtil.getInt(jo, "isOrganizer");
+				int isMember = JSONUtil.getInt(jo, "isMember");
+				final long startTime = JSONUtil.getLong(jo, "start");
 
-			if (JSONUtil.getInt(jo, "isOver") == 0) {
+				if (JSONUtil.getInt(jo, "isOver") == 0) {
 
-				if (isOrganizer == 1) {
-					holder.joinT.setText("管理");
-					holder.joinT
-							.setBackgroundResource(R.drawable.button_yanzheng_bg);
+					if (isOrganizer == 1) {
+						holder.joinT.setText("管理");
+						holder.joinT
+								.setBackgroundResource(R.drawable.button_yanzheng_bg);
+					} else {
+						if (isMember == 1) {
+							holder.joinT.setText("已加入");
+							holder.joinT
+									.setBackgroundResource(R.drawable.button_yanzheng_bg);
+						} else if (isMember == 0) {
+							holder.joinT.setText("我要去玩");
+							holder.joinT
+									.setBackgroundResource(R.drawable.button_yanzheng_bg);
+						} else {
+							holder.joinT.setText("申请中");
+							holder.joinT
+									.setBackgroundResource(R.drawable.btn_grey_dark_bg);
+						}
+					}
+
 				} else {
-					if (isMember == 1) {
-						holder.joinT.setText("已加入");
-						holder.joinT
-								.setBackgroundResource(R.drawable.button_yanzheng_bg);
-					} else if (isMember == 0) {
-						holder.joinT.setText("我要去玩");
-						holder.joinT
-								.setBackgroundResource(R.drawable.button_yanzheng_bg);
-					} else {
-						holder.joinT.setText("申请中");
-						holder.joinT
-								.setBackgroundResource(R.drawable.btn_grey_dark_bg);
-					}
+					holder.joinT.setText("已结束");
+					holder.joinT
+							.setBackgroundResource(R.drawable.btn_grey_dark_bg);
 				}
+				holder.joinT.setVisibility(View.VISIBLE);
 
-			} else {
-				holder.joinT.setText("已结束");
-				holder.joinT.setBackgroundResource(R.drawable.btn_grey_dark_bg);
-			}
-			holder.joinT.setVisibility(View.VISIBLE);
+				final String activityId = JSONUtil.getString(jo, "activityId");
+				holder.joinT.setOnClickListener(new OnClickListener() {
 
-			final String activityId = JSONUtil.getString(jo, "activityId");
-			holder.joinT.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						User user = User.getInstance();
+						if (user.isLogin) {
+							Intent it;
+							int isOrganizer = JSONUtil
+									.getInt(jo, "isOrganizer");
+							int isMember = JSONUtil.getInt(jo, "isMember");
+							if (isOrganizer == 1) {
+								JSONObject shareJo = getShareContent(jo);
+								it = new Intent(mContext,
+										MyActiveMembersManageActivity.class);
+								it.putExtra("activityId", activityId);
+								it.putExtra("isJoin", true);
+								it.putExtra("shareContent", shareJo.toString());
+								mContext.startActivity(it);
 
-				@Override
-				public void onClick(View v) {
-					User user = User.getInstance();
-					if (user.isLogin) {
+							} else if (isMember == 1) {
+								it = new Intent(mContext,
+										ActiveMembersActivity.class);
+								it.putExtra("activityId", activityId);
+								it.putExtra("isJoin", true);
+								mContext.startActivity(it);
+
+							} else if (isMember == 0) {
+								isAuthen(activityId, jo);
+							} else if (holder.joinT.getText().equals("申请中")) {
+
+							} else {
+
+							}
+						} else {
+							UserInfoManage.getInstance().checkLogin(
+									(Activity) mContext, new LoginCallBack() {
+
+										@Override
+										public void onisLogin() {
+											refreshDialog();
+										}
+
+										@Override
+										public void onLoginFail() {
+											// TODO Auto-generated method stub
+
+										}
+									});
+						}
+					}
+				});
+				holder.headlayoutV.setOnClickListener(new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						User user = User.getInstance();
 						Intent it;
-						if (holder.joinT.getText().equals("管理")) {
-							JSONObject shareJo = getShareContent(jo);
-							it = new Intent(mContext,
-									MyActiveMembersManageActivity.class);
-							it.putExtra("activityId", activityId);
-							it.putExtra("isJoin", true);
-							it.putExtra("shareContent", shareJo.toString());
-							mContext.startActivity(it);
-
-						} else if (holder.joinT.getText().toString()
-								.equals("已加入")) {
-							it = new Intent(mContext,
-									ActiveMembersActivity.class);
-							it.putExtra("activityId", activityId);
-							it.putExtra("isJoin", true);
-							mContext.startActivity(it);
-
-						} else if (holder.joinT.getText().equals("我要去玩")) {
-							isAuthen(activityId, jo);
-						} else if (holder.joinT.getText().equals("申请中")) {
-
+						if (user.isLogin()) {
+							int isMember = JSONUtil.getInt(jo, "isMember");
+							if (holder.joinT.getText().equals("管理")) {
+								JSONObject shareJo = getShareContent(jo);
+								it = new Intent(mContext,
+										MyActiveMembersManageActivity.class);
+								it.putExtra("activityId", activityId);
+								it.putExtra("isJoin", isMember == 1 ? true
+										: false);
+								it.putExtra("shareContent", shareJo.toString());
+								mContext.startActivity(it);
+							} else {
+								it = new Intent(mContext,
+										ActiveMembersActivity.class);
+								it.putExtra("activityId", activityId);
+								it.putExtra("startTime", startTime);
+								it.putExtra("isJoin", isMember == 1 ? true
+										: false);
+								mContext.startActivity(it);
+							}
 						} else {
+							UserInfoManage.getInstance().checkLogin(
+									(Activity) mContext, new LoginCallBack() {
 
+										@Override
+										public void onisLogin() {
+											refreshDialog();
+										}
+
+										@Override
+										public void onLoginFail() {
+											// TODO Auto-generated method stub
+
+										}
+									});
 						}
-					} else {
-						UserInfoManage.getInstance().checkLogin(
-								(Activity) mContext, new LoginCallBack() {
-
-									@Override
-									public void onisLogin() {
-										refreshDialog();
-									}
-
-									@Override
-									public void onLoginFail() {
-										// TODO Auto-generated method stub
-
-									}
-								});
 					}
+				});
+				ViewUtil.bindView(holder.nameT,
+						JSONUtil.getString(creater, "nickname"));
+				if (JSONUtil.getString(creater, "gender").equals("男")) {
+					holder.layout_sexV.setBackgroundResource(R.drawable.man);
+				} else {
+					holder.layout_sexV.setBackgroundResource(R.drawable.woman);
 				}
-			});
-			holder.headlayoutV.setOnClickListener(new OnClickListener() {
 
-				@Override
-				public void onClick(View v) {
-					User user = User.getInstance();
-					Intent it;
-					if (user.isLogin()) {
-						int isMember = JSONUtil.getInt(jo, "isMember");
-						if (holder.joinT.getText().equals("管理")) {
-							JSONObject shareJo = getShareContent(jo);
-							it = new Intent(mContext,
-									MyActiveMembersManageActivity.class);
-							it.putExtra("activityId", activityId);
-							it.putExtra("isJoin", isMember == 1 ? true : false);
-							it.putExtra("shareContent", shareJo.toString());
-							mContext.startActivity(it);
-						} else {
-							it = new Intent(mContext,
-									ActiveMembersActivity.class);
-							it.putExtra("activityId", activityId);
-							it.putExtra("startTime", startTime);
-							it.putExtra("isJoin", isMember == 1 ? true : false);
-							mContext.startActivity(it);
-						}
-					} else {
-						UserInfoManage.getInstance().checkLogin(
-								(Activity) mContext, new LoginCallBack() {
+				ViewUtil.bindView(holder.ageT,
+						JSONUtil.getString(creater, "age"));
+				ViewUtil.bindView(holder.tv_publish_timeT,
+						JSONUtil.getString(jo, "publishTime"), "neartime");
 
-									@Override
-									public void onisLogin() {
-										refreshDialog();
-									}
+				CarPlayUtil.bindDriveAge(creater, holder.car_logoI,
+						holder.drive_ageT);
 
-									@Override
-									public void onLoginFail() {
-										// TODO Auto-generated method stub
+				ViewUtil.bindView(holder.contentT,
+						JSONUtil.getString(jo, "introduction"));
+				JSONArray picJsa = JSONUtil.getJSONArray(jo, "cover");
+				// holder.piclayoutV.removeAllViews();
+				PicLayoutUtil util = new PicLayoutUtil(mContext);
+				util.BindImageView(holder.piclayoutV, picJsa);
+				// util.addMoreChild();
+				// holder.headlayoutV.removeAllViews();
+				JSONArray headJsa = JSONUtil.getJSONArray(jo, "members");
+				PicLayoutUtil headUtil = new PicLayoutUtil(mContext);
+				headUtil.BindHeadImage(holder.headlayoutV, headJsa);
 
-									}
-								});
-					}
+				if (JSONUtil.getLong(jo, "start") == 0) {
+					ViewUtil.bindView(holder.timeT, "不确定");
+				} else {
+					ViewUtil.bindView(holder.timeT,
+							JSONUtil.getLong(jo, "start"), "time");
 				}
-			});
-			ViewUtil.bindView(holder.nameT,
-					JSONUtil.getString(creater, "nickname"));
-			if (JSONUtil.getString(creater, "gender").equals("男")) {
-				holder.layout_sexV.setBackgroundResource(R.drawable.man);
-			} else {
-				holder.layout_sexV.setBackgroundResource(R.drawable.woman);
+				ViewUtil.bindView(holder.addressT,
+						JSONUtil.getString(jo, "location"));
+				ViewUtil.bindNetImage(holder.headI,
+						JSONUtil.getString(creater, "photo"), "head");
+				holder.headI.setTag(JSONUtil.getString(creater, "userId"));
+
+				ViewUtil.bindView(holder.statusT, JSONUtil.getString(jo, "pay"));
+				String pay = JSONUtil.getString(jo, "pay");
+				holder.statusT.setVisibility(View.VISIBLE);
+				if (pay.equals("我请客")) {
+					holder.statusT
+							.setBackgroundResource(R.drawable.button_radian);
+				} else if (pay.equals("请我吧")) {
+					holder.statusT.setBackgroundResource(R.drawable.grey_bg);
+				} else {
+					holder.statusT
+							.setBackgroundResource(R.drawable.blue_light_bg);
+				}
+
+				if (JSONUtil.getString(jo, "holdingSeat").equals(
+						JSONUtil.getString(jo, "totalSeat"))) {
+					ViewUtil.bindView(holder.seat_countT, "已满");
+					holder.seat_count_allT.setVisibility(View.GONE);
+				} else {
+					holder.seat_count_allT.setVisibility(View.VISIBLE);
+					ViewUtil.bindView(holder.seat_countT,
+							JSONUtil.getString(jo, "holdingSeat"));
+					ViewUtil.bindView(holder.seat_count_allT,
+							"/" + JSONUtil.getString(jo, "totalSeat") + "座");
+				}
 			}
 
-			ViewUtil.bindView(holder.ageT, JSONUtil.getString(creater, "age"));
-			ViewUtil.bindView(holder.tv_publish_timeT,
-					JSONUtil.getString(jo, "publishTime"), "neartime");
-
-			CarPlayUtil.bindDriveAge(creater, holder.car_logoI,
-					holder.drive_ageT);
-
-			ViewUtil.bindView(holder.contentT,
-					JSONUtil.getString(jo, "introduction"));
-			JSONArray picJsa = JSONUtil.getJSONArray(jo, "cover");
-			// holder.piclayoutV.removeAllViews();
-			PicLayoutUtil util = new PicLayoutUtil(mContext);
-			util.BindImageView(holder.piclayoutV, picJsa);
-			// util.addMoreChild();
-			// holder.headlayoutV.removeAllViews();
-			JSONArray headJsa = JSONUtil.getJSONArray(jo, "members");
-			PicLayoutUtil headUtil = new PicLayoutUtil(mContext);
-			headUtil.BindHeadImage(holder.headlayoutV, headJsa);
-
-			if (JSONUtil.getLong(jo, "start") == 0) {
-				ViewUtil.bindView(holder.timeT, "不确定");
-			} else {
-				ViewUtil.bindView(holder.timeT, JSONUtil.getLong(jo, "start"),
-						"time");
-			}
-			ViewUtil.bindView(holder.addressT,
-					JSONUtil.getString(jo, "location"));
-			ViewUtil.bindNetImage(holder.headI,
-					JSONUtil.getString(creater, "photo"), "head");
-			holder.headI.setTag(JSONUtil.getString(creater, "userId"));
-
-			ViewUtil.bindView(holder.statusT, JSONUtil.getString(jo, "pay"));
-			String pay = JSONUtil.getString(jo, "pay");
-			holder.statusT.setVisibility(View.VISIBLE);
-			if (pay.equals("我请客")) {
-				holder.statusT.setBackgroundResource(R.drawable.button_radian);
-			} else if (pay.equals("请我吧")) {
-				holder.statusT.setBackgroundResource(R.drawable.grey_bg);
-			} else {
-				holder.statusT.setBackgroundResource(R.drawable.blue_light_bg);
-			}
-
-			if (JSONUtil.getString(jo, "holdingSeat").equals(
-					JSONUtil.getString(jo, "totalSeat"))) {
-				ViewUtil.bindView(holder.seat_countT, "已满");
-				holder.seat_count_allT.setVisibility(View.GONE);
-			} else {
-				holder.seat_count_allT.setVisibility(View.VISIBLE);
-				ViewUtil.bindView(holder.seat_countT,
-						JSONUtil.getString(jo, "holdingSeat"));
-				ViewUtil.bindView(holder.seat_count_allT,
-						"/" + JSONUtil.getString(jo, "totalSeat") + "座");
-			}
 		}
 
 		return convertView;
@@ -418,6 +439,8 @@ public class HotAdapter extends NetJSONAdapter {
 		ViewPager pager;
 
 		View[] views;
+
+		TextView joinT;
 
 	}
 
@@ -608,6 +631,7 @@ public class HotAdapter extends NetJSONAdapter {
 
 			SimplePageAdapter middleAdapter = new SimplePageAdapter(views);
 			middleHolder.pager.setAdapter(middleAdapter);
+			// middleHolder.pager.setVisibility(View.VISIBLE);
 		}
 	}
 

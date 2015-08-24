@@ -541,8 +541,10 @@ public class MainActivity extends BaseFragmentActivity implements
 		JSONObject applicationJo = JSONUtil.getJSONObject(jo, "application");
 		int applicationCount = JSONUtil.getInt(applicationJo, "count");
 
+		System.out.println("22222222222");
 		if (commentCount != 0 || applicationCount != 0) {
 			// msgT.setText(commentCount + applicationCount + "");
+			System.out.println("3333333333");
 			msgT.setVisibility(View.VISIBLE);
 		} else {
 			msgT.setVisibility(View.GONE);
@@ -708,21 +710,24 @@ public class MainActivity extends BaseFragmentActivity implements
 
 	public void updateUnreadLabel() {
 		int count = getUnreadMsgCountTotal();
-		System.out.println("count:" + count);
+		System.out.println("聊天count:" + count);
 		chatPointI.setVisibility(count > 0 ? View.VISIBLE : View.GONE);
 	}
 
 	public int getUnreadMsgCountTotal() {
 		int unreadMsgCountTotal = 0;
 		int chatroomUnreadMsgCount = 0;
+		int chatGroupCount = 0;
 		unreadMsgCountTotal = EMChatManager.getInstance().getUnreadMsgsCount();
 		for (EMConversation conversation : EMChatManager.getInstance()
 				.getAllConversations().values()) {
-			if (conversation.getType() == EMConversationType.ChatRoom)
+			if (conversation.getType() == EMConversationType.GroupChat)
 				chatroomUnreadMsgCount = chatroomUnreadMsgCount
 						+ conversation.getUnreadMsgCount();
+
+			chatGroupCount = chatGroupCount + conversation.getUnreadMsgCount();
 		}
-		return unreadMsgCountTotal - chatroomUnreadMsgCount;
+		return chatGroupCount;
 	}
 
 	public class MyGroupChangeListener implements EMGroupChangeListener {
