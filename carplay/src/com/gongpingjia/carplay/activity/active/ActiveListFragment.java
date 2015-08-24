@@ -1,16 +1,20 @@
 package com.gongpingjia.carplay.activity.active;
 
+import java.text.SimpleDateFormat;
+
 import net.duohuo.dhroid.adapter.NetJSONAdapter;
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.util.UserLocation;
+import net.duohuo.dhroid.util.ViewUtil;
 import net.duohuo.dhroid.view.INetRefreshAndMorelistView.OnRefreshListener;
 import net.duohuo.dhroid.view.NetRefreshAndMoreListView;
 import net.duohuo.dhroid.view.NetRefreshAndMoreListView.OnEmptyDataListener;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Intent;
@@ -21,6 +25,7 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
@@ -62,6 +67,8 @@ public class ActiveListFragment extends Fragment {
 	NetJSONAdapter newAdapter, nearAdapter;
 
 	HotAdapter hotAdapter;
+
+	View HeadV;
 
 	public static ActiveListFragment getInstance() {
 		if (instance == null) {
@@ -107,6 +114,7 @@ public class ActiveListFragment extends Fragment {
 
 			}
 		});
+		HeadV = mLayoutInflater.inflate(R.layout.item_hotlistview, null);
 
 		HotV = mLayoutInflater.inflate(R.layout.include_refresh_listview, null);
 		NearV = mLayoutInflater
@@ -362,12 +370,68 @@ public class ActiveListFragment extends Fragment {
 			public void doInUI(Response response, Integer transfer) {
 				JSONArray jo = response.jSONArrayFromData();
 				if (jo != null && jo.length() > 0) {
+					// bindViewPageAdapter(jo);
 					hotAdapter.setJsa(jo);
 				}
 
 			}
 		});
 
+	}
+
+	private void bindViewPageAdapter(JSONArray jsa) {
+		if (jsa != null && jsa.length() > 0) {
+			View[] views = new View[jsa.length()];
+			for (int i = 0; i < jsa.length(); i++) {
+				final JSONObject jot;
+				try {
+					jot = jsa.getJSONObject(i);
+					View leftV = mLayoutInflater.inflate(
+							R.layout.item_hotview_viewpage, null);
+
+					ImageView pghead = (ImageView) leftV
+							.findViewById(R.id.head);
+					ImageView pglogo = (ImageView) leftV
+							.findViewById(R.id.logo);
+					TextView pgtitle = (TextView) leftV
+							.findViewById(R.id.title);
+					TextView pgendtime = (TextView) leftV
+							.findViewById(R.id.endtime);
+					TextView pgcontent = (TextView) leftV
+							.findViewById(R.id.content);
+
+					SimpleDateFormat formatdate = new SimpleDateFormat(
+							"yyyy.MM.dd");
+					pgendtime.setText("截止时间:  "
+							+ formatdate.format(JSONUtil.getLong(jot, "end")));
+					pgtitle.setText(JSONUtil.getString(jot, "title"));
+					pgcontent.setText(JSONUtil.getString(jot, "content"));
+					ViewUtil.bindNetImage(pghead,
+							JSONUtil.getString(jot, "cover"), "cover");
+					ViewUtil.bindNetImage(pglogo,
+							JSONUtil.getString(jot, "logo"), "logo");
+
+					leftV.setOnClickListener(new OnClickListener() {
+
+						@Override
+						public void onClick(View arg0) {
+							Intent intent = new Intent(getActivity(),
+									ActiveDetailsActivity.class);
+							intent.putExtra("activityId",
+									JSONUtil.getString(jot, "activityId"));
+							startActivity(intent);
+						}
+					});
+					views[i] = leftV;
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+
+			ViewPager page = (ViewPager) HeadV.findViewById(R.id.page);
+			SimplePageAdapter middleAdapter = new SimplePageAdapter(views);
+			page.setAdapter(middleAdapter);
+		}
 	}
 
 	@Override

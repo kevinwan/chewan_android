@@ -63,6 +63,8 @@ public class HotAdapter extends NetJSONAdapter {
 
 	View[] views;
 
+	public boolean isRefresh = false;
+
 	JSONArray jsa = new JSONArray();
 
 	public HotAdapter(String api, Context context, int mResource) {
@@ -80,8 +82,25 @@ public class HotAdapter extends NetJSONAdapter {
 	}
 
 	public void setJsa(JSONArray j) {
+		isRefresh = true;
 		jsa = j;
 		notifyDataSetChanged();
+	}
+
+	@Override
+	public JSONObject getItem(int position) {
+		JSONObject jo = null;
+		if (jsa != null && jsa.length() > 0) {
+			if (position >= 1) {
+				jo = mVaules.get(position - 1);
+			} else {
+				jo = mVaules.get(position);
+			}
+		} else {
+			jo = mVaules.get(position);
+		}
+
+		return jo;
 	}
 
 	@Override
@@ -91,12 +110,25 @@ public class HotAdapter extends NetJSONAdapter {
 		if (position == 1) {
 			if (jsa.length() > 0) {
 				count = 0;
+			} else {
+
+				count = JSONUtil.getJSONArray(jo, "cover").length();
 			}
 			// else {
 			// JSONObject jo = mVaules.get(position);
 			// count = JSONUtil.getJSONArray(jo, "cover").length();
 			// }
+		} else {
+			if (position == 0) {
+				count = JSONUtil.getJSONArray(jo, "cover").length();
+			} else {
+				JSONObject jo1 = mVaules.get(position - 1);
+				count = JSONUtil.getJSONArray(jo1, "cover").length();
+			}
 		}
+
+		System.out.println("position:" + position);
+		System.out.println("count:" + count);
 		return count;
 	}
 
@@ -167,10 +199,10 @@ public class HotAdapter extends NetJSONAdapter {
 			}
 		}
 
-		if (type == 0) {
+		if (type == 0 && isRefresh) {
 			bindViewPageAdapter();
 		} else {
-			final JSONObject jo = mVaules.get(position);
+			final JSONObject jo = getItem(position);
 			final JSONObject creater = JSONUtil.getJSONObject(jo, "organizer");
 
 			int isOrganizer = JSONUtil.getInt(jo, "isOrganizer");
@@ -299,7 +331,6 @@ public class HotAdapter extends NetJSONAdapter {
 			});
 			ViewUtil.bindView(holder.nameT,
 					JSONUtil.getString(creater, "nickname"));
-
 			if (JSONUtil.getString(creater, "gender").equals("男")) {
 				holder.layout_sexV.setBackgroundResource(R.drawable.man);
 			} else {
@@ -385,6 +416,9 @@ public class HotAdapter extends NetJSONAdapter {
 
 	class MiddleViewHolder {
 		ViewPager pager;
+
+		View[] views;
+
 	}
 
 	/**
@@ -523,6 +557,7 @@ public class HotAdapter extends NetJSONAdapter {
 
 	/** 官方活动 */
 	private void bindViewPageAdapter() {
+		isRefresh = false;
 		if (jsa != null && jsa.length() > 0) {
 			views = new View[jsa.length()];
 			for (int i = 0; i < jsa.length(); i++) {
@@ -575,4 +610,5 @@ public class HotAdapter extends NetJSONAdapter {
 			middleHolder.pager.setAdapter(middleAdapter);
 		}
 	}
+
 }

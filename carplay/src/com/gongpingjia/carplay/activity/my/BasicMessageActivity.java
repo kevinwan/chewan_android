@@ -223,7 +223,7 @@ public class BasicMessageActivity extends CarPlayBaseActivity implements
 			showToast("请设置您的年龄");
 			return;
 		}
-		
+
 		final String strcity = cityT.getText().toString();
 		if (TextUtils.isEmpty(strcity)) {
 			showToast("请设置您所在的城市");
@@ -394,6 +394,8 @@ public class BasicMessageActivity extends CarPlayBaseActivity implements
 							User user = User.getInstance();
 							user.setToken(JSONUtil.getString(jo, "token"));
 							user.setUserId(JSONUtil.getString(jo, "userId"));
+							user.setNickName(nicknameT.getText().toString());
+							user.setHeadUrl(JSONUtil.getString(jo, "photo"));
 							user.setLogin(true);
 
 							LoginEB loginEB = new LoginEB();

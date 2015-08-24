@@ -32,14 +32,12 @@ import android.widget.TextView;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.activity.active.ActiveDetailsActivity;
-import com.gongpingjia.carplay.activity.main.LargePICActivity;
 import com.gongpingjia.carplay.adapter.ActiveAdapter;
 import com.gongpingjia.carplay.adapter.GalleryAdapter;
 import com.gongpingjia.carplay.adapter.MyReleaseActiveAdapter;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.CarPlayUtil;
-import com.gongpingjia.carplay.util.PicLayoutUtil;
 import com.gongpingjia.carplay.view.CarPlayGallery;
 import com.gongpingjia.carplay.view.ImageGallery;
 import com.gongpingjia.carplay.view.RoundImageView;
@@ -115,6 +113,7 @@ public class PersonDetailActivity extends CarPlayBaseActivity implements OnClick
         // });
         // }
         // });
+        type = RELEASE;
         user = User.getInstance();
         userId = getIntent().getStringExtra("userId");
         headV = LayoutInflater.from(self).inflate(R.layout.head_user_details, null);
