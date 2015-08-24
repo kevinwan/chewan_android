@@ -96,7 +96,7 @@ public class ActiveInformationActivity extends CarPlayBaseActivity implements
 		quiteB.setOnClickListener(this);
 		headlayoutV.setOnClickListener(this);
 		activity_edit.setOnClickListener(this);
-//		head.setOnClickListener(this);
+		head.setOnClickListener(this);
 		acitvity_layout_head.setOnClickListener(this);
 	}
 
@@ -247,6 +247,17 @@ public class ActiveInformationActivity extends CarPlayBaseActivity implements
 			}
 			break;
 		case R.id.acitvity_layout_head:
+			if (id != 0) {
+				it = new Intent(self, MyPerSonDetailActivity.class);
+				it.putExtra("userId", userid);
+				startActivity(it);
+			} else {
+				it = new Intent(self, PersonDetailActivity.class);
+				it.putExtra("userId", userid);
+				startActivity(it);
+			}
+			break;
+		case R.id.activity_head:
 			if (id != 0) {
 				it = new Intent(self, MyPerSonDetailActivity.class);
 				it.putExtra("userId", userid);
