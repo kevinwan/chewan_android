@@ -48,105 +48,149 @@
             android:name="EASEMOB_APPKEY"
             android:value="gongpingjia#chewantest" />
 
-        <activity android:name=".activity.chat.AlertDialog" >
+        <activity android:name=".activity.chat.AlertDialog" 
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".activity.chat.ChatActivity" >
+        <activity android:name=".activity.chat.ChatActivity"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".activity.chat.ContextMenu"
-            android:theme="@style/CustomDialog" >
+            android:theme="@style/CustomDialog" 
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".activity.chat.ShowBigImage" >
+        <activity android:name=".activity.chat.ShowBigImage"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".activity.active.CreateActiveActivity" >
+        <activity android:name=".activity.active.CreateActiveActivity" 
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".activity.my.PersonalDataActivity" >
+        <activity android:name=".activity.my.PersonalDataActivity"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".activity.my.SettingActivity" >
+        <activity android:name=".activity.my.SettingActivity"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".activity.my.LoginActivity"
-            android:launchMode="singleTask" >
+            android:launchMode="singleTask" 
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".activity.my.ForgetPwdActivity" >
+        <activity android:name=".activity.my.ForgetPwdActivity" 
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".activity.my.PwdNextActivity" >
+        <activity android:name=".activity.my.PwdNextActivity" 
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".activity.my.AttentionPersonActivity" >
+        <activity android:name=".activity.my.AttentionPersonActivity"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".activity.msg.PlayCarChatActivity" >
+        <activity android:name=".activity.msg.PlayCarChatActivity"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".activity.BasicMessageActivity" >
+        <activity android:name=".activity.BasicMessageActivity" 
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".activity.main.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".activity.PartyDetailsActivity" />
-        <activity android:name=".activity.my.AuthenticateOwnersActivity" >
+        <activity android:name=".activity.PartyDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.my.AuthenticateOwnersActivity" 
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".activity.active.ActiveInformationActivity" >
+        <activity android:name=".activity.active.ActiveInformationActivity" 
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".activity.my.RegisterActivity" >
+        <activity android:name=".activity.my.RegisterActivity" 
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".activity.msg.ChatActivity" >
+        <activity android:name=".activity.msg.ChatActivity" 
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".activity.msg.NewMessageActivity" >
+        <activity android:name=".activity.msg.NewMessageActivity" 
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".activity.my.ParticipateApplicationActivity" >
+        <activity android:name=".activity.my.ParticipateApplicationActivity"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".activity.my.MyAttentionActiveActivity" >
+        <activity android:name=".activity.my.MyAttentionActiveActivity"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".activity.my.MyParticipationActiveActivity" >
+        <activity android:name=".activity.my.MyParticipationActiveActivity"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".activity.my.MyReleaseActiveActivity" >
+        <activity android:name=".activity.my.MyReleaseActiveActivity" 
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".activity.my.EditPersonalInfoActivity" >
+        <activity android:name=".activity.my.EditPersonalInfoActivity"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".activity.main.GuidanceActivity" >
+        <activity android:name=".activity.main.GuidanceActivity"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".activity.active.EventIntroduceActivity" >
+        <activity android:name=".activity.active.EventIntroduceActivity"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".activity.active.ActiveMembersActivity" >
+        <activity android:name=".activity.active.ActiveMembersActivity" 
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".activity.active.MyActiveMembersManageActivity" >
+        <activity android:name=".activity.active.MyActiveMembersManageActivity"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".activity.active.ActiveIntroduceActivity" >
+        <activity android:name=".activity.active.ActiveIntroduceActivity"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".activity.active.ActiveDetailsActivity" >
+        <activity android:name=".activity.active.ActiveDetailsActivity" 
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".activity.active.MapActivity" />
-        <activity android:name=".activity.my.ManageAlbumActivity" >
+        <activity android:name=".activity.active.MapActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.my.ManageAlbumActivity" 
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".activity.my.CarTypeSelectActivity" >
+        <activity android:name=".activity.my.CarTypeSelectActivity" 
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".activity.active.ActiveDescriptionActivity" >
+        <activity android:name=".activity.active.ActiveDescriptionActivity"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".activity.active.SearchPlaceActivity" />
-        <activity android:name=".activity.my.PersonDetailActivity" >
+        <activity android:name=".activity.active.SearchPlaceActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.my.PersonDetailActivity" 
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".activity.my.MyPerSonDetailActivity" >
+        <activity android:name=".activity.my.MyPerSonDetailActivity"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".activity.active.EditActiveActivity" />
-        <activity android:name=".activity.my.FeedBackActivity" />
-        <activity android:name=".activity.my.VersionIntroActivity" >
+        <activity android:name=".activity.active.EditActiveActivity" 
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.my.FeedBackActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.my.VersionIntroActivity" 
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".activity.chat.ChatMapActivity" >
+        <activity android:name=".activity.chat.ChatMapActivity" 
+            android:screenOrientation="portrait">
         </activity>
 
         <service android:name="com.gongpingjia.carplay.service.MsgService" >
         </service>
 
-        <activity android:name=".activity.my.BasicMessageActivity" />
-        <activity android:name=".activity.main.SplashActivity" >
+        <activity android:name=".activity.my.BasicMessageActivity" 
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.main.SplashActivity"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.my.AboutUsActivity" >
+        <activity android:name=".activity.my.AboutUsActivity"
+            android:screenOrientation="portrait" >
         </activity>
 
         <!-- 分享编辑页 -->
@@ -156,13 +200,15 @@
             android:launchMode="singleTask"
             android:noHistory="true"
             android:theme="@style/Theme.UMDialog"
-            android:windowSoftInputMode="stateVisible|adjustResize" />
+            android:windowSoftInputMode="stateVisible|adjustResize" 
+            android:screenOrientation="portrait"/>
 
         <!-- ############ QQ空间和QQ SSO授权的Activity注册 ############ -->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"
-            android:noHistory="true" >
+            android:noHistory="true"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -182,15 +228,19 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity android:name=".activity.msg.PlayCarcDetailActivity" >
+        <activity android:name=".activity.msg.PlayCarcDetailActivity"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.gongpingjia.carplay.activity.main.TermsActivity"
-            android:label="@string/title_activity_terms" >
+            android:label="@string/title_activity_terms"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".activity.main.LargePICActivity" >
+        <activity android:name=".activity.main.LargePICActivity"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".activity.my.AttestationNotifyActivity" >
+        <activity android:name=".activity.my.AttestationNotifyActivity" 
+            android:screenOrientation="portrait">
         </activity>
 
         <service android:name="com.easemob.chat.EMChatService" />
