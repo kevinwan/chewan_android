@@ -246,7 +246,7 @@ public class MyFragment extends Fragment implements OnClickListener {
 					carModelT.setText("带我飞~");
 				} else {
 					carModelT
-							.setText(carModel + "  " + drivingExperience + "年");
+							.setText(carModel + ",  " + drivingExperience + "年车龄");
 				}
 
 				if (TextUtils.isEmpty(carBrandLogo)

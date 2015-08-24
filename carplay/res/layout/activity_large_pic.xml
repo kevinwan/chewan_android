@@ -12,7 +12,8 @@
         android:layout_centerInParent="true"
         android:background="@drawable/img_loading"
         android:fadingEdgeLength="0dp"
-        android:unselectedAlpha="128" />
+        android:unselectedAlpha="0.0"
+         />
 
     <View
         android:id="@+id/back"

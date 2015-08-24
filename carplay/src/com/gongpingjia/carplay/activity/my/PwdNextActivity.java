@@ -96,6 +96,7 @@ public class PwdNextActivity extends CarPlayBaseActivity {
                     @Override
                     public void doInUI(Response response, Integer transfer) {
                         if (response.isSuccess()) {
+                        	showToast("密码修改成功!");
                             JSONObject jo = response.jSONFrom("data");
                             User user = User.getInstance();
                             // JSONUtil.getString(jo, "userId")
