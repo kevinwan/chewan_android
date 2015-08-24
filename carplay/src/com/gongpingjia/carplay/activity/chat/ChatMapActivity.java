@@ -47,6 +47,7 @@ public class ChatMapActivity extends CarPlayBaseActivity implements AMapLocation
 
     private void setupMap(Bundle savedInstanceState) {
 
+        setTitle("位置");
         Intent it = getIntent();
         mMapView = (MapView) findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
@@ -61,7 +62,6 @@ public class ChatMapActivity extends CarPlayBaseActivity implements AMapLocation
             mLocationManager.setGpsEnable(true);
             mLocationManager.requestLocationData(LocationProviderProxy.AMapNetwork, 20000, 10, this);
 
-            setTitle("位置");
             setRightAction("发送", -1, new View.OnClickListener() {
 
                 @Override
