@@ -202,6 +202,8 @@ public class ChatActivity extends CarPlayBaseActivity implements
 
 	private SwipeRefreshLayout swipeRefreshLayout;
 
+	boolean needSend = true;
+
 	private Handler micImageHandler = new Handler() {
 		@Override
 		public void handleMessage(android.os.Message msg) {
@@ -210,7 +212,9 @@ public class ChatActivity extends CarPlayBaseActivity implements
 			if (msg.what > 5) {
 				msg.what = 5;
 			}
-			micImage.setImageDrawable(micImages[msg.what]);
+			if (needSend) {
+				micImage.setImageDrawable(micImages[msg.what]);
+			}
 		}
 	};
 	public EMGroup group;
@@ -363,7 +367,6 @@ public class ChatActivity extends CarPlayBaseActivity implements
 				android.R.color.holo_green_light,
 				android.R.color.holo_orange_light,
 				android.R.color.holo_red_light);
-		
 
 		swipeRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
 
@@ -1437,6 +1440,7 @@ public class ChatActivity extends CarPlayBaseActivity implements
 		public boolean onTouch(View v, MotionEvent event) {
 			switch (event.getAction()) {
 			case MotionEvent.ACTION_DOWN:
+				needSend = true;
 				if (!CommonUtils.isExitsSdcard()) {
 					String st4 = getResources().getString(
 							R.string.Send_voice_need_sdcard_support);
@@ -1472,14 +1476,18 @@ public class ChatActivity extends CarPlayBaseActivity implements
 				return true;
 			case MotionEvent.ACTION_MOVE: {
 				if (event.getY() < 0) {
+					needSend = false;
 					recordingHint
 							.setText(getString(R.string.release_to_cancel));
-					recordingHint
-							.setBackgroundResource(R.drawable.recording_text_hint_bg);
+					// recordingHint
+					// .setBackgroundResource(R.drawable.recording_text_hint_bg);
+					micImage.setImageResource(R.drawable.voice_cancle_send);
 				} else {
+					needSend = true;
 					recordingHint
 							.setText(getString(R.string.move_up_to_cancel));
-					recordingHint.setBackgroundColor(Color.TRANSPARENT);
+					// recordingHint.setBackgroundColor(Color.TRANSPARENT);
+					micImage.setImageResource(R.drawable.record_animate_01);
 				}
 				return true;
 			}

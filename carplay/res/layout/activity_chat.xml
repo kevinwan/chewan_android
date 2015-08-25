@@ -455,7 +455,10 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:background="@drawable/recording_hint_bg"
-            android:padding="10dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:paddingTop="10dp"
             android:visibility="invisible" >
 
             <ImageView
@@ -474,7 +477,8 @@
                 android:layout_marginTop="5dp"
                 android:padding="2dp"
                 android:text="@string/move_up_to_cancel"
-                android:textSize="10sp" />
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_small" />
         </RelativeLayout>
     </RelativeLayout>
 

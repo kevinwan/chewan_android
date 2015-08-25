@@ -19,6 +19,7 @@ import org.json.JSONObject;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -472,7 +473,8 @@ public class PersonDetailActivity extends CarPlayBaseActivity implements OnClick
     Handler handler = new Handler() {
         public void handleMessage(android.os.Message msg) {
             currentPosition = currentPosition + 1;
-            gallery.setSelection(currentPosition);
+//            gallery.setSelection(currentPosition);
+            gallery.onKeyDown(KeyEvent.KEYCODE_DPAD_RIGHT, null);
         };
     };
 }

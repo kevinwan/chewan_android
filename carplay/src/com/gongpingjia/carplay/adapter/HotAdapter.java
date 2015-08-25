@@ -109,6 +109,12 @@ public class HotAdapter extends NetJSONAdapter {
 	}
 
 	@Override
+	public long getItemId(int position) {
+
+		return position;
+	}
+
+	@Override
 	public int getItemViewType(int position) {
 		int count = 0;
 		if (position == 1) {
@@ -309,7 +315,9 @@ public class HotAdapter extends NetJSONAdapter {
 						Intent it;
 						if (user.isLogin()) {
 							int isMember = JSONUtil.getInt(jo, "isMember");
-							if (holder.joinT.getText().equals("管理")) {
+							int isOrganizer = JSONUtil
+									.getInt(jo, "isOrganizer");
+							if (isOrganizer == 1) {
 								JSONObject shareJo = getShareContent(jo);
 								it = new Intent(mContext,
 										MyActiveMembersManageActivity.class);
