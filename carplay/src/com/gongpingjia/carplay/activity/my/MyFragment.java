@@ -437,6 +437,8 @@ public class MyFragment extends Fragment implements OnClickListener {
 		if (galleryTimer != null) {
 			galleryTimer.cancel();
 		}
+
+		EventBus.getDefault().unregister(this);
 	}
 
 	Handler handler = new Handler() {

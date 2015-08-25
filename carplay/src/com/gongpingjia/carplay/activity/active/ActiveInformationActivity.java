@@ -46,7 +46,7 @@ public class ActiveInformationActivity extends CarPlayBaseActivity implements
 	// 活动ID
 	String activityId;
 
-	LinearLayout headlayoutV, activity_edit,acitvity_layout_head;
+	LinearLayout headlayoutV, activity_edit, acitvity_layout_head;
 	// 是否为创建者
 	int id;
 
@@ -109,13 +109,13 @@ public class ActiveInformationActivity extends CarPlayBaseActivity implements
 		setTitle("活动信息");
 		user = User.getInstance();
 		activityId = getIntent().getStringExtra("activityId");
-		setRightAction("举报", -1, new OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				showToast("举报");
-			}
-		});
+		// setRightAction("举报", -1, new OnClickListener() {
+		//
+		// @Override
+		// public void onClick(View arg0) {
+		// showToast("举报");
+		// }
+		// });
 		getData();
 
 	}
@@ -269,11 +269,11 @@ public class ActiveInformationActivity extends CarPlayBaseActivity implements
 			}
 			break;
 		case R.id.activity_edit:
-//			if (id != 0) {
-//				it = new Intent(self, ActiveDescriptionActivity.class);
-//				it.putExtra("intr", activity_Introduction.getText().toString());
-//				startActivityForResult(it, REQUEST_DESCRIPTION);
-//			}
+			// if (id != 0) {
+			// it = new Intent(self, ActiveDescriptionActivity.class);
+			// it.putExtra("intr", activity_Introduction.getText().toString());
+			// startActivityForResult(it, REQUEST_DESCRIPTION);
+			// }
 			break;
 
 		case R.id.quite:

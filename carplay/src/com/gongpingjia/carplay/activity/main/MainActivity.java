@@ -541,10 +541,8 @@ public class MainActivity extends BaseFragmentActivity implements
 		JSONObject applicationJo = JSONUtil.getJSONObject(jo, "application");
 		int applicationCount = JSONUtil.getInt(applicationJo, "count");
 
-		System.out.println("22222222222");
 		if (commentCount != 0 || applicationCount != 0) {
 			// msgT.setText(commentCount + applicationCount + "");
-			System.out.println("3333333333");
 			msgT.setVisibility(View.VISIBLE);
 		} else {
 			msgT.setVisibility(View.GONE);
@@ -710,7 +708,6 @@ public class MainActivity extends BaseFragmentActivity implements
 
 	public void updateUnreadLabel() {
 		int count = getUnreadMsgCountTotal();
-		System.out.println("聊天count:" + count);
 		chatPointI.setVisibility(count > 0 ? View.VISIBLE : View.GONE);
 	}
 
