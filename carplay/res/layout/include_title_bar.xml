@@ -47,7 +47,7 @@
             android:layout_centerInParent="true"
             android:text="首页"
             android:textColor="@color/white"
-            android:textSize="25sp" />
+            android:textSize="@dimen/text_title" />
 
         <TextView
             android:id="@+id/right_text"

@@ -30,7 +30,7 @@
                 android:gravity="center"
                 android:text="热门"
                 android:textColor="@color/text_black"
-                android:textSize="@dimen/text_big" />
+                android:textSize="@dimen/text_medium" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -53,7 +53,7 @@
                 android:gravity="center"
                 android:text="附近"
                 android:textColor="@color/text_black"
-                android:textSize="@dimen/text_big" />
+                android:textSize="@dimen/text_medium" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -76,7 +76,7 @@
                 android:gravity="center"
                 android:text="最新"
                 android:textColor="@color/text_black"
-                android:textSize="@dimen/text_big" />
+                android:textSize="@dimen/text_medium" />
         </RelativeLayout>
     </LinearLayout>
 

@@ -24,7 +24,7 @@
         <TextView
             android:id="@+id/status"
             style="@style/text_white_smaller"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="7dp"
             android:background="@drawable/button_radian"
             android:paddingBottom="2dp"
             android:paddingLeft="6dp"
@@ -73,8 +73,8 @@
 
                 <RelativeLayout
                     android:id="@+id/layout_sex"
-                    android:layout_width="35dp"
-                    android:layout_height="17dp"
+                    android:layout_width="34dp"
+                    android:layout_height="16dp"
                     android:layout_marginLeft="5dp"
                     android:background="@drawable/man" >
 
@@ -86,7 +86,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginRight="2dp"
                         android:textColor="@color/white"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/text_small" />
                 </RelativeLayout>
 
                 <View
@@ -126,7 +126,10 @@
             <TextView
                 android:id="@+id/content"
                 style="@style/text_black_medium"
-                android:layout_marginTop="6dp" />
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="4dp"
+                android:lineSpacingMultiplier="1.15"
+                 />
 
             <LinearLayout
                 android:id="@+id/piclayout"
@@ -209,8 +212,8 @@
                     android:gravity="center"
                     android:text="我也要玩"
                     android:textColor="@color/white"
-                    android:textSize="16sp"
-                    android:visibility="gone" />
+                    android:textSize="@dimen/text_hot_small"
+                    android:visibility="visible" />
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

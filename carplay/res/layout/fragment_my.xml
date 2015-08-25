@@ -206,7 +206,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginBottom="15dp"
                         android:layout_marginTop="15dp"
-                        android:background="@color/text_grey" />
+                        android:background="@color/cutline" />
 
                     <LinearLayout
                         android:id="@+id/my_attention"
@@ -234,7 +234,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginBottom="15dp"
                         android:layout_marginTop="15dp"
-                        android:background="@color/text_grey" />
+                        android:background="@color/cutline" />
 
                     <LinearLayout
                         android:id="@+id/my_participation"
