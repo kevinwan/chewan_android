@@ -104,7 +104,7 @@
             android:id="@+id/tv_tip"
             style="@style/text_black_medium"
             android:layout_centerInParent="true"
-            android:text="您还可以选择第三方登陆" />
+            android:text="您还可以选择第三方登录" />
 
         <View
             android:layout_width="match_parent"
@@ -146,7 +146,7 @@
             <TextView
                 style="@style/text_black_medium"
                 android:layout_marginTop="10dp"
-                android:text="微信登陆" />
+                android:text="微信登录" />
         </LinearLayout>
 
         <LinearLayout
@@ -166,7 +166,7 @@
             <TextView
                 style="@style/text_black_medium"
                 android:layout_marginTop="10dp"
-                android:text="QQ登陆" />
+                android:text="QQ登录" />
         </LinearLayout>
 
         <LinearLayout
@@ -186,7 +186,7 @@
             <TextView
                 style="@style/text_black_medium"
                 android:layout_marginTop="10dp"
-                android:text="微博登陆" />
+                android:text="微博登录" />
         </LinearLayout>
     </LinearLayout>
 
