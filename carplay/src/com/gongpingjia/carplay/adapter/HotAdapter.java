@@ -21,6 +21,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,6 +44,8 @@ import com.gongpingjia.carplay.manage.UserInfoManage;
 import com.gongpingjia.carplay.manage.UserInfoManage.LoginCallBack;
 import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.util.PicLayoutUtil;
+import com.gongpingjia.carplay.view.CarPlayGallery;
+import com.gongpingjia.carplay.view.HotGallery;
 import com.gongpingjia.carplay.view.RoundImageView;
 import com.gongpingjia.carplay.view.dialog.CarSeatSelectDialog;
 import com.gongpingjia.carplay.view.dialog.CarSeatSelectDialog.OnSelectResultListener;
@@ -590,6 +593,10 @@ public class HotAdapter extends NetJSONAdapter {
 	/** 官方活动 */
 	private void bindViewPageAdapter() {
 		isRefresh = false;
+		// if (jsa != null && jsa.length() > 0) {
+		// HotActiveAdapter adapter = new HotActiveAdapter(mContext, jsa);
+		// middleHolder.pager.setAdapter(adapter);
+		// }
 		if (jsa != null && jsa.length() > 0) {
 			views = new View[jsa.length()];
 			for (int i = 0; i < jsa.length(); i++) {
@@ -640,6 +647,31 @@ public class HotAdapter extends NetJSONAdapter {
 
 			SimplePageAdapter middleAdapter = new SimplePageAdapter(views);
 			middleHolder.pager.setAdapter(middleAdapter);
+			middleHolder.pager
+					.setOnPageChangeListener(new OnPageChangeListener() {
+
+						@Override
+						public void onPageSelected(int arg0) {
+							// if (arg0 == 0)
+							// middleHolder.pager
+							// .setCurrentItem(1);
+							// else if (arg0 == views.length - 1)
+							// middleHolder.pager.setCurrentItem(1);
+						}
+
+						@Override
+						public void onPageScrolled(int arg0, float arg1,
+								int arg2) {
+							// TODO Auto-generated method stub
+
+						}
+
+						@Override
+						public void onPageScrollStateChanged(int arg0) {
+							// TODO Auto-generated method stub
+
+						}
+					});
 			// middleHolder.pager.setVisibility(View.VISIBLE);
 		}
 	}
