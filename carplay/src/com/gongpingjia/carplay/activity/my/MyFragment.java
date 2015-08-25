@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -444,7 +445,7 @@ public class MyFragment extends Fragment implements OnClickListener {
 	Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
 			currentPosition = currentPosition + 1;
-			gallery.setSelection(currentPosition, true);
+			gallery.onKeyDown(KeyEvent.KEYCODE_DPAD_RIGHT, null);
 		};
 	};
 
