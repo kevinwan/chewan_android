@@ -2,422 +2,410 @@
 
     <province name="北京市" >
 
-        <city name="北京市" >
+        <city
+            name="昌平区"
+            zipcode="100000" />
 
-            <district
-                name="昌平区"
-                zipcode="100000" />
+        <city
+            name="朝阳区"
+            zipcode="100000" />
 
-            <district
-                name="朝阳区"
-                zipcode="100000" />
+        <city
+            name="崇文区"
+            zipcode="100000" />
 
-            <district
-                name="崇文区"
-                zipcode="100000" />
+        <city
+            name="大兴区"
+            zipcode="100000" />
 
-            <district
-                name="大兴区"
-                zipcode="100000" />
+        <city
+            name="东城区"
+            zipcode="100000" />
 
-            <district
-                name="东城区"
-                zipcode="100000" />
+        <city
+            name="房山区"
+            zipcode="100000" />
 
-            <district
-                name="房山区"
-                zipcode="100000" />
+        <city
+            name="丰台区"
+            zipcode="100000" />
 
-            <district
-                name="丰台区"
-                zipcode="100000" />
+        <city
+            name="海淀区"
+            zipcode="100000" />
 
-            <district
-                name="海淀区"
-                zipcode="100000" />
+        <city
+            name="怀柔区"
+            zipcode="100000" />
 
-            <district
-                name="怀柔区"
-                zipcode="100000" />
+        <city
+            name="门头沟区"
+            zipcode="100000" />
 
-            <district
-                name="门头沟区"
-                zipcode="100000" />
+        <city
+            name="密云县"
+            zipcode="100000" />
 
-            <district
-                name="密云县"
-                zipcode="100000" />
+        <city
+            name="平谷区"
+            zipcode="100000" />
 
-            <district
-                name="平谷区"
-                zipcode="100000" />
+        <city
+            name="石景山区"
+            zipcode="100000" />
 
-            <district
-                name="石景山区"
-                zipcode="100000" />
+        <city
+            name="顺义区"
+            zipcode="100000" />
 
-            <district
-                name="顺义区"
-                zipcode="100000" />
+        <city
+            name="通州区"
+            zipcode="100000" />
 
-            <district
-                name="通州区"
-                zipcode="100000" />
+        <city
+            name="西城区"
+            zipcode="100000" />
 
-            <district
-                name="西城区"
-                zipcode="100000" />
+        <city
+            name="宣武区"
+            zipcode="100000" />
 
-            <district
-                name="宣武区"
-                zipcode="100000" />
+        <city
+            name="延庆县"
+            zipcode="100000" />
 
-            <district
-                name="延庆县"
-                zipcode="100000" />
-
-            <district
-                name="其他"
-                zipcode="100000" />
-        </city>
+        <city
+            name="其他"
+            zipcode="100000" />
     </province>
 
     <province name="天津市" >
 
-        <city name="天津市" >
+        <city
+            name="宝坻区"
+            zipcode="100000" />
 
-            <district
-                name="宝坻区"
-                zipcode="100000" />
+        <city
+            name="北辰区"
+            zipcode="100000" />
 
-            <district
-                name="北辰区"
-                zipcode="100000" />
+        <city
+            name="大港区"
+            zipcode="100000" />
 
-            <district
-                name="大港区"
-                zipcode="100000" />
+        <city
+            name="东丽区"
+            zipcode="100000" />
 
-            <district
-                name="东丽区"
-                zipcode="100000" />
+        <city
+            name="汉沽区"
+            zipcode="100000" />
 
-            <district
-                name="汉沽区"
-                zipcode="100000" />
+        <city
+            name="和平区"
+            zipcode="100000" />
 
-            <district
-                name="和平区"
-                zipcode="100000" />
+        <city
+            name="河北区"
+            zipcode="100000" />
 
-            <district
-                name="河北区"
-                zipcode="100000" />
+        <city
+            name="河东区"
+            zipcode="100000" />
 
-            <district
-                name="河东区"
-                zipcode="100000" />
+        <city
+            name="河西区"
+            zipcode="100000" />
 
-            <district
-                name="河西区"
-                zipcode="100000" />
+        <city
+            name="红桥区"
+            zipcode="100000" />
 
-            <district
-                name="红桥区"
-                zipcode="100000" />
+        <city
+            name="蓟县"
+            zipcode="100000" />
 
-            <district
-                name="蓟县"
-                zipcode="100000" />
+        <city
+            name="津南区"
+            zipcode="100000" />
 
-            <district
-                name="津南区"
-                zipcode="100000" />
+        <city
+            name="静海县"
+            zipcode="100000" />
 
-            <district
-                name="静海县"
-                zipcode="100000" />
+        <city
+            name="南开区"
+            zipcode="100000" />
 
-            <district
-                name="南开区"
-                zipcode="100000" />
+        <city
+            name="宁河县"
+            zipcode="100000" />
 
-            <district
-                name="宁河县"
-                zipcode="100000" />
+        <city
+            name="塘沽区"
+            zipcode="100000" />
 
-            <district
-                name="塘沽区"
-                zipcode="100000" />
+        <city
+            name="武清区"
+            zipcode="100000" />
 
-            <district
-                name="武清区"
-                zipcode="100000" />
+        <city
+            name="西青区"
+            zipcode="100000" />
 
-            <district
-                name="西青区"
-                zipcode="100000" />
-
-            <district
-                name="其他"
-                zipcode="100000" />
-        </city>
+        <city
+            name="其他"
+            zipcode="100000" />
     </province>
 
     <province name="上海市" >
 
-        <city name="上海市" >
+        <city
+            name="宝山区"
+            zipcode="200000" />
 
-            <district
-                name="宝山区"
-                zipcode="200000" />
+        <city
+            name="长宁区"
+            zipcode="200000" />
 
-            <district
-                name="长宁区"
-                zipcode="200000" />
+        <city
+            name="崇明县"
+            zipcode="200000" />
 
-            <district
-                name="崇明县"
-                zipcode="200000" />
+        <city
+            name="奉贤区"
+            zipcode="200000" />
 
-            <district
-                name="奉贤区"
-                zipcode="200000" />
+        <city
+            name="虹口区"
+            zipcode="200000" />
 
-            <district
-                name="虹口区"
-                zipcode="200000" />
+        <city
+            name="黄浦区"
+            zipcode="200000" />
 
-            <district
-                name="黄浦区"
-                zipcode="200000" />
+        <city
+            name="嘉定区"
+            zipcode="200000" />
 
-            <district
-                name="嘉定区"
-                zipcode="200000" />
+        <city
+            name="金山区"
+            zipcode="200000" />
 
-            <district
-                name="金山区"
-                zipcode="200000" />
+        <city
+            name="静安区"
+            zipcode="200000" />
 
-            <district
-                name="静安区"
-                zipcode="200000" />
+        <city
+            name="卢湾区"
+            zipcode="200000" />
 
-            <district
-                name="卢湾区"
-                zipcode="200000" />
+        <city
+            name="闵行区"
+            zipcode="200000" />
 
-            <district
-                name="闵行区"
-                zipcode="200000" />
+        <city
+            name="南汇区"
+            zipcode="200000" />
 
-            <district
-                name="南汇区"
-                zipcode="200000" />
+        <city
+            name="浦东新区"
+            zipcode="200000" />
 
-            <district
-                name="浦东新区"
-                zipcode="200000" />
+        <city
+            name="普陀区"
+            zipcode="200000" />
 
-            <district
-                name="普陀区"
-                zipcode="200000" />
+        <city
+            name="青浦区"
+            zipcode="200000" />
 
-            <district
-                name="青浦区"
-                zipcode="200000" />
+        <city
+            name="松江区"
+            zipcode="200000" />
 
-            <district
-                name="松江区"
-                zipcode="200000" />
+        <city
+            name="徐汇区"
+            zipcode="200000" />
 
-            <district
-                name="徐汇区"
-                zipcode="200000" />
+        <city
+            name="杨浦区"
+            zipcode="200000" />
 
-            <district
-                name="杨浦区"
-                zipcode="200000" />
+        <city
+            name="闸北区"
+            zipcode="200000" />
 
-            <district
-                name="闸北区"
-                zipcode="200000" />
-
-            <district
-                name="其他"
-                zipcode="200000" />
-        </city>
+        <city
+            name="其他"
+            zipcode="200000" />
     </province>
 
     <province name="重庆市" >
 
-        <city name="重庆市" >
+        <city
+            name="巴南区"
+            zipcode="404100" />
 
-            <district
-                name="巴南区"
-                zipcode="404100" />
+        <city
+            name="北碚区"
+            zipcode="404100" />
 
-            <district
-                name="北碚区"
-                zipcode="404100" />
+        <city
+            name="璧山县"
+            zipcode="404100" />
 
-            <district
-                name="璧山县"
-                zipcode="404100" />
+        <city
+            name="长寿区"
+            zipcode="404100" />
 
-            <district
-                name="长寿区"
-                zipcode="404100" />
+        <city
+            name="城口县"
+            zipcode="404100" />
 
-            <district
-                name="城口县"
-                zipcode="404100" />
+        <city
+            name="大渡口区"
+            zipcode="404100" />
 
-            <district
-                name="大渡口区"
-                zipcode="404100" />
+        <city
+            name="大足县"
+            zipcode="404100" />
 
-            <district
-                name="大足县"
-                zipcode="404100" />
+        <city
+            name="垫江县"
+            zipcode="404100" />
 
-            <district
-                name="垫江县"
-                zipcode="404100" />
+        <city
+            name="丰都县"
+            zipcode="404100" />
 
-            <district
-                name="丰都县"
-                zipcode="404100" />
+        <city
+            name="奉节县"
+            zipcode="404100" />
 
-            <district
-                name="奉节县"
-                zipcode="404100" />
+        <city
+            name="涪陵区"
+            zipcode="404100" />
 
-            <district
-                name="涪陵区"
-                zipcode="404100" />
+        <city
+            name="合川区"
+            zipcode="404100" />
 
-            <district
-                name="合川区"
-                zipcode="404100" />
+        <city
+            name="江北区"
+            zipcode="404100" />
 
-            <district
-                name="江北区"
-                zipcode="404100" />
+        <city
+            name="江津区"
+            zipcode="404100" />
 
-            <district
-                name="江津区"
-                zipcode="404100" />
+        <city
+            name="九龙坡区"
+            zipcode="404100" />
 
-            <district
-                name="九龙坡区"
-                zipcode="404100" />
+        <city
+            name="开县"
+            zipcode="404100" />
 
-            <district
-                name="开县"
-                zipcode="404100" />
+        <city
+            name="梁平县"
+            zipcode="404100" />
 
-            <district
-                name="梁平县"
-                zipcode="404100" />
+        <city
+            name="南岸区"
+            zipcode="404100" />
 
-            <district
-                name="南岸区"
-                zipcode="404100" />
+        <city
+            name="南川区"
+            zipcode="404100" />
 
-            <district
-                name="南川区"
-                zipcode="404100" />
+        <city
+            name="彭水苗族土家族自治县"
+            zipcode="404100" />
 
-            <district
-                name="彭水苗族土家族自治县"
-                zipcode="404100" />
+        <city
+            name="綦江县"
+            zipcode="404100" />
 
-            <district
-                name="綦江县"
-                zipcode="404100" />
+        <city
+            name="黔江区"
+            zipcode="404100" />
 
-            <district
-                name="黔江区"
-                zipcode="404100" />
+        <city
+            name="荣昌县"
+            zipcode="404100" />
 
-            <district
-                name="荣昌县"
-                zipcode="404100" />
+        <city
+            name="沙坪坝区"
+            zipcode="404100" />
 
-            <district
-                name="沙坪坝区"
-                zipcode="404100" />
+        <city
+            name="石柱土家族自治县"
+            zipcode="404100" />
 
-            <district
-                name="石柱土家族自治县"
-                zipcode="404100" />
+        <city
+            name="双桥区"
+            zipcode="404100" />
 
-            <district
-                name="双桥区"
-                zipcode="404100" />
+        <city
+            name="铜梁县"
+            zipcode="404100" />
 
-            <district
-                name="铜梁县"
-                zipcode="404100" />
+        <city
+            name="潼南县"
+            zipcode="404100" />
 
-            <district
-                name="潼南县"
-                zipcode="404100" />
+        <city
+            name="万盛区"
+            zipcode="404100" />
 
-            <district
-                name="万盛区"
-                zipcode="404100" />
+        <city
+            name="万州区"
+            zipcode="404100" />
 
-            <district
-                name="万州区"
-                zipcode="404100" />
+        <city
+            name="巫山县"
+            zipcode="404100" />
 
-            <district
-                name="巫山县"
-                zipcode="404100" />
+        <city
+            name="巫溪县"
+            zipcode="404100" />
 
-            <district
-                name="巫溪县"
-                zipcode="404100" />
+        <city
+            name="武隆县"
+            zipcode="404100" />
 
-            <district
-                name="武隆县"
-                zipcode="404100" />
+        <city
+            name="秀山土家族苗族自治县"
+            zipcode="404100" />
 
-            <district
-                name="秀山土家族苗族自治县"
-                zipcode="404100" />
+        <city
+            name="永川区"
+            zipcode="404100" />
 
-            <district
-                name="永川区"
-                zipcode="404100" />
+        <city
+            name="酉阳土家族苗族自治县"
+            zipcode="404100" />
 
-            <district
-                name="酉阳土家族苗族自治县"
-                zipcode="404100" />
+        <city
+            name="渝北区"
+            zipcode="404100" />
 
-            <district
-                name="渝北区"
-                zipcode="404100" />
+        <city
+            name="渝中区"
+            zipcode="404100" />
 
-            <district
-                name="渝中区"
-                zipcode="404100" />
+        <city
+            name="云阳县"
+            zipcode="404100" />
 
-            <district
-                name="云阳县"
-                zipcode="404100" />
+        <city
+            name="忠县"
+            zipcode="404100" />
 
-            <district
-                name="忠县"
-                zipcode="404100" />
-
-            <district
-                name="其他"
-                zipcode="404100" />
-        </city>
+        <city
+            name="其他"
+            zipcode="404100" />
     </province>
 
     <province name="河北省" >

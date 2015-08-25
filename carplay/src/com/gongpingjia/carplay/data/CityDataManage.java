@@ -81,7 +81,7 @@ public class CityDataManage {
 			if (type == 1) {
 				fileName = "province_data.xml";
 			} else {
-				fileName = "province_new_data.xml";
+				fileName = "area.xml";
 			}
 			InputStream input = asset.open(fileName);
 			// 创建一个解析xml的工厂对象
@@ -101,8 +101,10 @@ public class CityDataManage {
 					mCurrentCityName = cityList.get(0).getName();
 					List<DistrictModel> districtList = cityList.get(0)
 							.getDistrictList();
-					mCurrentDistrictName = districtList.get(0).getName();
-					mCurrentZipCode = districtList.get(0).getZipcode();
+					if (districtList != null && !districtList.isEmpty()) {
+						mCurrentDistrictName = districtList.get(0).getName();
+						mCurrentZipCode = districtList.get(0).getZipcode();
+					}
 				}
 			}
 			// */

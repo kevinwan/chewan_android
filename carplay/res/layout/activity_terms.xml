@@ -1,9 +1,12 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:orientation="vertical"
     tools:context="com.example.aaa.MainActivity" >
+
+    <include layout="@layout/include_title_bar" />
 
     <ScrollView
         android:id="@+id/scrollView1"
@@ -14,18 +17,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical" >
-			
-            <include layout="@layout/include_title_bar"/>
+
             <TextView
                 android:id="@+id/txt"
                 style="@style/text_black_medium"
-                android:layout_marginTop="15dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:lineSpacingMultiplier="1.5"
-                 />
-
+                android:layout_marginTop="15dp"
+                android:lineSpacingMultiplier="1.5" />
         </LinearLayout>
     </ScrollView>
 
-</RelativeLayout>
+</LinearLayout>

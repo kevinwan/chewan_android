@@ -65,7 +65,7 @@
     <string name="prompt">提示</string>
     <string name="clear_records">清空记录</string>
     <string name="clear_all_records">是否清空所有聊天记录？</string>
-    <string name="location_recv">[%1$s的位置]</string>
+    <string name="location_recv">[位置]</string>
     <string name="location_message">位置信息</string>
     <string name="recording_video">录制视频</string>
     <string name="location_prefix">[我的位置]</string>
@@ -92,7 +92,7 @@
     <string name="set">设置</string>
     <string name="notify">新消息提醒</string>
     <string name="newnotify">接收新消息通知</string>
-    <string name="voice">声音</string>
+    <string name="voice">[声音]</string>
     <string name="shake">震动</string>
     <string name="chatset">聊天设置</string>
     <string name="yangshengqi">使用扬声器播放语音</string>

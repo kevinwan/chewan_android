@@ -42,6 +42,7 @@ import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.activity.chat.ChatActivity;
 import com.gongpingjia.carplay.activity.my.LoginActivity;
 import com.gongpingjia.carplay.api.API;
+import com.gongpingjia.carplay.bean.ActiveEditEB;
 import com.gongpingjia.carplay.bean.JoinEB;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.manage.UserInfoManage;
@@ -778,6 +779,10 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 		}
 	}
 
+	public void onEventMainThread(ActiveEditEB activeEditEB) {
+		getData();
+	}
+
 	public JSONObject getShareContent(JSONObject jo) {
 		JSONArray picJsa = JSONUtil.getJSONArray(jo, "cover");
 		JSONObject picjo;
@@ -809,5 +814,11 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 		}
 
 		return shareJo;
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		EventBus.getDefault().unregister(this);
 	}
 }

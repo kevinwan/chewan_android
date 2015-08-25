@@ -234,7 +234,7 @@ public class FragmentMsgAdapter extends BaseAdapter {
 				// digest = EasyUtils.getAppResourceString(context,
 				// "location_recv");
 				digest = getStrng(context, R.string.location_recv);
-				digest = String.format(digest, message.getFrom());
+//				digest = String.format(digest, message.getFrom());
 				return digest;
 			} else {
 				// digest = EasyUtils.getAppResourceString(context,
@@ -244,8 +244,8 @@ public class FragmentMsgAdapter extends BaseAdapter {
 			break;
 		case IMAGE: // 图片消息
 			ImageMessageBody imageBody = (ImageMessageBody) message.getBody();
-			digest = getStrng(context, R.string.picture)
-					+ imageBody.getFileName();
+			digest = getStrng(context, R.string.picture);
+					;
 			break;
 		case VOICE:// 语音消息
 			digest = getStrng(context, R.string.voice);

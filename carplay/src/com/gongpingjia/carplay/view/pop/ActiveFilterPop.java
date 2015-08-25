@@ -150,7 +150,11 @@ public class ActiveFilterPop extends PopupWindow implements OnClickListener {
 
 			@Override
 			public void onResult(String provice, String city, String district) {
-				addresssT.setText(provice + city);
+				if (provice.equals(city)) {
+					addresssT.setText(provice);
+				} else {
+					addresssT.setText(provice + city);
+				}
 				if (provice.contains("市")) {
 					mcity = provice;
 					mdistrict = city;

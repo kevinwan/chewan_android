@@ -41,6 +41,7 @@ import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.adapter.ImageAdapter;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.api.Constant;
+import com.gongpingjia.carplay.bean.ActiveCreateEB;
 import com.gongpingjia.carplay.bean.PhotoState;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.CarPlayUtil;
@@ -59,6 +60,8 @@ import com.umeng.socialize.sso.UMSsoHandler;
 import com.umeng.socialize.weixin.controller.UMWXHandler;
 import com.umeng.socialize.weixin.media.CircleShareContent;
 import com.umeng.socialize.weixin.media.WeiXinShareContent;
+
+import de.greenrobot.event.EventBus;
 
 /***
  * 
@@ -482,6 +485,7 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements
 					if (response.isSuccess()) {
 						showToast("发布成功");
 						self.finish();
+						EventBus.getDefault().post(new ActiveCreateEB());
 					} else {
 						try {
 							Log.e("err", response.jSON().getString("errmsg"));

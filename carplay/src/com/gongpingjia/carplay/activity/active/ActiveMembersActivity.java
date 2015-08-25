@@ -120,7 +120,7 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 		user = User.getInstance();
 		activityId = getIntent().getStringExtra("activityId");
 		startTime = getIntent().getLongExtra("startTime", 0);
-		isJoin = getIntent().getBooleanExtra("isJoin", false);
+		// isJoin = getIntent().getBooleanExtra("isJoin", false);
 		quitB = (Button) findViewById(R.id.quit);
 		quitB.setOnClickListener(this);
 		joinB = (Button) findViewById(R.id.join);
@@ -448,6 +448,7 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 					joinB.setText("申请中");
 					joinB.setBackgroundResource(R.drawable.btn_grey_bg);
 					isShenqing = true;
+
 					// findViewById(R.id.bottom_bar).setVisibility(View.GONE);
 					JoinEB join = new JoinEB();
 					join.setActivityId(activityId);

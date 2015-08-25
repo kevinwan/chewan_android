@@ -35,6 +35,7 @@ import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.adapter.ImageAdapter;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.api.Constant;
+import com.gongpingjia.carplay.bean.ActiveEditEB;
 import com.gongpingjia.carplay.bean.PhotoState;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.CarPlayUtil;
@@ -43,6 +44,8 @@ import com.gongpingjia.carplay.view.NestedGridView;
 import com.gongpingjia.carplay.view.dialog.CommonDialog;
 import com.gongpingjia.carplay.view.dialog.CommonDialog.OnCommonDialogItemClickListener;
 import com.gongpingjia.carplay.view.dialog.DateTimePickerDialog;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * 编辑活动
@@ -409,6 +412,7 @@ public class EditActiveActivity extends CarPlayBaseActivity implements
 					if (response.isSuccess()) {
 						showToast("修改成功");
 						self.finish();
+						EventBus.getDefault().post(new ActiveEditEB());
 					} else {
 						showToast("修改异常请重试");
 						try {

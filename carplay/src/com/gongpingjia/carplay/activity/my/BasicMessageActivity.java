@@ -2,6 +2,7 @@ package com.gongpingjia.carplay.activity.my;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -132,7 +133,13 @@ public class BasicMessageActivity extends CarPlayBaseActivity implements
 
 			@Override
 			public void onResult(String provice, String city, String district) {
-				cityT.setText(provice + city + district);
+				if (provice.equals(city) && provice.equals(district)) {
+					cityT.setText(provice);
+				} else if (provice.equals(city)) {
+					cityT.setText(provice + district);
+				} else {
+					cityT.setText(provice + city + district);
+				}
 				mProvice = provice;
 				mCity = city;
 				mDistrict = district;
@@ -221,6 +228,11 @@ public class BasicMessageActivity extends CarPlayBaseActivity implements
 		final String strage = ageT.getText().toString();
 		if (TextUtils.isEmpty(strage)) {
 			showToast("请设置您的年龄");
+			return;
+		}
+		Calendar a = Calendar.getInstance();
+		if (mYear >= a.get(Calendar.YEAR)) {
+			showToast("您选择的年龄小于0岁,请选择正确的年龄");
 			return;
 		}
 

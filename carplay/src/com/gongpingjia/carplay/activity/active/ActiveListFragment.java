@@ -38,6 +38,8 @@ import com.gongpingjia.carplay.adapter.ActiveAdapter;
 import com.gongpingjia.carplay.adapter.HotAdapter;
 import com.gongpingjia.carplay.adapter.SimplePageAdapter;
 import com.gongpingjia.carplay.api.API;
+import com.gongpingjia.carplay.bean.ActiveCreateEB;
+import com.gongpingjia.carplay.bean.ActiveEditEB;
 import com.gongpingjia.carplay.bean.ActiveParmasEB;
 import com.gongpingjia.carplay.bean.JoinEB;
 import com.gongpingjia.carplay.bean.LoginEB;
@@ -359,6 +361,17 @@ public class ActiveListFragment extends Fragment {
 		}
 	}
 
+	public void onEventMainThread(ActiveEditEB activeEditEB) {
+		hotAdapter.refresh();
+		nearAdapter.refresh();
+		newAdapter.refresh();
+	}
+
+	public void onEventMainThread(ActiveCreateEB activeCreateEB) {
+		nearAdapter.refresh();
+		newAdapter.refresh();
+	}
+
 	private void getOfficalData() {
 		DhNet net = new DhNet(API.official);
 		net.doGetInDialog(new NetTask(getActivity()) {
@@ -370,7 +383,7 @@ public class ActiveListFragment extends Fragment {
 					// bindViewPageAdapter(jo);
 					hotAdapter.setJsa(jo);
 				} else {
-					
+
 				}
 
 			}
