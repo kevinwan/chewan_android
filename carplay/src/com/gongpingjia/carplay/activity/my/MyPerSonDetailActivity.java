@@ -24,6 +24,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -464,7 +465,8 @@ public class MyPerSonDetailActivity extends CarPlayBaseActivity implements
 	Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
 			currentPosition = currentPosition + 1;
-			gallery.setSelection(currentPosition);
+//			gallery.setSelection(currentPosition);
+			gallery.onKeyDown(KeyEvent.KEYCODE_DPAD_RIGHT, null);
 		};
 	};
 
