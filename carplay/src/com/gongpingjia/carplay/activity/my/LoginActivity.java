@@ -170,17 +170,19 @@ public class LoginActivity extends CarPlayBaseActivity implements OnClickListene
                 DhNet net = new DhNet(API.login);
                 net.addParam("phone", strPhoneNum);
                 net.addParam("password", MD5Util.string2MD5(strPassword));
-                net.doPostInDialog("登录中...", new NetTask(self) {
+                showProgressDialog("登录中...");
+                net.doPost(new NetTask(self) {
 
                     @Override
                     public void doInUI(Response response, Integer transfer) {
                         if (response.isSuccess()) {
                             JSONObject jo = response.jSONFrom("data");
-
                             // 登录环信
                             loginHX(MD5Util.string2MD5(JSONUtil.getString(jo, "userId")),
                                     MD5Util.string2MD5(strPassword), jo, strPhoneNum);
-
+                        } else {
+                            hidenProgressDialog();
+                            showToast("登录失败，请重试");
                         }
                     }
                 });
@@ -282,6 +284,8 @@ public class LoginActivity extends CarPlayBaseActivity implements OnClickListene
                     per.phone = phone;
                     per.password = currentPassword;
                     per.commit();
+
+                    hidenProgressDialog();
                     String action = getIntent().getStringExtra("action");
                     if (action != null && action.equals("logout")) {
                         Intent it = new Intent(self, MainActivity.class);
@@ -297,6 +301,7 @@ public class LoginActivity extends CarPlayBaseActivity implements OnClickListene
                 } catch (Exception e) {
                     e.printStackTrace();
                     // 取好友或者群聊失败，不让进入主页面
+                    hidenProgressDialog();
                     runOnUiThread(new Runnable() {
                         public void run() {
                             DemoHXSDKHelper.getInstance().logout(true, null);
@@ -321,6 +326,7 @@ public class LoginActivity extends CarPlayBaseActivity implements OnClickListene
 
             @Override
             public void onProgress(int progress, String status) {
+                hidenProgressDialog();
             }
 
             @Override
@@ -328,6 +334,7 @@ public class LoginActivity extends CarPlayBaseActivity implements OnClickListene
                 // if (!progressShow) {
                 // return;
                 // }
+                hidenProgressDialog();
                 runOnUiThread(new Runnable() {
                     public void run() {
                         // pd.dismiss();
@@ -341,6 +348,13 @@ public class LoginActivity extends CarPlayBaseActivity implements OnClickListene
                 });
             }
         });
+
+    }
+
+    @Override
+    protected void onResume() {
+        System.out.print("resume");
+        super.onResume();
 
     }
 
@@ -397,7 +411,7 @@ public class LoginActivity extends CarPlayBaseActivity implements OnClickListene
 
             @Override
             public void onStart(SHARE_MEDIA arg0) {
-                showProgressDialog("加載中...");
+                showProgressDialog("加载中...");
             }
 
             @Override
@@ -463,7 +477,7 @@ public class LoginActivity extends CarPlayBaseActivity implements OnClickListene
                     net.addParam("uid", mUid);
                     net.addParam("channel", mChannel);
                     net.addParam("sign", sign);
-                    net.doPostInDialog("跳转中...",new NetTask(self) {
+                    net.doPostInDialog("跳转中...", new NetTask(self) {
 
                         @Override
                         public void doInUI(Response response, Integer transfer) {
@@ -520,7 +534,7 @@ public class LoginActivity extends CarPlayBaseActivity implements OnClickListene
                                     self.finish();
                                 }
                             } else {
-                                showToast("登陆失败");
+                                showToast("登录失败");
                             }
                         }
                     });

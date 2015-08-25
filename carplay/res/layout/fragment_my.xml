@@ -196,7 +196,7 @@
 
                         <TextView
                             style="@style/text_grey_small"
-                            android:layout_marginTop="4dp"
+                            android:layout_marginTop="2dp"
                             android:text="我的发布" />
                     </LinearLayout>
 
@@ -223,7 +223,7 @@
 
                         <TextView
                             style="@style/text_grey_small"
-                            android:layout_marginTop="4dp"
+                            android:layout_marginTop="2dp"
                             android:text="我的收藏" />
                     </LinearLayout>
 
@@ -250,7 +250,7 @@
 
                         <TextView
                             style="@style/text_grey_small"
-                            android:layout_marginTop="4dp"
+                            android:layout_marginTop="2dp"
                             android:text="我的参与" />
                     </LinearLayout>
                 </LinearLayout>

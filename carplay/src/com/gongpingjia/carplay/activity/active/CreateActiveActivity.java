@@ -481,9 +481,18 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements
 
 				@Override
 				public void doInUI(Response response, Integer transfer) {
-					// TODO Auto-generated method stub
 					if (response.isSuccess()) {
 						showToast("发布成功");
+						try {
+							String activeId = response.jSONFrom("data")
+									.getString("activityId");
+							Intent it = new Intent(self,
+									ActiveDetailsActivity.class);
+							it.putExtra("activityId", activeId);
+							startActivity(it);
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
 						self.finish();
 						EventBus.getDefault().post(new ActiveCreateEB());
 					} else {
