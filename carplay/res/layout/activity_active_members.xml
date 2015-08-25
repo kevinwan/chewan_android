@@ -60,7 +60,7 @@
         android:layout_alignParentBottom="true"
         android:background="@color/white"
         android:orientation="vertical"
-        android:paddingBottom="55dp" >
+        android:paddingBottom="12dp" >
 
         <View
             android:layout_width="fill_parent"

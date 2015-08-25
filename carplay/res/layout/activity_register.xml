@@ -28,7 +28,7 @@
 
             <EditText
                 android:id="@+id/phone"
-                style="@style/text_black_small"
+                style="@style/text_black_medium"
                 android:layout_width="0dp"
                 android:layout_height="55dp"
                 android:layout_weight="1"
@@ -37,6 +37,7 @@
                 android:hint="请输入手机号"
                 android:inputType="number"
                 android:singleLine="true"
+                android:layout_marginLeft="5dp"
                 android:textColorHint="@color/text_grey" >
 
                 <requestFocus />
@@ -58,7 +59,7 @@
 
             <EditText
                 android:id="@+id/code"
-                style="@style/text_black_small"
+                style="@style/text_black_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="55dp"
                 android:layout_weight="1"
@@ -67,6 +68,7 @@
                 android:hint="请输入验证码"
                 android:inputType="number"
                 android:singleLine="true"
+                android:layout_marginLeft="5dp"
                 android:textColorHint="@color/text_grey" />
 
             <Button
@@ -94,7 +96,7 @@
 
             <EditText
                 android:id="@+id/pswd"
-                style="@style/text_black_small"
+                style="@style/text_black_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="55dp"
                 android:layout_weight="1"
@@ -103,6 +105,7 @@
                 android:hint="密码6-16位数字和字母组合"
                 android:inputType="textPassword"
                 android:singleLine="true"
+                android:layout_marginLeft="5dp"
                 android:textColorHint="@color/text_grey" />
         </LinearLayout>
 

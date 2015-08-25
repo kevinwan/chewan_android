@@ -101,12 +101,13 @@
                 <ImageView
                     android:id="@+id/car_logo"
                     android:layout_width="10dp"
-                    android:layout_height="10dp" />
+                    android:layout_height="10dp"
+                    android:layout_marginRight="5dp"
+                     />
 
                 <TextView
                     android:id="@+id/drive_age"
                     style="@style/text_grey_small"
-                    android:layout_marginLeft="5dp"
                     android:ellipsize="end"
                     android:singleLine="true" />
             </LinearLayout>
@@ -149,7 +150,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:textColor="@color/text_red"
-                    android:textSize="@dimen/text_medium" />
+                    android:textSize="@dimen/text_title" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -162,7 +163,7 @@
                     android:id="@+id/tabline"
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="15dp"
                     android:background="@color/text_red" />
             </LinearLayout>
 
@@ -181,6 +182,7 @@
                 <TextView
                     android:id="@+id/attention_count"
                     style="@style/text_grey_medium"
+                    android:textSize="@dimen/text_title"
                     android:layout_marginTop="10dp" />
 
                 <TextView
@@ -191,7 +193,7 @@
                     android:id="@+id/tabline"
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="15dp"
                     android:background="@color/text_red"
                     android:visibility="gone" />
             </LinearLayout>
@@ -211,6 +213,7 @@
                 <TextView
                     android:id="@+id/active_count"
                     style="@style/text_grey_medium"
+                    android:textSize="@dimen/text_title"
                     android:layout_marginTop="10dp" />
 
                 <TextView
@@ -221,7 +224,7 @@
                     android:id="@+id/tabline"
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="15dp"
                     android:background="@color/text_red"
                     android:visibility="gone" />
             </LinearLayout>

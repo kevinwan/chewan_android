@@ -19,12 +19,19 @@
         android:dividerHeight="1dp"
         android:paddingBottom="120dp" />
 
+    
+    <View
+            android:layout_width="fill_parent"
+            android:layout_height="1.5px"
+            android:layout_marginBottom="70dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/line_grey" />
     <Button
         android:id="@+id/chat"
         android:layout_width="fill_parent"
         android:layout_height="45dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="55dp"
+        android:layout_marginBottom="12dp"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         android:background="@drawable/button_zc_bg"

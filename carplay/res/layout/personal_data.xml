@@ -217,7 +217,6 @@
                 style="@style/text_blacklight_medium"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginRight="10dp"
                 android:singleLine="true"
                 android:ellipsize="end"
                 android:paddingLeft="40dp"

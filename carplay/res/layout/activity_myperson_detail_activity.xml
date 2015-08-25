@@ -108,7 +108,7 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
+                                android:layout_marginTop="5dp"
                                 android:gravity="center_vertical" >
 
                                 <com.gongpingjia.carplay.view.RoundImageView
@@ -154,7 +154,7 @@
 
                             <TextView
                                 style="@style/text_grey_small"
-                                android:layout_marginTop="7dp"
+                                android:layout_marginTop="5dp"
                                 android:text="个人信息" />
                         </LinearLayout>
 
@@ -197,11 +197,12 @@
                             <TextView
                                 android:id="@+id/postNumber"
                                 style="@style/text_grey_medium"
+                                android:textSize="@dimen/text_title"
                                 android:text="0" />
 
                             <TextView
                                 style="@style/text_grey_small"
-                                android:layout_marginTop="4dp"
+                                android:layout_marginTop="2dp"
                                 android:text="我的发布" />
                         </LinearLayout>
 
@@ -224,11 +225,12 @@
                             <TextView
                                 android:id="@+id/subscribeNumber"
                                 style="@style/text_grey_medium"
+                                android:textSize="@dimen/text_title"
                                 android:text="0" />
 
                             <TextView
                                 style="@style/text_grey_small"
-                                android:layout_marginTop="4dp"
+                                android:layout_marginTop="2dp"
                                 android:text="我的收藏" />
                         </LinearLayout>
 
@@ -252,11 +254,12 @@
                             <TextView
                                 android:id="@+id/joinNumber"
                                 style="@style/text_grey_medium"
+                                android:textSize="@dimen/text_title"
                                 android:text="0" />
 
                             <TextView
                                 style="@style/text_grey_small"
-                                android:layout_marginTop="4dp"
+                                android:layout_marginTop="2dp"
                                 android:text="我的参与" />
                         </LinearLayout>
                     </LinearLayout>

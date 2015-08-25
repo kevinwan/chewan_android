@@ -115,7 +115,7 @@ public class MyReleaseActiveAdapter extends NetJSONAdapter {
 		} else {
 			ViewUtil.bindView(holder.dateT, JSONUtil.getLong(jo, "startDate"),"time");
 		}
-		ViewUtil.bindView(holder.addressT,"地点: " + JSONUtil.getString(jo, "location"));
+		ViewUtil.bindView(holder.addressT,JSONUtil.getString(jo, "location"));
 
 		ViewUtil.bindView(holder.payTypeT, JSONUtil.getString(jo, "pay"));
 		ViewUtil.bindView(holder.date_leftT,
