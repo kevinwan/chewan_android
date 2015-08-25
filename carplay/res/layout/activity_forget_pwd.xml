@@ -11,7 +11,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        
         android:orientation="vertical" >
 
         <LinearLayout
@@ -23,7 +22,7 @@
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                 android:layout_marginLeft="14dp"
+                android:layout_marginLeft="14dp"
                 android:text="手机号" />
 
             <EditText
@@ -46,6 +45,7 @@
         <View style="@style/line" />
 
         <LinearLayout
+            android:id="@+id/layout_varification_code"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
@@ -54,7 +54,7 @@
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                 android:layout_marginLeft="14dp"
+                android:layout_marginLeft="14dp"
                 android:text="验证码" />
 
             <EditText
@@ -76,8 +76,8 @@
                 android:layout_width="100dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center_vertical"
-                android:background="@drawable/button_yanzheng_bg"
                 android:layout_marginRight="10dp"
+                android:background="@drawable/button_yanzheng_bg"
                 android:text="获取验证码" />
         </LinearLayout>
 

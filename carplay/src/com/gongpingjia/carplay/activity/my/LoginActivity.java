@@ -351,6 +351,13 @@ public class LoginActivity extends CarPlayBaseActivity implements OnClickListene
 
     }
 
+    @Override
+    protected void onResume() {
+        System.out.print("resume");
+        super.onResume();
+
+    }
+
     private void initializeContacts() {
         Map<String, ChatUser> userlist = new HashMap<String, ChatUser>();
         // 添加user"申请与通知"
