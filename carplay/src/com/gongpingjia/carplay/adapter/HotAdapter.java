@@ -145,7 +145,8 @@ public class HotAdapter extends NetJSONAdapter {
 
 	@Override
 	public int getCount() {
-		if (jsa != null && jsa.length() > 0 && mVaules != null) {
+		if (jsa != null && jsa.length() > 0
+				&& (mVaules != null && mVaules.size() != 0)) {
 			return mVaules.size() + 1;
 		} else {
 			return 0;
