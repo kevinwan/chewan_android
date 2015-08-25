@@ -10,13 +10,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/icon_comment_msg"
-        android:visibility="invisible" />
+        android:visibility="gone" />
 
     <com.gongpingjia.carplay.view.RoundImageView
         android:id="@+id/imgView_avatar"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="3dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="2dp"
         android:background="@drawable/head_icon" />
@@ -72,7 +72,7 @@
 
         <TextView
             android:id="@+id/tv_comment_content"
-            style="@style/text_black_medium"/>
+            style="@style/text_black_medium" />
     </LinearLayout>
 
 </LinearLayout>

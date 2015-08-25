@@ -85,6 +85,8 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 
 	String chatGroupId;
 
+	boolean isShenqing = false;
+
 	public static final int Chat = 1001;
 
 	@Override
@@ -175,6 +177,9 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 			}
 		});
 		listV = (NetRefreshAndMoreListView) findViewById(R.id.listview);
+		listV.setAutoLoadCount(-1);
+		listV.setLoadMore(false);
+		listV.footViewVisibility(View.GONE);
 		listV.addHeaderView(headV);
 		String url = API.CWBaseurl + "/activity/" + activityId
 				+ "/members?userId=" + user.getUserId() + "&token="
@@ -213,7 +218,7 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 				if (TextUtils.isEmpty(JSONUtil.getString(itemjo, "carModel"))) {
 					car_age.setVisibility(View.GONE);
 					car_logo.setVisibility(View.GONE);
-					drive_age.setText("带我飞");
+					drive_age.setText("带我飞~");
 				} else {
 					if (drive_str.length() > 15) {
 						drive_str = drive_str.substring(0, 15) + "...";
@@ -271,7 +276,7 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 				int isMember = JSONUtil.getInt(jo, "isMember");
 
 				isJoin = isMember == 1 ? true : false;
-
+				isShenqing = isMember == 2 ? true : false;
 				initQuitAndJoinButton(isJoin);
 
 			}
@@ -281,6 +286,10 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 	private void initQuitAndJoinButton(boolean isJoin) {
 		quit_layoutV.setVisibility(isJoin ? View.VISIBLE : View.GONE);
 		joinB.setVisibility(isJoin ? View.GONE : View.VISIBLE);
+		if (isShenqing) {
+			joinB.setText("申请中");
+			joinB.setBackgroundResource(R.drawable.btn_grey_bg);
+		}
 		// quite_desT.setVisibility(isJoin ? View.VISIBLE : View.INVISIBLE);
 	}
 
@@ -340,8 +349,9 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 			dialog.show();
 			break;
 		case R.id.join:
-
-			isAuthen();
+			if (!isShenqing) {
+				isAuthen();
+			}
 			break;
 
 		case R.id.chat:
@@ -435,7 +445,10 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 			@Override
 			public void doInUI(Response response, Integer transfer) {
 				if (response.isSuccess()) {
-					findViewById(R.id.bottom_bar).setVisibility(View.GONE);
+					joinB.setText("申请中");
+					joinB.setBackgroundResource(R.drawable.btn_grey_bg);
+					isShenqing = true;
+					// findViewById(R.id.bottom_bar).setVisibility(View.GONE);
 					JoinEB join = new JoinEB();
 					join.setActivityId(activityId);
 					join.setIsMember(2);
