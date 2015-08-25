@@ -49,6 +49,7 @@
                     android:layout_height="55dp"
                     android:background="@color/nothing"
                     android:gravity="center_vertical|right"
+                    android:textColorHint="@color/text_grey" 
                     android:hint="请输入昵称" />
             </LinearLayout>
 
@@ -124,7 +125,7 @@
 
                     <TextView
                         android:id="@+id/age"
-                        style="@style/text_blacklight_small"
+                        style="@style/text_blacklight_medium"
                         android:layout_width="fill_parent"
                         android:layout_height="match_parent"
                         android:layout_marginRight="3dp"
@@ -160,7 +161,7 @@
 
                     <TextView
                         android:id="@+id/city"
-                        style="@style/text_blacklight_small"
+                        style="@style/text_blacklight_medium"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginRight="10dp"

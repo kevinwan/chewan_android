@@ -358,8 +358,8 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 		TextView addressT = (TextView) headV.findViewById(R.id.address);
 		float size = addressT.getTextSize();
 
-		if (JSONUtil.getString(headJo, "location").length() > 9) {
-			addressT.setTextSize(TypedValue.COMPLEX_UNIT_PX, size - 8);
+		if (JSONUtil.getString(headJo, "location").length() > 8) {
+			addressT.setTextSize(TypedValue.COMPLEX_UNIT_PX, size - 4);
 		}
 		ViewUtil.bindView(headV.findViewById(R.id.address),
 				JSONUtil.getString(headJo, "location"));

@@ -328,7 +328,7 @@ public class MyActiveMembersManageActivity extends CarPlayBaseActivity {
 				if (TextUtils.isEmpty(JSONUtil.getString(itemjo, "carModel"))) {
 					car_age.setVisibility(View.GONE);
 					car_logo.setVisibility(View.GONE);
-					drive_age.setText("带我飞");
+					drive_age.setText("带我飞~");
 				} else {
 					if (drive_str.length() > 15) {
 						drive_str = drive_str.substring(0, 15) + "...";
