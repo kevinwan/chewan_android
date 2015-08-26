@@ -99,6 +99,14 @@ public class MyFragment extends Fragment implements OnClickListener {
 	int galleryCount = 0;
 
 	boolean isfirst;
+	
+	//是否认证车主成功 (默认0:未成功) 
+	int isAuthenticated=0;
+	int drivingyears=0;
+	String carModel="";
+	String license="";
+	
+	
 
 	public static MyFragment getInstance() {
 		if (instance == null) {
@@ -233,6 +241,25 @@ public class MyFragment extends Fragment implements OnClickListener {
 			MainActivity activity = (MainActivity) getActivity();
 			activity.showProgressDialog("加载中");
 		}
+		
+		DhNet verifyNet = new DhNet(API.CWBaseurl + "/user/" + user.getUserId()
+				+ "/authentication?token="
+				+ user.getToken());
+		verifyNet.doGet(new NetTask(getActivity()) {
+			
+			@Override
+			public void doInUI(Response response, Integer transfer) {
+				if (response.isSuccess()) {
+					JSONObject jo = response.jSONFromData();
+					isAuthenticated = JSONUtil.getInt(jo, "isAuthenticated");
+					drivingyears=JSONUtil.getInt(jo, "drivingExperience");
+					carModel=JSONUtil.getString(jo, "carModel");
+					license=JSONUtil.getString(jo, "licensePhoto");
+				}
+			}
+		});
+		
+		
 		DhNet net = new DhNet(API.CWBaseurl + "/user/" + user.getUserId()
 				+ "/info?userId=" + user.getUserId() + "&token="
 				+ user.getToken());
@@ -279,11 +306,33 @@ public class MyFragment extends Fragment implements OnClickListener {
 						carBrandLogoI.setVisibility(View.GONE);
 					} else {
 						carBrandLogoI.setVisibility(View.VISIBLE);
-						attestation_txt.setVisibility(View.VISIBLE);
 						ViewUtil.bindNetImage(carBrandLogoI, carBrandLogo,
 								CarPlayValueFix.optionsDefault.toString());
+					}
+					
+					switch (isAuthenticated) {
+					//未认证
+					case 0:
+						attestation_txt.setVisibility(View.GONE);
+						carlogo.setVisibility(View.GONE);
+						break;
+					//已认证
+					case 1:
+						carlogo.setVisibility(View.VISIBLE);
+						attestation_txt.setVisibility(View.VISIBLE);
+						attestation_txt.setText("已认证");
 						ViewUtil.bindNetImage(carlogo, carBrandLogo,
 								CarPlayValueFix.optionsDefault.toString());
+						break;
+					//认证中
+					case 2:
+						attestation_txt.setVisibility(View.VISIBLE);
+						carlogo.setVisibility(View.GONE);
+						attestation_txt.setText("认证中");
+						break;
+
+					default:
+						break;
 					}
 
 					if (gender.equals("男"))
@@ -378,7 +427,12 @@ public class MyFragment extends Fragment implements OnClickListener {
 							it = new Intent(getActivity(),
 									AuthenticateOwnersActivity.class);
 							it.putExtra("type", "my");
+							it.putExtra("isAuthenticated", isAuthenticated);
+							it.putExtra("drivingyears", drivingyears);
+							it.putExtra("carModel", carModel);
+							it.putExtra("license", license);
 							startActivity(it);
+							
 							break;
 
 						case R.id.editdata:
