@@ -157,6 +157,7 @@ public class MyFragment extends Fragment implements OnClickListener {
 				startActivityForResult(it, LOGINCODE);
 			}
 		});
+		unLogheadI.setOnClickListener(this);
 		my_attentionV.setOnClickListener(this);
 		my_releaseV.setOnClickListener(this);
 		my_participationV.setOnClickListener(this);
@@ -381,7 +382,11 @@ public class MyFragment extends Fragment implements OnClickListener {
 							it = new Intent(getActivity(),
 									EditPersonalInfoActivity.class);
 							startActivity(it);
-
+							break;
+						case R.id.notlogin_head:
+							it = new Intent(getActivity(),
+									ManageAlbumActivity.class);
+							startActivity(it);
 							break;
 						default:
 							break;

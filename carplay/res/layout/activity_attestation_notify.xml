@@ -30,7 +30,7 @@
 
         <TextView
             android:id="@+id/contentpass"
-            style="@style/text_black_medium"
+            style="@style/text_grey_medium"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="10dp"
@@ -38,7 +38,7 @@
             android:text="您申请的 奥迪A4车主 身份认证已经审核通过" />
 
         <TextView
-            style="@style/text_black_medium"
+            style="@style/text_grey_medium"
             android:layout_marginTop="5dp"
             android:text="现在就开启您的车旅程吧~" />
     </LinearLayout>
@@ -48,7 +48,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:visibility="gone"
+         >
 
         <ImageView
             android:layout_width="40dp"
@@ -71,11 +73,27 @@
             android:gravity="center"
             android:text="您申请的 奥迪A4车主 身份认证未通过审核" />
 
+        
+        <LinearLayout 
+             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:orientation="vertical"
+            >
+            
+             <TextView
+            style="@style/text_grey_small"
+            android:text="原因如下:" />
         <TextView
             style="@style/text_grey_small"
-            android:layout_marginTop="15dp"
-            android:gravity="center"
-            android:text="您上传的行驶证照片不够清晰,请重新上传" />
+            android:layout_marginTop="7dp"
+            android:lineSpacingExtra="7dp"
+            android:text="您上传的行驶证照片不够清晰,请重新上传清晰的行驶证进行认证" />
+            
+        </LinearLayout>
+       
     </LinearLayout>
 
     <Button

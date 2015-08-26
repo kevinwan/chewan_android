@@ -173,6 +173,7 @@ public class MyPerSonDetailActivity extends CarPlayBaseActivity implements
 		people_concerned.setOnClickListener(this);
 		owners_certification.setOnClickListener(this);
 		editdata.setOnClickListener(this);
+		unLogheadI.setOnClickListener(this);
 		feedback_layoutV.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -388,6 +389,11 @@ public class MyPerSonDetailActivity extends CarPlayBaseActivity implements
 					it = new Intent(self, EditPersonalInfoActivity.class);
 					startActivity(it);
 
+					break;
+				case R.id.notlogin_head:
+					it = new Intent(self,
+							ManageAlbumActivity.class);
+					startActivity(it);
 					break;
 				default:
 					break;
