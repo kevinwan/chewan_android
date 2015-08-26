@@ -87,6 +87,8 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 
 	boolean isShenqing = false;
 
+	int isOver;
+
 	public static final int Chat = 1001;
 
 	@Override
@@ -129,7 +131,7 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 		chatB.setOnClickListener(this);
 		quite_desT = (TextView) findViewById(R.id.quite_des);
 		quit_layoutV = findViewById(R.id.quit_layout);
-		initQuitAndJoinButton(isJoin);
+		// initQuitAndJoinButton(isJoin);
 
 		headV = LayoutInflater.from(self).inflate(R.layout.head_active_members,
 				null);
@@ -268,29 +270,38 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 
 			@Override
 			public void doInUI(Response response, Integer transfer) {
-				JSONArray carJsa = response.jSONArrayFrom("data.cars");
-				carUtil.addCar(carJsa);
+				if (response.isSuccess()) {
+					JSONArray carJsa = response.jSONArrayFrom("data.cars");
+					carUtil.addCar(carJsa);
 
-				JSONObject data = response.jSONFromData();
-				chatGroupId = JSONUtil.getString(data, "chatGroupId");
+					JSONObject data = response.jSONFromData();
+					chatGroupId = JSONUtil.getString(data, "chatGroupId");
 
-				JSONObject jo = response.jSONFromData();
-				int isMember = JSONUtil.getInt(jo, "isMember");
+					JSONObject jo = response.jSONFromData();
+					int isMember = JSONUtil.getInt(jo, "isMember");
 
-				isJoin = isMember == 1 ? true : false;
-				isShenqing = isMember == 2 ? true : false;
-				initQuitAndJoinButton(isJoin);
-
+					isJoin = isMember == 1 ? true : false;
+					isShenqing = isMember == 2 ? true : false;
+					isOver = JSONUtil.getInt(jo, "isOver");
+					initQuitAndJoinButton(isJoin);
+				}
 			}
 		});
 	}
 
 	private void initQuitAndJoinButton(boolean isJoin) {
 		quit_layoutV.setVisibility(isJoin ? View.VISIBLE : View.GONE);
-		joinB.setVisibility(isJoin ? View.GONE : View.VISIBLE);
-		if (isShenqing) {
-			joinB.setText("申请中");
-			joinB.setBackgroundResource(R.drawable.btn_grey_bg);
+		if (isOver == 1) {
+			findViewById(R.id.bottom_bar).setVisibility(View.GONE);
+			// joinB.setVisibility(View.GONE);
+			findViewById(R.id.line).setVisibility(View.GONE);
+		} else {
+			findViewById(R.id.line).setVisibility(View.VISIBLE);
+			if (isShenqing) {
+				joinB.setText("申请中");
+				joinB.setBackgroundResource(R.drawable.btn_grey_bg);
+			}
+			joinB.setVisibility(isJoin ? View.GONE : View.VISIBLE);
 		}
 		// quite_desT.setVisibility(isJoin ? View.VISIBLE : View.INVISIBLE);
 	}

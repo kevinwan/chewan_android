@@ -61,9 +61,9 @@ public class MyReleaseActiveAdapter extends NetJSONAdapter {
 	public MyReleaseActiveAdapter(String api, Context context, int mResource) {
 		super(api, context, mResource);
 
-		mLayoutInflater = LayoutInflater.from(context);
+		mLayoutInflater = LayoutInflater.from(mContext);
 		this.mResource = mResource;
-		Display display = ((Activity) context).getWindowManager()
+		Display display = ((Activity) mContext).getWindowManager()
 				.getDefaultDisplay();
 		int width = display.getWidth();
 		piclayoutWidth = width
@@ -290,11 +290,11 @@ public class MyReleaseActiveAdapter extends NetJSONAdapter {
 		JSONObject picjo;
 		JSONObject shareJo = new JSONObject();
 		try {
+			User user = User.getInstance();
 			picjo = picJsa.getJSONObject(0);
 			String imgUrl = JSONUtil.getString(picjo, "thumbnail_pic");
-			JSONObject userJo = JSONUtil.getJSONObject(jo, "organizer");
-			String shareTitle = JSONUtil.getString(userJo, "nickname")
-					+ "邀请您参加" + JSONUtil.getString(jo, "introduction") + "活动";
+			String shareTitle = user.getNickName() + "邀请您参加"
+					+ JSONUtil.getString(jo, "introduction") + "活动";
 			long time = JSONUtil.getLong(jo, "start");
 			String startTime = CarPlayValueFix.getStandardTime(time, "MM月dd日 ");
 			String shareContent = "开始时间: " + startTime + "\n目的地: "

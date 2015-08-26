@@ -20,15 +20,15 @@ public class GalleryAdapter extends BaseAdapter {
 
 	LayoutInflater mLayoutInflater;
 
-	Context context;
+	Context mContext;
 
 	String url;
 
 	JSONArray jsa;
 
 	public GalleryAdapter(Context context, JSONArray jsa) {
-		this.context = context;
-		mLayoutInflater = LayoutInflater.from(context);
+		this.mContext = context;
+		mLayoutInflater = LayoutInflater.from(mContext);
 		this.jsa = jsa;
 	}
 
