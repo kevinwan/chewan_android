@@ -121,7 +121,7 @@ public class BasicMessageActivity extends CarPlayBaseActivity implements
 			@Override
 			public void result(String date, long datetime, int year, int month,
 					int day) {
-				ageT.setText(year+"-"+setData(month)+"-"+setData(day));
+				ageT.setText(year + "-" + setData(month) + "-" + setData(day));
 				mYear = year;
 				mMonth = month;
 				mDay = day;
@@ -225,7 +225,7 @@ public class BasicMessageActivity extends CarPlayBaseActivity implements
 			showToast("昵称不能为空");
 			return;
 		}
-		if (strnickname.length()>8) {
+		if (strnickname.length() > 8) {
 			showToast("昵称不能大于8个字符");
 			return;
 		}
@@ -460,7 +460,11 @@ public class BasicMessageActivity extends CarPlayBaseActivity implements
 						runOnUiThread(new Runnable() {
 							public void run() {
 								// pd.dismiss();
-								showToast("登录失败:" + message);
+								if (code == ERROR_EXCEPTION_INVALID_PASSWORD_USERNAME) {
+									showToast("用户名或者密码错误!");
+								} else {
+									showToast("登录失败:" + message);
+								}
 
 							}
 						});
@@ -508,14 +512,14 @@ public class BasicMessageActivity extends CarPlayBaseActivity implements
 		List<ChatUser> users = new ArrayList<ChatUser>(userlist.values());
 		dao.saveContactList(users);
 	}
-	
-	private String setData(int data){
-		String strdata=String.valueOf(data);
-		if (strdata.length()==1) {
-			return "0"+strdata;
+
+	private String setData(int data) {
+		String strdata = String.valueOf(data);
+		if (strdata.length() == 1) {
+			return "0" + strdata;
 		}
 		return strdata;
-		
+
 	}
 
 }
