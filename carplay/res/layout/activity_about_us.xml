@@ -47,6 +47,7 @@
                     <TextView
                         style="@style/text_black_medium"
                         android:layout_marginTop="10dp"
+                        android:lineSpacingMultiplier="1.15"
                         android:text="同城车主和非车主聚会，自驾游，活动神器即使你没有车，也可以邂逅身边的车主，一起自驾游，一起外出活动。还有更多格式各样的同城热闹活动等你来参与，让自己的汽车人生更加精彩！" />
                 </LinearLayout>
             </LinearLayout>
@@ -84,6 +85,7 @@
                     <TextView
                         style="@style/text_black_medium"
                         android:layout_marginTop="10dp"
+                        android:lineSpacingMultiplier="1.15"
                         android:text="同城车主和非车主聚会，自驾游，活动神器即使你没有车，也可以邂逅身边的车主，一起自驾游，一起外出活动。还有更多格式各样的同城热闹活动等你来参与，让自己的汽车人生更加精彩！" />
                 </LinearLayout>
             </LinearLayout>

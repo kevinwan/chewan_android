@@ -121,7 +121,7 @@ public class BasicMessageActivity extends CarPlayBaseActivity implements
 			@Override
 			public void result(String date, long datetime, int year, int month,
 					int day) {
-				ageT.setText(date);
+				ageT.setText(year+"-"+setData(month)+"-"+setData(day));
 				mYear = year;
 				mMonth = month;
 				mDay = day;
@@ -503,6 +503,15 @@ public class BasicMessageActivity extends CarPlayBaseActivity implements
 		UserDao dao = new UserDao(self);
 		List<ChatUser> users = new ArrayList<ChatUser>(userlist.values());
 		dao.saveContactList(users);
+	}
+	
+	private String setData(int data){
+		String strdata=String.valueOf(data);
+		if (strdata.length()==1) {
+			return "0"+strdata;
+		}
+		return strdata;
+		
 	}
 
 }

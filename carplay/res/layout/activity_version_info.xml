@@ -40,9 +40,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:lineSpacingMultiplier="1.1"
                 android:textColor="@color/text_black"
+                 android:lineSpacingMultiplier="1.15"
                 android:textSize="@dimen/text_medium" />
+
         </LinearLayout>
     </LinearLayout>
 

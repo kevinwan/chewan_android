@@ -247,7 +247,7 @@ public class EditActiveActivity extends CarPlayBaseActivity implements
 				mLocation = location;
 
 				SimpleDateFormat format = new SimpleDateFormat(
-						"yyyy年MM月dd日  HH:mm");
+						"yyyy-MM-dd  HH:mm");
 				mDescriptionText.setText(introduction);
 				mTypeText.setText(type);
 				mFeeText.setText(pay);

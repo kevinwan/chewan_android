@@ -86,7 +86,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginRight="2dp"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/text_small" />
+                        android:textSize="@dimen/text_smaller" />
                 </RelativeLayout>
 
                 <View
@@ -126,10 +126,9 @@
             <TextView
                 android:id="@+id/content"
                 style="@style/text_black_medium"
-                android:layout_marginTop="6dp"
                 android:layout_marginBottom="4dp"
-                android:lineSpacingMultiplier="1.15"
-                 />
+                android:layout_marginTop="6dp"
+                android:lineSpacingMultiplier="1.15" />
 
             <LinearLayout
                 android:id="@+id/piclayout"
@@ -142,7 +141,6 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="-1dp"
                 android:orientation="horizontal" >
 
                 <LinearLayout
@@ -207,7 +205,7 @@
                     android:id="@+id/join"
                     android:layout_width="77dp"
                     android:layout_height="32dp"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="8dp"
                     android:background="@drawable/button_yanzheng_bg"
                     android:gravity="center"
                     android:text="我也要玩"
