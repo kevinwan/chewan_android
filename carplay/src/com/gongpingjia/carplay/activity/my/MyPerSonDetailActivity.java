@@ -430,13 +430,16 @@ public class MyPerSonDetailActivity extends CarPlayBaseActivity implements
 					startActivity(it);
 					break;
 				case R.id.owners_certification:
-					it = new Intent(self, AuthenticateOwnersActivity.class);
-					it.putExtra("type", "my");
-					it.putExtra("isAuthenticated", isAuthenticated);
-					it.putExtra("drivingyears", drivingyears);
-					it.putExtra("carModel", carModel);
-					it.putExtra("license", license);
-					startActivity(it);
+					//已认证 则不跳转
+					if (isAuthenticated!=1) {
+						it = new Intent(self, AuthenticateOwnersActivity.class);
+						it.putExtra("type", "my");
+						it.putExtra("isAuthenticated", isAuthenticated);
+						it.putExtra("drivingyears", drivingyears);
+						it.putExtra("carModel", carModel);
+						it.putExtra("license", license);
+						startActivity(it);
+					}
 					break;
 
 				case R.id.editdata:

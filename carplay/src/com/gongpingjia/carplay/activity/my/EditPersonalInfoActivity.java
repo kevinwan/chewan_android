@@ -194,6 +194,10 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 	private void modification() {
 		String nickname = nicknameT.getText().toString();
 		String carage = carageT.getText().toString().trim();
+		if (nickname.length()>8) {
+			showToast("昵称不能大于8个字符");
+			return;
+		}
 		int drivingExperience;
 		if (carage.contains("年")) {
 			carage = carage.replace("年", "");

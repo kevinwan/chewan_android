@@ -72,6 +72,7 @@
             android:layout_height="60dp"
             android:background="@color/nothing"
             android:gravity="center_vertical|right"
+            android:singleLine="true"
             android:hint="请输入昵称" />
 
             <ImageView

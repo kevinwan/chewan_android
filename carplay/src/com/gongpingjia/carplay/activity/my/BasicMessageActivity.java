@@ -225,6 +225,10 @@ public class BasicMessageActivity extends CarPlayBaseActivity implements
 			showToast("昵称不能为空");
 			return;
 		}
+		if (strnickname.length()>8) {
+			showToast("昵称不能大于8个字符");
+			return;
+		}
 		final String strage = ageT.getText().toString();
 		if (TextUtils.isEmpty(strage)) {
 			showToast("请设置您的年龄");
