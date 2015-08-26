@@ -387,10 +387,12 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 				JSONUtil.getString(headJo, "pay"));
 
 		View layoutSex = headV.findViewById(R.id.layout_sex);
-		if (JSONUtil.getString(createrJo, "gender").equals("男")) {
-			layoutSex.setBackgroundResource(R.drawable.man);
-		} else {
-			layoutSex.setBackgroundResource(R.drawable.woman);
+		if (!TextUtils.isEmpty(JSONUtil.getString(createrJo, "gender"))) {
+			if (JSONUtil.getString(createrJo, "gender").equals("男")) {
+				layoutSex.setBackgroundResource(R.drawable.man);
+			} else {
+				layoutSex.setBackgroundResource(R.drawable.woman);
+			}
 		}
 		ViewUtil.bindView(headV.findViewById(R.id.empty_seats),
 				JSONUtil.getString(headJo, "seatInfo"));

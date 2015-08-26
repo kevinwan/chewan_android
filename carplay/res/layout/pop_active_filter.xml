@@ -39,7 +39,8 @@
                 <TextView
                     android:id="@+id/addresss"
                     style="@style/text_black_small"
-                    android:layout_marginRight="3dp" />
+                    android:layout_marginRight="3dp"
+                    android:text="不限" />
 
                 <ImageView
                     android:layout_width="25dp"
@@ -72,7 +73,8 @@
                 <TextView
                     android:id="@+id/type"
                     style="@style/text_black_small"
-                    android:layout_marginRight="3dp" />
+                    android:layout_marginRight="3dp"
+                    android:text="不限" />
 
                 <ImageView
                     android:layout_width="25dp"

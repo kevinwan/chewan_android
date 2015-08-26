@@ -138,13 +138,14 @@ public class ActiveFilterPop extends PopupWindow implements OnClickListener {
 
 		mTypeOptions = new ArrayList<String>();
 		mTypeOptions.add("吃饭");
-        mTypeOptions.add("唱歌");
-        mTypeOptions.add("看电影");
-        mTypeOptions.add("周边游");
-        mTypeOptions.add("运动");
-        mTypeOptions.add("拼车");
-        mTypeOptions.add("购物");
-        mTypeOptions.add("亲子游");
+		mTypeOptions.add("唱歌");
+		mTypeOptions.add("看电影");
+		mTypeOptions.add("周边游");
+		mTypeOptions.add("运动");
+		mTypeOptions.add("拼车");
+		mTypeOptions.add("购物");
+		mTypeOptions.add("亲子游");
+		mTypeOptions.add("不限");
 
 		citydialog = new CityPickDialog(context, false);
 		citydialog.setOnPickResultListener(new OnPickResultListener() {
@@ -235,11 +236,20 @@ public class ActiveFilterPop extends PopupWindow implements OnClickListener {
 		}
 
 		ActiveParmasEB pa = new ActiveParmasEB();
-		pa.setCity(mcity);
-		pa.setActiveType(typeT.getText().toString());
+		if (addresssT.getText().toString().equals("不限")) {
+			pa.setCity("");
+			pa.setDistrict("");
+		} else {
+			pa.setCity(mcity);
+			pa.setDistrict(mdistrict);
+		}
+		if (typeT.getText().toString().equals("不限")) {
+			pa.setActiveType("");
+		} else {
+			pa.setActiveType(typeT.getText().toString());
+		}
 		pa.setAuthenticate(authenticate);
 		pa.setCarLevel(carLevel);
-		pa.setDistrict(mdistrict);
 		pa.setGender(gender);
 		EventBus.getDefault().post(pa);
 
