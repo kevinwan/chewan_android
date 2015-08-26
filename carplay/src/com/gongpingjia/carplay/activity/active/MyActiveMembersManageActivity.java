@@ -82,10 +82,14 @@ public class MyActiveMembersManageActivity extends CarPlayBaseActivity {
 	private UMSocialService mController = UMServiceFactory
 			.getUMSocialService("com.umeng.share");
 
-	// 微信id
-	static String sAppId = "wx4c127cf07bd7d80b";
+	// 微信id(正式版)
+    // static String sAppId = "wx4c127cf07bd7d80b";
+    // static String sAppSecret = "315ce754c5a1096c5188b4b69a7b9f04";
 
-	static String sAppSecret = "315ce754c5a1096c5188b4b69a7b9f04";
+    // 微信(测试版)
+    static String sAppId = "wx9c80b151c6d4ae54";
+
+    static String sAppSecret = "81077629b31790b0e8e8da336acdf4bb";
 
 	// 微信好友
 	private UMWXHandler wxHandler;
