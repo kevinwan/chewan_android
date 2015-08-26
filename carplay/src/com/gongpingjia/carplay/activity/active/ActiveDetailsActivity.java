@@ -11,6 +11,7 @@ import net.duohuo.dhroid.util.DhUtil;
 import net.duohuo.dhroid.util.ViewUtil;
 import net.duohuo.dhroid.view.INetRefreshAndMorelistView.OnRefreshListener;
 import net.duohuo.dhroid.view.NetRefreshAndMoreListView;
+import net.duohuo.dhroid.view.NetRefreshAndMoreListView.OnEmptyDataListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,7 +20,6 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.hardware.input.InputManager;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.TextUtils;
@@ -193,6 +193,15 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements OnClic
             }
 
         });
+
+        mListView.setOnEmptyDataListener(new OnEmptyDataListener() {
+
+            @Override
+            public void onEmpty(boolean showeEptyView) {
+                headV.findViewById(R.id.empty).setVisibility(showeEptyView ? View.VISIBLE : View.GONE);
+            }
+        });
+
         mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 
             @Override
@@ -395,7 +404,7 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements OnClic
         ViewUtil.bindView(headV.findViewById(R.id.age), JSONUtil.getString(createrJo, "age"));
 
         if (JSONUtil.getString(createrJo, "userId").equals(user.getUserId())) {
-            if (JSONUtil.getInt(headJo, "isModified") == 1) {
+            if (JSONUtil.getInt(headJo, "isModified") == 1 || JSONUtil.getInt(headJo, "isOVer") == 1) {
                 rightTitleT.setVisibility(View.GONE);
             } else {
                 rightTitleT.setText("编辑活动");
@@ -480,6 +489,8 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements OnClic
         } else {
             joinT.setText("已结束");
             joinT.setBackgroundResource(R.drawable.btn_grey_dark_bg);
+
+            rightTitleT.setVisibility(View.GONE);
         }
         joinT.setVisibility(View.VISIBLE);
     }

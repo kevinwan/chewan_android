@@ -48,7 +48,7 @@
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="18dp"
-                        android:src="@drawable/below_btn" />
+                        android:src="@drawable/right_btn" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -170,7 +170,7 @@
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="18dp"
-                        android:src="@drawable/below_btn" />
+                        android:src="@drawable/right_btn" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -207,7 +207,7 @@
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="18dp"
-                        android:src="@drawable/below_btn" />
+                        android:src="@drawable/right_btn" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -244,7 +244,7 @@
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="18dp"
-                        android:src="@drawable/below_btn" />
+                        android:src="@drawable/right_btn" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -283,7 +283,7 @@
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="18dp"
-                        android:src="@drawable/below_btn" />
+                        android:src="@drawable/right_btn" />
                 </LinearLayout>
             </LinearLayout>
 
