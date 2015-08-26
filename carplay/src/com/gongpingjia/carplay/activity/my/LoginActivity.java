@@ -484,6 +484,11 @@ public class LoginActivity extends CarPlayBaseActivity implements OnClickListene
                             if (response.isSuccess()) {
                                 JSONObject json = response.jSONFrom("data");
                                 if (json.has("snsUid")) {
+                                    try {
+                                        System.out.print(json.getString("snsId"));
+                                    } catch (JSONException e1) {
+                                        e1.printStackTrace();
+                                    }
                                     Intent it = new Intent(self, BasicMessageActivity.class);
                                     Bundle bundle = new Bundle();
                                     bundle.putString("avatarUrl", mAvatarUrl);
