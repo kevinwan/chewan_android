@@ -404,7 +404,7 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements OnClic
         ViewUtil.bindView(headV.findViewById(R.id.age), JSONUtil.getString(createrJo, "age"));
 
         if (JSONUtil.getString(createrJo, "userId").equals(user.getUserId())) {
-            if (JSONUtil.getInt(headJo, "isModified") == 1 || JSONUtil.getInt(headJo, "isOVer") == 1) {
+            if (JSONUtil.getInt(headJo, "isModified") == 1 || JSONUtil.getInt(headJo, "isOver") == 1) {
                 rightTitleT.setVisibility(View.GONE);
             } else {
                 rightTitleT.setText("编辑活动");
