@@ -19,6 +19,7 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.hardware.input.InputManager;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.TextUtils;
@@ -161,6 +162,9 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements OnClic
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 if (position < 2) {
                     comment_contentE.setHint("给楼主留个言...");
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(self.getCurrentFocus().getWindowToken(),
+                            InputMethodManager.HIDE_NOT_ALWAYS);
                     return;
                 }
                 if (User.getInstance().isLogin()) {
