@@ -415,6 +415,7 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements
 				public void onDialogItemClick(int position) {
 					// TODO Auto-generated method stub
 					mSeatText.setText(mSeatOptions.get(position));
+					mSeatText.setTextColor(getBaseContext().getResources().getColorStateList(R.color.text_black_light));
 				}
 			});
 			dlg.show();

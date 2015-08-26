@@ -119,13 +119,17 @@
                     android:layout_height="60dp"
                     android:gravity="right|center_vertical"
                     android:orientation="horizontal"
-                    android:padding="10dp" >
+                    android:paddingLeft="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                     >
 
                     <TextView
                         android:id="@+id/tv_destination"
                         style="@style/text_blacklight_medium"
                         android:ellipsize="end"
-                        android:maxLines="1" />
+                        android:layout_marginRight="12dp"
+                        android:singleLine="true" />
 
                     <ImageView
                         android:layout_width="18dp"
@@ -273,6 +277,7 @@
                         android:layout_height="60dp"
                         android:layout_marginRight="5dp"
                         android:gravity="center_vertical"
+                        android:textColor="@color/text_grey"
                         android:text="0" />
 
                     <ImageView
