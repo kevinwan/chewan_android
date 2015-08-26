@@ -125,13 +125,13 @@
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/chat"
+                    android:id="@+id/join"
                     style="@style/text_orangebg"
-                    android:layout_width="48dp"
-                    android:layout_marginLeft="10dp"
+                    android:layout_width="77dp"
+                    android:layout_height="32dp"
+                    android:layout_marginLeft="8dp"
                     android:gravity="center"
-                    android:text="聊天"
-                    android:visibility="invisible" />
+                    android:visibility="gone" />
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
