@@ -157,6 +157,7 @@ public class MyFragment extends Fragment implements OnClickListener {
 				startActivityForResult(it, LOGINCODE);
 			}
 		});
+		unLogheadI.setOnClickListener(this);
 		my_attentionV.setOnClickListener(this);
 		my_releaseV.setOnClickListener(this);
 		my_participationV.setOnClickListener(this);
@@ -243,57 +244,60 @@ public class MyFragment extends Fragment implements OnClickListener {
 					MainActivity activity = (MainActivity) getActivity();
 					activity.hidenProgressDialog();
 				}
-				isfirst = false;
-				JSONObject jo = response.jSONFromData();
+				if (response.isSuccess()) {
+					isfirst = false;
+					JSONObject jo = response.jSONFromData();
 
-				String nickname = JSONUtil.getString(jo, "nickname");
-				String age = JSONUtil.getString(jo, "age");
-				String carModel = JSONUtil.getString(jo, "carModel");
-				String drivingExperience = JSONUtil.getString(jo,
-						"drivingExperience");
-				String photo = JSONUtil.getString(jo, "photo");
-				String carBrandLogo = JSONUtil.getString(jo, "carBrandLogo");
-				String gender = JSONUtil.getString(jo, "gender");
-				String postNumber = JSONUtil.getString(jo, "postNumber");
-				String subscribeNumber = JSONUtil.getString(jo,
-						"subscribeNumber");
-				String joinNumber = JSONUtil.getString(jo, "joinNumber");
+					String nickname = JSONUtil.getString(jo, "nickname");
+					String age = JSONUtil.getString(jo, "age");
+					String carModel = JSONUtil.getString(jo, "carModel");
+					String drivingExperience = JSONUtil.getString(jo,
+							"drivingExperience");
+					String photo = JSONUtil.getString(jo, "photo");
+					String carBrandLogo = JSONUtil
+							.getString(jo, "carBrandLogo");
+					String gender = JSONUtil.getString(jo, "gender");
+					String postNumber = JSONUtil.getString(jo, "postNumber");
+					String subscribeNumber = JSONUtil.getString(jo,
+							"subscribeNumber");
+					String joinNumber = JSONUtil.getString(jo, "joinNumber");
 
-				nicknameT.setText(nickname);
-				ageT.setText(age);
+					nicknameT.setText(nickname);
+					ageT.setText(age);
 
-				ViewUtil.bindNetImage(headI, photo, "head");
+					ViewUtil.bindNetImage(headI, photo, "head");
 
-				if (TextUtils.isEmpty(carModel)) {
-					carModelT.setText("带我飞~");
-				} else {
-					carModelT.setText(carModel + ",  " + drivingExperience
-							+ "年车龄");
+					if (TextUtils.isEmpty(carModel)) {
+						carModelT.setText("带我飞~");
+					} else {
+						carModelT.setText(carModel + ",  " + drivingExperience
+								+ "年车龄");
+					}
+
+					if (TextUtils.isEmpty(carBrandLogo)
+							|| carBrandLogo.equals("null")) {
+						carBrandLogoI.setVisibility(View.GONE);
+					} else {
+						carBrandLogoI.setVisibility(View.VISIBLE);
+						attestation_txt.setVisibility(View.VISIBLE);
+						ViewUtil.bindNetImage(carBrandLogoI, carBrandLogo,
+								CarPlayValueFix.optionsDefault.toString());
+						ViewUtil.bindNetImage(carlogo, carBrandLogo,
+								CarPlayValueFix.optionsDefault.toString());
+					}
+
+					if (gender.equals("男"))
+						genderR.setBackgroundResource(R.drawable.man);
+					else
+						genderR.setBackgroundResource(R.drawable.woman);
+
+					postNumberT.setText(postNumber);
+					subscribeNumberT.setText(subscribeNumber);
+					joinNumberT.setText(joinNumber);
+					JSONArray albumPhotosJsa = JSONUtil.getJSONArray(jo,
+							"albumPhotos");
+					bingGallery(albumPhotosJsa);
 				}
-
-				if (TextUtils.isEmpty(carBrandLogo)
-						|| carBrandLogo.equals("null")) {
-					carBrandLogoI.setVisibility(View.GONE);
-				} else {
-					carBrandLogoI.setVisibility(View.VISIBLE);
-					attestation_txt.setVisibility(View.VISIBLE);
-					ViewUtil.bindNetImage(carBrandLogoI, carBrandLogo,
-							CarPlayValueFix.optionsDefault.toString());
-					ViewUtil.bindNetImage(carlogo, carBrandLogo,
-							CarPlayValueFix.optionsDefault.toString());
-				}
-
-				if (gender.equals("男"))
-					genderR.setBackgroundResource(R.drawable.man);
-				else
-					genderR.setBackgroundResource(R.drawable.woman);
-
-				postNumberT.setText(postNumber);
-				subscribeNumberT.setText(subscribeNumber);
-				joinNumberT.setText(joinNumber);
-				JSONArray albumPhotosJsa = JSONUtil.getJSONArray(jo,
-						"albumPhotos");
-				bingGallery(albumPhotosJsa);
 
 			}
 		});
@@ -381,7 +385,11 @@ public class MyFragment extends Fragment implements OnClickListener {
 							it = new Intent(getActivity(),
 									EditPersonalInfoActivity.class);
 							startActivity(it);
-
+							break;
+						case R.id.notlogin_head:
+							it = new Intent(getActivity(),
+									ManageAlbumActivity.class);
+							startActivity(it);
 							break;
 						default:
 							break;

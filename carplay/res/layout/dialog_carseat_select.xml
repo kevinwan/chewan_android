@@ -85,7 +85,7 @@
 
         <TextView
             android:id="@+id/count"
-            style="@style/text_black_medium"
+            style="@style/text_grey_medium"
             android:text="0" />
 
         <TextView

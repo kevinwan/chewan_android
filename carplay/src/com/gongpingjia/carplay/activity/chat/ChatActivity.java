@@ -241,16 +241,18 @@ public class ChatActivity extends CarPlayBaseActivity implements
 	 * initView
 	 */
 	public void initView() {
-		setRightAction("管理", -1, new OnClickListener() {
+		setRightAction(null, R.drawable.icon_group_member,
+				new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				Intent it = new Intent(self, ActiveInformationActivity.class);
-				it.putExtra("activityId", activiyId);
-				it.putExtra("groupId", toChatUsername);
-				startActivity(it);
-			}
-		});
+					@Override
+					public void onClick(View v) {
+						Intent it = new Intent(self,
+								ActiveInformationActivity.class);
+						it.putExtra("activityId", activiyId);
+						it.putExtra("groupId", toChatUsername);
+						startActivity(it);
+					}
+				});
 		recordingContainer = findViewById(R.id.recording_container);
 		micImage = (ImageView) findViewById(R.id.mic_image);
 		recordingHint = (TextView) findViewById(R.id.recording_hint);

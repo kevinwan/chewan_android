@@ -94,7 +94,7 @@ public abstract class CarPlayBaseActivity extends BaseActivity {
 				leftTextT.setVisibility(View.VISIBLE);
 			}
 		} else {
-			leftTextT.setVisibility(View.GONE);
+			leftTextT.setVisibility(View.INVISIBLE);
 		}
 	}
 

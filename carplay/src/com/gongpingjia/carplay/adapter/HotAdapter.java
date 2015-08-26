@@ -102,7 +102,7 @@ public class HotAdapter extends NetJSONAdapter {
 	public void setJsa(JSONArray j) {
 		isRefresh = true;
 		jsa = j;
-		// notifyDataSetChanged();
+		notifyDataSetChanged();
 	}
 
 	@Override
@@ -166,6 +166,7 @@ public class HotAdapter extends NetJSONAdapter {
 				&& (mVaules != null && mVaules.size() != 0)) {
 			return mVaules.size() + 1;
 		} else {
+			isRefresh = true;
 			return 0;
 		}
 	}
@@ -497,7 +498,7 @@ public class HotAdapter extends NetJSONAdapter {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-				} 
+				}
 			}
 		});
 	}
