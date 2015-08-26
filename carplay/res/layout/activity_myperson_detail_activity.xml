@@ -320,13 +320,15 @@
                                 android:layout_height="match_parent"
                                 android:layout_marginRight="5dp"
                                 android:gravity="center_vertical"
-                                android:text="已认证"
+                                android:text=""
                                 android:visibility="gone" />
 
                             <com.gongpingjia.carplay.view.RoundImageView
                                 android:id="@+id/person_carlogo"
                                 android:layout_width="28dp"
-                                android:layout_height="28dp" />
+                                android:layout_height="28dp"
+                                android:visibility="gone"
+                                 />
 
                             <ImageView
                                 android:layout_width="18dp"
