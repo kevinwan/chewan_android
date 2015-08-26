@@ -144,6 +144,7 @@ public class MainActivity extends BaseFragmentActivity implements
 		// asyncFetchGroupsFromServer();
 		// ((DemoHXSDKHelper) HXSDKHelper.getInstance()).getUserProfileManager()
 		// .asyncGetCurrentUserInfo();
+
 	}
 
 	public void initView() {

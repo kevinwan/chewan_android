@@ -197,7 +197,7 @@ public class FragmentMsgAdapter extends BaseAdapter {
 							getMessageDigest(lastMessage, (mContext))),
 					BufferType.SPANNABLE);
 			timeT.setVisibility(View.VISIBLE);
-			ViewUtil.bindView(timeT, lastMessage.getMsgTime(), "time");
+			ViewUtil.bindView(timeT, lastMessage.getMsgTime(), "neartime");
 			if (lastMessage.direct == EMMessage.Direct.SEND
 					&& lastMessage.status == EMMessage.Status.FAIL) {
 				msg_stateI.setVisibility(View.VISIBLE);

@@ -79,7 +79,7 @@ public class MyPerSonDetailActivity extends CarPlayBaseActivity implements
 	Button loginBtn;
 
 	/** 头像,车logo */
-	RoundImageView headI, carBrandLogoI,person_carlogo;
+	RoundImageView headI, carBrandLogoI, person_carlogo;
 
 	/** 昵称,年龄,车型+车龄 */
 	TextView nicknameT, ageT, carModelT;
@@ -89,7 +89,7 @@ public class MyPerSonDetailActivity extends CarPlayBaseActivity implements
 
 	/** 发布数,关注数,参与数 */
 	TextView postNumberT, subscribeNumberT, joinNumberT;
-	/**     是否已认证    */
+	/** 是否已认证 */
 	TextView person_txt;
 
 	ImageView unLogheadI;
@@ -143,12 +143,12 @@ public class MyPerSonDetailActivity extends CarPlayBaseActivity implements
 		ageT = (TextView) findViewById(R.id.age);
 		carModelT = (TextView) findViewById(R.id.carModel);
 		genderR = (RelativeLayout) findViewById(R.id.gender);
-		 person_txt = (TextView) findViewById(R.id.person_txt);
+		person_txt = (TextView) findViewById(R.id.person_txt);
 		postNumberT = (TextView) findViewById(R.id.postNumber);
 		subscribeNumberT = (TextView) findViewById(R.id.subscribeNumber);
 		joinNumberT = (TextView) findViewById(R.id.joinNumber);
 		unLogheadI = (ImageView) findViewById(R.id.notlogin_head);
-		
+
 		my_attentionV = findViewById(R.id.my_attention);
 		my_releaseV = findViewById(R.id.my_release);
 		my_participationV = findViewById(R.id.my_participation);
@@ -227,7 +227,7 @@ public class MyPerSonDetailActivity extends CarPlayBaseActivity implements
 			public void run() {
 				handler.sendEmptyMessage(0);
 			}
-		}, 0, 10 * 1000);
+		}, 3 * 1000, 10 * 1000);
 	}
 
 	@Override
@@ -465,7 +465,7 @@ public class MyPerSonDetailActivity extends CarPlayBaseActivity implements
 	Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
 			currentPosition = currentPosition + 1;
-//			gallery.setSelection(currentPosition);
+			// gallery.setSelection(currentPosition);
 			gallery.onKeyDown(KeyEvent.KEYCODE_DPAD_RIGHT, null);
 		};
 	};

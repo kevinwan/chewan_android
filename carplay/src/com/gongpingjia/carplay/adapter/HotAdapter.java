@@ -2,6 +2,8 @@ package com.gongpingjia.carplay.adapter;
 
 import java.text.SimpleDateFormat;
 import java.util.Iterator;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import net.duohuo.dhroid.adapter.NetJSONAdapter;
 import net.duohuo.dhroid.dialog.IDialog;
@@ -18,11 +20,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.Display;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -71,6 +76,14 @@ public class HotAdapter extends NetJSONAdapter {
 
 	JSONArray jsa = new JSONArray();
 
+	Timer galleryTimer;
+
+	int currentPosition = 0;
+
+	Dialog progressdialog;
+
+	public IDialog dialoger;
+
 	public HotAdapter(String api, Context context, int mResource) {
 		super(api, context, mResource);
 		mLayoutInflater = LayoutInflater.from(context);
@@ -83,6 +96,7 @@ public class HotAdapter extends NetJSONAdapter {
 				- DhUtil.dip2px(context, 77 + 10 + 8 * 2);
 
 		EventBus.getDefault().register(this);
+		dialoger = IocContainer.getShare().get(IDialog.class);
 	}
 
 	public void setJsa(JSONArray j) {
@@ -470,6 +484,9 @@ public class HotAdapter extends NetJSONAdapter {
 
 			@Override
 			public void doInUI(Response response, Integer transfer) {
+				if (progressdialog != null) {
+					progressdialog.dismiss();
+				}
 				if (response.isSuccess()) {
 					IocContainer.getShare().get(IDialog.class)
 							.showToastShort(mContext, "已提交加入活动申请,等待管理员审核!");
@@ -480,12 +497,13 @@ public class HotAdapter extends NetJSONAdapter {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-				}
+				} 
 			}
 		});
 	}
 
 	private void isAuthen(final String activityId, final JSONObject jo) {
+		progressdialog = dialoger.showProgressDialog(mContext, "");
 		User user = User.getInstance();
 		DhNet mDhNet = new DhNet(API.availableSeat + user.getUserId()
 				+ "/seats?token=" + user.getToken());
@@ -501,12 +519,18 @@ public class HotAdapter extends NetJSONAdapter {
 						user.setIsAuthenticated(json.getInt("isAuthenticated"));
 
 						if (user.getIsAuthenticated() == 1) {
+							if (progressdialog != null) {
+								progressdialog.dismiss();
+							}
 							CarSeatSelectDialog dialog = new CarSeatSelectDialog(
 									mContext, activityId);
 							dialog.setOnSelectResultListener(new OnSelectResultListener() {
 
 								@Override
 								public void click(int seatCount) {
+									progressdialog = dialoger
+											.showProgressDialog(mContext,
+													"申请加入中...");
 									joinActive(activityId, seatCount, jo);
 								}
 							});
@@ -647,6 +671,7 @@ public class HotAdapter extends NetJSONAdapter {
 
 			SimplePageAdapter middleAdapter = new SimplePageAdapter(views);
 			middleHolder.pager.setAdapter(middleAdapter);
+			startTimer();
 			middleHolder.pager
 					.setOnPageChangeListener(new OnPageChangeListener() {
 
@@ -676,4 +701,28 @@ public class HotAdapter extends NetJSONAdapter {
 		}
 	}
 
+	public void startTimer() {
+		galleryTimer = new Timer();
+		galleryTimer.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				handler.sendEmptyMessage(0);
+			}
+		}, 5 * 1000, 5 * 1000);
+	}
+
+	Handler handler = new Handler() {
+		public void handleMessage(android.os.Message msg) {
+			currentPosition = currentPosition + 1;
+			int positon = currentPosition % jsa.length();
+			middleHolder.pager.setCurrentItem(positon);
+			// middleHolder.pager.onKeyDown(KeyEvent.KEYCODE_DPAD_RIGHT, null);
+		};
+	};
+
+	public void stopTimer() {
+		if (galleryTimer != null) {
+			galleryTimer.cancel();
+		}
+	}
 }

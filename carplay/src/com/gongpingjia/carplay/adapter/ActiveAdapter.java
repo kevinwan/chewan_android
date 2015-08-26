@@ -17,6 +17,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.Display;
@@ -50,12 +51,14 @@ import de.greenrobot.event.EventBus;
 
 public class ActiveAdapter extends NetJSONAdapter {
 	LayoutInflater mLayoutInflater;
-
+	public IDialog dialoger;
 	int mResource;
 
 	int piclayoutWidth;
 
 	int headlayoutWidth;
+
+	Dialog progressdialog;
 
 	public ActiveAdapter(String api, Context context, int mResource) {
 		super(api, context, mResource);
@@ -69,6 +72,8 @@ public class ActiveAdapter extends NetJSONAdapter {
 				- DhUtil.dip2px(context, 77 + 10 + 8 * 2);
 
 		EventBus.getDefault().register(this);
+
+		dialoger = IocContainer.getShare().get(IDialog.class);
 	}
 
 	@Override
@@ -348,6 +353,9 @@ public class ActiveAdapter extends NetJSONAdapter {
 
 			@Override
 			public void doInUI(Response response, Integer transfer) {
+				if (progressdialog != null) {
+					progressdialog.dismiss();
+				}
 				if (response.isSuccess()) {
 					IocContainer.getShare().get(IDialog.class)
 							.showToastShort(mContext, "已提交加入活动申请,等待管理员审核!");
@@ -364,6 +372,7 @@ public class ActiveAdapter extends NetJSONAdapter {
 	}
 
 	private void isAuthen(final String activityId, final JSONObject jo) {
+		progressdialog = dialoger.showProgressDialog(mContext, "");
 		User user = User.getInstance();
 		DhNet mDhNet = new DhNet(API.availableSeat + user.getUserId()
 				+ "/seats?token=" + user.getToken());
@@ -379,12 +388,18 @@ public class ActiveAdapter extends NetJSONAdapter {
 						user.setIsAuthenticated(json.getInt("isAuthenticated"));
 
 						if (user.getIsAuthenticated() == 1) {
+							if (progressdialog != null) {
+								progressdialog.dismiss();
+							}
 							CarSeatSelectDialog dialog = new CarSeatSelectDialog(
 									mContext, activityId);
 							dialog.setOnSelectResultListener(new OnSelectResultListener() {
 
 								@Override
 								public void click(int seatCount) {
+									progressdialog = dialoger
+											.showProgressDialog(mContext,
+													"申请加入中...");
 									joinActive(activityId, seatCount, jo);
 								}
 							});
@@ -405,7 +420,6 @@ public class ActiveAdapter extends NetJSONAdapter {
 
 	/** 接受加入或者退出活动事件 */
 	public void onEventMainThread(JoinEB join) {
-		System.out.println("主页");
 		if (mVaules != null && mVaules.size() != 0) {
 			for (Iterator iterator = mVaules.iterator(); iterator.hasNext();) {
 				JSONObject jo = (JSONObject) iterator.next();

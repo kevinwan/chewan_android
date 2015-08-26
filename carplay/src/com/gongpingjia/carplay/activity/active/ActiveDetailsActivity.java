@@ -109,7 +109,6 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_active_details);
 		EventBus.getDefault().register(this);
-
 	}
 
 	@Override
@@ -688,6 +687,7 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 			@Override
 			public void doInUI(Response response, Integer transfer) {
 				if (response.isSuccess()) {
+					hidenProgressDialog();
 					showToast("已提交加入活动申请,等待管理员审核!");
 					// joinT.setText("申请中");
 					// joinT.setBackgroundResource(R.drawable.btn_grey_dark_bg);
@@ -701,6 +701,7 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 	}
 
 	private void isAuthen() {
+		showProgressDialog("");
 		User user = User.getInstance();
 		DhNet mDhNet = new DhNet(API.availableSeat + user.getUserId()
 				+ "/seats?token=" + user.getToken());
@@ -716,12 +717,14 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 						user.setIsAuthenticated(json.getInt("isAuthenticated"));
 
 						if (user.getIsAuthenticated() == 1) {
+							hidenProgressDialog();
 							CarSeatSelectDialog dialog = new CarSeatSelectDialog(
 									self, activityId);
 							dialog.setOnSelectResultListener(new OnSelectResultListener() {
 
 								@Override
 								public void click(int seatCount) {
+									showProgressDialog("申请加入中...");
 									joinActive(seatCount);
 								}
 							});

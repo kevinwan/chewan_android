@@ -330,6 +330,8 @@ public class MyActiveMembersManageActivity extends CarPlayBaseActivity {
 					car_logo.setVisibility(View.GONE);
 					drive_age.setText("带我飞~");
 				} else {
+					car_age.setVisibility(View.VISIBLE);
+					car_logo.setVisibility(View.VISIBLE);
 					if (drive_str.length() > 15) {
 						drive_str = drive_str.substring(0, 15) + "...";
 					}

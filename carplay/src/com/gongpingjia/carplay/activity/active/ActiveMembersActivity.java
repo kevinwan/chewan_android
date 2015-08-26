@@ -198,7 +198,7 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 				RoundImageView headI = (RoundImageView) itemV
 						.findViewById(R.id.head);
 				ViewUtil.bindNetImage(headI,
-						JSONUtil.getString(itemjo, "photo"), "default");
+						JSONUtil.getString(itemjo, "photo"), "head");
 				ViewUtil.bindNetImage(car_logo,
 						JSONUtil.getString(itemjo, "carBrandLogo"), "carlogo");
 				headI.setTag(JSONUtil.getString(itemjo, "userId"));
@@ -220,6 +220,8 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 					car_logo.setVisibility(View.GONE);
 					drive_age.setText("带我飞~");
 				} else {
+					car_age.setVisibility(View.VISIBLE);
+					car_logo.setVisibility(View.VISIBLE);
 					if (drive_str.length() > 15) {
 						drive_str = drive_str.substring(0, 15) + "...";
 					}

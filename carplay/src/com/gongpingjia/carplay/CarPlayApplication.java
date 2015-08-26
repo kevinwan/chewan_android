@@ -12,6 +12,7 @@ import android.content.Intent;
 
 import com.easemob.EMCallBack;
 import com.easemob.chat.EMChat;
+import com.gongpingjia.carplay.activity.main.SplashActivity;
 import com.gongpingjia.carplay.chat.DemoHXSDKHelper;
 import com.gongpingjia.carplay.data.CityDataManage;
 import com.gongpingjia.carplay.db.DaoHelper;
@@ -22,7 +23,8 @@ import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
-public class CarPlayApplication extends Application {
+public class CarPlayApplication extends Application implements
+		Thread.UncaughtExceptionHandler {
 
 	private static CarPlayApplication instance;
 
@@ -39,6 +41,7 @@ public class CarPlayApplication extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+//		Thread.setDefaultUncaughtExceptionHandler(this);
 		hxSDKHelper.onInit(getApplicationContext());
 		instance = this;
 		Const.netadapter_page_no = "page";
@@ -114,6 +117,15 @@ public class CarPlayApplication extends Application {
 	public void logout(final boolean isGCM, final EMCallBack emCallBack) {
 		// 先调用sdk logout，在清理app中自己的数据
 		hxSDKHelper.logout(isGCM, emCallBack);
+	}
+
+	@Override
+	public void uncaughtException(Thread thread, Throwable ex) {
+		// System.out.println("奔溃.................");
+		Intent intent = new Intent(this, SplashActivity.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		startActivity(intent);
+		android.os.Process.killProcess(android.os.Process.myPid());
 	}
 
 }

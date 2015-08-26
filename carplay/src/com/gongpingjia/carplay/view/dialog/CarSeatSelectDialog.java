@@ -80,6 +80,8 @@ public class CarSeatSelectDialog extends BaseAlertDialog {
 						public void onDialogItemClick(int position) {
 							// TODO Auto-generated method stub
 							countT.setText(mSeatOptions.get(position));
+							countT.setTextColor(mContext.getResources()
+									.getColor(R.color.text_black));
 						}
 					});
 					dlg.show();
@@ -92,6 +94,8 @@ public class CarSeatSelectDialog extends BaseAlertDialog {
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
 				if (checkedId == R.id.radio_right) {
 					countT.setText(0 + "");
+					countT.setTextColor(mContext.getResources().getColor(
+							R.color.text_grey));
 				}
 			}
 		});
@@ -114,6 +118,16 @@ public class CarSeatSelectDialog extends BaseAlertDialog {
 						count = 0;
 					} else {
 						count = Integer.parseInt(countT.getText().toString());
+					}
+
+					if (radiogroup.getCheckedRadioButtonId() == R.id.radio_left
+							&& count == 0) {
+						IocContainer
+								.getShare()
+								.get(IDialog.class)
+								.showToastShort(mContext,
+										"请选择" + desT.getText().toString() + "!");
+						return;
 					}
 					onSelectResultListener.click(count);
 				}

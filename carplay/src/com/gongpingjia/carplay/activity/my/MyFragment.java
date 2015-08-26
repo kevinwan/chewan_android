@@ -421,7 +421,7 @@ public class MyFragment extends Fragment implements OnClickListener {
 			public void run() {
 				handler.sendEmptyMessage(0);
 			}
-		}, 0, 10 * 1000);
+		}, 3 * 1000, 10 * 1000);
 	}
 
 	@Override
