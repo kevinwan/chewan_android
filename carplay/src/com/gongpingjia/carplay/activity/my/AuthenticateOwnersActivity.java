@@ -8,6 +8,7 @@ import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.net.upload.FileInfo;
 import net.duohuo.dhroid.util.PhotoUtil;
+import net.duohuo.dhroid.util.ViewUtil;
 
 import org.json.JSONObject;
 
@@ -23,6 +24,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.api.API;
@@ -60,6 +62,12 @@ public class AuthenticateOwnersActivity extends CarPlayBaseActivity implements
 
 	// 图片缓存根目录
 	private File mCacheDir;
+	
+	//认证类型 (0:未认证 1:认证成功 2:认证中)
+	int isAuthenticated=0;
+	int drivingyears=0;
+	String carModel="";
+	String license="";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +101,53 @@ public class AuthenticateOwnersActivity extends CarPlayBaseActivity implements
 		drivingExperienceE = (EditText) findViewById(R.id.drivingExperience);
 		submitB = (Button) findViewById(R.id.submit);
 		submitB.setOnClickListener(this);
+		
+		
+		Bundle bundle=getIntent().getExtras();
+		if (bundle!=null) {
+			isAuthenticated=bundle.getInt("isAuthenticated", 0);
+			drivingyears=bundle.getInt("drivingyears", 0);
+			carModel=bundle.getString("carModel");
+			license=bundle.getString("license");
+		}
+		System.out.println("-----------------"+license);
+		switch (isAuthenticated) {
+		//未认证
+		case 0:
+			drivingExperienceE.setText("");
+			modelT.setText("");
+			submitB.setText("认证车主");
+			submitB.setEnabled(true);
+			break;
+		//已认证
+		case 1:
+			drivingExperienceE.setText(drivingyears+"");
+			modelT.setText(carModel);
+			if (!TextUtils.isEmpty(license)) {
+				ViewUtil.bindNetImage(picI, license,
+						CarPlayValueFix.optionsDefault.toString());
+			}
+			submitB.setText("已认证");
+			submitB.setEnabled(false);
+			submitB.setBackgroundResource(R.drawable.btn_grey_bg);
+			break;
+		//认证中
+		case 2:
+			drivingExperienceE.setText(drivingyears+"");
+			modelT.setText(carModel);
+			if (!TextUtils.isEmpty(license)) {
+				ViewUtil.bindNetImage(picI, license,
+						CarPlayValueFix.optionsDefault.toString());
+			}
+			submitB.setText("认证中");
+			submitB.setEnabled(false);
+			submitB.setBackgroundResource(R.drawable.btn_grey_bg);
+			break;
+
+		default:
+			break;
+		}
+		
 	}
 
 	private void authtion() {

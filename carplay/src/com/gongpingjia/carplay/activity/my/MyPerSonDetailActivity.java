@@ -108,6 +108,12 @@ public class MyPerSonDetailActivity extends CarPlayBaseActivity implements
 
 	String tempPath;
 
+	// 是否认证车主成功 (默认0:未成功)
+	int isAuthenticated = 0;
+	int drivingyears = 0;
+	String carModel = "";
+	String license = "";
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -251,6 +257,23 @@ public class MyPerSonDetailActivity extends CarPlayBaseActivity implements
 
 	/** 获取个人资料 */
 	private void getMyDetails() {
+		DhNet verifyNet = new DhNet(API.CWBaseurl + "/user/" + user.getUserId()
+				+ "/authentication?token="
+				+ user.getToken());
+		verifyNet.doGet(new NetTask(self) {
+			
+			@Override
+			public void doInUI(Response response, Integer transfer) {
+				if (response.isSuccess()) {
+					JSONObject jo = response.jSONFromData();
+					isAuthenticated = JSONUtil.getInt(jo, "isAuthenticated");
+					drivingyears=JSONUtil.getInt(jo, "drivingExperience");
+					carModel=JSONUtil.getString(jo, "carModel");
+					license=JSONUtil.getString(jo, "licensePhoto");
+				}
+			}
+		});
+		
 		DhNet net = new DhNet(API.CWBaseurl + "/user/" + user.getUserId()
 				+ "/info?userId=" + user.getUserId() + "&token="
 				+ user.getToken());
@@ -258,56 +281,83 @@ public class MyPerSonDetailActivity extends CarPlayBaseActivity implements
 
 			@Override
 			public void doInUI(Response response, Integer transfer) {
-				JSONObject jo = response.jSONFromData();
 
-				String nickname = JSONUtil.getString(jo, "nickname");
-				String age = JSONUtil.getString(jo, "age");
-				String carModel = JSONUtil.getString(jo, "carModel");
-				String drivingExperience = JSONUtil.getString(jo,
-						"drivingExperience");
-				String photo = JSONUtil.getString(jo, "photo");
-				String carBrandLogo = JSONUtil.getString(jo, "carBrandLogo");
-				String gender = JSONUtil.getString(jo, "gender");
-				String postNumber = JSONUtil.getString(jo, "postNumber");
-				String subscribeNumber = JSONUtil.getString(jo,
-						"subscribeNumber");
-				String joinNumber = JSONUtil.getString(jo, "joinNumber");
+				if (response.isSuccess()) {
+					JSONObject jo = response.jSONFromData();
 
-				nicknameT.setText(nickname);
-				ageT.setText(age);
+					String nickname = JSONUtil.getString(jo, "nickname");
+					String age = JSONUtil.getString(jo, "age");
+					String carModel = JSONUtil.getString(jo, "carModel");
+					String drivingExperience = JSONUtil.getString(jo,
+							"drivingExperience");
+					String photo = JSONUtil.getString(jo, "photo");
+					String carBrandLogo = JSONUtil
+							.getString(jo, "carBrandLogo");
+					String gender = JSONUtil.getString(jo, "gender");
+					String postNumber = JSONUtil.getString(jo, "postNumber");
+					String subscribeNumber = JSONUtil.getString(jo,
+							"subscribeNumber");
+					String joinNumber = JSONUtil.getString(jo, "joinNumber");
 
-				ViewUtil.bindNetImage(headI, photo, "head");
+					nicknameT.setText(nickname);
+					ageT.setText(age);
 
-				if (TextUtils.isEmpty(carModel)) {
-					carModelT.setText("带我飞~");
-				} else {
-					carModelT
-							.setText(carModel + "  " + drivingExperience + "年");
+					ViewUtil.bindNetImage(headI, photo, "head");
+
+					if (TextUtils.isEmpty(carModel)) {
+						carModelT.setText("带我飞~");
+					} else {
+						carModelT.setText(carModel + "  " + drivingExperience
+								+ "年");
+					}
+
+					if (TextUtils.isEmpty(carBrandLogo)
+							|| carBrandLogo.equals("null")) {
+						carBrandLogoI.setVisibility(View.GONE);
+					} else {
+						carBrandLogoI.setVisibility(View.VISIBLE);
+						ViewUtil.bindNetImage(carBrandLogoI, carBrandLogo,
+								"carlogo");
+					}
+					
+					switch (isAuthenticated) {
+					//未认证
+					case 0:
+						person_txt.setVisibility(View.GONE);
+						person_carlogo.setVisibility(View.GONE);
+						break;
+					//已认证
+					case 1:
+						person_carlogo.setVisibility(View.VISIBLE);
+						person_txt.setVisibility(View.VISIBLE);
+						person_txt.setText("已认证");
+						ViewUtil.bindNetImage(person_carlogo, carBrandLogo,
+								CarPlayValueFix.optionsDefault.toString());
+						break;
+					//认证中
+					case 2:
+						person_txt.setVisibility(View.VISIBLE);
+						person_carlogo.setVisibility(View.GONE);
+						person_txt.setText("认证中");
+						break;
+
+					default:
+						break;
+					}
+					
+
+					if (gender.equals("男"))
+						genderR.setBackgroundResource(R.drawable.man);
+					else
+						genderR.setBackgroundResource(R.drawable.woman);
+
+					postNumberT.setText(postNumber);
+					subscribeNumberT.setText(subscribeNumber);
+					joinNumberT.setText(joinNumber);
+					JSONArray albumPhotosJsa = JSONUtil.getJSONArray(jo,
+							"albumPhotos");
+					bingGallery(albumPhotosJsa);
 				}
-
-				if (TextUtils.isEmpty(carBrandLogo)
-						|| carBrandLogo.equals("null")) {
-					carBrandLogoI.setVisibility(View.GONE);
-				} else {
-					carBrandLogoI.setVisibility(View.VISIBLE);
-					person_txt.setVisibility(View.VISIBLE);
-					ViewUtil.bindNetImage(carBrandLogoI, carBrandLogo,
-							"carlogo");
-					ViewUtil.bindNetImage(person_carlogo, carBrandLogo,
-							"carlogo");
-				}
-
-				if (gender.equals("男"))
-					genderR.setBackgroundResource(R.drawable.man);
-				else
-					genderR.setBackgroundResource(R.drawable.woman);
-
-				postNumberT.setText(postNumber);
-				subscribeNumberT.setText(subscribeNumber);
-				joinNumberT.setText(joinNumber);
-				JSONArray albumPhotosJsa = JSONUtil.getJSONArray(jo,
-						"albumPhotos");
-				bingGallery(albumPhotosJsa);
 			}
 		});
 
@@ -382,6 +432,10 @@ public class MyPerSonDetailActivity extends CarPlayBaseActivity implements
 				case R.id.owners_certification:
 					it = new Intent(self, AuthenticateOwnersActivity.class);
 					it.putExtra("type", "my");
+					it.putExtra("isAuthenticated", isAuthenticated);
+					it.putExtra("drivingyears", drivingyears);
+					it.putExtra("carModel", carModel);
+					it.putExtra("license", license);
 					startActivity(it);
 					break;
 
@@ -391,8 +445,7 @@ public class MyPerSonDetailActivity extends CarPlayBaseActivity implements
 
 					break;
 				case R.id.notlogin_head:
-					it = new Intent(self,
-							ManageAlbumActivity.class);
+					it = new Intent(self, ManageAlbumActivity.class);
 					startActivity(it);
 					break;
 				default:
