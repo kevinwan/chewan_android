@@ -42,7 +42,7 @@ public class MessageAdapter extends NetJSONAdapter {
 
 	public MessageAdapter(String api, Context context, int mResource) {
 		super(api, context, mResource);
-		mLayoutInflater = LayoutInflater.from(context);
+		mLayoutInflater = LayoutInflater.from(mContext);
 		this.mResource = mResource;
 	}
 

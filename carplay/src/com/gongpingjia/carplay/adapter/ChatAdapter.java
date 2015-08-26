@@ -29,7 +29,7 @@ public class ChatAdapter extends BaseAdapter {
     public ChatAdapter(Context context, List<ChatMessage> data) {
         this.mContext = context;
         this.mDatas = data;
-        mInflater = LayoutInflater.from(context);
+        mInflater = LayoutInflater.from(mContext);
     }
 
     @Override

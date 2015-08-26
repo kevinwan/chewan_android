@@ -62,9 +62,9 @@ public class ActiveAdapter extends NetJSONAdapter {
 
 	public ActiveAdapter(String api, Context context, int mResource) {
 		super(api, context, mResource);
-		mLayoutInflater = LayoutInflater.from(context);
+		mLayoutInflater = LayoutInflater.from(mContext);
 		this.mResource = mResource;
-		Display display = ((Activity) context).getWindowManager()
+		Display display = ((Activity) mContext).getWindowManager()
 				.getDefaultDisplay();
 		int width = display.getWidth();
 		piclayoutWidth = width - DhUtil.dip2px(context, 59 + 12 * 2 + 10);

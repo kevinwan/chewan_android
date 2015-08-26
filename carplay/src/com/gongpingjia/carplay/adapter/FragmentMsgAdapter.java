@@ -51,7 +51,7 @@ public class FragmentMsgAdapter extends BaseAdapter {
 
 	public FragmentMsgAdapter(Context context) {
 		mContext = context;
-		mInflater = LayoutInflater.from(context);
+		mInflater = LayoutInflater.from(mContext);
 	}
 
 	@Override

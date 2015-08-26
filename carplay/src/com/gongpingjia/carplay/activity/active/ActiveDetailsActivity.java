@@ -11,6 +11,7 @@ import net.duohuo.dhroid.util.DhUtil;
 import net.duohuo.dhroid.util.ViewUtil;
 import net.duohuo.dhroid.view.INetRefreshAndMorelistView.OnRefreshListener;
 import net.duohuo.dhroid.view.NetRefreshAndMoreListView;
+import net.duohuo.dhroid.view.NetRefreshAndMoreListView.OnEmptyDataListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -272,6 +273,15 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 						return true;
 					}
 				});
+
+		mListView.setOnEmptyDataListener(new OnEmptyDataListener() {
+
+			@Override
+			public void onEmpty(boolean showeEptyView) {
+				headV.findViewById(R.id.empty).setVisibility(
+						showeEptyView ? View.VISIBLE : View.GONE);
+			}
+		});
 		mJsonAdapter = new NetJSONAdapter(API.CWBaseurl + "/activity/"
 				+ activityId + "/comment?userId=" + user.getUserId()
 				+ "&token=" + user.getToken(), this, R.layout.listitem_comment);

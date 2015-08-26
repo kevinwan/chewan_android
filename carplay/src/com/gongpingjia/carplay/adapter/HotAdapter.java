@@ -86,9 +86,9 @@ public class HotAdapter extends NetJSONAdapter {
 
 	public HotAdapter(String api, Context context, int mResource) {
 		super(api, context, mResource);
-		mLayoutInflater = LayoutInflater.from(context);
+		mLayoutInflater = LayoutInflater.from(mContext);
 		this.mResource = mResource;
-		Display display = ((Activity) context).getWindowManager()
+		Display display = ((Activity) mContext).getWindowManager()
 				.getDefaultDisplay();
 		int width = display.getWidth();
 		piclayoutWidth = width - DhUtil.dip2px(context, 59 + 12 * 2 + 10);
@@ -164,9 +164,11 @@ public class HotAdapter extends NetJSONAdapter {
 	public int getCount() {
 		if (jsa != null && jsa.length() > 0
 				&& (mVaules != null && mVaules.size() != 0)) {
+			// currentPosition = 0;
 			return mVaules.size() + 1;
 		} else {
 			isRefresh = true;
+			// currentPosition = 0;
 			return 0;
 		}
 	}
@@ -672,6 +674,7 @@ public class HotAdapter extends NetJSONAdapter {
 
 			SimplePageAdapter middleAdapter = new SimplePageAdapter(views);
 			middleHolder.pager.setAdapter(middleAdapter);
+			middleHolder.pager.setCurrentItem(0);
 			startTimer();
 			middleHolder.pager
 					.setOnPageChangeListener(new OnPageChangeListener() {
@@ -703,6 +706,7 @@ public class HotAdapter extends NetJSONAdapter {
 	}
 
 	public void startTimer() {
+		stopTimer();
 		galleryTimer = new Timer();
 		galleryTimer.schedule(new TimerTask() {
 			@Override

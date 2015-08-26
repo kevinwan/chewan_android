@@ -99,8 +99,8 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="6dp"
-        android:lineSpacingMultiplier="1.15"
-        android:background="@color/white" />
+        android:background="@color/white"
+        android:lineSpacingMultiplier="1.15" />
 
     <LinearLayout
         android:id="@+id/pic_layout"
@@ -276,6 +276,37 @@
                 android:id="@+id/des"
                 style="@style/text_black_medium"
                 android:layout_marginTop="5dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/empty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tab_layout"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingBottom="20dp"
+            android:paddingTop="40dp" >
+
+            <ImageView
+                android:id="@+id/icon_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/no_release" />
+
+            <TextView
+                android:id="@+id/msg"
+                style="@style/text_grey_small"
+                android:layout_marginTop="12dp"
+                android:text="暂无留言" />
         </LinearLayout>
     </LinearLayout>
 

@@ -31,7 +31,7 @@ public class BrandAdapter extends BaseAdapter implements SectionIndexer {
 
     public BrandAdapter(Context context, List<CarBrand> datas) {
         this.mContext = context;
-        mInflater = LayoutInflater.from(context);
+        mInflater = LayoutInflater.from(mContext);
         this.mDatas = datas;
     }
 
