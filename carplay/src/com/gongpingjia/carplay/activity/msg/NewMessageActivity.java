@@ -14,6 +14,7 @@ import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.util.DhUtil;
 import net.duohuo.dhroid.view.NetRefreshAndMoreListView;
+import net.duohuo.dhroid.view.NetRefreshAndMoreListView.OnEmptyDataListener;
 import net.duohuo.dhroid.view.RefreshAndMoreListView;
 import net.duohuo.dhroid.view.RefreshAndMoreListView.OnRefreshListener;
 import android.content.ContentValues;
@@ -190,6 +191,15 @@ public class NewMessageActivity extends CarPlayBaseActivity implements
 						startActivity(it);
 					}
 				}
+			}
+		});
+
+		listView.setOnEmptyDataListener(new OnEmptyDataListener() {
+
+			@Override
+			public void onEmpty(boolean showeEptyView) {
+				findViewById(R.id.empty).setVisibility(
+						showeEptyView ? View.VISIBLE : View.GONE);
 			}
 		});
 		User user = User.getInstance();
