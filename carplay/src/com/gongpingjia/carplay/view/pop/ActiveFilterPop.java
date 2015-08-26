@@ -119,6 +119,7 @@ public class ActiveFilterPop extends PopupWindow implements OnClickListener {
 		locationLayoutV = contentV.findViewById(R.id.locationLayout);
 		typeLayoutV = contentV.findViewById(R.id.typeLayout);
 		addresssT = (TextView) contentV.findViewById(R.id.addresss);
+		addresssT.setText("不限");
 		typeT = (TextView) contentV.findViewById(R.id.type);
 
 		cancleB = (Button) contentV.findViewById(R.id.cancle);
@@ -174,6 +175,9 @@ public class ActiveFilterPop extends PopupWindow implements OnClickListener {
 
 	public void show(View v) {
 		pop.showAsDropDown(v);
+		if (addresssT != null) {
+			addresssT.setText("不限");
+		}
 	}
 
 	public OnCheckResult getOnCheckResult() {
