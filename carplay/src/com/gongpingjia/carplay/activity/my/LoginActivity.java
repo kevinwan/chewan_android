@@ -190,7 +190,6 @@ public class LoginActivity extends CarPlayBaseActivity implements
 									strPhoneNum);
 						} else {
 							hidenProgressDialog();
-							showToast("登录失败，请重试");
 						}
 					}
 				});
