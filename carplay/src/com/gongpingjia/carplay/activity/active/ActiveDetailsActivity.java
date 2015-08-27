@@ -173,7 +173,7 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements OnClic
                         if (!mCommentItem.getString("userId").equals(user.getUserId())) {
                             comment_contentE.setHint("回复" + mCommentItem.getString("nickname") + ":");
                         } else {
-                            showToast("不能给自己评论哦");
+//                            showToast("不能给自己评论哦");
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
