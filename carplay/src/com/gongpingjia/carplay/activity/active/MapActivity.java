@@ -238,9 +238,9 @@ public class MapActivity extends CarPlayBaseActivity implements OnMarkerClickLis
         } else if (rCode == 27) {
             showToast("网络出问题啦");
         } else if (rCode == 32) {
-            showToast("api key error");
+            showToast("暂无搜索结果");
         } else {
-            showToast("出现未知异常");
+            showToast("暂无搜索结果");
         }
 
     }
