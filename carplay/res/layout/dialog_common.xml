@@ -5,7 +5,10 @@
     android:layout_height="wrap_content"
     android:background="@drawable/white_fillet_button"
     android:orientation="vertical"
-    android:padding="10dp" >
+    android:paddingBottom="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="15dp" >
 
     <TextView
         android:id="@+id/tv_dlg_title"
@@ -13,12 +16,12 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="title"
-        android:textColor="@color/text_black"
+        android:textColor="@color/dialog_blue"
         android:textSize="@dimen/text_big" />
 
     <View
         style="@style/line_horizontal"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="15dp" />
 
     <ListView
         android:id="@+id/lv_dlg"

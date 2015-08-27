@@ -12,5 +12,5 @@
     <dimen name="text_small">11sp</dimen>
     <dimen name="text_smaller">9sp</dimen>
     <dimen name="text_hot_small">13sp</dimen>
-
+	<dimen name="text_time_small">11sp</dimen>
 </resources>

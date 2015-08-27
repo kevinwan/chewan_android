@@ -51,7 +51,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginRight="2dp"
                         android:textColor="@color/white"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/text_smaller" />
                 </RelativeLayout>
 
                 <LinearLayout
@@ -138,7 +138,7 @@
             android:gravity="center"
             android:text="我也要玩"
             android:textColor="@color/white"
-            android:textSize="16sp"
+            android:textSize="@dimen/text_hot_small"
             android:visibility="gone" />
     </LinearLayout>
 
@@ -211,7 +211,8 @@
                 <TextView
                     android:id="@+id/address"
                     style="@style/text_black_medium"
-                    android:layout_marginTop="5dp" />
+                    android:layout_marginTop="5dp"
+                    android:lineSpacingMultiplier="1.15" />
             </LinearLayout>
 
             <View style="@style/line_vertical" />
@@ -255,7 +256,8 @@
                 <TextView
                     android:id="@+id/empty_seats"
                     style="@style/text_black_medium"
-                    android:layout_marginTop="5dp" />
+                    android:layout_marginTop="5dp"
+                    android:lineSpacingMultiplier="1.15" />
             </LinearLayout>
         </LinearLayout>
 

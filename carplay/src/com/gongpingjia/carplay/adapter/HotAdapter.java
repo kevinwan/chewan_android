@@ -235,19 +235,8 @@ public class HotAdapter extends NetJSONAdapter {
 			}
 		}
 
-		if (type == 0) {
-			if (isRefresh) {
-				bindViewPageAdapter();
-				System.out.println("build..............");
-			} else {
-				if ((jsa != null && middleHolder.pager != null)
-						&& (middleHolder.pager.getChildCount() == 0)) {
-					System.out.println("middleHolder.pager.getChildCount()"
-							+ middleHolder.pager.getChildCount());
-					bindViewPageAdapter();
-					System.out.println("rebuild..............");
-				}
-			}
+		if (type == 0 && isRefresh) {
+			bindViewPageAdapter();
 		} else {
 			final JSONObject jo = getItem(position);
 			if (jo != null) {
@@ -657,7 +646,7 @@ public class HotAdapter extends NetJSONAdapter {
 
 					SimpleDateFormat formatdate = new SimpleDateFormat(
 							"yyyy.MM.dd");
-					pgendtime.setText("截止时间:  "
+					pgendtime.setText("报名截止:  "
 							+ formatdate.format(JSONUtil.getLong(jot, "end")));
 					pgtitle.setText(JSONUtil.getString(jot, "title"));
 					pgcontent.setText(JSONUtil.getString(jot, "content"));
