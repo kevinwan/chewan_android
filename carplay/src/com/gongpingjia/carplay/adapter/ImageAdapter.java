@@ -47,6 +47,7 @@ public class ImageAdapter extends BaseAdapter {
         int width = display.getWidth();
         picHeight = (width - DhUtil.dip2px(context, 40)) / 3;
     }
+    
 
     @Override
     public int getCount() {

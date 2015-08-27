@@ -68,7 +68,6 @@ public class ActiveMsgDialog extends BaseAlertDialog
             }
         });
         
-        Window window = getWindow();
     }
     
     public OnClickResultListener getOnClickResultListener()
