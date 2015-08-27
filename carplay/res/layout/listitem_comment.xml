@@ -72,7 +72,11 @@
 
         <TextView
             android:id="@+id/tv_comment_content"
-            style="@style/text_black_medium" />
+            style="@style/text_black_small"
+            android:textSize="@dimen/text_hot_small"
+            android:lineSpacingMultiplier="1.15"
+            android:layout_marginTop="5dp"
+             />
     </LinearLayout>
 
 </LinearLayout>

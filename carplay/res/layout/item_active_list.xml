@@ -134,7 +134,7 @@
                 android:id="@+id/piclayout"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="5dp"
                 android:orientation="vertical" >
             </LinearLayout>
 
@@ -158,7 +158,9 @@
 
                     <TextView
                         android:id="@+id/time"
-                        style="@style/text_blacklight_small" />
+                        style="@style/text_blacklight_small"
+                        android:textSize="@dimen/text_time_small"
+                         />
                 </LinearLayout>
 
                 <LinearLayout

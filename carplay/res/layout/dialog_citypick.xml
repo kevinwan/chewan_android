@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="请选择省市区"
-                android:textColor="@color/text_black"
+                android:textColor="@color/dialog_blue"
                 android:textSize="20sp" />
         </RelativeLayout>
 
@@ -57,7 +57,7 @@
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="42dp" >
+            android:layout_height="48dp" >
 
             <Button
                 android:id="@+id/cancle"

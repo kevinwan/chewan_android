@@ -12,10 +12,11 @@
         android:padding="20dp" >
 
         <TextView
-            style="@style/text_black_medium"
+            style="@style/text_black_big"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:textColor="@color/dialog_blue"
             android:text="请选择" />
     </RelativeLayout>
 
@@ -89,6 +90,7 @@
             android:text="0" />
 
         <TextView
+            android:id="@+id/count_unit"
             style="@style/text_black_medium"
             android:text="个" />
     </LinearLayout>

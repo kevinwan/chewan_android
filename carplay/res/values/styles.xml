@@ -20,6 +20,12 @@
         <item name="android:textColor">@color/text_black</item>
         <item name="android:textSize">@dimen/text_medium</item>
     </style>
+     <style name="text_black_big">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_black</item>
+        <item name="android:textSize">@dimen/text_big</item>
+    </style>
 
     <style name="text_black_small">
         <item name="android:layout_width">wrap_content</item>
@@ -109,7 +115,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">@dimen/text_hot_small</item>
         <item name="android:background">@drawable/btn_orange_bg_s</item>
     </style>
 

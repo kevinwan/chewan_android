@@ -84,6 +84,7 @@
                     android:id="@+id/date"
                     style="@style/text_blacklight_small"
                     android:drawableLeft="@drawable/icon_my_time"
+                    android:textSize="@dimen/text_time_small"
                     android:drawablePadding="3dp" />
 
                 <LinearLayout
@@ -113,7 +114,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="8dp"
                 android:background="@color/tab_grey_bg"
                 android:gravity="center_vertical"
                 android:padding="8dp" >

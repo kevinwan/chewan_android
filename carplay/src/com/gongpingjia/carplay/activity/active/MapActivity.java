@@ -212,7 +212,12 @@ public class MapActivity extends CarPlayBaseActivity implements OnMarkerClickLis
                         aMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(firstPoint.getLatitude(),
                                 firstPoint.getLongitude()), 15));
                         poiItems.get(0).getLatLonPoint();
-                        if (poiItems.size() == 1) {
+                        // if (poiItems.size() == 1) {
+                        // mLocTitleText.setText(poiItems.get(0).getTitle());
+                        // mLocDesText.setText(mAddress.getFormatAddress());
+                        // }
+
+                        if (mQuery.getPageSize() == 1) {
                             mLocTitleText.setText(poiItems.get(0).getTitle());
                             mLocDesText.setText(mAddress.getFormatAddress());
                         }
@@ -233,9 +238,9 @@ public class MapActivity extends CarPlayBaseActivity implements OnMarkerClickLis
         } else if (rCode == 27) {
             showToast("网络出问题啦");
         } else if (rCode == 32) {
-            showToast("api key error");
+            showToast("暂无搜索结果");
         } else {
-            showToast("出现未知异常");
+            showToast("暂无搜索结果");
         }
 
     }
