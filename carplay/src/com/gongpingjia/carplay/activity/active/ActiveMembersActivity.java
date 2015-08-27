@@ -348,7 +348,7 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 			ActiveMsgDialog dialog;
 			// if (startTime != 0 && startTime - currentTime > 1000 * 60 * 60 *
 			// 6) {
-			dialog = new ActiveMsgDialog(self, "确定退出活动?");
+			dialog = new ActiveMsgDialog(self, "退出活动将同时退出此活动群聊请确认是否退出?");
 			dialog.setOnClickResultListener(new OnClickResultListener() {
 
 				@Override

@@ -80,7 +80,9 @@
                     style="@style/text_blacklight_medium"
                     android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="8dp" />
+                    android:layout_marginTop="8dp"
+                    android:lineSpacingMultiplier="1.15"
+                     />
             </LinearLayout>
 
             <View style="@style/line" />
@@ -302,7 +304,7 @@
                     android:background="@drawable/gray_fillet_button"
                     android:text="完成"
                     android:textColor="@color/text_black_light"
-                    android:textSize="@dimen/text_small" />
+                    android:textSize="@dimen/text_medium" />
 
                 <Button
                     android:id="@+id/btn_finish_invite"
@@ -313,7 +315,7 @@
                     android:background="@drawable/button_zc_bg"
                     android:text="完成并邀请好友"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_small" />
+                    android:textSize="@dimen/text_medium" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

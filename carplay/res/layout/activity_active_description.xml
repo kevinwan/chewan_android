@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:background="@color/nothing"
+        android:lineSpacingMultiplier="1.15"
         android:gravity="top"
         android:padding="15dp"
         android:hint="介绍越详细越容易吸引人哟~"

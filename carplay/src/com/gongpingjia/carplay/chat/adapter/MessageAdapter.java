@@ -641,14 +641,14 @@ public class MessageAdapter extends BaseAdapter {
 
 							@Override
 							public boolean onLongClick(View v) {
-								Intent intent = new Intent(activity,
-										AlertDialog.class);
-								intent.putExtra("msg", st);
-								intent.putExtra("cancel", true);
-								intent.putExtra("position", position);
-								activity.startActivityForResult(
-										intent,
-										ChatActivity.REQUEST_CODE_ADD_TO_BLACKLIST);
+								// Intent intent = new Intent(activity,
+								// AlertDialog.class);
+								// intent.putExtra("msg", st);
+								// intent.putExtra("cancel", true);
+								// intent.putExtra("position", position);
+								// activity.startActivityForResult(
+								// intent,
+								// ChatActivity.REQUEST_CODE_ADD_TO_BLACKLIST);
 								return true;
 							}
 						});
