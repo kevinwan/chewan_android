@@ -149,6 +149,8 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
 
     private ImageView mDelImgView;
 
+    private boolean isPublishSuccess = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -547,6 +549,7 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                 public void doInUI(Response response, Integer transfer) {
                     if (response.isSuccess()) {
                         showToast("创建成功");
+                        isPublishSuccess = true;
                         JSONObject json = response.jSONFrom("data");
                         try {
                             final String activeId = json.getString("activityId");
@@ -783,5 +786,14 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                 }
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (!isPublishSuccess) {
+            // 发布没有成功,保存信息到数据库中
+            
+        }
     }
 }
