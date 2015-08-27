@@ -87,6 +87,7 @@
             style="@style/text_grey_small"
             android:text="原因如下:" />
         <TextView
+            android:id="@+id/reason"
             style="@style/text_grey_small"
             android:layout_marginTop="7dp"
             android:lineSpacingExtra="7dp"

@@ -32,7 +32,7 @@ import com.gongpingjia.carplay.bean.User;
  * 
  */
 public class AttestationNotifyActivity extends CarPlayBaseActivity {
-	TextView contentpassT, contentfailT;
+	TextView contentpassT, contentfailT,reasonT;
 	Button nextBtn;
 	LinearLayout notpassL, passL;
 	String result;
@@ -42,7 +42,7 @@ public class AttestationNotifyActivity extends CarPlayBaseActivity {
 	int drivingyears = 0;
 	String carModel = "";
 	String license = "";
-	
+
 	User user;
 
 	@Override
@@ -60,6 +60,7 @@ public class AttestationNotifyActivity extends CarPlayBaseActivity {
 		nextBtn = (Button) findViewById(R.id.next);
 		notpassL = (LinearLayout) findViewById(R.id.notpass);
 		passL = (LinearLayout) findViewById(R.id.pass);
+		reasonT=(TextView) findViewById(R.id.reason);
 
 		Intent it = getIntent();
 		String model = it.getExtras().getString("carModel");
@@ -68,26 +69,26 @@ public class AttestationNotifyActivity extends CarPlayBaseActivity {
 		if (result.equals("0")) {
 			pass(model);
 		} else {
-			fail(model);
+			String reason=it.getStringExtra("content");
+			fail(model,reason);
 		}
 
 		DhNet verifyNet = new DhNet(API.CWBaseurl + "/user/" + user.getUserId()
-				+ "/authentication?token="
-				+ user.getToken());
+				+ "/authentication?token=" + user.getToken());
 		verifyNet.doGet(new NetTask(self) {
-			
+
 			@Override
 			public void doInUI(Response response, Integer transfer) {
 				if (response.isSuccess()) {
 					JSONObject jo = response.jSONFromData();
 					isAuthenticated = JSONUtil.getInt(jo, "isAuthenticated");
-					drivingyears=JSONUtil.getInt(jo, "drivingExperience");
-					carModel=JSONUtil.getString(jo, "carModel");
-					license=JSONUtil.getString(jo, "licensePhoto");
+					drivingyears = JSONUtil.getInt(jo, "drivingExperience");
+					carModel = JSONUtil.getString(jo, "carModel");
+					license = JSONUtil.getString(jo, "licensePhoto");
 				}
 			}
 		});
-		
+
 		nextBtn.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -95,8 +96,8 @@ public class AttestationNotifyActivity extends CarPlayBaseActivity {
 				if (result.equals("0")) {
 					finish();
 				} else {
-					//已认证 则不跳转
-					if (isAuthenticated!=1) {
+					// 已认证 则不跳转
+					if (isAuthenticated != 1) {
 						Intent intent = new Intent(self,
 								AuthenticateOwnersActivity.class);
 						intent.putExtra("type", "attest");
@@ -110,7 +111,7 @@ public class AttestationNotifyActivity extends CarPlayBaseActivity {
 				}
 			}
 		});
-		
+
 	}
 
 	/** 通过 */
@@ -129,7 +130,7 @@ public class AttestationNotifyActivity extends CarPlayBaseActivity {
 	}
 
 	/** 未通过 */
-	private void fail(String model) {
+	private void fail(String model,String reason) {
 		notpassL.setVisibility(View.VISIBLE);
 		passL.setVisibility(View.GONE);
 		nextBtn.setText("重新认证");
@@ -141,6 +142,7 @@ public class AttestationNotifyActivity extends CarPlayBaseActivity {
 		newcontent = a + b + c;
 
 		contentfailT.setText(strColor(newcontent, b));
+		reasonT.setText(reason);
 	}
 
 	private SpannableStringBuilder strColor(String newcontent, String str) {
