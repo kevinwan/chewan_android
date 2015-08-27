@@ -213,6 +213,10 @@ public class PersonDetailActivity extends CarPlayBaseActivity implements
 	@Override
 	public void onResume() {
 		super.onResume();
+		if (mTimer != null) {
+			mTimer.cancel();
+		}
+
 		mTimer = new Timer();
 		mTimer.schedule(new TimerTask() {
 			@Override

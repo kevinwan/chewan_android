@@ -331,7 +331,7 @@ public class MyFragment extends Fragment implements OnClickListener {
 						break;
 					}
 
-					if (!TextUtils.isEmpty(gender)) {  
+					if (!TextUtils.isEmpty(gender)) {
 						if (gender.equals("男")) {
 							genderR.setBackgroundResource(R.drawable.man);
 						} else {
@@ -478,6 +478,9 @@ public class MyFragment extends Fragment implements OnClickListener {
 			getMyDetails();
 		}
 
+		if (galleryTimer != null) {
+			galleryTimer.cancel();
+		}
 		galleryTimer = new Timer();
 		galleryTimer.schedule(new TimerTask() {
 			@Override
