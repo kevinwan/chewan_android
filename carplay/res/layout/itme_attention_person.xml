@@ -100,7 +100,7 @@
             android:gravity="center"
             android:text="取消关注"
             android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textSize="@dimen/text_hot_small" />
     </LinearLayout>
 
     <View
