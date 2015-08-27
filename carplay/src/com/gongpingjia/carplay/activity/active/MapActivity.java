@@ -21,7 +21,6 @@ import com.amap.api.maps2d.model.BitmapDescriptorFactory;
 import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.Marker;
 import com.amap.api.maps2d.model.MarkerOptions;
-import com.amap.api.maps2d.overlay.PoiOverlay;
 import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.core.SuggestionCity;
@@ -63,7 +62,7 @@ public class MapActivity extends CarPlayBaseActivity implements OnMarkerClickLis
 
     private LocationManagerProxy mLocationManager;
 
-    private MarkerOptions mMarkerOptions;
+    // private MarkerOptions mMarkerOptions;
 
     private boolean mIsFirstLocate = true;
 
@@ -78,6 +77,8 @@ public class MapActivity extends CarPlayBaseActivity implements OnMarkerClickLis
     private LatLng mCurLatLng;
 
     private RegeocodeAddress mAddress;
+
+    private Marker mMarker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,9 +147,9 @@ public class MapActivity extends CarPlayBaseActivity implements OnMarkerClickLis
         mLocationManager.setGpsEnable(true);
         mLocationManager.requestLocationData(LocationProviderProxy.AMapNetwork, 20000, 10, this);
 
-        mMarkerOptions = new MarkerOptions();
-        mMarkerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_position));
-        mMarkerOptions.draggable(true);
+        // mMarkerOptions = new MarkerOptions();
+        // mMarkerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_position));
+        // mMarkerOptions.draggable(true);
 
         // 地址编码
         mGeoSearch = new GeocodeSearch(this);
@@ -197,7 +198,6 @@ public class MapActivity extends CarPlayBaseActivity implements OnMarkerClickLis
 
     @Override
     public void onPoiSearched(PoiResult result, int rCode) {
-        // TODO Auto-generated method stub
         hidenProgressDialog();
         if (rCode == 0) {
             if (result != null && result.getQuery() != null) {
@@ -207,25 +207,41 @@ public class MapActivity extends CarPlayBaseActivity implements OnMarkerClickLis
                     // 当搜索不到poi item数据时，会返回含有搜索关键字的城市信息
                     List<SuggestionCity> suggestionCities = result.getSearchSuggestionCitys();
                     if (poiItems != null && poiItems.size() > 0) {
-                        aMap.clear();
-                        LatLonPoint firstPoint = poiItems.get(0).getLatLonPoint();
-                        aMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(firstPoint.getLatitude(),
-                                firstPoint.getLongitude()), 15));
-                        poiItems.get(0).getLatLonPoint();
+                        // aMap.clear();
+                        // LatLonPoint firstPoint =
+                        // poiItems.get(0).getLatLonPoint();
+                        // aMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new
+                        // LatLng(firstPoint.getLatitude(),
+                        // firstPoint.getLongitude()), 15));
                         // if (poiItems.size() == 1) {
                         // mLocTitleText.setText(poiItems.get(0).getTitle());
                         // mLocDesText.setText(mAddress.getFormatAddress());
                         // }
 
-                        if (mQuery.getPageSize() == 1) {
-                            mLocTitleText.setText(poiItems.get(0).getTitle());
-                            mLocDesText.setText(mAddress.getFormatAddress());
-                        }
+                        PoiItem item = poiItems.get(0);
+                        RegeocodeQuery query = new RegeocodeQuery(item.getLatLonPoint(), 200, GeocodeSearch.AMAP);// 第一个参数表示一个Latlng，第二参数表示范围多少米，第三个参数表示是火系坐标系还是GPS原生坐标系
+                        mGeoSearch.getFromLocationAsyn(query);// 设置同步逆地理编码请求
+                        mCurLatLng = new LatLng(item.getLatLonPoint().getLatitude(), item.getLatLonPoint()
+                                .getLongitude());
+                        // if (mQuery.getPageSize() == 1) {
+                        // // mLocTitleText.setText(item.getTitle());
+                        // // mLocDesText.setText(mAddress.getFormatAddress());
+                        // } else if (mQuery.getPageSize() == 10) {
+                        // // LatLng ll = new
+                        // // LatLng(item.getLatLonPoint().getLatitude(),
+                        // // item.getLatLonPoint()
+                        // // .getLongitude());
+                        // // mCurLatLng = ll;
+                        // // mLocTitleText.setText(item.getTitle());
+                        // //
+                        // mLocDesText.setText(item.getProvinceName()+item.getCityName()+item.get)
+                        // }
 
-                        PoiOverlay poiOverlay = new PoiOverlay(aMap, poiItems);
-                        poiOverlay.removeFromMap();
-                        poiOverlay.addToMap();
-                        poiOverlay.zoomToSpan();
+                        // PoiOverlay poiOverlay = new PoiOverlay(aMap,
+                        // poiItems);
+                        // poiOverlay.removeFromMap();
+                        // poiOverlay.addToMap();
+                        // poiOverlay.zoomToSpan();
                     } else if (suggestionCities != null && suggestionCities.size() > 0) {
                         showToast("条件模糊，请重新搜索");
                     } else {
@@ -280,15 +296,18 @@ public class MapActivity extends CarPlayBaseActivity implements OnMarkerClickLis
 
     @Override
     public void onLocationChanged(AMapLocation location) {
-        // TODO Auto-generated method stub
         if (location != null) {
             LatLng ll = new LatLng(location.getLatitude(), location.getLongitude());
-            mMarkerOptions.position(ll);
-            mMarkerOptions.title(location.getPoiName());
-            mMarkerOptions.snippet(location.getDistrict());
-            aMap.addMarker(mMarkerOptions);
+            // mMarkerOptions.position(ll);
+            // mMarkerOptions.title(location.getPoiName());
+            // mMarkerOptions.snippet(location.getDistrict());
+            // aMap.addMarker(mMarkerOptions);
+
+            mMarker = aMap.addMarker(new MarkerOptions().anchor(0.5f, 0.5f).icon(
+                    BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
 
             if (mIsFirstLocate) {
+                hidenProgressDialog();
                 mCurLatLng = new LatLng(location.getLatitude(), location.getLongitude());
                 mIsFirstLocate = false;
                 LatLonPoint latLonPoint = new LatLonPoint(ll.latitude, ll.longitude);
@@ -319,24 +338,31 @@ public class MapActivity extends CarPlayBaseActivity implements OnMarkerClickLis
         if (rCode == 0) {
             if (result != null && result.getRegeocodeAddress() != null
                     && result.getRegeocodeAddress().getFormatAddress() != null) {
+
                 mAddress = result.getRegeocodeAddress();
+                PoiItem item = mAddress.getPois().get(0);
+                mLocTitleText.setText(item.getTitle());
+                mLocDesText.setText(mAddress.getFormatAddress());
 
-                mQuery = new PoiSearch.Query(mAddress.getFormatAddress(), "", "");// 全国搜索
-                mQuery.setPageSize(1);// 每页查询1个
-                mQuery.setPageNum(0);// 设置查第一页
-
-                mPoiSearch = new PoiSearch(MapActivity.this, mQuery);
-                mPoiSearch.setOnPoiSearchListener(MapActivity.this);
-                mPoiSearch.searchPOIAsyn();
+                aMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mCurLatLng, 15));
+                mMarker.setPosition(mCurLatLng);
+                // mQuery = new PoiSearch.Query(mAddress.getFormatAddress(), "",
+                // "");// 全国搜索
+                // mQuery.setPageSize(1);// 每页查询1个
+                // mQuery.setPageNum(0);// 设置查第一页
+                //
+                // mPoiSearch = new PoiSearch(MapActivity.this, mQuery);
+                // mPoiSearch.setOnPoiSearchListener(MapActivity.this);
+                // mPoiSearch.searchPOIAsyn();
             } else {
-                showToast("没有结果");
+                showToast("暂无搜索结果");
             }
         } else if (rCode == 27) {
             showToast("网络错误");
         } else if (rCode == 32) {
             showToast("api key有误");
         } else {
-            showToast("未知错误");
+            showToast("暂无搜索结果");
         }
     }
 
@@ -348,9 +374,9 @@ public class MapActivity extends CarPlayBaseActivity implements OnMarkerClickLis
             if (requestCode == REQUEST_KEY) {
                 String key = data.getStringExtra("key");
                 mSearchEdit.setText(key);
-                showProgressDialog("正在搜索");
+                showProgressDialog("正在搜索...");
                 mQuery = new PoiSearch.Query(key, "", "");// 全国搜索
-                mQuery.setPageSize(10);// 每页查询10个
+                mQuery.setPageSize(1);// 每页查询10个
                 mQuery.setPageNum(0);// 设置查第一页
 
                 mPoiSearch = new PoiSearch(MapActivity.this, mQuery);
