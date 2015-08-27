@@ -407,7 +407,7 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 
 		if (!TextUtils.isEmpty(JSONUtil.getString(headJo, "location"))) {
 			if (JSONUtil.getString(headJo, "location").length() > 8) {
-				addressT.setTextSize(TypedValue.COMPLEX_UNIT_PX, size - 4);
+				addressT.setTextSize(TypedValue.COMPLEX_UNIT_PX, size - 2);
 			}
 		}
 
