@@ -56,6 +56,7 @@ import com.gongpingjia.carplay.view.dialog.CityPickDialog.OnPickResultListener;
 import com.gongpingjia.carplay.view.dialog.DateDialog;
 import com.gongpingjia.carplay.view.dialog.DateDialog.OnDateResultListener;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.umeng.analytics.MobclickAgent;
 
 import de.greenrobot.event.EventBus;
 
@@ -315,6 +316,9 @@ public class BasicMessageActivity extends CarPlayBaseActivity implements
 					// 登录环信
 
 					showToast("注册成功!");
+					if (getIntent().getBooleanExtra("isFromAvatar", false)) {
+                        MobclickAgent.onEvent(self, "register_from_avatar");
+                    }
 
 					CarPlayPerference per = IocContainer.getShare().get(
 							CarPlayPerference.class);
