@@ -49,7 +49,7 @@ public class CarPlayApplication extends Application implements
 		Const.response_total = "totalRows";
 		Const.response_data = "data";
 		Const.netadapter_step_default = 10;
-		Const.DATABASE_VERSION = 8;
+		Const.DATABASE_VERSION = 9;
 		Const.response_success = "result";
 		Const.response_msg = "errmsg";
 		Const.response_result_status = "0";
