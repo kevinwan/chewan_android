@@ -128,6 +128,7 @@ public class MessageAdapter extends NetJSONAdapter {
 						.setVisibility(JSONUtil.getInt(jo, "seat") > 0 ? View.VISIBLE
 								: View.GONE);
 				holder.agreeT.setText("同意");
+				holder.agreeT.setTextColor(mContext.getResources().getColor(R.color.white));
 				holder.agreeT
 						.setBackgroundResource(R.drawable.button_yanzheng_bg);
 				holder.agreeT.setOnClickListener(new OnClickListener() {
