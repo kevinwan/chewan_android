@@ -9,12 +9,13 @@ import android.view.Window;
 import android.view.WindowManager.LayoutParams;
 
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.view.BaseAlertDialog;
 
 /*
  *@author zhanglong
  *Email:1269521147@qq.com
  */
-public class DeleteDialog extends Dialog {
+public class DeleteDialog extends BaseAlertDialog {
 
     private OnDeleteClickListener mListener;
 

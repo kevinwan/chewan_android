@@ -112,6 +112,8 @@ public class LoginActivity extends CarPlayBaseActivity implements
 			isFromLogout = true;
 			ActivityTack.getInstanse().finishOthers(this);
 		}
+
+		User.getInstance().setLogin(false);
 	}
 
 	@Override

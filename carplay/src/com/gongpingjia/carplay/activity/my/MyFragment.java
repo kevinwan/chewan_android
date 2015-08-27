@@ -99,14 +99,12 @@ public class MyFragment extends Fragment implements OnClickListener {
 	int galleryCount = 0;
 
 	boolean isfirst;
-	
-	//是否认证车主成功 (默认0:未成功) 
-	int isAuthenticated=0;
-	int drivingyears=0;
-	String carModel="";
-	String license="";
-	
-	
+
+	// 是否认证车主成功 (默认0:未成功)
+	int isAuthenticated = 0;
+	int drivingyears = 0;
+	String carModel = "";
+	String license = "";
 
 	public static MyFragment getInstance() {
 		if (instance == null) {
@@ -241,25 +239,23 @@ public class MyFragment extends Fragment implements OnClickListener {
 			MainActivity activity = (MainActivity) getActivity();
 			activity.showProgressDialog("加载中");
 		}
-		
+
 		DhNet verifyNet = new DhNet(API.CWBaseurl + "/user/" + user.getUserId()
-				+ "/authentication?token="
-				+ user.getToken());
+				+ "/authentication?token=" + user.getToken());
 		verifyNet.doGet(new NetTask(getActivity()) {
-			
+
 			@Override
 			public void doInUI(Response response, Integer transfer) {
 				if (response.isSuccess()) {
 					JSONObject jo = response.jSONFromData();
 					isAuthenticated = JSONUtil.getInt(jo, "isAuthenticated");
-					drivingyears=JSONUtil.getInt(jo, "drivingExperience");
-					carModel=JSONUtil.getString(jo, "carModel");
-					license=JSONUtil.getString(jo, "licensePhoto");
+					drivingyears = JSONUtil.getInt(jo, "drivingExperience");
+					carModel = JSONUtil.getString(jo, "carModel");
+					license = JSONUtil.getString(jo, "licensePhoto");
 				}
 			}
 		});
-		
-		
+
 		DhNet net = new DhNet(API.CWBaseurl + "/user/" + user.getUserId()
 				+ "/info?userId=" + user.getUserId() + "&token="
 				+ user.getToken());
@@ -309,14 +305,14 @@ public class MyFragment extends Fragment implements OnClickListener {
 						ViewUtil.bindNetImage(carBrandLogoI, carBrandLogo,
 								CarPlayValueFix.optionsDefault.toString());
 					}
-					
+
 					switch (isAuthenticated) {
-					//未认证
+					// 未认证
 					case 0:
 						attestation_txt.setVisibility(View.GONE);
 						carlogo.setVisibility(View.GONE);
 						break;
-					//已认证
+					// 已认证
 					case 1:
 						carlogo.setVisibility(View.VISIBLE);
 						attestation_txt.setVisibility(View.VISIBLE);
@@ -324,7 +320,7 @@ public class MyFragment extends Fragment implements OnClickListener {
 						ViewUtil.bindNetImage(carlogo, carBrandLogo,
 								CarPlayValueFix.optionsDefault.toString());
 						break;
-					//认证中
+					// 认证中
 					case 2:
 						attestation_txt.setVisibility(View.VISIBLE);
 						carlogo.setVisibility(View.GONE);
@@ -335,10 +331,13 @@ public class MyFragment extends Fragment implements OnClickListener {
 						break;
 					}
 
-					if (gender.equals("男"))
-						genderR.setBackgroundResource(R.drawable.man);
-					else
-						genderR.setBackgroundResource(R.drawable.woman);
+					if (!TextUtils.isEmpty(gender)) {  
+						if (gender.equals("男")) {
+							genderR.setBackgroundResource(R.drawable.man);
+						} else {
+							genderR.setBackgroundResource(R.drawable.woman);
+						}
+					}
 
 					postNumberT.setText(postNumber);
 					subscribeNumberT.setText(subscribeNumber);
@@ -424,8 +423,8 @@ public class MyFragment extends Fragment implements OnClickListener {
 							startActivity(it);
 							break;
 						case R.id.owners_certification:
-							//已认证 则不跳转
-							if (isAuthenticated!=1) {
+							// 已认证 则不跳转
+							if (isAuthenticated != 1) {
 								it = new Intent(getActivity(),
 										AuthenticateOwnersActivity.class);
 								it.putExtra("type", "my");
