@@ -302,9 +302,27 @@ public class PersonDetailActivity extends CarPlayBaseActivity implements
 					ViewUtil.bindView(headV.findViewById(R.id.nickname),
 							JSONUtil.getString(jo, "nickname"));
 
-					CarPlayUtil.bindDriveAge(jo,
-							(ImageView) headV.findViewById(R.id.car_logo),
-							(TextView) headV.findViewById(R.id.drive_age));
+					if (JSONUtil.getString(jo, "role").equals("官方用户")) {
+						headV.findViewById(R.id.car_logo).setVisibility(
+								View.GONE);
+						headV.findViewById(R.id.drive_age).setVisibility(
+								View.GONE);
+						headV.findViewById(R.id.layout_sex).setVisibility(
+								View.GONE);
+					} else {
+						headV.findViewById(R.id.car_logo).setVisibility(
+								View.VISIBLE);
+						headV.findViewById(R.id.drive_age).setVisibility(
+								View.VISIBLE);
+						headV.findViewById(R.id.layout_sex).setVisibility(
+								View.VISIBLE);
+						CarPlayUtil.bindDriveAge(jo,
+								(ImageView) headV.findViewById(R.id.car_logo),
+								(TextView) headV.findViewById(R.id.drive_age));
+						CarPlayUtil.bindSexView(
+								JSONUtil.getString(jo, "gender"),
+								headV.findViewById(R.id.layout_sex));
+					}
 
 					// ViewUtil.bindView(
 					// headV.findViewById(R.id.drive_age),
@@ -315,8 +333,6 @@ public class PersonDetailActivity extends CarPlayBaseActivity implements
 					ViewUtil.bindView(headV.findViewById(R.id.content),
 							JSONUtil.getString(jo, "introduction"));
 
-					CarPlayUtil.bindSexView(JSONUtil.getString(jo, "gender"),
-							headV.findViewById(R.id.layout_sex));
 					ViewUtil.bindView(headV.findViewById(R.id.age),
 							JSONUtil.getString(jo, "age"));
 					// ViewUtil.bindNetImage(

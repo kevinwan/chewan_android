@@ -375,7 +375,9 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 			public void doInUI(Response response, Integer transfer) {
 				if (response.isSuccess()) {
 					headJo = response.jSONFromData();
-					bindHeadView(headJo);
+					if (headJo != null) {
+						bindHeadView(headJo);
+					}
 				}
 			}
 		});
@@ -392,10 +394,26 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 				JSONUtil.getString(headJo, "introduction"));
 		ViewUtil.bindView(headV.findViewById(R.id.des),
 				JSONUtil.getString(headJo, "introduction"));
+		View layoutSex = headV.findViewById(R.id.layout_sex);
 
-		CarPlayUtil.bindDriveAge(createrJo,
-				(ImageView) headV.findViewById(R.id.car_logo),
-				(TextView) headV.findViewById(R.id.drive_age));
+		if (JSONUtil.getString(createrJo, "role").equals("官方用户")) {
+			headV.findViewById(R.id.car_logo).setVisibility(View.GONE);
+			headV.findViewById(R.id.drive_age).setVisibility(View.GONE);
+			layoutSex.setVisibility(View.GONE);
+		} else {
+			CarPlayUtil.bindDriveAge(createrJo,
+					(ImageView) headV.findViewById(R.id.car_logo),
+					(TextView) headV.findViewById(R.id.drive_age));
+
+			if (!TextUtils.isEmpty(JSONUtil.getString(createrJo, "gender"))) {
+				if (JSONUtil.getString(createrJo, "gender").equals("男")) {
+					layoutSex.setBackgroundResource(R.drawable.man);
+				} else {
+					layoutSex.setBackgroundResource(R.drawable.woman);
+				}
+			}
+		}
+
 		RoundImageView headI = (RoundImageView) headV.findViewById(R.id.head);
 		ViewUtil.bindNetImage(headI, JSONUtil.getString(createrJo, "photo"),
 				"head");
@@ -434,14 +452,6 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 		ViewUtil.bindView(headV.findViewById(R.id.pay),
 				JSONUtil.getString(headJo, "pay"));
 
-		View layoutSex = headV.findViewById(R.id.layout_sex);
-		if (!TextUtils.isEmpty(JSONUtil.getString(createrJo, "gender"))) {
-			if (JSONUtil.getString(createrJo, "gender").equals("男")) {
-				layoutSex.setBackgroundResource(R.drawable.man);
-			} else {
-				layoutSex.setBackgroundResource(R.drawable.woman);
-			}
-		}
 		ViewUtil.bindView(headV.findViewById(R.id.empty_seats),
 				JSONUtil.getString(headJo, "seatInfo"));
 		ViewUtil.bindView(headV.findViewById(R.id.age),

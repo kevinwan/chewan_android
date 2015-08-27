@@ -208,30 +208,9 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 				View car_age = itemV.findViewById(R.id.car_age);
 				View sexBg = itemV.findViewById(R.id.sex);
 				View seat_num = itemV.findViewById(R.id.seat_num);
-				View seatnum = itemV.findViewById(R.id.seatnum);
+				TextView seatnum = (TextView) itemV.findViewById(R.id.seatnum);
 				View seatnumber = itemV.findViewById(R.id.seatnumber);
 
-				if (JSONUtil.getString(itemjo, "gender").equals("男")) {
-					sexBg.setBackgroundResource(R.drawable.man);
-				} else {
-					sexBg.setBackgroundResource(R.drawable.woman);
-				}
-				String drive_str = JSONUtil.getString(itemjo, "carModel");
-				if (TextUtils.isEmpty(JSONUtil.getString(itemjo, "carModel"))) {
-					car_age.setVisibility(View.GONE);
-					car_logo.setVisibility(View.GONE);
-					drive_age.setText("带我飞~");
-				} else {
-					car_age.setVisibility(View.VISIBLE);
-					car_logo.setVisibility(View.VISIBLE);
-					if (drive_str.length() > 15) {
-						drive_str = drive_str.substring(0, 15) + "...";
-					}
-					drive_age.setText(drive_str);
-					ViewUtil.bindView(itemV.findViewById(R.id.car_age), ","
-							+ JSONUtil.getString(itemjo, "drivingExperience")
-							+ "年驾龄");
-				}
 				ViewUtil.bindView(itemV.findViewById(R.id.age),
 						JSONUtil.getString(itemjo, "age"));
 				ViewUtil.bindView(itemV.findViewById(R.id.name),
@@ -253,6 +232,46 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 					seatnum.setVisibility(View.GONE);
 					seatnumber.setVisibility(View.GONE);
 				}
+
+				if (JSONUtil.getString(itemjo, "role").equals("官方用户")) {
+					itemV.findViewById(R.id.car_logo).setVisibility(View.GONE);
+					itemV.findViewById(R.id.drive_age).setVisibility(View.GONE);
+					itemV.findViewById(R.id.car_age).setVisibility(View.GONE);
+					itemV.findViewById(R.id.sex).setVisibility(View.GONE);
+					seatnum.setText("提供");
+				} else {
+					itemV.findViewById(R.id.drive_age).setVisibility(
+							View.VISIBLE);
+					seatnum.setText(",提供");
+					String drive_str = JSONUtil.getString(itemjo, "carModel");
+					if (TextUtils.isEmpty(JSONUtil
+							.getString(itemjo, "carModel"))) {
+						car_age.setVisibility(View.GONE);
+						car_logo.setVisibility(View.GONE);
+						drive_age.setText("带我飞~");
+					} else {
+						car_age.setVisibility(View.VISIBLE);
+						car_logo.setVisibility(View.VISIBLE);
+						if (drive_str.length() > 15) {
+							drive_str = drive_str.substring(0, 15) + "...";
+						}
+						drive_age.setText(drive_str);
+						ViewUtil.bindView(
+								itemV.findViewById(R.id.car_age),
+								","
+										+ JSONUtil.getString(itemjo,
+												"drivingExperience") + "年驾龄");
+					}
+
+					itemV.findViewById(R.id.sex).setVisibility(View.VISIBLE);
+
+					if (JSONUtil.getString(itemjo, "gender").equals("男")) {
+						sexBg.setBackgroundResource(R.drawable.man);
+					} else {
+						sexBg.setBackgroundResource(R.drawable.woman);
+					}
+				}
+
 				return o;
 			}
 		});
