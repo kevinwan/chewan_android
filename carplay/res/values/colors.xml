@@ -18,6 +18,8 @@
 
     <!-- 背景灰 -->
     <color name="bg_grey">#f5f7fa</color>
+    
+    <color name="dialog_blue">#23bde1</color>
     <!-- 线灰 -->
     <color name="line_grey">#e6e9ed</color>
     <color name="tab_grey_bg">#f5f7fa</color>

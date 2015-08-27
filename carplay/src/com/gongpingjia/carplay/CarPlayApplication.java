@@ -11,12 +11,9 @@ import android.app.Application;
 import android.content.Intent;
 
 import com.easemob.EMCallBack;
-import com.easemob.chat.EMChat;
 import com.gongpingjia.carplay.activity.main.SplashActivity;
 import com.gongpingjia.carplay.chat.DemoHXSDKHelper;
-import com.gongpingjia.carplay.data.CityDataManage;
 import com.gongpingjia.carplay.db.DaoHelper;
-import com.gongpingjia.carplay.service.MsgService;
 import com.gongpingjia.carplay.view.NomalDialog;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -49,7 +46,7 @@ public class CarPlayApplication extends Application implements
 		Const.response_total = "totalRows";
 		Const.response_data = "data";
 		Const.netadapter_step_default = 10;
-		Const.DATABASE_VERSION = 9;
+		Const.DATABASE_VERSION = 16;
 		Const.response_success = "result";
 		Const.response_msg = "errmsg";
 		Const.response_result_status = "0";

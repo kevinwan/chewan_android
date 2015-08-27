@@ -46,6 +46,8 @@ public class CarSeatSelectDialog extends BaseAlertDialog {
 	TextView desT;
 
 	String activityId;
+	
+	TextView unitT;
 
 	public CarSeatSelectDialog(Context context, String activityId) {
 		super(context);
@@ -60,6 +62,7 @@ public class CarSeatSelectDialog extends BaseAlertDialog {
 		setContentView(R.layout.dialog_carseat_select);
 		radiogroup = (RadioGroup) findViewById(R.id.radiogroup);
 		countT = (TextView) findViewById(R.id.count);
+		unitT=(TextView) findViewById(R.id.count_unit);
 		desT = (TextView) findViewById(R.id.des);
 		seatLayoutV = findViewById(R.id.seatLayout);
 		seatLayoutV.setOnClickListener(new View.OnClickListener() {
@@ -96,6 +99,11 @@ public class CarSeatSelectDialog extends BaseAlertDialog {
 					countT.setText(0 + "");
 					countT.setTextColor(mContext.getResources().getColor(
 							R.color.text_grey));
+					unitT.setTextColor(mContext.getResources().getColor(
+							R.color.text_grey));
+				}else {
+					unitT.setTextColor(mContext.getResources().getColor(
+							R.color.text_black));
 				}
 			}
 		});

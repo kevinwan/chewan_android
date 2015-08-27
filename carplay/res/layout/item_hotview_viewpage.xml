@@ -36,7 +36,7 @@
                 style="@style/text_white_small"
                 android:layout_width="match_parent"
                 android:gravity="center_vertical|right"
-                android:text="报名截止:" />
+                 />
         </LinearLayout>
 
         <LinearLayout
