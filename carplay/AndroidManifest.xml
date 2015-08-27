@@ -50,6 +50,7 @@
 
         <activity
             android:name=".activity.chat.AlertDialog"
+            android:theme="@style/CustomDia"
             android:screenOrientation="portrait" >
         </activity>
         <activity

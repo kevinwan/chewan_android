@@ -18,8 +18,10 @@ import java.io.File;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -43,6 +45,8 @@ public class AlertDialog extends CarPlayBaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.alert_dialog);
+		// getWindow().setLayout(LayoutParams.MATCH_PARENT,
+		// LayoutParams.MATCH_PARENT);
 		mTextView = (TextView) findViewById(R.id.title);
 		mButton = (Button) findViewById(R.id.btn_cancel);
 		imageView = (ImageView) findViewById(R.id.image);
@@ -101,17 +105,17 @@ public class AlertDialog extends CarPlayBaseActivity {
 		/* .putExtra("voicePath", voicePath) */);
 		if (position != -1)
 			ChatActivity.resendPos = position;
-		finish();
+		finishAnim();
 
 	}
 
 	public void cancel(View view) {
-		finish();
+		finishAnim();
 	}
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		finish();
+		finishAnim();
 		return true;
 	}
 
@@ -121,4 +125,13 @@ public class AlertDialog extends CarPlayBaseActivity {
 
 	}
 
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			finishAnim();
+			return false;
+		}
+		// TODO Auto-generated method stub
+		return super.onKeyDown(keyCode, event);
+	}
 }

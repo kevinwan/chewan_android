@@ -20,7 +20,8 @@
         <item name="android:textColor">@color/text_black</item>
         <item name="android:textSize">@dimen/text_medium</item>
     </style>
-     <style name="text_black_big">
+
+    <style name="text_black_big">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/text_black</item>
@@ -206,6 +207,19 @@
         <item name="android:windowIsTranslucent">true</item>
         <!-- 设置半透明 -->
         <item name="android:windowFullscreen">true</item>
+        <item name="android:windowAnimationStyle">@style/FeelyouWindowAnimTheme</item>
+        <!-- 设置全屏 -->
+    </style>
+
+    <style name="CustomDia" parent="@android:style/Theme.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <!-- 设置title -->
+        <item name="android:windowBackground">@color/nothing</item>
+        <item name="android:windowFrame">@null</item>
+        <!-- 设置边框 -->
+        <item name="android:windowIsTranslucent">true</item>
+        <!-- 设置半透明 -->
+        <item name="android:windowFullscreen">false</item>
         <item name="android:windowAnimationStyle">@style/FeelyouWindowAnimTheme</item>
         <!-- 设置全屏 -->
     </style>
