@@ -776,9 +776,9 @@ public class ChatActivity extends CarPlayBaseActivity implements
 
 				}
 			} else if (requestCode == REQUEST_CODE_ADD_TO_BLACKLIST) { // 移入黑名单
-				EMMessage deleteMsg = (EMMessage) adapter.getItem(data
-						.getIntExtra("position", -1));
-				addUserToBlacklist(deleteMsg.getFrom());
+//				EMMessage deleteMsg = (EMMessage) adapter.getItem(data
+//						.getIntExtra("position", -1));
+//				addUserToBlacklist(deleteMsg.getFrom());
 			} else if (conversation.getMsgCount() > 0) {
 				adapter.refresh();
 				setResult(RESULT_OK);

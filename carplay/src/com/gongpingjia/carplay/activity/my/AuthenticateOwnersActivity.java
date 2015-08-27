@@ -91,7 +91,19 @@ public class AuthenticateOwnersActivity extends CarPlayBaseActivity implements
 					finish();
 				}
 			});
+			
+			findViewById(R.id.backLayout).setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					Intent it = getIntent();
+					setResult(Activity.RESULT_OK, it);
+					finish();
+				}
+			});
 		}
+		
+		
 		modelT = (TextView) findViewById(R.id.model);
 		modelT.setOnClickListener(this);
 		picI = (ImageView) findViewById(R.id.pic);

@@ -95,14 +95,17 @@ public class AttestationNotifyActivity extends CarPlayBaseActivity {
 				if (result.equals("0")) {
 					finish();
 				} else {
-					Intent intent = new Intent(self,
-							AuthenticateOwnersActivity.class);
-					intent.putExtra("type", "attest");
-					intent.putExtra("isAuthenticated", isAuthenticated);
-					intent.putExtra("drivingyears", drivingyears);
-					intent.putExtra("carModel", carModel);
-					intent.putExtra("license", license);
-					startActivity(intent);
+					//已认证 则不跳转
+					if (isAuthenticated!=1) {
+						Intent intent = new Intent(self,
+								AuthenticateOwnersActivity.class);
+						intent.putExtra("type", "attest");
+						intent.putExtra("isAuthenticated", isAuthenticated);
+						intent.putExtra("drivingyears", drivingyears);
+						intent.putExtra("carModel", carModel);
+						intent.putExtra("license", license);
+						startActivity(intent);
+					}
 					finish();
 				}
 			}
