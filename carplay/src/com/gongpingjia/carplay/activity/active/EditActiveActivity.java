@@ -413,13 +413,6 @@ public class EditActiveActivity extends CarPlayBaseActivity implements
 						showToast("修改成功");
 						self.finish();
 						EventBus.getDefault().post(new ActiveEditEB());
-					} else {
-						showToast("修改异常请重试");
-						try {
-							Log.e("err", response.jSON().getString("errmsg"));
-						} catch (JSONException e) {
-							e.printStackTrace();
-						}
 					}
 				}
 			});

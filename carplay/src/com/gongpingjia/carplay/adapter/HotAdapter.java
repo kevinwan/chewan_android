@@ -235,8 +235,19 @@ public class HotAdapter extends NetJSONAdapter {
 			}
 		}
 
-		if (type == 0 && isRefresh) {
-			bindViewPageAdapter();
+		if (type == 0) {
+			if (isRefresh) {
+				bindViewPageAdapter();
+				System.out.println("build..............");
+			} else {
+				if ((jsa != null && middleHolder.pager != null)
+						&& (middleHolder.pager.getChildCount() == 0)) {
+					System.out.println("middleHolder.pager.getChildCount()"
+							+ middleHolder.pager.getChildCount());
+					bindViewPageAdapter();
+					System.out.println("rebuild..............");
+				}
+			}
 		} else {
 			final JSONObject jo = getItem(position);
 			if (jo != null) {

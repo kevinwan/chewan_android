@@ -9,6 +9,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.gongpingjia.carplay.bean.Active;
 import com.gongpingjia.carplay.bean.Message;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
@@ -29,6 +30,7 @@ public class DaoHelper extends OrmLiteSqliteOpenHelper {
 			System.out.println("创建数据库..............");
 			TableUtils.createTable(connectionSource, Cache.class);
 			TableUtils.createTable(connectionSource, Message.class);
+			TableUtils.createTable(connectionSource, Active.class);
 		} catch (SQLException e) {
 			System.out.println("e" + e);
 			e.printStackTrace();
@@ -42,6 +44,7 @@ public class DaoHelper extends OrmLiteSqliteOpenHelper {
 			System.out.println("删除数据库..............");
 			TableUtils.dropTable(connectionSource, Cache.class, true);
 			TableUtils.dropTable(connectionSource, Message.class, true);
+			TableUtils.dropTable(connectionSource, Active.class, true);
 			onCreate(db, connectionSource);
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -212,6 +212,7 @@ public class SplashActivity extends CarPlayBaseActivity {
 							user.setNickName(JSONUtil.getString(jo, "nickname"));
 							user.setHeadUrl(JSONUtil.getString(jo, "photo"));
 							User.getInstance().setLogin(true);
+							
 							LoginEB loginEB = new LoginEB();
 							loginEB.setIslogin(true);
 							EventBus.getDefault().post(loginEB);

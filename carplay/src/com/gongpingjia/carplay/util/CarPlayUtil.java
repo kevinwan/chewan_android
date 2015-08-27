@@ -17,10 +17,12 @@ import com.gongpingjia.carplay.R;
 
 public class CarPlayUtil {
 	public static void bindSexView(String gender, View sexBg) {
-		if (gender.equals("男")) {
-			sexBg.setBackgroundResource(R.drawable.man);
-		} else {
-			sexBg.setBackgroundResource(R.drawable.woman);
+		if (!TextUtils.isEmpty(gender)) {
+			if (gender.equals("男")) {
+				sexBg.setBackgroundResource(R.drawable.man);
+			} else {
+				sexBg.setBackgroundResource(R.drawable.woman);
+			}
 		}
 	}
 
