@@ -28,7 +28,9 @@ public class GalleryAdapter extends BaseAdapter {
 
 	public GalleryAdapter(Context context, JSONArray jsa) {
 		this.mContext = context;
-		mLayoutInflater = LayoutInflater.from(mContext);
+		if (mContext != null) {
+			mLayoutInflater = LayoutInflater.from(mContext);
+		}
 		this.jsa = jsa;
 	}
 
