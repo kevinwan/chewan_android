@@ -85,12 +85,30 @@
                     android:visibility="gone" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/content"
-                style="@style/text_grey_small"
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:ellipsize="end"
-                android:maxLines="1" />
+                 >
+
+                <TextView
+                    android:id="@+id/content"
+                    style="@style/text_grey_small"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:maxWidth="220dp"
+                    android:text=""
+                     />
+
+                <TextView
+                    android:id="@+id/content_last"
+                    style="@style/text_grey_small"
+                    android:layout_toRightOf="@id/content"
+                    android:singleLine="true"
+                    android:visibility="gone"
+                    android:text=""
+                     />
+            </RelativeLayout>
         </LinearLayout>
 
         <LinearLayout

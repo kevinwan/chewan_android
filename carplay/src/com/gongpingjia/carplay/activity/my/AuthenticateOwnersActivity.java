@@ -154,6 +154,9 @@ public class AuthenticateOwnersActivity extends CarPlayBaseActivity implements
 			submitB.setText("认证中");
 			submitB.setEnabled(false);
 			submitB.setBackgroundResource(R.drawable.btn_grey_bg);
+			picI.setEnabled(false);
+			drivingExperienceE.setEnabled(false);
+			modelT.setEnabled(false);
 			break;
 
 		default:

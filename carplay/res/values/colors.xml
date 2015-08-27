@@ -64,5 +64,6 @@
     <color name="btn_answer_normal">#2dafa3</color>
     <color name="btn_chatcopy_focused">#75D2D4</color>
     <color name="btn_chatdel_focused">#FC927D</color>
+    <color name="btn_head_grey">#CCD1D9</color>
 
 </resources>

@@ -14,6 +14,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -71,6 +72,7 @@ public class MessageAdapter extends NetJSONAdapter {
 			holder.carLogoI = (ImageView) convertView
 					.findViewById(R.id.carlogo);
 			holder.timeT = (TextView) convertView.findViewById(R.id.time);
+			holder.content_lastT=(TextView) convertView.findViewById(R.id.content_last);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
@@ -147,6 +149,7 @@ public class MessageAdapter extends NetJSONAdapter {
 			} else if (remarks.equals("已同意") && msgtype.equals("活动申请处理")) {
 				holder.agreeT.setVisibility(View.VISIBLE);
 				holder.agreeT.setText(remarks);
+				holder.agreeT.setTextColor((mContext.getResources().getColor(R.color.text_grey)));
 				holder.agreeT.setBackgroundResource(R.drawable.button_grey_bg);
 				
 				holder.countT
@@ -174,14 +177,18 @@ public class MessageAdapter extends NetJSONAdapter {
 		String newcontent = null;
 		String content = JSONUtil.getString(jo, "content");
 		if (!msgtype.equals("留言")) {
+			holder.content_lastT.setVisibility(View.VISIBLE);
 			if (msgtype.equals("车主认证")) {
 				newcontent = "您提交的" + content;
 			} else if (msgtype.equals("活动邀请")) {
-				newcontent = "邀请您加入" + content + "活动";
+				newcontent = "邀请您加入" + content ;
+				holder.content_lastT.setText("活动");
 			} else if (msgtype.equals("活动申请结果")) {
-				newcontent = "活动消息: " + content + "已同意";
+				newcontent = "活动申请: " + content;
+				holder.content_lastT.setText("已同意");
 			} else if (msgtype.equals("活动申请处理")) {
-				newcontent = "想加入" + content + "活动";
+				newcontent = "想加入" + content;
+				holder.content_lastT.setText("活动");
 			}
 			int start = newcontent.indexOf(content);
 			SpannableStringBuilder style = new SpannableStringBuilder(
@@ -194,6 +201,7 @@ public class MessageAdapter extends NetJSONAdapter {
 			// Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
 			holder.contentT.setText(style);
 		} else {
+			holder.content_lastT.setVisibility(View.GONE);
 			ViewUtil.bindView(holder.contentT,
 					JSONUtil.getString(jo, "content"));
 		}
@@ -297,7 +305,7 @@ public class MessageAdapter extends NetJSONAdapter {
 
 		TextView agreeT;
 
-		TextView countT, timeT;
+		TextView countT, timeT,content_lastT;
 
 	}
 }

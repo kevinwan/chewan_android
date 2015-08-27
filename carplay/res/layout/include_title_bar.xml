@@ -47,6 +47,10 @@
             android:layout_centerInParent="true"
             android:text="首页"
             android:textColor="@color/white"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:gravity="center"
+            android:maxWidth="200dp"
             android:textSize="@dimen/text_title" />
 
         <TextView
