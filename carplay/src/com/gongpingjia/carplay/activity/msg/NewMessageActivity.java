@@ -13,6 +13,7 @@ import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.util.DhUtil;
+import net.duohuo.dhroid.util.ViewUtil;
 import net.duohuo.dhroid.view.NetRefreshAndMoreListView;
 import net.duohuo.dhroid.view.NetRefreshAndMoreListView.OnEmptyDataListener;
 import net.duohuo.dhroid.view.RefreshAndMoreListView;
@@ -200,6 +201,7 @@ public class NewMessageActivity extends CarPlayBaseActivity implements
 
 			@Override
 			public void onEmpty(boolean showeEptyView) {
+				ViewUtil.bindView(findViewById(R.id.msg), "暂无留言");
 				findViewById(R.id.empty).setVisibility(
 						showeEptyView ? View.VISIBLE : View.GONE);
 			}

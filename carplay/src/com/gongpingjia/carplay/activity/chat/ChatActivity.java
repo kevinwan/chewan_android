@@ -776,9 +776,9 @@ public class ChatActivity extends CarPlayBaseActivity implements
 
 				}
 			} else if (requestCode == REQUEST_CODE_ADD_TO_BLACKLIST) { // 移入黑名单
-//				EMMessage deleteMsg = (EMMessage) adapter.getItem(data
-//						.getIntExtra("position", -1));
-//				addUserToBlacklist(deleteMsg.getFrom());
+				// EMMessage deleteMsg = (EMMessage) adapter.getItem(data
+				// .getIntExtra("position", -1));
+				// addUserToBlacklist(deleteMsg.getFrom());
 			} else if (conversation.getMsgCount() > 0) {
 				adapter.refresh();
 				setResult(RESULT_OK);
@@ -1019,9 +1019,13 @@ public class ChatActivity extends CarPlayBaseActivity implements
 			TextMessageBody txtBody = new TextMessageBody(content);
 			// 设置消息body
 			message.addBody(txtBody);
-			message.setAttribute("nickName", user.getNickName());
-			message.setAttribute("headUrl", user.getHeadUrl());
-			message.setAttribute("userId", user.getUserId());
+			if (!TextUtils.isEmpty(user.getNickName())
+					&& !TextUtils.isEmpty(user.getHeadUrl())
+					&& !TextUtils.isEmpty(user.getUserId())) {
+				message.setAttribute("nickName", user.getNickName());
+				message.setAttribute("headUrl", user.getHeadUrl());
+				message.setAttribute("userId", user.getUserId());
+			}
 			// 设置要发给谁,用户username或者群聊groupid
 			message.setReceipt(toChatUsername);
 			// 把messgage加到conversation中
@@ -1057,9 +1061,13 @@ public class ChatActivity extends CarPlayBaseActivity implements
 			} else if (chatType == CHATTYPE_CHATROOM) {
 				message.setChatType(ChatType.ChatRoom);
 			}
-			message.setAttribute("nickName", user.getNickName());
-			message.setAttribute("headUrl", user.getHeadUrl());
-			message.setAttribute("userId", user.getUserId());
+			if (!TextUtils.isEmpty(user.getNickName())
+					&& !TextUtils.isEmpty(user.getHeadUrl())
+					&& !TextUtils.isEmpty(user.getUserId())) {
+				message.setAttribute("nickName", user.getNickName());
+				message.setAttribute("headUrl", user.getHeadUrl());
+				message.setAttribute("userId", user.getUserId());
+			}
 			message.setReceipt(toChatUsername);
 			int len = Integer.parseInt(length);
 			VoiceMessageBody body = new VoiceMessageBody(new File(filePath),
@@ -1094,9 +1102,13 @@ public class ChatActivity extends CarPlayBaseActivity implements
 		} else if (chatType == CHATTYPE_CHATROOM) {
 			message.setChatType(ChatType.ChatRoom);
 		}
-		message.setAttribute("nickName", user.getNickName());
-		message.setAttribute("headUrl", user.getHeadUrl());
-		message.setAttribute("userId", user.getUserId());
+		if (!TextUtils.isEmpty(user.getNickName())
+				&& !TextUtils.isEmpty(user.getHeadUrl())
+				&& !TextUtils.isEmpty(user.getUserId())) {
+			message.setAttribute("nickName", user.getNickName());
+			message.setAttribute("headUrl", user.getHeadUrl());
+			message.setAttribute("userId", user.getUserId());
+		}
 		message.setReceipt(to);
 		ImageMessageBody body = new ImageMessageBody(new File(filePath));
 		// 默认超过100k的图片会压缩后发给对方，可以设置成发送原图
@@ -1205,9 +1217,13 @@ public class ChatActivity extends CarPlayBaseActivity implements
 		} else if (chatType == CHATTYPE_CHATROOM) {
 			message.setChatType(ChatType.ChatRoom);
 		}
-		message.setAttribute("nickName", user.getNickName());
-		message.setAttribute("headUrl", user.getHeadUrl());
-		message.setAttribute("userId", user.getUserId());
+		if (!TextUtils.isEmpty(user.getNickName())
+				&& !TextUtils.isEmpty(user.getHeadUrl())
+				&& !TextUtils.isEmpty(user.getUserId())) {
+			message.setAttribute("nickName", user.getNickName());
+			message.setAttribute("headUrl", user.getHeadUrl());
+			message.setAttribute("userId", user.getUserId());
+		}
 		LocationMessageBody locBody = new LocationMessageBody(locationAddress,
 				latitude, longitude);
 		message.addBody(locBody);
