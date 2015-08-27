@@ -25,6 +25,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -353,21 +354,34 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements
 			}
 		});
 
-		OrmLiteSqliteOpenHelper daoHelper = IocContainer.getShare().get(
-				OrmLiteSqliteOpenHelper.class);
-		try {
-			activeDao = daoHelper.getDao(Active.class);
-			List<Active> list = activeDao.queryForAll();
-			if (list.size() > 0) {
-				Active active = list.get(list.size() - 1);
-				initData(active);
-			} else {
-				mPhotoStates.add(mLastPhoto);
-				mImageAdapter.notifyDataSetChanged();
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				OrmLiteSqliteOpenHelper daoHelper = IocContainer.getShare()
+						.get(OrmLiteSqliteOpenHelper.class);
+				try {
+					activeDao = daoHelper.getDao(Active.class);
+					final List<Active> list = activeDao.queryForAll();
+
+					runOnUiThread(new Runnable() {
+
+						@Override
+						public void run() {
+							if (list.size() > 0) {
+								Active active = list.get(list.size() - 1);
+								initData(active);
+							} else {
+								mPhotoStates.add(mLastPhoto);
+								mImageAdapter.notifyDataSetChanged();
+							}
+						}
+					});
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		}).start();
 
 	}
 

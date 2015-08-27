@@ -45,20 +45,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="首页"
-            android:textColor="@color/white"
             android:ellipsize="end"
-            android:singleLine="true"
             android:gravity="center"
             android:maxWidth="200dp"
+            android:singleLine="true"
+            android:text="首页"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_title" />
 
         <TextView
             android:id="@+id/right_text"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:gravity="center"
             android:text="创建活动"
             android:textColor="@color/white"
             android:textSize="@dimen/text_medium"
@@ -67,12 +68,12 @@
         <ImageView
             android:id="@+id/right_icon"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
-            android:scaleType="fitStart"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:scaleType="center"
             android:visibility="gone" />
     </RelativeLayout>
 
