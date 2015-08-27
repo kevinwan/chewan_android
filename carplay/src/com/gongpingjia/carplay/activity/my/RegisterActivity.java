@@ -10,7 +10,6 @@ import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -22,6 +21,7 @@ import com.gongpingjia.carplay.activity.main.TermsActivity;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.util.MD5Util;
 import com.gongpingjia.carplay.util.Utils;
+import com.umeng.analytics.MobclickAgent;
 
 /***
  * 注册页面
@@ -176,6 +176,7 @@ public class RegisterActivity extends CarPlayBaseActivity implements OnClickList
                     it.putExtra("phone", phone);
                     it.putExtra("code", code);
                     it.putExtra("pswd", MD5Util.string2MD5(pswdEt.getText().toString()));
+                    it.putExtra("isFromAvatar", getIntent().getBooleanExtra("isFromAvatar", false));
                     startActivityForResult(it, BasicMessage);
                 } else {
                     showToast("验证码错误!");
