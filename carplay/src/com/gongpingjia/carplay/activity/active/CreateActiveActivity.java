@@ -657,7 +657,7 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
             mDhNet.addParam("pay", mFeeText.getText().toString());
             mDhNet.addParam("seat", mSeatText.getText().toString());
 
-            if (UserLocation.getInstance().getCity() != null) {
+            if (!TextUtils.isEmpty(UserLocation.getInstance().getCity())) {
                 mDhNet.addParam("currentCity", UserLocation.getInstance().getCity());
             } else {
                 mDhNet.addParam("currentCity", UserLocation.getInstance().getProvice());
