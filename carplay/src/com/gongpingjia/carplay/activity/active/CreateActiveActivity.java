@@ -647,7 +647,7 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements
 				showToast("请选择目的地");
 				return;
 			}
-			if (mSeatText.getText().toString().length() == 0) {
+			if (mSeatText.getText().toString().length() == 0 || mSeatText.getText().toString().equals("0")) {
 				showToast("请选择空座位数");
 				return;
 			}
