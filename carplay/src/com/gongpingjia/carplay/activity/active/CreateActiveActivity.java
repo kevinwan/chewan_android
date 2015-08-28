@@ -579,8 +579,12 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
             }
             mDhNet.addParam("latitude", mLatitude);
             mDhNet.addParam("longitude", mLongitude);
-            
-            mDhNet.addParam("currentCity", UserLocation.getInstance().getCity());
+
+            if (UserLocation.getInstance().getCity() != null) {
+                mDhNet.addParam("currentCity", UserLocation.getInstance().getCity());
+            } else {
+                mDhNet.addParam("currentCity", UserLocation.getInstance().getProvice());
+            }
             mDhNet.addParam("currentDistrict", UserLocation.getInstance().getDistrict());
 
             Map<String, Object> params = mDhNet.getParams();
@@ -652,10 +656,14 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
             mDhNet.addParam("district", mDistrict);
             mDhNet.addParam("pay", mFeeText.getText().toString());
             mDhNet.addParam("seat", mSeatText.getText().toString());
-            
-            mDhNet.addParam("currentCity", UserLocation.getInstance().getCity());
+
+            if (!TextUtils.isEmpty(UserLocation.getInstance().getCity())) {
+                mDhNet.addParam("currentCity", UserLocation.getInstance().getCity());
+            } else {
+                mDhNet.addParam("currentCity", UserLocation.getInstance().getProvice());
+            }
             mDhNet.addParam("currentDistrict", UserLocation.getInstance().getDistrict());
-            
+
             if (mEndTimeStamp != 0) {
                 mDhNet.addParam("end", mEndTimeStamp);
             }
