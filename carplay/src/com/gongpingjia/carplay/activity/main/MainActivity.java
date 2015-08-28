@@ -63,6 +63,7 @@ import com.gongpingjia.carplay.activity.my.MyFragment;
 import com.gongpingjia.carplay.activity.my.SettingActivity;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.api.Constant;
+import com.gongpingjia.carplay.bean.TabEB;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.chat.DemoHXSDKHelper;
 import com.gongpingjia.carplay.chat.bean.GroupEB;
@@ -141,6 +142,7 @@ public class MainActivity extends BaseFragmentActivity implements
 						EMNotifierEvent.Event.EventNewMessage,
 						EMNotifierEvent.Event.EventOfflineMessage,
 						EMNotifierEvent.Event.EventConversationListChanged });
+
 		// asyncFetchGroupsFromServer();
 		// ((DemoHXSDKHelper) HXSDKHelper.getInstance()).getUserProfileManager()
 		// .asyncGetCurrentUserInfo();
@@ -548,6 +550,10 @@ public class MainActivity extends BaseFragmentActivity implements
 		} else {
 			msgT.setVisibility(View.GONE);
 		}
+	}
+
+	public void onEventMainThread(TabEB tab) {
+		setTab(0);
 	}
 
 	public static void asyncFetchGroupsFromServer() {

@@ -167,7 +167,6 @@ public class HotAdapter extends NetJSONAdapter {
 			if (jsa != null && jsa.length() > 0 && mVaules.size() != 0) {
 				return mVaules.size() + 1;
 			}
-
 			return mVaules.size();
 			// currentPosition = 0;
 		} else {
@@ -239,14 +238,12 @@ public class HotAdapter extends NetJSONAdapter {
 			}
 		}
 
-		if (type == 0 && isRefresh) {
+		if (type == 0) {
 			if (isRefresh) {
-				System.out.println("刷新111");
 				bindViewPageAdapter();
 			} else if ((jsa != null && jsa.length() > 0)
 					&& (middleHolder.pager != null && middleHolder.pager
 							.getChildCount() == 0)) {
-				System.out.println("刷新");
 				bindViewPageAdapter();
 			}
 

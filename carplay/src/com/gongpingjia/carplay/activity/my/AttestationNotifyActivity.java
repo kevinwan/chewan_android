@@ -22,8 +22,12 @@ import com.gongpingjia.carplay.R.color;
 import com.gongpingjia.carplay.R.id;
 import com.gongpingjia.carplay.R.layout;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
+import com.gongpingjia.carplay.activity.main.MainActivity;
 import com.gongpingjia.carplay.api.API;
+import com.gongpingjia.carplay.bean.TabEB;
 import com.gongpingjia.carplay.bean.User;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * 车主认证通知
@@ -32,7 +36,7 @@ import com.gongpingjia.carplay.bean.User;
  * 
  */
 public class AttestationNotifyActivity extends CarPlayBaseActivity {
-	TextView contentpassT, contentfailT,reasonT;
+	TextView contentpassT, contentfailT, reasonT;
 	Button nextBtn;
 	LinearLayout notpassL, passL;
 	String result;
@@ -60,7 +64,7 @@ public class AttestationNotifyActivity extends CarPlayBaseActivity {
 		nextBtn = (Button) findViewById(R.id.next);
 		notpassL = (LinearLayout) findViewById(R.id.notpass);
 		passL = (LinearLayout) findViewById(R.id.pass);
-		reasonT=(TextView) findViewById(R.id.reason);
+		reasonT = (TextView) findViewById(R.id.reason);
 
 		Intent it = getIntent();
 		String model = it.getExtras().getString("carModel");
@@ -69,8 +73,8 @@ public class AttestationNotifyActivity extends CarPlayBaseActivity {
 		if (result.equals("0")) {
 			pass(model);
 		} else {
-			String reason=it.getStringExtra("content");
-			fail(model,reason);
+			String reason = it.getStringExtra("content");
+			fail(model, reason);
 		}
 
 		DhNet verifyNet = new DhNet(API.CWBaseurl + "/user/" + user.getUserId()
@@ -94,7 +98,11 @@ public class AttestationNotifyActivity extends CarPlayBaseActivity {
 			@Override
 			public void onClick(View arg0) {
 				if (result.equals("0")) {
+					Intent it = new Intent(self, MainActivity.class);
+					it.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					startActivity(it);
 					finish();
+					EventBus.getDefault().post(new TabEB());
 				} else {
 					// 已认证 则不跳转
 					if (isAuthenticated != 1) {
@@ -130,7 +138,7 @@ public class AttestationNotifyActivity extends CarPlayBaseActivity {
 	}
 
 	/** 未通过 */
-	private void fail(String model,String reason) {
+	private void fail(String model, String reason) {
 		notpassL.setVisibility(View.VISIBLE);
 		passL.setVisibility(View.GONE);
 		nextBtn.setText("重新认证");
