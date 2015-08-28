@@ -9,8 +9,7 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="50dp"
-        android:background="@color/theme_bg"
-        android:paddingRight="12dp" >
+        android:background="@color/theme_bg" >
 
         <LinearLayout
             android:id="@+id/backLayout"
@@ -49,7 +48,6 @@
             android:gravity="center"
             android:maxWidth="200dp"
             android:singleLine="true"
-            android:text="首页"
             android:textColor="@color/white"
             android:textSize="@dimen/text_title" />
 
@@ -60,7 +58,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:text="创建活动"
+            android:paddingRight="12dp"
             android:textColor="@color/white"
             android:textSize="@dimen/text_medium"
             android:visibility="gone" />
@@ -68,7 +66,7 @@
         <ImageView
             android:id="@+id/right_icon"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:paddingLeft="10dp"
