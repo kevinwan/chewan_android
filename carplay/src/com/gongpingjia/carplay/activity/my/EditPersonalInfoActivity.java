@@ -157,7 +157,7 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 				JSONObject jo = response.jSONFromData();
 
 				nickname = JSONUtil.getString(jo, "nickname");
-				drivingExperience = JSONUtil.getString(jo, "drivingExperience");
+				drivingExperience = JSONUtil.getInt(jo, "drivingExperience")+"";
 				String photo = JSONUtil.getString(jo, "photo");
 				String gender = JSONUtil.getString(jo, "gender");
 				mProvice = JSONUtil.getString(jo, "province");
