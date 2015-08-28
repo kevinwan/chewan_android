@@ -27,40 +27,33 @@ import android.content.Context;
 import android.view.ViewGroup;
 
 /**
- * Class wraps URLs to adapter, then it instantiates {@link UrlTouchImageView} objects to paging up through them.
+ * Class wraps URLs to adapter, then it instantiates {@link UrlTouchImageView}
+ * objects to paging up through them.
  */
-public class UrlPagerAdapter extends BasePagerAdapter
-{
-    
-    public UrlPagerAdapter(Context context, List<String> resources)
-    {
+public class UrlPagerAdapter extends BasePagerAdapter {
+
+    public UrlPagerAdapter(Context context, List<String> resources) {
         super(context, resources);
-        
-        ImageLoaderConfiguration imageconfig =
-            new ImageLoaderConfiguration.Builder(context).threadPoolSize(3)
-                .threadPriority(Thread.NORM_PRIORITY - 2)
-                .memoryCacheSize(1000000)
-                .denyCacheImageMultipleSizesInMemory()
-                .discCacheFileNameGenerator(new Md5FileNameGenerator())
-                .build();
+
+        ImageLoaderConfiguration imageconfig = new ImageLoaderConfiguration.Builder(context).threadPoolSize(3)
+                .threadPriority(Thread.NORM_PRIORITY - 2).memoryCacheSize(1000000)
+                .denyCacheImageMultipleSizesInMemory().discCacheFileNameGenerator(new Md5FileNameGenerator()).build();
         ImageLoader.getInstance().init(imageconfig);
     }
-    
+
     @Override
-    public void setPrimaryItem(ViewGroup container, int position, Object object)
-    {
+    public void setPrimaryItem(ViewGroup container, int position, Object object) {
         super.setPrimaryItem(container, position, object);
-        ((GalleryViewPager)container).mCurrentView = ((UrlTouchImageView)object).getImageView();
+        ((GalleryViewPager) container).mCurrentView = ((UrlTouchImageView) object).getImageView();
     }
-    
+
     @Override
-    public Object instantiateItem(ViewGroup collection, int position)
-    {
+    public Object instantiateItem(ViewGroup collection, int position) {
         final UrlTouchImageView iv = new UrlTouchImageView(mContext);
-        iv.setUrl(mResources.get(position) + "?imageMogr2/thumbnail/!640x360r");
+        iv.setUrl(mResources.get(position));
         iv.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.MATCH_PARENT));
-        
+                ViewGroup.LayoutParams.MATCH_PARENT));
+
         collection.addView(iv, 0);
         return iv;
     }

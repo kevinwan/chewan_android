@@ -392,6 +392,5 @@ public class ManageAlbumActivity extends CarPlayBaseActivity implements
             }
         });
     }
->>>>>>> origin/master
 
 }
