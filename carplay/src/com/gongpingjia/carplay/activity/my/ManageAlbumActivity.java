@@ -39,6 +39,7 @@ import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.PhotoState;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.CarPlayPerference;
+import com.gongpingjia.carplay.view.ImageGallery;
 
 /**
  * @Description 相册管理
@@ -168,6 +169,17 @@ public class ManageAlbumActivity extends CarPlayBaseActivity implements OnClickL
                                                 mPhotoStates.get(position).setChecked(true);
                                             }
                                             mPhotoAdapter.notifyDataSetChanged();
+                                        } else {
+                                            // 不可以编辑进图大图
+                                            int flag = mPhotoStates.size() == 9 ? 0 : 1;
+                                            String[] imgUrls = new String[mPhotoStates.size() - flag];
+                                            for (int i = 0, len = imgUrls.length; i < len; i++) {
+                                                imgUrls[i] = mPhotoStates.get(i).getPath();
+                                            }
+                                            Intent it = new Intent(self, ImageGallery.class);
+                                            it.putExtra("imgurls", imgUrls);
+                                            it.putExtra("currentItem", position);
+                                            self.startActivity(it);
                                         }
                                     }
                                 }
