@@ -50,8 +50,8 @@
 
         <activity
             android:name=".activity.chat.AlertDialog"
-            android:theme="@style/CustomDia"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomDia" >
         </activity>
         <activity
             android:name=".activity.chat.ChatActivity"
@@ -258,7 +258,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="1104728007" />
+                <!-- <data android:scheme="1104728007" /> -->
+                <data android:scheme="tencent100424468" />
             </intent-filter>
         </activity>
         <activity
