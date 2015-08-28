@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -211,7 +212,11 @@ public class ActiveListFragment extends Fragment {
 		hotAdapter.addparam("key", "hot");
 		hotAdapter.addparam("userId", user.getUserId());
 		hotAdapter.addparam("token", user.getToken());
-		hotAdapter.addparam("city", location.getCity());
+		if (TextUtils.isEmpty(location.getCity())) {
+			hotAdapter.addparam("city", location.getProvice());
+		} else {
+			hotAdapter.addparam("city", location.getCity());
+		}
 		hotAdapter.addparam("district", "");
 		hotAdapter.addparam("type", "");
 		hotAdapter.addparam("gender", "");
@@ -227,7 +232,11 @@ public class ActiveListFragment extends Fragment {
 		nearAdapter.addparam("key", "nearby");
 		nearAdapter.addparam("userId", user.getUserId());
 		nearAdapter.addparam("token", user.getToken());
-		nearAdapter.addparam("city", location.getCity());
+		if (TextUtils.isEmpty(location.getCity())) {
+			nearAdapter.addparam("city", location.getProvice());
+		} else {
+			nearAdapter.addparam("city", location.getCity());
+		}
 		nearAdapter.addparam("district", "");
 		nearAdapter.addparam("type", "");
 		nearAdapter.addparam("gender", "");
@@ -244,7 +253,11 @@ public class ActiveListFragment extends Fragment {
 		newAdapter.addparam("key", "latest");
 		newAdapter.addparam("userId", user.getUserId());
 		newAdapter.addparam("token", user.getToken());
-		newAdapter.addparam("city", location.getCity());
+		if (TextUtils.isEmpty(location.getCity())) {
+			newAdapter.addparam("city", location.getProvice());
+		} else {
+			newAdapter.addparam("city", location.getCity());
+		}
 		newAdapter.addparam("district", "");
 		newAdapter.addparam("type", "");
 		newAdapter.addparam("gender", "");
@@ -389,61 +402,6 @@ public class ActiveListFragment extends Fragment {
 			}
 		});
 
-	}
-
-	private void bindViewPageAdapter(JSONArray jsa) {
-		if (jsa != null && jsa.length() > 0) {
-			View[] views = new View[jsa.length()];
-			for (int i = 0; i < jsa.length(); i++) {
-				final JSONObject jot;
-				try {
-					jot = jsa.getJSONObject(i);
-					View leftV = mLayoutInflater.inflate(
-							R.layout.item_hotview_viewpage, null);
-
-					ImageView pghead = (ImageView) leftV
-							.findViewById(R.id.head);
-					ImageView pglogo = (ImageView) leftV
-							.findViewById(R.id.logo);
-					TextView pgtitle = (TextView) leftV
-							.findViewById(R.id.title);
-					TextView pgendtime = (TextView) leftV
-							.findViewById(R.id.endtime);
-					TextView pgcontent = (TextView) leftV
-							.findViewById(R.id.content);
-
-					SimpleDateFormat formatdate = new SimpleDateFormat(
-							"yyyy.MM.dd");
-					pgendtime.setText("截止时间:  "
-							+ formatdate.format(JSONUtil.getLong(jot, "end")));
-					pgtitle.setText(JSONUtil.getString(jot, "title"));
-					pgcontent.setText(JSONUtil.getString(jot, "content"));
-					ViewUtil.bindNetImage(pghead,
-							JSONUtil.getString(jot, "cover"), "cover");
-					ViewUtil.bindNetImage(pglogo,
-							JSONUtil.getString(jot, "logo"), "logo");
-
-					leftV.setOnClickListener(new OnClickListener() {
-
-						@Override
-						public void onClick(View arg0) {
-							Intent intent = new Intent(getActivity(),
-									ActiveDetailsActivity.class);
-							intent.putExtra("activityId",
-									JSONUtil.getString(jot, "activityId"));
-							startActivity(intent);
-						}
-					});
-					views[i] = leftV;
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
-			}
-
-			ViewPager page = (ViewPager) HeadV.findViewById(R.id.page);
-			SimplePageAdapter middleAdapter = new SimplePageAdapter(views);
-			page.setAdapter(middleAdapter);
-		}
 	}
 
 	@Override

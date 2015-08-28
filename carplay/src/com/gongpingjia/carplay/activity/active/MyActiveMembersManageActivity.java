@@ -33,6 +33,7 @@ import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.activity.chat.ChatActivity;
 import com.gongpingjia.carplay.api.API;
+import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.CarPlayPerference;
 import com.gongpingjia.carplay.util.CarPlayUtil;
@@ -87,9 +88,8 @@ public class MyActiveMembersManageActivity extends CarPlayBaseActivity {
 	// static String sAppSecret = "315ce754c5a1096c5188b4b69a7b9f04";
 
 	// 微信(测试版)
-	static String sAppId = "wx9c80b151c6d4ae54";
-
-	static String sAppSecret = "81077629b31790b0e8e8da336acdf4bb";
+	static String sAppId = Constant.WX_APP_KEY;
+	static String sAppSecret = Constant.WX_APP_SECRET;
 
 	// 微信好友
 	private UMWXHandler wxHandler;
@@ -244,6 +244,7 @@ public class MyActiveMembersManageActivity extends CarPlayBaseActivity {
 
 			@Override
 			public void onClick(View v) {
+
 				if (!TextUtils.isEmpty(chatGroupId)) {
 					Intent intent = new Intent(self, ChatActivity.class);
 					// it is group chat
@@ -252,6 +253,7 @@ public class MyActiveMembersManageActivity extends CarPlayBaseActivity {
 					intent.putExtra("groupId", chatGroupId);
 					startActivityForResult(intent, 0);
 				}
+
 			}
 		});
 
