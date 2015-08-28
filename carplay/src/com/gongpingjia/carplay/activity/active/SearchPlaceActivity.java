@@ -3,6 +3,7 @@ package com.gongpingjia.carplay.activity.active;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
@@ -60,6 +62,9 @@ public class SearchPlaceActivity extends CarPlayBaseActivity implements TextWatc
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(self.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+
                 SuggestionPlace sp = mDatas.get(position);
                 String key = sp.getDetails() + sp.getStyleName().toString();
                 Intent it = new Intent();
