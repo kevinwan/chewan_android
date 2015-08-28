@@ -40,8 +40,7 @@
                     android:id="@+id/layout_sex"
                     android:layout_width="35dp"
                     android:layout_height="17dp"
-                    android:layout_marginLeft="5dp"
-                    android:background="@drawable/man" >
+                    android:layout_marginLeft="5dp" >
 
                     <TextView
                         android:id="@+id/age"
