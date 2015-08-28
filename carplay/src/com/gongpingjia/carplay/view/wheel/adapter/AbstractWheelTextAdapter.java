@@ -255,7 +255,7 @@ public abstract class AbstractWheelTextAdapter extends AbstractWheelAdapter {
 		view.setGravity(Gravity.CENTER);
 		view.setTextSize(textSize);
 		view.setEllipsize(TextUtils.TruncateAt.END);
-		view.setPadding(0, 5, 0, 5);
+		view.setPadding(0, 7, 0, 7);
 		view.setLines(1);
 		// view.setCompoundDrawablePadding(20);
 		// view.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);

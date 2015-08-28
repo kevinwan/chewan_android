@@ -17,6 +17,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -62,12 +63,12 @@ public class AuthenticateOwnersActivity extends CarPlayBaseActivity implements
 
 	// 图片缓存根目录
 	private File mCacheDir;
-	
-	//认证类型 (0:未认证 1:认证成功 2:认证中)
-	int isAuthenticated=0;
-	int drivingyears=0;
-	String carModel="";
-	String license="";
+
+	// 认证类型 (0:未认证 1:认证成功 2:认证中)
+	int isAuthenticated = 0;
+	int drivingyears = 0;
+	String carModel = "";
+	String license = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -91,19 +92,19 @@ public class AuthenticateOwnersActivity extends CarPlayBaseActivity implements
 					finish();
 				}
 			});
-			
-			findViewById(R.id.backLayout).setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					Intent it = getIntent();
-					setResult(Activity.RESULT_OK, it);
-					finish();
-				}
-			});
+
+			findViewById(R.id.backLayout).setOnClickListener(
+					new OnClickListener() {
+
+						@Override
+						public void onClick(View v) {
+							Intent it = getIntent();
+							setResult(Activity.RESULT_OK, it);
+							finish();
+						}
+					});
 		}
-		
-		
+
 		modelT = (TextView) findViewById(R.id.model);
 		modelT.setOnClickListener(this);
 		picI = (ImageView) findViewById(R.id.pic);
@@ -113,27 +114,26 @@ public class AuthenticateOwnersActivity extends CarPlayBaseActivity implements
 		drivingExperienceE = (EditText) findViewById(R.id.drivingExperience);
 		submitB = (Button) findViewById(R.id.submit);
 		submitB.setOnClickListener(this);
-		
-		
-		Bundle bundle=getIntent().getExtras();
-		if (bundle!=null) {
-			isAuthenticated=bundle.getInt("isAuthenticated", 0);
-			drivingyears=bundle.getInt("drivingyears", 0);
-			carModel=bundle.getString("carModel");
-			license=bundle.getString("license");
+
+		Bundle bundle = getIntent().getExtras();
+		if (bundle != null) {
+			isAuthenticated = bundle.getInt("isAuthenticated", 0);
+			drivingyears = bundle.getInt("drivingyears", 0);
+			carModel = bundle.getString("carModel");
+			license = bundle.getString("license");
 		}
-		System.out.println("-----------------"+license);
+		System.out.println("-----------------" + license);
 		switch (isAuthenticated) {
-		//未认证
+		// 未认证
 		case 0:
 			drivingExperienceE.setText("");
 			modelT.setText("");
 			submitB.setText("认证车主");
 			submitB.setEnabled(true);
 			break;
-		//已认证
+		// 已认证
 		case 1:
-			drivingExperienceE.setText(drivingyears+"");
+			drivingExperienceE.setText(drivingyears + "");
 			modelT.setText(carModel);
 			if (!TextUtils.isEmpty(license)) {
 				ViewUtil.bindNetImage(picI, license,
@@ -143,9 +143,9 @@ public class AuthenticateOwnersActivity extends CarPlayBaseActivity implements
 			submitB.setEnabled(false);
 			submitB.setBackgroundResource(R.drawable.btn_grey_bg);
 			break;
-		//认证中
+		// 认证中
 		case 2:
-			drivingExperienceE.setText(drivingyears+"");
+			drivingExperienceE.setText(drivingyears + "");
 			modelT.setText(carModel);
 			if (!TextUtils.isEmpty(license)) {
 				ViewUtil.bindNetImage(picI, license,
@@ -162,7 +162,7 @@ public class AuthenticateOwnersActivity extends CarPlayBaseActivity implements
 		default:
 			break;
 		}
-		
+
 	}
 
 	private void authtion() {
@@ -177,8 +177,8 @@ public class AuthenticateOwnersActivity extends CarPlayBaseActivity implements
 		}
 
 		if (Integer.parseInt(drivingExperienceE.getText().toString()) > 20
-				|| Integer.parseInt(drivingExperienceE.getText().toString()) == 0) {
-			showToast("驾龄为0~20数字");
+				|| Integer.parseInt(drivingExperienceE.getText().toString()) <= 0) {
+			showToast("驾龄为1~20数字");
 			return;
 		}
 
@@ -302,6 +302,16 @@ public class AuthenticateOwnersActivity extends CarPlayBaseActivity implements
 				break;
 			}
 		}
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			Intent it = getIntent();
+			setResult(Activity.RESULT_OK, it);
+			finish();
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 
 }
