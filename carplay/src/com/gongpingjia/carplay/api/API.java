@@ -4,9 +4,9 @@ public class API {
 
 	public static final String CWBaseurl = "http://cwapi.gongpingjia.com/v1";
 
-	public static final String allCarBrands = "http://cwapi.gongpingjia.com/v1/car/brand";
+	public static final String allCarBrands = CWBaseurl + "/car/brand";
 
-	public static final String carDetails = " http://cwapi.gongpingjia.com/v1/car/model";
+	public static final String carDetails = CWBaseurl + "/car/model";
 
 	// 登录
 	public static final String login = CWBaseurl + "/user/login";
@@ -40,7 +40,7 @@ public class API {
 	public static final String update = "http://cwapi.gongpingjia.com/version";
 
 	public static final String share = "http://cwapi.gongpingjia.com/";
-	
+
 	// 官方活动
 	public static final String official = CWBaseurl + "/official/activity/list";
 
