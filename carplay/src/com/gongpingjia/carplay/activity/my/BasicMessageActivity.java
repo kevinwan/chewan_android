@@ -51,6 +51,7 @@ import com.gongpingjia.carplay.chat.db.UserDao;
 import com.gongpingjia.carplay.data.CityDataManage;
 import com.gongpingjia.carplay.util.CarPlayPerference;
 import com.gongpingjia.carplay.util.MD5Util;
+import com.gongpingjia.carplay.view.RoundImageView;
 import com.gongpingjia.carplay.view.dialog.CityPickDialog;
 import com.gongpingjia.carplay.view.dialog.CityPickDialog.OnPickResultListener;
 import com.gongpingjia.carplay.view.dialog.DateDialog;
@@ -71,7 +72,7 @@ public class BasicMessageActivity extends CarPlayBaseActivity implements
 		OnClickListener {
 
 	/** 头像 */
-	private ImageView headI = null;
+	private RoundImageView headI = null;
 
 	/** 昵称 */
 	private EditText nicknameT = null;
@@ -148,7 +149,7 @@ public class BasicMessageActivity extends CarPlayBaseActivity implements
 		});
 		sexR = (RadioGroup) findViewById(R.id.tab);
 
-		headI = (ImageView) findViewById(R.id.head);
+		headI = (RoundImageView) findViewById(R.id.head);
 		nicknameT = (EditText) findViewById(R.id.nickname);
 		ageT = (TextView) findViewById(R.id.age);
 		cityT = (TextView) findViewById(R.id.city);

@@ -111,6 +111,7 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_active_details);
 		EventBus.getDefault().register(this);
+		
 	}
 
 	@Override

@@ -128,6 +128,7 @@ public class MainActivity extends BaseFragmentActivity implements
 		initView();
 		isAuthen();
 		updateApp();
+
 	}
 
 	@Override

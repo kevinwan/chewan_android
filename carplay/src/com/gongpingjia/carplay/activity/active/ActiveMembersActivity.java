@@ -387,12 +387,14 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 			break;
 
 		case R.id.chat:
-			Intent intent = new Intent(self, ChatActivity.class);
-			// it is group chat
-			intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
-			intent.putExtra("activityId", activityId);
-			intent.putExtra("groupId", chatGroupId);
-			startActivityForResult(intent, Chat);
+			if(!TextUtils.isEmpty(chatGroupId)) {
+				Intent intent = new Intent(self, ChatActivity.class);
+				// it is group chat
+				intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
+				intent.putExtra("activityId", activityId);
+				intent.putExtra("groupId", chatGroupId);
+				startActivityForResult(intent, Chat);
+			}
 			break;
 		default:
 			break;

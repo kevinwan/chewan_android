@@ -39,6 +39,7 @@ import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.PhotoState;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.CarPlayPerference;
+import com.gongpingjia.carplay.view.ImageGallery;
 
 /**
  * @Description 相册管理
@@ -59,370 +60,338 @@ public class ManageAlbumActivity extends CarPlayBaseActivity implements
 	// 当前正在处理图片状态，GridView最后一个图片状态
 	private PhotoState mLastPhotoState;
 
-	private ImageAdapter mPhotoAdapter;
 
-	private String mCurPath;
+    private ImageAdapter mPhotoAdapter;
 
-	private TextView mRightText;
+    private String mCurPath;
 
-	private TextView mLeftText;
+    private TextView mRightText;
 
-	private ImageView mRightImage;
+    private TextView mLeftText;
 
-	private ImageView mLeftImage;
+    private ImageView mRightImage;
 
-	static User mUser = User.getInstance();
+    private ImageView mLeftImage;
 
-	private boolean isEditable = false;
+    static User mUser = User.getInstance();
 
-	CarPlayPerference per;
+    private boolean isEditable = false;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_manage_album);
+    CarPlayPerference per;
 
-		per = IocContainer.getShare().get(CarPlayPerference.class);
-		per.load();
-		if (per.isShowPhotoGuilde == 0) {
-			findViewById(R.id.guide).setVisibility(View.VISIBLE);
-		}
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        // TODO Auto-generated method stub
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_manage_album);
 
-		findViewById(R.id.know).setOnClickListener(new OnClickListener() {
+        per = IocContainer.getShare().get(CarPlayPerference.class);
+        per.load();
+        if (per.isShowPhotoGuilde == 0) {
+            findViewById(R.id.guide).setVisibility(View.VISIBLE);
+        }
 
-			@Override
-			public void onClick(View v) {
-				per.load();
-				per.isShowPhotoGuilde = 1;
-				per.commit();
-				findViewById(R.id.guide).setVisibility(View.GONE);
-			}
-		});
+        findViewById(R.id.know).setOnClickListener(new OnClickListener() {
 
-		setTitle("相册管理");
-		setRightAction("编辑", -1, this);
-		mRightText = (TextView) findViewById(R.id.right_text);
-		mRightImage = (ImageView) findViewById(R.id.right_icon);
-		mLeftText = (TextView) findViewById(R.id.left_text);
-		mLeftImage = (ImageView) findViewById(R.id.back);
+            @Override
+            public void onClick(View v) {
+                per.load();
+                per.isShowPhotoGuilde = 1;
+                per.commit();
+                findViewById(R.id.guide).setVisibility(View.GONE);
+            }
+        });
 
-		mCacheDir = new File(getExternalCacheDir(), "CarPlay");
-		mCacheDir.mkdirs();
+        setTitle("相册管理");
+        setRightAction("编辑", -1, this);
+        mRightText = (TextView) findViewById(R.id.right_text);
+        mRightImage = (ImageView) findViewById(R.id.right_icon);
+        mLeftText = (TextView) findViewById(R.id.left_text);
+        mLeftImage = (ImageView) findViewById(R.id.back);
 
-		mLastPhotoState = new PhotoState();
-		mLastPhotoState.setChecked(false);
-		mLastPhotoState.setLast(true);
+        mCacheDir = new File(getExternalCacheDir(), "CarPlay");
+        mCacheDir.mkdirs();
 
-		mPhotoStates = new ArrayList<PhotoState>();
-		mPicIds = new ArrayList<String>();
+        mLastPhotoState = new PhotoState();
+        mLastPhotoState.setChecked(false);
+        mLastPhotoState.setLast(true);
 
-		DhNet net = new DhNet(API.CWBaseurl + "/user/" + mUser.getUserId()
-				+ "/info?userId=" + mUser.getUserId() + "&token="
-				+ mUser.getToken());
-		net.doGetInDialog("加载相册中", new NetTask(self) {
+        mPhotoStates = new ArrayList<PhotoState>();
+        mPicIds = new ArrayList<String>();
 
-			@Override
-			public void doInUI(Response response, Integer transfer) {
-				if (response.isSuccess()) {
+        DhNet net = new DhNet(API.CWBaseurl + "/user/" + mUser.getUserId() + "/info?userId=" + mUser.getUserId()
+                + "&token=" + mUser.getToken());
+        net.doGetInDialog("加载相册中", new NetTask(self) {
 
-					mLeftImage.setOnClickListener(ManageAlbumActivity.this);
-					mLeftText.setOnClickListener(ManageAlbumActivity.this);
-					mRightText.setOnClickListener(ManageAlbumActivity.this);
-					mRightImage.setOnClickListener(ManageAlbumActivity.this);
+            @Override
+            public void doInUI(Response response, Integer transfer) {
+                if (response.isSuccess()) {
 
-					Log.e("tag", response.plain());
-					JSONObject data = response.jSONFrom("data");
-					try {
-						JSONArray array = data.getJSONArray("albumPhotos");
-						if (array != null) {
-							for (int i = 0; i < array.length(); i++) {
-								PhotoState state = new PhotoState();
-								state.setChecked(false);
-								state.setPath(array.getJSONObject(i).getString(
-										"thumbnail_pic"));
-								state.setLast(false);
-								mPicIds.add(array.getJSONObject(i).getString(
-										"photoId"));
-								mPhotoStates.add(state);
-							}
-							if (mPhotoStates.size() < 9) {
-								mPhotoStates.add(mLastPhotoState);
-							}
+                    mLeftImage.setOnClickListener(ManageAlbumActivity.this);
+                    mLeftText.setOnClickListener(ManageAlbumActivity.this);
+                    mRightText.setOnClickListener(ManageAlbumActivity.this);
+                    mRightImage.setOnClickListener(ManageAlbumActivity.this);
 
-							mPhotoAdapter = new ImageAdapter(
-									ManageAlbumActivity.this, mPhotoStates);
-							mPhotoGridView.setAdapter(mPhotoAdapter);
-							mPhotoGridView
-									.setOnItemClickListener(new OnItemClickListener() {
+                    Log.e("tag", response.plain());
+                    JSONObject data = response.jSONFrom("data");
+                    try {
+                        JSONArray array = data.getJSONArray("albumPhotos");
+                        if (array != null) {
+                            for (int i = 0; i < array.length(); i++) {
+                                PhotoState state = new PhotoState();
+                                state.setChecked(false);
+                                state.setPath(array.getJSONObject(i).getString("thumbnail_pic"));
+                                state.setLast(false);
+                                mPicIds.add(array.getJSONObject(i).getString("photoId"));
+                                mPhotoStates.add(state);
+                            }
+                            if (mPhotoStates.size() < 9) {
+                                mPhotoStates.add(mLastPhotoState);
+                            }
 
-										@Override
-										public void onItemClick(
-												AdapterView<?> parent,
-												View view, int position, long id) {
-											// TODO Auto-generated method stubF
-											if (mPhotoStates.get(position)
-													.isLast()) {
-												mCurPath = new File(
-														mCacheDir,
-														System.currentTimeMillis()
-																+ ".jpg")
-														.getAbsolutePath();
-												PhotoUtil.getPhoto(self,
-														Constant.TAKE_PHOTO,
-														Constant.PICK_PHOTO,
-														new File(mCurPath));
-											} else {
-												if (isEditable) {
-													if (mPhotoStates.get(
-															position)
-															.isChecked()) {
-														view.findViewById(
-																R.id.imgView_visible)
-																.setVisibility(
-																		View.GONE);
-														mPhotoStates.get(
-																position)
-																.setChecked(
-																		false);
-													} else {
-														view.findViewById(
-																R.id.imgView_visible)
-																.setVisibility(
-																		View.VISIBLE);
-														mPhotoStates.get(
-																position)
-																.setChecked(
-																		true);
-													}
-													mPhotoAdapter
-															.notifyDataSetChanged();
-												}
-											}
-										}
-									});
+                            mPhotoAdapter = new ImageAdapter(ManageAlbumActivity.this, mPhotoStates);
+                            mPhotoGridView.setAdapter(mPhotoAdapter);
+                            mPhotoGridView.setOnItemClickListener(new OnItemClickListener() {
 
-							mPhotoGridView
-									.setOnItemLongClickListener(new OnItemLongClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                    // TODO Auto-generated method stubF
+                                    if (mPhotoStates.get(position).isLast()) {
+                                        mCurPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg")
+                                                .getAbsolutePath();
+                                        PhotoUtil.getPhoto(self, Constant.TAKE_PHOTO, Constant.PICK_PHOTO, new File(
+                                                mCurPath));
+                                    } else {
+                                        if (isEditable) {
+                                            if (mPhotoStates.get(position).isChecked()) {
+                                                view.findViewById(R.id.imgView_visible).setVisibility(View.GONE);
+                                                mPhotoStates.get(position).setChecked(false);
+                                            } else {
+                                                view.findViewById(R.id.imgView_visible).setVisibility(View.VISIBLE);
+                                                mPhotoStates.get(position).setChecked(true);
+                                            }
+                                            mPhotoAdapter.notifyDataSetChanged();
+                                        } else {
+                                            // 不可以编辑进图大图
+                                            int flag = mPhotoStates.size() == 9 ? 0 : 1;
+                                            String[] imgUrls = new String[mPhotoStates.size() - flag];
+                                            for (int i = 0, len = imgUrls.length; i < len; i++) {
+                                                imgUrls[i] = mPhotoStates.get(i).getPath();
+                                            }
+                                            Intent it = new Intent(self, ImageGallery.class);
+                                            it.putExtra("imgurls", imgUrls);
+                                            it.putExtra("currentItem", position);
+                                            self.startActivity(it);
+                                        }
+                                    }
+                                }
+                            });
 
-										@SuppressLint("NewApi")
-										@Override
-										public boolean onItemLongClick(
-												AdapterView<?> parent,
-												View view, int position, long id) {
-											if (!mPhotoStates.get(position)
-													.isLast()) {
-												isEditable = true;
-												mRightText
-														.setVisibility(View.GONE);
-												mRightImage
-														.setVisibility(View.VISIBLE);
-												mRightImage
-														.setImageResource(R.drawable.action_delete);
-												mLeftImage
-														.setVisibility(View.GONE);
+                            mPhotoGridView.setOnItemLongClickListener(new OnItemLongClickListener() {
 
-												LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-														LinearLayout.LayoutParams.MATCH_PARENT,
-														LinearLayout.LayoutParams.WRAP_CONTENT);
-												lp.setMargins(20, 0, 0, 0);
-												mLeftText.setText("取消");
-												mLeftText
-														.setVisibility(View.VISIBLE);
-												mLeftText.setLayoutParams(lp);
+                                @SuppressLint("NewApi")
+                                @Override
+                                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                                    if (!mPhotoStates.get(position).isLast()) {
+                                        isEditable = true;
+                                        mRightText.setVisibility(View.GONE);
+                                        mRightImage.setVisibility(View.VISIBLE);
+                                        mRightImage.setImageResource(R.drawable.action_delete);
+                                        mLeftImage.setVisibility(View.GONE);
 
-												mPhotoStates.get(position)
-														.setChecked(true);
-												mPhotoAdapter
-														.notifyDataSetChanged();
-											}
-											return true;
-										}
-									});
-						}
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
+                                        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                                                LinearLayout.LayoutParams.MATCH_PARENT,
+                                                LinearLayout.LayoutParams.WRAP_CONTENT);
+                                        lp.setMargins(20, 0, 0, 0);
+                                        mLeftText.setText("取消");
+                                        mLeftText.setVisibility(View.VISIBLE);
+                                        mLeftText.setLayoutParams(lp);
 
-				} else {
-					showToast("获取相册失败");
-				}
-			}
-		});
+                                        mPhotoStates.get(position).setChecked(true);
+                                        mPhotoAdapter.notifyDataSetChanged();
+                                    }
+                                    return true;
+                                }
+                            });
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 
-	}
+                } else {
+                    showToast("获取相册失败");
+                }
+            }
+        });
 
-	@Override
-	public void initView() {
-		// TODO Auto-generated method stub
-		mPhotoGridView = (GridView) findViewById(R.id.gv_photo);
-	}
+    }
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO Auto-generated method stub
-		super.onActivityResult(requestCode, resultCode, data);
-		if (resultCode == RESULT_OK) {
-			switch (requestCode) {
-			// case Constant.TAKE_PHOTO:
-			// String newPath = new File(mCacheDir, System.currentTimeMillis() +
-			// ".jpg").getAbsolutePath();
-			// String path = PhotoUtil.onPhotoFromCamera(self,
-			// Constant.ZOOM_PIC, mCurPath, 3, 2, 1000, newPath);
-			// mCurPath = path;
-			// break;
-			// case Constant.PICK_PHOTO:
-			// PhotoUtil.onPhotoFromPick(self, Constant.ZOOM_PIC, mCurPath,
-			// data, 3, 2, 1000);
-			// break;
-			// case Constant.ZOOM_PIC:
-			// upLoadPic(mCurPath);
-			// break;
+    @Override
+    public void initView() {
+        // TODO Auto-generated method stub
+        mPhotoGridView = (GridView) findViewById(R.id.gv_photo);
+    }
 
-			case Constant.PICK_PHOTO:
-				Bitmap btp = PhotoUtil.checkImage(self, data);
-				PhotoUtil.saveLocalImage(btp, new File(mCurPath));
-				btp.recycle();
-				upLoadPic(mCurPath);
-				break;
-			case Constant.TAKE_PHOTO:
-				Bitmap btp1 = PhotoUtil.getLocalImage(new File(mCurPath));
-				String newPath = new File(mCacheDir, System.currentTimeMillis()
-						+ ".jpg").getAbsolutePath();
-				int degree = PhotoUtil.getBitmapDegree(mCurPath);
-				PhotoUtil.saveLocalImage(btp1, new File(newPath), degree);
-				btp1.recycle();
-				upLoadPic(newPath);
-				break;
-			}
-		}
-	}
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // TODO Auto-generated method stub
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+            // case Constant.TAKE_PHOTO:
+            // String newPath = new File(mCacheDir, System.currentTimeMillis() +
+            // ".jpg").getAbsolutePath();
+            // String path = PhotoUtil.onPhotoFromCamera(self,
+            // Constant.ZOOM_PIC, mCurPath, 3, 2, 1000, newPath);
+            // mCurPath = path;
+            // break;
+            // case Constant.PICK_PHOTO:
+            // PhotoUtil.onPhotoFromPick(self, Constant.ZOOM_PIC, mCurPath,
+            // data, 3, 2, 1000);
+            // break;
+            // case Constant.ZOOM_PIC:
+            // upLoadPic(mCurPath);
+            // break;
 
-	@SuppressLint("NewApi")
-	@Override
-	public void onClick(View v) {
-		// TODO Auto-generated method stub
-		switch (v.getId()) {
-		case R.id.right_icon:
-			if (isEditable) {
-				Iterator<PhotoState> iterator = mPhotoStates.iterator();
-				while (iterator.hasNext()) {
-					PhotoState state = iterator.next();
-					if (state.isChecked()) {
-						int index = mPhotoStates.indexOf(state);
-						mPicIds.remove(index);
-						iterator.remove();
-					}
-				}
-				DhNet dhNet = new DhNet(API.editAlbum + mUser.getUserId()
-						+ "/album/photos?token=" + mUser.getToken());
-				dhNet.addParam("photos", new JSONArray(mPicIds));
-				dhNet.doPostInDialog("删除中", new NetTask(self) {
+            case Constant.PICK_PHOTO:
+                Bitmap btp = PhotoUtil.checkImage(self, data);
+                PhotoUtil.saveLocalImage(btp, new File(mCurPath));
+                btp.recycle();
+                upLoadPic(mCurPath);
+                break;
+            case Constant.TAKE_PHOTO:
+                Bitmap btp1 = PhotoUtil.getLocalImage(new File(mCurPath));
+                String newPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg").getAbsolutePath();
+                int degree = PhotoUtil.getBitmapDegree(mCurPath);
+                PhotoUtil.saveLocalImage(btp1, new File(newPath), degree);
+                btp1.recycle();
+                upLoadPic(newPath);
+                break;
+            }
+        }
+    }
 
-					@Override
-					public void doInUI(Response response, Integer transfer) {
-						if (response.isSuccess()) {
-							showToast("删除成功");
-							isEditable = false;
-							mLeftText.setVisibility(View.GONE);
-							mLeftImage.setVisibility(View.VISIBLE);
-							mRightImage.setVisibility(View.GONE);
-							mRightText.setVisibility(View.VISIBLE);
+    @SuppressLint("NewApi")
+    @Override
+    public void onClick(View v) {
+        // TODO Auto-generated method stub
+        switch (v.getId()) {
+        case R.id.right_icon:
+            if (isEditable) {
+                Iterator<PhotoState> iterator = mPhotoStates.iterator();
+                while (iterator.hasNext()) {
+                    PhotoState state = iterator.next();
+                    if (state.isChecked()) {
+                        int index = mPhotoStates.indexOf(state);
+                        mPicIds.remove(index);
+                        iterator.remove();
+                    }
+                }
+                DhNet dhNet = new DhNet(API.editAlbum + mUser.getUserId() + "/album/photos?token=" + mUser.getToken());
+                dhNet.addParam("photos", new JSONArray(mPicIds));
+                dhNet.doPostInDialog("删除中", new NetTask(self) {
 
-							if (!mPhotoStates.get(mPhotoStates.size() - 1)
-									.isLast()) {
-								mPhotoStates.add(mLastPhotoState);
-							}
-							mPhotoAdapter.notifyDataSetChanged();
-						} else {
-							showToast("删除失败，请重试");
-						}
-					}
-				});
+                    @Override
+                    public void doInUI(Response response, Integer transfer) {
+                        if (response.isSuccess()) {
+                            showToast("删除成功");
+                            isEditable = false;
+                            mLeftText.setVisibility(View.GONE);
+                            mLeftImage.setVisibility(View.VISIBLE);
+                            mRightImage.setVisibility(View.GONE);
+                            mRightText.setVisibility(View.VISIBLE);
 
-			} else {
-				showToast("请点击右上角编辑文字");
-			}
-			break;
-		case R.id.right_text:
-			if (mRightText.getText().toString().equals("编辑")) {
-				isEditable = true;
-				mRightText.setVisibility(View.GONE);
-				mRightImage.setVisibility(View.VISIBLE);
-				mRightImage.setImageResource(R.drawable.action_delete);
-				mLeftImage.setVisibility(View.GONE);
+                            if (!mPhotoStates.get(mPhotoStates.size() - 1).isLast()) {
+                                mPhotoStates.add(mLastPhotoState);
+                            }
+                            mPhotoAdapter.notifyDataSetChanged();
+                        } else {
+                            showToast("删除失败，请重试");
+                        }
+                    }
+                });
 
-				LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-						LinearLayout.LayoutParams.FILL_PARENT,
-						LinearLayout.LayoutParams.WRAP_CONTENT);
-				lp.setMargins(20, 0, 0, 0);
-				mLeftText.setText("取消");
-				mLeftText.setVisibility(View.VISIBLE);
-				mLeftText.setLayoutParams(lp);
-			}
-			break;
-		case R.id.left_text:
-			if (mLeftText.getText().toString().equals("取消")) {
-				isEditable = false;
-				mLeftText.setVisibility(View.GONE);
-				mLeftImage.setVisibility(View.VISIBLE);
+            } else {
+                showToast("请点击右上角编辑文字");
+            }
+            break;
+        case R.id.right_text:
+            if (mRightText.getText().toString().equals("编辑")) {
+                isEditable = true;
+                mRightText.setVisibility(View.GONE);
+                mRightImage.setVisibility(View.VISIBLE);
+                mRightImage.setImageResource(R.drawable.action_delete);
+                mLeftImage.setVisibility(View.GONE);
 
-				mRightText.setVisibility(View.VISIBLE);
-				mRightImage.setVisibility(View.GONE);
-				mRightText.setText("编辑");
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT);
+                lp.setMargins(20, 0, 0, 0);
+                mLeftText.setText("取消");
+                mLeftText.setVisibility(View.VISIBLE);
+                mLeftText.setLayoutParams(lp);
+            }
+            break;
+        case R.id.left_text:
+            if (mLeftText.getText().toString().equals("取消")) {
+                isEditable = false;
+                mLeftText.setVisibility(View.GONE);
+                mLeftImage.setVisibility(View.VISIBLE);
 
-				for (PhotoState state : mPhotoStates) {
-					state.setChecked(false);
-				}
-				mPhotoAdapter.notifyDataSetChanged();
-			}
-			break;
-		case R.id.back:
-			this.finish();
-			break;
-		}
-	}
+                mRightText.setVisibility(View.VISIBLE);
+                mRightImage.setVisibility(View.GONE);
+                mRightText.setText("编辑");
 
-	private void upLoadPic(String path) {
-		mPhotoStates.remove(mPhotoStates.size() - 1);
-		PhotoState curState = new PhotoState();
-		curState.setChecked(false);
-		curState.setLast(false);
-		curState.setPath(path);
-		mPhotoStates.add(curState);
-		if (mPhotoStates.size() != 9) {
-			mPhotoStates.add(mLastPhotoState);
-		}
-		mPhotoAdapter.notifyDataSetChanged();
+                for (PhotoState state : mPhotoStates) {
+                    state.setChecked(false);
+                }
+                mPhotoAdapter.notifyDataSetChanged();
+            }
+            break;
+        case R.id.back:
+            this.finish();
+            break;
+        }
+    }
 
-		DhNet net = new DhNet(API.uploadAlbum + mUser.getUserId()
-				+ "/album/upload?token=" + mUser.getToken());
-		Log.e("url", net.getUrl());
-		net.upload(new FileInfo("attach", new File(path)), new NetTask(self) {
+    private void upLoadPic(String path) {
+        mPhotoStates.remove(mPhotoStates.size() - 1);
+        PhotoState curState = new PhotoState();
+        curState.setChecked(false);
+        curState.setLast(false);
+        curState.setPath(path);
+        mPhotoStates.add(curState);
+        if (mPhotoStates.size() != 9) {
+            mPhotoStates.add(mLastPhotoState);
+        }
+        mPhotoAdapter.notifyDataSetChanged();
 
-			@Override
-			public void doInUI(Response response, Integer transfer) {
-				if (response.isSuccess()) {
-					JSONObject jo = response.jSONFrom("data");
-					try {
-						String picId = jo.getString("photoId");
-						mPicIds.add(picId);
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
-					showToast("图片上传成功");
-				} else {
-					mPhotoStates.remove(mPhotoStates.size() - 2);
-					mPhotoAdapter.notifyDataSetChanged();
-					try {
-						showToast(response.jSON().getString("errmsg")
-								+ " 图片上传失败,请重新选择上传");
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		});
-	}
+        DhNet net = new DhNet(API.uploadAlbum + mUser.getUserId() + "/album/upload?token=" + mUser.getToken());
+        Log.e("url", net.getUrl());
+        net.upload(new FileInfo("attach", new File(path)), new NetTask(self) {
+
+            @Override
+            public void doInUI(Response response, Integer transfer) {
+                if (response.isSuccess()) {
+                    JSONObject jo = response.jSONFrom("data");
+                    try {
+                        String picId = jo.getString("photoId");
+                        mPicIds.add(picId);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    showToast("图片上传成功");
+                } else {
+                    mPhotoStates.remove(mPhotoStates.size() - 2);
+                    mPhotoAdapter.notifyDataSetChanged();
+                    try {
+                        showToast(response.jSON().getString("errmsg") + " 图片上传失败,请重新选择上传");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
+>>>>>>> origin/master
 
 }
