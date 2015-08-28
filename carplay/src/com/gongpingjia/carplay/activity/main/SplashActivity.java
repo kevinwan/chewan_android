@@ -84,7 +84,7 @@ public class SplashActivity extends CarPlayBaseActivity {
 				"sign",
 				MD5Util.string2MD5(per.thirdId + per.channel
 						+ "com.gongpingjia.carplay"));
-		net.doPost( new NetTask(self) {
+		net.doPost(new NetTask(self) {
 
 			@Override
 			public void doInUI(Response response, Integer transfer) {
@@ -140,6 +140,13 @@ public class SplashActivity extends CarPlayBaseActivity {
 					loginHX(MD5Util
 							.string2MD5(JSONUtil.getString(jo, "userId")),
 							per.password, jo);
+				} else {
+					if (per.isFirst == 0) {
+						first();
+
+					} else {
+						notFirst();
+					}
 				}
 
 			}
@@ -212,7 +219,7 @@ public class SplashActivity extends CarPlayBaseActivity {
 							user.setNickName(JSONUtil.getString(jo, "nickname"));
 							user.setHeadUrl(JSONUtil.getString(jo, "photo"));
 							User.getInstance().setLogin(true);
-							
+
 							LoginEB loginEB = new LoginEB();
 							loginEB.setIslogin(true);
 							EventBus.getDefault().post(loginEB);

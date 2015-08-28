@@ -600,7 +600,7 @@ public class MainActivity extends BaseFragmentActivity implements
 							// showAccountRemovedDialog();
 						} else if (error == EMError.CONNECTION_CONFLICT) {
 							// 显示帐号在其他设备登陆dialog
-							showToast("账号在另一地点登陆!");
+							showToast("账号在另一地点登录!");
 							isConflict = true;
 							// showConflictDialog();
 						} else {
