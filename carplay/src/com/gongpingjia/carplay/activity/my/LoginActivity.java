@@ -508,7 +508,7 @@ public class LoginActivity extends CarPlayBaseActivity implements OnClickListene
                                     it.putExtra("isFromAvatar", getIntent().getBooleanExtra("isFromAvatar", false));
                                     startActivityForResult(it, Basicmessage);
                                 } else if (json.has("userId")) {
-                                    showToast("登陆成功");
+                                    showToast("登录成功");
                                     CarPlayPerference per = IocContainer.getShare().get(CarPlayPerference.class);
                                     per.load();
                                     per.thirdId = mUid;
