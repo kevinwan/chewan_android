@@ -38,7 +38,7 @@ public class CarPlayApplication extends Application implements
 	@Override
 	public void onCreate() {
 		super.onCreate();
-//		Thread.setDefaultUncaughtExceptionHandler(this);
+		Thread.setDefaultUncaughtExceptionHandler(this);
 		hxSDKHelper.onInit(getApplicationContext());
 		instance = this;
 		Const.netadapter_page_no = "page";
@@ -119,9 +119,9 @@ public class CarPlayApplication extends Application implements
 	@Override
 	public void uncaughtException(Thread thread, Throwable ex) {
 		// System.out.println("奔溃.................");
-		Intent intent = new Intent(this, SplashActivity.class);
-		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		startActivity(intent);
+//		Intent intent = new Intent(this, SplashActivity.class);
+//		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//		startActivity(intent);
 		android.os.Process.killProcess(android.os.Process.myPid());
 	}
 

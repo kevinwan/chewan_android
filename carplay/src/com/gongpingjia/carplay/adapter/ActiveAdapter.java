@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -260,17 +261,28 @@ public class ActiveAdapter extends NetJSONAdapter {
 			}
 		});
 		ViewUtil.bindView(holder.nameT, JSONUtil.getString(creater, "nickname"));
-		if (JSONUtil.getString(creater, "gender").equals("男")) {
-			holder.layout_sexV.setBackgroundResource(R.drawable.man);
-		} else {
-			holder.layout_sexV.setBackgroundResource(R.drawable.woman);
-		}
 
 		ViewUtil.bindView(holder.ageT, JSONUtil.getString(creater, "age"));
 		ViewUtil.bindView(holder.tv_publish_timeT,
 				JSONUtil.getString(jo, "publishTime"), "neartime");
 
-		CarPlayUtil.bindDriveAge(creater, holder.car_logoI, holder.drive_ageT);
+		if (!TextUtils.isEmpty(JSONUtil.getString(creater, "role"))
+				&& JSONUtil.getString(creater, "role").equals("官方用户")) {
+			holder.layout_sexV.setVisibility(View.GONE);
+			holder.car_logoI.setVisibility(View.GONE);
+			holder.drive_ageT.setVisibility(View.GONE);
+		} else {
+			holder.layout_sexV.setVisibility(View.VISIBLE);
+			holder.car_logoI.setVisibility(View.VISIBLE);
+			holder.drive_ageT.setVisibility(View.VISIBLE);
+			if (JSONUtil.getString(creater, "gender").equals("男")) {
+				holder.layout_sexV.setBackgroundResource(R.drawable.man);
+			} else {
+				holder.layout_sexV.setBackgroundResource(R.drawable.woman);
+			}
+			CarPlayUtil.bindDriveAge(creater, holder.car_logoI,
+					holder.drive_ageT);
+		}
 
 		ViewUtil.bindView(holder.contentT,
 				JSONUtil.getString(jo, "introduction"));
