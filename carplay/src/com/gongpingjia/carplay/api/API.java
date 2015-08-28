@@ -1,8 +1,12 @@
 package com.gongpingjia.carplay.api;
 
 public class API {
+	
+	public static final String update = "http://chewanapi.gongpingjia.com/version";
 
-	public static final String CWBaseurl = "http://cwapi.gongpingjia.com/v1";
+	public static final String share = "http://chewanapi.gongpingjia.com";
+
+	public static final String CWBaseurl = "http://chewanapi.gongpingjia.com/v1";
 
 	public static final String allCarBrands = CWBaseurl + "/car/brand";
 
@@ -37,9 +41,6 @@ public class API {
 
 	public static final String editAlbum = CWBaseurl + "/user/";
 
-	public static final String update = "http://cwapi.gongpingjia.com/version";
-
-	public static final String share = "http://cwapi.gongpingjia.com/";
 
 	// 官方活动
 	public static final String official = CWBaseurl + "/official/activity/list";
