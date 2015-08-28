@@ -15,6 +15,7 @@ import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.net.upload.FileInfo;
 import net.duohuo.dhroid.util.PhotoUtil;
+import net.duohuo.dhroid.util.UserLocation;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,7 +26,6 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -579,6 +579,9 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
             }
             mDhNet.addParam("latitude", mLatitude);
             mDhNet.addParam("longitude", mLongitude);
+            
+            mDhNet.addParam("currentCity", UserLocation.getInstance().getCity());
+            mDhNet.addParam("currentDistrict", UserLocation.getInstance().getDistrict());
 
             Map<String, Object> params = mDhNet.getParams();
             for (String key : params.keySet()) {
@@ -649,6 +652,10 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
             mDhNet.addParam("district", mDistrict);
             mDhNet.addParam("pay", mFeeText.getText().toString());
             mDhNet.addParam("seat", mSeatText.getText().toString());
+            
+            mDhNet.addParam("currentCity", UserLocation.getInstance().getCity());
+            mDhNet.addParam("currentDistrict", UserLocation.getInstance().getDistrict());
+            
             if (mEndTimeStamp != 0) {
                 mDhNet.addParam("end", mEndTimeStamp);
             }
