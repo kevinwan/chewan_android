@@ -83,13 +83,13 @@ public class MyActiveMembersManageActivity extends CarPlayBaseActivity {
 			.getUMSocialService("com.umeng.share");
 
 	// 微信id(正式版)
-    // static String sAppId = "wx4c127cf07bd7d80b";
-    // static String sAppSecret = "315ce754c5a1096c5188b4b69a7b9f04";
+	// static String sAppId = "wx4c127cf07bd7d80b";
+	// static String sAppSecret = "315ce754c5a1096c5188b4b69a7b9f04";
 
-    // 微信(测试版)
-    static String sAppId = "wx9c80b151c6d4ae54";
+	// 微信(测试版)
+	static String sAppId = "wx9c80b151c6d4ae54";
 
-    static String sAppSecret = "81077629b31790b0e8e8da336acdf4bb";
+	static String sAppSecret = "81077629b31790b0e8e8da336acdf4bb";
 
 	// 微信好友
 	private UMWXHandler wxHandler;
@@ -244,12 +244,14 @@ public class MyActiveMembersManageActivity extends CarPlayBaseActivity {
 
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(self, ChatActivity.class);
-				// it is group chat
-				intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
-				intent.putExtra("activityId", activityId);
-				intent.putExtra("groupId", chatGroupId);
-				startActivityForResult(intent, 0);
+				if (!TextUtils.isEmpty(chatGroupId)) {
+					Intent intent = new Intent(self, ChatActivity.class);
+					// it is group chat
+					intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
+					intent.putExtra("activityId", activityId);
+					intent.putExtra("groupId", chatGroupId);
+					startActivityForResult(intent, 0);
+				}
 			}
 		});
 

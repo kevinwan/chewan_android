@@ -23,7 +23,7 @@
                 android:background="#f5f7fa"
                 android:gravity="center" >
 
-                <ImageView
+                <com.gongpingjia.carplay.view.RoundImageView
                     android:id="@+id/head"
                     android:layout_width="85dp"
                     android:layout_height="85dp"
