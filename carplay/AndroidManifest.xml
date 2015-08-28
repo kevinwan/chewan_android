@@ -47,6 +47,10 @@
         <meta-data
             android:name="EASEMOB_APPKEY"
             android:value="gongpingjia#chewan" />
+        
+         <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="${UMENG_CHANNEL_VALUE}" />
 
         <activity
             android:name=".activity.chat.AlertDialog"
