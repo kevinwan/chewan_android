@@ -32,13 +32,14 @@ import com.gongpingjia.carplay.chat.view.PhotoViewAttacher.OnMatrixChangedListen
 import com.gongpingjia.carplay.chat.view.PhotoViewAttacher.OnPhotoTapListener;
 import com.gongpingjia.carplay.chat.view.PhotoViewAttacher.OnViewTapListener;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.ImageView;
-
 
 public class PhotoView extends ImageView implements IPhotoView {
 
@@ -46,23 +47,29 @@ public class PhotoView extends ImageView implements IPhotoView {
 
 	private ScaleType mPendingScaleType;
 
+	Activity mcontext;
+
 	public PhotoView(Context context) {
 		this(context, null);
+		this.mcontext = (Activity) context;
 	}
 
 	public PhotoView(Context context, AttributeSet attr) {
 		this(context, attr, 0);
+		this.mcontext = (Activity) context;
 	}
-	
+
 	public PhotoView(Context context, AttributeSet attr, int defStyle) {
 		super(context, attr, defStyle);
 		super.setScaleType(ScaleType.MATRIX);
-		mAttacher = new PhotoViewAttacher(this);
+		this.mcontext = (Activity) context;
+		mAttacher = new PhotoViewAttacher(this, mcontext);
 
 		if (null != mPendingScaleType) {
 			setScaleType(mPendingScaleType);
 			mPendingScaleType = null;
 		}
+
 	}
 
 	@Override
@@ -100,12 +107,12 @@ public class PhotoView extends ImageView implements IPhotoView {
 		return mAttacher.getScaleType();
 	}
 
-    @Override
-    public void setAllowParentInterceptOnEdge(boolean allow) {
-        mAttacher.setAllowParentInterceptOnEdge(allow);
-    }
+	@Override
+	public void setAllowParentInterceptOnEdge(boolean allow) {
+		mAttacher.setAllowParentInterceptOnEdge(allow);
+	}
 
-    @Override
+	@Override
 	public void setMinScale(float minScale) {
 		mAttacher.setMinScale(minScale);
 	}

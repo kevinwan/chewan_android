@@ -52,7 +52,6 @@ public class LoadingDialogNew extends AlertDialog
     {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.dialog_loading);
-        System.out.println("dialo");
         tips_loading_msg = (TextView)findViewById(R.id.tips_loading_msg);
         tips_loading_msg.setText(this.message);
     }
