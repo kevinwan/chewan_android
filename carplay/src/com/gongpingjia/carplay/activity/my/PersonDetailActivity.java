@@ -294,7 +294,7 @@ public class PersonDetailActivity extends CarPlayBaseActivity implements OnClick
                     int isSubscribed = JSONUtil.getInt(jo, "isSubscribed");
                     ViewUtil.bindView(attentionT, isSubscribed == 1 ? "取消关注" : "关注");
                     ViewUtil.bindNetImage(headI, JSONUtil.getString(jo, "photo"), "head");
-                    mHeadImgUrl = JSONUtil.getString(jo, "photo");
+                    mHeadImgUrl = JSONUtil.getString(jo, "originalPhoto");
                     ViewUtil.bindView(headV.findViewById(R.id.nickname), JSONUtil.getString(jo, "nickname"));
 
                     if (JSONUtil.getString(jo, "role").equals("官方用户")) {
