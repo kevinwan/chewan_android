@@ -81,8 +81,7 @@
                     android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="8dp"
-                    android:lineSpacingMultiplier="1.15"
-                     />
+                    android:lineSpacingMultiplier="1.15" />
             </LinearLayout>
 
             <View style="@style/line" />
@@ -121,16 +120,15 @@
                     android:layout_height="60dp"
                     android:gravity="right|center_vertical"
                     android:orientation="horizontal"
-                    android:paddingLeft="10dp"
-                    android:paddingTop="10dp"
                     android:paddingBottom="10dp"
-                     >
+                    android:paddingLeft="10dp"
+                    android:paddingTop="10dp" >
 
                     <TextView
                         android:id="@+id/tv_destination"
                         style="@style/text_blacklight_medium"
-                        android:ellipsize="end"
                         android:layout_marginRight="12dp"
+                        android:ellipsize="end"
                         android:singleLine="true" />
 
                     <ImageView
@@ -279,8 +277,8 @@
                         android:layout_height="60dp"
                         android:layout_marginRight="5dp"
                         android:gravity="center_vertical"
-                        android:textColor="@color/text_grey"
-                        android:text="0" />
+                        android:text="请选择座位数"
+                        android:textColor="@color/text_grey" />
 
                     <ImageView
                         android:layout_width="25dp"

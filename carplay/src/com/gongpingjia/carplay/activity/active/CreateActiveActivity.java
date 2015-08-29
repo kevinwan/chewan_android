@@ -417,7 +417,7 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements
 		mFeeText.setText(active.pay);
 		mSeatText.setText(active.seat);
 
-		if (!active.seat.equals("0")) {
+		if (!active.seat.equals("请选择座位数")) {
 			mSeatText.setTextColor(getBaseContext().getResources()
 					.getColorStateList(R.color.text_black_light));
 		}
@@ -561,7 +561,7 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements
 				return;
 			}
 			if (mSeatText.getText().toString().length() == 0
-					|| mSeatText.getText().toString().equals("0")) {
+					|| mSeatText.getText().toString().equals("请选择座位数")) {
 				showToast("请选择空座位数");
 				return;
 			}
@@ -659,7 +659,7 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements
 				return;
 			}
 			if (mSeatText.getText().toString().length() == 0
-					|| mSeatText.getText().toString().equals("0")) {
+					|| mSeatText.getText().toString().equals("请选择座位数")) {
 				showToast("请选择空座位数");
 				return;
 			}
