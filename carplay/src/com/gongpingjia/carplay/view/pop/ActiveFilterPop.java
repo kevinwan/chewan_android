@@ -175,9 +175,9 @@ public class ActiveFilterPop extends PopupWindow implements OnClickListener {
 
 	public void show(View v) {
 		pop.showAsDropDown(v);
-		if (addresssT != null) {
-			addresssT.setText("不限");
-		}
+		// if (addresssT != null) {
+		// addresssT.setText("不限");
+		// }
 	}
 
 	public OnCheckResult getOnCheckResult() {
