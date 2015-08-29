@@ -42,6 +42,7 @@ import com.gongpingjia.carplay.chat.task.LoadLocalBigImgTask.OnLoadResult;
 import com.gongpingjia.carplay.chat.util.ImageCache;
 import com.gongpingjia.carplay.chat.view.PhotoView;
 import com.gongpingjia.carplay.view.dialog.SavePhotoDialog;
+import com.gongpingjia.carplay.view.gallery.TouchImageView;
 
 /**
  * 下载显示大图
@@ -50,7 +51,7 @@ import com.gongpingjia.carplay.view.dialog.SavePhotoDialog;
 public class ShowBigImage extends CarPlayBaseActivity {
 	private static final String TAG = "ShowBigImage";
 	private ProgressDialog pd;
-	private PhotoView image;
+	private TouchImageView image;
 	private int default_res = R.drawable.default_image;
 	private String localFilePath;
 	private Bitmap bitmap;
@@ -63,7 +64,7 @@ public class ShowBigImage extends CarPlayBaseActivity {
 		setContentView(R.layout.activity_show_big_image);
 		super.onCreate(savedInstanceState);
 
-		image = (PhotoView) findViewById(R.id.image);
+		image = (TouchImageView) findViewById(R.id.image);
 		loadLocalPb = (ProgressBar) findViewById(R.id.pb_load_local);
 		default_res = getIntent().getIntExtra("default_image",
 				R.drawable.head_icon);
@@ -112,13 +113,6 @@ public class ShowBigImage extends CarPlayBaseActivity {
 			image.setImageResource(default_res);
 		}
 
-		image.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				finish();
-			}
-		});
-
 		image.setOnLongClickListener(new OnLongClickListener() {
 
 			@Override
@@ -132,6 +126,15 @@ public class ShowBigImage extends CarPlayBaseActivity {
 				return false;
 			}
 		});
+
+		image.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
+
 	}
 
 	/**

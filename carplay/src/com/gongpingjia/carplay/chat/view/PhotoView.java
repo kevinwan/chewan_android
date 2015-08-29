@@ -52,11 +52,27 @@ public class PhotoView extends ImageView implements IPhotoView {
 	public PhotoView(Context context) {
 		this(context, null);
 		this.mcontext = (Activity) context;
+
+		this.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				mcontext.finish();
+			}
+		});
 	}
 
 	public PhotoView(Context context, AttributeSet attr) {
 		this(context, attr, 0);
 		this.mcontext = (Activity) context;
+
+		this.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				mcontext.finish();
+			}
+		});
 	}
 
 	public PhotoView(Context context, AttributeSet attr, int defStyle) {
@@ -69,6 +85,14 @@ public class PhotoView extends ImageView implements IPhotoView {
 			setScaleType(mPendingScaleType);
 			mPendingScaleType = null;
 		}
+
+		this.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				mcontext.finish();
+			}
+		});
 
 	}
 

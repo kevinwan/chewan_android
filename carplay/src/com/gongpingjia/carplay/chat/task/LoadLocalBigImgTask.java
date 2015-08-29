@@ -24,11 +24,12 @@ import com.easemob.util.ImageUtils;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.chat.util.ImageCache;
 import com.gongpingjia.carplay.chat.view.PhotoView;
+import com.gongpingjia.carplay.view.gallery.TouchImageView;
 
 public class LoadLocalBigImgTask extends AsyncTask<Void, Void, Bitmap> {
 
 	private ProgressBar pb;
-	private PhotoView photoView;
+	private TouchImageView photoView;
 	private String path;
 	private int width;
 	private int height;
@@ -37,7 +38,7 @@ public class LoadLocalBigImgTask extends AsyncTask<Void, Void, Bitmap> {
 	OnLoadResult onLoadResult;
 
 	public LoadLocalBigImgTask(Context context, String path,
-			PhotoView photoView, ProgressBar pb, int width, int height) {
+			TouchImageView photoView, ProgressBar pb, int width, int height) {
 		this.context = context;
 		this.path = path;
 		this.photoView = photoView;
