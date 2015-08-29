@@ -73,8 +73,8 @@ public class AttestationNotifyActivity extends CarPlayBaseActivity {
 		if (result.equals("0")) {
 			pass(model);
 		} else {
-			String reason = it.getStringExtra("content");
-			fail(model, reason);
+			String remarks = it.getStringExtra("remarks");
+			fail(model, remarks);
 		}
 
 		DhNet verifyNet = new DhNet(API.CWBaseurl + "/user/" + user.getUserId()
@@ -138,7 +138,7 @@ public class AttestationNotifyActivity extends CarPlayBaseActivity {
 	}
 
 	/** 未通过 */
-	private void fail(String model, String reason) {
+	private void fail(String model, String remarks) {
 		notpassL.setVisibility(View.VISIBLE);
 		passL.setVisibility(View.GONE);
 		nextBtn.setText("重新认证");
@@ -150,7 +150,7 @@ public class AttestationNotifyActivity extends CarPlayBaseActivity {
 		newcontent = a + b + c;
 
 		contentfailT.setText(strColor(newcontent, b));
-		reasonT.setText(reason);
+		reasonT.setText(remarks);
 	}
 
 	private SpannableStringBuilder strColor(String newcontent, String str) {

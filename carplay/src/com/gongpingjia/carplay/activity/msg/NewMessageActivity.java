@@ -180,7 +180,7 @@ public class NewMessageActivity extends CarPlayBaseActivity implements
 					}
 					if (type.equals("车主认证")) {
 						String carModel = JSONUtil.getString(jo, "carModel");
-						String content = JSONUtil.getString(jo, "content");
+						String remarks = JSONUtil.getString(jo, "remarks");
 						String rs = "";
 						if (JSONUtil.getString(jo, "remarks").equals("")) {
 							rs = "0";
@@ -190,7 +190,7 @@ public class NewMessageActivity extends CarPlayBaseActivity implements
 						it = new Intent(self, AttestationNotifyActivity.class);
 						it.putExtra("carModel", carModel);
 						it.putExtra("result", rs);
-						it.putExtra("content", content);
+						it.putExtra("remarks", remarks);
 						startActivity(it);
 					}
 				}
