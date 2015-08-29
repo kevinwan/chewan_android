@@ -15,6 +15,7 @@ import android.widget.EditText;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
+import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.util.Utils;
 import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
@@ -101,8 +102,8 @@ public class ForgetPwdActivity extends CarPlayBaseActivity implements OnClickLis
                 return;
             }
 
-            String varApi = "http://cwapi.gongpingjia.com/v1/phone/" + strPhone + "/verification";
-            DhNet net = new DhNet(varApi);
+            String url1 = API.CWBaseurl+"/phone/"+ strPhone + "/verification";
+            DhNet net = new DhNet(url1);
             net.addParam("code", strVerification);
             net.addParam("type", 1);
             net.doPostInDialog("验证中...", new NetTask(self) {
@@ -139,7 +140,8 @@ public class ForgetPwdActivity extends CarPlayBaseActivity implements OnClickLis
                 }
             }
 
-            DhNet codeNet = new DhNet("http://cwapi.gongpingjia.com/v1/phone/" + strPhone + "/verification");
+            String url = API.CWBaseurl+"/phone/"+ strPhone + "/verification";
+            DhNet codeNet = new DhNet(url);
             codeNet.addParam("type", 1);
             codeNet.doGetInDialog("获取中...", new NetTask(self) {
 

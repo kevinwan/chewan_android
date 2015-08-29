@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
+import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.bean.User;
 
 /**
@@ -36,11 +37,15 @@ public class ParticipateApplicationActivity extends CarPlayBaseActivity {
 
 		User user = User.getInstance();
 		listView = (NetRefreshAndMoreListView) findViewById(R.id.listview);
-		adapter = new NetJSONAdapter(
-				"http://cwapi.gongpingjia.com/v1/user/"
-						+ user.getUserId() + "/application/list? token="
-						+ user.getToken(),
-				self, R.layout.itme_participate_application);
+		String url = API.CWBaseurl+"user/"+ user.getUserId() + "/application/list? token="
+                + user.getToken();
+//		adapter = new NetJSONAdapter(
+//				"http://cwapi.gongpingjia.com/v1/user/"
+//						+ user.getUserId() + "/application/list? token="
+//						+ user.getToken(),
+//				self, R.layout.itme_participate_application);
+		
+	    adapter = new NetJSONAdapter(url,self, R.layout.itme_participate_application);
 		adapter.fromWhat("data");
 		adapter.addField("nickname", R.id.participate_name);
 		adapter.addField("age", R.id.participate_age);
