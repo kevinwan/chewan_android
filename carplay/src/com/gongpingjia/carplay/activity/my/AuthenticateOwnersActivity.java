@@ -172,7 +172,7 @@ public class AuthenticateOwnersActivity extends CarPlayBaseActivity implements
 		}
 
 		if (TextUtils.isEmpty(drivingExperienceE.getText().toString())) {
-			showToast("请输入架龄!");
+			showToast("请输入驾龄!");
 			return;
 		}
 

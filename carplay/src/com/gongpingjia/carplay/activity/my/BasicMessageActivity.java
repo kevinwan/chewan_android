@@ -222,7 +222,7 @@ public class BasicMessageActivity extends CarPlayBaseActivity implements
 			return;
 		}
 
-		final String strnickname = nicknameT.getText().toString().trim();
+		final String strnickname = nicknameT.getText().toString();
 		if (TextUtils.isEmpty(strnickname)) {
 			showToast("昵称不能为空");
 			return;
