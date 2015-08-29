@@ -20,7 +20,7 @@ public class CarPlayValueFix implements ValueFix {
 		imageOptions = new HashMap<String, DisplayImageOptions>();
 		optionsDefault = new DisplayImageOptions.Builder()
 				.showImageForEmptyUri(R.drawable.img_loading_faild)
-				.showStubImage(R.drawable.img_loading).cacheInMemory()
+				.showStubImage(R.color.img_color).cacheInMemory()
 				.cacheOnDisc().build();
 		imageOptions.put("default", optionsDefault);
 

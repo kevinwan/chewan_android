@@ -21,7 +21,11 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
+import net.duohuo.dhroid.dialog.IDialog;
+import net.duohuo.dhroid.ioc.IocContainer;
+
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -38,142 +42,158 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
 
 public class UrlTouchImageView extends RelativeLayout {
-    // protected ProgressBar mProgressBar;
+	// protected ProgressBar mProgressBar;
 
-    protected TouchImageView mImageView;
+	protected TouchImageView mImageView;
 
-    protected Context mContext;
+	protected Context mContext;
 
-    public UrlTouchImageView(Context ctx) {
-        super(ctx);
-        mContext = ctx;
-        init();
-    }
+	Dialog progressdialog;
 
-    public UrlTouchImageView(Context ctx, AttributeSet attrs) {
-        super(ctx, attrs);
-        mContext = ctx;
-        init();
-    }
+	public UrlTouchImageView(Context ctx) {
+		super(ctx);
+		mContext = ctx;
+		init();
+	}
 
-    public TouchImageView getImageView() {
-        return mImageView;
-    }
+	public UrlTouchImageView(Context ctx, AttributeSet attrs) {
+		super(ctx, attrs);
+		mContext = ctx;
+		init();
+	}
 
-    @SuppressWarnings("deprecation")
-    protected void init() {
-        mImageView = new TouchImageView(mContext);
-        mImageView.setOnClickListener(new OnClickListener() {
+	public TouchImageView getImageView() {
+		return mImageView;
+	}
 
-            @Override
-            public void onClick(View v) {
+	@SuppressWarnings("deprecation")
+	protected void init() {
+		mImageView = new TouchImageView(mContext);
+		mImageView.setOnClickListener(new OnClickListener() {
 
-                Activity activity = (Activity) mContext;
-                activity.finish();
-            }
-        });
-        LayoutParams params = new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
-        mImageView.setLayoutParams(params);
-        this.addView(mImageView);
-        mImageView.setVisibility(GONE);
+			@Override
+			public void onClick(View v) {
 
-        // mProgressBar = new ProgressBar(mContext, null,
-        // android.R.attr.progressBarStyleHorizontal);
-        // params = new LayoutParams(LayoutParams.FILL_PARENT,
-        // LayoutParams.WRAP_CONTENT);
-        // params.addRule(RelativeLayout.CENTER_VERTICAL);
-        // params.setMargins(30, 0, 30, 0);
-        // mProgressBar.setLayoutParams(params);
-        // mProgressBar.setIndeterminate(false);
-        // mProgressBar.setMax(100);
-        // this.addView(mProgressBar);
-    }
+				Activity activity = (Activity) mContext;
+				activity.finish();
+			}
+		});
+		LayoutParams params = new LayoutParams(LayoutParams.FILL_PARENT,
+				LayoutParams.FILL_PARENT);
+		mImageView.setLayoutParams(params);
+		this.addView(mImageView);
+		mImageView.setVisibility(GONE);
 
-    public void setUrl(String imageUrl) {
-        if (!imageUrl.startsWith("http")) {
-            imageUrl = "file://" + imageUrl;
-        }
-        ImageLoader.getInstance().displayImage(imageUrl, mImageView, CarPlayValueFix.optionsDefault,
-                new ImageLoadingListener() {
+		// mProgressBar = new ProgressBar(mContext, null,
+		// android.R.attr.progressBarStyleHorizontal);
+		// params = new LayoutParams(LayoutParams.FILL_PARENT,
+		// LayoutParams.WRAP_CONTENT);
+		// params.addRule(RelativeLayout.CENTER_VERTICAL);
+		// params.setMargins(30, 0, 30, 0);
+		// mProgressBar.setLayoutParams(params);
+		// mProgressBar.setIndeterminate(false);
+		// mProgressBar.setMax(100);
+		// this.addView(mProgressBar);
+	}
 
-                    @Override
-                    public void onLoadingStarted() {
-                        // TODO Auto-generated method stub
+	public void setUrl(String imageUrl) {
+		if (!imageUrl.startsWith("http")) {
+			imageUrl = "file://" + imageUrl;
+		}
+		ImageLoader.getInstance().displayImage(imageUrl, mImageView,
+				CarPlayValueFix.optionsDefault, new ImageLoadingListener() {
 
-                    }
+					@Override
+					public void onLoadingStarted() {
+						// TODO Auto-generated method stub
+						// progressdialog = IocContainer.getShare()
+						// .get(IDialog.class)
+						// .showProgressDialog(mContext, "加载中...");
 
-                    @Override
-                    public void onLoadingFailed(FailReason failReason) {
-                        // TODO Auto-generated method stub
+					}
 
-                    }
+					@Override
+					public void onLoadingFailed(FailReason failReason) {
+						// if (progressdialog != null
+						// && progressdialog.isShowing()) {
+						// progressdialog.dismiss();
+						// }
+					}
 
-                    @Override
-                    public void onLoadingComplete(Bitmap bitmap) {
-                        if (bitmap == null) {
-                            mImageView.setScaleType(ScaleType.CENTER);
-                            bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.no_photo);
-                            mImageView.setImageBitmap(bitmap);
-                        } else {
-                            mImageView.setScaleType(ScaleType.MATRIX);
-                            mImageView.setImageBitmap(bitmap);
-                        }
-                        mImageView.setVisibility(VISIBLE);
-                    }
+					@Override
+					public void onLoadingComplete(Bitmap bitmap) {
+						// if (progressdialog != null
+						// && progressdialog.isShowing()) {
+						// progressdialog.dismiss();
+						// }
+						if (bitmap == null) {
+							mImageView.setScaleType(ScaleType.CENTER);
+							bitmap = BitmapFactory.decodeResource(
+									getResources(), R.drawable.no_photo);
+							mImageView.setImageBitmap(bitmap);
+						} else {
+							mImageView.setScaleType(ScaleType.MATRIX);
+							mImageView.setImageBitmap(bitmap);
+						}
+						mImageView.setVisibility(VISIBLE);
+					}
 
-                    @Override
-                    public void onLoadingCancelled() {
-                        // TODO Auto-generated method stub
+					@Override
+					public void onLoadingCancelled() {
+						// TODO Auto-generated method stub
 
-                    }
-                });
-    }
+					}
+				});
+	}
 
-    // No caching load
-    public class ImageLoadTask extends AsyncTask<String, Integer, Bitmap> {
-        @Override
-        protected Bitmap doInBackground(String... strings) {
-            String url = strings[0];
-            Bitmap bm = null;
-            try {
-                URL aURL = new URL(url);
-                URLConnection conn = aURL.openConnection();
-                conn.connect();
-                InputStream is = conn.getInputStream();
-                int totalLen = conn.getContentLength();
-                InputStreamWrapper bis = new InputStreamWrapper(is, 8192, totalLen);
-                bis.setProgressListener(new InputStreamWrapper.InputStreamProgressListener() {
-                    @Override
-                    public void onProgress(float progressValue, long bytesLoaded, long bytesTotal) {
-                        publishProgress((int) (progressValue * 100));
-                    }
-                });
-                bm = BitmapFactory.decodeStream(bis);
-                bis.close();
-                is.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return bm;
-        }
+	// No caching load
+	public class ImageLoadTask extends AsyncTask<String, Integer, Bitmap> {
+		@Override
+		protected Bitmap doInBackground(String... strings) {
+			String url = strings[0];
+			Bitmap bm = null;
+			try {
+				URL aURL = new URL(url);
+				URLConnection conn = aURL.openConnection();
+				conn.connect();
+				InputStream is = conn.getInputStream();
+				int totalLen = conn.getContentLength();
+				InputStreamWrapper bis = new InputStreamWrapper(is, 8192,
+						totalLen);
+				bis.setProgressListener(new InputStreamWrapper.InputStreamProgressListener() {
+					@Override
+					public void onProgress(float progressValue,
+							long bytesLoaded, long bytesTotal) {
+						publishProgress((int) (progressValue * 100));
+					}
+				});
+				bm = BitmapFactory.decodeStream(bis);
+				bis.close();
+				is.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return bm;
+		}
 
-        @Override
-        protected void onPostExecute(Bitmap bitmap) {
-            if (bitmap == null) {
-                mImageView.setScaleType(ScaleType.CENTER);
-                bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.no_photo);
-                mImageView.setImageBitmap(bitmap);
-            } else {
-                mImageView.setScaleType(ScaleType.MATRIX);
-                mImageView.setImageBitmap(bitmap);
-            }
-            mImageView.setVisibility(VISIBLE);
-            // mProgressBar.setVisibility(GONE);
-        }
+		@Override
+		protected void onPostExecute(Bitmap bitmap) {
+			if (bitmap == null) {
+				mImageView.setScaleType(ScaleType.CENTER);
+				bitmap = BitmapFactory.decodeResource(getResources(),
+						R.drawable.no_photo);
+				mImageView.setImageBitmap(bitmap);
+			} else {
+				mImageView.setScaleType(ScaleType.MATRIX);
+				mImageView.setImageBitmap(bitmap);
+			}
+			mImageView.setVisibility(VISIBLE);
+			// mProgressBar.setVisibility(GONE);
+		}
 
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            // mProgressBar.setProgress(values[0]);
-        }
-    }
+		@Override
+		protected void onProgressUpdate(Integer... values) {
+			// mProgressBar.setProgress(values[0]);
+		}
+	}
 }
