@@ -49,6 +49,8 @@
                 android:background="@null"
                 android:gravity="right|center"
                 android:inputType="number"
+                android:hint="驾龄为1~20之间"
+                android:textColorHint="@color/text_grey"
                 android:textColor="@color/text_black_light"
                  />
 

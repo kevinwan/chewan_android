@@ -182,7 +182,7 @@ public class PersonDetailActivity extends CarPlayBaseActivity implements
 					}
 				}
 				it.putExtra("imgurls", imgUrls);
-				it.putExtra("currentItem", position);
+				it.putExtra("currentItem", position%albumPhotosJsa.length());
 				startActivity(it);
 			}
 		});

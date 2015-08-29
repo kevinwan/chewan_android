@@ -23,6 +23,8 @@
             android:hint="请输入目的地"
             android:singleLine="true"
             android:imeOptions="actionSearch"
+            android:textColor="@color/text_grey"
+            android:textColorHint="@color/text_grey"
             android:padding="5dp" />
     </LinearLayout>
 
