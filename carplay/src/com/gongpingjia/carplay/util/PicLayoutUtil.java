@@ -235,22 +235,22 @@ public class PicLayoutUtil {
 				try {
 					lastChildCount = lc.getChildCount();
 					for (int j = 0; j < lc.getChildCount(); j++) {
-						if (j == 0) {
-							JSONObject jo = jsa.getJSONObject(j);
-							ImageView img = (ImageView) lc.getChildAt(j);
-							img.setBackgroundResource(R.drawable.img_loading);
-							ViewUtil.bindNetImage(img,
-									JSONUtil.getString(jo, "thumbnail_pic"),
-									"bigPicOptions");
-							largePic(img, jsa, j);
-						} else {
-							JSONObject jo = jsa.getJSONObject(j);
-							ImageView img = (ImageView) lc.getChildAt(j);
-							ViewUtil.bindNetImage(img,
-									JSONUtil.getString(jo, "thumbnail_pic"),
-									"default");
-							largePic(img, jsa, j);
-						}
+						// if (j == 0) {
+						// JSONObject jo = jsa.getJSONObject(j);
+						// ImageView img = (ImageView) lc.getChildAt(j);
+						// img.setBackgroundResource(R.drawable.img_loading);
+						// ViewUtil.bindNetImage(img,
+						// JSONUtil.getString(jo, "thumbnail_pic"),
+						// "default");
+						// largePic(img, jsa, j);
+						// } else {
+						JSONObject jo = jsa.getJSONObject(j);
+						ImageView img = (ImageView) lc.getChildAt(j);
+						ViewUtil.bindNetImage(img,
+								JSONUtil.getString(jo, "thumbnail_pic"),
+								"default");
+						largePic(img, jsa, j);
+						// }
 
 					}
 				} catch (JSONException e) {
@@ -494,13 +494,12 @@ public class PicLayoutUtil {
 			params = new LayoutParams(DhUtil.dip2px(mContext, 200),
 					DhUtil.dip2px(mContext, 150));
 			ImageView img = new ImageView(mContext);
-			img.setBackgroundResource(R.drawable.img_loading);
+			// img.setBackgroundResource(R.drawable.img_loading);
 			img.setLayoutParams(params);
 			if (type == 1) {
 				JSONObject jo = data.getJSONObject(0);
 				ViewUtil.bindNetImage(img,
-						JSONUtil.getString(jo, "thumbnail_pic"),
-						"bigPicOptions");
+						JSONUtil.getString(jo, "thumbnail_pic"), "default");
 			}
 			child.addView(img, params);
 
