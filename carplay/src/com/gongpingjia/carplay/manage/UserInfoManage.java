@@ -49,7 +49,6 @@ public class UserInfoManage {
         } else {
             if (loginCallBack != null) {
                 loginCallBack.onisLogin();
-
             }
         }
         return islogin;
