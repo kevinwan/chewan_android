@@ -37,7 +37,7 @@ public class ParticipateApplicationActivity extends CarPlayBaseActivity {
 
 		User user = User.getInstance();
 		listView = (NetRefreshAndMoreListView) findViewById(R.id.listview);
-		String url = API.CWBaseurl+"user/"+ user.getUserId() + "/application/list? token="
+		String url = API.CWBaseurl+"/user/"+ user.getUserId() + "/application/list? token="
                 + user.getToken();
 //		adapter = new NetJSONAdapter(
 //				"http://cwapi.gongpingjia.com/v1/user/"
