@@ -160,6 +160,8 @@ public class ActiveFilterPop extends PopupWindow implements OnClickListener {
 
                 if (provice.equals(city)) {
                     addresssT.setText(provice);
+                    pre.setCity("");
+                    pre.setProvince("");
                 } else {
                     addresssT.setText(provice + city);
                 }
