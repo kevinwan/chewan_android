@@ -4,7 +4,7 @@ public class API {
 
     public static final String update = "http://chewanapi.gongpingjia.com/version";
 
-    public static final String share = "http://chewanapi.gongpingjia.com";
+    public static final String share = "http://chewanapi.gongpingjia.com/";
 
     //正式版
     // public static final String CWBaseurl =
