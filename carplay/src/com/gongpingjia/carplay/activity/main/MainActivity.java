@@ -126,6 +126,12 @@ public class MainActivity extends BaseFragmentActivity implements
 	}
 
 	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		// TODO Auto-generated method stub
+		super.onSaveInstanceState(outState);
+	}
+
+	@Override
 	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
@@ -650,6 +656,13 @@ public class MainActivity extends BaseFragmentActivity implements
 				.getInstance();
 
 		super.onStop();
+
+	}
+
+	@Override
+	public void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
 	}
 
 	static public class ExitRunnable implements Runnable {

@@ -137,9 +137,7 @@
                 android:id="@+id/activity_head"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginRight="5dp"
-                android:focusable="false"
-                android:focusableInTouchMode="false" />
+                android:layout_marginRight="5dp" />
 
             <TextView
                 android:id="@+id/activity_name"
@@ -147,10 +145,12 @@
                 android:layout_marginRight="3dp" />
 
             <ImageView
+                android:id="@+id/arrow"
                 android:layout_width="18dp"
                 android:layout_height="25dp"
                 android:layout_marginRight="5dp"
-                android:src="@drawable/right_btn" />
+                android:src="@drawable/right_btn"
+                android:visibility="gone" />
         </LinearLayout>
     </LinearLayout>
 
