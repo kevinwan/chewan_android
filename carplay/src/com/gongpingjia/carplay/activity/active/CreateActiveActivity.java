@@ -49,6 +49,7 @@ import com.gongpingjia.carplay.bean.Active;
 import com.gongpingjia.carplay.bean.ActiveCreateEB;
 import com.gongpingjia.carplay.bean.PhotoState;
 import com.gongpingjia.carplay.bean.User;
+import com.gongpingjia.carplay.photo.model.PhotoModel;
 import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.util.Utils;
 import com.gongpingjia.carplay.view.NestedGridView;
@@ -340,7 +341,7 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements
 				if (mPhotoStates.get(position).isLast()) {
 					mCurPath = new File(mCacheDir, System.currentTimeMillis()
 							+ ".jpg").getAbsolutePath();
-					PhotoUtil.getPhoto(self, Constant.TAKE_PHOTO,
+					CarPlayUtil.getPhoto(self, Constant.TAKE_PHOTO,
 							Constant.PICK_PHOTO, new File(mCurPath));
 				} else {
 					if (isEditable) {
@@ -937,9 +938,27 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements
 				// mCurPath, 1, 1, 1000);
 				break;
 			case Constant.PICK_PHOTO:
-				Bitmap btp = PhotoUtil.checkImage(self, data);
-				PhotoUtil.saveLocalImage(btp, new File(mCurPath));
-				upLoadPic(mCurPath);
+
+				if (data != null && data.getExtras() != null) {
+					@SuppressWarnings("unchecked")
+					List<PhotoModel> photos = (List<PhotoModel>) data
+							.getExtras().getSerializable("photos");
+					if (photos == null || photos.isEmpty()) {
+						showToast("没有选择图片!");
+					} else {
+						for (int i = 0; i < photos.size(); i++) {
+							String newPhotoPath = new File(mCacheDir,
+									System.currentTimeMillis() + ".jpg")
+									.getAbsolutePath();
+							Bitmap btp = PhotoUtil.getLocalImage(new File(
+									photos.get(i).getOriginalPath()));
+							PhotoUtil.saveLocalImage(btp,
+									new File(newPhotoPath));
+							upLoadPic(newPhotoPath);
+						}
+					}
+				}
+
 				// PhotoUtil.onPhotoFromPick(self, Constant.ZOOM_PIC, mCurPath,
 				// data, 1, 1, 1000);
 				break;
