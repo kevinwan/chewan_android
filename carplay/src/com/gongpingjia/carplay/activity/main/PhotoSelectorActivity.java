@@ -10,7 +10,6 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -26,20 +25,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
-import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.utils.StorageUtils;
-import com.photoselector.R;
-import com.photoselector.domain.PhotoSelectorDomain;
-import com.photoselector.model.AlbumModel;
-import com.photoselector.model.PhotoModel;
-import com.photoselector.ui.PhotoItem.onItemClickListener;
-import com.photoselector.ui.PhotoItem.onPhotoItemCheckedListener;
-import com.photoselector.util.AnimationUtil;
-import com.photoselector.util.CommonUtils;
+import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.photo.domain.PhotoSelectorDomain;
+import com.gongpingjia.carplay.photo.model.AlbumModel;
+import com.gongpingjia.carplay.photo.model.PhotoModel;
+import com.gongpingjia.carplay.photo.ui.AlbumAdapter;
+import com.gongpingjia.carplay.photo.ui.PhotoItem.onItemClickListener;
+import com.gongpingjia.carplay.photo.ui.PhotoItem.onPhotoItemCheckedListener;
+import com.gongpingjia.carplay.photo.ui.PhotoSelectorAdapter;
+import com.gongpingjia.carplay.util.AnimationUtil;
+import com.gongpingjia.carplay.util.CommonUtils;
 
 /**
  * @author Aizaz AZ

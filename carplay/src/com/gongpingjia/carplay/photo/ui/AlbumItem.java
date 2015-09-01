@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.photo.model.AlbumModel;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class AlbumItem extends LinearLayout {

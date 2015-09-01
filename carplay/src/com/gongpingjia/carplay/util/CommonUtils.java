@@ -1,6 +1,5 @@
 package com.gongpingjia.carplay.util;
 
-import com.photoselector.ui.PhotoSelectorActivity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,6 +9,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore.Images.ImageColumns;
 import android.util.DisplayMetrics;
+
+import com.gongpingjia.carplay.activity.main.PhotoSelectorActivity;
 
 /**
  * ͨ�ù�����

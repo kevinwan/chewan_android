@@ -12,17 +12,17 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.photoselector.R;
-import com.photoselector.model.PhotoModel;
-import com.photoselector.util.AnimationUtil;
+import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.photo.model.PhotoModel;
+import com.gongpingjia.carplay.util.AnimationUtil;
 
 public class BasePhotoPreviewActivity extends Activity implements OnPageChangeListener, OnClickListener {
 

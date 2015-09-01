@@ -3,18 +3,15 @@ package com.gongpingjia.carplay.photo.ui;
 import java.util.ArrayList;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView.LayoutParams;
-import android.widget.TextView;
 
-import com.photoselector.R;
-import com.photoselector.model.PhotoModel;
-import com.photoselector.ui.PhotoItem.onItemClickListener;
-import com.photoselector.ui.PhotoItem.onPhotoItemCheckedListener;
-import com.photoselector.util.CommonUtils;
+import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.photo.model.PhotoModel;
+import com.gongpingjia.carplay.photo.ui.PhotoItem.onItemClickListener;
+import com.gongpingjia.carplay.photo.ui.PhotoItem.onPhotoItemCheckedListener;
 
 /**
  * 

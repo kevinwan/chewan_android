@@ -2,16 +2,16 @@ package com.gongpingjia.carplay.photo.domain;
 
 import java.util.List;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
+
 import com.gongpingjia.carplay.activity.main.PhotoSelectorActivity.OnLocalAlbumListener;
 import com.gongpingjia.carplay.activity.main.PhotoSelectorActivity.OnLocalReccentListener;
 import com.gongpingjia.carplay.photo.controller.AlbumController;
 import com.gongpingjia.carplay.photo.model.AlbumModel;
 import com.gongpingjia.carplay.photo.model.PhotoModel;
-
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.os.Handler;
-import android.os.Message;
 
 
 @SuppressLint("HandlerLeak")

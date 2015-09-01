@@ -8,6 +8,12 @@ import java.util.List;
 
 import android.os.Bundle;
 
+import com.gongpingjia.carplay.activity.main.PhotoSelectorActivity.OnLocalReccentListener;
+import com.gongpingjia.carplay.photo.domain.PhotoSelectorDomain;
+import com.gongpingjia.carplay.photo.model.PhotoModel;
+import com.gongpingjia.carplay.photo.ui.BasePhotoPreviewActivity;
+import com.gongpingjia.carplay.util.CommonUtils;
+
 
 public class PhotoPreviewActivity extends BasePhotoPreviewActivity implements OnLocalReccentListener {
 

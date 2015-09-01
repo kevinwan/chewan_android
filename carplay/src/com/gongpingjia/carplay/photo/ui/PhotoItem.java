@@ -12,9 +12,9 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.photo.model.PhotoModel;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.photoselector.R;
-import com.photoselector.model.PhotoModel;
 
 /**
  * @author Aizaz AZ

@@ -14,12 +14,12 @@ import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
+import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.photo.model.PhotoModel;
+import com.gongpingjia.carplay.photo.polites.GestureImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
-import com.photoselector.R;
-import com.photoselector.model.PhotoModel;
-import com.polites.GestureImageView;
 
 public class PhotoPreview extends LinearLayout implements OnClickListener {
 
