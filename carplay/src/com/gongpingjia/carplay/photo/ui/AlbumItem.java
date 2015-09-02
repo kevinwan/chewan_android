@@ -1,4 +1,5 @@
 package com.gongpingjia.carplay.photo.ui;
+
 /**
  * 
  * @author Aizaz AZ
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.photo.model.AlbumModel;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -41,7 +43,8 @@ public class AlbumItem extends LinearLayout {
 
 	/** ÉèÖÃÏà²á·âÃæ */
 	public void setAlbumImage(String path) {
-		ImageLoader.getInstance().displayImage("file://" + path, ivAlbum);
+		ImageLoader.getInstance().displayImage("file://" + path, ivAlbum,
+				CarPlayValueFix.optionsDefault);
 	}
 
 	/** ³õÊ¼»¯ */

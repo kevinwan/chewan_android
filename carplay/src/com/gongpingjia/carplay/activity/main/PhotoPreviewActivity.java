@@ -44,7 +44,7 @@ public class PhotoPreviewActivity extends BasePhotoPreviewActivity implements On
 			if (!CommonUtils.isNull(albumName) && albumName.equals(PhotoSelectorActivity.RECCENT_PHOTO)) {
 				photoSelectorDomain.getReccent(this);
 			} else {
-				photoSelectorDomain.getAlbum(albumName, this);
+				photoSelectorDomain.getAlbum(albumName, this);  
 			}
 		}
 	}

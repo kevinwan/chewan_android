@@ -13,7 +13,7 @@
         android:layout_gravity="center"
         android:indeterminateDrawable="@anim/pb_default" />
 
-    <com.polites.GestureImageView
+    <com.gongpingjia.carplay.photo.polites.GestureImageView
         android:id="@+id/iv_content_vpp"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

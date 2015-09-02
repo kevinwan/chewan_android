@@ -14,12 +14,13 @@ import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
+import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.photo.model.PhotoModel;
 import com.gongpingjia.carplay.photo.polites.GestureImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 public class PhotoPreview extends LinearLayout implements OnClickListener {
 
@@ -50,32 +51,22 @@ public class PhotoPreview extends LinearLayout implements OnClickListener {
 	}
 
 	private void loadImage(String path) {
-		ImageLoader.getInstance().displayImage(path, ivContent,
-				new ImageLoadingListener() {
-
+		ImageLoader.getInstance().loadImage(path,
+				CarPlayValueFix.optionsDefault,
+				new SimpleImageLoadingListener() {
 					@Override
-					public void onLoadingStarted() {
-						// TODO Auto-generated method stub
-
-					}
-
-					@Override
-					public void onLoadingFailed(FailReason failReason) {
-						ivContent.setImageDrawable(getResources().getDrawable(
-								R.drawable.ic_picture_loadfailed));
-						pbLoading.setVisibility(View.GONE);
-					}
-
-					@Override
-					public void onLoadingComplete(Bitmap loadedImage) {
+					public void onLoadingComplete(String imageUri, View view,
+							Bitmap loadedImage) {
 						ivContent.setImageBitmap(loadedImage);
 						pbLoading.setVisibility(View.GONE);
 					}
 
 					@Override
-					public void onLoadingCancelled() {
-						// TODO Auto-generated method stub
-
+					public void onLoadingFailed(String imageUri, View view,
+							FailReason failReason) {
+						ivContent.setImageDrawable(getResources().getDrawable(
+								R.drawable.ic_picture_loadfailed));
+						pbLoading.setVisibility(View.GONE);
 					}
 				});
 	}

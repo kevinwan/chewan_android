@@ -7,6 +7,7 @@ import java.util.Map;
 
 import net.duohuo.dhroid.adapter.ValueFix;
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
@@ -17,35 +18,42 @@ public class CarPlayValueFix implements ValueFix {
 	public static DisplayImageOptions optionsDefault, headOptions,
 			carLogoOptions, carBigLogoOptions, bigPicOptions;
 	static {
+
 		imageOptions = new HashMap<String, DisplayImageOptions>();
 		optionsDefault = new DisplayImageOptions.Builder()
-				.showImageForEmptyUri(R.drawable.img_loading_faild)
-				.showStubImage(R.color.img_color).cacheInMemory()
-				.cacheOnDisc().build();
+				.showImageOnLoading(R.color.img_color)
+				.showImageOnFail(R.drawable.img_loading_faild)
+				.cacheInMemory(true).cacheOnDisk(true)
+				.resetViewBeforeLoading(true).considerExifParams(false)
+				.bitmapConfig(Bitmap.Config.RGB_565).build();
 		imageOptions.put("default", optionsDefault);
 
 		headOptions = new DisplayImageOptions.Builder()
-				.showImageForEmptyUri(R.drawable.head_icon)
-				.showStubImage(R.drawable.head_icon).cacheInMemory()
-				.cacheOnDisc().build();
+				.showImageOnLoading(R.drawable.head_icon)
+				.showImageOnFail(R.drawable.head_icon).cacheInMemory(true)
+				.cacheOnDisk(true).resetViewBeforeLoading(true)
+				.considerExifParams(false).bitmapConfig(Bitmap.Config.RGB_565)
+				.build();
 		imageOptions.put("head", headOptions);
 
-		carLogoOptions = new DisplayImageOptions.Builder()
-		// .showImageForEmptyUri(R.drawable.head2)
-		// .showStubImage(R.drawable.head2)
-				.cacheInMemory().cacheOnDisc().build();
+		carLogoOptions = new DisplayImageOptions.Builder().cacheInMemory(true)
+				.cacheOnDisk(true).resetViewBeforeLoading(true)
+				.considerExifParams(false).bitmapConfig(Bitmap.Config.RGB_565)
+				.build();
 		imageOptions.put("carlogo", carLogoOptions);
 
 		carBigLogoOptions = new DisplayImageOptions.Builder()
-				.showImageForEmptyUri(R.drawable.car_default)
-				.showStubImage(R.drawable.car_default).cacheInMemory()
-				.cacheOnDisc().build();
+				.showImageOnLoading(R.drawable.car_default)
+				.showImageOnFail(R.drawable.car_default).cacheInMemory(true)
+				.cacheOnDisk(true).resetViewBeforeLoading(true)
+				.considerExifParams(false).bitmapConfig(Bitmap.Config.RGB_565)
+				.build();
 		imageOptions.put("carbiglogo", carBigLogoOptions);
 
-		bigPicOptions = new DisplayImageOptions.Builder()
-		// .showImageForEmptyUri(R.drawable.car_default)
-		// .showStubImage(R.drawable.car_default).cacheInMemory()
-				.cacheOnDisc().build();
+		bigPicOptions = new DisplayImageOptions.Builder().cacheInMemory(true)
+				.cacheOnDisk(true).resetViewBeforeLoading(true)
+				.considerExifParams(false).bitmapConfig(Bitmap.Config.RGB_565)
+				.build();
 		imageOptions.put("big_pic", bigPicOptions);
 
 	}

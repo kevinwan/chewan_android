@@ -12,13 +12,14 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.photo.model.PhotoModel;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
  * @author Aizaz AZ
- *
+ * 
  */
 
 public class PhotoItem extends LinearLayout implements OnCheckedChangeListener,
@@ -30,7 +31,7 @@ public class PhotoItem extends LinearLayout implements OnCheckedChangeListener,
 	private PhotoModel photo;
 	private boolean isCheckAll;
 	private onItemClickListener l;
-	private int position;	
+	private int position;
 
 	private PhotoItem(Context context) {
 		super(context);
@@ -78,7 +79,8 @@ public class PhotoItem extends LinearLayout implements OnCheckedChangeListener,
 		 */
 
 		ImageLoader.getInstance().displayImage(
-				"file://" + photo.getOriginalPath(), ivPhoto);
+				"file://" + photo.getOriginalPath(), ivPhoto,
+				CarPlayValueFix.optionsDefault);
 	}
 
 	private void setDrawingable() {

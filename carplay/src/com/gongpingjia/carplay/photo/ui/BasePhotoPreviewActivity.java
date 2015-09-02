@@ -73,7 +73,7 @@ public class BasePhotoPreviewActivity extends Activity implements OnPageChangeLi
 			((ViewPager) container).addView(photoPreview);
 			photoPreview.loadImage(photos.get(position));
 			photoPreview.setOnClickListener(photoItemClickListener);
-			return photoPreview;
+			return photoPreview;  
 		}
 
 		@Override
