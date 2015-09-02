@@ -177,12 +177,15 @@
             android:layout_height="60dp"
             android:background="@color/nothing"
             android:gravity="center_vertical|right"
-            android:hint="请输入驾龄(数字0~20)"
+            android:textColor="@color/text_grey"
+            android:enabled="false"
             android:inputType="number" />
 
             <ImageView
+                android:id="@+id/icon"
                 android:layout_width="18dp"
                 android:layout_height="25dp"
+                android:visibility="invisible"
                 android:src="@drawable/right_btn" />
         </LinearLayout>
        

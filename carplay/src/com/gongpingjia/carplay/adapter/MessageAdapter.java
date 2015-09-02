@@ -181,6 +181,7 @@ public class MessageAdapter extends NetJSONAdapter {
 			holder.content_lastT.setVisibility(View.VISIBLE);
 			if (msgtype.equals("车主认证")) {
 				newcontent = "您提交的" + content;
+				holder.headI.setEnabled(false);
 			} else if (msgtype.equals("活动邀请")) {
 				newcontent = "邀请您加入" + content ;
 				holder.content_lastT.setText("活动");

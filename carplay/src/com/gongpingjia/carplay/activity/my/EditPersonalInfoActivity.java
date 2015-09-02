@@ -23,6 +23,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gongpingjia.carplay.CarPlayValueFix;
@@ -125,21 +126,21 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 		headI.setOnClickListener(this);
 		cityT.setOnClickListener(this);
 		getMyDetails();
-
 	}
 
 	/** 判断资料是否有改动 */
 	private boolean isModify() {
 		String name = nicknameT.getText().toString();
-		String carage = carageT.getText().toString();
-		if (carage.contains("年")) {
-			carage = carage.replace("年", "");
-		}
+//		String carage = carageT.getText().toString();
+//		if (carage.contains("年")) {
+//			carage = carage.replace("年", "");
+//		}
 		if (TextUtils.isEmpty(name)) {
 			return false;
 		}
 		if (map.get("flag") || !name.equals(nickname)
-				|| !carage.equals(drivingExperience)) {
+//				|| !carage.equals(drivingExperience)
+				) {
 			return true;
 		}
 		return false;
@@ -193,30 +194,30 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 
 	private void modification() {
 		String nickname = nicknameT.getText().toString();
-		String carage = carageT.getText().toString().trim();
+//		String carage = carageT.getText().toString().trim();
 		if (nickname.length()>8) {
 			showToast("昵称不能大于8个字符");
 			return;
 		}
-		int drivingExperience;
-		if (carage.contains("年")) {
-			carage = carage.replace("年", "");
-		}
-		try {
-			drivingExperience = Integer.parseInt(carage);
-		} catch (Exception e) {
-			showToast("驾龄格式不正确");
-			return;
-		}
-		if (drivingExperience < 0 || drivingExperience > 20) {
-			showToast("驾龄为0~20数字");
-			return;
-		}
+//		int drivingExperience;
+//		if (carage.contains("年")) {
+//			carage = carage.replace("年", "");
+//		}
+//		try {
+//			drivingExperience = Integer.parseInt(carage);
+//		} catch (Exception e) {
+//			showToast("驾龄格式不正确");
+//			return;
+//		}
+//		if (drivingExperience < 0 || drivingExperience > 20) {
+//			showToast("驾龄为0~20数字");
+//			return;
+//		}
 
 		DhNet net = new DhNet(API.availableSeat + mUser.getUserId()
 				+ "/info?token=" + mUser.getToken());
 		net.addParam("nickname", nickname);
-		net.addParam("drivingExperience", drivingExperience);
+//		net.addParam("drivingExperience", drivingExperience);
 		net.addParam("province", mProvice);
 		net.addParam("city", mCity);
 		net.addParam("district", mDistrict);

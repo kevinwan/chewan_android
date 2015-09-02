@@ -39,6 +39,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_marginRight="5dp"
             android:gravity="right|center_vertical"
             android:orientation="horizontal" >
 
@@ -55,9 +56,9 @@
                  />
 
             <ImageView
+                android:id="@+id/icon_t"
                 android:layout_width="25dp"
                 android:layout_height="18dp"
-                android:layout_marginRight="5dp"
                 android:src="@drawable/right_btn" />
         </LinearLayout>
     </LinearLayout>
@@ -79,6 +80,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_marginRight="5dp"
             android:gravity="right|center_vertical"
             android:orientation="horizontal" >
 
@@ -90,9 +92,9 @@
                 android:gravity="center_vertical|right" />
 
             <ImageView
+                android:id="@+id/icon_b"
                 android:layout_width="25dp"
                 android:layout_height="18dp"
-                android:layout_marginRight="5dp"
                 android:src="@drawable/right_btn" />
         </LinearLayout>
     </LinearLayout>

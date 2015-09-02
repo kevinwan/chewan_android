@@ -18,6 +18,7 @@ import android.view.Display;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -81,6 +82,8 @@ public class ActiveInformationActivity extends CarPlayBaseActivity implements
 	JSONArray picJsa;
 
 	Button quiteB;
+	
+	ImageView iconI;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +96,8 @@ public class ActiveInformationActivity extends CarPlayBaseActivity implements
 		activity_name = (TextView) findViewById(R.id.activity_name);
 		head = (RoundImageView) findViewById(R.id.activity_head);
 		quiteB = (Button) findViewById(R.id.quite);
+		iconI=(ImageView) findViewById(R.id.icon);
+		
 		quiteB.setOnClickListener(this);
 		headlayoutV.setOnClickListener(this);
 		activity_edit.setOnClickListener(this);
@@ -170,6 +175,12 @@ public class ActiveInformationActivity extends CarPlayBaseActivity implements
 				headlayoutV, headlayoutWidth);
 		headUtil.setHeadMaxCount(6);
 		headUtil.AddChild();
+		
+		if (id != 0) {
+			acitvity_layout_head.setEnabled(false);
+			iconI.setVisibility(View.INVISIBLE);
+			head.setEnabled(false);
+		}
 
 	}
 

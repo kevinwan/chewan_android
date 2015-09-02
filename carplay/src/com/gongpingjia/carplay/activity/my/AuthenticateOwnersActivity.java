@@ -60,6 +60,8 @@ public class AuthenticateOwnersActivity extends CarPlayBaseActivity implements
 	String picUid;
 
 	Button submitB;
+	
+	ImageView icon_tI,icon_bI;
 
 	// 图片缓存根目录
 	private File mCacheDir;
@@ -105,6 +107,8 @@ public class AuthenticateOwnersActivity extends CarPlayBaseActivity implements
 					});
 		}
 
+		icon_tI=(ImageView) findViewById(R.id.icon_t);
+		icon_bI=(ImageView) findViewById(R.id.icon_b);
 		modelT = (TextView) findViewById(R.id.model);
 		modelT.setOnClickListener(this);
 		picI = (ImageView) findViewById(R.id.pic);
@@ -156,7 +160,12 @@ public class AuthenticateOwnersActivity extends CarPlayBaseActivity implements
 			submitB.setBackgroundResource(R.drawable.btn_grey_bg);
 			picI.setEnabled(false);
 			drivingExperienceE.setEnabled(false);
+			drivingExperienceE.setTextColor(self.getResources().getColor(R.color.text_grey));
+			modelT.setTextColor(self.getResources().getColor(R.color.text_grey));
 			modelT.setEnabled(false);
+			
+			icon_tI.setVisibility(View.INVISIBLE);
+			icon_bI.setVisibility(View.INVISIBLE);
 			break;
 
 		default:
