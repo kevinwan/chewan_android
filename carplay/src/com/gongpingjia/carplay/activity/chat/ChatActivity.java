@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import net.duohuo.dhroid.util.PhotoUtil;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -93,6 +95,7 @@ import com.easemob.util.VoiceRecorder;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.activity.active.ActiveInformationActivity;
+import com.gongpingjia.carplay.activity.main.PhotoSelectorActivity;
 import com.gongpingjia.carplay.bean.JoinEB;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.chat.DemoHXSDKHelper;
@@ -109,6 +112,7 @@ import com.gongpingjia.carplay.chat.utils.CommonUtils;
 import com.gongpingjia.carplay.chat.utils.UserUtils;
 import com.gongpingjia.carplay.chat.view.ExpandGridView;
 import com.gongpingjia.carplay.chat.view.PasteEditText;
+import com.gongpingjia.carplay.photo.model.PhotoModel;
 
 import de.greenrobot.event.EventBus;
 
@@ -731,12 +735,26 @@ public class ChatActivity extends CarPlayBaseActivity implements
 				sendVideo(videoPath, file.getAbsolutePath(), duration / 1000);
 
 			} else if (requestCode == REQUEST_CODE_LOCAL) { // 发送本地图片
-				if (data != null) {
-					Uri selectedImage = data.getData();
-					if (selectedImage != null) {
-						sendPicByUri(selectedImage);
+				if (data != null && data.getExtras() != null) {
+					@SuppressWarnings("unchecked")
+					List<PhotoModel> photos = (List<PhotoModel>) data
+							.getExtras().getSerializable("photos");
+					if (photos == null || photos.isEmpty()) {
+						showToast("没有选择图片!");
+					} else {
+						for (int i = 0; i < photos.size(); i++) {
+							PhotoModel photo = photos.get(i);
+							sendPicByUri(Uri.parse(photo.getOriginalPath()));
+						}
 					}
 				}
+
+				// if (data != null) {
+				// Uri selectedImage = data.getData();
+				// if (selectedImage != null) {
+				// sendPicByUri(selectedImage);
+				// }
+				// }
 			} else if (requestCode == REQUEST_CODE_SELECT_FILE) { // 发送选择的文件
 				if (data != null) {
 					Uri uri = data.getData();
@@ -803,7 +821,14 @@ public class ChatActivity extends CarPlayBaseActivity implements
 		} else if (id == R.id.btn_take_picture) {
 			selectPicFromCamera();// 点击照相图标
 		} else if (id == R.id.btn_picture) {
-			selectPicFromLocal(); // 点击图片图标
+
+			Intent intent = new Intent(self, PhotoSelectorActivity.class);
+			intent.putExtra(PhotoSelectorActivity.KEY_MAX, 9);
+			intent.putExtra("type", "type");
+			intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+			startActivityForResult(intent, REQUEST_CODE_LOCAL);
+
+			// selectPicFromLocal(); // 点击图片图标
 		} else if (id == R.id.btn_location) { // 位置
 			startActivityForResult(new Intent(this, ChatMapActivity.class),
 					REQUEST_CODE_MAP);
