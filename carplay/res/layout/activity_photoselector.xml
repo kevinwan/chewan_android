@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/layout_title_heigh"
         android:layout_alignParentTop="true"
-        android:background="@color/bg" >
+        android:background="@color/theme_bg" >
 
         <LinearLayout
             android:id="@+id/bv_back_lh"
@@ -26,7 +26,7 @@
                 android:layout_height="@dimen/layout_title_content_heigh"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
-                android:src="@drawable/arrow" />
+                android:src="@drawable/left_back" />
 
             <TextView
                 android:id="@+id/tv_title_vb"
@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_gravity="center_vertical"
-            android:text="@string/select_photos"
+            android:text="选择照片"
             android:textColor="@android:color/white"
             android:textSize="18sp" />
 
@@ -57,12 +57,12 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="5dp"
             android:layout_toLeftOf="@+id/tv_number"
-            android:background="@color/bg"
+            android:background="@color/theme_bg"
             android:paddingBottom="5dp"
             android:paddingLeft="10dp"
             android:paddingRight="0dp"
             android:paddingTop="5dp"
-            android:text="@string/sure"
+            android:text="确定"
             android:textColor="@android:color/white"
             android:textSize="@dimen/layout_title_mini_textsize" />
 
@@ -121,7 +121,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/collection_photo_toolbar_height"
         android:layout_alignParentBottom="true"
-        android:background="@color/bg" >
+        android:background="@color/theme_bg" >
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -136,7 +136,7 @@
                 android:layout_marginLeft="10dp"
                 android:gravity="left|center_vertical"
                 android:minWidth="50dp"
-                android:text="@string/recent_photos"
+                android:text="最近照片"
                 android:textColor="@drawable/btn_black_textcolor_selector"
                 android:textSize="13sp" />
 
@@ -159,7 +159,8 @@
             android:layout_marginRight="5dp"
             android:layout_marginTop="10dp"
             android:layout_toLeftOf="@+id/tv_preview_ar"
-            android:background="@android:color/white" />
+            android:background="@android:color/white"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_preview_ar"
@@ -170,8 +171,9 @@
             android:clickable="true"
             android:enabled="false"
             android:padding="10dp"
-            android:text="@string/preview"
-            android:textColor="@android:color/white" />
+            android:text="预览"
+            android:textColor="@android:color/white"
+            android:visibility="gone" />
     </RelativeLayout>
 
 </RelativeLayout>

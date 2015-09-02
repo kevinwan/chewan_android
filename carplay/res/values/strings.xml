@@ -330,7 +330,7 @@
     
     <string name="more_than_max">Exceeds the upper limit</string>
     <string name="preview">Preview</string>
-    <string name="recent_photos">Recent photos</string>
+    <string name="recent_photos">最近照片</string>
     <string name="sure">Sure</string>
     <string name="select_photos">Select photos</string>
     <string name="taking_pictures">Taking Pictures</string>

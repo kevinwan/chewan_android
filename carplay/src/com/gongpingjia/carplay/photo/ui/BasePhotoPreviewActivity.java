@@ -1,4 +1,5 @@
 package com.gongpingjia.carplay.photo.ui;
+
 /**
  * 
  * @author Aizaz AZ
@@ -15,119 +16,127 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.animation.LinearInterpolator;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.photo.model.PhotoModel;
-import com.gongpingjia.carplay.util.AnimationUtil;
 
 public class BasePhotoPreviewActivity extends Activity implements OnPageChangeListener, OnClickListener {
 
-	private ViewPager mViewPager;
-	private RelativeLayout layoutTop;
-	private ImageButton btnBack;
-	private TextView tvPercent;
-	protected List<PhotoModel> photos;
-	protected int current;
+    private ViewPager mViewPager;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);// 去掉标题栏
-		setContentView(R.layout.activity_photopreview);
-		layoutTop = (RelativeLayout) findViewById(R.id.layout_top_app);
-		btnBack = (ImageButton) findViewById(R.id.btn_back_app);
-		tvPercent = (TextView) findViewById(R.id.tv_percent_app);
-		mViewPager = (ViewPager) findViewById(R.id.vp_base_app);
+    private RelativeLayout layoutTop;
 
-		btnBack.setOnClickListener(this);
-		mViewPager.setOnPageChangeListener(this);
+    private ImageView btnBack;
 
-		overridePendingTransition(R.anim.activity_alpha_action_in, 0); // 渐入效果
+    private TextView tvPercent;
 
-	}
+    protected List<PhotoModel> photos;
 
-	/** 绑定数据，更新界面 */
-	protected void bindData() {
-		mViewPager.setAdapter(mPagerAdapter);
-		mViewPager.setCurrentItem(current);
-	}
+    protected int current;
 
-	private PagerAdapter mPagerAdapter = new PagerAdapter() {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);// 去掉标题栏
+        setContentView(R.layout.activity_photopreview);
+        layoutTop = (RelativeLayout) findViewById(R.id.layout_top_app);
+        btnBack = (ImageView) findViewById(R.id.btn_back_app);
+        tvPercent = (TextView) findViewById(R.id.tv_percent_app);
+        mViewPager = (ViewPager) findViewById(R.id.vp_base_app);
 
-		@Override
-		public int getCount() {
-			if (photos == null) {
-				return 0;
-			} else {
-				return photos.size();
-			}
-		}
+        btnBack.setOnClickListener(this);
+        mViewPager.setOnPageChangeListener(this);
 
-		@Override
-		public View instantiateItem(final ViewGroup container, final int position) {
-			PhotoPreview photoPreview = new PhotoPreview(getApplicationContext());
-			((ViewPager) container).addView(photoPreview);
-			photoPreview.loadImage(photos.get(position));
-			photoPreview.setOnClickListener(photoItemClickListener);
-			return photoPreview;  
-		}
+        overridePendingTransition(R.anim.activity_alpha_action_in, 0); // 渐入效果
 
-		@Override
-		public void destroyItem(ViewGroup container, int position, Object object) {
-			container.removeView((View) object);
-		}
+    }
 
-		@Override
-		public boolean isViewFromObject(View view, Object object) {
-			return view == object;
-		}
+    /** 绑定数据，更新界面 */
+    protected void bindData() {
+        mViewPager.setAdapter(mPagerAdapter);
+        mViewPager.setCurrentItem(current);
+    }
 
-	};
-	protected boolean isUp;
+    private PagerAdapter mPagerAdapter = new PagerAdapter() {
 
-	@Override
-	public void onClick(View v) {
-		if (v.getId() == R.id.btn_back_app)
-			finish();
-	}
+        @Override
+        public int getCount() {
+            if (photos == null) {
+                return 0;
+            } else {
+                return photos.size();
+            }
+        }
 
-	@Override
-	public void onPageScrollStateChanged(int arg0) {
+        @Override
+        public View instantiateItem(final ViewGroup container, final int position) {
+            PhotoPreview photoPreview = new PhotoPreview(getApplicationContext());
+            ((ViewPager) container).addView(photoPreview);
+            photoPreview.loadImage(photos.get(position));
+            photoPreview.setOnClickListener(photoItemClickListener);
+            return photoPreview;
+        }
 
-	}
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView((View) object);
+        }
 
-	@Override
-	public void onPageScrolled(int arg0, float arg1, int arg2) {
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return view == object;
+        }
 
-	}
+    };
 
-	@Override
-	public void onPageSelected(int arg0) {
-		current = arg0;
-		updatePercent();
-	}
+    protected boolean isUp;
 
-	protected void updatePercent() {
-		tvPercent.setText((current + 1) + "/" + photos.size());
-	}
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.btn_back_app)
+            finish();
+    }
 
-	/** 图片点击事件回调 */
-	private OnClickListener photoItemClickListener = new OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			if (!isUp) {
-				new AnimationUtil(getApplicationContext(), R.anim.translate_up)
-						.setInterpolator(new LinearInterpolator()).setFillAfter(true).startAnimation(layoutTop);
-				isUp = true;
-			} else {
-				new AnimationUtil(getApplicationContext(), R.anim.translate_down_current)
-						.setInterpolator(new LinearInterpolator()).setFillAfter(true).startAnimation(layoutTop);
-				isUp = false;
-			}
-		}
-	};
+    @Override
+    public void onPageScrollStateChanged(int arg0) {
+
+    }
+
+    @Override
+    public void onPageScrolled(int arg0, float arg1, int arg2) {
+
+    }
+
+    @Override
+    public void onPageSelected(int arg0) {
+        current = arg0;
+        updatePercent();
+    }
+
+    protected void updatePercent() {
+        tvPercent.setText((current + 1) + "/" + photos.size());
+    }
+
+    /** 图片点击事件回调 */
+    private OnClickListener photoItemClickListener = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            // if (!isUp) {
+            // new AnimationUtil(getApplicationContext(), R.anim.translate_up)
+            // .setInterpolator(new
+            // LinearInterpolator()).setFillAfter(true).startAnimation(layoutTop);
+            // isUp = true;
+            // } else {
+            // new AnimationUtil(getApplicationContext(),
+            // R.anim.translate_down_current)
+            // .setInterpolator(new
+            // LinearInterpolator()).setFillAfter(true).startAnimation(layoutTop);
+            // isUp = false;
+            // }
+            finish();
+        }
+    };
 }

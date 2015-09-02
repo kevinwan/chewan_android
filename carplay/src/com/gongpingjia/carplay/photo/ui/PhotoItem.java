@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -22,110 +23,105 @@ import com.nostra13.universalimageloader.core.ImageLoader;
  * 
  */
 
-public class PhotoItem extends LinearLayout implements OnCheckedChangeListener,
-		OnLongClickListener {
+public class PhotoItem extends LinearLayout implements OnCheckedChangeListener, OnLongClickListener, OnClickListener {
 
-	private ImageView ivPhoto;
-	private CheckBox cbPhoto;
-	private onPhotoItemCheckedListener listener;
-	private PhotoModel photo;
-	private boolean isCheckAll;
-	private onItemClickListener l;
-	private int position;
+    private ImageView ivPhoto;
 
-	private PhotoItem(Context context) {
-		super(context);
-	}
+    private CheckBox cbPhoto;
 
-	public PhotoItem(Context context, onPhotoItemCheckedListener listener) {
-		this(context);
-		LayoutInflater.from(context).inflate(R.layout.layout_photoitem, this,
-				true);
-		this.listener = listener;
+    private onPhotoItemCheckedListener listener;
 
-		setOnLongClickListener(this);
+    private PhotoModel photo;
 
-		ivPhoto = (ImageView) findViewById(R.id.iv_photo_lpsi);
-		cbPhoto = (CheckBox) findViewById(R.id.cb_photo_lpsi);
+    private boolean isCheckAll;
 
-		cbPhoto.setOnCheckedChangeListener(this); // CheckBoxѡ��״̬�ı������
-	}
+    private onItemClickListener l;
 
-	@Override
-	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-		if (!isCheckAll) {
-			listener.onCheckedChanged(photo, buttonView, isChecked); // ����������ص�����
-		}
-		// ��ͼƬ�䰵���߱���
-		if (isChecked) {
-			setDrawingable();
-			ivPhoto.setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
-		} else {
-			ivPhoto.clearColorFilter();
-		}
-		photo.setChecked(isChecked);
-	}
+    private int position;
 
-	/** ����·���µ�ͼƬ��Ӧ������ͼ */
-	public void setImageDrawable(final PhotoModel photo) {
-		this.photo = photo;
-		// You may need this setting form some custom ROM(s)
-		/*
-		 * new Handler().postDelayed(new Runnable() {
-		 * 
-		 * @Override public void run() { ImageLoader.getInstance().displayImage(
-		 * "file://" + photo.getOriginalPath(), ivPhoto); } }, new
-		 * Random().nextInt(10));
-		 */
+    private PhotoItem(Context context) {
+        super(context);
+    }
 
-		ImageLoader.getInstance().displayImage(
-				"file://" + photo.getOriginalPath(), ivPhoto,
-				CarPlayValueFix.optionsDefault);
-	}
+    public PhotoItem(Context context, onPhotoItemCheckedListener listener) {
+        this(context);
+        LayoutInflater.from(context).inflate(R.layout.layout_photoitem, this, true);
+        this.listener = listener;
+        // setOnLongClickListener(this);
+        setOnClickListener(this);
+        ivPhoto = (ImageView) findViewById(R.id.iv_photo_lpsi);
+        cbPhoto = (CheckBox) findViewById(R.id.cb_photo_lpsi);
+        cbPhoto.setOnCheckedChangeListener(this);
+    }
 
-	private void setDrawingable() {
-		ivPhoto.setDrawingCacheEnabled(true);
-		ivPhoto.buildDrawingCache();
-	}
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if (!isCheckAll) {
+            listener.onCheckedChanged(photo, buttonView, isChecked);
+        }
+        if (isChecked) {
+            setDrawingable();
+            ivPhoto.setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
+        } else {
+            ivPhoto.clearColorFilter();
+        }
+        photo.setChecked(isChecked);
+    }
 
-	@Override
-	public void setSelected(boolean selected) {
-		if (photo == null) {
-			return;
-		}
-		isCheckAll = true;
-		cbPhoto.setChecked(selected);
-		isCheckAll = false;
-	}
+    public void setImageDrawable(final PhotoModel photo) {
+        this.photo = photo;
+        // You may need this setting form some custom ROM(s)
+        /*
+         * new Handler().postDelayed(new Runnable() {
+         * 
+         * @Override public void run() { ImageLoader.getInstance().displayImage(
+         * "file://" + photo.getOriginalPath(), ivPhoto); } }, new
+         * Random().nextInt(10));
+         */
 
-	public void setOnClickListener(onItemClickListener l, int position) {
-		this.l = l;
-		this.position = position;
-	}
+        ImageLoader.getInstance().displayImage("file://" + photo.getOriginalPath(), ivPhoto,
+                CarPlayValueFix.optionsDefault);
+    }
 
-	// @Override
-	// public void
-	// onClick(View v) {
-	// if (l != null)
-	// l.onItemClick(position);
-	// }
+    private void setDrawingable() {
+        ivPhoto.setDrawingCacheEnabled(true);
+        ivPhoto.buildDrawingCache();
+    }
 
-	/** ͼƬItemѡ���¼������� */
-	public static interface onPhotoItemCheckedListener {
-		public void onCheckedChanged(PhotoModel photoModel,
-				CompoundButton buttonView, boolean isChecked);
-	}
+    @Override
+    public void setSelected(boolean selected) {
+        if (photo == null) {
+            return;
+        }
+        isCheckAll = true;
+        cbPhoto.setChecked(selected);
+        isCheckAll = false;
+    }
 
-	/** ͼƬ����¼� */
-	public interface onItemClickListener {
-		public void onItemClick(int position);
-	}
+    public void setOnClickListener(onItemClickListener l, int position) {
+        this.l = l;
+        this.position = position;
+    }
 
-	@Override
-	public boolean onLongClick(View v) {
-		if (l != null)
-			l.onItemClick(position);
-		return true;
-	}
+    @Override
+    public void onClick(View v) {
+        if (l != null)
+            l.onItemClick(position);
+    }
+
+    public static interface onPhotoItemCheckedListener {
+        public void onCheckedChanged(PhotoModel photoModel, CompoundButton buttonView, boolean isChecked);
+    }
+
+    public interface onItemClickListener {
+        public void onItemClick(int position);
+    }
+
+    @Override
+    public boolean onLongClick(View v) {
+        if (l != null)
+            l.onItemClick(position);
+        return true;
+    }
 
 }
