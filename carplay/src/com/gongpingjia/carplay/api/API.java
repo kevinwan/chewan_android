@@ -6,12 +6,15 @@ public class API {
 
     public static final String share = "http://chewanapi.gongpingjia.com/";
 
-    //正式版
+    // 正式版
     // public static final String CWBaseurl =
     // "http://chewanapi.gongpingjia.com/v1";
 
-    //测试版
+    // 测试版
     public static final String CWBaseurl = "http://cwapi.gongpingjia.com/v1";
+
+    // public static final String CWBaseurl =
+    // "http://192.168.1.124:8080/carplay";
 
     public static final String allCarBrands = CWBaseurl + "/car/brand";
 

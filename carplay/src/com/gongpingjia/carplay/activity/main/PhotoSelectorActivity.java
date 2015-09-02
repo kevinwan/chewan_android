@@ -47,7 +47,7 @@ public class PhotoSelectorActivity extends Activity implements onItemClickListen
 
     public static final String KEY_MAX = "key_max";
 
-    private int MAX_IMAGE;
+    private int MAX_IMAGE = 9;
 
     public static final int REQUEST_PHOTO = 0;
 
@@ -100,6 +100,7 @@ public class PhotoSelectorActivity extends Activity implements onItemClickListen
         tvPreview = (TextView) findViewById(R.id.tv_preview_ar);
         layoutAlbum = (RelativeLayout) findViewById(R.id.layout_album_ar);
         tvNumber = (TextView) findViewById(R.id.tv_number);
+        tvNumber.setText("(0/" + MAX_IMAGE + ")");
 
         btnOk.setOnClickListener(this);
         tvAlbum.setOnClickListener(this);
@@ -108,16 +109,6 @@ public class PhotoSelectorActivity extends Activity implements onItemClickListen
         photoAdapter = new PhotoSelectorAdapter(getApplicationContext(), new ArrayList<PhotoModel>(),
                 CommonUtils.getWidthPixels(this), this, this, this);
         gvPhotos.setAdapter(photoAdapter);
-
-        // gvPhotos.setOnItemClickListener(new OnItemClickListener() {
-        //
-        // @Override
-        // public void onItemClick(AdapterView<?> parent, View view, int
-        // position, long id) {
-        // List<PhotoModel> photos = photoAdapter.getItems();
-        // priview((ArrayList<PhotoModel>) photos, position);
-        // }
-        // });
 
         albumAdapter = new AlbumAdapter(getApplicationContext(), new ArrayList<AlbumModel>());
         lvAblum.setAdapter(albumAdapter);
@@ -270,7 +261,7 @@ public class PhotoSelectorActivity extends Activity implements onItemClickListen
     /** 清空选中的图片 */
     private void reset() {
         selected.clear();
-        tvNumber.setText("(0)");
+        tvNumber.setText("(0/" + MAX_IMAGE + ")");
         tvPreview.setEnabled(false);
     }
 
@@ -291,18 +282,26 @@ public class PhotoSelectorActivity extends Activity implements onItemClickListen
     /** 照片选中状态改变之后 */
     public void onCheckedChanged(PhotoModel photoModel, CompoundButton buttonView, boolean isChecked) {
         if (isChecked) {
-            if (!selected.contains(photoModel))
-                selected.add(photoModel);
+            if (!selected.contains(photoModel)) {
+                if (selected.size() < MAX_IMAGE) {
+                    selected.add(photoModel);
+                } else {
+                    Toast.makeText(this, "最大可以上传" + MAX_IMAGE + "张", Toast.LENGTH_SHORT).show();
+                    buttonView.setChecked(false);
+                    return;
+                }
+            }
             tvPreview.setEnabled(true);
         } else {
             selected.remove(photoModel);
         }
-        tvNumber.setText("(" + selected.size() + ")");
+        tvNumber.setText("(" + selected.size() + "/" + MAX_IMAGE + ")");
 
         if (selected.isEmpty()) {
             tvPreview.setEnabled(false);
             tvPreview.setText(getString(R.string.preview));
         }
+
     }
 
     @Override
