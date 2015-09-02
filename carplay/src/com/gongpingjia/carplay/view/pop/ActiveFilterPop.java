@@ -6,6 +6,7 @@ import java.util.List;
 import net.duohuo.dhroid.ioc.IocContainer;
 import android.app.Activity;
 import android.graphics.drawable.BitmapDrawable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -177,7 +178,7 @@ public class ActiveFilterPop extends PopupWindow implements OnClickListener {
 
         // 初始化选择器
         if (pre.getFirst() != null) {
-            if (pre.getProvince() != null) {
+            if (TextUtils.isEmpty(pre.getProvince())) {
                 // 初始化城市
                 if (pre.getProvince().equals(pre.getCity())) {
                     addresssT.setText(pre.getProvince());
