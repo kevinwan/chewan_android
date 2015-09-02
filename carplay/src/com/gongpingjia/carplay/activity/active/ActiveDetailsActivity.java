@@ -456,9 +456,9 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 
 		ViewUtil.bindView(headV.findViewById(R.id.pay),
 				JSONUtil.getString(headJo, "pay"));
-
+		String seatInfo=JSONUtil.getString(headJo, "seatInfo");
 		ViewUtil.bindView(headV.findViewById(R.id.empty_seats),
-				JSONUtil.getString(headJo, "seatInfo"));
+				ToDBC(seatInfo));
 		ViewUtil.bindView(headV.findViewById(R.id.age),
 				JSONUtil.getString(createrJo, "age"));
 
@@ -889,6 +889,21 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 
 		return shareJo;
 	}
+	
+	/**
+	 *	将字符串转换为全角 
+	 */
+	public String ToDBC(String input) {
+		   char[] c = input.toCharArray();
+		   for (int i = 0; i< c.length; i++) {
+		       if (c[i] == 12288) {
+		         c[i] = (char) 32;
+		         continue;
+		       }if (c[i]> 65280&& c[i]< 65375)
+		          c[i] = (char) (c[i] - 65248);
+		       }
+		   return new String(c);
+		}
 
 	@Override
 	protected void onDestroy() {

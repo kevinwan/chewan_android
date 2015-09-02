@@ -129,6 +129,7 @@
             android:id="@+id/acitvity_layout_head"
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:layout_marginRight="5dp"
             android:clickable="true"
             android:gravity="right|center_vertical"
             android:orientation="horizontal" >
@@ -150,7 +151,7 @@
                 android:layout_height="25dp"
                 android:layout_marginRight="5dp"
                 android:src="@drawable/right_btn"
-                android:visibility="gone" />
+                android:visibility="visible" />
         </LinearLayout>
     </LinearLayout>
 

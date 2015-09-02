@@ -19,8 +19,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.AlertDialog.Builder;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -42,12 +45,14 @@ import com.easemob.EMError;
 import com.easemob.EMEventListener;
 import com.easemob.EMGroupChangeListener;
 import com.easemob.EMNotifierEvent;
+import com.easemob.chat.CmdMessageBody;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMConversation;
 import com.easemob.chat.EMConversation.EMConversationType;
 import com.easemob.chat.EMGroup;
 import com.easemob.chat.EMGroupManager;
 import com.easemob.chat.EMMessage;
+import com.easemob.exceptions.EaseMobException;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.active.ActiveListFragment;
 import com.gongpingjia.carplay.activity.active.CreateActiveActivity;
@@ -68,6 +73,7 @@ import com.gongpingjia.carplay.manage.UserInfoManage.LoginCallBack;
 import com.gongpingjia.carplay.service.MsgService;
 import com.gongpingjia.carplay.util.CarPlayPerference;
 import com.gongpingjia.carplay.view.pop.ActiveFilterPop;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import de.greenrobot.event.EventBus;
 
@@ -122,6 +128,10 @@ public class MainActivity extends BaseFragmentActivity implements
 		initView();
 		isAuthen();
 		updateApp();
+
+		IntentFilter cmdIntentFilter = new IntentFilter(EMChatManager
+				.getInstance().getCmdMessageBroadcastAction());
+		registerReceiver(cmdMessageReceiver, cmdIntentFilter);
 
 	}
 
@@ -647,6 +657,9 @@ public class MainActivity extends BaseFragmentActivity implements
 			EMGroupManager.getInstance().removeGroupChangeListener(
 					groupChangeListener);
 		}
+
+		unregisterReceiver(cmdMessageReceiver);
+
 	}
 
 	@Override
@@ -803,4 +816,25 @@ public class MainActivity extends BaseFragmentActivity implements
 			// 加群申请被拒绝，demo未实现
 		}
 	}
+
+	private BroadcastReceiver cmdMessageReceiver = new BroadcastReceiver() {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			// 获取cmd message对象
+			String msgId = intent.getStringExtra("msgid");
+			EMMessage message = intent.getParcelableExtra("message");
+			// 获取消息body
+			CmdMessageBody cmdMsgBody = (CmdMessageBody) message.getBody();
+			String aciton = cmdMsgBody.action;// 获取自定义action
+			// 获取扩展属性
+			try {
+				String attr = message.getStringAttribute("photoUrl");
+				ImageLoader.getInstance().getMemoryCache().remove(attr);
+			} catch (EaseMobException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	};
 }

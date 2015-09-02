@@ -2,6 +2,7 @@ package com.gongpingjia.carplay.activity.my;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import net.duohuo.dhroid.net.DhNet;
@@ -25,13 +26,19 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.easemob.EMCallBack;
+import com.easemob.chat.CmdMessageBody;
+import com.easemob.chat.EMChatManager;
+import com.easemob.chat.EMGroup;
+import com.easemob.chat.EMGroupManager;
+import com.easemob.chat.EMMessage;
+import com.easemob.chat.EMMessage.ChatType;
 import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.User;
-import com.gongpingjia.carplay.data.CityDataManage;
 import com.gongpingjia.carplay.view.RoundImageView;
 import com.gongpingjia.carplay.view.dialog.CityPickDialog;
 import com.gongpingjia.carplay.view.dialog.CityPickDialog.OnPickResultListener;
@@ -128,21 +135,21 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 		headI.setOnClickListener(this);
 		cityT.setOnClickListener(this);
 		getMyDetails();
-
 	}
 
 	/** 判断资料是否有改动 */
 	private boolean isModify() {
 		String name = nicknameT.getText().toString();
-		String carage = carageT.getText().toString();
-		if (carage.contains("年")) {
-			carage = carage.replace("年", "");
-		}
+//		String carage = carageT.getText().toString();
+//		if (carage.contains("年")) {
+//			carage = carage.replace("年", "");
+//		}
 		if (TextUtils.isEmpty(name)) {
 			return false;
 		}
 		if (map.get("flag") || !name.equals(nickname)
-				|| !carage.equals(drivingExperience)) {
+//				|| !carage.equals(drivingExperience)
+				) {
 			return true;
 		}
 		return false;
@@ -197,30 +204,32 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 
 	private void modification() {
 		String nickname = nicknameT.getText().toString();
+//		String carage = carageT.getText().toString().trim();
+		if (nickname.length()>8) {
 		String carage = carageT.getText().toString().trim();
 		if (nickname.length() > 8) {
 			showToast("昵称不能大于8个字符");
 			return;
 		}
-		int drivingExperience;
-		if (carage.contains("年")) {
-			carage = carage.replace("年", "");
-		}
-		try {
-			drivingExperience = Integer.parseInt(carage);
-		} catch (Exception e) {
-			showToast("驾龄格式不正确");
-			return;
-		}
-		if (drivingExperience < 0 || drivingExperience > 20) {
-			showToast("驾龄为0~20数字");
-			return;
-		}
+//		int drivingExperience;
+//		if (carage.contains("年")) {
+//			carage = carage.replace("年", "");
+//		}
+//		try {
+//			drivingExperience = Integer.parseInt(carage);
+//		} catch (Exception e) {
+//			showToast("驾龄格式不正确");
+//			return;
+//		}
+//		if (drivingExperience < 0 || drivingExperience > 20) {
+//			showToast("驾龄为0~20数字");
+//			return;
+//		}
 
 		DhNet net = new DhNet(API.availableSeat + mUser.getUserId()
 				+ "/info?token=" + mUser.getToken());
 		net.addParam("nickname", nickname);
-		net.addParam("drivingExperience", drivingExperience);
+//		net.addParam("drivingExperience", drivingExperience);
 		net.addParam("province", mProvice);
 		net.addParam("city", mCity);
 		net.addParam("district", mDistrict);
@@ -237,6 +246,7 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 			}
 		});
 	}
+	}
 
 	private void uploadHead(String path) {
 		DhNet net = new DhNet(API.availableSeat + mUser.getUserId()
@@ -249,6 +259,27 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 					JSONObject jo = response.jSONFromData();
 					photoUid = JSONUtil.getString(jo, "photoId");
 					ImageLoader.getInstance().getMemoryCache().remove(photo);
+
+					List<EMGroup> list = EMGroupManager.getInstance()
+							.getAllGroups();
+
+					for (int i = 0; i < list.size(); i++) {
+						EMGroup group = list.get(i);
+						EMMessage cmdMsg = EMMessage
+								.createSendMessage(EMMessage.Type.CMD);
+
+						// 支持单聊和群聊，默认单聊，如果是群聊添加下面这行
+						cmdMsg.setChatType(ChatType.GroupChat);
+
+						String action = "updateAvatar";// action可以自定义，在广播接收时可以收到
+						CmdMessageBody cmdBody = new CmdMessageBody(action);
+						String toUsername = group.getGroupId();// 发送给某个人
+						cmdMsg.setReceipt(toUsername);
+						cmdMsg.setAttribute("photoUrl",
+								photo);// 支持自定义扩展
+						cmdMsg.addBody(cmdBody);
+						EMChatManager.getInstance().sendMessage(cmdMsg, null);
+					}
 				}
 			}
 		});
