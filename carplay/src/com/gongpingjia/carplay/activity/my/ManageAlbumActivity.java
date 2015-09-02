@@ -38,7 +38,9 @@ import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.PhotoState;
 import com.gongpingjia.carplay.bean.User;
+import com.gongpingjia.carplay.photo.model.PhotoModel;
 import com.gongpingjia.carplay.util.CarPlayPerference;
+import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.view.ImageGallery;
 
 /**
@@ -46,20 +48,18 @@ import com.gongpingjia.carplay.view.ImageGallery;
  * @author Administrator
  * @date 2015-7-21 上午9:36:10
  */
-public class ManageAlbumActivity extends CarPlayBaseActivity implements
-		OnClickListener {
+public class ManageAlbumActivity extends CarPlayBaseActivity implements OnClickListener {
 
-	private GridView mPhotoGridView;
+    private GridView mPhotoGridView;
 
-	private List<PhotoState> mPhotoStates;
+    private List<PhotoState> mPhotoStates;
 
-	private List<String> mPicIds;
+    private List<String> mPicIds;
 
-	private File mCacheDir;
+    private File mCacheDir;
 
-	// 当前正在处理图片状态，GridView最后一个图片状态
-	private PhotoState mLastPhotoState;
-
+    // 当前正在处理图片状态，GridView最后一个图片状态
+    private PhotoState mLastPhotoState;
 
     private ImageAdapter mPhotoAdapter;
 
@@ -159,8 +159,13 @@ public class ManageAlbumActivity extends CarPlayBaseActivity implements
                                     if (mPhotoStates.get(position).isLast()) {
                                         mCurPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg")
                                                 .getAbsolutePath();
-                                        PhotoUtil.getPhoto(self, Constant.TAKE_PHOTO, Constant.PICK_PHOTO, new File(
-                                                mCurPath));
+                                        // PhotoUtil.getPhoto(self,
+                                        // Constant.TAKE_PHOTO,
+                                        // Constant.PICK_PHOTO, new File(
+                                        // mCurPath));
+                                        CarPlayUtil.getPhoto(self, Constant.TAKE_PHOTO, Constant.PICK_PHOTO, new File(
+                                                mCurPath), 10 - mPhotoStates.size());
+
                                     } else {
                                         if (isEditable) {
                                             if (mPhotoStates.get(position).isChecked()) {
@@ -254,10 +259,25 @@ public class ManageAlbumActivity extends CarPlayBaseActivity implements
             // break;
 
             case Constant.PICK_PHOTO:
-                Bitmap btp = PhotoUtil.checkImage(self, data);
-                PhotoUtil.saveLocalImage(btp, new File(mCurPath));
-                btp.recycle();
-                upLoadPic(mCurPath);
+                // Bitmap btp = PhotoUtil.checkImage(self, data);
+                // PhotoUtil.saveLocalImage(btp, new File(mCurPath));
+                // btp.recycle();
+                // upLoadPic(mCurPath);
+                if (data != null && data.getExtras() != null) {
+                    @SuppressWarnings("unchecked")
+                    List<PhotoModel> photos = (List<PhotoModel>) data.getExtras().getSerializable("photos");
+                    if (photos == null || photos.isEmpty()) {
+                        showToast("没有选择图片!");
+                    } else {
+                        for (int i = 0; i < photos.size(); i++) {
+                            String newPhotoPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg")
+                                    .getAbsolutePath();
+                            Bitmap btp = PhotoUtil.getLocalImage(new File(photos.get(i).getOriginalPath()));
+                            PhotoUtil.saveLocalImage(btp, new File(newPhotoPath));
+                            upLoadPic(newPhotoPath);
+                        }
+                    }
+                }
                 break;
             case Constant.TAKE_PHOTO:
                 Bitmap btp1 = PhotoUtil.getLocalImage(new File(mCurPath));
