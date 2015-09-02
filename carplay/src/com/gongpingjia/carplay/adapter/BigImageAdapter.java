@@ -27,7 +27,6 @@ import com.gongpingjia.carplay.chat.task.LoadLocalBigImgTask;
 import com.gongpingjia.carplay.chat.view.PhotoView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
 
 public class BigImageAdapter extends BaseAdapter {
 

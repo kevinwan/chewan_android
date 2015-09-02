@@ -39,7 +39,7 @@ import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 public class UrlTouchImageView extends RelativeLayout {
 	// protected ProgressBar mProgressBar;
@@ -100,32 +100,13 @@ public class UrlTouchImageView extends RelativeLayout {
 		if (!imageUrl.startsWith("http")) {
 			imageUrl = "file://" + imageUrl;
 		}
-		ImageLoader.getInstance().displayImage(imageUrl, mImageView,
-				CarPlayValueFix.optionsDefault, new ImageLoadingListener() {
 
+		ImageLoader.getInstance().loadImage(imageUrl,
+				CarPlayValueFix.optionsDefault,
+				new SimpleImageLoadingListener() {
 					@Override
-					public void onLoadingStarted() {
-						// TODO Auto-generated method stub
-						// progressdialog = IocContainer.getShare()
-						// .get(IDialog.class)
-						// .showProgressDialog(mContext, "加载中...");
-
-					}
-
-					@Override
-					public void onLoadingFailed(FailReason failReason) {
-						// if (progressdialog != null
-						// && progressdialog.isShowing()) {
-						// progressdialog.dismiss();
-						// }
-					}
-
-					@Override
-					public void onLoadingComplete(Bitmap bitmap) {
-						// if (progressdialog != null
-						// && progressdialog.isShowing()) {
-						// progressdialog.dismiss();
-						// }
+					public void onLoadingComplete(String imageUri, View view,
+							Bitmap bitmap) {
 						if (bitmap == null) {
 							mImageView.setScaleType(ScaleType.CENTER);
 							bitmap = BitmapFactory.decodeResource(
@@ -139,11 +120,11 @@ public class UrlTouchImageView extends RelativeLayout {
 					}
 
 					@Override
-					public void onLoadingCancelled() {
-						// TODO Auto-generated method stub
-
+					public void onLoadingFailed(String imageUri, View view,
+							FailReason failReason) {
 					}
 				});
+
 	}
 
 	// No caching load

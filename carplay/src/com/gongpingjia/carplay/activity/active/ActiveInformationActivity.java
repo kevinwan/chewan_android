@@ -96,7 +96,7 @@ public class ActiveInformationActivity extends CarPlayBaseActivity implements
 		activity_name = (TextView) findViewById(R.id.activity_name);
 		head = (RoundImageView) findViewById(R.id.activity_head);
 		quiteB = (Button) findViewById(R.id.quite);
-		iconI=(ImageView) findViewById(R.id.icon);
+		iconI=(ImageView) findViewById(R.id.arrow);
 		
 		quiteB.setOnClickListener(this);
 		headlayoutV.setOnClickListener(this);
@@ -190,7 +190,9 @@ public class ActiveInformationActivity extends CarPlayBaseActivity implements
 		if (isOrganizer == 1) {
 			status = "管理";
 			isJoin = true;
+			findViewById(R.id.arrow).setVisibility(View.GONE);
 		} else {
+			findViewById(R.id.arrow).setVisibility(View.VISIBLE);
 			if (isMember == 1) {
 				status = "已加入";
 				isJoin = true;
@@ -259,9 +261,9 @@ public class ActiveInformationActivity extends CarPlayBaseActivity implements
 			break;
 		case R.id.acitvity_layout_head:
 			if (id != 0) {
-				it = new Intent(self, MyPerSonDetailActivity.class);
-				it.putExtra("userId", userid);
-				startActivity(it);
+				// it = new Intent(self, MyPerSonDetailActivity.class);
+				// it.putExtra("userId", userid);
+				// startActivity(it);
 			} else {
 				it = new Intent(self, PersonDetailActivity.class);
 				it.putExtra("userId", userid);
@@ -270,9 +272,9 @@ public class ActiveInformationActivity extends CarPlayBaseActivity implements
 			break;
 		case R.id.activity_head:
 			if (id != 0) {
-				it = new Intent(self, MyPerSonDetailActivity.class);
-				it.putExtra("userId", userid);
-				startActivity(it);
+				// it = new Intent(self, MyPerSonDetailActivity.class);
+				// it.putExtra("userId", userid);
+				// startActivity(it);
 			} else {
 				it = new Intent(self, PersonDetailActivity.class);
 				it.putExtra("userId", userid);

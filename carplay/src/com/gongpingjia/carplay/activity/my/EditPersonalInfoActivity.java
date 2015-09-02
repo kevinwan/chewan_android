@@ -23,7 +23,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gongpingjia.carplay.CarPlayValueFix;
@@ -32,10 +31,10 @@ import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.User;
-import com.gongpingjia.carplay.data.CityDataManage;
 import com.gongpingjia.carplay.view.RoundImageView;
 import com.gongpingjia.carplay.view.dialog.CityPickDialog;
 import com.gongpingjia.carplay.view.dialog.CityPickDialog.OnPickResultListener;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
  * 
@@ -73,6 +72,8 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 	private String photoUid;
 
 	private User mUser = User.getInstance();
+
+	String photo = "";
 
 	private Map<String, Boolean> map = new HashMap<String, Boolean>();
 
@@ -158,8 +159,9 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 				JSONObject jo = response.jSONFromData();
 
 				nickname = JSONUtil.getString(jo, "nickname");
-				drivingExperience = JSONUtil.getInt(jo, "drivingExperience")+"";
-				String photo = JSONUtil.getString(jo, "photo");
+				drivingExperience = JSONUtil.getInt(jo, "drivingExperience")
+						+ "";
+				photo = JSONUtil.getString(jo, "photo");
 				String gender = JSONUtil.getString(jo, "gender");
 				mProvice = JSONUtil.getString(jo, "province");
 				mCity = JSONUtil.getString(jo, "city");
@@ -196,6 +198,8 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 		String nickname = nicknameT.getText().toString();
 //		String carage = carageT.getText().toString().trim();
 		if (nickname.length()>8) {
+		String carage = carageT.getText().toString().trim();
+		if (nickname.length() > 8) {
 			showToast("昵称不能大于8个字符");
 			return;
 		}
@@ -234,6 +238,7 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 			}
 		});
 	}
+	}
 
 	private void uploadHead(String path) {
 		DhNet net = new DhNet(API.availableSeat + mUser.getUserId()
@@ -245,6 +250,7 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 				if (response.isSuccess()) {
 					JSONObject jo = response.jSONFromData();
 					photoUid = JSONUtil.getString(jo, "photoId");
+					ImageLoader.getInstance().getMemoryCache().remove(photo);
 				}
 			}
 		});
