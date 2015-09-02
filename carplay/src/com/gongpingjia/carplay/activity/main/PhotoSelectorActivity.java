@@ -20,6 +20,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -109,6 +110,14 @@ public class PhotoSelectorActivity extends Activity implements onItemClickListen
         photoAdapter = new PhotoSelectorAdapter(getApplicationContext(), new ArrayList<PhotoModel>(),
                 CommonUtils.getWidthPixels(this), this, this, this);
         gvPhotos.setAdapter(photoAdapter);
+
+        gvPhotos.setOnItemClickListener(new OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
 
         albumAdapter = new AlbumAdapter(getApplicationContext(), new ArrayList<AlbumModel>());
         lvAblum.setAdapter(albumAdapter);
@@ -280,7 +289,7 @@ public class PhotoSelectorActivity extends Activity implements onItemClickListen
 
     @Override
     /** 照片选中状态改变之后 */
-    public void onCheckedChanged(PhotoModel photoModel, CompoundButton buttonView, boolean isChecked) {
+    public void onCheckedChanged(PhotoModel photoModel, CompoundButton buttonView, boolean isChecked, ImageView imgView) {
         if (isChecked) {
             if (!selected.contains(photoModel)) {
                 if (selected.size() < MAX_IMAGE) {
@@ -288,6 +297,8 @@ public class PhotoSelectorActivity extends Activity implements onItemClickListen
                 } else {
                     Toast.makeText(this, "最大可以上传" + MAX_IMAGE + "张", Toast.LENGTH_SHORT).show();
                     buttonView.setChecked(false);
+                    photoModel.setChecked(false);
+                    imgView.clearColorFilter();
                     return;
                 }
             }
