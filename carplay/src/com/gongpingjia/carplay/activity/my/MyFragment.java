@@ -87,6 +87,7 @@ public class MyFragment extends Fragment implements OnClickListener {
 	TextView postNumberT, subscribeNumberT, joinNumberT;
 
 	ImageView unLogheadI;
+	
 
 	DotLinLayout dotLinLayout;
 
@@ -319,6 +320,7 @@ public class MyFragment extends Fragment implements OnClickListener {
 						attestation_txt.setText("已认证");
 						ViewUtil.bindNetImage(carlogo, carBrandLogo,
 								CarPlayValueFix.optionsDefault.toString());
+						mainV.findViewById(R.id.icon).setVisibility(View.INVISIBLE);
 						break;
 					// 认证中
 					case 2:
