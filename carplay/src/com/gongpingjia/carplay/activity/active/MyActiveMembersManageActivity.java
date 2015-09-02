@@ -315,7 +315,7 @@ public class MyActiveMembersManageActivity extends CarPlayBaseActivity {
 				ImageView car_logo = (ImageView) itemV
 						.findViewById(R.id.car_logo);
 				ViewUtil.bindNetImage(headI,
-						JSONUtil.getString(itemjo, "photo"), "default");
+						JSONUtil.getString(itemjo, "photo"), "head");
 				ViewUtil.bindNetImage(car_logo,
 						JSONUtil.getString(itemjo, "carBrandLogo"), "carlogo");
 				headI.setTag(JSONUtil.getString(itemjo, "userId"));
