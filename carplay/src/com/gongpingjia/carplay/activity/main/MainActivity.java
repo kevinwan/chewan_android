@@ -831,6 +831,8 @@ public class MainActivity extends BaseFragmentActivity implements
 			try {
 				String attr = message.getStringAttribute("photoUrl");
 				ImageLoader.getInstance().getMemoryCache().remove(attr);
+				ImageLoader.getInstance().getDiskCache().remove(attr);
+				System.out.println("清除缓存");
 			} catch (EaseMobException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

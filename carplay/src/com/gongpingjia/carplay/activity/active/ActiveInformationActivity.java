@@ -82,7 +82,7 @@ public class ActiveInformationActivity extends CarPlayBaseActivity implements
 	JSONArray picJsa;
 
 	Button quiteB;
-	
+
 	ImageView iconI;
 
 	@Override
@@ -96,8 +96,8 @@ public class ActiveInformationActivity extends CarPlayBaseActivity implements
 		activity_name = (TextView) findViewById(R.id.activity_name);
 		head = (RoundImageView) findViewById(R.id.activity_head);
 		quiteB = (Button) findViewById(R.id.quite);
-		iconI=(ImageView) findViewById(R.id.arrow);
-		
+		iconI = (ImageView) findViewById(R.id.arrow);
+
 		quiteB.setOnClickListener(this);
 		headlayoutV.setOnClickListener(this);
 		activity_edit.setOnClickListener(this);
@@ -175,7 +175,7 @@ public class ActiveInformationActivity extends CarPlayBaseActivity implements
 				headlayoutV, headlayoutWidth);
 		headUtil.setHeadMaxCount(6);
 		headUtil.AddChild();
-		
+
 		if (id != 0) {
 			acitvity_layout_head.setEnabled(false);
 			iconI.setVisibility(View.INVISIBLE);
@@ -190,7 +190,7 @@ public class ActiveInformationActivity extends CarPlayBaseActivity implements
 		if (isOrganizer == 1) {
 			status = "管理";
 			isJoin = true;
-			findViewById(R.id.arrow).setVisibility(View.GONE);
+			findViewById(R.id.arrow).setVisibility(View.INVISIBLE);
 		} else {
 			findViewById(R.id.arrow).setVisibility(View.VISIBLE);
 			if (isMember == 1) {

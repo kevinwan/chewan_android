@@ -140,16 +140,16 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 	/** 判断资料是否有改动 */
 	private boolean isModify() {
 		String name = nicknameT.getText().toString();
-//		String carage = carageT.getText().toString();
-//		if (carage.contains("年")) {
-//			carage = carage.replace("年", "");
-//		}
+		// String carage = carageT.getText().toString();
+		// if (carage.contains("年")) {
+		// carage = carage.replace("年", "");
+		// }
 		if (TextUtils.isEmpty(name)) {
 			return false;
 		}
 		if (map.get("flag") || !name.equals(nickname)
-//				|| !carage.equals(drivingExperience)
-				) {
+		// || !carage.equals(drivingExperience)
+		) {
 			return true;
 		}
 		return false;
@@ -204,48 +204,48 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 
 	private void modification() {
 		String nickname = nicknameT.getText().toString();
-//		String carage = carageT.getText().toString().trim();
-		if (nickname.length()>8) {
-		String carage = carageT.getText().toString().trim();
+		// String carage = carageT.getText().toString().trim();
 		if (nickname.length() > 8) {
-			showToast("昵称不能大于8个字符");
-			return;
-		}
-//		int drivingExperience;
-//		if (carage.contains("年")) {
-//			carage = carage.replace("年", "");
-//		}
-//		try {
-//			drivingExperience = Integer.parseInt(carage);
-//		} catch (Exception e) {
-//			showToast("驾龄格式不正确");
-//			return;
-//		}
-//		if (drivingExperience < 0 || drivingExperience > 20) {
-//			showToast("驾龄为0~20数字");
-//			return;
-//		}
-
-		DhNet net = new DhNet(API.availableSeat + mUser.getUserId()
-				+ "/info?token=" + mUser.getToken());
-		net.addParam("nickname", nickname);
-//		net.addParam("drivingExperience", drivingExperience);
-		net.addParam("province", mProvice);
-		net.addParam("city", mCity);
-		net.addParam("district", mDistrict);
-		net.doPostInDialog(new NetTask(self) {
-
-			@Override
-			public void doInUI(Response response, Integer transfer) {
-				if (response.isSuccess()) {
-					showToast("修改信息成功");
-					finish();
-				} else {
-					showToast("修改信息失败");
-				}
+			String carage = carageT.getText().toString().trim();
+			if (nickname.length() > 8) {
+				showToast("昵称不能大于8个字符");
+				return;
 			}
-		});
-	}
+			// int drivingExperience;
+			// if (carage.contains("年")) {
+			// carage = carage.replace("年", "");
+			// }
+			// try {
+			// drivingExperience = Integer.parseInt(carage);
+			// } catch (Exception e) {
+			// showToast("驾龄格式不正确");
+			// return;
+			// }
+			// if (drivingExperience < 0 || drivingExperience > 20) {
+			// showToast("驾龄为0~20数字");
+			// return;
+			// }
+
+			DhNet net = new DhNet(API.availableSeat + mUser.getUserId()
+					+ "/info?token=" + mUser.getToken());
+			net.addParam("nickname", nickname);
+			// net.addParam("drivingExperience", drivingExperience);
+			net.addParam("province", mProvice);
+			net.addParam("city", mCity);
+			net.addParam("district", mDistrict);
+			net.doPostInDialog(new NetTask(self) {
+
+				@Override
+				public void doInUI(Response response, Integer transfer) {
+					if (response.isSuccess()) {
+						showToast("修改信息成功");
+						finish();
+					} else {
+						showToast("修改信息失败");
+					}
+				}
+			});
+		}
 	}
 
 	private void uploadHead(String path) {
@@ -257,14 +257,23 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 			public void doInUI(Response response, Integer transfer) {
 				if (response.isSuccess()) {
 					JSONObject jo = response.jSONFromData();
+					User.getInstance().setHeadUrl(
+							JSONUtil.getString(jo, "photoUrl"));
 					photoUid = JSONUtil.getString(jo, "photoId");
+					ImageLoader.getInstance().getDiskCache().remove(photo);
 					ImageLoader.getInstance().getMemoryCache().remove(photo);
+
+					ImageLoader.getInstance().getDiskCache()
+							.remove(JSONUtil.getString(jo, "photoUrl"));
+					ImageLoader.getInstance().getMemoryCache()
+							.remove(JSONUtil.getString(jo, "photoUrl"));
 
 					List<EMGroup> list = EMGroupManager.getInstance()
 							.getAllGroups();
 
 					for (int i = 0; i < list.size(); i++) {
 						EMGroup group = list.get(i);
+						System.out.println("group:" + group.getGroupId());
 						EMMessage cmdMsg = EMMessage
 								.createSendMessage(EMMessage.Type.CMD);
 
@@ -275,10 +284,28 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 						CmdMessageBody cmdBody = new CmdMessageBody(action);
 						String toUsername = group.getGroupId();// 发送给某个人
 						cmdMsg.setReceipt(toUsername);
-						cmdMsg.setAttribute("photoUrl",
-								photo);// 支持自定义扩展
+						cmdMsg.setAttribute("photoUrl", photo);// 支持自定义扩展
 						cmdMsg.addBody(cmdBody);
-						EMChatManager.getInstance().sendMessage(cmdMsg, null);
+						EMChatManager.getInstance().sendMessage(cmdMsg,
+								new EMCallBack() {
+
+									@Override
+									public void onSuccess() {
+										System.out.println("发布成功!");
+									}
+
+									@Override
+									public void onProgress(int arg0, String arg1) {
+										// TODO Auto-generated method stub
+
+									}
+
+									@Override
+									public void onError(int arg0, String arg1) {
+										// TODO Auto-generated method stub
+
+									}
+								});
 					}
 				}
 			}
