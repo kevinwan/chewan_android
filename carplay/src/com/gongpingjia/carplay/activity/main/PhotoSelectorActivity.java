@@ -12,6 +12,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -97,6 +98,9 @@ public class PhotoSelectorActivity extends Activity implements onItemClickListen
         gvPhotos = (GridView) findViewById(R.id.gv_photos_ar);
         lvAblum = (ListView) findViewById(R.id.lv_ablum_ar);
         btnOk = (Button) findViewById(R.id.btn_right_lh);
+        if (TextUtils.isEmpty(getIntent().getStringExtra("type"))) {
+            btnOk.setText("发送");
+        }
         tvAlbum = (TextView) findViewById(R.id.tv_album_ar);
         tvPreview = (TextView) findViewById(R.id.tv_preview_ar);
         layoutAlbum = (RelativeLayout) findViewById(R.id.layout_album_ar);
