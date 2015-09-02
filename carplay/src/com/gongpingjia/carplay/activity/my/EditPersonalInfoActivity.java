@@ -2,6 +2,7 @@ package com.gongpingjia.carplay.activity.my;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import net.duohuo.dhroid.net.DhNet;
@@ -25,6 +26,13 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.easemob.EMCallBack;
+import com.easemob.chat.CmdMessageBody;
+import com.easemob.chat.EMChatManager;
+import com.easemob.chat.EMGroup;
+import com.easemob.chat.EMGroupManager;
+import com.easemob.chat.EMMessage;
+import com.easemob.chat.EMMessage.ChatType;
 import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
@@ -249,6 +257,27 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 					JSONObject jo = response.jSONFromData();
 					photoUid = JSONUtil.getString(jo, "photoId");
 					ImageLoader.getInstance().getMemoryCache().remove(photo);
+
+					List<EMGroup> list = EMGroupManager.getInstance()
+							.getAllGroups();
+
+					for (int i = 0; i < list.size(); i++) {
+						EMGroup group = list.get(i);
+						EMMessage cmdMsg = EMMessage
+								.createSendMessage(EMMessage.Type.CMD);
+
+						// 支持单聊和群聊，默认单聊，如果是群聊添加下面这行
+						cmdMsg.setChatType(ChatType.GroupChat);
+
+						String action = "updateAvatar";// action可以自定义，在广播接收时可以收到
+						CmdMessageBody cmdBody = new CmdMessageBody(action);
+						String toUsername = group.getGroupId();// 发送给某个人
+						cmdMsg.setReceipt(toUsername);
+						cmdMsg.setAttribute("photoUrl",
+								photo);// 支持自定义扩展
+						cmdMsg.addBody(cmdBody);
+						EMChatManager.getInstance().sendMessage(cmdMsg, null);
+					}
 				}
 			}
 		});
