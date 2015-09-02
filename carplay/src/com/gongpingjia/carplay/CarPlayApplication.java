@@ -46,7 +46,7 @@ public class CarPlayApplication extends Application implements
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		Thread.setDefaultUncaughtExceptionHandler(this);
+		// Thread.setDefaultUncaughtExceptionHandler(this);
 		hxSDKHelper.onInit(getApplicationContext());
 		instance = this;
 		Const.netadapter_page_no = "page";

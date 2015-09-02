@@ -262,7 +262,6 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 					photoUid = JSONUtil.getString(jo, "photoId");
 					ImageLoader.getInstance().getDiskCache().remove(photo);
 					ImageLoader.getInstance().getMemoryCache().remove(photo);
-					
 
 					ImageLoader.getInstance().getDiskCache()
 							.remove(JSONUtil.getString(jo, "photoUrl"));
