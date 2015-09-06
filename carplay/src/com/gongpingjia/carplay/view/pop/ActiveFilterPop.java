@@ -178,7 +178,7 @@ public class ActiveFilterPop extends PopupWindow implements OnClickListener {
 
         // 初始化选择器
         if (pre.getFirst() != null) {
-            if (TextUtils.isEmpty(pre.getProvince())) {
+            if (!TextUtils.isEmpty(pre.getProvince())) {
                 // 初始化城市
                 if (pre.getProvince().equals(pre.getCity())) {
                     addresssT.setText(pre.getProvince());
@@ -198,9 +198,9 @@ public class ActiveFilterPop extends PopupWindow implements OnClickListener {
                     typeT.setText(pre.getType());
                 }
             }
-            if (pre.getGender().equals("女")) {
+            if ("女".equals(pre.getGender())) {
                 genderRG.check(R.id.gender_rg_center);
-            } else if (pre.getGender().equals("男")) {
+            } else if ("男".equals(pre.getGender())) {
                 genderRG.check(R.id.gender_rg_left);
             } else {
                 genderRG.check(R.id.gender_rg_right);
@@ -219,9 +219,9 @@ public class ActiveFilterPop extends PopupWindow implements OnClickListener {
                 break;
             }
 
-            if (pre.getCarLevel().equals("normal")) {
+            if ("normal".equals(pre.getCarLevel())) {
                 carLevelRG.check(R.id.carLevel_rg_left);
-            } else if (pre.getCarLevel().equals("good")) {
+            } else if ("good".equals(pre.getCarLevel())) {
                 carLevelRG.check(R.id.carLevel_rg_center);
             } else {
                 carLevelRG.check(R.id.carLevel_rg_right);
