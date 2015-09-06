@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.duohuo.dhroid.ioc.IocContainer;
+import net.duohuo.dhroid.util.UserLocation;
 import android.app.Activity;
 import android.graphics.drawable.BitmapDrawable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -177,7 +179,7 @@ public class ActiveFilterPop extends PopupWindow implements OnClickListener {
 
         // 初始化选择器
         if (pre.getFirst() != null) {
-            if (pre.getProvince() != null) {
+            if (!TextUtils.isEmpty(pre.getProvince())) {
                 // 初始化城市
                 if (pre.getProvince().equals(pre.getCity())) {
                     addresssT.setText(pre.getProvince());
@@ -191,15 +193,22 @@ public class ActiveFilterPop extends PopupWindow implements OnClickListener {
                     mcity = pre.getCity();
                     mdistrict = pre.getDistrict();
                 }
-                if (pre.getType().equals("")) {
-                    typeT.setText("不限");
+            } else {
+                // 直辖市
+                if (UserLocation.getInstance().getProvice() == null) {
+                    addresssT.setText(UserLocation.getInstance().getCity() + UserLocation.getInstance().getDistrict());
                 } else {
-                    typeT.setText(pre.getType());
+                    addresssT.setText(UserLocation.getInstance().getProvice() + UserLocation.getInstance().getCity());
                 }
             }
-            if (pre.getGender().equals("女")) {
+            if (pre.getType().equals("")) {
+                typeT.setText("不限");
+            } else {
+                typeT.setText(pre.getType());
+            }
+            if ("女".equals(pre.getGender())) {
                 genderRG.check(R.id.gender_rg_center);
-            } else if (pre.getGender().equals("男")) {
+            } else if ("男".equals(pre.getGender())) {
                 genderRG.check(R.id.gender_rg_left);
             } else {
                 genderRG.check(R.id.gender_rg_right);
@@ -218,12 +227,19 @@ public class ActiveFilterPop extends PopupWindow implements OnClickListener {
                 break;
             }
 
-            if (pre.getCarLevel().equals("normal")) {
+            if ("normal".equals(pre.getCarLevel())) {
                 carLevelRG.check(R.id.carLevel_rg_left);
-            } else if (pre.getCarLevel().equals("good")) {
+            } else if ("good".equals(pre.getCarLevel())) {
                 carLevelRG.check(R.id.carLevel_rg_center);
             } else {
                 carLevelRG.check(R.id.carLevel_rg_right);
+            }
+        } else {
+            // 直辖市
+            if (UserLocation.getInstance().getProvice() == null) {
+                addresssT.setText(UserLocation.getInstance().getCity() + UserLocation.getInstance().getDistrict());
+            } else {
+                addresssT.setText(UserLocation.getInstance().getProvice() + UserLocation.getInstance().getCity());
             }
         }
 

@@ -134,6 +134,13 @@ public class SettingActivity extends CarPlayBaseActivity implements OnClickListe
                             FilterPreference pre = IocContainer.getShare().get(FilterPreference.class);
                             pre.load();
                             pre.setFirst(null);
+                            pre.setCarLevel("");
+                            pre.setCity("");
+                            pre.setDistrict("");
+                            pre.setIsAuthenticate(3);
+                            pre.setProvince("");
+                            pre.setType("");
+                            pre.setGender("");
                             pre.commit();
                         }
                     });

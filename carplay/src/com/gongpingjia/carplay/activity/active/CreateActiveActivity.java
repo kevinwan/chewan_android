@@ -862,7 +862,7 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                 // mCurPath, 1, 1, 1000);
                 break;
             case Constant.PICK_PHOTO:
-
+                showProgressDialog("图片上传中...");
                 if (data != null && data.getExtras() != null) {
                     @SuppressWarnings("unchecked")
                     List<PhotoModel> photos = (List<PhotoModel>) data.getExtras().getSerializable("photos");
