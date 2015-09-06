@@ -429,15 +429,11 @@ public class ActiveAdapter extends NetJSONAdapter {
 
 	/** 接受加入或者退出活动事件 */
 	public void onEventMainThread(JoinEB join) {
-		System.out.println("接受消息");
-		System.out.println("joinid:" + join.getActivityId());
-		System.out.println("当前:" + this);
 		if (mVaules != null && mVaules.size() != 0) {
 			for (Iterator iterator = mVaules.iterator(); iterator.hasNext();) {
 				JSONObject jo = (JSONObject) iterator.next();
 				if (JSONUtil.getString(jo, "activityId").equals(
 						join.getActivityId())) {
-					System.out.println("接受消息更改ui");
 					try {
 						jo.put("isMember", join.getIsMember());
 						if (join.getIsMember() == 0) {

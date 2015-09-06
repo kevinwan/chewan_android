@@ -1045,7 +1045,7 @@ public class ChatActivity extends CarPlayBaseActivity implements
 			// 设置消息body
 			message.addBody(txtBody);
 			if (!TextUtils.isEmpty(user.getNickName())
-					&& !TextUtils.isEmpty(user.getHeadUrl())
+					&& !TextUtils.isEmpty(user.getHeadUrl())  
 					&& !TextUtils.isEmpty(user.getUserId())) {
 				message.setAttribute("nickName", user.getNickName());
 				message.setAttribute("headUrl", user.getHeadUrl());

@@ -134,6 +134,7 @@ public class MainActivity extends BaseFragmentActivity implements
 		IntentFilter cmdIntentFilter = new IntentFilter(EMChatManager
 				.getInstance().getCmdMessageBroadcastAction());
 		registerReceiver(cmdMessageReceiver, cmdIntentFilter);
+		updateUnreadLabel();
 	}
 
 	@Override
@@ -722,6 +723,15 @@ public class MainActivity extends BaseFragmentActivity implements
 		}
 
 		case EventOfflineMessage: {
+			EMMessage message = (EMMessage) event.getData();
+			runOnUiThread(new Runnable() {
+				public void run() {
+					updateUnreadLabel();
+				}
+			});
+			// 提示新消息
+			// HXSDKHelper.getInstance().getNotifier().onNewMsg(message);
+			EventBus.getDefault().post(message);
 			break;
 		}
 

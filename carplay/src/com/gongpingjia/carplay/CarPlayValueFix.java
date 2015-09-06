@@ -34,7 +34,6 @@ public class CarPlayValueFix implements ValueFix {
 				.showImageForEmptyUri(R.drawable.head_icon)
 				.showImageOnFail(R.drawable.head_icon).cacheInMemory(true)
 				.cacheOnDisk(true).resetViewBeforeLoading(true)
-				.considerExifParams(false).bitmapConfig(Bitmap.Config.RGB_565)
 				.build();
 		imageOptions.put("head", headOptions);
 

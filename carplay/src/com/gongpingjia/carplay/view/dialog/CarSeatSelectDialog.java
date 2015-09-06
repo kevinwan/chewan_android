@@ -49,6 +49,8 @@ public class CarSeatSelectDialog extends BaseAlertDialog {
 
 	TextView unitT;
 
+	int minNun = 0;
+
 	public CarSeatSelectDialog(Context context, String activityId) {
 		super(context);
 		this.mContext = context;
@@ -104,6 +106,7 @@ public class CarSeatSelectDialog extends BaseAlertDialog {
 				} else {
 					unitT.setTextColor(mContext.getResources().getColor(
 							R.color.text_black));
+					countT.setText(minNun + "");
 				}
 			}
 		});
@@ -176,6 +179,7 @@ public class CarSeatSelectDialog extends BaseAlertDialog {
 
 					if (mSeatOptions.size() != 0) {
 						countT.setText(mSeatOptions.get(0));
+						minNun = Integer.parseInt(mSeatOptions.get(0));
 					}
 				}
 			}

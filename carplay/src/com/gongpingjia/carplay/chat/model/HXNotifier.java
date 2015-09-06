@@ -33,6 +33,7 @@ import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMMessage;
 import com.easemob.util.EMLog;
 import com.easemob.util.EasyUtils;
+import com.gongpingjia.carplay.activity.main.SplashActivity;
 import com.gongpingjia.carplay.chat.controller.HXSDKHelper;
 
 import de.greenrobot.event.EventBus;
@@ -243,15 +244,26 @@ public class HXNotifier {
 					.setSmallIcon(appContext.getApplicationInfo().icon)
 					.setWhen(System.currentTimeMillis()).setAutoCancel(true);
 
-			Intent msgIntent = appContext.getPackageManager()
-					.getLaunchIntentForPackage(packageName);
-			if (notificationInfoProvider != null) {
-				// 设置自定义的notification点击跳转intent
-				msgIntent = notificationInfoProvider.getLaunchIntent(message);
-			}
+			
+			 Intent notificationIntent = new Intent(appContext, SplashActivity.class);
+             notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+             notificationIntent.setFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+             
+             notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+             notificationIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+             notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+             notificationIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+             PendingIntent contentIntent = PendingIntent.getActivity(appContext, 0, notificationIntent, 0);
+			
+//			Intent msgIntent = appContext.getPackageManager()
+//					.getLaunchIntentForPackage(packageName);
+//			if (notificationInfoProvider != null) {
+//				// 设置自定义的notification点击跳转intent
+//				notificationIntent = notificationInfoProvider.getLaunchIntent(message);
+//			}
 
-			PendingIntent pendingIntent = PendingIntent.getActivity(appContext,
-					notifyID, msgIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+//			PendingIntent pendingIntent = PendingIntent.getActivity(appContext,
+//					notifyID, msgIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 			if (numIncrease) {
 				// prepare latest event info section
@@ -284,14 +296,16 @@ public class HXNotifier {
 			mBuilder.setContentTitle(contentTitle);
 			mBuilder.setTicker(notifyText);
 			mBuilder.setContentText(summaryBody);
-			mBuilder.setContentIntent(pendingIntent);
+			mBuilder.setContentIntent(contentIntent);
 			// mBuilder.setNumber(notificationNum);
 			Notification notification = mBuilder.build();
 
 			if (isForeground) {
+				System.out.println("11111111");
 				// notificationManager.notify(foregroundNotifyID, notification);
 				// notificationManager.cancel(foregroundNotifyID);
 			} else {
+				System.out.println("222222222");
 				notificationManager.notify(notifyID, notification);
 			}
 

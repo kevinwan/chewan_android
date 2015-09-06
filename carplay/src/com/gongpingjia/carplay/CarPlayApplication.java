@@ -85,7 +85,7 @@ public class CarPlayApplication extends Application implements Thread.UncaughtEx
                 .diskCache(new UnlimitedDiscCache(StorageUtils.getCacheDirectory(this, true)))
                 // default
                 .diskCacheSize(50 * 1024 * 1024).diskCacheFileCount(100)
-                .diskCacheFileNameGenerator(new HashCodeFileNameGenerator())
+//                .diskCacheFileNameGenerator(new HashCodeFileNameGenerator())
                 // default
                 .imageDownloader(new BaseImageDownloader(this))
                 // default
