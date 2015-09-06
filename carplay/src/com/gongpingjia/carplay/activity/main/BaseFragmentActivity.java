@@ -6,6 +6,8 @@ import net.duohuo.dhroid.ioc.IocContainer;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.view.View;
@@ -14,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.receiver.NetReceiver;
 import com.umeng.analytics.MobclickAgent;
 
 public class BaseFragmentActivity extends FragmentActivity {
@@ -25,6 +28,8 @@ public class BaseFragmentActivity extends FragmentActivity {
 
 	Dialog progressdialog;
 
+	NetReceiver netReceiver;
+
 	@Override
 	public void setContentView(int layoutResID) {
 		super.setContentView(layoutResID);
@@ -32,6 +37,11 @@ public class BaseFragmentActivity extends FragmentActivity {
 		self = this;
 		initTitleBar();
 		ActivityTack.getInstanse().addActivity(this);
+
+		netReceiver = new NetReceiver();
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+		registerReceiver(netReceiver, filter);
 	}
 
 	private void initTitleBar() {
@@ -164,6 +174,15 @@ public class BaseFragmentActivity extends FragmentActivity {
 
 	public void showToast(String msg) {
 		dialoger.showToastShort(getApplicationContext(), msg);
+	}
+
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		if (netReceiver != null) {
+			unregisterReceiver(netReceiver);
+		}
 	}
 
 	public Dialog showProgressDialog(String msg) {

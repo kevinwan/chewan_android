@@ -28,6 +28,8 @@ public class User {
 
 	public String psaaword;
 
+	private boolean isDisconnect = false;
+
 	public static User getInstance() {
 		if (user == null) {
 			user = new User();
@@ -130,6 +132,15 @@ public class User {
 	public void setHeadUrl(String headUrl) {
 		this.headUrl = headUrl;
 	}
+
+	public boolean isDisconnect() {
+		return isDisconnect;
+	}
+
+	public void setDisconnect(boolean isDisconnect) {
+		this.isDisconnect = isDisconnect;
+	}
+	
 	
 
 }
