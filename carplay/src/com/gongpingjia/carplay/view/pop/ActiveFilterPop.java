@@ -192,11 +192,11 @@ public class ActiveFilterPop extends PopupWindow implements OnClickListener {
                     mcity = pre.getCity();
                     mdistrict = pre.getDistrict();
                 }
-                if (pre.getType().equals("")) {
-                    typeT.setText("不限");
-                } else {
-                    typeT.setText(pre.getType());
-                }
+            }
+            if (pre.getType().equals("")) {
+                typeT.setText("不限");
+            } else {
+                typeT.setText(pre.getType());
             }
             if ("女".equals(pre.getGender())) {
                 genderRG.check(R.id.gender_rg_center);
