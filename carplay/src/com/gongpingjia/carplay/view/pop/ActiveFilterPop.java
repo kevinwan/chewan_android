@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.duohuo.dhroid.ioc.IocContainer;
+import net.duohuo.dhroid.util.UserLocation;
 import android.app.Activity;
 import android.graphics.drawable.BitmapDrawable;
 import android.text.TextUtils;
@@ -192,6 +193,13 @@ public class ActiveFilterPop extends PopupWindow implements OnClickListener {
                     mcity = pre.getCity();
                     mdistrict = pre.getDistrict();
                 }
+            } else {
+                // 直辖市
+                if (UserLocation.getInstance().getProvice() == null) {
+                    addresssT.setText(UserLocation.getInstance().getCity() + UserLocation.getInstance().getDistrict());
+                } else {
+                    addresssT.setText(UserLocation.getInstance().getProvice() + UserLocation.getInstance().getCity());
+                }
             }
             if (pre.getType().equals("")) {
                 typeT.setText("不限");
@@ -225,6 +233,13 @@ public class ActiveFilterPop extends PopupWindow implements OnClickListener {
                 carLevelRG.check(R.id.carLevel_rg_center);
             } else {
                 carLevelRG.check(R.id.carLevel_rg_right);
+            }
+        } else {
+            // 直辖市
+            if (UserLocation.getInstance().getProvice() == null) {
+                addresssT.setText(UserLocation.getInstance().getCity() + UserLocation.getInstance().getDistrict());
+            } else {
+                addresssT.setText(UserLocation.getInstance().getProvice() + UserLocation.getInstance().getCity());
             }
         }
 
