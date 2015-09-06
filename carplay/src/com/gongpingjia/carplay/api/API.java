@@ -13,7 +13,8 @@ public class API {
     // 测试版
     public static final String CWBaseurl = "http://cwapi.gongpingjia.com/v1";
 
-//     public static final String CWBaseurl ="http://cwapi.gongpingjia.com:8080";
+    // public static final String CWBaseurl
+    // ="http://cwapi.gongpingjia.com:8080";
 
     public static final String allCarBrands = CWBaseurl + "/car/brand";
 

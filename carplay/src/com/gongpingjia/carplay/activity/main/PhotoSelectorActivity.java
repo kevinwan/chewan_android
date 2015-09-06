@@ -98,7 +98,7 @@ public class PhotoSelectorActivity extends Activity implements onItemClickListen
         gvPhotos = (GridView) findViewById(R.id.gv_photos_ar);
         lvAblum = (ListView) findViewById(R.id.lv_ablum_ar);
         btnOk = (Button) findViewById(R.id.btn_right_lh);
-        if (TextUtils.isEmpty(getIntent().getStringExtra("type"))) {
+        if ("".equals(getIntent().getStringExtra("type"))) {
             btnOk.setText("发送");
         }
         tvAlbum = (TextView) findViewById(R.id.tv_album_ar);

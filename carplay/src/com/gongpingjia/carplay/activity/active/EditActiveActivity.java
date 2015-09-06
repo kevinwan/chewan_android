@@ -113,6 +113,8 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
 
     String mAddress, mProvince, mDistrict;
 
+    private int mSize;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -477,13 +479,14 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
                 // Bitmap btp = PhotoUtil.checkImage(self, data);
                 // PhotoUtil.saveLocalImage(btp, new File(mCurPath));
                 // upLoadPic(mCurPath);
-
+                showProgressDialog("图片上传中...");
                 if (data != null && data.getExtras() != null) {
                     @SuppressWarnings("unchecked")
                     List<PhotoModel> photos = (List<PhotoModel>) data.getExtras().getSerializable("photos");
                     if (photos == null || photos.isEmpty()) {
                         showToast("没有选择图片!");
                     } else {
+                        mSize = photos.size();
                         for (int i = 0; i < photos.size(); i++) {
                             String newPhotoPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg")
                                     .getAbsolutePath();
@@ -527,7 +530,10 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    showToast("图片上传成功");
+                    if (--mSize == 0) {
+                        showToast("图片上传成功");
+                        hidenProgressDialog();
+                    }
                 } else {
 
                     if (mPhotoStates.size() != 9) {

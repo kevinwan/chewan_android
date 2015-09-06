@@ -78,6 +78,7 @@ public class ManageAlbumActivity extends CarPlayBaseActivity implements OnClickL
     private boolean isEditable = false;
 
     CarPlayPerference per;
+    private int mSize;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -263,12 +264,14 @@ public class ManageAlbumActivity extends CarPlayBaseActivity implements OnClickL
                 // PhotoUtil.saveLocalImage(btp, new File(mCurPath));
                 // btp.recycle();
                 // upLoadPic(mCurPath);
+                showProgressDialog("图片上传中...");
                 if (data != null && data.getExtras() != null) {
                     @SuppressWarnings("unchecked")
                     List<PhotoModel> photos = (List<PhotoModel>) data.getExtras().getSerializable("photos");
                     if (photos == null || photos.isEmpty()) {
                         showToast("没有选择图片!");
                     } else {
+                        mSize = photos.size();
                         for (int i = 0; i < photos.size(); i++) {
                             String newPhotoPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg")
                                     .getAbsolutePath();
@@ -399,7 +402,10 @@ public class ManageAlbumActivity extends CarPlayBaseActivity implements OnClickL
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    showToast("图片上传成功");
+                    if(--mSize == 0){
+                        showToast("图片上传成功");
+                        hidenProgressDialog();
+                    }
                 } else {
                     mPhotoStates.remove(mPhotoStates.size() - 2);
                     mPhotoAdapter.notifyDataSetChanged();

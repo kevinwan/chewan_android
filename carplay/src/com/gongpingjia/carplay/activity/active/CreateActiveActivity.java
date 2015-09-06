@@ -163,6 +163,8 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
 
     Dao<Active, Integer> activeDao;
 
+    private int mSize = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -869,6 +871,7 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                     if (photos == null || photos.isEmpty()) {
                         showToast("没有选择图片!");
                     } else {
+                        mSize = photos.size();
                         for (int i = 0; i < photos.size(); i++) {
                             String newPhotoPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg")
                                     .getAbsolutePath();
@@ -912,7 +915,10 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    showToast("图片上传成功");
+                    if (--mSize == 0) {
+                        showToast("图片上传成功");
+                        hidenProgressDialog();
+                    }
                 } else {
 
                     if (mPhotoStates.size() != 9) {
