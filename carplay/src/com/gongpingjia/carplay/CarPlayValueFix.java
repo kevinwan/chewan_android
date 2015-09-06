@@ -23,6 +23,7 @@ public class CarPlayValueFix implements ValueFix {
 		optionsDefault = new DisplayImageOptions.Builder()
 				.showImageOnLoading(R.color.img_color)
 				.showImageOnFail(R.drawable.img_loading_faild)
+				.showImageForEmptyUri(R.color.img_color)
 				.cacheInMemory(true).cacheOnDisk(true)
 				.resetViewBeforeLoading(true).considerExifParams(false)
 				.bitmapConfig(Bitmap.Config.RGB_565).build();
@@ -30,6 +31,7 @@ public class CarPlayValueFix implements ValueFix {
 
 		headOptions = new DisplayImageOptions.Builder()
 				.showImageOnLoading(R.drawable.head_icon)
+				.showImageForEmptyUri(R.drawable.head_icon)
 				.showImageOnFail(R.drawable.head_icon).cacheInMemory(true)
 				.cacheOnDisk(true).resetViewBeforeLoading(true)
 				.considerExifParams(false).bitmapConfig(Bitmap.Config.RGB_565)
@@ -44,6 +46,7 @@ public class CarPlayValueFix implements ValueFix {
 
 		carBigLogoOptions = new DisplayImageOptions.Builder()
 				.showImageOnLoading(R.drawable.car_default)
+				.showImageForEmptyUri(R.drawable.car_default)
 				.showImageOnFail(R.drawable.car_default).cacheInMemory(true)
 				.cacheOnDisk(true).resetViewBeforeLoading(true)
 				.considerExifParams(false).bitmapConfig(Bitmap.Config.RGB_565)

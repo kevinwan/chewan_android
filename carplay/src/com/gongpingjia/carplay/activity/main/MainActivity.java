@@ -25,6 +25,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -70,6 +71,7 @@ import com.gongpingjia.carplay.chat.bean.GroupEB;
 import com.gongpingjia.carplay.chat.controller.HXSDKHelper;
 import com.gongpingjia.carplay.manage.UserInfoManage;
 import com.gongpingjia.carplay.manage.UserInfoManage.LoginCallBack;
+import com.gongpingjia.carplay.receiver.NetReceiver;
 import com.gongpingjia.carplay.service.MsgService;
 import com.gongpingjia.carplay.util.CarPlayPerference;
 import com.gongpingjia.carplay.view.pop.ActiveFilterPop;
@@ -132,7 +134,6 @@ public class MainActivity extends BaseFragmentActivity implements
 		IntentFilter cmdIntentFilter = new IntentFilter(EMChatManager
 				.getInstance().getCmdMessageBroadcastAction());
 		registerReceiver(cmdMessageReceiver, cmdIntentFilter);
-
 	}
 
 	@Override
@@ -157,7 +158,6 @@ public class MainActivity extends BaseFragmentActivity implements
 		// asyncFetchGroupsFromServer();
 		// ((DemoHXSDKHelper) HXSDKHelper.getInstance()).getUserProfileManager()
 		// .asyncGetCurrentUserInfo();
-
 	}
 
 	public void initView() {
@@ -601,6 +601,7 @@ public class MainActivity extends BaseFragmentActivity implements
 
 		@Override
 		public void onConnected() {
+
 		}
 
 		@Override
@@ -619,6 +620,10 @@ public class MainActivity extends BaseFragmentActivity implements
 							// 显示帐号在其他设备登陆dialog
 							showToast("账号在另一地点登录!");
 							isConflict = true;
+							Intent it = new Intent(self, LoginActivity.class);
+							it.putExtra("action", "logout");
+							startActivity(it);
+							finish();
 							// showConflictDialog();
 						} else {
 							showToast("网络异常,请重新连接!");
@@ -630,12 +635,8 @@ public class MainActivity extends BaseFragmentActivity implements
 							// chatHistoryFragment.errorText.setText(st2);
 
 						}
-
-						Intent it = new Intent(self, LoginActivity.class);
-						it.putExtra("action", "logout");
-						startActivity(it);
-						finish();
-
+						User.getInstance().setLogin(false);
+						User.getInstance().setDisconnect(true);
 						DemoHXSDKHelper.getInstance().logout(true, null);
 					}
 				}
@@ -659,7 +660,6 @@ public class MainActivity extends BaseFragmentActivity implements
 		}
 
 		unregisterReceiver(cmdMessageReceiver);
-
 	}
 
 	@Override

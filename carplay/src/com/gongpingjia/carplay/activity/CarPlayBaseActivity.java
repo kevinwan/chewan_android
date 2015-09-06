@@ -7,6 +7,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.chat.controller.HXSDKHelper;
+import com.gongpingjia.carplay.receiver.NetReceiver;
 import com.umeng.analytics.MobclickAgent;
 
 public abstract class CarPlayBaseActivity extends BaseActivity {
@@ -26,6 +29,8 @@ public abstract class CarPlayBaseActivity extends BaseActivity {
 
 	Dialog progressdialog;
 
+	NetReceiver netReceiver;
+
 	@Override
 	public void setContentView(int layoutResID) {
 		super.setContentView(layoutResID);
@@ -33,6 +38,10 @@ public abstract class CarPlayBaseActivity extends BaseActivity {
 		self = this;
 		initTitleBar();
 		initView();
+		netReceiver = new NetReceiver();
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+		registerReceiver(netReceiver, filter);
 	}
 
 	private void initTitleBar() {
@@ -250,5 +259,14 @@ public abstract class CarPlayBaseActivity extends BaseActivity {
 		super.onResume();
 		MobclickAgent.onResume(this);
 		HXSDKHelper.getInstance().getNotifier().reset();
+	}
+
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		if (netReceiver != null) {
+			unregisterReceiver(netReceiver);
+		}
 	}
 }

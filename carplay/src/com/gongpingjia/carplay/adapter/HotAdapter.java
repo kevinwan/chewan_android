@@ -486,7 +486,7 @@ public class HotAdapter extends NetJSONAdapter {
 	/**
 	 * 加入活动
 	 */
-	private void joinActive(String activityId, int seatCount,
+	private void joinActive(final String activityId, int seatCount,
 			final JSONObject jo) {
 		User user = User.getInstance();
 		DhNet net = new DhNet(API.CWBaseurl + "/activity/" + activityId
@@ -503,13 +503,10 @@ public class HotAdapter extends NetJSONAdapter {
 				if (response.isSuccess()) {
 					IocContainer.getShare().get(IDialog.class)
 							.showToastShort(mContext, "已提交加入活动申请,等待管理员审核!");
-					try {
-						jo.put("isMember", 2);
-						notifyDataSetChanged();
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					JoinEB join = new JoinEB();
+					join.setActivityId(activityId);
+					join.setIsMember(2);
+					EventBus.getDefault().post(join);
 				}
 			}
 		});
@@ -564,11 +561,14 @@ public class HotAdapter extends NetJSONAdapter {
 
 	/** 接受加入或者退出活动事件 */
 	public void onEventMainThread(JoinEB join) {
+		System.out.println("接受消息hot");
+		System.out.println("hotid:"+join.getActivityId());
 		if (mVaules != null && mVaules.size() != 0) {
 			for (Iterator iterator = mVaules.iterator(); iterator.hasNext();) {
 				JSONObject jo = (JSONObject) iterator.next();
 				if (JSONUtil.getString(jo, "activityId").equals(
 						join.getActivityId())) {
+					System.out.println("接受消息hot更改ui");
 					try {
 						jo.put("isMember", join.getIsMember());
 						if (join.getIsMember() == 0) {

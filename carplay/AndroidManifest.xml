@@ -45,7 +45,7 @@
         <!--
              <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="f5a41f709dd7b958bda5c51d3a0a247e" />
+            android:value="f5a41f709dd7b958bda5c51d3a0a247e" />
         -->
 
         <meta-data
@@ -56,7 +56,7 @@
         <!--
              <meta-data
             android:name="EASEMOB_APPKEY"
-            android:value="gongpingjia#chewan" />
+            android:value="gongpingjia#chewan" />
         -->
 
         <meta-data
