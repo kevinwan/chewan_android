@@ -295,7 +295,7 @@ public class MyReleaseActiveAdapter extends NetJSONAdapter {
 			String imgUrl = JSONUtil.getString(picjo, "thumbnail_pic");
 			String shareTitle = user.getNickName() + "邀请您参加"
 					+ JSONUtil.getString(jo, "introduction") + "活动";
-			long time = JSONUtil.getLong(jo, "start");
+			long time = JSONUtil.getLong(jo, "startDate");
 			String startTime = CarPlayValueFix.getStandardTime(time, "MM月dd日 ");
 			String shareContent = "开始时间: " + startTime + "\n目的地: "
 					+ JSONUtil.getString(jo, "location") + "\n费用: "
