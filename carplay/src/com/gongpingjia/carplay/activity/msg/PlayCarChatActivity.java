@@ -89,7 +89,7 @@ public class PlayCarChatActivity extends CarPlayBaseActivity {
 						+ "\n" + "\n" + "管理员和车玩会会长不定时对帖子进行维护操作，如有疑义，请及时联系沟通。"
 						+ "\n" + "\n" ;
 				intent.putExtra("detail", deta);
-				intent.putExtra("title", "发布活动指南");
+				intent.putExtra("title", "发表活动指南");
 
 				intent.setClass(self, PlayCarcDetailActivity.class);
 				startActivity(intent);
@@ -123,7 +123,7 @@ public class PlayCarChatActivity extends CarPlayBaseActivity {
 						+ "\n" + "\n" + "\n" + "管理活动及群聊" + "\n" + "\n"
 						+ "可以删除未开始的活动；移除活动和群聊的参与者";
 				intent.putExtra("detail", four);
-				intent.putExtra("title", "活动发起者权限");
+				intent.putExtra("title", "活动发起权限");
 				intent.setClass(self, PlayCarcDetailActivity.class);
 				startActivity(intent);
 				break;
