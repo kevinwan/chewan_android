@@ -104,6 +104,8 @@ public class CarSeatSelectDialog extends BaseAlertDialog {
 					unitT.setTextColor(mContext.getResources().getColor(
 							R.color.text_grey));
 				} else {
+					countT.setTextColor(mContext.getResources().getColor(
+							R.color.text_black));
 					unitT.setTextColor(mContext.getResources().getColor(
 							R.color.text_black));
 					countT.setText(minNun + "");
