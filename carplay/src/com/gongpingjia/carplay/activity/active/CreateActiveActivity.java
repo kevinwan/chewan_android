@@ -262,7 +262,9 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
                         showToast("请至少选择一张图片");
                         return;
                     } else {
-                        if (!mPhotoStates.get(mPhotoStates.size() - 1).isLast()) {
+                        if (mPhotoStates.size() == 0) {
+                            mPhotoStates.add(mLastPhoto);
+                        } else if (!mPhotoStates.get(mPhotoStates.size() - 1).isLast()) {
                             mPhotoStates.add(mLastPhoto);
                         }
                         mImageAdapter.notifyDataSetChanged();
