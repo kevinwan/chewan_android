@@ -310,14 +310,14 @@ public class MyFragment extends Fragment implements OnClickListener {
 					switch (isAuthenticated) {
 					// 未认证
 					case 0:
-						attestation_txt.setVisibility(View.GONE);
+						attestation_txt.setText("未认证");
 						carlogo.setVisibility(View.GONE);
 						break;
 					// 已认证
 					case 1:
 						carlogo.setVisibility(View.VISIBLE);
 						attestation_txt.setVisibility(View.VISIBLE);
-						attestation_txt.setText("已认证");
+						attestation_txt.setText(carModel);
 						ViewUtil.bindNetImage(carlogo, carBrandLogo,
 								CarPlayValueFix.optionsDefault.toString());
 						mainV.findViewById(R.id.icon).setVisibility(View.INVISIBLE);
@@ -326,7 +326,7 @@ public class MyFragment extends Fragment implements OnClickListener {
 					case 2:
 						attestation_txt.setVisibility(View.VISIBLE);
 						carlogo.setVisibility(View.GONE);
-						attestation_txt.setText("认证中");
+						attestation_txt.setText("审核中");
 						break;
 
 					default:
