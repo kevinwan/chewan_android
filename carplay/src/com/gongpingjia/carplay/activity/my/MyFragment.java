@@ -15,6 +15,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -41,12 +42,14 @@ import com.gongpingjia.carplay.activity.msg.PlayCarChatActivity;
 import com.gongpingjia.carplay.adapter.ActiveAdapter;
 import com.gongpingjia.carplay.adapter.GalleryAdapter;
 import com.gongpingjia.carplay.api.API;
+import com.gongpingjia.carplay.bean.EditHeadPhotoEB;
 import com.gongpingjia.carplay.bean.LoginEB;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.manage.UserInfoManage;
 import com.gongpingjia.carplay.manage.UserInfoManage.LoginCallBack;
 import com.gongpingjia.carplay.view.CarPlayGallery;
 import com.gongpingjia.carplay.view.RoundImageView;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import de.greenrobot.event.EventBus;
 
@@ -87,7 +90,6 @@ public class MyFragment extends Fragment implements OnClickListener {
 	TextView postNumberT, subscribeNumberT, joinNumberT;
 
 	ImageView unLogheadI;
-	
 
 	DotLinLayout dotLinLayout;
 
@@ -320,7 +322,8 @@ public class MyFragment extends Fragment implements OnClickListener {
 						attestation_txt.setText(carModel);
 						ViewUtil.bindNetImage(carlogo, carBrandLogo,
 								CarPlayValueFix.optionsDefault.toString());
-						mainV.findViewById(R.id.icon).setVisibility(View.INVISIBLE);
+						mainV.findViewById(R.id.icon).setVisibility(
+								View.INVISIBLE);
 						break;
 					// 认证中
 					case 2:
@@ -468,6 +471,15 @@ public class MyFragment extends Fragment implements OnClickListener {
 			isfirst = true;
 			getMyDetails();
 		}
+	}
+
+	public void onEventMainThread(EditHeadPhotoEB edhead) {
+		boolean a = ImageLoader.getInstance().getDiskCache()
+				.remove(edhead.getHeadUrl());
+		Bitmap b = ImageLoader.getInstance().getMemoryCache()
+				.remove(edhead.getHeadUrl());
+		System.out.println("a" + a);
+		System.out.println("b" + b);
 	}
 
 	@Override

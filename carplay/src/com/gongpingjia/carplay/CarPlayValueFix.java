@@ -1,6 +1,7 @@
 package com.gongpingjia.carplay;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,18 +24,17 @@ public class CarPlayValueFix implements ValueFix {
 		optionsDefault = new DisplayImageOptions.Builder()
 				.showImageOnLoading(R.color.img_color)
 				.showImageOnFail(R.drawable.img_loading_faild)
-				.showImageForEmptyUri(R.color.img_color)
-				.cacheInMemory(true).cacheOnDisk(true)
-				.resetViewBeforeLoading(true).considerExifParams(false)
-				.bitmapConfig(Bitmap.Config.RGB_565).build();
+				.showImageForEmptyUri(R.color.img_color).cacheInMemory(true)
+				.cacheOnDisk(true).resetViewBeforeLoading(true)
+				.considerExifParams(false).bitmapConfig(Bitmap.Config.RGB_565)
+				.build();
 		imageOptions.put("default", optionsDefault);
 
 		headOptions = new DisplayImageOptions.Builder()
 				.showImageOnLoading(R.drawable.head_icon)
 				.showImageForEmptyUri(R.drawable.head_icon)
 				.showImageOnFail(R.drawable.head_icon).cacheInMemory(true)
-				.cacheOnDisk(true).resetViewBeforeLoading(true)
-				.build();
+				.cacheOnDisk(true).resetViewBeforeLoading(true).build();
 		imageOptions.put("head", headOptions);
 
 		carLogoOptions = new DisplayImageOptions.Builder().cacheInMemory(true)
@@ -89,14 +89,23 @@ public class CarPlayValueFix implements ValueFix {
 		long timeGap = (currentSeconds - timestamp) / 1000;// 与现在时间相差秒�?
 		Date currentDate = new Date(currentSeconds);
 		Date agoDate = new Date(timestamp);
-		int currentDay = currentDate.getDate();
-		int agoDay = agoDate.getDate();
 		String timeStr = null;
-		if (currentDay - agoDay >= 2) {// 1天以�?
+
+		Calendar aCalendar = Calendar.getInstance();
+
+		aCalendar.setTime(currentDate);
+		int currentDays = aCalendar.get(Calendar.DAY_OF_YEAR);
+		aCalendar.setTime(agoDate);
+		int agoDays = aCalendar.get(Calendar.DAY_OF_YEAR);
+		// if(currentYear>agoYear) {
+		// if()
+		// }
+
+		if (currentDays - agoDays >= 2) {// 1天以�?
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			Date date = new Date(timestamp);
 			timeStr = sdf.format(date);
-		} else if (currentDay - agoDay == 1) {// 1小时-24小时
+		} else if (currentDays - agoDays == 1) {// 1小时-24小时
 			timeStr = "昨天";
 		} else if (timeGap > 60 * 60) {
 			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");

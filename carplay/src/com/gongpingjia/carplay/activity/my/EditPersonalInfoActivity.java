@@ -38,11 +38,14 @@ import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.api.Constant;
+import com.gongpingjia.carplay.bean.EditHeadPhotoEB;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.view.RoundImageView;
 import com.gongpingjia.carplay.view.dialog.CityPickDialog;
 import com.gongpingjia.carplay.view.dialog.CityPickDialog.OnPickResultListener;
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * 
@@ -178,8 +181,7 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 				nicknameT.setText(nickname);
 				sexT.setText(gender);
 				carageT.setText(drivingExperience + "年");
-				ViewUtil.bindNetImage(headI, photo,
-						CarPlayValueFix.optionsDefault.toString());
+				ViewUtil.bindNetImage(headI, photo, "head");
 			}
 		});
 
@@ -261,10 +263,11 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 							.remove(photo);
 					Bitmap b = ImageLoader.getInstance().getMemoryCache()
 							.remove(photo);
-
 					System.out.println("a" + a);
 					System.out.println("b" + b);
-
+					EditHeadPhotoEB eb = new EditHeadPhotoEB();
+					eb.setHeadUrl(photo);
+					EventBus.getDefault().post(eb);
 
 					List<EMGroup> list = EMGroupManager.getInstance()
 							.getAllGroups();

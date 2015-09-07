@@ -842,6 +842,7 @@ public class MainActivity extends BaseFragmentActivity implements
 				String attr = message.getStringAttribute("photoUrl");
 				ImageLoader.getInstance().getMemoryCache().remove(attr);
 				ImageLoader.getInstance().getDiskCache().remove(attr);
+				showToast("清除缓存");
 				System.out.println("清除缓存");
 			} catch (EaseMobException e) {
 				// TODO Auto-generated catch block
