@@ -258,7 +258,11 @@ public class HotAdapter extends NetJSONAdapter {
 				final long startTime = JSONUtil.getLong(jo, "start");
 
 				if (JSONUtil.getInt(jo, "isOver") == 0) {
-
+					if (startTime<System.currentTimeMillis()) {
+						holder.joinT.setText("进行中");
+						holder.joinT
+								.setBackgroundResource(R.drawable.btn_grey_dark_bg);
+					}else
 					if (isOrganizer == 1) {
 						holder.joinT.setText("管理");
 						holder.joinT
@@ -297,7 +301,11 @@ public class HotAdapter extends NetJSONAdapter {
 							int isOrganizer = JSONUtil
 									.getInt(jo, "isOrganizer");
 							int isMember = JSONUtil.getInt(jo, "isMember");
+							if (startTime<System.currentTimeMillis()) {
+								System.out.println("------进行中---->>>");
+							}else
 							if (isOrganizer == 1) {
+								System.out.println("------活动创建者---->>>");
 								JSONObject shareJo = getShareContent(jo);
 								it = new Intent(mContext,
 										MyActiveMembersManageActivity.class);
@@ -307,6 +315,7 @@ public class HotAdapter extends NetJSONAdapter {
 								mContext.startActivity(it);
 
 							} else if (isMember == 1) {
+//								System.out.println("------成员---->>>");
 								it = new Intent(mContext,
 										ActiveMembersActivity.class);
 								it.putExtra("activityId", activityId);
@@ -316,9 +325,9 @@ public class HotAdapter extends NetJSONAdapter {
 							} else if (isMember == 0) {
 								isAuthen(activityId, jo);
 							} else if (holder.joinT.getText().equals("申请中")) {
-
+//								System.out.println("------申请中---->>>");
 							} else {
-
+//								System.out.println("---------->>>");
 							}
 						} else {
 							UserInfoManage.getInstance().checkLogin(

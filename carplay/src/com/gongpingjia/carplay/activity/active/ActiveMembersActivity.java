@@ -67,7 +67,7 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 	User user;
 
 	String activityId;
-
+	
 	SeatDialog grabDialog;
 
 	boolean isJoin = false;
@@ -152,7 +152,10 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 			public void onSeatClick(String carId, int childPosition) {
 				if (isJoin) {
 					showGradDialog(carId, childPosition);
-				} else {
+				}else if(startTime<System.currentTimeMillis()){
+					showToast("活动正在进行 您来晚了哟~");
+				} 
+				else {
 					showToast("加入活动才能抢座，点击底部“加入活动”吧!");
 				}
 			}
@@ -316,6 +319,11 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 			findViewById(R.id.line).setVisibility(View.GONE);
 		} else {
 			findViewById(R.id.line).setVisibility(View.VISIBLE);
+			if(startTime<System.currentTimeMillis()){
+				joinB.setText("进行中");
+				joinB.setBackgroundResource(R.drawable.btn_grey_bg);
+				joinB.setEnabled(false);
+			}else
 			if (isShenqing) {
 				joinB.setText("申请中");
 				joinB.setBackgroundResource(R.drawable.btn_grey_bg);

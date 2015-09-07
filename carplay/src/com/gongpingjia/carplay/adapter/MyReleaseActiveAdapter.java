@@ -153,8 +153,13 @@ public class MyReleaseActiveAdapter extends NetJSONAdapter {
 
 		int isOrganizer = JSONUtil.getInt(jo, "isOrganizer");
 		int isMember = JSONUtil.getInt(jo, "isMember");
+		final long startTime = JSONUtil.getLong(jo, "startDate");
 		if (JSONUtil.getInt(jo, "isOver") == 0) {
-
+			if (startTime<System.currentTimeMillis()) {
+				holder.joinT.setText("进行中");
+				holder.joinT
+						.setBackgroundResource(R.drawable.btn_grey_dark_bg);
+			}else
 			if (isOrganizer == 1) {
 				holder.joinT.setText("管理");
 				holder.joinT
@@ -181,7 +186,6 @@ public class MyReleaseActiveAdapter extends NetJSONAdapter {
 		}
 		holder.joinT.setVisibility(View.VISIBLE);
 		final String activityId = JSONUtil.getString(jo, "activityId");
-		final long startTime = JSONUtil.getLong(jo, "start");
 		holder.joinT.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -189,6 +193,9 @@ public class MyReleaseActiveAdapter extends NetJSONAdapter {
 				User user = User.getInstance();
 				if (user.isLogin) {
 					Intent it;
+					if (holder.joinT.getText().equals("进行中")) {
+						
+					}else
 					if (holder.joinT.getText().equals("管理")) {
 						JSONObject shareJo = getShareContent(jo);
 						it = new Intent(mContext,

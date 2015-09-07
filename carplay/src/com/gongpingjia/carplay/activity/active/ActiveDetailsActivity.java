@@ -392,6 +392,7 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 		JSONObject createrJo = JSONUtil.getJSONObject(headJo, "organizer");
 		joinT = (TextView) headV.findViewById(R.id.join);
 		joinT.setOnClickListener(this);
+		startTime = JSONUtil.getLong(headJo, "start");
 		activeRelative(headJo);
 		ViewUtil.bindView(headV.findViewById(R.id.name),
 				JSONUtil.getString(createrJo, "nickname"));
@@ -443,8 +444,6 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 			ViewUtil.bindView(headV.findViewById(R.id.start_time),
 					JSONUtil.getLong(headJo, "start"), "time");
 		}
-
-		startTime = JSONUtil.getLong(headJo, "start");
 
 		if (JSONUtil.getLong(headJo, "end") == 0) {
 			ViewUtil.bindView(headV.findViewById(R.id.end_time), "不确定");
@@ -533,8 +532,14 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 	private void activeRelative(JSONObject jo) {
 		int isOrganizer = JSONUtil.getInt(jo, "isOrganizer");
 		int isMember = JSONUtil.getInt(jo, "isMember");
-
 		if (JSONUtil.getInt(jo, "isOver") == 0) {
+			if (startTime<System.currentTimeMillis()) {
+				joinT.setText("进行中");
+				joinT
+						.setBackgroundResource(R.drawable.btn_grey_dark_bg);
+				isJoin = false;
+				
+			}else
 			if (isOrganizer == 1) {
 				joinT.setText("管理");
 				isJoin = true;

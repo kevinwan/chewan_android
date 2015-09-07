@@ -144,7 +144,11 @@ public class ActiveAdapter extends NetJSONAdapter {
 		final long startTime = JSONUtil.getLong(jo, "start");
 
 		if (JSONUtil.getInt(jo, "isOver") == 0) {
-
+			if (startTime<System.currentTimeMillis()) {
+				holder.joinT.setText("进行中");
+				holder.joinT
+						.setBackgroundResource(R.drawable.btn_grey_dark_bg);
+			}else
 			if (isOrganizer == 1) {
 				holder.joinT.setText("管理");
 				holder.joinT
