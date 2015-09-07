@@ -39,7 +39,7 @@ public class CarPlayUtil {
 			TextView driveAgeT) {
 		if (TextUtils.isEmpty(JSONUtil.getString(jo, "carModel"))) {
 			carLogoI.setVisibility(View.GONE);
-			ViewUtil.bindView(driveAgeT, "未认证");
+			ViewUtil.bindView(driveAgeT, "带我飞~");
 		} else {
 			carLogoI.setVisibility(View.VISIBLE);
 			ViewUtil.bindView(driveAgeT, JSONUtil.getString(jo, "carModel")

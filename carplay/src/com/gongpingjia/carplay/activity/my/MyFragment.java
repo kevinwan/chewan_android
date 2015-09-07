@@ -292,7 +292,7 @@ public class MyFragment extends Fragment implements OnClickListener {
 					ViewUtil.bindNetImage(headI, photo, "head");
 
 					if (TextUtils.isEmpty(carModel)) {
-						carModelT.setText("未认证");
+						carModelT.setText("带我飞~");
 					} else {
 						carModelT.setText(carModel + ",  " + drivingExperience
 								+ "年车龄");
