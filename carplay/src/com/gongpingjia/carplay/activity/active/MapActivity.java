@@ -5,6 +5,7 @@ import java.util.List;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.widget.TextView;
 
@@ -94,6 +95,7 @@ public class MapActivity extends CarPlayBaseActivity implements OnMarkerClickLis
         mLocDesText = (TextView) findViewById(R.id.tv_loc_des);
         mLocTitleText = (TextView) findViewById(R.id.tv_loc_title);
         mSearchEdit = (ClearableEditText) findViewById(R.id.et_search);
+        mSearchEdit.setInputType(InputType.TYPE_NULL);
         mSearchEdit.setOnClickListener(new View.OnClickListener() {
 
             @Override

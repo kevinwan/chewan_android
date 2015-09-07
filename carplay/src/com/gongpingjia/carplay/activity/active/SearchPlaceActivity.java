@@ -29,6 +29,7 @@ import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.adapter.SuggestionAdapter;
 import com.gongpingjia.carplay.bean.SuggestionPlace;
+import com.gongpingjia.carplay.util.Utils;
 import com.gongpingjia.carplay.view.ClearableEditText;
 
 /*
@@ -96,6 +97,7 @@ public class SearchPlaceActivity extends CarPlayBaseActivity implements TextWatc
             finish();
             break;
         case R.id.tv_search:
+        	Utils.autoCloseKeyboard(self,v);
             String key = mKeyEditText.getText().toString();
             Intent it = new Intent();
             it.putExtra("key", key);
