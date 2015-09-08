@@ -1,5 +1,8 @@
 package com.gongpingjia.carplay.activity.main;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import net.duohuo.dhroid.activity.ActivityTack;
 import net.duohuo.dhroid.dialog.IDialog;
 import net.duohuo.dhroid.ioc.IocContainer;
@@ -13,7 +16,10 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.receiver.NetReceiver;
@@ -29,6 +35,7 @@ public class BaseFragmentActivity extends FragmentActivity {
 	Dialog progressdialog;
 
 	NetReceiver netReceiver;
+	private static Boolean isExit = false;
 
 	@Override
 	public void setContentView(int layoutResID) {
@@ -218,4 +225,48 @@ public class BaseFragmentActivity extends FragmentActivity {
 		// }
 	}
 
+	/**
+	 * 返回列表顶部
+	 */
+	public void backToTop(final ListView... listViews) {
+		RelativeLayout labt = (RelativeLayout) findViewById(R.id.labt);
+		if (labt != null) {
+			labt.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View arg0) {
+					for (int i = 0; i < listViews.length; i++) {
+						backTop(listViews[i]);
+					}
+				}
+			});
+
+		}
+	}
+
+	/**
+	 * 返回列表顶部双击响应事件
+	 * 
+	 * @param listView
+	 */
+	private void backTop(ListView listView) {
+		Timer tExit = null;
+		if (isExit == false) {
+			isExit = true; // 准备退出
+			tExit = new Timer();
+			tExit.schedule(new TimerTask() {
+				@Override
+				public void run() {
+					isExit = false; // 取消退出
+				}
+			}, 300); // 如果0.3秒钟内没有按下返回键，则启动定时器取消掉刚才执行的任务
+
+		} else {
+			if (!listView.isStackFromBottom()) {
+				listView.setStackFromBottom(true);
+			}
+			listView.setStackFromBottom(false);
+
+		}
+	}
 }
