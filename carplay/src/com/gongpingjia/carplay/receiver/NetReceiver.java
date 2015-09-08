@@ -50,7 +50,6 @@ public class NetReceiver extends BroadcastReceiver {
 	public void onReceive(Context context, Intent intent) {
 		// TODO Auto-generated method stub
 		// Toast.makeText(context, intent.getAction(), 1).show();
-		System.out.println("333333333333333");
 		this.context = context;
 		ConnectivityManager manager = (ConnectivityManager) context
 				.getSystemService(Context.CONNECTIVITY_SERVICE);

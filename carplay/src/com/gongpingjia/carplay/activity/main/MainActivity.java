@@ -625,6 +625,7 @@ public class MainActivity extends BaseFragmentActivity implements
 							it.putExtra("action", "logout");
 							startActivity(it);
 							finish();
+							User.getInstance().setDisconnect(false);
 							// showConflictDialog();
 						} else {
 							showToast("网络异常,请重新连接!");

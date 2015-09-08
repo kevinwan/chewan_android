@@ -99,6 +99,8 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 
 	boolean islogin = false;
 
+	boolean isOrginer = false;
+
 	TextView rightTitleT;
 
 	CarPlayPerference per;
@@ -113,8 +115,6 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_active_details);
 		EventBus.getDefault().register(this);
-		
-		
 
 	}
 
@@ -455,9 +455,8 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 
 		ViewUtil.bindView(headV.findViewById(R.id.pay),
 				JSONUtil.getString(headJo, "pay"));
-		String seatInfo=JSONUtil.getString(headJo, "seatInfo");
-		ViewUtil.bindView(headV.findViewById(R.id.empty_seats),
-				ToDBC(seatInfo));
+		String seatInfo = JSONUtil.getString(headJo, "seatInfo");
+		ViewUtil.bindView(headV.findViewById(R.id.empty_seats), ToDBC(seatInfo));
 		ViewUtil.bindView(headV.findViewById(R.id.age),
 				JSONUtil.getString(createrJo, "age"));
 
@@ -533,14 +532,19 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 		int isOrganizer = JSONUtil.getInt(jo, "isOrganizer");
 		int isMember = JSONUtil.getInt(jo, "isMember");
 		if (JSONUtil.getInt(jo, "isOver") == 0) {
-			if (startTime<System.currentTimeMillis()) {
+			if (startTime < System.currentTimeMillis()) {
 				joinT.setText("进行中");
-				joinT
-						.setBackgroundResource(R.drawable.btn_grey_dark_bg);
-				isJoin = false;
-				
-			}else
-			if (isOrganizer == 1) {
+				joinT.setBackgroundResource(R.drawable.btn_grey_dark_bg);
+
+				if (isOrganizer == 1) {
+					isJoin = true;
+					isOrginer = true;
+				} else {
+					isJoin = isMember == 1 ? true : false;
+					isOrginer = false;
+				}
+
+			} else if (isOrganizer == 1) {
 				joinT.setText("管理");
 				isJoin = true;
 			} else {
@@ -658,7 +662,7 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 
 		case R.id.headlayout:
 			if (User.getInstance().isLogin()) {
-				if (joinT.getText().equals("管理")) {
+				if (joinT.getText().equals("管理") || isOrginer) {
 					JSONObject shareJo = getShareContent(headJo);
 					it = new Intent(self, MyActiveMembersManageActivity.class);
 					it.putExtra("activityId", activityId);
@@ -726,6 +730,8 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 					// } else {
 					// joinActive(0);
 					// }
+				} else if (joinT.getText().equals("进行中")) {
+
 				}
 			} else {
 				UserInfoManage.getInstance().checkLogin((Activity) self,
@@ -894,21 +900,22 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 
 		return shareJo;
 	}
-	
+
 	/**
-	 *	将字符串转换为全角 
+	 * 将字符串转换为全角
 	 */
 	public String ToDBC(String input) {
-		   char[] c = input.toCharArray();
-		   for (int i = 0; i< c.length; i++) {
-		       if (c[i] == 12288) {
-		         c[i] = (char) 32;
-		         continue;
-		       }if (c[i]> 65280&& c[i]< 65375)
-		          c[i] = (char) (c[i] - 65248);
-		       }
-		   return new String(c);
+		char[] c = input.toCharArray();
+		for (int i = 0; i < c.length; i++) {
+			if (c[i] == 12288) {
+				c[i] = (char) 32;
+				continue;
+			}
+			if (c[i] > 65280 && c[i] < 65375)
+				c[i] = (char) (c[i] - 65248);
 		}
+		return new String(c);
+	}
 
 	@Override
 	protected void onDestroy() {

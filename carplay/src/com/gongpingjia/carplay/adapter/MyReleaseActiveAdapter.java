@@ -151,16 +151,14 @@ public class MyReleaseActiveAdapter extends NetJSONAdapter {
 		ViewUtil.bindView(holder.date_leftT,
 				JSONUtil.getString(jo, "publishDate"));
 
-		int isOrganizer = JSONUtil.getInt(jo, "isOrganizer");
+		final int isOrganizer = JSONUtil.getInt(jo, "isOrganizer");
 		int isMember = JSONUtil.getInt(jo, "isMember");
 		final long startTime = JSONUtil.getLong(jo, "startDate");
 		if (JSONUtil.getInt(jo, "isOver") == 0) {
-			if (startTime<System.currentTimeMillis()) {
+			if (startTime < System.currentTimeMillis()) {
 				holder.joinT.setText("进行中");
-				holder.joinT
-						.setBackgroundResource(R.drawable.btn_grey_dark_bg);
-			}else
-			if (isOrganizer == 1) {
+				holder.joinT.setBackgroundResource(R.drawable.btn_grey_dark_bg);
+			} else if (isOrganizer == 1) {
 				holder.joinT.setText("管理");
 				holder.joinT
 						.setBackgroundResource(R.drawable.button_yanzheng_bg);
@@ -194,9 +192,8 @@ public class MyReleaseActiveAdapter extends NetJSONAdapter {
 				if (user.isLogin) {
 					Intent it;
 					if (holder.joinT.getText().equals("进行中")) {
-						
-					}else
-					if (holder.joinT.getText().equals("管理")) {
+
+					} else if (holder.joinT.getText().equals("管理")) {
 						JSONObject shareJo = getShareContent(jo);
 						it = new Intent(mContext,
 								MyActiveMembersManageActivity.class);
@@ -244,7 +241,7 @@ public class MyReleaseActiveAdapter extends NetJSONAdapter {
 				Intent it;
 				if (user.isLogin()) {
 					int isMember = JSONUtil.getInt(jo, "isMember");
-					if (holder.joinT.getText().equals("管理")) {
+					if (holder.joinT.getText().equals("管理") || isOrganizer == 1) {
 						JSONObject shareJo = getShareContent(jo);
 						it = new Intent(mContext,
 								MyActiveMembersManageActivity.class);
