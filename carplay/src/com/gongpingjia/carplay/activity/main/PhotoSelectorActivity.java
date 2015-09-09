@@ -63,7 +63,7 @@ public class PhotoSelectorActivity extends Activity implements onItemClickListen
 
     private Button btnOk;
 
-    private TextView tvAlbum, tvPreview, tvTitle;
+    private TextView tvAlbum, tvTitle;
 
     private PhotoSelectorDomain photoSelectorDomain;
 
@@ -102,14 +102,12 @@ public class PhotoSelectorActivity extends Activity implements onItemClickListen
             btnOk.setText("发送");
         }
         tvAlbum = (TextView) findViewById(R.id.tv_album_ar);
-        tvPreview = (TextView) findViewById(R.id.tv_preview_ar);
         layoutAlbum = (RelativeLayout) findViewById(R.id.layout_album_ar);
         tvNumber = (TextView) findViewById(R.id.tv_number);
         tvNumber.setText("(0/" + MAX_IMAGE + ")");
 
         btnOk.setOnClickListener(this);
         tvAlbum.setOnClickListener(this);
-        tvPreview.setOnClickListener(this);
 
         photoAdapter = new PhotoSelectorAdapter(getApplicationContext(), new ArrayList<PhotoModel>(),
                 CommonUtils.getWidthPixels(this), this, this, this);
@@ -182,8 +180,6 @@ public class PhotoSelectorActivity extends Activity implements onItemClickListen
             ok(); // 选完照片
         else if (v.getId() == R.id.tv_album_ar)
             album();
-        else if (v.getId() == R.id.tv_preview_ar)
-            priview();
         else if (v.getId() == R.id.tv_camera_vc)
             catchPicture();
         else if (v.getId() == R.id.bv_back_lh)
@@ -275,7 +271,6 @@ public class PhotoSelectorActivity extends Activity implements onItemClickListen
     private void reset() {
         selected.clear();
         tvNumber.setText("(0/" + MAX_IMAGE + ")");
-        tvPreview.setEnabled(false);
     }
 
     @Override
@@ -306,16 +301,10 @@ public class PhotoSelectorActivity extends Activity implements onItemClickListen
                     return;
                 }
             }
-            tvPreview.setEnabled(true);
         } else {
             selected.remove(photoModel);
         }
         tvNumber.setText("(" + selected.size() + "/" + MAX_IMAGE + ")");
-
-        if (selected.isEmpty()) {
-            tvPreview.setEnabled(false);
-            tvPreview.setText(getString(R.string.preview));
-        }
 
     }
 

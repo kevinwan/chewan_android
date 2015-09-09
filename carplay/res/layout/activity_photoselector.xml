@@ -50,7 +50,7 @@
             android:textColor="@color/white"
             android:textSize="@dimen/text_title" />
 
-        <Button
+       <!--  <Button
             android:id="@+id/btn_right_lh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
             android:text="(0)"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white" /> -->
     </RelativeLayout>
 
     <RelativeLayout
@@ -151,29 +151,30 @@
                 android:scaleType="centerInside" />
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/tv_line_ar"
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="10dp"
+        <Button
+            android:id="@+id/btn_right_lh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_marginRight="5dp"
-            android:layout_marginTop="10dp"
-            android:layout_toLeftOf="@+id/tv_preview_ar"
-            android:background="@android:color/white"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/tv_preview_ar"
+            android:layout_toLeftOf="@+id/tv_number"
+            android:background="@color/theme_bg"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="0dp"
+            android:paddingTop="5dp"
+            android:text="完成"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/layout_title_mini_textsize" />
+        <TextView
+            android:id="@+id/tv_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:clickable="true"
-            android:enabled="false"
-            android:padding="10dp"
-            android:text="预览"
-            android:textColor="@android:color/white"
-            android:visibility="gone" />
+            android:layout_marginRight="10dp"
+            android:text="(0)"
+            android:textColor="@android:color/white" />
     </RelativeLayout>
 
 </RelativeLayout>
