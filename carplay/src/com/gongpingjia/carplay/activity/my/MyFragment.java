@@ -323,7 +323,7 @@ public class MyFragment extends Fragment implements OnClickListener {
 						ViewUtil.bindNetImage(carlogo, carBrandLogo,
 								CarPlayValueFix.optionsDefault.toString());
 						mainV.findViewById(R.id.icon).setVisibility(
-								View.INVISIBLE);
+								View.GONE);
 						break;
 					// 认证中
 					case 2:

@@ -337,6 +337,8 @@ public class MyPerSonDetailActivity extends CarPlayBaseActivity implements
 						person_txt.setText("已认证");
 						ViewUtil.bindNetImage(person_carlogo, carBrandLogo,
 								CarPlayValueFix.optionsDefault.toString());
+						findViewById(R.id.icon).setVisibility(
+								View.GONE);
 						break;
 					//认证中
 					case 2:
