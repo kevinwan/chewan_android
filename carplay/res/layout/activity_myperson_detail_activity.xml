@@ -331,6 +331,7 @@
                                  />
 
                             <ImageView
+                                android:id="@+id/icon"
                                 android:layout_width="18dp"
                                 android:layout_height="25dp"
                                 android:src="@drawable/right_btn" />

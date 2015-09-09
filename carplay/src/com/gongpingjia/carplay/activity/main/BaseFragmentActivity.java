@@ -35,8 +35,10 @@ public class BaseFragmentActivity extends FragmentActivity {
 	Dialog progressdialog;
 
 	NetReceiver netReceiver;
-	private static Boolean isExit = false;
 
+	private long exitTimefist = 0;
+	private long exitTimesec = 0;
+	private long exitTimethr = 0;
 	@Override
 	public void setContentView(int layoutResID) {
 		super.setContentView(layoutResID);
@@ -236,7 +238,7 @@ public class BaseFragmentActivity extends FragmentActivity {
 				@Override
 				public void onClick(View arg0) {
 					for (int i = 0; i < listViews.length; i++) {
-						backTop(listViews[i]);
+						dowbleClick(listViews[i], i);
 					}
 				}
 			});
@@ -249,24 +251,36 @@ public class BaseFragmentActivity extends FragmentActivity {
 	 * 
 	 * @param listView
 	 */
-	private void backTop(ListView listView) {
-		Timer tExit = null;
-		if (isExit == false) {
-			isExit = true; // 准备退出
-			tExit = new Timer();
-			tExit.schedule(new TimerTask() {
-				@Override
-				public void run() {
-					isExit = false; // 取消退出
-				}
-			}, 300); // 如果0.3秒钟内没有按下返回键，则启动定时器取消掉刚才执行的任务
+	private void dowbleClick(ListView listView, int currnt) {
+		switch (currnt) {
+		case 0:
+			if ((System.currentTimeMillis() - exitTimefist) > 300)
+				exitTimefist = System.currentTimeMillis();
+			else
+				backTop(listView);
+			break;
+		case 1:
+			if ((System.currentTimeMillis() - exitTimesec) > 300)
+				exitTimesec = System.currentTimeMillis();
+			else
+				backTop(listView);
+			break;
+		case 2:
+			if ((System.currentTimeMillis() - exitTimethr) > 300)
+				exitTimethr = System.currentTimeMillis();
+			else
+				backTop(listView);
+			break;
 
-		} else {
-			if (!listView.isStackFromBottom()) {
-				listView.setStackFromBottom(true);
-			}
-			listView.setStackFromBottom(false);
-
+		default:
+			break;
 		}
+	}
+
+	private void backTop(ListView listView) {
+		if (!listView.isStackFromBottom()) {
+			listView.setStackFromBottom(true);
+		}
+		listView.setStackFromBottom(false);
 	}
 }
