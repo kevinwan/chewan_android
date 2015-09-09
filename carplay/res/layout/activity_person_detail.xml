@@ -7,6 +7,15 @@
 
     <include layout="@layout/include_title_bar" />
 
-    <include layout="@layout/include_refresh_listview" />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <include layout="@layout/include_refresh_listview" />
+
+        <include
+            android:id="@+id/ablove_tab"
+            layout="@layout/include_person_tab" />
+    </RelativeLayout>
 
 </LinearLayout>

@@ -88,7 +88,7 @@ public class MainActivity extends BaseFragmentActivity implements
 	FragmentManager fm;
 
 	// Fragment 的栈
-	public static Stack<Fragment> slist;
+	Stack<Fragment> slist;
 
 	ActiveFilterPop activeFilterPop;
 
