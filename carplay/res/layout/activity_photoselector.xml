@@ -7,7 +7,7 @@
     <RelativeLayout
         android:id="@+id/hl_head_ar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/layout_title_heigh"
+        android:layout_height="50dp"
         android:layout_alignParentTop="true"
         android:background="@color/theme_bg" >
 
@@ -47,8 +47,8 @@
             android:layout_centerInParent="true"
             android:layout_gravity="center_vertical"
             android:text="选择照片"
-            android:textColor="@android:color/white"
-            android:textSize="18sp" />
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_title" />
 
         <Button
             android:id="@+id/btn_right_lh"

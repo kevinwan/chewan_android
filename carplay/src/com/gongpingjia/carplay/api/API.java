@@ -15,13 +15,13 @@ public class API {
 	// "http://chewanapi.gongpingjia.com/v1";
 
 	// 测试
-	// public static final String share = "http://cwapi.gongpingjia.com/";
+//	 public static final String share = "http://cwapi.gongpingjia.com/";
 
 	// 正式版
-	public static final String CWBaseurl = "http://chewanapi.gongpingjia.com/v1";
+//	public static final String CWBaseurl = "http://chewanapi.gongpingjia.com/v1";
 
 	// 测试版
-	// public static final String CWBaseurl = "http://cwapi.gongpingjia.com/v1";
+	 public static final String CWBaseurl = "http://cwapi.gongpingjia.com/v1";
 
 	// public static final String CWBaseurl="http://cwapi.gongpingjia.com:8080";
 
