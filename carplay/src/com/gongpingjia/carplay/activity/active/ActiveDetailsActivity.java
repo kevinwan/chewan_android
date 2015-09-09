@@ -2,7 +2,6 @@ package com.gongpingjia.carplay.activity.active;
 
 import net.duohuo.dhroid.adapter.FieldMap;
 import net.duohuo.dhroid.adapter.NetJSONAdapter;
-import net.duohuo.dhroid.image.ImageLoad;
 import net.duohuo.dhroid.ioc.IocContainer;
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
@@ -58,7 +57,6 @@ import com.gongpingjia.carplay.view.dialog.CarSeatSelectDialog;
 import com.gongpingjia.carplay.view.dialog.CarSeatSelectDialog.OnSelectResultListener;
 import com.gongpingjia.carplay.view.dialog.DeleteDialog;
 import com.gongpingjia.carplay.view.dialog.DeleteDialog.OnDeleteClickListener;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import de.greenrobot.event.EventBus;
 

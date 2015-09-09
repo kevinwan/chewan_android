@@ -47,6 +47,7 @@ import com.gongpingjia.carplay.view.dialog.ActiveMsgDialog.OnClickResultListener
 import com.gongpingjia.carplay.view.dialog.CommonDialog;
 import com.gongpingjia.carplay.view.dialog.CommonDialog.OnCommonDialogItemClickListener;
 import com.gongpingjia.carplay.view.dialog.DateTimePickerDialog;
+import com.gongpingjia.carplay.view.dialog.PromptDialog;
 
 import de.greenrobot.event.EventBus;
 
@@ -124,7 +125,6 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
                 Iterator<PhotoState> iterator = mPhotoStates.iterator();
                 while (iterator.hasNext()) {
                     PhotoState state = iterator.next();
@@ -141,6 +141,9 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
                 mImageAdapter.notifyDataSetChanged();
             }
         });
+
+        PromptDialog dlg = new PromptDialog(this, "活动只能编辑一次，此次编辑并保存后将不能再编辑");
+        dlg.show();
     }
 
     @Override
@@ -371,59 +374,60 @@ public class EditActiveActivity extends CarPlayBaseActivity implements OnClickLi
                 }
             }
 
-            ActiveMsgDialog dialog = new ActiveMsgDialog(self, "活动编辑只能编辑一次", "确定要修改吗？");
-            dialog.setOnClickResultListener(new OnClickResultListener() {
+            // ActiveMsgDialog dialog = new ActiveMsgDialog(self, "活动编辑只能编辑一次",
+            // "确定要修改吗？");
+            // dialog.setOnClickResultListener(new OnClickResultListener() {
+            //
+            // @Override
+            // public void onclick() {
+            User user = User.getInstance();
+            mDhNet = new DhNet(API.editActive + mActiveId + "/info?userId=" + user.getUserId() + "&token="
+                    + user.getToken());
+            mDhNet.addParam("type", mTypeText.getText().toString());
+            mDhNet.addParam("introduction", mDescriptionText.getText().toString());
+            JSONArray array = new JSONArray(mPicIds);
+            mDhNet.addParam("cover", array);
+            mDhNet.addParam("location", mLocation);
+            if (mCity != null) {
+                mDhNet.addParam("city", mCity);
+            }
+            if (!mDestimationText.getText().toString().equals(mLocation)) {
+                mDhNet.addParam("address", mAddress);
+                mDhNet.addParam("province", mProvince);
+                mDhNet.addParam("district", mDistrict);
+                mDhNet.addParam("location", mDestimationText.getText().toString());
+            }
+
+            if (mLatitude != 0 || mLongitude != 0) {
+                mDhNet.addParam("latitude", mLatitude);
+                mDhNet.addParam("longitude", mLongitude);
+            }
+            mDhNet.addParam("start", mStartTimeStamp);
+            mDhNet.addParam("pay", mFeeText.getText().toString());
+            if (mEndTimeStamp != 0) {
+                mDhNet.addParam("end", mEndTimeStamp);
+            }
+
+            Log.e("tag", "url:" + mDhNet.getUrl());
+            Map<String, Object> params = mDhNet.getParams();
+            for (String key : params.keySet()) {
+                Log.e("tag", key + ": " + params.get(key));
+            }
+            mDhNet.doPostInDialog(new NetTask(self) {
 
                 @Override
-                public void onclick() {
-                    User user = User.getInstance();
-                    mDhNet = new DhNet(API.editActive + mActiveId + "/info?userId=" + user.getUserId() + "&token="
-                            + user.getToken());
-                    mDhNet.addParam("type", mTypeText.getText().toString());
-                    mDhNet.addParam("introduction", mDescriptionText.getText().toString());
-                    JSONArray array = new JSONArray(mPicIds);
-                    mDhNet.addParam("cover", array);
-                    mDhNet.addParam("location", mLocation);
-                    if (mCity != null) {
-                        mDhNet.addParam("city", mCity);
+                public void doInUI(Response response, Integer transfer) {
+                    if (response.isSuccess()) {
+                        showToast("修改成功");
+                        self.finish();
+                        EventBus.getDefault().post(new ActiveEditEB());
                     }
-                    if (!mDestimationText.getText().toString().equals(mLocation)) {
-                        mDhNet.addParam("address", mAddress);
-                        mDhNet.addParam("province", mProvince);
-                        mDhNet.addParam("district", mDistrict);
-                        mDhNet.addParam("location", mDestimationText.getText().toString());
-                    }
-
-                    if (mLatitude != 0 || mLongitude != 0) {
-                        mDhNet.addParam("latitude", mLatitude);
-                        mDhNet.addParam("longitude", mLongitude);
-                    }
-                    mDhNet.addParam("start", mStartTimeStamp);
-                    mDhNet.addParam("pay", mFeeText.getText().toString());
-                    if (mEndTimeStamp != 0) {
-                        mDhNet.addParam("end", mEndTimeStamp);
-                    }
-
-                    Log.e("tag", "url:" + mDhNet.getUrl());
-                    Map<String, Object> params = mDhNet.getParams();
-                    for (String key : params.keySet()) {
-                        Log.e("tag", key + ": " + params.get(key));
-                    }
-                    mDhNet.doPostInDialog(new NetTask(self) {
-
-                        @Override
-                        public void doInUI(Response response, Integer transfer) {
-                            if (response.isSuccess()) {
-                                showToast("修改成功");
-                                self.finish();
-                                EventBus.getDefault().post(new ActiveEditEB());
-                            }
-                        }
-                    });
                 }
             });
+            // }
+            // });
 
-            dialog.show();
+            // dialog.show();
 
             break;
         }
