@@ -588,6 +588,8 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
             }
             mDhNet.addParam("latitude", mLatitude);
             mDhNet.addParam("longitude", mLongitude);
+            mDhNet.addParam("currentLatitude", UserLocation.getInstance().getLatitude());
+            mDhNet.addParam("currentLongitude", UserLocation.getInstance().getLongitude());
 
             if (UserLocation.getInstance().getCity() != null) {
                 mDhNet.addParam("currentCity", UserLocation.getInstance().getCity());
@@ -676,6 +678,8 @@ public class CreateActiveActivity extends CarPlayBaseActivity implements OnClick
             if (mEndTimeStamp != 0) {
                 mDhNet.addParam("end", mEndTimeStamp);
             }
+            mDhNet.addParam("currentLatitude", UserLocation.getInstance().getLatitude());
+            mDhNet.addParam("currentLongitude", UserLocation.getInstance().getLongitude());
             mDhNet.addParam("latitude", mLatitude);
             mDhNet.addParam("longitude", mLongitude);
             mDhNet.doPostInDialog(new NetTask(this) {

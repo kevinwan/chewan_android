@@ -15,7 +15,8 @@
 
         <include
             android:id="@+id/ablove_tab"
-            layout="@layout/include_person_tab" />
+            layout="@layout/include_person_tab"
+            android:visibility="gone" />
     </RelativeLayout>
 
 </LinearLayout>
