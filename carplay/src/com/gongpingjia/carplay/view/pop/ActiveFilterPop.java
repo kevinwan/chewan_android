@@ -83,7 +83,7 @@ public class ActiveFilterPop extends PopupWindow implements OnClickListener {
         pop.setFocusable(true);
         pop.setAnimationStyle(R.style.PopupMenu);
         pop.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-        initView();
+        initView();  
 
     }
 
