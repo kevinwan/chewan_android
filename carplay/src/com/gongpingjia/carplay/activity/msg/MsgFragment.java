@@ -162,7 +162,7 @@ public class MsgFragment extends Fragment {
 			else
 				strapi += group.getGroupId() + ",";
 		}
-
+		if (!TextUtils.isEmpty(strapi)) {
 		// 获取聊天群组头像列表
 		DhNet net = new DhNet(API.groupChatHead + "userId=" + mUser.getUserId()
 				+ "&token=" + mUser.getToken() + "&ids=" + strapi);
@@ -193,6 +193,7 @@ public class MsgFragment extends Fragment {
 				}
 			}
 		});
+		}
 	}
 
 	private void bindHeadView(JSONObject jo) {
