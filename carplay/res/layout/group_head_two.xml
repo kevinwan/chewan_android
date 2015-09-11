@@ -5,6 +5,7 @@
     android:orientation="vertical" >
 
     <RelativeLayout
+        android:id="@+id/head_two" 
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:background="@drawable/head_grey"
