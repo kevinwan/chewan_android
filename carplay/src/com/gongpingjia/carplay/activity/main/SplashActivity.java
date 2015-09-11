@@ -176,7 +176,7 @@ public class SplashActivity extends CarPlayBaseActivity {
 				per.commit();
 				finishWithoutAnim();
 			}
-		}, 3000);
+		}, 2000);
 	}
 
 	private void notFirst() {
@@ -187,7 +187,7 @@ public class SplashActivity extends CarPlayBaseActivity {
 				startActivity(intent);
 				finishWithoutAnim();
 			}
-		}, 3000);
+		}, 2000);
 	}
 
 	private void loginHX(String currentUsername, String currentPassword,
