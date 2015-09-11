@@ -234,6 +234,7 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 					seat_num.setVisibility(View.GONE);
 					seatnum.setVisibility(View.GONE);
 					seatnumber.setVisibility(View.GONE);
+					
 				}
 
 				if (JSONUtil.getString(itemjo, "role").equals("官方用户")) {
