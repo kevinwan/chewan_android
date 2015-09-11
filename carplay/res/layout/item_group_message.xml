@@ -20,12 +20,18 @@
             android:layout_width="60dp"
             android:layout_height="60dp" >
 
-            <ImageView
-                android:id="@+id/leave_comments_img"
+            <com.gongpingjia.carplay.view.RoundImageView
+                android:id="@+id/head_one"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_centerVertical="true"
                 android:src="@drawable/icon_group_head" />
+
+            <include layout="@layout/group_head_two" />
+
+            <include layout="@layout/group_head_three" />
+
+            <include layout="@layout/group_head_four" />
 
             <ImageView
                 android:id="@+id/msg_point"

@@ -45,7 +45,10 @@ public class API {
 
     public static final String editAlbum = CWBaseurl + "/user/";
 
-    // 官方活动
-    public static final String official = CWBaseurl + "/official/activity/list";
+	// 官方活动
+	public static final String official = CWBaseurl + "/official/activity/list";
+	
+	//获取群聊头像
+	public static final String groupChatHead = CWBaseurl + "/chatgroup/photos?";
 
 }

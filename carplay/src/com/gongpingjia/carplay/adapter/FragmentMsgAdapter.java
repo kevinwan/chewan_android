@@ -1,9 +1,15 @@
 package com.gongpingjia.carplay.adapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import net.duohuo.dhroid.net.DhNet;
+import net.duohuo.dhroid.net.NetTask;
+import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.util.ViewUtil;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
@@ -12,6 +18,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TextView.BufferType;
 
@@ -22,11 +30,15 @@ import com.easemob.chat.EMMessage;
 import com.easemob.chat.ImageMessageBody;
 import com.easemob.chat.TextMessageBody;
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.api.API;
+import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.chat.Constant;
 import com.gongpingjia.carplay.chat.DemoHXSDKHelper;
 import com.gongpingjia.carplay.chat.controller.HXSDKHelper;
 import com.gongpingjia.carplay.chat.util.SmileUtils;
 import com.gongpingjia.carplay.view.BadgeView;
+import com.gongpingjia.carplay.view.RoundImageView;
+import com.google.gson.JsonArray;
 
 /*
  *@author zhanglong
@@ -48,6 +60,10 @@ public class FragmentMsgAdapter extends BaseAdapter {
 	JSONObject jo;
 
 	List<EMConversation> conversationList;
+	
+	List<JSONArray> headList;
+	List<String>  GroupIdlist;
+//	private User mUser;
 
 	public FragmentMsgAdapter(Context context) {
 		mContext = context;
@@ -169,16 +185,40 @@ public class FragmentMsgAdapter extends BaseAdapter {
 		//
 		// }
 		// } else {
-
+		ViewHolder holder;
 		if (convertView == null) {
 			convertView = mInflater.inflate(R.layout.item_group_message, null);
+			holder = new ViewHolder();
+			holder.head_one = (RoundImageView) convertView
+					.findViewById(R.id.head_one);
+			holder.head_two = (RelativeLayout) convertView
+					.findViewById(R.id.head_two);
+			holder.head_three = (RelativeLayout) convertView
+					.findViewById(R.id.head_three);
+			holder.head_four = (RelativeLayout) convertView
+					.findViewById(R.id.head_four);
+			convertView.setTag(holder);
+		} else {
+			holder = (ViewHolder) convertView.getTag();
 		}
+		
 		EMConversation conversation = conversationList.get(position);
 		String username = conversation.getUserName();
 		EMGroup group = EMGroupManager.getInstance().getGroup(username);
-		if(group!=null) {
+		if (group != null) {
 			ViewUtil.bindView(convertView.findViewById(R.id.title),
 					group.getGroupName());
+			//判断当前群组
+			if (headList!=null&&GroupIdlist!=null) {
+				for (int i = 0; i < GroupIdlist.size(); i++) {
+					if (group.getGroupId().equals(GroupIdlist.get(i))) {
+//						System.out.println("");
+						//设置头像
+						setPicState(holder, headList.get(i), headList.get(i).length());
+					}
+				}
+			}
+			
 		}
 
 		convertView.findViewById(R.id.msg_point)
@@ -234,7 +274,7 @@ public class FragmentMsgAdapter extends BaseAdapter {
 				// digest = EasyUtils.getAppResourceString(context,
 				// "location_recv");
 				digest = getStrng(context, R.string.location_recv);
-//				digest = String.format(digest, message.getFrom());
+				// digest = String.format(digest, message.getFrom());
 				return digest;
 			} else {
 				// digest = EasyUtils.getAppResourceString(context,
@@ -245,7 +285,7 @@ public class FragmentMsgAdapter extends BaseAdapter {
 		case IMAGE: // 图片消息
 			ImageMessageBody imageBody = (ImageMessageBody) message.getBody();
 			digest = getStrng(context, R.string.picture);
-					;
+			;
 			break;
 		case VOICE:// 语音消息
 			digest = getStrng(context, R.string.voice);
@@ -284,4 +324,68 @@ public class FragmentMsgAdapter extends BaseAdapter {
 		return context.getResources().getString(resId);
 	}
 
+	/**
+	 * 设置群组头像状态
+	 * @param holder
+	 * @param count
+	 */
+	private void setPicState(ViewHolder holder,JSONArray jsona,int poi) {
+		holder.head_one.setVisibility(View.GONE);
+		holder.head_two.setVisibility(View.GONE);
+		holder.head_three.setVisibility(View.GONE);
+		holder.head_four.setVisibility(View.GONE);
+		switch (poi) {
+		case 0:
+			break;
+		case 1:
+			holder.head_one.setVisibility(View.VISIBLE);
+			try {
+				ViewUtil.bindNetImage(holder.head_one, jsona.getString(0), "head");
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+		case 2:
+			holder.head_two.setVisibility(View.VISIBLE);
+			setHeadImg(holder.head_two,jsona);
+			break;
+		case 3:
+			holder.head_three.setVisibility(View.VISIBLE);
+			setHeadImg(holder.head_three,jsona);
+			break;
+		default:
+			holder.head_four.setVisibility(View.VISIBLE);
+			setHeadImg(holder.head_four,jsona);
+			break;
+		}
+	}
+	
+	/**
+	 * 设置群组头像
+	 * @param rel
+	 */
+	private void setHeadImg(RelativeLayout rel,JSONArray jsona){
+		for (int i = 0; i < rel.getChildCount(); i++) {
+			RoundImageView icon=(RoundImageView) rel.getChildAt(i);
+			try {
+				ViewUtil.bindNetImage(icon, jsona.getString(i), "head");
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	class ViewHolder {
+		RoundImageView head_one;
+		RelativeLayout  head_two, head_three, head_four;
+	}
+	
+	public void setListHead(List<JSONArray> jslist,List<String> jsGroupId){
+		headList=jslist;
+		GroupIdlist=jsGroupId;
+		notifyDataSetChanged();
+	}
+	
 }

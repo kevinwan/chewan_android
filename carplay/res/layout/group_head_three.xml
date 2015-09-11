@@ -5,33 +5,35 @@
     android:orientation="vertical" >
 
     <RelativeLayout
+        android:id="@+id/head_three"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:background="@drawable/head_grey"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp" >
+        android:background="@drawable/bg_groupchat_head"
+        android:visibility="gone"
+        android:padding="7dp" >
 
         <com.gongpingjia.carplay.view.RoundImageView
             android:id="@+id/icon1"
-            android:layout_width="22dp"
-            android:layout_height="22dp"
+            android:layout_width="21dp"
+            android:layout_height="21dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="3dp"
             android:src="@drawable/head_icon" />
 
         <com.gongpingjia.carplay.view.RoundImageView
             android:id="@+id/icon2"
-            android:layout_width="22dp"
-            android:layout_height="22dp"
+            android:layout_width="21dp"
+            android:layout_height="21dp"
             android:layout_below="@+id/icon1"
+            android:layout_marginTop="1dp"
             android:src="@drawable/head_icon" />
 
         <com.gongpingjia.carplay.view.RoundImageView
             android:id="@+id/icon3"
-            android:layout_width="22dp"
-            android:layout_height="22dp"
+            android:layout_width="21dp"
+            android:layout_height="21dp"
             android:layout_below="@+id/icon1"
-            android:layout_marginLeft="3dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginLeft="4dp"
             android:layout_toRightOf="@+id/icon2"
             android:src="@drawable/head_icon" />
     </RelativeLayout>

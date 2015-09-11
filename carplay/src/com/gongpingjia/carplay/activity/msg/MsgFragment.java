@@ -14,6 +14,8 @@ import net.duohuo.dhroid.util.ViewUtil;
 import net.duohuo.dhroid.view.RefreshAndMoreListView;
 import net.duohuo.dhroid.view.RefreshAndMoreListView.OnRefreshListener;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Intent;
@@ -29,8 +31,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.easemob.EMError;
-import com.easemob.EMNotifierEvent;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMConversation;
 import com.easemob.chat.EMGroup;
@@ -60,6 +60,8 @@ public class MsgFragment extends Fragment {
 	private RefreshAndMoreListView mRefreshListView;
 
 	private boolean hidden;;
+
+	private User mUser = User.getInstance();
 
 	//
 	// BadgeView normalMsgBadgeT, applicationMsgBadgeT;
@@ -133,6 +135,8 @@ public class MsgFragment extends Fragment {
 				getMsgCount();
 				conversationList = loadConversationsWithRecentChat();
 				mAdapter.setGroupMessageData(conversationList);
+
+				getHeadImg();
 			}
 		});
 
@@ -140,8 +144,56 @@ public class MsgFragment extends Fragment {
 			bindHeadView(dataJo);
 			// mAdapter.setData(dataJo);
 		}
-
+		getHeadImg();
 		return view;
+	}
+
+	/**
+	 * 获取头像信息
+	 */
+	private void getHeadImg() {
+		// 获取群组id
+		String strapi = "";
+		List<EMGroup> list = EMGroupManager.getInstance().getAllGroups();
+		for (int i = 0; i < list.size(); i++) {
+			EMGroup group = list.get(i);
+			if (i == list.size() - 1)
+				strapi += group.getGroupId();
+			else
+				strapi += group.getGroupId() + ",";
+		}
+		if (!TextUtils.isEmpty(strapi)) {
+		// 获取聊天群组头像列表
+		DhNet net = new DhNet(API.groupChatHead + "userId=" + mUser.getUserId()
+				+ "&token=" + mUser.getToken() + "&ids=" + strapi);
+		net.doGet(new NetTask(getActivity()) {
+			@Override
+			public void doInUI(Response response, Integer transfer) {
+				if (response.isSuccess()) {
+					// 头像列表
+					List<JSONArray> jsheadlsit = new ArrayList<JSONArray>();
+					// 群组id
+					List<String> jsGroupId = new ArrayList<String>();
+					JSONArray js = response.jSONArrayFromData();
+					for (int i = 0; i < js.length(); i++) {
+						try {
+							JSONArray jsona = js.getJSONObject(i).getJSONArray(
+									"photos");
+							jsGroupId.add(js.getJSONObject(i).get("groupId")
+									.toString());
+							jsheadlsit.add(jsona);
+							// System.out.println(js.length()+"-----------------"+js.getJSONObject(i).getJSONArray("photos").getString(0));
+							// setPicState(holder, jsona,jsona.length());
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					mAdapter.setListHead(jsheadlsit, jsGroupId);
+				}
+			}
+		});
+		}
 	}
 
 	private void bindHeadView(JSONObject jo) {
@@ -240,7 +292,7 @@ public class MsgFragment extends Fragment {
 					mRefreshListView.onRefreshComplete();
 					mRefreshListView.removeFootView();
 					JSONObject jo = response.jSONFromData();
-					if(jo!=null) {
+					if (jo != null) {
 						EventBus.getDefault().post(jo);
 					}
 				}
@@ -279,6 +331,7 @@ public class MsgFragment extends Fragment {
 		this.hidden = hidden;
 		if (!hidden) {
 			getMsgCount();
+			getHeadImg();
 			// conversationList = loadConversationsWithRecentChat();
 			// mAdapter.setGroupMessageData(conversationList);
 		}
@@ -296,6 +349,7 @@ public class MsgFragment extends Fragment {
 		if (!hidden && !((MainActivity) getActivity()).isConflict) {
 
 			getMsgCount();
+			getHeadImg();
 			// conversationList = loadConversationsWithRecentChat();
 			// mAdapter.setGroupMessageData(conversationList);
 		}

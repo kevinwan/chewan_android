@@ -5,10 +5,12 @@
     android:orientation="vertical" >
 
     <RelativeLayout
+        android:id="@+id/head_two" 
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:background="@drawable/head_grey"
+        android:background="@drawable/bg_groupchat_head"
         android:gravity="center_vertical"
+        android:visibility="gone"
         android:paddingLeft="5dp"
         android:paddingRight="5dp" >
 
@@ -22,7 +24,7 @@
             android:id="@+id/icon2"
             android:layout_width="22dp"
             android:layout_height="22dp"
-            android:layout_marginLeft="3dp"
+            android:layout_marginLeft="6dp"
             android:layout_toRightOf="@+id/icon1"
             android:src="@drawable/head_icon" />
     </RelativeLayout>
