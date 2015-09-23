@@ -33,6 +33,7 @@ import android.os.AsyncTask;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView.ScaleType;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import com.gongpingjia.carplay.CarPlayValueFix;
@@ -49,6 +50,8 @@ public class UrlTouchImageView extends RelativeLayout {
 	protected Context mContext;
 
 	Dialog progressdialog;
+
+	ProgressBar mProgressBar;
 
 	public UrlTouchImageView(Context ctx) {
 		super(ctx);
@@ -84,16 +87,14 @@ public class UrlTouchImageView extends RelativeLayout {
 		this.addView(mImageView);
 		mImageView.setVisibility(GONE);
 
-		// mProgressBar = new ProgressBar(mContext, null,
-		// android.R.attr.progressBarStyleHorizontal);
-		// params = new LayoutParams(LayoutParams.FILL_PARENT,
-		// LayoutParams.WRAP_CONTENT);
-		// params.addRule(RelativeLayout.CENTER_VERTICAL);
-		// params.setMargins(30, 0, 30, 0);
-		// mProgressBar.setLayoutParams(params);
-		// mProgressBar.setIndeterminate(false);
-		// mProgressBar.setMax(100);
-		// this.addView(mProgressBar);
+		mProgressBar = new ProgressBar(mContext);
+		params = new LayoutParams(LayoutParams.FILL_PARENT,
+				LayoutParams.WRAP_CONTENT);
+		params.addRule(RelativeLayout.CENTER_VERTICAL);
+		params.setMargins(30, 0, 30, 0);
+		mProgressBar.setLayoutParams(params);
+		mProgressBar.setIndeterminate(false);
+		this.addView(mProgressBar);
 	}
 
 	public void setUrl(String imageUrl) {
@@ -104,6 +105,13 @@ public class UrlTouchImageView extends RelativeLayout {
 		ImageLoader.getInstance().loadImage(imageUrl,
 				CarPlayValueFix.optionsDefault,
 				new SimpleImageLoadingListener() {
+
+					@Override
+					public void onLoadingStarted(String imageUri, View view) {
+						super.onLoadingStarted(imageUri, view);
+						mProgressBar.setVisibility(View.VISIBLE);
+					}
+
 					@Override
 					public void onLoadingComplete(String imageUri, View view,
 							Bitmap bitmap) {
@@ -117,6 +125,7 @@ public class UrlTouchImageView extends RelativeLayout {
 							mImageView.setImageBitmap(bitmap);
 						}
 						mImageView.setVisibility(VISIBLE);
+						mProgressBar.setVisibility(View.GONE);
 					}
 
 					@Override

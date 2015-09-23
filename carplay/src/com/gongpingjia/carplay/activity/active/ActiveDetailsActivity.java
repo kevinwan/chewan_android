@@ -41,6 +41,7 @@ import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.activity.my.LoginActivity;
+import com.gongpingjia.carplay.activity.my.TestActivity;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.bean.ActiveEditEB;
 import com.gongpingjia.carplay.bean.JoinEB;
@@ -113,7 +114,14 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_active_details);
 		EventBus.getDefault().register(this);
+		findViewById(R.id.text).setOnClickListener(new OnClickListener() {
 
+			@Override
+			public void onClick(View v) {
+				Intent it = new Intent(self, TestActivity.class);
+				startActivity(it);
+			}
+		});
 	}
 
 	@Override
