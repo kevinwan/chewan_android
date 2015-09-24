@@ -1,6 +1,7 @@
 package com.gongpingjia.carplay.activity.my;
 
 import android.os.Bundle;
+import android.widget.EditText;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
