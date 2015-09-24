@@ -5,13 +5,13 @@ public class API {
     public static final String update = "http://chewanapi.gongpingjia.com/version";
 
     // 正式
-    public static final String share = "http://chewanapi.gongpingjia.com/";
-
-    public static final String CWBaseurl = "http://chewanapi.gongpingjia.com/v1";
+//    public static final String share = "http://chewanapi.gongpingjia.com/";
+//
+//    public static final String CWBaseurl = "http://chewanapi.gongpingjia.com/v1";
 
     // 测试
-    // public static final String share = "http://cwapi.gongpingjia.com/";
-    // public static final String CWBaseurl = "http://cwapi.gongpingjia.com/v1";
+     public static final String share = "http://cwapi.gongpingjia.com/";
+     public static final String CWBaseurl = "http://cwapi.gongpingjia.com/v1";
 
     public static final String allCarBrands = CWBaseurl + "/car/brand";
 
