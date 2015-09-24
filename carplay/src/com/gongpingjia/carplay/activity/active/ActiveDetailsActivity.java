@@ -76,7 +76,7 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 
 	String activityId;
 
-	View headV;
+	View headV;  
 
 	int piclayoutWidth;
 
