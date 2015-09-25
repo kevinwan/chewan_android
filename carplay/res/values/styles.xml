@@ -144,6 +144,11 @@
         <item name="android:layout_height">1.5px</item>
         <item name="android:background">@color/cutline</item>
     </style>
+     <style name="line_bold">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">10dp</item>
+        <item name="android:background">@color/cutline</item>
+    </style>
 
     <style name="linearlayout">
         <item name="android:layout_width">match_parent</item>
