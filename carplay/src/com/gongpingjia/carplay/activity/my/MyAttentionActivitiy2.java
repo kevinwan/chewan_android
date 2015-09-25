@@ -3,16 +3,21 @@ package com.gongpingjia.carplay.activity.my;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.duohuo.dhroid.adapter.NetJSONAdapter;
+import net.duohuo.dhroid.view.INetRefreshAndMorelistView.OnRefreshListener;
+import net.duohuo.dhroid.view.NetRefreshAndMoreListView;
+import net.duohuo.dhroid.view.NetRefreshAndMoreListView.OnEmptyDataListener;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
+import com.gongpingjia.carplay.api.API;
 
 /*
  *@author zhanglong
@@ -28,9 +33,12 @@ public class MyAttentionActivitiy2 extends CarPlayBaseActivity {
 
     private List<String> mTitles;
 
+    private View mRoot;
+
+    private NetRefreshAndMoreListView mFollowEachOther, mFollowing, mFollower;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_attention2);
     }
@@ -45,6 +53,31 @@ public class MyAttentionActivitiy2 extends CarPlayBaseActivity {
         mTitles.add("我的关注");
         mTitles.add("关注我的");
 
+        mRoot = LayoutInflater.from(this).inflate(R.layout.include_refresh_listview, null);
+        mFollowEachOther = (NetRefreshAndMoreListView) mRoot.findViewById(R.id.listview);
+        mFollowing = (NetRefreshAndMoreListView) mRoot.findViewById(R.id.listview);
+        mFollower = (NetRefreshAndMoreListView) mRoot.findViewById(R.id.listview);
+        NetJSONAdapter adapter = new NetJSONAdapter(API.activeList, this, R.layout.item_follower_mutual);
+        adapter.addparam("key", "latest");
+        mFollowEachOther.setAdapter(adapter);
+        adapter.showNext();
+
+        mFollowEachOther.setOnEmptyDataListener(new OnEmptyDataListener() {
+
+            @Override
+            public void onEmpty(boolean showeEptyView) {
+                mRoot.findViewById(R.id.empty).setVisibility(View.VISIBLE);
+            }
+        });
+
+        mFollowEachOther.setonRefreshListener(new OnRefreshListener() {
+
+            @Override
+            public void onRefresh() {
+                showToast("refresh");
+            }
+        });
+
         mAdapter = new PagerAdapter() {
 
             @Override
@@ -54,11 +87,20 @@ public class MyAttentionActivitiy2 extends CarPlayBaseActivity {
 
             @Override
             public Object instantiateItem(View container, int position) {
-                // TODO Auto-generated method stub
-                TextView tv = new TextView(self);
-                tv.setText(String.valueOf(position));
-                ((ViewPager) container).addView(tv);
-                return tv;
+                switch (position) {
+                case 0:
+                    ((ViewPager) container).addView(mFollowEachOther);
+                    break;
+                case 1:
+                    ((ViewPager) container).addView(mFollowing);
+                    break;
+                case 2:
+                    ((ViewPager) container).addView(mFollower);
+                    break;
+                default:
+                    return mFollowEachOther;
+                }
+                return mFollowEachOther;
             }
 
             @Override
@@ -83,5 +125,4 @@ public class MyAttentionActivitiy2 extends CarPlayBaseActivity {
         mTabLayout.setTabsFromPagerAdapter(mAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
     }
-
 }
