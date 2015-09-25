@@ -49,7 +49,7 @@
         <!--
             <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="427c3acc9b4358fd1fa1823194709ae3" />
+            android:value="427c3acc9b4358fd1fa1823194709ae3" />
         -->
 
 
@@ -61,12 +61,12 @@
 <meta-data
 >>>>>>> origin/master
             android:name="EASEMOB_APPKEY"
-            android:value="gongpingjia#chewantest" />
+            android:value="gongpingjia#chewantest" />
         -->
         <!--
              <meta-data
             android:name="EASEMOB_APPKEY"
-            android:value="gongpingjia#carplayapp" />
+            android:value="gongpingjia#carplayapp" />
         -->
         <meta-data
             android:name="UMENG_CHANNEL"
@@ -250,15 +250,22 @@
             android:name=".activity.main.SplashActivity"
             android:launchMode="standard"
             android:screenOrientation="portrait" >
+            <!-- <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter> -->
+        </activity>
+        <activity
+            android:name=".activity.my.AboutUsActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity android:name=".activity.my.MyAttentionActivitiy2" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".activity.my.AboutUsActivity"
-            android:screenOrientation="portrait" >
         </activity>
 
         <!-- 分享编辑页 -->
