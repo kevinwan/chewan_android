@@ -48,7 +48,7 @@ public class MyAttentionActivitiy2 extends CarPlayBaseActivity {
         mTabLayout = (TabLayout) findViewById(R.id.tl_attention);
         mViewPager = (ViewPager) findViewById(R.id.vp_attention);
 
-        mTitles = new ArrayList<>();
+        mTitles = new ArrayList<String>();
         mTitles.add("互相关注");
         mTitles.add("我的关注");
         mTitles.add("关注我的");

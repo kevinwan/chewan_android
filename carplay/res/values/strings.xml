@@ -324,10 +324,7 @@
     <string name="toast_updatenick_fail">更新昵称失败!</string>
     <string name="toast_updatephoto_success">更新头像成功!</string>
     <string name="toast_updatephoto_fail">更新头像失败!</string>
-    
     <string name="login_forget_password"><u>忘记密码？</u></string>
-    
-    
     <string name="more_than_max">Exceeds the upper limit</string>
     <string name="preview">Preview</string>
     <string name="recent_photos">最近照片</string>

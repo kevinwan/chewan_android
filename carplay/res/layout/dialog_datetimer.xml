@@ -164,7 +164,7 @@
                 android:id="@+id/btn_confirm"
                 android:layout_width="160dp"
                 android:layout_height="48dp"
-                android:background="@drawable/date_dialog_btn_bg"
+                android:background="@drawable/btn_red_fillet"
                 android:gravity="center"
                 android:text="完成"
                 android:textColor="@color/white" />

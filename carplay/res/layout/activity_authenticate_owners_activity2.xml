@@ -1,0 +1,169 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_grey"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    tools:context="com.gongpingjia.carplay.activity.my.AuthenticateOwnersActivity2" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="26dp"
+        android:paddingLeft="14dp"
+        android:paddingTop="14dp" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="21dp"
+                android:layout_height="21dp"
+                android:src="@drawable/aut_paiming" />
+
+            <TextView
+                style="@style/text_grey_new_hot_small"
+                android:paddingLeft="14dp"
+                android:gravity="center_vertical"
+                android:text="车主认证以后在附近排名靠前" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_marginTop="14dp"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="21dp"
+                android:layout_height="21dp"
+                android:src="@drawable/aut_zungui" />
+
+            <TextView
+                style="@style/text_grey_new_hot_small"
+                android:paddingLeft="14dp"
+                android:gravity="center_vertical"
+                android:text="车主认证后将拥有尊贵图标" />
+        </LinearLayout>
+        
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:background="@color/white"
+         >
+
+        <TextView
+            style="@style/text_grey_new_medium"
+            android:layout_marginLeft="14dp"
+            android:text="车品牌选择" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="right|center_vertical"
+            android:paddingRight="14dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                style="@style/text_blacklight_medium"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|right" />
+
+            <ImageView
+                android:layout_width="19dp"
+                android:layout_height="19dp"
+                android:src="@drawable/right_btn" />
+        </LinearLayout>
+    </LinearLayout>
+    
+    <View style="@style/line"/>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:background="@color/white"
+         >
+
+        <TextView
+            style="@style/text_grey_new_medium"
+            android:layout_marginLeft="14dp"
+            android:text="上传行驶证" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:paddingRight="14dp"
+            android:gravity="right|center_vertical"
+            android:orientation="horizontal" >
+
+            <TextView
+                style="@style/text_blacklight_medium"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|right" />
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="18dp"
+                android:src="@drawable/camera" />
+        </LinearLayout>
+    </LinearLayout>
+    
+    <View style="@style/line"/>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:background="@color/white"
+         >
+
+        <TextView
+            style="@style/text_grey_new_medium"
+            android:layout_marginLeft="14dp"
+            android:text="上传驾驶证" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:paddingRight="14dp"
+            android:gravity="right|center_vertical"
+            android:orientation="horizontal" >
+
+            <TextView
+                style="@style/text_blacklight_medium"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|right" />
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="18dp"
+                android:src="@drawable/camera" />
+        </LinearLayout>
+    </LinearLayout>
+    
+    <Button 
+        android:layout_width="158dp"
+        android:layout_height="43dp"
+        android:background="@drawable/btn_red_fillet"
+        android:layout_marginTop="27dp"
+        android:text="提交认证"
+        android:textColor="@color/white"
+        />
+
+</LinearLayout>
