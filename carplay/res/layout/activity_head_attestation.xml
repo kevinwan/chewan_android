@@ -7,6 +7,7 @@
     android:orientation="vertical"
     tools:context="com.gongpingjia.carplay.activity.my.HeadAttestationActivity" >
 
+    <include layout="@layout/include_title_bar"/>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >

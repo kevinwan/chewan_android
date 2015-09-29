@@ -154,6 +154,11 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/text_title</item>
     </style>
+    
+     <style name="item_layout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">68dp</item>
+    </style>
 
     <style name="icon_style">
         <item name="android:layout_width">25dp</item>
