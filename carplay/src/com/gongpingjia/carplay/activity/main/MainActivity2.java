@@ -17,6 +17,9 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -113,6 +116,9 @@ public class MainActivity2 extends BaseFragmentActivity implements
 
     ImageView appointmentI;
 
+    private RotateAnimation mRotateAnimation;
+    ImageView imgCenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -195,6 +201,13 @@ public class MainActivity2 extends BaseFragmentActivity implements
         // 注册群聊相关的listener
         EMGroupManager.getInstance()
                 .addGroupChangeListener(groupChangeListener);
+
+        RotateAnimation rotateAnimation = new RotateAnimation(0f, 360f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        rotateAnimation.setDuration(1000);
+        rotateAnimation.setRepeatCount(-1);
+        rotateAnimation.setInterpolator(new LinearInterpolator());
+        appointmentI.setAnimation(rotateAnimation);
+        rotateAnimation.start();
     }
 
     private void initTab() {
