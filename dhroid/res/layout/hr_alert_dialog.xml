@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center" >
+
+    <LinearLayout
+        android:id="@+id/customlayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="60dp"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:id="@+id/layout_include_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/dialog_head_bg"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:visibility="gone"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/icon"
+                android:layout_width="30dp"
+                android:scaleType="fitCenter"
+                android:layout_height="fill_parent"
+                android:src="@drawable/icon_black_about_n" />
+
+    <TextView
+        android:id="@+id/title"
+        style="?android:attr/textAppearanceMedium"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:text=""
+        android:gravity="center"
+        android:layout_marginTop="4dp"
+        android:paddingLeft="18dp"
+        android:textSize="18sp" >
+    </TextView>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/contentPanel"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="120dp"
+            android:layout_weight="1"
+            android:background="@drawable/dialog_body_bg"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/content"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:textSize="18sp"
+                android:layout_marginBottom="8dp"
+                android:textColor="@color/text_hui999999"
+                android:text="" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                 >
+				<View 
+				    android:layout_width="18dp"
+				    android:layout_height="1dp"
+				    />
+                
+                <Button
+                    android:id="@+id/confirm"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:minHeight="30dp"
+                    android:background="@drawable/dialog_btn_confirm_s"
+                    android:textColor="@color/white"
+                    style="@style/blackshadowStyle"
+                    android:textSize="18sp"
+                    android:text="确定" />
+				<View 
+				    android:id="@+id/mid"
+				    android:layout_width="12dp"
+				    android:layout_height="1dp"
+				    />
+                <Button
+                    android:id="@+id/cancel"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:minHeight="30dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/dialog_btn_cancel_s"
+                    android:textColor="@color/text_hui999999"
+                    style="@style/whiteshadowStyle"
+                    android:textSize="18sp"
+                    android:text="取消" />
+	<View 
+				    android:layout_width="18dp"
+				    android:layout_height="1dp"
+				    />
+            </LinearLayout>
+            
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

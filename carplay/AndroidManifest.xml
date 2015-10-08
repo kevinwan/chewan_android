@@ -66,7 +66,14 @@
         <!--
              <meta-data
             android:name="EASEMOB_APPKEY"
-            android:value="gongpingjia#carplayapp" />
+            android:value="gongpingjia#carplayapp" />
+
+
+
+
+
+
+
         -->
         <meta-data
             android:name="UMENG_CHANNEL"
@@ -95,10 +102,6 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".activity.my.PersonalDataActivity"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
             android:name=".activity.my.SettingActivity"
             android:screenOrientation="portrait" >
         </activity>
@@ -123,18 +126,6 @@
             android:name=".activity.msg.PlayCarChatActivity"
             android:screenOrientation="portrait" >
         </activity>
-        <activity
-            android:name=".activity.BasicMessageActivity"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name=".activity.main.MainActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name=".activity.PartyDetailsActivity"
-            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.my.AuthenticateOwnersActivity"
             android:screenOrientation="portrait" >
@@ -182,10 +173,6 @@
         </activity>
         <activity
             android:name=".activity.main.GuidanceActivity"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name=".activity.active.EventIntroduceActivity"
             android:screenOrientation="portrait" >
         </activity>
         <activity
@@ -252,7 +239,7 @@
             android:name=".activity.my.BasicMessageActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.main.SplashActivity"
+            android:name=".activity.main.MainActivity2"
             android:launchMode="standard"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -326,12 +313,6 @@
         <activity
             android:name="com.gongpingjia.carplay.activity.main.PhotoPreviewActivity"
             android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.gongpingjia.carplay.activity.main.PhotoSelectorPreview"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity android:name="com.gongpingjia.carplay.activity.my.TestActivity" >
         </activity>
         <activity android:name=".view.ImageGallery" />
 

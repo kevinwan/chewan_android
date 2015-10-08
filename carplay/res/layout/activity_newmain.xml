@@ -3,29 +3,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_weight="1" >
+        android:layout_weight="1">
 
         <FrameLayout
             android:id="@+id/main_content"
             android:layout_width="match_parent"
-            android:layout_height="fill_parent" >
-        </FrameLayout>
+            android:layout_height="fill_parent"></FrameLayout>
 
         <ScrollView
             android:id="@+id/guide"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:scrollbars="none"
-            android:visibility="gone" >
+            android:visibility="gone">
 
             <RelativeLayout
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content">
 
                 <ImageView
                     android:layout_width="fill_parent"
@@ -46,14 +45,14 @@
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="70dp" >
+        android:layout_height="70dp">
 
         <LinearLayout
             android:id="@+id/tab"
             android:layout_width="fill_parent"
             android:layout_height="55dp"
             android:layout_alignParentBottom="true"
-            android:background="@color/white" >
+            android:background="@color/white">
 
             <LinearLayout
                 android:id="@+id/layout"
@@ -61,18 +60,18 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <RelativeLayout
                     android:id="@+id/img_layout"
-                    android:layout_width="26dp"
-                    android:layout_height="26dp" >
+                    android:layout_width="32dp"
+                    android:layout_height="32dp">
 
                     <ImageView
                         android:id="@+id/img"
-                        android:layout_width="26dp"
-                        android:layout_height="26dp"
-                        android:src="@drawable/city_n" />
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/icon_nav_near" />
                 </RelativeLayout>
 
                 <TextView
@@ -91,18 +90,18 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <RelativeLayout
                     android:id="@+id/img_layout"
-                    android:layout_width="26dp"
-                    android:layout_height="26dp" >
+                    android:layout_width="32dp"
+                    android:layout_height="32dp">
 
                     <ImageView
                         android:id="@+id/img"
-                        android:layout_width="26dp"
-                        android:layout_height="26dp"
-                        android:src="@drawable/city_n" />
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/icon_nav_tuijian" />
                 </RelativeLayout>
 
                 <TextView
@@ -121,8 +120,7 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:orientation="vertical" >
-            </LinearLayout>
+                android:orientation="vertical"></LinearLayout>
 
             <LinearLayout
                 android:id="@+id/layout"
@@ -130,19 +128,19 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <RelativeLayout
                     android:id="@+id/img_layout"
-                    android:layout_width="30dp"
-                    android:layout_height="26dp" >
+                    android:layout_width="32dp"
+                    android:layout_height="32dp">
 
                     <ImageView
                         android:id="@+id/img"
-                        android:layout_width="26dp"
-                        android:layout_height="26dp"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
                         android:layout_centerHorizontal="true"
-                        android:src="@drawable/msg_n" />
+                        android:src="@drawable/icon_nav_dongtai" />
 
                     <ImageView
                         android:id="@+id/msg_point"
@@ -177,18 +175,18 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <RelativeLayout
                     android:id="@+id/img_layout"
-                    android:layout_width="26dp"
-                    android:layout_height="26dp" >
+                    android:layout_width="32dp"
+                    android:layout_height="32dp">
 
                     <ImageView
                         android:id="@+id/img"
-                        android:layout_width="26dp"
-                        android:layout_height="26dp"
-                        android:src="@drawable/my_n" />
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/icon_nav_mine" />
                 </RelativeLayout>
 
                 <TextView
@@ -206,22 +204,16 @@
             android:layout_width="fill_parent"
             android:layout_height="1.5px"
             android:layout_above="@id/tab"
-            android:background="@drawable/main_tab_line" />
+            android:background="@color/text_black" />
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:id="@+id/center"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
             android:layout_alignParentBottom="true"
-            android:background="@color/nothing"
-            android:gravity="center"
-            android:paddingBottom="15dp" >
-
-            <ImageView
-                android:id="@+id/appointment"
-                android:layout_width="55dp"
-                android:layout_height="55dp"
-                android:src="@drawable/head_icon" />
-        </LinearLayout>
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="15dp"
+            android:src="@drawable/icon_nav_center" />
     </RelativeLayout>
 
 </LinearLayout>

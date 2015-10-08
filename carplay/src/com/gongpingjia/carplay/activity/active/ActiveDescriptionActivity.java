@@ -18,6 +18,7 @@ public class ActiveDescriptionActivity extends CarPlayBaseActivity {
 
     private EditText mDesEdit;
     Intent intent = new Intent();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
@@ -39,7 +40,7 @@ public class ActiveDescriptionActivity extends CarPlayBaseActivity {
                 // TODO Auto-generated method stub
                 String des = mDesEdit.getText().toString();
                 if (!TextUtils.isEmpty(des) && des.length() > 1 && des.length() < 140) {
-                   
+
                     intent.putExtra("des", des);
                     setResult(RESULT_OK, intent);
                     finish();

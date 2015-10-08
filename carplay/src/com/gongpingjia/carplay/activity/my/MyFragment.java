@@ -174,8 +174,7 @@ public class MyFragment extends Fragment implements OnClickListener {
 
 			@Override
 			public void onClick(View arg0) {
-//				Intent it = new Intent(getActivity(), PlayCarChatActivity.class);
-				Intent it = new Intent(getActivity(), AuthenticateOwnersActivity2.class);
+				Intent it = new Intent(getActivity(), PlayCarChatActivity.class);
 				startActivity(it);
 
 			}
