@@ -111,6 +111,34 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/text_smaller</item>
     </style>
+    
+    <style name="text_grey_new_smaller">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_grey_new</item>
+        <item name="android:textSize">@dimen/text_smaller</item>
+    </style>
+    
+    <style name="text_grey_new_small">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_grey_new</item>
+        <item name="android:textSize">@dimen/text_small</item>
+    </style>
+    
+    <style name="text_grey_new_hot_small">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_grey_new</item>
+        <item name="android:textSize">@dimen/text_hot_small</item>
+    </style>
+    
+    <style name="text_grey_new_medium">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_grey_new</item>
+        <item name="android:textSize">@dimen/text_medium</item>
+    </style>
 
     <style name="text_orangebg">
         <item name="android:layout_width">wrap_content</item>
@@ -125,6 +153,11 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/text_title</item>
+    </style>
+    
+     <style name="item_layout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">68dp</item>
     </style>
 
     <style name="icon_style">
@@ -142,6 +175,11 @@
     <style name="line">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1.5px</item>
+        <item name="android:background">@color/cutline</item>
+    </style>
+     <style name="line_bold">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">10dp</item>
         <item name="android:background">@color/cutline</item>
     </style>
 
