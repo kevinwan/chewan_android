@@ -43,6 +43,7 @@ import com.easemob.util.EMLog;
 import com.easemob.util.EasyUtils;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.chat.ChatActivity;
+import com.gongpingjia.carplay.activity.chat.VoiceCallActivity;
 import com.gongpingjia.carplay.activity.main.MainActivity;
 import com.gongpingjia.carplay.chat.bean.ChatUser;
 import com.gongpingjia.carplay.chat.bean.RobotUser;
@@ -50,6 +51,7 @@ import com.gongpingjia.carplay.chat.controller.HXSDKHelper;
 import com.gongpingjia.carplay.chat.model.HXNotifier;
 import com.gongpingjia.carplay.chat.model.HXNotifier.HXNotificationInfoProvider;
 import com.gongpingjia.carplay.chat.model.HXSDKModel;
+import com.gongpingjia.carplay.chat.receiver.CallReceiver;
 import com.gongpingjia.carplay.chat.utils.CommonUtils;
 
 /**
@@ -76,7 +78,7 @@ public class DemoHXSDKHelper extends HXSDKHelper {
 	 * robot list in cache
 	 */
 	private Map<String, RobotUser> robotList;
-	// private CallReceiver callReceiver;
+	private CallReceiver callReceiver;
 
 	private UserProfileManager userProManager;
 
@@ -125,12 +127,12 @@ public class DemoHXSDKHelper extends HXSDKHelper {
 		super.initListener();
 		IntentFilter callFilter = new IntentFilter(EMChatManager.getInstance()
 				.getIncomingCallBroadcastAction());
-		// if(callReceiver == null){
-		// callReceiver = new CallReceiver();
-		// }
-		//
-		// //注册通话广播接收者
-		// appContext.registerReceiver(callReceiver, callFilter);
+		if (callReceiver == null) {
+			callReceiver = new CallReceiver();
+		}
+
+		// 注册通话广播接收者
+		appContext.registerReceiver(callReceiver, callFilter);
 		// 注册消息事件监听
 		initEventListener();
 	}
@@ -365,24 +367,27 @@ public class DemoHXSDKHelper extends HXSDKHelper {
 				// 有电话时优先跳转到通话页面
 				// if(isVideoCalling){
 				// intent = new Intent(appContext, VideoCallActivity.class);
-				// }else if(isVoiceCalling){
-				// intent = new Intent(appContext, VoiceCallActivity.class);
-				// }else{
-				ChatType chatType = message.getChatType();
-				if (chatType == ChatType.Chat) { // 单聊信息
-					intent.putExtra("userId", message.getFrom());
-					intent.putExtra("chatType", ChatActivity.CHATTYPE_SINGLE);
-				} else { // 群聊信息
-					// message.getTo()为群聊id
-					intent.putExtra("groupId", message.getTo());
-					if (chatType == ChatType.GroupChat) {
-						intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
-					} else {
+				// }else
+				if (isVoiceCalling) {
+					intent = new Intent(appContext, VoiceCallActivity.class);
+				} else {
+					ChatType chatType = message.getChatType();
+					if (chatType == ChatType.Chat) { // 单聊信息
+						intent.putExtra("userId", message.getFrom());
 						intent.putExtra("chatType",
-								ChatActivity.CHATTYPE_CHATROOM);
-					}
+								ChatActivity.CHATTYPE_SINGLE);
+					} else { // 群聊信息
+						// message.getTo()为群聊id
+						intent.putExtra("groupId", message.getTo());
+						if (chatType == ChatType.GroupChat) {
+							intent.putExtra("chatType",
+									ChatActivity.CHATTYPE_GROUP);
+						} else {
+							intent.putExtra("chatType",
+									ChatActivity.CHATTYPE_CHATROOM);
+						}
 
-					// }
+					}
 				}
 				return intent;
 			}

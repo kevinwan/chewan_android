@@ -860,11 +860,11 @@ public class ChatActivity extends CarPlayBaseActivity implements
 			if (!EMChatManager.getInstance().isConnected())
 				Toast.makeText(this, st1, 0).show();
 			else {
-				// startActivity(new Intent(ChatActivity.this,
-				// VoiceCallActivity.class).putExtra("username",
-				// toChatUsername).putExtra("isComingCall", false));
-				// voiceCallBtn.setEnabled(false);
-				// toggleMore(null);
+				startActivity(new Intent(ChatActivity.this,
+						VoiceCallActivity.class).putExtra("username",
+						toChatUsername).putExtra("isComingCall", false));
+				voiceCallBtn.setEnabled(false);
+				toggleMore(null);
 			}
 		} else if (id == R.id.btn_video_call) { // 视频通话
 			if (!EMChatManager.getInstance().isConnected())
@@ -1045,7 +1045,7 @@ public class ChatActivity extends CarPlayBaseActivity implements
 			// 设置消息body
 			message.addBody(txtBody);
 			if (!TextUtils.isEmpty(user.getNickName())
-					&& !TextUtils.isEmpty(user.getHeadUrl())  
+					&& !TextUtils.isEmpty(user.getHeadUrl())
 					&& !TextUtils.isEmpty(user.getUserId())) {
 				message.setAttribute("nickName", user.getNickName());
 				message.setAttribute("headUrl", user.getHeadUrl());

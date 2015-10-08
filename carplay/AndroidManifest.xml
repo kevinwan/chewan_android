@@ -54,15 +54,15 @@
 
 
         <!-- 正式版 -->
-        <meta-data
+        <!--
+             <meta-data
             android:name="EASEMOB_APPKEY"
             android:value="gongpingjia#chewan" />
-        <!--
-<meta-data
->>>>>>> origin/master
+        -->
+
+    <meta-data
             android:name="EASEMOB_APPKEY"
             android:value="gongpingjia#chewantest" />
-        -->
         <!--
              <meta-data
             android:name="EASEMOB_APPKEY"
@@ -139,6 +139,11 @@
             android:name=".activity.my.AuthenticateOwnersActivity"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name=".activity.chat.VoiceCallActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        
         <activity
             android:name=".activity.active.ActiveInformationActivity"
             android:screenOrientation="portrait" >

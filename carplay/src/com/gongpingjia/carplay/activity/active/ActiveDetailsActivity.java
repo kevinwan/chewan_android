@@ -40,6 +40,8 @@ import android.widget.TextView;
 import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
+import com.gongpingjia.carplay.activity.chat.ChatActivity;
+import com.gongpingjia.carplay.activity.chat.VoiceCallActivity;
 import com.gongpingjia.carplay.activity.my.LoginActivity;
 import com.gongpingjia.carplay.activity.my.TestActivity;
 import com.gongpingjia.carplay.api.API;
@@ -118,8 +120,12 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
 
 			@Override
 			public void onClick(View v) {
-				Intent it = new Intent(self, TestActivity.class);
-				startActivity(it);
+
+				startActivity(new Intent(self, VoiceCallActivity.class)
+						.putExtra("username", "143746d3b3c8e40c142c2024830a6b78").putExtra(
+								"isComingCall", false));
+				// Intent it = new Intent(self, TestActivity.class);
+				// startActivity(it);
 			}
 		});
 	}
