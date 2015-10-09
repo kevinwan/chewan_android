@@ -324,6 +324,11 @@
 
         <activity android:name=".activity.active.ActiveDetailsActivity2" >
         </activity>
+        <activity android:name=".activity.my.AuthenticateOwnersActivity2" >
+        </activity>
+        <activity
+            android:name=".activity.my.HeadAttestationActivity" >
+        </activity>
     </application>
 
 </manifest>

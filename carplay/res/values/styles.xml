@@ -112,6 +112,34 @@
         <item name="android:textSize">@dimen/text_smaller</item>
     </style>
 
+    <style name="text_grey_new_smaller">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_grey</item>
+        <item name="android:textSize">@dimen/text_smaller</item>
+    </style>
+
+    <style name="text_grey_new_small">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_grey</item>
+        <item name="android:textSize">@dimen/text_small</item>
+    </style>
+
+    <style name="text_grey_new_hot_small">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_grey</item>
+        <item name="android:textSize">@dimen/text_hot_small</item>
+    </style>
+
+    <style name="text_grey_new_medium">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_grey</item>
+        <item name="android:textSize">@dimen/text_medium</item>
+    </style>
+
     <style name="text_orangebg">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
