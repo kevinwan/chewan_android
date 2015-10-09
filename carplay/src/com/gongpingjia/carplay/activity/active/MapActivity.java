@@ -1,7 +1,5 @@
 package com.gongpingjia.carplay.activity.active;
 
-import java.util.List;
-
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
@@ -39,6 +37,8 @@ import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.bean.MapEB;
 import com.gongpingjia.carplay.view.ClearableEditText;
+
+import java.util.List;
 
 import de.greenrobot.event.EventBus;
 
