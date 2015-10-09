@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.gongpingjia.carplay.activity.active.MyActiveActivity">
+
+    <include layout="@layout/include_title_bar"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:background="@color/line_grey"
+        android:paddingBottom="12dp"
+        android:paddingTop="12dp">
+
+        <TextView
+            style="@style/text_grey_medium"
+            android:text="越早联系成功率越高" />
+    </LinearLayout>
+
+    <com.gongpingjia.carplay.view.swipeMenuListView.SwipeMenuListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/nothing"
+        android:divider="@color/nothing"
+        android:dividerHeight="1dp"
+        android:paddingBottom="120dp" />
+
+</LinearLayout>
