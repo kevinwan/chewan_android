@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <View style="@style/line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:src="@drawable/ic_launcher" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="车玩官方"
+            android:textColor="@color/text_red"
+            android:textSize="@dimen/text_big" />
+
+        <TextView
+            style="@style/text_grey_small"
+            android:layout_width="match_parent"
+            android:layout_marginRight="12dp"
+            android:gravity="right"
+            android:text="1小时前" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
+        android:scaleType="fitCenter" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp">
+
+        <TextView
+            style="@style/text_black_medium"
+            android:layout_marginBottom="18dp"
+            android:layout_marginTop="18dp"
+            android:lineSpacingMultiplier="1.3"
+            android:text="五月天演唱会,将在鸟巢举行,官方补贴,车玩补贴,每张门票20元,名额有限." />
+
+        <TextView
+            style="@style/text_grey_small"
+            android:layout_marginBottom="18dp"
+            android:layout_marginTop="18dp"
+            android:ellipsize="end"
+            android:lineSpacingMultiplier="1.3"
+            android:maxLines="6"
+            android:text="五月天演唱会,将在鸟巢举行,官方补贴,车玩补贴,每张门票20元,名额有限,五月天演唱会,将在鸟巢举行,官方补贴,车玩补贴,每张门票20元,名额有限,五月天演唱会,将在鸟巢举行,官方补贴,车玩补贴,每张门票20元,名额有限,五月天演唱会,将在鸟巢举行,官方补贴,车玩补贴,每张门票20元,名额有限,五月天演唱会,将在鸟巢举行,官方补贴,车玩补贴,每张门票20元,名额有限." />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="20dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/detail_up" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <View
+        style="@style/line"
+        android:layout_height="12dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/text_grey_small"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="12dp"
+                android:text="开始时间" />
+
+            <TextView
+                style="@style/text_black_small"
+                android:layout_marginLeft="12dp"
+                android:text="2015-8-16 9:12" />
+
+        </LinearLayout>
+
+        <View
+            style="@style/line"
+            android:layout_width="1.5px"
+            android:layout_height="match_parent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/text_grey_small"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="12dp"
+                android:text="结束时间" />
+
+            <TextView
+                style="@style/text_black_small"
+                android:layout_marginLeft="12dp"
+                android:text="2015-8-16 9:12" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View style="@style/line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/text_grey_small"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="12dp"
+            android:text="费用" />
+
+        <TextView
+            style="@style/text_black_small"
+            android:layout_marginLeft="12dp"
+            android:text="300元/人 ( 现在报名立减60元 ) " />
+
+    </LinearLayout>
+
+    <View style="@style/line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/text_grey_small"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="12dp"
+            android:text="目的地" />
+
+        <TextView
+            style="@style/text_black_small"
+            android:layout_marginLeft="12dp"
+            android:text="国家体育场 " />
+
+    </LinearLayout>
+
+    <View
+        style="@style/line"
+        android:layout_height="12dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/text_black_big"
+            android:layout_marginLeft="12dp"
+            android:text="参与成员" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="right|center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:src="@drawable/icon_women" />
+
+            <TextView
+                style="@style/text_black_smaller"
+                android:text="12/14" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:src="@drawable/icon_men" />
+
+            <TextView
+                style="@style/text_black_smaller"
+                android:layout_marginRight="12dp"
+                android:text="12/14" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View style="@style/line" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:gravity="center"
+        android:text="点击下面报名活动即可出现在这里"
+        android:textColor="@color/text_red"
+        android:textSize="@dimen/text_smaller" />
+
+    <View style="@style/line" />
+</LinearLayout>

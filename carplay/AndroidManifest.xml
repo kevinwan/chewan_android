@@ -60,20 +60,13 @@
             android:value="gongpingjia#chewan" />
         -->
 
-    <meta-data
+        <meta-data
             android:name="EASEMOB_APPKEY"
             android:value="gongpingjia#chewantest" />
         <!--
              <meta-data
             android:name="EASEMOB_APPKEY"
             android:value="gongpingjia#carplayapp" />
-
-
-
-
-
-
-
         -->
         <meta-data
             android:name="UMENG_CHANNEL"
@@ -134,7 +127,6 @@
             android:name=".activity.chat.VoiceCallActivity"
             android:screenOrientation="portrait" >
         </activity>
-        
         <activity
             android:name=".activity.active.ActiveInformationActivity"
             android:screenOrientation="portrait" >
@@ -232,7 +224,7 @@
             android:screenOrientation="portrait" >
         </activity>
 
-        <service android:name="com.gongpingjia.carplay.service.MsgService" >
+        <service android:name=".service.MsgService" >
         </service>
 
         <activity
@@ -294,7 +286,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.gongpingjia.carplay.activity.main.TermsActivity"
+            android:name=".activity.main.TermsActivity"
             android:label="@string/title_activity_terms"
             android:screenOrientation="portrait" >
         </activity>
@@ -307,11 +299,11 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.gongpingjia.carplay.activity.main.PhotoSelectorActivity"
+            android:name=".activity.main.PhotoSelectorActivity"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.gongpingjia.carplay.activity.main.PhotoPreviewActivity"
+            android:name=".activity.main.PhotoPreviewActivity"
             android:screenOrientation="portrait" >
         </activity>
         <activity android:name=".view.ImageGallery" />
@@ -329,6 +321,9 @@
                 <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
         </receiver>
+
+        <activity android:name=".activity.active.ActiveDetailsActivity2" >
+        </activity>
     </application>
 
 </manifest>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/text_grey_medium"
+            android:text="点击查看更多"
+            android:textSize="@dimen/text_big" />
+    </LinearLayout>
+
+    <View
+        style="@style/line"
+        android:layout_height="12dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/text_black_medium"
+            android:layout_marginLeft="12dp"
+            android:text="活动流程"
+            android:textSize="@dimen/text_big" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|right">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="20dp"
+                android:layout_marginRight="12dp"
+                android:src="@drawable/down_btn" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        style="@style/line"
+        android:layout_height="12dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/text_black_medium"
+            android:layout_marginLeft="12dp"
+            android:text="活动说明"
+            android:textSize="@dimen/text_big" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|right">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="20dp"
+                android:layout_marginRight="12dp"
+                android:src="@drawable/up_btn" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        style="@style/line"
+        android:layout_height="12dp" />
+</LinearLayout>
