@@ -5,6 +5,9 @@ import android.os.Bundle;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 
+/**
+ * 头像认证
+ */
 public class HeadAttestationActivity extends CarPlayBaseActivity {
 
     @Override

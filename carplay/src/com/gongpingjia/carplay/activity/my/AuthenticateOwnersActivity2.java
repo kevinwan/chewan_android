@@ -5,6 +5,9 @@ import android.os.Bundle;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 
+/**
+ * 车主认证
+ */
 public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity {
 
     @Override
