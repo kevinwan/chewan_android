@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/new_bg_grey"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_title_bar" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg3x" />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/personal_cemare"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_cemare3x" />
+
+            <TextView
+                style="@style/text_black_small"
+                android:text="上传真实头像"
+                android:textColor="@color/white" />
+
+            <TextView
+                style="@style/text_black_small"
+                android:layout_marginTop="8dp"
+                android:text="非真实头像不会得到推荐噢"
+                android:textColor="@color/white" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/text_black_medium"
+            android:layout_marginLeft="15dp"
+            android:text="昵称"
+            android:textColor="@color/text_grey_new" />
+
+        <EditText
+            style="@style/text_black_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@color/nothing"
+            android:gravity="center_vertical|right"
+            android:hint="请输入昵称"
+            android:inputType="number"
+            android:paddingRight="8dp"
+            android:singleLine="true"
+            android:textColorHint="@color/text_grey">
+
+        </EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/text_black_medium"
+            android:layout_marginLeft="15dp"
+            android:text="性别"
+            android:textColor="@color/text_grey_new" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:gravity="center|right"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radio0"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/radio_sex_fillet"
+                android:button="@null"
+                android:checked="true"
+                android:drawableLeft="@drawable/icon_man3x"
+                android:drawablePadding="8dp"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="男"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_medium" />
+
+            <RadioButton
+                android:id="@+id/radio1"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/radio_sex_woman_fillet"
+                android:button="@null"
+                android:drawableLeft="@drawable/icon_woman3x"
+                android:drawablePadding="8dp"
+                android:gravity="center"
+                android:paddingBottom="2dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="2dp"
+                android:text="女"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_medium" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/text_black_medium"
+            android:layout_marginLeft="15dp"
+            android:text="生日"
+            android:textColor="@color/text_grey_new" />
+
+        <TextView
+            style="@style/text_black_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:gravity="right|center"
+            android:paddingRight="8dp"
+            android:text="告诉小伙伴你的年龄"
+            android:textColor="@color/text_grey_ccc" />
+    </LinearLayout>
+
+</LinearLayout>
+
