@@ -1,7 +1,7 @@
 apply plugin: 'android'
 
 dependencies {
-    compile fileTree(include: '*.jar', dir: 'libs')
+    compile fileTree(dir: 'libs', include: '*.jar')
     compile project(':dhroid')
     compile 'com.android.support:cardview-v7:22.2.1'
 }

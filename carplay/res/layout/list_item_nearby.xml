@@ -1,30 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:my="http://schemas.android.com/tools"
+    my:android="http://schemas.android.com/apk/res/com.gongpingjia.carplay"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
     app:cardBackgroundColor="@android:color/white"
     app:cardCornerRadius="5dp"
-    app:contentPadding="10dp" >
+    app:contentPaddingBottom="15dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp" >
+        android:layout_marginTop="16dp"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:gravity="center_vertical"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/tv_nickname"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/text_black_medium"
                 android:text="请我吃饭吧" />
 
             <ImageView
@@ -42,15 +44,15 @@
 
             <TextView
                 android:id="@+id/tv_car_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/text_grey_small"
                 android:layout_marginLeft="3dp"
                 android:text="宝马" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right" >
+                android:layout_marginLeft="10dp"
+                android:gravity="right">
 
                 <ImageView
                     android:layout_width="25dp"
@@ -64,10 +66,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_marginTop="5dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="5dp" >
+            android:paddingLeft="5dp">
 
             <include layout="@layout/include_sex" />
 
@@ -86,54 +90,80 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp" >
+            android:layout_height="260dp"
+            android:layout_marginTop="8dp">
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_launcher" />
+                android:scaleType="centerCrop"
+                android:src="@drawable/model_pic" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+
+            <com.gongpingjia.carplay.view.AnimButtonView
+                my:bg="@drawable/red_circle"
+                my:src="@drawable/red_circle"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="10dp"
-                android:text="邀请" />
+
+
+                >
+
+                <TextView
+                    style="@style/text_white_small"
+                    android:layout_centerInParent="true"
+                    android:text="邀请" />
+            </com.gongpingjia.carplay.view.AnimButtonView>
+
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
-                android:orientation="vertical" >
+                android:layout_marginTop="16dp"
+                android:orientation="vertical">
 
                 <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="上传" />
+                    android:layout_width="70dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/white_btn_bg"
+                    android:text="上传"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_medium" />
 
                 <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="上传" />
+                    android:layout_width="70dp"
+                    android:layout_height="35dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/white_btn_bg"
+                    android:text="上传"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_medium" />
 
                 <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="上传" />
+                    android:layout_width="70dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/white_btn_bg"
+                    android:text="上传"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_medium" />
             </LinearLayout>
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp" >
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="8dp">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/text_grey_small"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:text="南京邮电大学" />

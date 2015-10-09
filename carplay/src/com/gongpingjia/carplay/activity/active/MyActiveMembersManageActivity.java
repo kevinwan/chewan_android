@@ -1,19 +1,5 @@
 package com.gongpingjia.carplay.activity.active;
 
-import net.duohuo.dhroid.adapter.FieldMap;
-import net.duohuo.dhroid.adapter.PSAdapter;
-import net.duohuo.dhroid.ioc.IocContainer;
-import net.duohuo.dhroid.net.DhNet;
-import net.duohuo.dhroid.net.JSONUtil;
-import net.duohuo.dhroid.net.NetTask;
-import net.duohuo.dhroid.net.Response;
-import net.duohuo.dhroid.util.DhUtil;
-import net.duohuo.dhroid.util.ViewUtil;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -23,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -36,7 +24,6 @@ import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.CarPlayPerference;
-import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.util.CarSeatUtil;
 import com.gongpingjia.carplay.util.CarSeatUtil.OnSeatClickListener;
 import com.gongpingjia.carplay.view.RoundImageView;
@@ -58,6 +45,20 @@ import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.weixin.controller.UMWXHandler;
 import com.umeng.socialize.weixin.media.CircleShareContent;
 import com.umeng.socialize.weixin.media.WeiXinShareContent;
+
+import net.duohuo.dhroid.adapter.FieldMap;
+import net.duohuo.dhroid.adapter.PSAdapter;
+import net.duohuo.dhroid.ioc.IocContainer;
+import net.duohuo.dhroid.net.DhNet;
+import net.duohuo.dhroid.net.JSONUtil;
+import net.duohuo.dhroid.net.NetTask;
+import net.duohuo.dhroid.net.Response;
+import net.duohuo.dhroid.util.DhUtil;
+import net.duohuo.dhroid.util.ViewUtil;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MyActiveMembersManageActivity extends CarPlayBaseActivity {
 	SwipeMenuListView listV;
