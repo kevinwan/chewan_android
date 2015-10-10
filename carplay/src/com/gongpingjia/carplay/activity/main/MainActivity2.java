@@ -40,6 +40,7 @@ import com.easemob.exceptions.EaseMobException;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.my.LoginActivity;
 import com.gongpingjia.carplay.activity.my.ManageAlbumActivity;
+import com.gongpingjia.carplay.activity.my.MyFragment2;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.TabEB;
@@ -276,7 +277,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
                         break;
                     case 4:
                         setTitle("我的");
-//                        switchContent(MyFragment.getInstance());
+                        switchContent(MyFragment2.getInstance());
                         img.setImageResource(R.drawable.icon_nav_mine_f);
                         break;
 
