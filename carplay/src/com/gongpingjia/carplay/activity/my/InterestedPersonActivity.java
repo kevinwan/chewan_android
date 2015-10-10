@@ -13,7 +13,8 @@ public class InterestedPersonActivity extends CarPlayBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_interested_person);
+//        setContentView(R.layout.activity_interested_person);
+        setContentView(R.layout.activity_mate_720);
     }
 
     @Override
