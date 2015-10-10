@@ -1,48 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:my="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    my:android="http://schemas.android.com/apk/res/com.gongpingjia.carplay">
 
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="现在你想?" />
-
-
-    <HorizontalScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleType="fitStart"
-                android:src="@drawable/mate_bg"/>
-
-
-            
-
-
-
-        </RelativeLayout>
-
-
-    </HorizontalScrollView>
-
+    <ImageView
+        android:id="@+id/img_title"
+        android:layout_width="124dp"
+        android:layout_height="33dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="33dp"
+        android:src="@drawable/mate_title" />
 
     <Button
+        android:id="@+id/btn_click"
+        android:layout_width="174dp"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="45dp"
+        android:background="@drawable/mate_btn_bg"
+        android:text="随便看看"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_medium" />
+
+    <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="随便看看" />
+        android:scrollbars="none"
+        android:layout_above="@id/btn_click"
+        android:layout_below="@id/img_title">
 
-</LinearLayout>
+        <HorizontalScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:scrollbars="none">
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitStart"
+                    android:src="@drawable/mate_bg" />
+
+                <com.gongpingjia.carplay.view.AnimButtonView
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:layout_marginLeft="66dp"
+                    android:layout_marginTop="36dp"
+                    my:bg="@drawable/mate_cf"
+                    my:src="@drawable/red_circle">
+
+                </com.gongpingjia.carplay.view.AnimButtonView>
+
+                <com.gongpingjia.carplay.view.AnimButtonView
+                    android:layout_width="84dp"
+                    android:layout_height="84dp"
+                    android:layout_marginLeft="240dp"
+                    android:layout_marginTop="80dp"
+                    my:bg="@drawable/mate_cg"
+                    my:src="@drawable/red_circle">
+
+                </com.gongpingjia.carplay.view.AnimButtonView>
+
+                <com.gongpingjia.carplay.view.AnimButtonView
+                    android:layout_width="84dp"
+                    android:layout_height="84dp"
+                    android:layout_marginLeft="114dp"
+                    android:layout_marginTop="180dp"
+                    my:bg="@drawable/mate_kdy"
+                    my:src="@drawable/red_circle">
+
+                </com.gongpingjia.carplay.view.AnimButtonView>
+
+                <com.gongpingjia.carplay.view.AnimButtonView
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:layout_marginLeft="270dp"
+                    android:layout_marginTop="246dp"
+                    my:bg="@drawable/mate_lg"
+                    my:src="@drawable/red_circle">
+
+                </com.gongpingjia.carplay.view.AnimButtonView>
+
+                <com.gongpingjia.carplay.view.AnimButtonView
+                    android:layout_width="78dp"
+                    android:layout_height="78dp"
+                    android:layout_marginLeft="33dp"
+                    android:layout_marginTop="282dp"
+                    my:bg="@drawable/mate_yd"
+                    my:src="@drawable/red_circle">
+
+                </com.gongpingjia.carplay.view.AnimButtonView>
+
+                <com.gongpingjia.carplay.view.AnimButtonView
+                    android:layout_width="84dp"
+                    android:layout_height="84dp"
+                    android:layout_marginLeft="180dp"
+                    android:layout_marginTop="340dp"
+                    my:bg="@drawable/mate_yx"
+                    my:src="@drawable/red_circle">
+
+                </com.gongpingjia.carplay.view.AnimButtonView>
+
+                <com.gongpingjia.carplay.view.AnimButtonView
+                    android:layout_width="84dp"
+                    android:layout_height="84dp"
+                    android:layout_marginLeft="523dp"
+                    android:layout_marginTop="44dp"
+                    my:bg="@drawable/mate_yd"
+                    my:src="@drawable/red_circle">
+
+                </com.gongpingjia.carplay.view.AnimButtonView>
+
+                <com.gongpingjia.carplay.view.AnimButtonView
+                    android:layout_width="84dp"
+                    android:layout_height="84dp"
+                    android:layout_marginLeft="408dp"
+                    android:layout_marginTop="122dp"
+                    my:bg="@drawable/mate_gw"
+                    my:src="@drawable/red_circle">
+
+                </com.gongpingjia.carplay.view.AnimButtonView>
+
+                <com.gongpingjia.carplay.view.AnimButtonView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="465dp"
+                    android:layout_marginTop="271dp"
+                    my:bg="@drawable/mate_hkf"
+                    my:src="@drawable/red_circle">
+
+                </com.gongpingjia.carplay.view.AnimButtonView>
+
+                <com.gongpingjia.carplay.view.AnimButtonView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="365dp"
+                    android:layout_marginTop="367dp"
+                    my:bg="@drawable/mate_hkf"
+                    my:src="@drawable/red_circle">
+
+                </com.gongpingjia.carplay.view.AnimButtonView>
+
+            </RelativeLayout>
+
+
+        </HorizontalScrollView>
+
+    </ScrollView>
+
+
+</RelativeLayout>
