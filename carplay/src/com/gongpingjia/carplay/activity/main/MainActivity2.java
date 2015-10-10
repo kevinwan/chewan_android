@@ -208,6 +208,9 @@ public class MainActivity2 extends BaseFragmentActivity implements
         rotateAnimation.setInterpolator(new LinearInterpolator());
         appointmentI.setAnimation(rotateAnimation);
         rotateAnimation.start();
+
+        //图片模糊处理
+//        Blurry.with(context).capture(view).into(imageView);
     }
 
     private void initTab() {
