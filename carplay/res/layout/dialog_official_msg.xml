@@ -14,7 +14,6 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_margin="40dp"
-        android:layout_marginLeft="45dp"
         android:background="@drawable/btn_white_fillet"
         android:gravity="center_horizontal"
         android:orientation="vertical">
@@ -22,7 +21,8 @@
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:padding="18dp"
+            android:layout_marginTop="12dp"
             android:checked="true"
             android:button="@null"
             android:drawableLeft="@drawable/dialog_checked"
@@ -36,7 +36,6 @@
             android:layout_height="40dp"
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
-            android:layout_marginTop="18dp"
             android:background="@drawable/edittext_bg"
             android:hint="说句话打动妹子  (选填)"
             android:paddingLeft="20dp"
