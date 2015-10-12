@@ -25,7 +25,7 @@
             android:layout_marginTop="12dp"
             android:checked="true"
             android:button="@null"
-            android:drawableLeft="@drawable/dialog_checked"
+            android:drawableLeft="@drawable/radio_checked"
             android:drawablePadding="5dp"
             android:gravity="center_vertical"
             android:textColor="@color/dialog_blue_text"
