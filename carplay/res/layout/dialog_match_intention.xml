@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black40" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="40dp"
+        android:layout_marginLeft="45dp"
+        android:background="@drawable/btn_white_fillet"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <GridView
+            android:id="@+id/gv_matching"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="18dp"
+            android:numColumns="3"
+            android:verticalSpacing="10dp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/edittext_bg"
+            android:hint="说句话打动妹子  (选填)"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:textColor="@color/text_black"
+            android:textColorHint="@color/text_grey"
+            android:textSize="@dimen/text_small" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:button="@null"
+            android:checked="true"
+            android:drawableLeft="@drawable/dialog_checked"
+            android:drawablePadding="5dp"
+            android:gravity="center_vertical"
+            android:text="包接送"
+            android:textColor="@color/dialog_blue_text" />
+
+
+        <Button
+            android:layout_width="160dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/btn_red_fillet"
+            android:text="匹配意向"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_medium" />
+    </LinearLayout>
+
+
+</RelativeLayout>
