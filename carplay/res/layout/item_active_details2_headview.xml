@@ -37,6 +37,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="190dp"
+        android:visibility="gone"
         android:scaleType="fitCenter" />
 
     <LinearLayout
@@ -60,6 +61,7 @@
             android:ellipsize="end"
             android:lineSpacingMultiplier="1.3"
             android:maxLines="6"
+            android:visibility="gone"
             android:text="五月天演唱会,将在鸟巢举行,官方补贴,车玩补贴,每张门票20元,名额有限,五月天演唱会,将在鸟巢举行,官方补贴,车玩补贴,每张门票20元,名额有限,五月天演唱会,将在鸟巢举行,官方补贴,车玩补贴,每张门票20元,名额有限,五月天演唱会,将在鸟巢举行,官方补贴,车玩补贴,每张门票20元,名额有限,五月天演唱会,将在鸟巢举行,官方补贴,车玩补贴,每张门票20元,名额有限." />
 
         <RelativeLayout
