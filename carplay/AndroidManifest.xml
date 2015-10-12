@@ -263,7 +263,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.main.PhotoPreviewActivity"
-            android:screenOrientation="portrait" />
+        android:screenOrientation="portrait" />
         <activity android:name=".view.ImageGallery" />
 
         <service android:name="com.easemob.chat.EMChatService" />
