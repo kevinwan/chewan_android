@@ -1,1 +1,1 @@
-include ':dhroid', ':carplay'
+include ':dhroid', ':carplay', ':lib', ':app'

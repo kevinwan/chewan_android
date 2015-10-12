@@ -38,6 +38,7 @@ import com.easemob.chat.EMGroupManager;
 import com.easemob.chat.EMMessage;
 import com.easemob.exceptions.EaseMobException;
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.activity.active.HorizontalLayoutFragment;
 import com.gongpingjia.carplay.activity.my.LoginActivity;
 import com.gongpingjia.carplay.activity.my.ManageAlbumActivity;
 import com.gongpingjia.carplay.activity.my.MyFragment2;
@@ -122,10 +123,10 @@ public class MainActivity2 extends BaseFragmentActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.list_item_nearby);
+        setContentView(R.layout.activity_newmain);
 //        EventBus.getDefault().register(this);
 //
-//        initView();
+        initView();
 //        isAuthen();
 //        updateApp();
 //
@@ -145,8 +146,8 @@ public class MainActivity2 extends BaseFragmentActivity implements
     public void onResume() {
         // TODO Auto-generated method stub
         super.onResume();
-        Intent it = new Intent(this, MsgService.class);
-        startService(it);
+//        Intent it = new Intent(this, MsgService.class);
+//        startService(it);
         EMChatManager.getInstance().registerEventListener(
                 this,
                 new EMNotifierEvent.Event[]{
@@ -262,7 +263,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
                     case 0:
                         setTitle("附近");
                         img.setImageResource(R.drawable.icon_nav_near_f);
-//                        switchContent(ActiveListFragment.getInstance());
+                        switchContent(new HorizontalLayoutFragment());
                         break;
 
                     case 1:
