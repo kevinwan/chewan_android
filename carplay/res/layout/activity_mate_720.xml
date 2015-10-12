@@ -36,7 +36,7 @@
                 android:layout_width="106dp"
                 android:layout_height="106dp"
                 android:layout_marginLeft="50dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="6dp"
                 my:bg="@drawable/mate_cf"
                 my:src="@drawable/mate_cf">
 
@@ -46,7 +46,7 @@
                 android:layout_width="94dp"
                 android:layout_height="94dp"
                 android:layout_marginLeft="220dp"
-                android:layout_marginTop="72dp"
+                android:layout_marginTop="62dp"
                 my:bg="@drawable/mate_cg"
                 my:src="@drawable/mate_cg">
 
@@ -56,7 +56,7 @@
                 android:layout_width="98dp"
                 android:layout_height="98dp"
                 android:layout_marginLeft="110dp"
-                android:layout_marginTop="158dp"
+                android:layout_marginTop="138dp"
                 my:bg="@drawable/mate_kdy"
                 my:src="@drawable/mate_kdy">
 
@@ -66,7 +66,7 @@
                 android:layout_width="82dp"
                 android:layout_height="82dp"
                 android:layout_marginLeft="260dp"
-                android:layout_marginTop="230dp"
+                android:layout_marginTop="200dp"
                 my:bg="@drawable/mate_lg"
                 my:src="@drawable/mate_lg">
 
@@ -76,7 +76,7 @@
                 android:layout_width="95dp"
                 android:layout_height="95dp"
                 android:layout_marginLeft="25dp"
-                android:layout_marginTop="252dp"
+                android:layout_marginTop="232dp"
                 my:bg="@drawable/mate_yd"
                 my:src="@drawable/mate_yd">
 
@@ -86,7 +86,7 @@
                 android:layout_width="94dp"
                 android:layout_height="94dp"
                 android:layout_marginLeft="170dp"
-                android:layout_marginTop="310dp"
+                android:layout_marginTop="280dp"
                 my:bg="@drawable/mate_yx"
                 my:src="@drawable/mate_yx">
 
@@ -96,7 +96,7 @@
                 android:layout_width="94dp"
                 android:layout_height="94dp"
                 android:layout_marginLeft="473dp"
-                android:layout_marginTop="44dp"
+                android:layout_marginTop="34dp"
                 my:bg="@drawable/mate_yd"
                 my:src="@drawable/mate_yd">
 
@@ -106,7 +106,7 @@
                 android:layout_width="94dp"
                 android:layout_height="94dp"
                 android:layout_marginLeft="368dp"
-                android:layout_marginTop="122dp"
+                android:layout_marginTop="102dp"
                 my:bg="@drawable/mate_gw"
                 my:src="@drawable/red_circle">
 
@@ -116,7 +116,7 @@
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_marginLeft="415dp"
-                android:layout_marginTop="256dp"
+                android:layout_marginTop="226dp"
                 my:bg="@drawable/mate_hkf"
                 my:src="@drawable/mate_hkf">
 
@@ -126,7 +126,7 @@
                 android:layout_width="94dp"
                 android:layout_height="94dp"
                 android:layout_marginLeft="335dp"
-                android:layout_marginTop="335dp"
+                android:layout_marginTop="295dp"
                 my:bg="@drawable/mate_hj"
                 my:src="@drawable/mate_hj">
 
