@@ -39,6 +39,7 @@ import com.easemob.chat.EMGroupManager;
 import com.easemob.chat.EMMessage;
 import com.easemob.exceptions.EaseMobException;
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.activity.active.NearListFragment;
 import com.gongpingjia.carplay.activity.my.LoginActivity;
 import com.gongpingjia.carplay.activity.my.ManageAlbumActivity;
 import com.gongpingjia.carplay.activity.my.MyFragment2;
@@ -146,8 +147,8 @@ public class MainActivity2 extends BaseFragmentActivity implements
     public void onResume() {
         // TODO Auto-generated method stub
         super.onResume();
-        Intent it = new Intent(this, MsgService.class);
-        startService(it);
+//        Intent it = new Intent(this, MsgService.class);
+//        startService(it);
         EMChatManager.getInstance().registerEventListener(
                 this,
                 new EMNotifierEvent.Event[]{
@@ -169,22 +170,6 @@ public class MainActivity2 extends BaseFragmentActivity implements
         initTab();
         setTab(0);
 
-        per = IocContainer.getShare().get(CarPlayPerference.class);
-        per.load();
-        if (per.isShowMainGuilde == 0) {
-            findViewById(R.id.guide).setVisibility(View.VISIBLE);
-        }
-
-        findViewById(R.id.know).setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                per.load();
-                per.isShowMainGuilde = 1;
-                per.commit();
-                findViewById(R.id.guide).setVisibility(View.GONE);
-            }
-        });
 
         msgT = (ImageView) findViewById(R.id.msg_point);
         chatPointI = (ImageView) findViewById(R.id.chat_point);
@@ -266,7 +251,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
                     case 0:
                         setTitle("附近");
                         img.setImageResource(R.drawable.icon_nav_near_f);
-//                        switchContent(ActiveListFragment.getInstance());
+                        switchContent(NearListFragment.getInstance());
                         break;
 
                     case 1:
