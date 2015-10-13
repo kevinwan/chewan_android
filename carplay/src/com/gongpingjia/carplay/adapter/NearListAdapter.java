@@ -14,20 +14,21 @@
  * limitations under the License.
  */
 
-package com.gongpingjia.carplay;
+package com.gongpingjia.carplay.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import com.gongpingjia.carplay.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class LayoutAdapter extends RecyclerView.Adapter<LayoutAdapter.SimpleViewHolder> {
+public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.SimpleViewHolder> {
     private static final int COUNT = 100;
 
     private final Context mContext;
@@ -36,15 +37,15 @@ public class LayoutAdapter extends RecyclerView.Adapter<LayoutAdapter.SimpleView
     private int mCurrentItemId = 0;
 
     public static class SimpleViewHolder extends RecyclerView.ViewHolder {
-        public final TextView title;
+//        public final TextView title;
 
         public SimpleViewHolder(View view) {
             super(view);
-            title = (TextView) view.findViewById(R.id.title);
+//            title = (TextView) view.findViewById(R.id.title);
         }
     }
 
-    public LayoutAdapter(Context context, RecyclerView recyclerView) {
+    public NearListAdapter(Context context, RecyclerView recyclerView) {
         mContext = context;
         mItems = new ArrayList<>(COUNT);
         for (int i = 0; i < COUNT; i++) {
@@ -67,13 +68,13 @@ public class LayoutAdapter extends RecyclerView.Adapter<LayoutAdapter.SimpleView
 
     @Override
     public SimpleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        final View view = LayoutInflater.from(mContext).inflate(R.layout.item, parent, false);
+        final View view = LayoutInflater.from(mContext).inflate(R.layout.list_item_nearby, parent, false);
         return new SimpleViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(SimpleViewHolder holder, int position) {
-        holder.title.setText(mItems.get(position).toString());
+//        holder.title.setText(mItems.get(position).toString());
 
         final View itemView = holder.itemView;
         itemView.setOnClickListener(new View.OnClickListener() {

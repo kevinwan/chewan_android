@@ -1,90 +1,60 @@
-/*
- * Copyright (C) 2014 Lucas Rocha
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.gongpingjia.carplay.activity.active;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.gongpingjia.carplay.LayoutAdapter;
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.adapter.RecommendListAdapter;
 import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
 
-public class HorizontalLayoutFragment extends Fragment {
-    private View mViewRoot;
+/**
+ * Created by Administrator on 2015/10/12.
+ */
+public class RecommendListFragment extends Fragment {
+
+
+    static RecommendListFragment instance;
     private RecyclerViewPager mRecyclerView;
-    private TextView mCountText;
-    private TextView mStateText;
-    private Toast mToast;
-    private TextView mPositionText;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        if (mViewRoot == null) {
-            mViewRoot = inflater.inflate(R.layout.layout_horizontal, container, false);
-        } else if (mViewRoot.getParent() != null) {
-            ((ViewGroup) mViewRoot.getParent()).removeView(mViewRoot);
+    View mainV;
+
+    public static RecommendListFragment getInstance() {
+        if (instance == null) {
+            instance = new RecommendListFragment();
         }
-        return mViewRoot;
+
+        return instance;
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mainV = inflater.inflate(R.layout.fragment_recommend, null);
+        initView();
+        return mainV;
+    }
 
-        final Activity activity = getActivity();
 
-        mToast = Toast.makeText(activity, "", Toast.LENGTH_SHORT);
-        mToast.setGravity(Gravity.CENTER, 0, 0);
-
-        mRecyclerView = (RecyclerViewPager) view.findViewById(R.id.list);
+    private void initView() {
+        mRecyclerView = (RecyclerViewPager) mainV.findViewById(R.id.list);
 
         LinearLayoutManager layout = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setTriggerOffset(0.15f);
         mRecyclerView.setFlingFactor(0.25f);
         mRecyclerView.setLayoutManager(layout);
-        mRecyclerView.setAdapter(new LayoutAdapter(activity, mRecyclerView));
+        mRecyclerView.setAdapter(new RecommendListAdapter(getActivity(), mRecyclerView));
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLongClickable(true);
 
-        mPositionText = (TextView) view.getRootView().findViewById(R.id.position);
-        mCountText = (TextView) view.getRootView().findViewById(R.id.count);
-
-        mStateText = (TextView) view.getRootView().findViewById(R.id.state);
-        updateState(RecyclerView.SCROLL_STATE_IDLE);
 
         mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int scrollState) {
-                updateState(scrollState);
             }
 
             @Override
@@ -92,18 +62,16 @@ public class HorizontalLayoutFragment extends Fragment {
 //                mPositionText.setText("First: " + mRecyclerView.getFirstVisiblePosition());
                 int childCount = mRecyclerView.getChildCount();
                 int width = mRecyclerView.getChildAt(0).getWidth();
-                int height = mRecyclerView.getChildAt(0).getHeight();
-                int padding = (mRecyclerView.getHeight() - height) / 2;
-                mCountText.setText("Count: " + childCount);
+                int padding = (mRecyclerView.getWidth() - width) / 2;
 
                 for (int j = 0; j < childCount; j++) {
                     View v = recyclerView.getChildAt(j);
                     //往左 从 padding 到 -(v.getWidth()-padding) 的过程中，由大到小
                     float rate = 0;
                     ;
-                    if (v.getTop() <= padding) {
-                        if (v.getTop() >= padding - v.getHeight()) {
-                            rate = (padding - v.getTop()) * 1f / v.getHeight();
+                    if (v.getLeft() <= padding) {
+                        if (v.getLeft() >= padding - v.getWidth()) {
+                            rate = (padding - v.getLeft()) * 1f / v.getWidth();
                         } else {
                             rate = 1;
                         }
@@ -112,13 +80,40 @@ public class HorizontalLayoutFragment extends Fragment {
 
                     } else {
                         //往右 从 padding 到 recyclerView.getWidth()-padding 的过程中，由大到小
-                        if (v.getTop() <= recyclerView.getHeight() - padding) {
-                            rate = (recyclerView.getHeight() - padding - v.getTop()) * 1f / v.getHeight();
+                        if (v.getLeft() <= recyclerView.getWidth() - padding) {
+                            rate = (recyclerView.getWidth() - padding - v.getLeft()) * 1f / v.getWidth();
                         }
                         v.setScaleY(0.9f + rate * 0.1f);
                         v.setScaleX(0.9f + rate * 0.1f);
                     }
                 }
+            }
+        });
+
+        mRecyclerView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                if (mRecyclerView.getChildCount() < 3) {
+                    if (mRecyclerView.getChildAt(1) != null) {
+                        if (mRecyclerView.getCurrentPosition() == 0) {
+                            View v1 = mRecyclerView.getChildAt(1);
+                            v1.setScaleY(0.9f);
+                            v1.setScaleX(0.9f);
+                        }
+                    }
+                } else {
+                    if (mRecyclerView.getChildAt(0) != null) {
+                        View v0 = mRecyclerView.getChildAt(0);
+                        v0.setScaleY(0.9f);
+                        v0.setScaleX(0.9f);
+                    }
+                    if (mRecyclerView.getChildAt(2) != null) {
+                        View v2 = mRecyclerView.getChildAt(2);
+                        v2.setScaleY(0.9f);
+                        v2.setScaleX(0.9f);
+                    }
+                }
+
             }
         });
 
@@ -152,25 +147,5 @@ public class HorizontalLayoutFragment extends Fragment {
 
             }
         });
-    }
-
-
-    private void updateState(int scrollState) {
-        String stateName = "Undefined";
-        switch (scrollState) {
-            case RecyclerView.SCROLL_STATE_IDLE:
-                stateName = "Idle";
-                break;
-
-            case RecyclerView.SCROLL_STATE_DRAGGING:
-                stateName = "Dragging";
-                break;
-
-            case RecyclerView.SCROLL_STATE_SETTLING:
-                stateName = "Flinging";
-                break;
-        }
-        mPositionText.setText("currentPosition:" + mRecyclerView.getCurrentPosition());
-        mStateText.setText(stateName);
     }
 }

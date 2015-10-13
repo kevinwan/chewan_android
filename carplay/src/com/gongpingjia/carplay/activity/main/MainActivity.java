@@ -1,23 +1,5 @@
 package com.gongpingjia.carplay.activity.main;
 
-import java.io.File;
-import java.util.List;
-import java.util.Stack;
-import java.util.Timer;
-
-import net.duohuo.dhroid.activity.ActivityTack;
-import net.duohuo.dhroid.dialog.IDialog;
-import net.duohuo.dhroid.ioc.IocContainer;
-import net.duohuo.dhroid.net.DhNet;
-import net.duohuo.dhroid.net.JSONUtil;
-import net.duohuo.dhroid.net.NetTask;
-import net.duohuo.dhroid.net.Response;
-import net.duohuo.dhroid.net.upload.FileInfo;
-import net.duohuo.dhroid.util.PhotoUtil;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.AlertDialog.Builder;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -25,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
-import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -56,12 +37,10 @@ import com.easemob.chat.EMMessage;
 import com.easemob.exceptions.EaseMobException;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.active.ActiveListFragment;
-import com.gongpingjia.carplay.activity.active.CreateActiveActivity;
 import com.gongpingjia.carplay.activity.msg.MsgFragment;
 import com.gongpingjia.carplay.activity.my.LoginActivity;
 import com.gongpingjia.carplay.activity.my.ManageAlbumActivity;
 import com.gongpingjia.carplay.activity.my.MyFragment;
-import com.gongpingjia.carplay.activity.my.SettingActivity;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.TabEB;
@@ -71,11 +50,28 @@ import com.gongpingjia.carplay.chat.bean.GroupEB;
 import com.gongpingjia.carplay.chat.controller.HXSDKHelper;
 import com.gongpingjia.carplay.manage.UserInfoManage;
 import com.gongpingjia.carplay.manage.UserInfoManage.LoginCallBack;
-import com.gongpingjia.carplay.receiver.NetReceiver;
 import com.gongpingjia.carplay.service.MsgService;
 import com.gongpingjia.carplay.util.CarPlayPerference;
 import com.gongpingjia.carplay.view.pop.ActiveFilterPop;
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import net.duohuo.dhroid.activity.ActivityTack;
+import net.duohuo.dhroid.dialog.IDialog;
+import net.duohuo.dhroid.ioc.IocContainer;
+import net.duohuo.dhroid.net.DhNet;
+import net.duohuo.dhroid.net.JSONUtil;
+import net.duohuo.dhroid.net.NetTask;
+import net.duohuo.dhroid.net.Response;
+import net.duohuo.dhroid.net.upload.FileInfo;
+import net.duohuo.dhroid.util.PhotoUtil;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.util.List;
+import java.util.Stack;
+import java.util.Timer;
 
 import de.greenrobot.event.EventBus;
 
@@ -171,22 +167,6 @@ public class MainActivity extends BaseFragmentActivity implements
 		initTab();
 		setTab(0);
 
-		per = IocContainer.getShare().get(CarPlayPerference.class);
-		per.load();
-		if (per.isShowMainGuilde == 0) {
-			findViewById(R.id.guide).setVisibility(View.VISIBLE);
-		}
-
-		findViewById(R.id.know).setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				per.load();
-				per.isShowMainGuilde = 1;
-				per.commit();
-				findViewById(R.id.guide).setVisibility(View.GONE);
-			}
-		});
 
 		msgT = (ImageView) findViewById(R.id.msg_point);
 		chatPointI = (ImageView) findViewById(R.id.chat_point);
@@ -248,106 +228,19 @@ public class MainActivity extends BaseFragmentActivity implements
 					setTitle("同城");
 					img.setImageResource(R.drawable.city_f);
 					switchContent(ActiveListFragment.getInstance());
-					setRightAction("创建活动", -1, new OnClickListener() {
-
-						@Override
-						public void onClick(View arg0) {
-							UserInfoManage.getInstance().checkLogin(self,
-									new LoginCallBack() {
-
-										@Override
-										public void onisLogin() {
-											Intent it = new Intent(
-													MainActivity.this,
-													CreateActiveActivity.class);
-											startActivity(it);
-										}
-
-										@Override
-										public void onLoginFail() {
-											// TODO Auto-generated method stub
-
-										}
-									});
-						}
-					});
-					setLeftAction(R.drawable.filtrate, "筛选",
-							new OnClickListener() {
-
-								@Override
-								public void onClick(View arg0) {
-									activeFilterPop.show(titleBar);
-								}
-							});
 					break;
 
 				case 1:
 					setTitle("消息");
-					setRightVISIBLEOrGone(View.GONE);
 					switchContent(MsgFragment.getInstance(dataJo));
 
 					img.setImageResource(R.drawable.msg_f);
-					setLeftAction(-2, null, new OnClickListener() {
-
-						@Override
-						public void onClick(View arg0) {
-						}
-					});
 					break;
 
 				case 2:
 					setTitle("我的");
 					switchContent(MyFragment.getInstance());
 					img.setImageResource(R.drawable.my_f);
-					setLeftAction(R.drawable.icon_setting, null,
-							new OnClickListener() {
-
-								@Override
-								public void onClick(View arg0) {
-									Intent it = new Intent(MainActivity.this,
-											SettingActivity.class);
-									startActivity(it);
-								}
-							});
-					setRightAction(null, R.drawable.icon_camera,
-							new OnClickListener() {
-
-								@Override
-								public void onClick(View arg0) {
-									UserInfoManage.getInstance().checkLogin(
-											self, new LoginCallBack() {
-
-												@Override
-												public void onisLogin() {
-													// TODO Auto-generated
-													// method stub
-													mCacheDir = new File(
-															getExternalCacheDir(),
-															"CarPlay");
-													mCacheDir.mkdirs();
-													tempPath = new File(
-
-															mCacheDir,
-															System.currentTimeMillis()
-																	+ ".jpg")
-															.getAbsolutePath();
-													PhotoUtil
-															.getPhoto(
-																	self,
-																	Constant.TAKE_PHOTO,
-																	Constant.PICK_PHOTO,
-																	new File(
-																			tempPath));
-
-												}
-
-												@Override
-												public void onLoginFail() {
-
-												}
-											});
-								}
-							});
 					break;
 
 				default:

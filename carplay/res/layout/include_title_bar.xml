@@ -3,29 +3,28 @@
     android:id="@+id/titlebar"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:background="@color/bg_grey"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/labt"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
-        android:background="@color/theme_bg" >
+        android:background="@color/white">
 
         <LinearLayout
             android:id="@+id/backLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true" >
+            android:layout_centerVertical="true">
 
             <ImageView
                 android:id="@+id/back"
-                android:layout_width="36dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:layout_marginLeft="12dp"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp"
-                android:scaleType="fitEnd"
                 android:src="@drawable/left_back" />
 
             <TextView
@@ -74,6 +73,11 @@
             android:paddingRight="10dp"
             android:scaleType="center"
             android:visibility="gone" />
+
+
+        <View
+            style="@style/line_horizontal"
+            android:layout_alignParentBottom="true"></View>
     </RelativeLayout>
 
 </LinearLayout>
