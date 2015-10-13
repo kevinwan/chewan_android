@@ -13,6 +13,11 @@ import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
+import com.gongpingjia.carplay.api.API2;
+
+import net.duohuo.dhroid.net.DhNet;
+import net.duohuo.dhroid.net.NetTask;
+import net.duohuo.dhroid.net.Response;
 
 /**
  * Created by Administrator on 2015/10/13.
@@ -61,6 +66,7 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
                 login();
                 break;
             case R.id.btn_register:
+                register();
                 break;
 
             case R.id.iv_qq:
@@ -77,7 +83,7 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
     }
 
     private void register() {
-        Intent it = new Intent(this,RegisterActivity.class);
+        Intent it = new Intent(this, RegisterActivity2.class);
         startActivity(it);
     }
 
@@ -89,6 +95,17 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
             return;
         }
 
+        DhNet dhNet = new DhNet(API2.login);
+        dhNet.doPostInDialog("登陆中...", new NetTask(self) {
+            @Override
+            public void doInUI(Response response, Integer transfer) {
+                if (response.isSuccess()) {
+                    showToast("登陆成功");
+                } else {
+                    showToast("登陆失败");
+                }
+            }
+        });
 
     }
 

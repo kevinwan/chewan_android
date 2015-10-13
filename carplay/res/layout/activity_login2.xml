@@ -27,8 +27,7 @@
             android:background="@color/nothing"
             android:drawableLeft="@drawable/ic_phone"
             android:drawablePadding="5dp"
-            android:inputType="phone"
-            android:text="18362971169" />
+            android:inputType="phone" />
 
         <View
             android:id="@+id/divider"
