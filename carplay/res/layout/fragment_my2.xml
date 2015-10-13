@@ -16,13 +16,12 @@
             android:layout_height="wrap_content"
             android:background="@color/text_grey">
 
-            <ImageView
+            <com.gongpingjia.carplay.view.RoundImageView
                 android:id="@+id/head"
                 android:layout_width="113dp"
                 android:layout_height="113dp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="28dp"
-                android:src="@drawable/head_icon" />
+                android:layout_marginTop="28dp" />
 
             <TextView
                 android:id="@+id/attestation"
