@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp">
+
+        <ImageView
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:src="@drawable/trends_official" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="26dp"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/text_black_medium"
+                android:text="车玩官方" />
+
+            <TextView
+                style="@style/text_grey_small"
+                android:layout_marginTop="6dp"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="您的车主认证未通过" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+        <TextView
+            style="@style/text_grey_smaller"
+            android:layout_marginTop="14dp"
+            android:layout_marginRight="14dp"
+            android:layout_alignParentRight="true"
+            android:text="3分钟前" />
+
+</RelativeLayout>

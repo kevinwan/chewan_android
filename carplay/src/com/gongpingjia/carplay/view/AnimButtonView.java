@@ -16,6 +16,7 @@ import com.gongpingjia.carplay.R;
 
 public class AnimButtonView extends RelativeLayout {
 
+
     Context mContext;
 
     private static final int OFFSET = 600; // 每个动画的播放时间间隔
@@ -36,28 +37,34 @@ public class AnimButtonView extends RelativeLayout {
         }
     };
 
+
     public AnimButtonView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mContext = context;
+        this.mContext = context;
         TypedArray a = mContext.obtainStyledAttributes(attrs, R.styleable.AnimButtonView);
+
+
         int srcId = a.getResourceId(R.styleable.AnimButtonView_src, 0);
         int bgId = a.getResourceId(R.styleable.AnimButtonView_bg, 0);
+
+        RelativeLayout.LayoutParams pa = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        pa.setMargins(30, 30, 30, 30);
         image1 = new ImageView(mContext);
-
-
         image2 = new ImageView(mContext);
         ImageView bg = new ImageView(mContext);
         image1.setImageResource(srcId);
         image2.setImageResource(srcId);
         bg.setImageResource(bgId);
+        image1.setLayoutParams(pa);
+        image2.setLayoutParams(pa);
+        bg.setLayoutParams(pa);
 
-        RelativeLayout.LayoutParams pamas = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-        addView(image1, pamas);
-        addView(image2, pamas);
+        addView(image1);
+        addView(image2);
         addView(bg);
         mAnimationSet1 = initAnimationSet();
         mAnimationSet2 = initAnimationSet();
-        startAnimation();
+        a.recycle();
     }
 
     private AnimationSet initAnimationSet() {
