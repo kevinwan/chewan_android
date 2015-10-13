@@ -43,19 +43,12 @@ public class AnimButtonView extends RelativeLayout {
         this.mContext = context;
         TypedArray a = mContext.obtainStyledAttributes(attrs, R.styleable.AnimButtonView);
 
-        System.out.print("a:" + a.getIndexCount());
-
-        int count = attrs.getAttributeCount();
-        for (int index = 0; index < count; index++) {
-            String attributeName = attrs.getAttributeName(index);
-            System.out.println("name:" + attributeName);
-        }
 
         int srcId = a.getResourceId(R.styleable.AnimButtonView_src, 0);
         int bgId = a.getResourceId(R.styleable.AnimButtonView_bg, 0);
 
         RelativeLayout.LayoutParams pa = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-        pa.setMargins(30,30,30,30);
+        pa.setMargins(30, 30, 30, 30);
         image1 = new ImageView(mContext);
         image2 = new ImageView(mContext);
         ImageView bg = new ImageView(mContext);
@@ -71,7 +64,7 @@ public class AnimButtonView extends RelativeLayout {
         addView(bg);
         mAnimationSet1 = initAnimationSet();
         mAnimationSet2 = initAnimationSet();
-        startAnimation();
+        a.recycle();
     }
 
     private AnimationSet initAnimationSet() {
