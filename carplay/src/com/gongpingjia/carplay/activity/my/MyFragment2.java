@@ -1,5 +1,6 @@
 package com.gongpingjia.carplay.activity.my;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,8 +14,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.activity.active.ActiveDetailsActivity2;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.view.RoundImageView;
+import com.gongpingjia.carplay.view.dialog.NearbyFilterDialog;
 
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
@@ -33,10 +36,10 @@ public class MyFragment2 extends Fragment implements OnClickListener {
     View mainV;
     static MyFragment2 instance;
     private RoundImageView headI;
-    private ImageView sexI;
+    private ImageView sexI, photo_bgI;
     private TextView attestationT, nameT, ageT, completenessT;
     private Button perfectBtn;
-    private RelativeLayout sexbgR, photo_bgR;
+    private RelativeLayout sexbgR;
     private LinearLayout myphotoL, myactiveL, myattentionL, headattestationL, carattestationL;
 
     public static MyFragment2 getInstance() {
@@ -65,7 +68,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
         ageT = (TextView) mainV.findViewById(R.id.tv_age);
         completenessT = (TextView) mainV.findViewById(R.id.txt_completeness);
         perfectBtn = (Button) mainV.findViewById(R.id.perfect);
-        photo_bgR = (RelativeLayout) mainV.findViewById(R.id.photo_bg);
+        photo_bgI = (ImageView) mainV.findViewById(R.id.photo_bg);
         myphotoL = (LinearLayout) mainV.findViewById(R.id.myphoto);
         myactiveL = (LinearLayout) mainV.findViewById(R.id.myactive);
         myattentionL = (LinearLayout) mainV.findViewById(R.id.myattention);
@@ -77,6 +80,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
         myattentionL.setOnClickListener(this);
         headattestationL.setOnClickListener(this);
         carattestationL.setOnClickListener(this);
+        headI.setOnClickListener(this);
         getMyDetails();
 
     }
@@ -101,8 +105,19 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                         sexbgR.setBackgroundResource(R.drawable.radion_sex_woman_normal);
                         sexI.setBackgroundResource(R.drawable.icon_woman3x);
                     }
-                    ViewUtil.bindNetImage(headI, JSONUtil.getString(jo, "avatar"), "head");
+
+                    String headimg=JSONUtil.getString(jo, "avatar");
+
+                    ViewUtil.bindNetImage(headI, headimg, "head");
+                    ViewUtil.bindNetImage(photo_bgI, headimg, "head");
+//                    photo_bgI.setBackgroundResource(R.drawable.vp_third);
                     ViewUtil.bindView(ageT, JSONUtil.getString(jo, "age"));
+//                    Blurry.with(getActivity())
+//                            .radius(10)
+//                            .sampling(8)
+//                            .async()
+//                            .capture(photo_bgI)
+//                            .into((ImageView) photo_bgI);
 
                     String licenseAuthStatus = JSONUtil.getString(jo, "licenseAuthStatus");
                     if (licenseAuthStatus.equals("未认证")) {
@@ -123,13 +138,19 @@ public class MyFragment2 extends Fragment implements OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            //编辑资料
+            case R.id.head:
+
+                break;
             //完善信息
             case R.id.perfect:
-
+                NearbyFilterDialog nearbyFilterDialog=new NearbyFilterDialog(getActivity());
+                nearbyFilterDialog.show();
                 break;
             //我的活动
             case R.id.myactive:
-
+                Intent it = new Intent(getActivity(), ActiveDetailsActivity2.class);
+                startActivity(it);
                 break;
             //我的关注
             case R.id.myattention:

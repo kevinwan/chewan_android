@@ -203,12 +203,13 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
 
         <activity android:name=".activity.my.BasicInformationActivity2" />
         <activity android:name=".activity.my.RegisterActivity2" />
         <activity android:name=".activity.main.MainActivity2" />
-        <activity android:name=".activity.my.ForgetPasswordActivity2"/>
+        <activity android:name=".activity.my.ForgetPasswordActivity2" />
 
         <activity
             android:name=".activity.my.AboutUsActivity"
@@ -290,8 +291,15 @@
             android:name=".activity.my.AuthenticateOwnersActivity2"
             android:screenOrientation="portrait">
             android:screenOrientation="portrait">
+
+
         </activity>
-        <activity android:name=".activity.my.HeadAttestationActivity" />
+
+        <activity
+            android:name=".activity.my.HeadAttestationActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
 
 
         <activity android:name=".activity.active.MyActiveActivity" />

@@ -10,7 +10,9 @@ public class API2 {
 
     //获取验证码
     public static final String getVerification = CWBaseurl + "phone/";
-    //验证码
+    //官方活动详情
+    public static final String ActiveDetails = CWBaseurl + "official/activity/";
+
     public static final String verifyCode = CWBaseurl + "phone/";
     //手机号登陆
     public static final String login = CWBaseurl + "user/login";
