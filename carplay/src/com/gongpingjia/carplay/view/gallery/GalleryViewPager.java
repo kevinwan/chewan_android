@@ -23,6 +23,8 @@ import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
+import com.gongpingjia.carplay.view.ImageGallery;
+
 /**
  * This class implements method to help <b>TouchImageView</b> fling, draggin and
  * scaling.
@@ -48,6 +50,7 @@ public class GalleryViewPager extends ViewPager {
 		case MotionEvent.ACTION_UP:
 			PointF curr = new PointF(event.getX(0), event.getY(0));
 			return new float[] { curr.x - last.x, curr.y - last.y };
+
 
 		}
 		return null;

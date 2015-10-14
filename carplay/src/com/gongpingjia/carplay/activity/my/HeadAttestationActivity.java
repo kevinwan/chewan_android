@@ -3,13 +3,16 @@ package com.gongpingjia.carplay.activity.my;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.api.API;
+import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.api.Constant;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -43,6 +46,8 @@ public class HeadAttestationActivity extends CarPlayBaseActivity implements View
 
     @Override
     public void initView() {
+        mCacheDir = new File(getExternalCacheDir(), "CarPlay");
+        mCacheDir.mkdirs();
          head_authenticate = (Button) findViewById(R.id.head_authenticate);
          up_head = (ImageView) findViewById(R.id.up_head);
          up_head.setOnClickListener(this);
@@ -58,7 +63,9 @@ public class HeadAttestationActivity extends CarPlayBaseActivity implements View
 
     }
     private void uploadHead(String path) {
-        DhNet net = new DhNet(API.uploadHead);
+        Bitmap bmp = PhotoUtil.getLocalImage(new File(path));
+        up_head.setImageBitmap(bmp);
+        DhNet net = new DhNet(API2.CWBaseurl+"/user/"+"561ba2d60cf2429fb48e86bd"+"/photo/upload?token="+"9927f747-c615-4362-bd43-a2ec31362205");
         net.upload(new FileInfo("attach", new File(path)), new NetTask(self) {
 
             @Override
@@ -67,6 +74,7 @@ public class HeadAttestationActivity extends CarPlayBaseActivity implements View
                 if (response.isSuccess()) {
                     JSONObject jo = response.jSONFromData();
                     photoUid = JSONUtil.getString(jo, "photoId");
+
                 } else {
                     up_head.setImageResource(R.drawable.head_icon);
                     photoUid = "";
@@ -86,7 +94,21 @@ public class HeadAttestationActivity extends CarPlayBaseActivity implements View
                         new File(mPhotoPath));
                 break;
             case R.id.head_authenticate:
+                if (TextUtils.isEmpty(photoUid)) {
+                    showToast("请上传头像");
+                    return;
+                }
+                DhNet net = new DhNet(API2.CWBaseurl+"/user/"+"561ba2d60cf2429fb48e86bd"+"/photo/authentication?token="+"9927f747-c615-4362-bd43-a2ec31362205");
+                net.addParam("photoId",photoUid);
+                net.doPostInDialog(new NetTask(self) {
+                    @Override
+                    public void doInUI(Response response, Integer transfer) {
+                        if(response.isSuccess()){
 
+                            finish();
+                        }
+                    }
+                });
                 break;
         }
     }
@@ -96,22 +118,22 @@ public class HeadAttestationActivity extends CarPlayBaseActivity implements View
 
         if (resultCode == RESULT_OK){
             switch (requestCode){
-                case Constant.TAKE_PHOTO:
-                    String newPath = new File(mCacheDir, System.currentTimeMillis()
-                            + ".jpg").getAbsolutePath();
-                    String path = PhotoUtil.onPhotoFromCamera(self,
-                            Constant.ZOOM_PIC, mPhotoPath, 1, 1, 1000, newPath);
-                    mPhotoPath = path;
-                    break;
                 case Constant.PICK_PHOTO:
-                    PhotoUtil.onPhotoFromPick(self, Constant.ZOOM_PIC, mPhotoPath,
-                            data, 1, 1, 1000);
-                    break;
-                case Constant.ZOOM_PIC:
-                    Bitmap bmp = PhotoUtil.getLocalImage(new File(mPhotoPath));
-                    up_head.setImageBitmap(ImageUtil.toRoundCorner(bmp, 1000));
+                    Bitmap btp = PhotoUtil.checkImage(self, data);
+                    PhotoUtil.saveLocalImage(btp, new File(mPhotoPath));
+                    btp.recycle();
                     showProgressDialog("上传头像中...");
                     uploadHead(mPhotoPath);
+                    break;
+                case Constant.TAKE_PHOTO:
+                    Bitmap btp1 = PhotoUtil.getLocalImage(new File(mPhotoPath));
+                    String newPath = new File(mCacheDir, System.currentTimeMillis()
+                            + ".jpg").getAbsolutePath();
+                    int degree = PhotoUtil.getBitmapDegree(mPhotoPath);
+                    PhotoUtil.saveLocalImage(btp1, new File(newPath), degree);
+                    btp1.recycle();
+                    showProgressDialog("上传头像中...");
+                    uploadHead(newPath);
                     break;
             }
         }
