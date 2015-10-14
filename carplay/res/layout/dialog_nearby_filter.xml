@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black40" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:background="@color/nothing"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:src="@drawable/dialog_nearby_bg" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_linegrey_fillet"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+
+            <RadioGroup
+                android:id="@+id/active_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/btn_white_fillet"
+                android:paddingBottom="12dp"
+                android:paddingTop="12dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/nearby_radio_btn"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="吃饭"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_small" />
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/nearby_radio_btn"
+                        android:button="@null"
+                        android:checked="true"
+                        android:gravity="center"
+                        android:text="唱歌"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_small" />
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/nearby_radio_btn"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="看电影"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_small" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp">
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/nearby_radio_btn"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="运动"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_small" />
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/nearby_radio_btn"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="遛狗"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_small" />
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/nearby_radio_btn"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="夜宵"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_small" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp">
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/nearby_radio_btn"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="购物"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_small" />
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/nearby_radio_btn"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="夜店"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_small" />
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/nearby_radio_btn"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="喝酒"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_small" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp">
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/nearby_radio_btn"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="喝咖啡"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_small" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1" />
+
+                </LinearLayout>
+
+            </RadioGroup>
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:background="@drawable/btn_white_fillet"
+                android:paddingBottom="12dp"
+                android:paddingTop="12dp">
+
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/nearby_radio_btn"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="请我吧"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_small" />
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/nearby_radio_btn"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="我请客"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_small" />
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/nearby_radio_btn"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="不限"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_small" />
+
+
+            </RadioGroup>
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:background="@drawable/btn_white_fillet"
+                android:paddingBottom="12dp"
+                android:paddingTop="12dp">
+
+
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/nearby_radio_btn"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="男"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_small" />
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/nearby_radio_btn"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="女"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_small" />
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/nearby_radio_btn"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="不限"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_small" />
+
+
+
+            </RadioGroup>
+
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:checked="true"
+                android:drawableLeft="@drawable/radio_checked"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
+                android:padding="12dp"
+                android:text="包接送"
+                android:textColor="@color/dialog_blue_text" />
+
+            <Button
+                android:layout_width="160dp"
+                android:layout_height="50dp"
+                android:background="@drawable/btn_red_fillet"
+                android:text="发送邀请"
+                android:layout_marginBottom="21dp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_medium" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</RelativeLayout>
