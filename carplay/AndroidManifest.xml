@@ -203,7 +203,7 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>s
+            </intent-filter>
 
         </activity>
         <activity
@@ -286,15 +286,11 @@
             android:screenOrientation="portrait">
 
 
-        </activity>
-
-        <activity android:name=".activity.my.HeadAttestationActivity" >
 
         </activity>
 
-
-
-        <activity android:name=".activity.my.HeadAttestationActivity" >
+        <activity android:name=".activity.my.HeadAttestationActivity"
+            android:screenOrientation="portrait">
 
         </activity>
 
