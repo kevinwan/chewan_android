@@ -12,6 +12,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
+            android:id="@+id/iv_background"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bg3x" />
@@ -23,10 +24,10 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:gravity="center_horizontal"
-                android:orientation="vertical">
+            android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/personal_cemare"
+                android:id="@+id/iv_avatar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/icon_cemare3x" />
@@ -58,6 +59,7 @@
             android:textColor="@color/text_grey_new" />
 
         <EditText
+            android:id="@+id/et_nickname"
             style="@style/text_black_medium"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
@@ -88,7 +90,7 @@
             android:textColor="@color/text_grey_new" />
 
         <RadioGroup
-            android:id="@+id/radioGroup1"
+            android:id="@+id/rg_sex"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
@@ -98,7 +100,7 @@
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/radio0"
+                android:id="@+id/rb_male"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_marginRight="10dp"
@@ -115,7 +117,7 @@
                 android:textSize="@dimen/text_medium" />
 
             <RadioButton
-                android:id="@+id/radio1"
+                android:id="@+id/rb_female"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_marginRight="8dp"
@@ -149,15 +151,24 @@
             android:textColor="@color/text_grey_new" />
 
         <TextView
+            android:id="@+id/tv_birthday"
             style="@style/text_black_medium"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_weight="1"
             android:gravity="right|center"
+            android:hint="告诉小伙伴你的年龄"
             android:paddingRight="8dp"
-            android:text="告诉小伙伴你的年龄"
             android:textColor="@color/text_grey_ccc" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_finish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:text="完成" />
 
 </LinearLayout>
 
