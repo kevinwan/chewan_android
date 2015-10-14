@@ -10,5 +10,9 @@ public class API2 {
 
     //官方活动详情
     public static final String ActiveDetails = CWBaseurl + "official/activity/";
+    public static final String getVarifacation = CWBaseurl + "phone/";
+
+    public static final String verifyCode = CWBaseurl + "phone/";
+    public static final String login = CWBaseurl + "user/login";
 
 }

@@ -62,7 +62,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="275dp"
                     android:layout_marginTop="24dp"
-                    android:src="@color/text_hui999999" />
+                    android:src="@drawable/mofangdongzuo" />
 
                 <TextView
                     style="@style/text_black_small"
