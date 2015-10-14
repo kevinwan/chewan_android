@@ -171,7 +171,7 @@
             android:id="@+id/up_button"
             android:layout_width="158dp"
             android:layout_height="43dp"
-            android:background="@drawable/btn_red_fillet"
+            android:background="@drawable/button_owners_bg"
             android:layout_marginTop="27dp"
             android:text="提交认证"
             android:textColor="@color/white"

@@ -118,7 +118,7 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
 //                }
                 up_button.setText("已认证");
                 up_button.setEnabled(false);
-                up_button.setBackgroundResource(R.drawable.btn_grey_bg);
+                up_button.setBackgroundResource(R.drawable.btn_grey_fillet);
                 break;
             // 认证中
             case 2:
@@ -129,7 +129,7 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
 //                }
                 up_button.setText("认证中");
                 up_button.setEnabled(false);
-                up_button.setBackgroundResource(R.drawable.btn_grey_bg);
+                up_button.setBackgroundResource(R.drawable.btn_grey_fillet);
                 drivinglicense_up.setEnabled(false);
                 driverlicense_up.setEnabled(false);
                 brandchoice.setEnabled(false);
