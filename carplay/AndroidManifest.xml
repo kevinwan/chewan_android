@@ -292,9 +292,6 @@
         <activity
             android:name=".activity.my.AuthenticateOwnersActivity2"
             android:screenOrientation="portrait">
-            android:screenOrientation="portrait">
-
-
         </activity>
 
         <activity

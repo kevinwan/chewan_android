@@ -150,7 +150,7 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
     private void updrivingPic(String path) {
         Bitmap bmp = PhotoUtil.getLocalImage(new File(path));
         driving_img.setImageBitmap(bmp);
-        DhNet net = new DhNet(API2.CWBaseurl + "/user/" + "561ba2d60cf2429fb48e86bd" + "/drivingLicense/upload?token=" + "9927f747-c615-4362-bd43-a2ec31362205");
+        DhNet net = new DhNet(API2.CWBaseurl+"/user/"+user.getUserId()+"/drivingLicense/upload?token="+user.getToken());
         net.upload(new FileInfo("attach", new File(path)), new NetTask(self) {
 
             @Override
@@ -174,7 +174,7 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
     private void updriverPic(String path) {
         Bitmap bmp = PhotoUtil.getLocalImage(new File(path));
         driver_img.setImageBitmap(bmp);
-        DhNet net = new DhNet(API2.CWBaseurl + "/user/" + "561ba2d60cf2429fb48e86bd" + "/driverLicense/upload?token=" + "9927f747-c615-4362-bd43-a2ec31362205");
+        DhNet net = new DhNet(API2.CWBaseurl+"/user/"+user.getUserId()+ "/driverLicense/upload?token="+ user.getToken());
         net.upload(new FileInfo("attach", new File(path)), new NetTask(self) {
 
             @Override
@@ -210,12 +210,13 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
                     showToast("请上传驾驶证!");
                     return;
                 }
-                DhNet net = new DhNet(API2.CWBaseurl+"user/"+"561ba2d60cf2429fb48e86bd"+"/license/authentication?token="+"9927f747-c615-4362-bd43-a2ec31362205");
+                DhNet net = new DhNet(API2.CWBaseurl+"user/"+user.getUserId()+"/license/authentication?token="+ user.getToken());
                 net.addParam("brand", brandName);
                 net.addParam("model", modelName);
+                net.addParam("logo", brandLogo);
                 net.addParam("driverLicense", picUids);
                 net.addParam("drivingLicense", picUid);
-                System.out.println("1.品牌中文名:" + brandName + "2.车型:" + modelName + "3.驾驶证:" + picUids + "4.行驶证:" + picUid);
+//                System.out.println("1.品牌中文名:" + brandName + "2.车型:" + modelName + "3.驾驶证:" + picUids + "4.行驶证:" + picUid);
                 net.doPostInDialog(new NetTask(self) {
                     @Override
                     public void doInUI(Response response, Integer transfer) {
@@ -262,7 +263,7 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
                     Intent it = new Intent(self, ImageGallery.class);
                     str = new String[1];
                     str[0] = imgs;
-                    System.out.println("++++++++++"+str[0]);
+//                    System.out.println("++++++++++"+str[0]);
                     it.putExtra("imgurls", str);
                     startActivity(it);
                 }
@@ -298,7 +299,7 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
                     modelName = data.getStringExtra("modelName");
                     modelSlug = data.getStringExtra("modelSlug");
                     carName.setText(modelName);
-
+                    showToast(brandLogo);
 
 
                     break;

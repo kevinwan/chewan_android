@@ -126,7 +126,7 @@ public class AuthenticateOwnersActivity extends CarPlayBaseActivity implements
 			carModel = bundle.getString("carModel");
 			license = bundle.getString("license");
 		}
-		System.out.println("-----------------" + license);
+//		System.out.println("-----------------" + license);
 		switch (isAuthenticated) {
 		// 未认证
 		case 0:

@@ -14,6 +14,7 @@ import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.api.Constant;
+import com.gongpingjia.carplay.bean.User;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import net.duohuo.dhroid.net.DhNet;
@@ -38,6 +39,7 @@ public class HeadAttestationActivity extends CarPlayBaseActivity implements View
     private File mCacheDir;
     private String mPhotoPath;
     String photoUid;
+    User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +53,7 @@ public class HeadAttestationActivity extends CarPlayBaseActivity implements View
          head_authenticate = (Button) findViewById(R.id.head_authenticate);
          up_head = (ImageView) findViewById(R.id.up_head);
          up_head.setOnClickListener(this);
-
+        user = User.getInstance();
 
         if (getIntent().getStringExtra("photoId") != null) {
             ImageLoader.getInstance().displayImage(
@@ -65,7 +67,7 @@ public class HeadAttestationActivity extends CarPlayBaseActivity implements View
     private void uploadHead(String path) {
         Bitmap bmp = PhotoUtil.getLocalImage(new File(path));
         up_head.setImageBitmap(bmp);
-        DhNet net = new DhNet(API2.CWBaseurl+"/user/"+"561ba2d60cf2429fb48e86bd"+"/photo/upload?token="+"9927f747-c615-4362-bd43-a2ec31362205");
+        DhNet net = new DhNet(API2.CWBaseurl+"/user/"+user.getUserId()+"/photo/upload?token="+user.getToken());
         net.upload(new FileInfo("attach", new File(path)), new NetTask(self) {
 
             @Override
@@ -98,7 +100,7 @@ public class HeadAttestationActivity extends CarPlayBaseActivity implements View
                     showToast("请上传头像");
                     return;
                 }
-                DhNet net = new DhNet(API2.CWBaseurl+"/user/"+"561ba2d60cf2429fb48e86bd"+"/photo/authentication?token="+"9927f747-c615-4362-bd43-a2ec31362205");
+                DhNet net = new DhNet(API2.CWBaseurl+"/user/"+user.getUserId()+"/photo/authentication?token="+user.getToken());
                 net.addParam("photoId",photoUid);
                 net.doPostInDialog(new NetTask(self) {
                     @Override
