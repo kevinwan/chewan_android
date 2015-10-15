@@ -7,7 +7,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
@@ -24,7 +23,7 @@ public class RegisterActivity2 extends CarPlayBaseActivity implements View.OnCli
 
     private EditText mEditNum, mEditPassword, mEditValidation;
     private Button mBtnRegister;
-    private TextView mTextGetValidation;
+    private Button mBtnGetVerification;
 
     private CountTimer mCountTimer;
 
@@ -39,10 +38,11 @@ public class RegisterActivity2 extends CarPlayBaseActivity implements View.OnCli
         mEditNum = (EditText) findViewById(R.id.et_phone_num);
         mEditPassword = (EditText) findViewById(R.id.et_password);
         mBtnRegister = (Button) findViewById(R.id.btn_register);
-        mTextGetValidation = (TextView) findViewById(R.id.tv_get_code);
+        mBtnGetVerification = (Button) findViewById(R.id.tv_get_code);
+        mEditValidation = (EditText) findViewById(R.id.et_verification_code);
 
         mBtnRegister.setOnClickListener(this);
-        mTextGetValidation.setOnClickListener(this);
+        mBtnGetVerification.setOnClickListener(this);
 
         mCountTimer = new CountTimer(60000, 1000);
     }
@@ -68,6 +68,7 @@ public class RegisterActivity2 extends CarPlayBaseActivity implements View.OnCli
             case R.id.tv_get_code:
                 getValidation(num);
                 break;
+
         }
     }
 
@@ -110,16 +111,16 @@ public class RegisterActivity2 extends CarPlayBaseActivity implements View.OnCli
      * @param num
      */
     private void getValidation(String num) {
-        DhNet dhNet = new DhNet(API2.getVarifacation + num + "/verification");
+        DhNet dhNet = new DhNet(API2.getVerification + num + "/verification");
         dhNet.doGetInDialog(new NetTask(self) {
             @Override
             public void doInUI(Response response, Integer transfer) {
                 if (response.isSuccess()) {
                     mCountTimer.start();
-                    mTextGetValidation.setEnabled(false);
+                    mBtnGetVerification.setEnabled(false);
                 } else {
                     showToast("获取验证码失败");
-                    mTextGetValidation.setEnabled(true);
+                    mBtnGetVerification.setEnabled(true);
                 }
             }
         });
@@ -133,14 +134,14 @@ public class RegisterActivity2 extends CarPlayBaseActivity implements View.OnCli
 
         @Override
         public void onTick(long millisUntilFinished) {
-            mTextGetValidation.setEnabled(false);
-            mTextGetValidation.setText(millisUntilFinished / 1000 + "s");
+            mBtnGetVerification.setEnabled(false);
+            mBtnGetVerification.setText(millisUntilFinished / 1000 + "s");
         }
 
         @Override
         public void onFinish() {
-            mTextGetValidation.setEnabled(true);
-            mTextGetValidation.setText("重新发送");
+            mBtnGetVerification.setEnabled(true);
+            mBtnGetVerification.setText("重新发送");
         }
     }
 }

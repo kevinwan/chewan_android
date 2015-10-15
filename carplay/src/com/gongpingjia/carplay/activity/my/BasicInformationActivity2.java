@@ -12,12 +12,13 @@ import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
-import com.gongpingjia.carplay.api.API;
+import com.gongpingjia.carplay.activity.main.MainActivity2;
+import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.util.CarPlayPerference;
 import com.gongpingjia.carplay.util.MD5Util;
 import com.gongpingjia.carplay.view.dialog.DateTimerDialog2;
-import com.umeng.analytics.MobclickAgent;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import net.duohuo.dhroid.ioc.IocContainer;
 import net.duohuo.dhroid.net.DhNet;
@@ -32,13 +33,13 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2015/10/13.
  */
 public class BasicInformationActivity2 extends CarPlayBaseActivity implements View.OnClickListener {
-
-    private Intent mIntent = getIntent();
 
     private RadioGroup mGroupSex;
     private EditText mEditNickname;
@@ -70,7 +71,7 @@ public class BasicInformationActivity2 extends CarPlayBaseActivity implements Vi
             }
         });
 
-        setRightAction("完成", -1, new View.OnClickListener() {
+        setRightAction("完成", 1, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 register();
@@ -82,9 +83,16 @@ public class BasicInformationActivity2 extends CarPlayBaseActivity implements Vi
         mTextBirthday = (TextView) findViewById(R.id.tv_birthday);
         mImgAvatar = (ImageView) findViewById(R.id.iv_avatar);
         Button mBtnFinish = (Button) findViewById(R.id.btn_finish);
+        mBtnFinish.setOnClickListener(this);
 
         mImgAvatar.setOnClickListener(this);
-        mBtnFinish.setOnClickListener(this);
+        mTextBirthday.setOnClickListener(this);
+
+        if (getIntent().getStringExtra("avatar") != null) {
+            ImageLoader.getInstance().displayImage(getIntent().getStringExtra("avatarUrl"), mImgAvatar);
+            mEditNickname.setText(getIntent().getStringExtra("nickname"));
+            photoUid = getIntent().getStringExtra("avatar");
+        }
     }
 
     @Override
@@ -108,6 +116,7 @@ public class BasicInformationActivity2 extends CarPlayBaseActivity implements Vi
                         mTextBirthday.setText(year + "年" + month + "月" + day + "日");
                     }
                 });
+                dateTimerDialog2.show();
                 break;
         }
     }
@@ -138,13 +147,14 @@ public class BasicInformationActivity2 extends CarPlayBaseActivity implements Vi
     }
 
     private void uploadHead(String path) {
-        DhNet net = new DhNet(API.uploadHead);
+        DhNet net = new DhNet(API2.uploadAvatar);
         net.upload(new FileInfo("attach", new File(path)), new NetTask(self) {
 
             @Override
             public void doInUI(Response response, Integer transfer) {
                 hidenProgressDialog();
                 if (response.isSuccess()) {
+                    showToast("头像上传成功");
                     JSONObject jo = response.jSONFromData();
                     photoUid = JSONUtil.getString(jo, "photoId");
                 } else {
@@ -158,7 +168,7 @@ public class BasicInformationActivity2 extends CarPlayBaseActivity implements Vi
 
 
     private void register() {
-        DhNet net = new DhNet(API.register);
+        DhNet net = new DhNet(API2.register);
 
         if (mBirthday <= 0) {
             showToast("请选择生日");
@@ -171,55 +181,59 @@ public class BasicInformationActivity2 extends CarPlayBaseActivity implements Vi
         }
 
         String gender = mGroupSex.getCheckedRadioButtonId() == R.id.rb_female ? "女" : "男";
-        if (mIntent.getStringExtra("phone") != null) {
+        if (getIntent().getStringExtra("phone") != null) {
             //手机号登陆
-            net.addParam("phone", mIntent.getStringExtra("phone"));
-            net.addParam("code", mIntent.getStringExtra("code"));
-            net.addParam("password", mIntent.getStringExtra("password"));
+            net.addParam("phone", getIntent().getStringExtra("phone"));
+            net.addParam("code", getIntent().getStringExtra("code"));
+            net.addParam("password", getIntent().getStringExtra("password"));
         } else {
             //三方登陆
-            net.addParam("snsUid", mIntent.getStringExtra("uid"));
-            net.addParam("snsUserName", mIntent.getStringExtra("nickname"));
-            net.addParam("snsChannel", mIntent.getStringExtra("channel"));
+            net.addParam("uid", getIntent().getStringExtra("uid"));
+            net.addParam("channel", getIntent().getStringExtra("channel"));
         }
+
+
         net.addParam("nickname", mEditNickname.getText().toString());
         net.addParam("gender", gender);
         net.addParam("birthday", mBirthday);
-        net.addParam("photo", photoUid);
+        net.addParam("avatar", photoUid);
+
+        Map<String, Object> landmark = new HashMap<>();
+        landmark.put("longitude", 180.5);
+        landmark.put("latitude", 36.5);
+        net.addParam("landmark", landmark);
         net.doPostInDialog(new NetTask(self) {
 
             @Override
             public void doInUI(Response response, Integer transfer) {
                 if (response.isSuccess()) {
-                    JSONObject jo = response.jSONFromData();
-                    if (mIntent.getStringExtra("phone") != null) {
-                        loginHX(MD5Util.string2MD5(JSONUtil.getString(jo,
-                                        "userId")), mIntent.getStringExtra("password"),
-                                jo);
-                    } else {
-                        loginHX(MD5Util.string2MD5(JSONUtil.getString(jo,
-                                "userId")), MD5Util.string2MD5(mIntent
-                                .getStringExtra("uid")
-                                + mIntent.getStringExtra("channel")
-                                + "com.gongpingjia.carplay"), jo);
-                    }
-                    // 登录环信
-
                     showToast("注册成功!");
-                    if (getIntent().getBooleanExtra("isFromAvatar", false)) {
-                        MobclickAgent.onEvent(self, "register_from_avatar");
-                    }
-
                     CarPlayPerference per = IocContainer.getShare().get(
                             CarPlayPerference.class);
                     per.load();
-                    per.thirdId = mIntent.getStringExtra("uid");
-                    per.channel = mIntent.getStringExtra("channel");
+
+                    JSONObject jo = response.jSONFromData();
+                    if (getIntent().getStringExtra("phone") != null) {
+                        loginHX(MD5Util.string2MD5(JSONUtil.getString(jo,
+                                        "userId")), getIntent().getStringExtra("password"),
+                                jo);
+                        per.phone = getIntent().getStringExtra("phone");
+                        per.password = getIntent().getStringExtra("password");
+
+                    } else {
+                        loginHX(MD5Util.string2MD5(JSONUtil.getString(jo,
+                                "userId")), MD5Util.string2MD5(getIntent()
+                                .getStringExtra("uid")
+                                + getIntent().getStringExtra("channel")
+                                + "com.gongpingjia.carplay"), jo);
+                        per.thirdId = getIntent().getStringExtra("uid");
+                        per.channel = getIntent().getStringExtra("channel");
+                    }
                     per.commit();
-//                    Intent it = new Intent(self,
-//                            AuthenticateOwnersActivity.class);
-//                    startActivityForResult(it, AuthenticateOwners);
-//                    setResult(Activity.RESULT_OK, mIntent);
+                    Intent it = new Intent(self, MainActivity2.class);
+                    startActivity(it);
+                } else {
+                    showToast("注册失败");
                 }
             }
 

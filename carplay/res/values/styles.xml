@@ -5,6 +5,7 @@
 
     <style name="NoTitle" parent="AppBaseTheme">
         <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/white</item>
     </style>
 
     <!-- Application theme. -->
@@ -183,7 +184,7 @@
 
     <style name="line_horizontal">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">1.5px</item>
+        <item name="android:layout_height">2px</item>
         <item name="android:background">@color/line_grey</item>
     </style>
 

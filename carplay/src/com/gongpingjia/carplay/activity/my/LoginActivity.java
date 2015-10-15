@@ -1,20 +1,5 @@
 package com.gongpingjia.carplay.activity.my;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import net.duohuo.dhroid.activity.ActivityTack;
-import net.duohuo.dhroid.ioc.IocContainer;
-import net.duohuo.dhroid.net.DhNet;
-import net.duohuo.dhroid.net.JSONUtil;
-import net.duohuo.dhroid.net.NetTask;
-import net.duohuo.dhroid.net.Response;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -56,13 +41,27 @@ import com.umeng.socialize.sso.UMQQSsoHandler;
 import com.umeng.socialize.sso.UMSsoHandler;
 import com.umeng.socialize.weixin.controller.UMWXHandler;
 
+import net.duohuo.dhroid.activity.ActivityTack;
+import net.duohuo.dhroid.ioc.IocContainer;
+import net.duohuo.dhroid.net.DhNet;
+import net.duohuo.dhroid.net.JSONUtil;
+import net.duohuo.dhroid.net.NetTask;
+import net.duohuo.dhroid.net.Response;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import de.greenrobot.event.EventBus;
 
 /**
  * 登录页面
- * 
+ *
  * @author Administrator
- * 
  */
 
 public class LoginActivity extends CarPlayBaseActivity implements OnClickListener {
@@ -256,7 +255,7 @@ public class LoginActivity extends CarPlayBaseActivity implements OnClickListene
     }
 
     private void loginHX(final String currentUsername, final String currentPassword, final JSONObject jo,
-            final String phone) {
+                         final String phone) {
         EMChatManager.getInstance().login(currentUsername, currentPassword, new EMCallBack() {
 
             @Override
@@ -402,15 +401,15 @@ public class LoginActivity extends CarPlayBaseActivity implements OnClickListene
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-        case R.id.layout_login_weixin:
-            doOauthVerify(SHARE_MEDIA.WEIXIN);
-            break;
-        case R.id.layout_login_weibo:
-            doOauthVerify(SHARE_MEDIA.SINA);
-            break;
-        case R.id.layout_login_qq:
-            doOauthVerify(SHARE_MEDIA.QQ);
-            break;
+            case R.id.layout_login_weixin:
+                doOauthVerify(SHARE_MEDIA.WEIXIN);
+                break;
+            case R.id.layout_login_weibo:
+                doOauthVerify(SHARE_MEDIA.SINA);
+                break;
+            case R.id.layout_login_qq:
+                doOauthVerify(SHARE_MEDIA.QQ);
+                break;
         }
     }
 
@@ -457,26 +456,26 @@ public class LoginActivity extends CarPlayBaseActivity implements OnClickListene
                 if (status == 200 && info != null) {
                     String api = API.CWBaseurl + "/sns/login";
                     switch (media) {
-                    case WEIXIN:
-                        mNickName = (String) info.get("nickname");
-                        mAvatarUrl = (String) info.get("headimgurl");
-                        mChannel = "wechat";
-                        break;
+                        case WEIXIN:
+                            mNickName = (String) info.get("nickname");
+                            mAvatarUrl = (String) info.get("headimgurl");
+                            mChannel = "wechat";
+                            break;
 
-                    case SINA:
-                        mNickName = (String) info.get("screen_name");
-                        mAvatarUrl = (String) info.get("profile_image_url");
-                        mChannel = "sinaWeibo";
-                        break;
+                        case SINA:
+                            mNickName = (String) info.get("screen_name");
+                            mAvatarUrl = (String) info.get("profile_image_url");
+                            mChannel = "sinaWeibo";
+                            break;
 
-                    case QQ:
-                        mNickName = (String) info.get("screen_name");
-                        mAvatarUrl = (String) info.get("profile_image_url");
-                        mChannel = "qq";
-                        break;
+                        case QQ:
+                            mNickName = (String) info.get("screen_name");
+                            mAvatarUrl = (String) info.get("profile_image_url");
+                            mChannel = "qq";
+                            break;
 
-                    default:
-                        break;
+                        default:
+                            break;
                     }
                     DhNet net = new DhNet(api);
                     String sign = MD5Util.string2MD5(mUid + mChannel + "com.gongpingjia.carplay");
@@ -515,27 +514,27 @@ public class LoginActivity extends CarPlayBaseActivity implements OnClickListene
                                     per.channel = mChannel;
                                     per.commit();
 
-                                    // User user = User.getInstance();
-                                    // try {
-                                    // user.setUserId(json.getString("userId"));
-                                    // user.setToken(json.getString("token"));
-                                    // user.setBrand(json.getString("brand"));
-                                    // user.setBrandLogo(json.getString("brandLogo"));
-                                    // user.setNickName(json.getString("nickname"));
-                                    // user.setSeatNumber(json.getInt("seatNumber"));
-                                    // user.setModel(json.getString("model"));
-                                    // User.getInstance().setLogin(true);
-                                    // LoginEB loginEB = new LoginEB();
-                                    // loginEB.setIslogin(true);
-                                    // EventBus.getDefault().post(loginEB);
+                                    User user = User.getInstance();
+                                    try {
+                                        user.setUserId(json.getString("userId"));
+                                        user.setToken(json.getString("token"));
+                                        user.setBrand(json.getString("brand"));
+                                        user.setBrandLogo(json.getString("brandLogo"));
+                                        user.setNickName(json.getString("nickname"));
+                                        user.setSeatNumber(json.getInt("seatNumber"));
+                                        user.setModel(json.getString("model"));
+                                        User.getInstance().setLogin(true);
+//                                        LoginEB loginEB = new LoginEB();
+//                                        loginEB.setIslogin(true);
+//                                        EventBus.getDefault().post(loginEB);
 
-                                    loginHX(MD5Util.string2MD5(JSONUtil.getString(json, "userId")),
-                                            MD5Util.string2MD5(per.thirdId + per.channel + "com.gongpingjia.carplay"),
-                                            json);
-                                    // } catch (JSONException e) {
-                                    // e.printStackTrace();
-                                    // }
-                                    // 从退出登陆过来
+                                        loginHX(MD5Util.string2MD5(JSONUtil.getString(json, "userId")),
+                                                MD5Util.string2MD5(per.thirdId + per.channel + "com.gongpingjia.carplay"),
+                                                json);
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+//                                    从退出登陆过来
                                     if (isFromLogout) {
                                         Intent it = new Intent(self, MainActivity.class);
                                         startActivity(it);

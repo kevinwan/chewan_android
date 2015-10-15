@@ -2,9 +2,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp">
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp">
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,20 +16,21 @@
 
         <ImageView
             android:id="@+id/iv_logo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/icon_logo" />
 
         <EditText
             android:id="@+id/et_phone_num"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="10dp"
             android:background="@color/nothing"
             android:drawableLeft="@drawable/ic_phone"
             android:drawablePadding="5dp"
-            android:inputType="phone" />
+            android:inputType="phone"
+            android:textColor="@color/text_red" />
 
         <View
             android:id="@+id/divider"
@@ -45,14 +48,16 @@
                 android:background="@color/nothing"
                 android:drawableLeft="@drawable/ic_lock"
                 android:drawablePadding="5dp"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:textColor="@color/text_red" />
 
-            <ImageView
+            <CheckBox
                 android:id="@+id/iv_switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/switch_left" />
+                android:background="@drawable/password_bg_sel"
+                android:button="@null" />
         </LinearLayout>
 
         <LinearLayout style="@style/line_horizontal"></LinearLayout>
@@ -69,7 +74,8 @@
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
                 android:background="@drawable/btn_red_fillet"
-                android:text="登录" />
+                android:text="登录"
+                android:textColor="@color/white" />
 
             <Button
                 android:id="@+id/btn_register"
@@ -77,13 +83,13 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/btn_blue_fillet"
-                android:text="注册" />
+                android:text="注册"
+                android:textColor="@color/white" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/tv_forget_password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/text_blue_medium"
             android:layout_marginTop="20dp"
             android:gravity="center"
             android:minHeight="20dp"
@@ -94,7 +100,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="20dp"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -105,7 +111,7 @@
 
             <TextView
                 android:id="@+id/tv_tip"
-                style="@style/text_black_small"
+                style="@style/text_grey_medium"
                 android:layout_centerInParent="true"
                 android:text="您还可以选择第三方登录" />
 
@@ -129,7 +135,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="20dp">
 
             <ImageView
                 android:id="@+id/iv_weixin"
