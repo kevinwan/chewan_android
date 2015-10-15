@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.active.ActiveDetailsActivity2;
 import com.gongpingjia.carplay.api.API2;
+import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.view.RoundImageView;
 import com.gongpingjia.carplay.view.dialog.NearbyFilterDialog;
 
@@ -50,11 +51,13 @@ public class MyFragment2 extends Fragment implements OnClickListener {
         return instance;
     }
 
+    User user;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         mainV = inflater.inflate(R.layout.fragment_my2, null);
+        user = User.getInstance();
         initView();
         return mainV;
     }
@@ -81,18 +84,21 @@ public class MyFragment2 extends Fragment implements OnClickListener {
         headattestationL.setOnClickListener(this);
         carattestationL.setOnClickListener(this);
         headI.setOnClickListener(this);
-        getMyDetails();
 
+        if (user.isLogin()) {
+            getMyDetails();
+        }
     }
 
     public void getMyDetails() {
 
-        DhNet verifyNet = new DhNet(API2.CWBaseurl + "/user/" + "561ba2d60cf2429fb48e86bd"
-                + "/info?viewUser=" + "561ba2d60cf2429fb48e86bd" + "&token=" + "9927f747-c615-4362-bd43-a2ec31362205");
+        DhNet verifyNet = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId()
+                + "/info?viewUser=" + user.getUserId() + "&token=" + user.getToken());
         verifyNet.doGet(new NetTask(getActivity()) {
 
             @Override
             public void doInUI(Response response, Integer transfer) {
+//                System.out.println(user.getUserId()+"---------"+user.getToken());
                 if (response.isSuccess()) {
                     JSONObject jo = response.jSONFromData();
 

@@ -56,11 +56,14 @@ public class MateActivity extends CarPlayBaseActivity implements Runnable{
     @Override
     public void run() {
         for (int i=0;true;i++){
-            mHandler.sendEmptyMessageDelayed(1, 1000);
+            Message msg=new Message();
+            msg.what=1;
+            Bundle bd=new Bundle();
+            bd.putInt("index",i%list.size());
+            msg.setData(bd);
+            mHandler.sendMessage(msg);
             try {
-
-                int rd=random.nextInt(2000);
-                Thread.sleep(1000+rd);
+                Thread.sleep(2500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -72,8 +75,9 @@ public class MateActivity extends CarPlayBaseActivity implements Runnable{
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
-                    int rd=random.nextInt(list.size());
-                    list.get(rd).startAnimation();
+                   int index= msg.getData().getInt("index");
+                        list.get(index).startAnimation();
+
                     break;
             }
         }

@@ -166,6 +166,28 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
             public void doInUI(Response response, Integer transfer) {
                 if (response.isSuccess()) {
                     showToast("登陆成功");
+                    JSONObject json = response.jSONFrom("data");
+                    User user = User.getInstance();
+                    try {
+                        user.setUserId(json.getString("userId"));
+                        user.setToken(json.getString("token"));
+                        user.setBrand(json.getString("brand"));
+                        user.setBrandLogo(json.getString("brandLogo"));
+                        user.setHeadUrl(json.getString("avatar"));
+                        user.setNickName(json.getString("nickname"));
+                        user.setModel(json.getString("model"));
+                        User.getInstance().setLogin(true);
+
+//                            LoginEB loginEB = new LoginEB();
+//                            loginEB.setIslogin(true);
+//                            EventBus.getDefault().post(loginEB);
+
+//                            loginHX(MD5Util.string2MD5(JSONUtil.getString(json, "userId")),
+//                                    MD5Util.string2MD5(per.thirdId + per.channel + "com.gongpingjia.carplay"),
+//                                    json);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     Intent it = new Intent(self, MainActivity2.class);
                     startActivity(it);
                 } else {

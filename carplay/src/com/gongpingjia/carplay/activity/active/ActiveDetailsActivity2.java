@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.api.API2;
+import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.view.gallery.BasePagerAdapter;
 import com.gongpingjia.carplay.view.gallery.GalleryViewPager;
 import com.gongpingjia.carplay.view.gallery.UrlPagerAdapter;
@@ -50,6 +51,8 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
 
     private Button joinBtn;
 
+    User user;
+
 
     /** headview */
     private ImageView imgfoldI;
@@ -77,6 +80,8 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
 
     @Override
     public void initView() {
+        user=User.getInstance();
+
         mInflater=LayoutInflater.from(this);
         mHeadView=mInflater.inflate(R.layout.item_active_details2_headview, null);
         mFootView=mInflater.inflate(R.layout.item_active_details2_footview, null);
@@ -134,11 +139,11 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
         foldR.setOnClickListener(this);
         processL.setOnClickListener(this);
         explainL.setOnClickListener(this);
-//        getActiveDetailsData();
+        getActiveDetailsData();
     }
 
     private void getActiveDetailsData(){
-        DhNet verifyNet = new DhNet(API2.ActiveDetails + "561e177089f5f20c9606daf9" + "/info?userId=" + "561ba2d60cf2429fb48e86bd" + "&token=" + "9927f747-c615-4362-bd43-a2ec31362205");
+        DhNet verifyNet = new DhNet(API2.ActiveDetails + "561f5eaa0cf2a1b735efa50a" + "/info?userId=" + user.getUserId() + "&token=" + user.getToken());
         verifyNet.doGet(new NetTask(self) {
 
             @Override
@@ -171,12 +176,22 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
                         foldR.setVisibility(View.GONE);
                     }
 
+                    //0:无限制 1：限制总人数 2：限制男女人数
+                    int limitType=JSONUtil.getInt(jo, "limitType");
                     //男生,女生数量,总量
-                    ViewUtil.bindView(participate_womanT,JSONUtil.getInt(jo, "femaleNum")+"/"+JSONUtil.getInt(jo, "femaleLimit"));
-                    ViewUtil.bindView(participate_manT,JSONUtil.getInt(jo, "maleNum")+"/"+JSONUtil.getInt(jo, "maleLimit"));
+                    if (limitType==1){
+                        ViewUtil.bindView(participate_womanT,JSONUtil.getInt(jo, "nowJoinNum")+"/"+JSONUtil.getInt(jo, "totalLimit"));
+                        ViewUtil.bindView(participate_manT,JSONUtil.getInt(jo, "nowJoinNum")+"/"+JSONUtil.getInt(jo, "totalLimit"));
+                    }else if(limitType==2){
+                        ViewUtil.bindView(participate_womanT,JSONUtil.getInt(jo, "femaleNum")+"/"+JSONUtil.getInt(jo, "femaleLimit"));
+                        ViewUtil.bindView(participate_manT,JSONUtil.getInt(jo, "maleNum")+"/"+JSONUtil.getInt(jo, "maleLimit"));
+                    }else {
+
+                    }
+
 
                     //活动大图
-                    JSONObject jsc= JSONUtil.getJSONObject(jo,"cover");
+                    JSONObject jsc= JSONUtil.getJSONObject(jo,"covers");
                     String photo=JSONUtil.getString(jsc,"url");
 
                     /** GalleryViewPager  */
