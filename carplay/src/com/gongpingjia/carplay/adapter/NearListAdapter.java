@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.SimpleViewHolder> {
-    private static final int COUNT = 100;
+    private static final int COUNT = 5;
 
     private final Context mContext;
     private final RecyclerView mRecyclerView;

@@ -257,4 +257,9 @@
         <item name="android:activityCloseExitAnimation">@anim/dialog_exit</item>
     </style>
 
+    <declare-styleable name="refreshableView">
+        <attr name="interceptAllMoveEvents" format="boolean"/>
+    </declare-styleable>
+
+
 </resources>

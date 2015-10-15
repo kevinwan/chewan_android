@@ -16,7 +16,7 @@ import java.util.List;
  * Created by Administrator on 2015/10/12.
  */
 public class RecommendListAdapter extends RecyclerView.Adapter<RecommendListAdapter.SimpleViewHolder> {
-    private static final int COUNT = 100;
+    private static final int COUNT = 5;
 
     private final Context mContext;
     private final RecyclerView mRecyclerView;
@@ -55,7 +55,7 @@ public class RecommendListAdapter extends RecyclerView.Adapter<RecommendListAdap
 
     @Override
     public SimpleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        final View view = LayoutInflater.from(mContext).inflate(R.layout.list_item_nearby, parent, false);
+        final View view = LayoutInflater.from(mContext).inflate(R.layout.item_fragment_recommend, parent, false);
         return new SimpleViewHolder(view);
     }
 

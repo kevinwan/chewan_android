@@ -39,6 +39,7 @@ import com.easemob.chat.EMMessage;
 import com.easemob.exceptions.EaseMobException;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.active.NearListFragment;
+import com.gongpingjia.carplay.activity.active.RecommendListFragment;
 import com.gongpingjia.carplay.activity.my.LoginActivity;
 import com.gongpingjia.carplay.activity.my.ManageAlbumActivity;
 import com.gongpingjia.carplay.activity.my.MyFragment2;
@@ -49,8 +50,6 @@ import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.chat.DemoHXSDKHelper;
 import com.gongpingjia.carplay.chat.bean.GroupEB;
 import com.gongpingjia.carplay.chat.controller.HXSDKHelper;
-import com.gongpingjia.carplay.manage.UserInfoManage;
-import com.gongpingjia.carplay.manage.UserInfoManage.LoginCallBack;
 import com.gongpingjia.carplay.service.MsgService;
 import com.gongpingjia.carplay.util.CarPlayPerference;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -120,6 +119,8 @@ public class MainActivity2 extends BaseFragmentActivity implements
     private RotateAnimation mRotateAnimation;
     ImageView imgCenter;
 
+    TextView rightT;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -168,8 +169,13 @@ public class MainActivity2 extends BaseFragmentActivity implements
         titleBar = findViewById(R.id.titlebar);
         initTab();
         setTab(0);
+        rightT = (TextView) findViewById(R.id.right_text);
+        rightT.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-
+            }
+        });
         msgT = (ImageView) findViewById(R.id.msg_point);
         chatPointI = (ImageView) findViewById(R.id.chat_point);
         appointmentI = (ImageView) findViewById(R.id.center);
@@ -214,26 +220,29 @@ public class MainActivity2 extends BaseFragmentActivity implements
 
     private void setTab(int index) {
 
-        if (index == 1) {
-            if (!User.getInstance().isLogin()) {
-                UserInfoManage.getInstance().checkLogin(self,
-                        new LoginCallBack() {
+//        if (index == 1) {
+//            if (!User.getInstance().isLogin()) {
+//                UserInfoManage.getInstance().checkLogin(self,
+//                        new LoginCallBack() {
+//
+//                            @Override
+//                            public void onisLogin() {
+//                                setTab(1);
+//                            }
+//
+//                            @Override
+//                            public void onLoginFail() {
+//                            }
+//                        });
+//            }
+//        }
+//
+//        if (index == 1 && !User.getInstance().isLogin()) {
+//            return;
+//        }
 
-                            @Override
-                            public void onisLogin() {
-                                setTab(1);
-                            }
 
-                            @Override
-                            public void onLoginFail() {
-                            }
-                        });
-            }
-        }
-
-        if (index == 1 && !User.getInstance().isLogin()) {
-            return;
-        }
+        rightT.setVisibility(index == 0 ? View.VISIBLE : View.GONE);
 
         for (int i = 0; i < tabV.getChildCount(); i++) {
             View childV = tabV.getChildAt(i);
@@ -256,11 +265,11 @@ public class MainActivity2 extends BaseFragmentActivity implements
                     case 1:
                         setTitle("推荐");
                         img.setImageResource(R.drawable.icon_nav_tuijian_f);
+                        switchContent(RecommendListFragment.getInstance());
                         break;
 
                     case 3:
                         setTitle("动态");
-//                        switchContent(MyFragment.getInstance());
                         img.setImageResource(R.drawable.icon_nav_dongtai_f);
                         break;
                     case 4:

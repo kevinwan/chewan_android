@@ -9,6 +9,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.ScaleAnimation;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -24,7 +25,7 @@ public class AnimButtonView extends RelativeLayout {
 
     ImageView image1, image2;
 
-    private AnimationSet mAnimationSet1, mAnimationSet2;
+    private AnimationSet mAnimationSet1, mAnimationSet2, mTranslateAnimationSet;
 
     private Handler mHandler = new Handler() {
         @Override
@@ -65,7 +66,9 @@ public class AnimButtonView extends RelativeLayout {
         mAnimationSet1 = initAnimationSet();
         mAnimationSet2 = initAnimationSet();
         a.recycle();
+        initAnimationTranslateAnimation();
     }
+
 
     private AnimationSet initAnimationSet() {
         AnimationSet as = new AnimationSet(true);
@@ -82,7 +85,18 @@ public class AnimButtonView extends RelativeLayout {
         return as;
     }
 
-    public void startAnimation() {
+    private void initAnimationTranslateAnimation() {
+        mTranslateAnimationSet = new AnimationSet(true);
+        TranslateAnimation ta = new TranslateAnimation(0, -15, 0, 0);
+        ta.setDuration(1000);
+        ta.setRepeatMode(Animation.REVERSE);
+        ta.setRepeatCount(Animation.INFINITE);// 设置循环
+        mTranslateAnimationSet.addAnimation(ta);
+        this.startAnimation(mTranslateAnimationSet);
+    }
+
+
+    public void startScaleAnimation() {
         image1.startAnimation(mAnimationSet1);
         mHandler.sendEmptyMessageDelayed(MSG_WAVE2_ANIMATION, OFFSET);
     }

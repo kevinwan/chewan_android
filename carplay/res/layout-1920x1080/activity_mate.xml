@@ -23,6 +23,7 @@
 
 
         <RelativeLayout
+            android:id="@+id/content_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
@@ -33,20 +34,20 @@
                 android:src="@drawable/mate_bg" />
 
             <com.gongpingjia.carplay.view.AnimButtonView
-                android:layout_width="112dp"
-                android:layout_height="112dp"
-                android:layout_marginLeft="40dp"
-                android:layout_marginTop="6dp"
+                android:layout_width="106dp"
+                android:layout_height="106dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="16dp"
                 my:bg="@drawable/mate_cf"
                 my:src="@drawable/mate_cf">
 
             </com.gongpingjia.carplay.view.AnimButtonView>
 
             <com.gongpingjia.carplay.view.AnimButtonView
-                android:layout_width="98dp"
-                android:layout_height="98dp"
-                android:layout_marginLeft="190dp"
-                android:layout_marginTop="42dp"
+                android:layout_width="94dp"
+                android:layout_height="94dp"
+                android:layout_marginLeft="220dp"
+                android:layout_marginTop="72dp"
                 my:bg="@drawable/mate_cg"
                 my:src="@drawable/mate_cg">
 
@@ -55,78 +56,78 @@
             <com.gongpingjia.carplay.view.AnimButtonView
                 android:layout_width="98dp"
                 android:layout_height="98dp"
-                android:layout_marginLeft="95dp"
-                android:layout_marginTop="108dp"
+                android:layout_marginLeft="110dp"
+                android:layout_marginTop="158dp"
                 my:bg="@drawable/mate_kdy"
                 my:src="@drawable/mate_kdy">
 
             </com.gongpingjia.carplay.view.AnimButtonView>
 
             <com.gongpingjia.carplay.view.AnimButtonView
-                android:layout_width="84dp"
-                android:layout_height="84dp"
-                android:layout_marginLeft="220dp"
-                android:layout_marginTop="170dp"
+                android:layout_width="82dp"
+                android:layout_height="82dp"
+                android:layout_marginLeft="260dp"
+                android:layout_marginTop="230dp"
                 my:bg="@drawable/mate_lg"
                 my:src="@drawable/mate_lg">
 
             </com.gongpingjia.carplay.view.AnimButtonView>
 
             <com.gongpingjia.carplay.view.AnimButtonView
-                android:layout_width="91dp"
-                android:layout_height="91dp"
+                android:layout_width="95dp"
+                android:layout_height="95dp"
                 android:layout_marginLeft="25dp"
-                android:layout_marginTop="192dp"
+                android:layout_marginTop="252dp"
                 my:bg="@drawable/mate_yd"
                 my:src="@drawable/mate_yd">
 
             </com.gongpingjia.carplay.view.AnimButtonView>
 
             <com.gongpingjia.carplay.view.AnimButtonView
-                android:layout_width="98dp"
-                android:layout_height="98dp"
-                android:layout_marginLeft="140dp"
-                android:layout_marginTop="220dp"
+                android:layout_width="94dp"
+                android:layout_height="94dp"
+                android:layout_marginLeft="170dp"
+                android:layout_marginTop="310dp"
                 my:bg="@drawable/mate_yx"
                 my:src="@drawable/mate_yx">
 
             </com.gongpingjia.carplay.view.AnimButtonView>
 
             <com.gongpingjia.carplay.view.AnimButtonView
-                android:layout_width="98dp"
-                android:layout_height="98dp"
-                android:layout_marginLeft="433dp"
-                android:layout_marginTop="24dp"
+                android:layout_width="94dp"
+                android:layout_height="94dp"
+                android:layout_marginLeft="473dp"
+                android:layout_marginTop="44dp"
                 my:bg="@drawable/mate_yd"
                 my:src="@drawable/mate_yd">
 
             </com.gongpingjia.carplay.view.AnimButtonView>
 
             <com.gongpingjia.carplay.view.AnimButtonView
-                android:layout_width="91dp"
-                android:layout_height="91dp"
-                android:layout_marginLeft="338dp"
-                android:layout_marginTop="92dp"
+                android:layout_width="94dp"
+                android:layout_height="94dp"
+                android:layout_marginLeft="368dp"
+                android:layout_marginTop="122dp"
                 my:bg="@drawable/mate_gw"
                 my:src="@drawable/red_circle">
 
             </com.gongpingjia.carplay.view.AnimButtonView>
 
             <com.gongpingjia.carplay.view.AnimButtonView
-                android:layout_width="84dp"
-                android:layout_height="84dp"
-                android:layout_marginLeft="395dp"
-                android:layout_marginTop="195dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="415dp"
+                android:layout_marginTop="256dp"
                 my:bg="@drawable/mate_hkf"
                 my:src="@drawable/mate_hkf">
 
             </com.gongpingjia.carplay.view.AnimButtonView>
 
             <com.gongpingjia.carplay.view.AnimButtonView
-                android:layout_width="98dp"
-                android:layout_height="98dp"
-                android:layout_marginLeft="295dp"
-                android:layout_marginTop="250dp"
+                android:layout_width="94dp"
+                android:layout_height="94dp"
+                android:layout_marginLeft="335dp"
+                android:layout_marginTop="335dp"
                 my:bg="@drawable/mate_hj"
                 my:src="@drawable/mate_hj">
 
@@ -144,7 +145,7 @@
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="45dp"
         android:background="@drawable/mate_btn_bg"
         android:text="随便看看"
         android:textColor="@color/white"
