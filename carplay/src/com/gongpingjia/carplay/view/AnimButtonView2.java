@@ -13,6 +13,8 @@ import android.widget.RelativeLayout;
 
 import com.gongpingjia.carplay.R;
 
+import net.duohuo.dhroid.util.DhUtil;
+
 public class AnimButtonView2 extends RelativeLayout {
 
 
@@ -26,7 +28,7 @@ public class AnimButtonView2 extends RelativeLayout {
 
     ImageView bg;
 
-    private AnimationSet mAnimationSet_bg, mAnimationSet_bg2,mAnimationSet_img,mAnimationSet_img2;
+    private AnimationSet mAnimationSet_bg, mAnimationSet_bg2, mAnimationSet_img, mAnimationSet_img2;
 
 
 //    private Handler mHandler = new Handler() {
@@ -52,7 +54,9 @@ public class AnimButtonView2 extends RelativeLayout {
 
 
         RelativeLayout.LayoutParams pa = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-        pa.setMargins(40, 40, 40, 40);
+        int margin = DhUtil.dip2px(mContext, 20);
+
+        pa.setMargins(margin, margin, margin, margin);
         image1 = new ImageView(mContext);
 //        image2 = new ImageView(mContext);
         bg = new ImageView(mContext);
@@ -117,6 +121,7 @@ public class AnimButtonView2 extends RelativeLayout {
         as.addAnimation(sa);
         return as;
     }
+
     private AnimationSet initAnimationSet_img2() {
         AnimationSet as = new AnimationSet(true);
         ScaleAnimation sa = new ScaleAnimation(1.1f, 1f, 1.1f, 1f,
@@ -141,7 +146,7 @@ public class AnimButtonView2 extends RelativeLayout {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
-                    bg.startAnimation( mAnimationSet_img2);
+                    bg.startAnimation(mAnimationSet_img2);
                     break;
                 case 2:
                     image1.startAnimation(mAnimationSet_bg);

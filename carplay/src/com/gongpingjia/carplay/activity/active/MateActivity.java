@@ -1,17 +1,6 @@
 package com.gongpingjia.carplay.activity.active;
 
 import android.os.Bundle;
-<<<<<<< HEAD
-
-import com.gongpingjia.carplay.R;
-import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
-
-/**
- * Created by Administrator on 2015/10/13.
- */
-public class MateActivity extends CarPlayBaseActivity {
-
-=======
 import android.os.Handler;
 import android.os.Message;
 import android.widget.RelativeLayout;
@@ -36,7 +25,6 @@ public class MateActivity extends CarPlayBaseActivity implements Runnable{
     List<AnimButtonView2> list;
 
     Random random = new Random();
->>>>>>> origin/develop-2.0
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,13 +33,9 @@ public class MateActivity extends CarPlayBaseActivity implements Runnable{
 
     @Override
     public void initView() {
-<<<<<<< HEAD
-
-    }
-=======
         list = new ArrayList<AnimButtonView2>();
 
-        vesselR = (RelativeLayout) findViewById(R.id.vessel);
+        vesselR = (RelativeLayout) findViewById(R.id.content_layout);
 
         for (int i=1;i<vesselR.getChildCount();i++){
             AnimButtonView2 view = (AnimButtonView2) vesselR.getChildAt(i);
@@ -98,5 +82,4 @@ public class MateActivity extends CarPlayBaseActivity implements Runnable{
             }
         }
     };
->>>>>>> origin/develop-2.0
 }
