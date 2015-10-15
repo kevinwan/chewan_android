@@ -73,7 +73,7 @@ public class ManageAlbumActivity extends CarPlayBaseActivity implements OnClickL
 
     private ImageView mLeftImage;
 
-    private ImageView bottom_Photograph;
+    private ImageView bottom_photograph,gallery_img;
 
     static User mUser = User.getInstance();
 
@@ -108,13 +108,14 @@ public class ManageAlbumActivity extends CarPlayBaseActivity implements OnClickL
 
         setTitle("相机胶卷");
         setRightAction("编辑", -1, this);
-        ImageView gallery_img = (ImageView) findViewById(R.id.gallery_img);
+         gallery_img = (ImageView) findViewById(R.id.gallery_img);
         gallery_img.setVisibility(View.VISIBLE);
+        gallery_img.setOnClickListener(this);
         mRightText = (TextView) findViewById(R.id.right_text);
         mRightImage = (ImageView) findViewById(R.id.right_icon);
         mLeftText = (TextView) findViewById(R.id.left_text);
         mLeftImage = (ImageView) findViewById(R.id.back);
-        bottom_Photograph = (ImageView) findViewById(R.id.bottom_Photograph);
+        bottom_photograph = (ImageView) findViewById(R.id.bottom_Photograph);
         choose_ok = (TextView) findViewById(R.id.choose_ok);
         choose_num = (TextView) findViewById(R.id.choose_num);
         mCacheDir = new File(getExternalCacheDir(), "CarPlay");
@@ -140,7 +141,7 @@ public class ManageAlbumActivity extends CarPlayBaseActivity implements OnClickL
                     mLeftText.setOnClickListener(ManageAlbumActivity.this);
                     mRightText.setOnClickListener(ManageAlbumActivity.this);
                     mRightImage.setOnClickListener(ManageAlbumActivity.this);
-                    bottom_Photograph.setOnClickListener(ManageAlbumActivity.this);
+                    bottom_photograph.setOnClickListener(ManageAlbumActivity.this);
                     Log.e("tag", response.plain());
                     JSONObject data = response.jSONFrom("data");
                     try {
