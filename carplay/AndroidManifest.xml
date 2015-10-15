@@ -199,12 +199,6 @@
             android:name=".activity.my.LoginActivity2"
             android:screenOrientation="portrait">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
         </activity>
 
 
@@ -289,7 +283,11 @@
         </receiver>
 
         <activity android:name=".activity.active.ActiveDetailsActivity2" >
-            
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
             </activity>
         <activity
             android:name=".activity.my.AuthenticateOwnersActivity2"
@@ -311,6 +309,7 @@
         <activity android:name=".activity.active.HispronActiveActivity" />
         <activity android:name=".activity.my.InterestedPersonActivity" />
         <activity android:name=".activity.my.SettingActivity2"></activity>
+        <activity android:name=".activity.active.MateActivity"></activity>
     </application>
 
 </manifest>

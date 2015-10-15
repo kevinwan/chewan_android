@@ -1,5 +1,6 @@
 package com.gongpingjia.carplay.activity.active;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -71,7 +72,7 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_active_details2);
 
-//        http://cwapi.gongpingjia.com:8080/v2/official/activity/561e177089f5f20c9606daf9/info?userId=561ba2d60cf2429fb48e86bd&token=9927f747-c615-4362-bd43-a2ec31362205
+//        http://cwapi.gongpingjia.com:8080/v2/official/activity/561f5eaa0cf2a1b735efa50a/info?userId=561ba2d60cf2429fb48e86bd&token=9927f747-c615-4362-bd43-a2ec31362205
     }
 
     @Override
@@ -133,7 +134,7 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
         foldR.setOnClickListener(this);
         processL.setOnClickListener(this);
         explainL.setOnClickListener(this);
-        getActiveDetailsData();
+//        getActiveDetailsData();
     }
 
     private void getActiveDetailsData(){
@@ -212,7 +213,8 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
         switch (v.getId()){
             //报名参加
             case R.id.join:
-
+                Intent it = new Intent(self,MateActivity.class);
+                startActivity(it);
                 break;
             //活动描述
             case R.id.fold:
