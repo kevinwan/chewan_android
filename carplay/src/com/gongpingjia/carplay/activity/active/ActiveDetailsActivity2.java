@@ -16,13 +16,23 @@ import android.widget.TextView;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.api.API2;
+import com.gongpingjia.carplay.view.gallery.BasePagerAdapter;
 import com.gongpingjia.carplay.view.gallery.GalleryViewPager;
+import com.gongpingjia.carplay.view.gallery.UrlPagerAdapter;
 
 import net.duohuo.dhroid.net.DhNet;
+import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
+import net.duohuo.dhroid.util.ViewUtil;
 
 import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 /**
  * 活动详情
@@ -42,7 +52,7 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
 
     /** headview */
     private ImageView imgfoldI;
-    private TextView titleT,contentT,startTimeT,endTimeT,priceT,placeT,participate_womanT,participate_manT;
+    private TextView titleT,contentT,startTimeT,endTimeT,priceT,placeT,participate_womanT,participate_manT,introduceT,creattimeT;
     private RelativeLayout foldR;
     private GalleryViewPager mViewPager;
 
@@ -61,7 +71,7 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_active_details2);
 
-//        http://cwapi.gongpingjia.com:8080/v2/official/activity/561ba7bf0cf2429fb48e86bf/info?userId=561ba2d60cf2429fb48e86bd&token=9927f747-c615-4362-bd43-a2ec31362205
+//        http://cwapi.gongpingjia.com:8080/v2/official/activity/561e177089f5f20c9606daf9/info?userId=561ba2d60cf2429fb48e86bd&token=9927f747-c615-4362-bd43-a2ec31362205
     }
 
     @Override
@@ -106,6 +116,8 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
         placeT = (TextView) mHeadView.findViewById(R.id.place);
         participate_womanT = (TextView) mHeadView.findViewById(R.id.participate_woman);
         participate_manT = (TextView) mHeadView.findViewById(R.id.participate_man);
+        creattimeT = (TextView) mHeadView.findViewById(R.id.creattime);
+        introduceT = (TextView) mHeadView.findViewById(R.id.introduce);
         mViewPager = (GalleryViewPager) mHeadView.findViewById(R.id.viewer);
 
 
@@ -121,11 +133,11 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
         foldR.setOnClickListener(this);
         processL.setOnClickListener(this);
         explainL.setOnClickListener(this);
-//        getActiveDetailsData();
+        getActiveDetailsData();
     }
 
     private void getActiveDetailsData(){
-        DhNet verifyNet = new DhNet(API2.ActiveDetails + "561ba7bf0cf2429fb48e86bf" + "/info?userId=" + "561ba2d60cf2429fb48e86bd" + "&token=" + "9927f747-c615-4362-bd43-a2ec31362205");
+        DhNet verifyNet = new DhNet(API2.ActiveDetails + "561e177089f5f20c9606daf9" + "/info?userId=" + "561ba2d60cf2429fb48e86bd" + "&token=" + "9927f747-c615-4362-bd43-a2ec31362205");
         verifyNet.doGet(new NetTask(self) {
 
             @Override
@@ -133,26 +145,62 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
                 if (response.isSuccess()) {
                     JSONObject jo = response.jSONFromData();
 
+                    //目的地
+                    JSONObject js= JSONUtil.getJSONObject(jo,"destination");
+                    ViewUtil.bindView(placeT,JSONUtil.getString(js,"province")+"省"+JSONUtil.getString(js,"city")+"市"+JSONUtil.getString(js,"detail"));
 
+                    //开始-结束时间,创建时间
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+                    Date sdate = new Date(JSONUtil.getLong(jo,"start"));
+                    ViewUtil.bindView(startTimeT,format.format(sdate));
+                    Date edate = new Date(JSONUtil.getLong(jo,"end"));
+                    ViewUtil.bindView(endTimeT,format.format(edate));
+
+                    Date cdate = new Date(JSONUtil.getLong(jo,"createTime"));
+                    ViewUtil.bindView(creattimeT,format.format(cdate));
+
+                    //标题,介绍,内容,价格,补贴
+                    ViewUtil.bindView(titleT,JSONUtil.getString(jo, "title"));
+                    ViewUtil.bindView(introduceT,JSONUtil.getString(jo, "instruction"));
+                    ViewUtil.bindView(contentT,JSONUtil.getString(jo, "description"));
+                    ViewUtil.bindView(priceT,JSONUtil.getDouble(jo, "price")+"元/人(现在报名立减"+JSONUtil.getDouble(jo, "subsidyPrice")+"元)");
+
+                    if (contentT.getLineCount()<4){
+                        foldR.setVisibility(View.GONE);
+                    }
+
+                    //男生,女生数量,总量
+                    ViewUtil.bindView(participate_womanT,JSONUtil.getInt(jo, "femaleNum")+"/"+JSONUtil.getInt(jo, "femaleLimit"));
+                    ViewUtil.bindView(participate_manT,JSONUtil.getInt(jo, "maleNum")+"/"+JSONUtil.getInt(jo, "maleLimit"));
+
+                    //活动大图
+                    JSONObject jsc= JSONUtil.getJSONObject(jo,"cover");
+                    String photo=JSONUtil.getString(jsc,"url");
 
                     /** GalleryViewPager  */
-//                    final String[] urls = bundle.getStringArray("imgurls");
-//                    List<String> items = new ArrayList<String>();
-//                    Collections.addAll(items, urls);
-//
-//                    UrlPagerAdapter pagerAdapter = new UrlPagerAdapter(this, items);
-//                    pagerAdapter.setOnItemChangeListener(new BasePagerAdapter.OnItemChangeListener() {
-//                        @Override
-//                        public void onItemChange(int currentPosition) {
-//                            mIndicatorText.setText(getIndicatorString(currentPosition,
-//                                    urls.length));
-//                        }
-//                    });
-//                    Intent it = getIntent();
-//                    mViewPager = (GalleryViewPager) findViewById(R.id.viewer);
-//                    mViewPager.setOffscreenPageLimit(3);
-//                    mViewPager.setAdapter(pagerAdapter);
-//                    mViewPager.setCurrentItem(it.getIntExtra("currentItem", 0));
+                    final String[] urls = new String[1];
+                    urls[0] = photo;
+                    List<String> items = new ArrayList<String>();
+                    Collections.addAll(items, urls);
+
+                    UrlPagerAdapter pagerAdapter = new UrlPagerAdapter(self, items);
+                    pagerAdapter.setOnItemChangeListener(new BasePagerAdapter.OnItemChangeListener() {
+                        @Override
+                        public void onItemChange(int currentPosition) {
+                        }
+                    });
+                    mViewPager = (GalleryViewPager) findViewById(R.id.viewer);
+                    mViewPager.setOffscreenPageLimit(3);
+                    mViewPager.setAdapter(pagerAdapter);
+
+
+                    /** 文字变色 */
+//                    SpannableStringBuilder style = new SpannableStringBuilder(newcontent);
+//                        style.setSpan(new ForegroundColorSpan(context.getResources()
+//                                        .getColor(R.color.text_orange)), day_start,
+//                                day_start + day.length(),
+//                                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
                 }
             }

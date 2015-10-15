@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <View style="@style/line" />
@@ -20,6 +21,7 @@
             android:src="@drawable/ic_launcher" />
 
         <TextView
+            android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="车玩官方"
@@ -27,6 +29,7 @@
             android:textSize="@dimen/text_big" />
 
         <TextView
+            android:id="@+id/creattime"
             style="@style/text_grey_small"
             android:layout_width="match_parent"
             android:layout_marginRight="12dp"
@@ -37,8 +40,7 @@
     <com.gongpingjia.carplay.view.gallery.GalleryViewPager
         android:id="@+id/viewer"
         android:layout_width="match_parent"
-        android:layout_height="190dp"
-        android:visibility="gone"/>
+        android:layout_height="190dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -48,7 +50,7 @@
         android:paddingRight="12dp">
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/introduce"
             style="@style/text_black_medium"
             android:layout_marginBottom="18dp"
             android:layout_marginTop="18dp"

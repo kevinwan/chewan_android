@@ -32,7 +32,7 @@
                 android:scaleType="fitStart"
                 android:src="@drawable/mate_bg" />
 
-            <com.gongpingjia.carplay.view.AnimButtonView
+            <com.gongpingjia.carplay.view.AnimButtonView2
                 android:layout_width="106dp"
                 android:layout_height="106dp"
                 android:layout_marginLeft="50dp"
@@ -40,7 +40,7 @@
                 my:bg="@drawable/mate_cf"
                 my:src="@drawable/mate_cf">
 
-            </com.gongpingjia.carplay.view.AnimButtonView>
+            </com.gongpingjia.carplay.view.AnimButtonView2>
 
             <com.gongpingjia.carplay.view.AnimButtonView
                 android:layout_width="94dp"
