@@ -1,0 +1,182 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <include layout="@layout/include_title_bar" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="10dp"
+        android:background="#e6e9ed" />
+
+    <RelativeLayout
+        android:id="@+id/setting_clear"
+        android:layout_width="match_parent"
+        android:layout_height="51dp" >
+
+        <ImageView
+            android:id="@+id/clear"
+            style="@style/icon_style"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/clear" />
+
+        <TextView
+            android:id="@+id/tv_cache_size"
+            style="@style/text_grey_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/img"
+            android:text="0M" />
+
+
+
+        <TextView
+            style="@style/text_black_medium"
+            android:layout_alignBottom="@+id/clear"
+            android:layout_toRightOf="@+id/clear"
+            android:text="清理缓存" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="#e6e9ed" />
+
+    <RelativeLayout
+        android:id="@+id/setting_like"
+        android:layout_width="match_parent"
+        android:layout_height="51dp" >
+
+        <ImageView
+            android:id="@+id/like"
+            style="@style/icon_style"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/like" />
+
+
+
+        <TextView
+            style="@style/text_black_medium"
+            android:layout_alignBottom="@+id/like"
+            android:layout_toRightOf="@+id/like"
+            android:text="喜欢我们打分鼓励" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="#e6e9ed" />
+
+    <RelativeLayout
+        android:id="@+id/setting_about_us"
+        android:layout_width="match_parent"
+        android:layout_height="51dp" >
+
+        <ImageView
+            android:id="@+id/about_us"
+            style="@style/icon_style"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/about_us" />
+
+
+
+        <TextView
+            style="@style/text_black_medium"
+            android:layout_alignBottom="@+id/about_us"
+            android:layout_toRightOf="@+id/about_us"
+            android:text="关于我们" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="#e6e9ed" />
+
+    <RelativeLayout
+        android:id="@+id/setting_versions"
+        android:layout_width="match_parent"
+        android:layout_height="51dp" >
+
+        <ImageView
+            android:id="@+id/versions"
+            style="@style/icon_style"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/versions" />
+
+
+
+        <TextView
+            style="@style/text_black_medium"
+            android:layout_alignBottom="@+id/versions"
+            android:layout_toRightOf="@+id/versions"
+            android:text="版本介绍" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="#e6e9ed" />
+
+    <RelativeLayout
+        android:id="@+id/setting_at_versions"
+        android:layout_width="match_parent"
+        android:layout_height="51dp" >
+
+        <ImageView
+            android:id="@+id/at_versions"
+            style="@style/icon_style"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/at_versions" />
+
+
+
+        <TextView
+            style="@style/text_black_medium"
+            android:layout_alignBottom="@+id/at_versions"
+            android:layout_toRightOf="@+id/at_versions"
+            android:text="版本更新" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="#e6e9ed" />
+
+    <Button
+        android:id="@+id/setting_quit"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/button_radian"
+        android:text="退出登录"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_medium"
+        android:visibility="gone" />
+
+</LinearLayout>

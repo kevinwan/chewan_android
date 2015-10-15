@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -125,16 +126,16 @@ public class MainActivity2 extends BaseFragmentActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_newmain);
-//        EventBus.getDefault().register(this);
-//
+        EventBus.getDefault().register(this);
+
         initView();
-//        isAuthen();
-//        updateApp();
-//
-//        IntentFilter cmdIntentFilter = new IntentFilter(EMChatManager
-//                .getInstance().getCmdMessageBroadcastAction());
-//        registerReceiver(cmdMessageReceiver, cmdIntentFilter);
-//        updateUnreadLabel();
+        isAuthen();
+        updateApp();
+
+        IntentFilter cmdIntentFilter = new IntentFilter(EMChatManager
+                .getInstance().getCmdMessageBroadcastAction());
+        registerReceiver(cmdMessageReceiver, cmdIntentFilter);
+        updateUnreadLabel();
     }
 
     @Override

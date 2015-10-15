@@ -25,7 +25,7 @@
     <color name="new_bg_grey">#EFEFEF</color>
     <color name="dialog_blue">#23bde1</color>
     <!-- 线灰 -->
-    <color name="line_grey">#e6e9ed</color>
+    <color name="line_grey">#e5e5e5</color>
     <color name="tab_grey_bg">#f5f7fa</color>
     <color name="text_red">#fc6e51</color>
     <color name="main_tab_bg">#F6F7FB</color>
@@ -77,5 +77,18 @@
 
     <color name="bg">#65BBF6</color>
     <color name="btn_pinkred_bg">#FE5967</color>
+    <color name="xiangce_rad">#FE5969</color>
+
+    <!--  意向匹配圆形背景颜色  -->
+    <color name="circle_cf_bg">#44A8F2</color>
+    <color name="circle_cg_bg">#FDCC22</color>
+    <color name="circle_kdy_bg">#BE77D2</color>
+    <color name="circle_yd_bg">#7BCC4A</color>
+    <color name="circle_lg_bg">#F17945</color>
+    <color name="circle_yx_bg">#498BB8</color>
+    <color name="circle_yed_bg">#2DC6BA</color>
+    <color name="circle_gw_bg">#FB6087</color>
+    <color name="circle_hkf_bg">#E85959</color>
+    <color name="circle_hj_bg">#1AAC8E</color>
 
 </resources>

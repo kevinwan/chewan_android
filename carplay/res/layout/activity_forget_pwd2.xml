@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <include layout="@layout/include_title_bar" />
 
@@ -14,14 +14,14 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="14dp"
         android:layout_marginRight="14dp"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_marginTop="15dp"
-            android:orientation="horizontal" >
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -29,7 +29,7 @@
                 android:src="@drawable/icon_phone3x" />
 
             <EditText
-                android:id="@+id/ed_forget_phone"
+                android:id="@+id/et_phone"
                 style="@style/text_black_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="55dp"
@@ -40,8 +40,7 @@
                 android:hint="请输入手机号"
                 android:inputType="number"
                 android:singleLine="true"
-                android:textColorHint="@color/text_grey" >
-            </EditText>
+                android:textColorHint="@color/text_grey"></EditText>
         </LinearLayout>
 
         <View style="@style/line" />
@@ -51,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -59,7 +58,7 @@
                 android:src="@drawable/icon_phone3" />
 
             <EditText
-                android:id="@+id/ed_forget_verification"
+                android:id="@+id/et_verification"
                 style="@style/text_black_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="55dp"
@@ -73,7 +72,7 @@
                 android:textColorHint="@color/text_grey" />
 
             <Button
-                android:id="@+id/button_forget_verification"
+                android:id="@+id/btn_get_verification"
                 style="@style/text_white_small"
                 android:layout_height="35dp"
                 android:layout_gravity="center_vertical"
@@ -89,7 +88,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -97,7 +96,7 @@
                 android:src="@drawable/icon_code3x" />
 
             <EditText
-                android:id="@+id/ed_forget_pwd"
+                android:id="@+id/et_password"
                 style="@style/text_black_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="55dp"
@@ -108,9 +107,9 @@
                 android:hint="密码"
                 android:inputType="textPassword"
                 android:singleLine="true"
-                android:textColorHint="@color/text_grey" >
-            </EditText>
+                android:textColorHint="@color/text_grey"></EditText>
         </LinearLayout>
+
         <View style="@style/line" />
 
         <TextView
@@ -125,17 +124,17 @@
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="center" >
+            android:gravity="center">
 
             <Button
-                android:id="@+id/next"
+                android:id="@+id/btn_finish"
                 style="@style/text_white_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
                 android:layout_marginTop="20dp"
+                android:background="@drawable/btn_forgetpwd_xml"
                 android:paddingLeft="70dp"
                 android:paddingRight="70dp"
-                android:background="@drawable/btn_forgetpwd_xml"
                 android:text="完成" />
         </RelativeLayout>
     </LinearLayout>

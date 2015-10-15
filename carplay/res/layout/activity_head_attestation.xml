@@ -58,10 +58,11 @@
                 </LinearLayout>
 
                 <ImageView
+                    android:id="@+id/up_head"
                     android:layout_width="match_parent"
                     android:layout_height="275dp"
                     android:layout_marginTop="24dp"
-                    android:src="@color/text_hui999999" />
+                    android:src="@drawable/mofangdongzuo" />
 
                 <TextView
                     style="@style/text_black_small"
@@ -70,6 +71,7 @@
                     android:textColor="@color/text_red" />
 
                 <Button
+                    android:id="@+id/head_authenticate"
                    android:layout_width="165dp"
                     android:layout_height="43dp"
                     android:layout_marginTop="24dp"

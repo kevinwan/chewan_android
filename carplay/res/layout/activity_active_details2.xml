@@ -1,26 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="@color/white"
     tools:context="com.gongpingjia.carplay.activity.active.ActiveDetailsActivity2">
 
-    <include layout="@layout/include_title_bar"/>
-
-    <net.duohuo.dhroid.view.NetRefreshAndMoreListView
-        android:id="@+id/listview"
+    <RelativeLayout
+        android:id="@+id/titlelayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/title_bar"
-        android:paddingBottom="60dp" >
-    </net.duohuo.dhroid.view.NetRefreshAndMoreListView>
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/include_title_bar"/>
+
+    </RelativeLayout>
 
     <Button
+        android:id="@+id/join"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:background="@color/btn_pinkred_bg"
         android:text="报名参加"
+        android:layout_alignParentBottom="true"
         android:textColor="@color/white"
         android:textSize="@dimen/text_medium"
         />
-</LinearLayout>
+
+    <ListView
+        android:id="@+id/listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/join"
+        android:layout_below="@id/titlelayout" >
+    </ListView>
+
+
+</RelativeLayout>
