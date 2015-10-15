@@ -207,6 +207,7 @@
 
         </activity>
 
+
         <activity android:name=".activity.my.BasicInformationActivity2" />
         <activity android:name=".activity.my.RegisterActivity2" />
         <activity android:name=".activity.main.MainActivity2" />
