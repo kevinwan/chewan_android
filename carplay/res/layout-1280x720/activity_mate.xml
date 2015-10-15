@@ -33,105 +33,115 @@
                 android:scaleType="fitStart"
                 android:src="@drawable/mate_bg" />
 
-            <com.gongpingjia.carplay.view.AnimButtonView
+            <com.gongpingjia.carplay.view.AnimButtonView2
+                android:id="@+id/eat"
                 android:layout_width="106dp"
                 android:layout_height="106dp"
                 android:layout_marginLeft="50dp"
                 android:layout_marginTop="6dp"
                 my:bg="@drawable/mate_cf"
-                my:src="@drawable/mate_cf">
+                my:src="@drawable/circle_cf">
 
-            </com.gongpingjia.carplay.view.AnimButtonView>
+            </com.gongpingjia.carplay.view.AnimButtonView2>
 
-            <com.gongpingjia.carplay.view.AnimButtonView
+            <com.gongpingjia.carplay.view.AnimButtonView2
+                android:id="@+id/sing"
                 android:layout_width="94dp"
                 android:layout_height="94dp"
                 android:layout_marginLeft="220dp"
                 android:layout_marginTop="62dp"
                 my:bg="@drawable/mate_cg"
-                my:src="@drawable/mate_cg">
+                my:src="@drawable/circle_cg">
 
-            </com.gongpingjia.carplay.view.AnimButtonView>
+            </com.gongpingjia.carplay.view.AnimButtonView2>
 
-            <com.gongpingjia.carplay.view.AnimButtonView
+            <com.gongpingjia.carplay.view.AnimButtonView2
+                android:id="@+id/film"
                 android:layout_width="98dp"
                 android:layout_height="98dp"
                 android:layout_marginLeft="110dp"
                 android:layout_marginTop="138dp"
                 my:bg="@drawable/mate_kdy"
-                my:src="@drawable/mate_kdy">
+                my:src="@drawable/circle_kdy">
 
-            </com.gongpingjia.carplay.view.AnimButtonView>
+            </com.gongpingjia.carplay.view.AnimButtonView2>
 
-            <com.gongpingjia.carplay.view.AnimButtonView
+            <com.gongpingjia.carplay.view.AnimButtonView2
+                android:id="@+id/dog"
                 android:layout_width="82dp"
                 android:layout_height="82dp"
                 android:layout_marginLeft="260dp"
                 android:layout_marginTop="200dp"
                 my:bg="@drawable/mate_lg"
-                my:src="@drawable/mate_lg">
+                my:src="@drawable/circle_lg">
 
-            </com.gongpingjia.carplay.view.AnimButtonView>
+            </com.gongpingjia.carplay.view.AnimButtonView2>
 
-            <com.gongpingjia.carplay.view.AnimButtonView
+            <com.gongpingjia.carplay.view.AnimButtonView2
+                android:id="@+id/exercise"
                 android:layout_width="95dp"
                 android:layout_height="95dp"
                 android:layout_marginLeft="25dp"
                 android:layout_marginTop="232dp"
                 my:bg="@drawable/mate_yd"
-                my:src="@drawable/mate_yd">
+                my:src="@drawable/circle_yd">
 
-            </com.gongpingjia.carplay.view.AnimButtonView>
+            </com.gongpingjia.carplay.view.AnimButtonView2>
 
-            <com.gongpingjia.carplay.view.AnimButtonView
+            <com.gongpingjia.carplay.view.AnimButtonView2
+                android:id="@+id/night_eat"
                 android:layout_width="94dp"
                 android:layout_height="94dp"
                 android:layout_marginLeft="170dp"
                 android:layout_marginTop="280dp"
                 my:bg="@drawable/mate_yx"
-                my:src="@drawable/mate_yx">
+                my:src="@drawable/circle_yx">
 
-            </com.gongpingjia.carplay.view.AnimButtonView>
+            </com.gongpingjia.carplay.view.AnimButtonView2>
 
-            <com.gongpingjia.carplay.view.AnimButtonView
+            <com.gongpingjia.carplay.view.AnimButtonView2
+                android:id="@+id/night_shop"
                 android:layout_width="94dp"
                 android:layout_height="94dp"
                 android:layout_marginLeft="473dp"
                 android:layout_marginTop="34dp"
-                my:bg="@drawable/mate_yd"
-                my:src="@drawable/mate_yd">
+                my:bg="@drawable/mate__yed"
+                my:src="@drawable/circle_yed">
 
-            </com.gongpingjia.carplay.view.AnimButtonView>
+            </com.gongpingjia.carplay.view.AnimButtonView2>
 
-            <com.gongpingjia.carplay.view.AnimButtonView
+            <com.gongpingjia.carplay.view.AnimButtonView2
+                android:id="@+id/shop"
                 android:layout_width="94dp"
                 android:layout_height="94dp"
                 android:layout_marginLeft="368dp"
                 android:layout_marginTop="102dp"
                 my:bg="@drawable/mate_gw"
-                my:src="@drawable/red_circle">
+                my:src="@drawable/circle_gw">
 
-            </com.gongpingjia.carplay.view.AnimButtonView>
+            </com.gongpingjia.carplay.view.AnimButtonView2>
 
-            <com.gongpingjia.carplay.view.AnimButtonView
+            <com.gongpingjia.carplay.view.AnimButtonView2
+                android:id="@+id/coffee"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_marginLeft="415dp"
                 android:layout_marginTop="226dp"
                 my:bg="@drawable/mate_hkf"
-                my:src="@drawable/mate_hkf">
+                my:src="@drawable/circle_hkf">
 
-            </com.gongpingjia.carplay.view.AnimButtonView>
+            </com.gongpingjia.carplay.view.AnimButtonView2>
 
-            <com.gongpingjia.carplay.view.AnimButtonView
+            <com.gongpingjia.carplay.view.AnimButtonView2
+                android:id="@+id/beer"
                 android:layout_width="94dp"
                 android:layout_height="94dp"
                 android:layout_marginLeft="335dp"
                 android:layout_marginTop="295dp"
                 my:bg="@drawable/mate_hj"
-                my:src="@drawable/mate_hj">
+                my:src="@drawable/circle_hj">
 
-            </com.gongpingjia.carplay.view.AnimButtonView>
+            </com.gongpingjia.carplay.view.AnimButtonView2>
 
         </RelativeLayout>
 
