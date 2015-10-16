@@ -197,7 +197,7 @@
             android:name=".activity.my.BasicMessageActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.main.MainActivity2"
+            android:name=".activity.my.LoginActivity2"
             android:launchMode="standard"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -205,6 +205,11 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.main.MainActivity2"
+            android:screenOrientation="portrait">
+
         </activity>
 
 
