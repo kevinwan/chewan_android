@@ -168,7 +168,8 @@ public class MyFragment2 extends Fragment implements OnClickListener {
         switch (v.getId()) {
             //编辑资料
             case R.id.head:
-
+                Intent intent = new Intent(getActivity(), EditPersonalInfoActivity2.class);
+                startActivity(intent);
                 break;
             //完善信息
             case R.id.perfect:
