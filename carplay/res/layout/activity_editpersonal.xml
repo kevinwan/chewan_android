@@ -51,6 +51,7 @@
             android:background="#e6e9ed" />
 
         <LinearLayout
+            android:id="@+id/name_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
@@ -68,14 +69,13 @@
                 android:gravity="center_vertical|right"
                 android:orientation="horizontal">
 
-                <EditText
+                <TextView
                     android:id="@+id/nickname"
                     style="@style/text_blacklight_medium"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:background="@color/nothing"
                     android:gravity="center_vertical|right"
-                    android:hint="请输入昵称"
                     android:singleLine="true" />
 
                 <ImageView

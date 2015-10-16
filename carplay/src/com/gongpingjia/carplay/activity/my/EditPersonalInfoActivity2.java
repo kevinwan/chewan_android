@@ -58,7 +58,7 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
     /**
      * 昵称
      */
-    private EditText nicknameT = null;
+    private TextView nicknameT ;
 
     private EditText edit_ageT = null;
     private String nickname;
@@ -80,7 +80,7 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
     String photo = "";
     //    private String drivingExperience;
     private Map<String, Boolean> map = new HashMap<String, Boolean>();
-    LinearLayout approve_layout_head, approve_layout_car;
+    LinearLayout approve_layout_head, approve_layout_car,name_layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,11 +120,15 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
         sexT = (TextView) findViewById(R.id.sex);
         head_approve = (TextView) findViewById(R.id.head_approve);
         car_approve = (TextView) findViewById(R.id.car_approve);
-        nicknameT = (EditText) findViewById(R.id.nickname);
+        nicknameT = (TextView) findViewById(R.id.nickname);
         edit_ageT = (EditText) findViewById(R.id.edit_age);
         approve_layout_head = (LinearLayout) findViewById(R.id.approve_layout_head);
         approve_layout_car = (LinearLayout) findViewById(R.id.approve_layout_car);
+        name_layout = (LinearLayout) findViewById(R.id.name_layout);
         headI.setOnClickListener(this);
+        name_layout.setOnClickListener(this);
+        approve_layout_head.setOnClickListener(this);
+        approve_layout_car.setOnClickListener(this);
         getMyDetails();
     }
 
@@ -133,6 +137,9 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
      */
     private void getMyDetails() {
         DhNet net = new DhNet(API2.CWBaseurl + "/user/" + mUser.getUserId()
+                + "/info? viewUser=" + mUser.getUserId() + "&token="
+                + mUser.getToken());
+        System.out.println( "/user/" + mUser.getUserId()
                 + "/info? viewUser=" + mUser.getUserId() + "&token="
                 + mUser.getToken());
         net.doGetInDialog(new NetTask(this) {
@@ -144,7 +151,7 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
                 nickname = JSONUtil.getString(jo, "nickname");
 //                drivingExperience = JSONUtil.getInt(jo, "drivingExperience")
 //                        + "";
-                photo = JSONUtil.getString(jo, "photo");
+                photo = JSONUtil.getString(jo, "avatar");
                 String gender = JSONUtil.getString(jo, "gender");
                 String photoAuthStatus = JSONUtil.getString(jo, "photoAuthStatus");
                 String licenseAuthStatus = JSONUtil.getString(jo, "licenseAuthStatus");
@@ -281,6 +288,19 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
                         + ".jpg").getAbsolutePath();
                 PhotoUtil.getPhoto(self, Constant.TAKE_PHOTO, Constant.PICK_PHOTO,
                         new File(mPhotoPath));
+                break;
+            case R.id.name_layout:
+                showToast("修改昵称");
+                break;
+            case R.id.approve_layout_head:
+
+                showToast("头像认证");
+
+                break;
+            case R.id.approve_layout_car:
+
+                showToast("车主认证");
+
                 break;
 
         }
