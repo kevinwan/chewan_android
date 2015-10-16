@@ -86,7 +86,7 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
     //    private String drivingExperience;
     private Map<String, Boolean> map = new HashMap<String, Boolean>();
     LinearLayout approve_layout_head, approve_layout_car,name_layout;
-
+    TextView right_txt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -98,13 +98,10 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
     public void initView() {
         setTitle("编辑资料");
         user = User.getInstance();
-        setRightAction("保存", R.id.right_text, new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-            }
-        });
         View backV = findViewById(R.id.backLayout);
+         right_txt = (TextView) findViewById(R.id.right_text);
+        right_txt.setText("保存");
         if (backV != null) {
             backV.setOnClickListener(new View.OnClickListener() {
 
@@ -280,6 +277,14 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
                 } else {
                     showToast("修改信息失败");
                 }
+            }
+        });
+    }
+    public void save(){
+        right_txt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                modification();
             }
         });
     }
