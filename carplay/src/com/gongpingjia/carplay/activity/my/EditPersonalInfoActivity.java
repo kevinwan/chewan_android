@@ -172,7 +172,7 @@ public class EditPersonalInfoActivity extends CarPlayBaseActivity implements
 				nickname = JSONUtil.getString(jo, "nickname");
 				drivingExperience = JSONUtil.getInt(jo, "drivingExperience")
 						+ "";
-				photo = JSONUtil.getString(jo, "photo");
+				photo = JSONUtil.getString(jo, "avatar");
 				String gender = JSONUtil.getString(jo, "gender");
 				mProvice = JSONUtil.getString(jo, "province");
 				mCity = JSONUtil.getString(jo, "city");

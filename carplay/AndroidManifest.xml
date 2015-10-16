@@ -308,6 +308,9 @@
         <activity android:name=".activity.my.InterestedPersonActivity" />
         <activity android:name=".activity.my.SettingActivity2"></activity>
         <activity android:name=".activity.active.MateActivity"></activity>
+        <activity android:name=".activity.my.EditPersonalInfoActivity2">
+
+        </activity>
     </application>
 
 </manifest>
