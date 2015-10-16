@@ -142,7 +142,9 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
     }
 
     private void getActiveDetailsData(){
-        DhNet verifyNet = new DhNet(API2.ActiveDetails + "561f5eaa0cf2a1b735efa50a" + "/info?userId=" + user.getUserId() + "&token=" + user.getToken());
+        String activeid=getIntent().getStringExtra("activityId");
+
+        DhNet verifyNet = new DhNet(API2.ActiveDetails + activeid + "/info?userId=" + user.getUserId() + "&token=" + user.getToken());
         verifyNet.doGet(new NetTask(self) {
 
             @Override

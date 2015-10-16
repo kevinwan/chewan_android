@@ -14,7 +14,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
-import com.gongpingjia.carplay.activity.active.ActiveDetailsActivity2;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.view.RoundImageView;
@@ -96,11 +95,11 @@ public class MyFragment2 extends Fragment implements OnClickListener {
 
         DhNet verifyNet = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId()
                 + "/info?viewUser=" + user.getUserId() + "&token=" + user.getToken());
-        verifyNet.doGet(new NetTask(getActivity()) {
+        verifyNet.doGetInDialog(new NetTask(getActivity()) {
 
             @Override
             public void doInUI(Response response, Integer transfer) {
-                System.out.println(user.getUserId()+"---------"+user.getToken());
+//                System.out.println(user.getUserId()+"---------"+user.getToken());
                 if (response.isSuccess()) {
                     JSONObject jo = response.jSONFromData();
 
@@ -113,8 +112,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                         sexbgR.setBackgroundResource(R.drawable.radion_sex_woman_normal);
                         sexI.setBackgroundResource(R.drawable.icon_woman3x);
                     }
-
-                    String headimg=JSONUtil.getString(jo, "avatar");
+                    String headimg = JSONUtil.getString(jo, "avatar");
 
                     ViewUtil.bindNetImage(headI, headimg, "head");
                     ViewUtil.bindNetImage(photo_bgI, headimg, "head");
@@ -136,22 +134,22 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                         attestationT.setBackgroundResource(R.drawable.radio_sex_man_focused);
                         attestationT.setText("未认证");
                         headattestationL.setEnabled(true);
-                    } else if (photoAuthStatus.equals("已认证")){
+                    } else if (photoAuthStatus.equals("已认证")) {
                         attestationT.setBackgroundResource(R.drawable.btn_yellow_fillet);
                         attestationT.setText("已认证");
                         headattestationL.setEnabled(false);
-                    } else if(photoAuthStatus.equals("认证中")){
+                    } else if (photoAuthStatus.equals("认证中")) {
                         attestationT.setBackgroundResource(R.drawable.radio_sex_man_focused);
                         attestationT.setText("未认证");
                         headattestationL.setEnabled(true);
                     }
 
                     //车主认证
-                    if (licenseAuthStatus.equals("未认证")){
+                    if (licenseAuthStatus.equals("未认证")) {
                         carattestationL.setEnabled(true);
-                    }else if (licenseAuthStatus.equals("已认证")){
+                    } else if (licenseAuthStatus.equals("已认证")) {
                         carattestationL.setEnabled(false);
-                    } else if(licenseAuthStatus.equals("认证中")){
+                    } else if (licenseAuthStatus.equals("认证中")) {
                         carattestationL.setEnabled(true);
                     }
 
@@ -168,8 +166,8 @@ public class MyFragment2 extends Fragment implements OnClickListener {
         switch (v.getId()) {
             //编辑资料
             case R.id.head:
-                Intent intent = new Intent(getActivity(), EditPersonalInfoActivity2.class);
-                startActivity(intent);
+                it = new Intent(getActivity(), EditPersonalInfoActivity2.class);
+                startActivity(it);
                 break;
             //完善信息
             case R.id.perfect:
@@ -178,7 +176,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                 break;
             //我的活动
             case R.id.myactive:
-                it = new Intent(getActivity(), ActiveDetailsActivity2.class);
+                it = new Intent(getActivity(), PersonDetailActivity2.class);
                 startActivity(it);
                 break;
             //我的关注
