@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.easemob.EMCallBack;
 import com.easemob.chat.CmdMessageBody;
@@ -58,10 +59,11 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
     /**
      * 昵称
      */
-    private TextView nicknameT ;
+    private EditText nicknameT ;
 
     private EditText edit_ageT = null;
     private String nickname;
+    String age;
     /**
      * 性别
      */
@@ -75,7 +77,10 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
 
     private String photoUid;
 
-    private User mUser = User.getInstance();
+    public static  final int APPROVE_HEAD = 3;
+    public static  final int APPROVE_CAR= 4;
+
+    User user;
     TextView head_approve, car_approve;
     String photo = "";
     //    private String drivingExperience;
@@ -92,6 +97,7 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
     @Override
     public void initView() {
         setTitle("编辑资料");
+        user = User.getInstance();
         setRightAction("保存", R.id.right_text, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -120,7 +126,7 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
         sexT = (TextView) findViewById(R.id.sex);
         head_approve = (TextView) findViewById(R.id.head_approve);
         car_approve = (TextView) findViewById(R.id.car_approve);
-        nicknameT = (TextView) findViewById(R.id.nickname);
+        nicknameT = (EditText) findViewById(R.id.nickname);
         edit_ageT = (EditText) findViewById(R.id.edit_age);
         approve_layout_head = (LinearLayout) findViewById(R.id.approve_layout_head);
         approve_layout_car = (LinearLayout) findViewById(R.id.approve_layout_car);
@@ -136,12 +142,11 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
      * 获取个人资料
      */
     private void getMyDetails() {
-        DhNet net = new DhNet(API2.CWBaseurl + "/user/" + mUser.getUserId()
-                + "/info? viewUser=" + mUser.getUserId() + "&token="
-                + mUser.getToken());
-        System.out.println( "/user/" + mUser.getUserId()
-                + "/info? viewUser=" + mUser.getUserId() + "&token="
-                + mUser.getToken());
+        DhNet net = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId()
+                + "/info?viewUser=" + user.getUserId() + "&token=" + user.getToken());
+        System.out.println( "/user/" + user.getUserId()
+                + "/info? viewUser=" + user.getUserId() + "&token="
+                + user.getToken());
         net.doGetInDialog(new NetTask(this) {
 
             @Override
@@ -155,7 +160,7 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
                 String gender = JSONUtil.getString(jo, "gender");
                 String photoAuthStatus = JSONUtil.getString(jo, "photoAuthStatus");
                 String licenseAuthStatus = JSONUtil.getString(jo, "licenseAuthStatus");
-                String age = JSONUtil.getString(jo, "age");
+                 age = JSONUtil.getString(jo, "age");
                 edit_ageT.setText(age);
                 head_approve.setText(photoAuthStatus);
                 car_approve.setText(licenseAuthStatus);
@@ -180,7 +185,7 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
         if (TextUtils.isEmpty(name)) {
             return false;
         }
-        if (map.get("flag") || !name.equals(nickname)
+        if (!edit_ageT.getText().toString().equals(age)|| !name.equals(nickname)
             // || !carage.equals(drivingExperience)
                 ) {
             return true;
@@ -189,8 +194,8 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
     }
 
     private void uploadHead(String path) {
-        DhNet net = new DhNet(API2.CWBaseurl + mUser.getUserId()
-                + "avatar?token=" + mUser.getToken());
+        DhNet net = new DhNet(API2.CWBaseurl + user.getUserId()
+                + "avatar?token=" + user.getToken());
         net.upload(new FileInfo("attach", new File(path)), new NetTask(self) {
 
             @Override
@@ -261,11 +266,10 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
             showToast("昵称不能大于8个字符或者不能为空");
             return;
         }
-        DhNet net = new DhNet(API2.CWBaseurl + mUser.getUserId()
-                + "/info?token=" + mUser.getToken());
+        DhNet net = new DhNet(API2.CWBaseurl + user.getUserId()
+                + "/info?token=" + user.getToken());
         net.addParam("nickname", nickname);
-//        net.addParam("birthday", mCity);
-//        net.addParam("district", mDistrict);
+        net.addParam("birthday", edit_ageT.getText().toString());
         net.doPostInDialog(new NetTask(self) {
 
             @Override
@@ -289,17 +293,21 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
                 PhotoUtil.getPhoto(self, Constant.TAKE_PHOTO, Constant.PICK_PHOTO,
                         new File(mPhotoPath));
                 break;
-            case R.id.name_layout:
-                showToast("修改昵称");
-                break;
+//            case R.id.name_layout:
+//               Intent intent = new Intent(self,ModifyName.class);
+//                intent.putExtra("name",nicknameT.getText().toString());
+//                startActivity(intent);
+//                break;
             case R.id.approve_layout_head:
-
                 showToast("头像认证");
+                Intent intent = new Intent(self,HeadAttestationActivity.class);
+                startActivity(intent);
 
                 break;
             case R.id.approve_layout_car:
-
                 showToast("车主认证");
+                Intent it = new Intent(self,AuthenticateOwnersActivity2.class);
+                startActivity(it);
 
                 break;
 
@@ -327,6 +335,16 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
                     Bitmap bmp = PhotoUtil.getLocalImage(new File(mPhotoPath));
                     headI.setImageBitmap(ImageUtil.toRoundCorner(bmp, 1000));
                     uploadHead(mPhotoPath);
+                    break;
+
+                case APPROVE_HEAD:
+                    head_approve.setText("认证中");
+
+
+                    break;
+                case APPROVE_CAR:
+                    car_approve.setText("认证中");
+
                     break;
 
             }

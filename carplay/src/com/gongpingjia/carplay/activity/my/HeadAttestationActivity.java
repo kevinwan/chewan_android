@@ -107,7 +107,8 @@ public class HeadAttestationActivity extends CarPlayBaseActivity implements View
                     @Override
                     public void doInUI(Response response, Integer transfer) {
                         if(response.isSuccess()){
-
+                            Intent intent = getIntent();
+                            self.setResult(RESULT_OK,intent);
                             finish();
                         }
                     }

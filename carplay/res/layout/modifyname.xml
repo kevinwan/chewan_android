@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/new_bg_grey">
+    <include layout="@layout/include_title_bar"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <TextView
+            style="@style/text_grey_medium"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="14dp"
+            android:text="新昵称"/>
+        <EditText
+            android:id="@+id/modify_name"
+            style="@style/text_blacklight_medium"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/nothing"
+            android:gravity="center_vertical|right"
+            android:singleLine="true"
+            android:layout_marginRight="14dp"
+            android:hint="请输入昵称" />
+    </LinearLayout>
+
+</LinearLayout>
