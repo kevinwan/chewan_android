@@ -168,12 +168,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rec_btn_bg"
-                    android:paddingBottom="3dp"
-                    android:paddingLeft="10dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="12dp"
                     android:paddingRight="8dp"
-                    android:paddingTop="3dp"
                     android:singleLine="true"
-                    android:text="哈哈哈哈哈哈哈"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_small" />
 
