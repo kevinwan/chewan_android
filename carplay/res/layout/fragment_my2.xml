@@ -176,6 +176,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/txtphotoAuthStatus"
                     style="@style/text_black_small"
                     android:layout_width="wrap_content"
                     android:layout_height="58dp"

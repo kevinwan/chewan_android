@@ -53,6 +53,7 @@ public class HeadAttestationActivity extends CarPlayBaseActivity implements View
          head_authenticate = (Button) findViewById(R.id.head_authenticate);
          up_head = (ImageView) findViewById(R.id.up_head);
          up_head.setOnClickListener(this);
+        head_authenticate.setOnClickListener(this);
         user = User.getInstance();
 
         if (getIntent().getStringExtra("photoId") != null) {
@@ -106,7 +107,8 @@ public class HeadAttestationActivity extends CarPlayBaseActivity implements View
                     @Override
                     public void doInUI(Response response, Integer transfer) {
                         if(response.isSuccess()){
-
+                            Intent intent = getIntent();
+                            self.setResult(RESULT_OK,intent);
                             finish();
                         }
                     }

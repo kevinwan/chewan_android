@@ -79,6 +79,8 @@
     <color name="btn_pinkred_bg">#FE5967</color>
     <color name="xiangce_rad">#FE5969</color>
 
+    <color name="text_green">#80C27A</color>
+
     <!--  意向匹配圆形背景颜色  -->
     <color name="circle_cf_bg">#44A8F2</color>
     <color name="circle_cg_bg">#FDCC22</color>

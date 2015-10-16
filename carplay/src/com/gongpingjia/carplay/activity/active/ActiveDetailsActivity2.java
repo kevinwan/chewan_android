@@ -16,11 +16,10 @@ import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
+import com.gongpingjia.carplay.adapter.BigImageAdapter;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.User;
-import com.gongpingjia.carplay.view.gallery.BasePagerAdapter;
-import com.gongpingjia.carplay.view.gallery.GalleryViewPager;
-import com.gongpingjia.carplay.view.gallery.UrlPagerAdapter;
+import com.gongpingjia.carplay.view.CarPlayGallery;
 
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
@@ -28,13 +27,11 @@ import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.util.ViewUtil;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 
 /**
  * 活动详情
@@ -55,10 +52,10 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
 
 
     /** headview */
-    private ImageView imgfoldI;
-    private TextView titleT,contentT,startTimeT,endTimeT,priceT,placeT,participate_womanT,participate_manT,introduceT,creattimeT;
+    private ImageView imgfoldI,avatarT;
+    private TextView nicknameT,contentT,startTimeT,endTimeT,priceT,placeT,participate_womanT,participate_manT,introduceT,creattimeT,unparticipateT;
     private RelativeLayout foldR;
-    private GalleryViewPager mViewPager;
+    private CarPlayGallery mViewPager;
 
     /** footview */
     private LinearLayout moreL,processL,explainL;
@@ -82,7 +79,7 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
     public void initView() {
         user=User.getInstance();
 
-        mInflater=LayoutInflater.from(this);
+        mInflater=LayoutInflater.from(self);
         mHeadView=mInflater.inflate(R.layout.item_active_details2_headview, null);
         mFootView=mInflater.inflate(R.layout.item_active_details2_footview, null);
         mListView = (ListView) findViewById(R.id.listview);
@@ -112,10 +109,11 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
 
         joinBtn = (Button) findViewById(R.id.join);
 
-        titleT = (TextView) mHeadView.findViewById(R.id.title);
+        nicknameT = (TextView) mHeadView.findViewById(R.id.nickname);
         contentT = (TextView) mHeadView.findViewById(R.id.content);
         foldR = (RelativeLayout) mHeadView.findViewById(R.id.fold);
         imgfoldI = (ImageView) mHeadView . findViewById(R.id.imgfold);
+        avatarT = (ImageView) mHeadView.findViewById(R.id.avatar);
         startTimeT = (TextView) mHeadView.findViewById(R.id.starttime);
         endTimeT = (TextView) mHeadView.findViewById(R.id.endtime);
         priceT = (TextView) mHeadView.findViewById(R.id.price);
@@ -124,7 +122,8 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
         participate_manT = (TextView) mHeadView.findViewById(R.id.participate_man);
         creattimeT = (TextView) mHeadView.findViewById(R.id.creattime);
         introduceT = (TextView) mHeadView.findViewById(R.id.introduce);
-        mViewPager = (GalleryViewPager) mHeadView.findViewById(R.id.viewer);
+        unparticipateT = (TextView) mHeadView.findViewById(R.id.unparticipate);
+        mViewPager = (CarPlayGallery) mHeadView.findViewById(R.id.viewer);
 
 
         moreL = (LinearLayout) mFootView.findViewById(R.id.more);
@@ -166,11 +165,14 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
                     Date cdate = new Date(JSONUtil.getLong(jo,"createTime"));
                     ViewUtil.bindView(creattimeT,format.format(cdate));
 
-                    //标题,介绍,内容,价格,补贴
-                    ViewUtil.bindView(titleT,JSONUtil.getString(jo, "title"));
-                    ViewUtil.bindView(introduceT,JSONUtil.getString(jo, "instruction"));
-                    ViewUtil.bindView(contentT,JSONUtil.getString(jo, "description"));
+                    //名字,头像,标题,介绍,价格,补贴,说明
+                    JSONObject jsname= JSONUtil.getJSONObject(jo,"organizer");
+                    ViewUtil.bindView(nicknameT,JSONUtil.getString(jsname, "nickname"));
+                    ViewUtil.bindNetImage(avatarT, JSONUtil.getString(jsname, "avatar"), "head");
+                    ViewUtil.bindView(introduceT, JSONUtil.getString(jo, "title"));
+                    ViewUtil.bindView(contentT,JSONUtil.getString(jo, "instruction"));
                     ViewUtil.bindView(priceT,JSONUtil.getDouble(jo, "price")+"元/人(现在报名立减"+JSONUtil.getDouble(jo, "subsidyPrice")+"元)");
+                    ViewUtil.bindView(explaintxtT,JSONUtil.getString(jo, "extraDesc"));
 
                     if (contentT.getLineCount()<4){
                         foldR.setVisibility(View.GONE);
@@ -180,35 +182,30 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
                     int limitType=JSONUtil.getInt(jo, "limitType");
                     //男生,女生数量,总量
                     if (limitType==1){
-                        ViewUtil.bindView(participate_womanT,JSONUtil.getInt(jo, "nowJoinNum")+"/"+JSONUtil.getInt(jo, "totalLimit"));
-                        ViewUtil.bindView(participate_manT,JSONUtil.getInt(jo, "nowJoinNum")+"/"+JSONUtil.getInt(jo, "totalLimit"));
+                        findViewById(R.id.limitedlayout).setVisibility(View.GONE);
+                        findViewById(R.id.unlimitedlayout).setVisibility(View.VISIBLE);
+                        ViewUtil.bindView(unparticipateT,JSONUtil.getInt(jo, "nowJoinNum")+"/"+JSONUtil.getInt(jo, "totalLimit"));
                     }else if(limitType==2){
+                        findViewById(R.id.limitedlayout).setVisibility(View.VISIBLE);
+                        findViewById(R.id.unlimitedlayout).setVisibility(View.GONE);
                         ViewUtil.bindView(participate_womanT,JSONUtil.getInt(jo, "femaleNum")+"/"+JSONUtil.getInt(jo, "femaleLimit"));
                         ViewUtil.bindView(participate_manT,JSONUtil.getInt(jo, "maleNum")+"/"+JSONUtil.getInt(jo, "maleLimit"));
                     }else {
-
+                        findViewById(R.id.limitedlayout).setVisibility(View.GONE);
+                        findViewById(R.id.unlimitedlayout).setVisibility(View.VISIBLE);
+                        ViewUtil.bindView(unparticipateT, JSONUtil.getInt(jo, "nowJoinNum") + "/" + "人数不限");
                     }
 
 
-                    //活动大图
-                    JSONObject jsc= JSONUtil.getJSONObject(jo,"covers");
-                    String photo=JSONUtil.getString(jsc,"url");
-
                     /** GalleryViewPager  */
-                    final String[] urls = new String[1];
-                    urls[0] = photo;
-                    List<String> items = new ArrayList<String>();
-                    Collections.addAll(items, urls);
+                    final String[] urls ;
 
-                    UrlPagerAdapter pagerAdapter = new UrlPagerAdapter(self, items);
-                    pagerAdapter.setOnItemChangeListener(new BasePagerAdapter.OnItemChangeListener() {
-                        @Override
-                        public void onItemChange(int currentPosition) {
-                        }
-                    });
-                    mViewPager = (GalleryViewPager) findViewById(R.id.viewer);
-                    mViewPager.setOffscreenPageLimit(3);
-                    mViewPager.setAdapter(pagerAdapter);
+                    //活动大图
+                    JSONArray jsc= JSONUtil.getJSONArray(jo, "covers");
+                    if (jsc != null) {
+                        BigImageAdapter adapter = new BigImageAdapter(self, jsc);
+                        mViewPager.setAdapter(adapter);
+                    }
 
 
                     /** 文字变色 */

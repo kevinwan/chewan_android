@@ -30,5 +30,6 @@ public class API2 {
     public static String getSubscribe(String userId, String token) {
         return String.format(CWBaseurl + "user/%s/subscribe?token=%s", userId, token);
     }
+    public static final String recommendList = CWBaseurl + "/official/activity/list";
 
 }

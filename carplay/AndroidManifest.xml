@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.gongpingjia.carplay"
     android:versionCode="1"
-    android:versionName="1.0.1">
+    android:versionName="1.0.1" >
 
     <uses-sdk
         android:minSdkVersion="11"
@@ -38,7 +38,7 @@
         android:label="@string/app_name"
         android:largeHeap="true"
         android:persistent="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="55c80d4be0f55af652003627" />
@@ -96,7 +96,6 @@
             android:name=".activity.my.LoginActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".activity.my.ForgetPwdActivity"
             android:screenOrientation="portrait" />
@@ -197,14 +196,18 @@
             android:name=".activity.my.BasicMessageActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.main.MainActivity2"
+            android:name=".activity.my.LoginActivity2"
             android:launchMode="standard"
             android:screenOrientation="portrait">
             <!--<intent-filter>-->
             <!--<action android:name="android.intent.action.MAIN" />-->
-
             <!--<category android:name="android.intent.category.LAUNCHER" />-->
             <!--</intent-filter>-->
+        </activity>
+        <activity
+            android:name=".activity.main.MainActivity2"
+            android:screenOrientation="portrait">
+
         </activity>
 
 
@@ -237,7 +240,7 @@
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"
             android:noHistory="true"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -281,7 +284,7 @@
 
         <service android:name="com.easemob.chat.EMChatService" />
 
-        <receiver android:name="com.easemob.chat.EMMonitorReceiver">
+        <receiver android:name="com.easemob.chat.EMMonitorReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />
 
@@ -302,17 +305,18 @@
 
         <activity
             android:name=".activity.my.HeadAttestationActivity"
-            android:screenOrientation="portrait">
-
+            android:screenOrientation="portrait" >
         </activity>
-
-
         <activity android:name=".activity.active.MyActiveActivity" />
         <activity android:name=".activity.active.ActiveTrendsActivity" />
         <activity android:name=".activity.active.HispronActiveActivity" />
         <activity android:name=".activity.my.InterestedPersonActivity" />
-        <activity android:name=".activity.my.SettingActivity2"></activity>
-        <activity android:name=".activity.active.MateActivity"></activity>
+        <activity android:name=".activity.my.SettingActivity2" />
+        <activity android:name=".activity.active.MateActivity" />
+        <activity android:name=".activity.my.PersonDetailActivity2" />
+        <activity android:name=".activity.my.EditPersonalInfoActivity2">
+
+        </activity>
     </application>
 
 </manifest>

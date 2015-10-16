@@ -168,8 +168,6 @@ public class MainActivity2 extends BaseFragmentActivity implements
         fm = getSupportFragmentManager();
         tabV = (LinearLayout) findViewById(R.id.tab);
         titleBar = findViewById(R.id.titlebar);
-        initTab();
-        setTab(0);
         rightT = (TextView) findViewById(R.id.right_text);
         rightT.setOnClickListener(new OnClickListener() {
             @Override
@@ -177,6 +175,8 @@ public class MainActivity2 extends BaseFragmentActivity implements
 
             }
         });
+        initTab();
+        setTab(0);
         msgT = (ImageView) findViewById(R.id.msg_point);
         chatPointI = (ImageView) findViewById(R.id.chat_point);
         appointmentI = (ImageView) findViewById(R.id.center);
