@@ -200,17 +200,23 @@
             android:name=".activity.main.MainActivity2"
             android:launchMode="standard"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
 
 
         <activity android:name=".activity.my.BasicInformationActivity2" />
         <activity android:name=".activity.my.RegisterActivity2" />
         <activity android:name=".activity.my.ForgetPasswordActivity2" />
+        <activity android:name=".activity.my.SubscribeActivity2">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <activity
             android:name=".activity.my.AboutUsActivity"
@@ -287,13 +293,12 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".activity.active.ActiveDetailsActivity2" >
+        <activity android:name=".activity.active.ActiveDetailsActivity2">
 
-            </activity>
+        </activity>
         <activity
             android:name=".activity.my.AuthenticateOwnersActivity2"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
 
         <activity
             android:name=".activity.my.HeadAttestationActivity"

@@ -23,7 +23,12 @@ public class API2 {
     //头像上传
     public static final String uploadAvatar = CWBaseurl + "avatar/upload";
 
+    //忘记密码
     public static final String forgetPassword = CWBaseurl + "user/password";
 
+    //获取我关注的信息
+    public static String getSubscribe(String userId, String token) {
+        return String.format(CWBaseurl + "user/%s/subscribe?token=%s", userId, token);
+    }
 
 }
