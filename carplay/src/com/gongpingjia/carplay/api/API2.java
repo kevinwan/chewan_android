@@ -25,5 +25,7 @@ public class API2 {
 
     public static final String forgetPassword = CWBaseurl + "user/password";
 
+    public static final String recommendList = CWBaseurl + "/official/activity/list";
+
 
 }
