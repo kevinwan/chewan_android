@@ -46,11 +46,11 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="28dp">
 
                     <RadioButton
                         android:layout_width="match_parent"
-                        android:layout_height="25dp"
+                        android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
@@ -63,7 +63,7 @@
 
                     <RadioButton
                         android:layout_width="match_parent"
-                        android:layout_height="25dp"
+                        android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
@@ -77,7 +77,7 @@
 
                     <RadioButton
                         android:layout_width="match_parent"
-                        android:layout_height="25dp"
+                        android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
@@ -92,12 +92,12 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="28dp"
                     android:layout_marginTop="6dp">
 
                     <RadioButton
                         android:layout_width="match_parent"
-                        android:layout_height="25dp"
+                        android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
@@ -110,7 +110,7 @@
 
                     <RadioButton
                         android:layout_width="match_parent"
-                        android:layout_height="25dp"
+                        android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
@@ -123,7 +123,7 @@
 
                     <RadioButton
                         android:layout_width="match_parent"
-                        android:layout_height="25dp"
+                        android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
@@ -138,12 +138,12 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="28dp"
                     android:layout_marginTop="6dp">
 
                     <RadioButton
                         android:layout_width="match_parent"
-                        android:layout_height="25dp"
+                        android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
@@ -156,7 +156,7 @@
 
                     <RadioButton
                         android:layout_width="match_parent"
-                        android:layout_height="25dp"
+                        android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
@@ -169,7 +169,7 @@
 
                     <RadioButton
                         android:layout_width="match_parent"
-                        android:layout_height="25dp"
+                        android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
@@ -184,12 +184,12 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="28dp"
                     android:layout_marginTop="6dp">
 
                     <RadioButton
                         android:layout_width="match_parent"
-                        android:layout_height="25dp"
+                        android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
@@ -202,14 +202,14 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
+                        android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1" />
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
+                        android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1" />
@@ -232,7 +232,7 @@
 
                     <RadioButton
                         android:layout_width="match_parent"
-                        android:layout_height="25dp"
+                        android:layout_height="28dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
@@ -245,7 +245,7 @@
 
                     <RadioButton
                         android:layout_width="match_parent"
-                        android:layout_height="25dp"
+                        android:layout_height="28dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
@@ -258,7 +258,7 @@
 
                     <RadioButton
                         android:layout_width="match_parent"
-                        android:layout_height="25dp"
+                        android:layout_height="28dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
@@ -287,7 +287,7 @@
 
                     <RadioButton
                         android:layout_width="match_parent"
-                        android:layout_height="25dp"
+                        android:layout_height="28dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
@@ -300,7 +300,7 @@
 
                     <RadioButton
                         android:layout_width="match_parent"
-                        android:layout_height="25dp"
+                        android:layout_height="28dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
@@ -313,7 +313,7 @@
 
                     <RadioButton
                         android:layout_width="match_parent"
-                        android:layout_height="25dp"
+                        android:layout_height="28dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"

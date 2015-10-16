@@ -84,7 +84,7 @@ public class RegisterActivity2 extends CarPlayBaseActivity implements View.OnCli
             return;
         }
 
-        DhNet dhNet = new DhNet(API2.verifyCode);
+        DhNet dhNet = new DhNet(API2.verifyCode + "/" + num + "/verification");
         dhNet.addParam("code", code);
         dhNet.doPostInDialog("验证中...", new NetTask(self) {
             @Override
@@ -101,8 +101,6 @@ public class RegisterActivity2 extends CarPlayBaseActivity implements View.OnCli
                 }
             }
         });
-
-
     }
 
     /**
