@@ -38,7 +38,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
     static MyFragment2 instance;
     private RoundImageView headI;
     private ImageView sexI, photo_bgI;
-    private TextView attestationT, nameT, ageT, completenessT;
+    private TextView attestationT, nameT, ageT, completenessT,txtphotoAuthStatusT,attestation_txtT;
     private Button perfectBtn;
     private RelativeLayout sexbgR;
     private LinearLayout myphotoL, myactiveL, myattentionL, headattestationL, carattestationL;
@@ -77,6 +77,8 @@ public class MyFragment2 extends Fragment implements OnClickListener {
         myattentionL = (LinearLayout) mainV.findViewById(R.id.myattention);
         headattestationL = (LinearLayout) mainV.findViewById(R.id.headattestation);
         carattestationL = (LinearLayout) mainV.findViewById(R.id.carattestation);
+        txtphotoAuthStatusT = (TextView) mainV.findViewById(R.id.txtphotoAuthStatus);
+        attestation_txtT = (TextView) mainV.findViewById(R.id.attestation_txt);
 
         perfectBtn.setOnClickListener(this);
         myactiveL.setOnClickListener(this);
@@ -85,9 +87,9 @@ public class MyFragment2 extends Fragment implements OnClickListener {
         carattestationL.setOnClickListener(this);
         headI.setOnClickListener(this);
 
-        if (user.isLogin()) {
-            getMyDetails();
-        }
+//        if (user.isLogin()) {
+        getMyDetails();
+//        }
     }
 
     public void getMyDetails() {
@@ -98,7 +100,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
 
             @Override
             public void doInUI(Response response, Integer transfer) {
-//                System.out.println(user.getUserId()+"---------"+user.getToken());
+                System.out.println(user.getUserId()+"---------"+user.getToken());
                 if (response.isSuccess()) {
                     JSONObject jo = response.jSONFromData();
 
@@ -117,7 +119,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                     ViewUtil.bindNetImage(headI, headimg, "head");
                     ViewUtil.bindNetImage(photo_bgI, headimg, "head");
 //                    photo_bgI.setBackgroundResource(R.drawable.vp_third);
-                    ViewUtil.bindView(ageT, JSONUtil.getString(jo, "age"));
+                    ViewUtil.bindView(ageT, JSONUtil.getInt(jo, "age"));
 //                    Blurry.with(getActivity())
 //                            .radius(10)
 //                            .sampling(8)
@@ -125,13 +127,32 @@ public class MyFragment2 extends Fragment implements OnClickListener {
 //                            .capture(photo_bgI)
 //                            .into((ImageView) photo_bgI);
 
+                    String photoAuthStatus = JSONUtil.getString(jo, "photoAuthStatus");
                     String licenseAuthStatus = JSONUtil.getString(jo, "licenseAuthStatus");
-                    if (licenseAuthStatus.equals("未认证")) {
+                    ViewUtil.bindView(txtphotoAuthStatusT, JSONUtil.getString(jo, "photoAuthStatus"));
+                    ViewUtil.bindView(attestation_txtT, JSONUtil.getString(jo, "licenseAuthStatus"));
+                    //头像认证
+                    if (photoAuthStatus.equals("未认证")) {
                         attestationT.setBackgroundResource(R.drawable.radio_sex_man_focused);
                         attestationT.setText("未认证");
-                    } else {
+                        headattestationL.setEnabled(true);
+                    } else if (photoAuthStatus.equals("已认证")){
                         attestationT.setBackgroundResource(R.drawable.btn_yellow_fillet);
                         attestationT.setText("已认证");
+                        headattestationL.setEnabled(false);
+                    } else if(photoAuthStatus.equals("认证中")){
+                        attestationT.setBackgroundResource(R.drawable.radio_sex_man_focused);
+                        attestationT.setText("未认证");
+                        headattestationL.setEnabled(true);
+                    }
+
+                    //车主认证
+                    if (licenseAuthStatus.equals("未认证")){
+                        carattestationL.setEnabled(true);
+                    }else if (licenseAuthStatus.equals("已认证")){
+                        carattestationL.setEnabled(false);
+                    } else if(licenseAuthStatus.equals("认证中")){
+                        carattestationL.setEnabled(true);
                     }
 
 
@@ -143,6 +164,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
 
     @Override
     public void onClick(View v) {
+        Intent it;
         switch (v.getId()) {
             //编辑资料
             case R.id.head:
@@ -155,7 +177,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                 break;
             //我的活动
             case R.id.myactive:
-                Intent it = new Intent(getActivity(), ActiveDetailsActivity2.class);
+                it = new Intent(getActivity(), ActiveDetailsActivity2.class);
                 startActivity(it);
                 break;
             //我的关注
@@ -164,11 +186,13 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                 break;
             //头像认证
             case R.id.headattestation:
-
+                it = new Intent(getActivity(), HeadAttestationActivity.class);
+                startActivity(it);
                 break;
             //车主认证
             case R.id.carattestation:
-
+                it = new Intent(getActivity(), AuthenticateOwnersActivity2.class);
+                startActivity(it);
                 break;
 
             default:

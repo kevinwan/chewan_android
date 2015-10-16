@@ -1,0 +1,181 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.gongpingjia.carplay.MyActivity">
+
+    <include layout="@layout/include_title_bar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+
+                <ImageView
+                    android:id="@+id/photo_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop" />
+
+                <com.gongpingjia.carplay.view.RoundImageView
+                    android:id="@+id/head"
+                    android:layout_width="113dp"
+                    android:layout_height="113dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="28dp" />
+
+                <TextView
+                    android:id="@+id/attestation"
+                    style="@style/text_white_medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="122dp"
+                    android:background="@drawable/radio_sex_man_focused"
+                    android:gravity="center"
+                    android:paddingBottom="4dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="4dp"
+                    android:text="未认证"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/attestation"
+                    android:layout_marginTop="18dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/name"
+                            style="@style/text_white_medium"
+                            android:layout_marginRight="12dp"
+                            android:text="陈小小"
+                            android:textStyle="bold" />
+
+                        <include layout="@layout/include_sex" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="22dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="13dp"/>
+
+                        <TextView
+                            android:id="@+id/txt_completeness"
+                            style="@style/text_white_small"
+                            android:text="资料完成度60%,越高越吸引人"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+
+                    <Button
+                        android:id="@+id/perfect"
+                        android:layout_width="195dp"
+                        android:layout_height="43dp"
+                        android:layout_marginBottom="22dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/btn_red_fillet"
+                        android:text="关注"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <View
+                style="@style/line"
+                android:layout_height="10dp" />
+
+            <RelativeLayout
+                android:id="@+id/myphoto"
+                android:layout_width="match_parent"
+                android:layout_height="120dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/bg3x"
+                    android:scaleType="centerCrop"/>
+
+                <TextView
+                    style="@style/text_white_small"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="27dp"
+                    android:text="相册至少上传一张照片才能查看TA的相册呦~"/>
+                
+                <Button
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:text="立即上传"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_medium"
+                    android:background="@drawable/btn_blue_fillet"/>
+
+            </RelativeLayout>
+
+            <View
+                style="@style/line"
+                android:layout_height="10dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="15dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="15dp">
+
+                <LinearLayout
+                    android:id="@+id/myactive"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/my_active" />
+
+                    <TextView
+                        style="@style/text_grey_small"
+                        android:layout_marginTop="15dp"
+                        android:text="TA 的活动" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                style="@style/line"
+                android:layout_width="match_parent"
+                android:layout_height="30dp" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
