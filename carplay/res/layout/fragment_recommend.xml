@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/new_bg_grey"
-    android:orientation="vertical">
+    android:background="@color/new_bg_grey">
 
 
     <com.gongpingjia.carplay.view.PullToRefreshRecyclerViewHorizontal
@@ -13,8 +12,8 @@
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:paddingLeft="30dp"
-        app:ptrDrawable="@drawable/lun"
         android:paddingRight="30dp"
+        app:ptrDrawable="@drawable/lun"
         app:triggerOffset="0.1" />
 
 </LinearLayout>
