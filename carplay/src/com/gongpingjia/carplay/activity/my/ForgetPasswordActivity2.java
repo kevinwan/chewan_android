@@ -106,15 +106,16 @@ public class ForgetPasswordActivity2 extends CarPlayBaseActivity implements View
             showToast("手机号不能为空");
             return;
         }
-        mCountTimer.start();
         DhNet dhNet = new DhNet(API2.getVerification + phone + "/verification");
         dhNet.addParam("type", 1);
         dhNet.doGetInDialog("获取中...", new NetTask(self) {
             @Override
             public void doInUI(Response response, Integer transfer) {
                 if (response.isSuccess()) {
+                    mCountTimer.start();
                     showToast("验证码发送成功");
                 } else {
+                    mCountTimer.cancel();
                     showToast("验证码获取失败，请重试");
                 }
             }
