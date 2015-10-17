@@ -160,7 +160,7 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
 
         DhNet dhNet = new DhNet(API2.login);
         dhNet.addParam("phone", num);
-        dhNet.addParam("password", password);
+        dhNet.addParam("password", MD5Util.string2MD5(password));
         dhNet.doPostInDialog("登陆中...", new NetTask(self) {
             @Override
             public void doInUI(Response response, Integer transfer) {
