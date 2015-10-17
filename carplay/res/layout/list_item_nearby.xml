@@ -32,11 +32,13 @@
                 android:text="请我吃饭吧" />
 
             <ImageView
+                android:id="@+id/head_att"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:src="@drawable/ic_launcher" />
+                android:src="@drawable/headaut_dl"
+                />
 
             <ImageView
                 android:id="@+id/iv_car_logo"
@@ -57,6 +59,7 @@
                 android:gravity="right">
 
                 <ImageView
+                    android:id="@+id/attention"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:gravity="right"
@@ -78,16 +81,20 @@
             <include layout="@layout/include_sex" />
 
             <TextView
+                android:id="@+id/pay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
+                android:textColor="@color/text_red"
                 android:text="请我吧 " />
 
             <TextView
+                android:id="@+id/transfer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="请我吧 " />
+                android:textColor="@color/text_skyblue"
+                android:text="包接送 " />
         </LinearLayout>
 
         <RelativeLayout
@@ -97,6 +104,7 @@
             android:layout_weight="1">
 
             <ImageView
+                android:id="@+id/active_bg"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
@@ -104,6 +112,7 @@
 
 
             <com.gongpingjia.carplay.view.AnimButtonView
+                android:id="@+id/invite"
                 android:layout_width="90dp"
                 android:layout_height="90dp"
                 android:layout_alignParentBottom="true"
@@ -131,6 +140,7 @@
                 android:orientation="vertical">
 
                 <Button
+                    android:id="@+id/upload"
                     android:layout_width="70dp"
                     android:layout_height="35dp"
                     android:background="@drawable/white_btn_bg"
@@ -139,20 +149,24 @@
                     android:textSize="@dimen/text_medium" />
 
                 <Button
+                    android:id="@+id/takephotos"
                     android:layout_width="70dp"
                     android:layout_height="35dp"
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/white_btn_bg"
-                    android:text="上传"
+                    android:text="拍照"
+                    android:visibility="gone"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_medium" />
 
                 <Button
+                    android:id="@+id/album"
                     android:layout_width="70dp"
                     android:layout_height="35dp"
                     android:background="@drawable/white_btn_bg"
-                    android:text="上传"
+                    android:text="相册"
+                    android:visibility="gone"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_medium" />
             </LinearLayout>
@@ -166,6 +180,7 @@
             android:layout_marginTop="8dp">
 
             <TextView
+                android:id="@+id/location"
                 style="@style/text_grey_small"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
