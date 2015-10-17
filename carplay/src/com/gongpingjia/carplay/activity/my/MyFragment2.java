@@ -17,7 +17,6 @@ import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.view.RoundImageView;
-import com.gongpingjia.carplay.view.dialog.NearbyFilterDialog;
 
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
@@ -172,8 +171,9 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                 break;
             //完善信息
             case R.id.perfect:
-                NearbyFilterDialog nearbyFilterDialog = new NearbyFilterDialog(getActivity());
-                nearbyFilterDialog.show();
+//                NearbyFilterDialog nearbyFilterDialog = new NearbyFilterDialog(getActivity());
+//                nearbyFilterDialog.show();
+                getMyDetails();
                 break;
             //我的活动
             case R.id.myactive:

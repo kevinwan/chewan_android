@@ -3,6 +3,9 @@
  */
 package com.gongpingjia.carplay;
 
+import android.content.Context;
+import android.text.TextUtils;
+
 import net.duohuo.dhroid.dialog.IDialog;
 import net.duohuo.dhroid.ioc.IocContainer;
 import net.duohuo.dhroid.net.GlobalCodeHandler;
@@ -10,9 +13,6 @@ import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.Response;
 
 import org.json.JSONObject;
-
-import android.content.Context;
-import android.text.TextUtils;
 
 /**
  * 
@@ -51,6 +51,11 @@ public class KmlGlobalCodeHandler implements GlobalCodeHandler
                 {
                     title = "网络错误";
                     msg = "当前网络不可用,请检查网络哦~";
+                }
+                else if (code.equals("noServiceError"))
+                {
+                    title = "网络错误";
+                    msg = "服务器异常";
                 }
                 
                 IocContainer.getShare().get(IDialog.class).showToastLong(context, msg);
