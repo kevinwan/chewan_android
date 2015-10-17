@@ -177,7 +177,11 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
                 if (licenseAuthStatus.equals("认证通过")){
 
                     ViewUtil.bindNetImage(carlogo, logo,"carlogo");
+                    approve_layout_car.setEnabled(false);
                 }
+//                if (photoAuthStatus.equals("认证通过")){
+//                    approve_layout_head.setEnabled(false);
+//                }
 
                 nicknameT.setText(nickname);
                 sexT.setText(gender);
