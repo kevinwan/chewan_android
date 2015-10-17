@@ -11,6 +11,7 @@ import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.util.CarPlayPerference;
+import com.gongpingjia.carplay.util.MD5Util;
 
 import net.duohuo.dhroid.ioc.IocContainer;
 import net.duohuo.dhroid.net.DhNet;
@@ -81,7 +82,7 @@ public class ForgetPasswordActivity2 extends CarPlayBaseActivity implements View
         DhNet dhNet = new DhNet(API2.forgetPassword);
         dhNet.addParam("phone", phone);
         dhNet.addParam("code", verification);
-        dhNet.addParam("password", password);
+        dhNet.addParam("password", MD5Util.string2MD5(password));
         dhNet.doPostInDialog("修改中...", new NetTask(self) {
             @Override
             public void doInUI(Response response, Integer transfer) {
@@ -106,7 +107,7 @@ public class ForgetPasswordActivity2 extends CarPlayBaseActivity implements View
             return;
         }
         mCountTimer.start();
-        DhNet dhNet = new DhNet(API2.getVerification);
+        DhNet dhNet = new DhNet(API2.getVerification + phone + "/verification");
         dhNet.addParam("type", 1);
         dhNet.doGetInDialog("获取中...", new NetTask(self) {
             @Override
