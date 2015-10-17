@@ -41,6 +41,7 @@ import com.easemob.exceptions.EaseMobException;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.active.NearListFragment;
 import com.gongpingjia.carplay.activity.active.RecommendListFragment;
+import com.gongpingjia.carplay.activity.dynamic.DynamicListFragment;
 import com.gongpingjia.carplay.activity.my.LoginActivity;
 import com.gongpingjia.carplay.activity.my.ManageAlbumActivity;
 import com.gongpingjia.carplay.activity.my.MyFragment2;
@@ -272,6 +273,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
                     case 3:
                         setTitle("动态");
                         img.setImageResource(R.drawable.icon_nav_dongtai_f);
+                        switchContent(DynamicListFragment.getInstance());
                         break;
                     case 4:
                         setTitle("我的");

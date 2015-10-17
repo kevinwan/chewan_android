@@ -204,17 +204,17 @@
             <!--<category android:name="android.intent.category.LAUNCHER" />-->
             <!--</intent-filter>-->
         </activity>
-        <activity
+      <!--  <activity
             android:name=".activity.main.MainActivity2"
             android:screenOrientation="portrait">
 
-        </activity>
+        </activity>-->
 
 
         <activity android:name=".activity.my.BasicInformationActivity2" />
         <activity android:name=".activity.my.RegisterActivity2" />
         <activity android:name=".activity.my.ForgetPasswordActivity2" />
-        <activity android:name=".activity.my.SubscribeActivity2">
+        <activity android:name=".activity.main.MainActivity2">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
