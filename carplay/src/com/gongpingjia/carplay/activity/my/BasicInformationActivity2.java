@@ -190,7 +190,7 @@ public class BasicInformationActivity2 extends CarPlayBaseActivity implements Vi
             //手机号登陆
             net.addParam("phone", getIntent().getStringExtra("phone"));
             net.addParam("code", getIntent().getStringExtra("code"));
-            net.addParam("password", getIntent().getStringExtra("password"));
+            net.addParam("password", MD5Util.string2MD5(getIntent().getStringExtra("password")));
         } else {
             //三方登陆
             net.addParam("uid", getIntent().getStringExtra("uid"));
