@@ -100,7 +100,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
 
             @Override
             public void doInUI(Response response, Integer transfer) {
-//                System.out.println(user.getUserId()+"---------"+user.getToken());
+//                System.out.println(user.getUserId()+"---------"+user.getToken()); 
                 if (response.isSuccess()) {
                     JSONObject jo = response.jSONFromData();
 
