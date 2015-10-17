@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.view.HeartView;
 import com.gongpingjia.carplay.view.RoundImageView;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -65,11 +66,13 @@ public class MySubscriberAdapter extends BaseAdapter {
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
-            
+            holder.textNickname.setText(obj.getString("nickname"));
+            holder.textDistance.setText(String.valueOf(obj.getInt("distance")));
+            holder.textAge.setText(String.valueOf(obj.getInt("age")));
+            ImageLoader.getInstance().displayImage(obj.getString("avatar"), holder.roundImageView);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
         return convertView;
     }
 
@@ -78,5 +81,6 @@ public class MySubscriberAdapter extends BaseAdapter {
         TextView textNickname;
         TextView textDistance;
         HeartView heartView;
+        TextView textAge;
     }
 }
