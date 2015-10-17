@@ -35,7 +35,7 @@ public class CarPlayBaseFragment extends Fragment {
 
     DhNet net;
 
-    boolean hasMore = true;
+    public boolean hasMore = true;
 
 
     Boolean isLoading = false;

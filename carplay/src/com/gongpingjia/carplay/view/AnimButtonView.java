@@ -15,6 +15,8 @@ import android.widget.RelativeLayout;
 
 import com.gongpingjia.carplay.R;
 
+import net.duohuo.dhroid.util.DhUtil;
+
 public class AnimButtonView extends RelativeLayout {
 
 
@@ -49,7 +51,9 @@ public class AnimButtonView extends RelativeLayout {
         int bgId = a.getResourceId(R.styleable.AnimButtonView_bg, 0);
 
         RelativeLayout.LayoutParams pa = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-        pa.setMargins(30, 30, 30, 30);
+        int margin = DhUtil.dip2px(mContext, 15);
+
+        pa.setMargins(margin, margin, margin, margin);
         image1 = new ImageView(mContext);
         image2 = new ImageView(mContext);
         ImageView bg = new ImageView(mContext);
@@ -66,7 +70,6 @@ public class AnimButtonView extends RelativeLayout {
         mAnimationSet1 = initAnimationSet();
         mAnimationSet2 = initAnimationSet();
         a.recycle();
-        initAnimationTranslateAnimation();
     }
 
 

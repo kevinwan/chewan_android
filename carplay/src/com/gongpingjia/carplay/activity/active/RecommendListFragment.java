@@ -5,7 +5,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.gongpingjia.carplay.ILoadSuccess;
 import com.gongpingjia.carplay.R;
@@ -79,12 +78,10 @@ public class RecommendListFragment extends CarPlayBaseFragment implements PullTo
     public void loadSuccess() {
         adapter.setData(mVaules);
         listV.onRefreshComplete();
-        Toast.makeText(getActivity(), "哈哈", Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
     public void loadSuccessOnFirst() {
-
     }
 }

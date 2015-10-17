@@ -198,19 +198,17 @@
         <activity
             android:name=".activity.my.LoginActivity2"
             android:launchMode="standard"
-            android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:screenOrientation="portrait">
+            <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
-        <activity
+      <!--  <activity
             android:name=".activity.main.MainActivity2"
             android:screenOrientation="portrait">
 
-        </activity>
-
+        </activity>-->
 
         <activity android:name=".activity.my.BasicInformationActivity2"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -223,6 +221,13 @@
         <activity android:name=".activity.my.ForgetPasswordActivity2"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"/>
+        <activity android:name=".activity.main.MainActivity2">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".activity.my.AboutUsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -299,13 +304,16 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".activity.active.ActiveDetailsActivity2" >
+        <activity android:name=".activity.active.ActiveDetailsActivity2">
+
         </activity>
         <activity
             android:name=".activity.my.AuthenticateOwnersActivity2"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" >
         </activity>
+
+
         <activity
             android:name=".activity.my.HeadAttestationActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

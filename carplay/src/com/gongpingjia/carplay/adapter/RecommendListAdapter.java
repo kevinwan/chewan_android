@@ -1,16 +1,16 @@
 package com.gongpingjia.carplay.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.activity.active.ActiveDetailsActivity2;
 
 import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.util.ViewUtil;
@@ -67,9 +67,9 @@ public class RecommendListAdapter extends RecyclerView.Adapter<RecommendListAdap
     }
 
     @Override
-    public void onBindViewHolder(SimpleViewHolder holder, int position) {
+    public void onBindViewHolder(SimpleViewHolder holder, final int position) {
 
-        JSONObject jo = getItem(position);
+        final JSONObject jo = getItem(position);
         holder.priceT.setText(JSONUtil.getString(jo, "price"));
         holder.priceDescT.setText(JSONUtil.getString(jo, "priceDesc"));
         holder.infoT.setText(JSONUtil.getString(jo, "title"));
@@ -96,8 +96,10 @@ public class RecommendListAdapter extends RecyclerView.Adapter<RecommendListAdap
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("msg", "22222222");
-                Toast.makeText(mContext, "哈哈", Toast.LENGTH_SHORT).show();
+                JSONObject jo = getItem(position);
+                Intent it = new Intent(mContext, ActiveDetailsActivity2.class);
+                it.putExtra("activityId", JSONUtil.getString(jo, "officialActivityId"));
+                mContext.startActivity(it);
             }
         });
     }
