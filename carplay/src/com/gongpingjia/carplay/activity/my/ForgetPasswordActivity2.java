@@ -107,7 +107,7 @@ public class ForgetPasswordActivity2 extends CarPlayBaseActivity implements View
             return;
         }
         mCountTimer.start();
-        DhNet dhNet = new DhNet(API2.getVerification);
+        DhNet dhNet = new DhNet(API2.getVerification + phone + "/verification");
         dhNet.addParam("type", 1);
         dhNet.doGetInDialog("获取中...", new NetTask(self) {
             @Override
