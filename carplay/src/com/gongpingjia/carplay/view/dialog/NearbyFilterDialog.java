@@ -17,6 +17,8 @@ public class NearbyFilterDialog extends BaseAlertDialog {
 
     Context mContext;
 
+    RadioGroup active_typeG1, active_typeG2, active_typeG3, active_typeG4;
+
 
     public NearbyFilterDialog(Context context) {
         super(context);
@@ -33,19 +35,61 @@ public class NearbyFilterDialog extends BaseAlertDialog {
 
     private void initView() {
 
-        RadioGroup group = (RadioGroup) this.findViewById(R.id.active_type);
+        active_typeG1 = (RadioGroup) this.findViewById(R.id.active_type1);
+        active_typeG2 = (RadioGroup) this.findViewById(R.id.active_type2);
+        active_typeG3 = (RadioGroup) this.findViewById(R.id.active_type3);
+        active_typeG4 = (RadioGroup) this.findViewById(R.id.active_type4);
+
 
         //响应单选框组内的选中项发生变化时的事件
-        group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        active_typeG1.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-
+                active_typeG2.clearCheck();
+                active_typeG3.clearCheck();
+                active_typeG4.clearCheck();
             }
         });
 
+
+        //响应单选框组内的选中项发生变化时的事件
+        active_typeG2.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                active_typeG1.clearCheck();
+                active_typeG3.clearCheck();
+                active_typeG4.clearCheck();
+            }
+        });
+
+
+        //响应单选框组内的选中项发生变化时的事件
+        active_typeG3.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                active_typeG2.clearCheck();
+                active_typeG1.clearCheck();
+                active_typeG4.clearCheck();
+            }
+        });
+
+
+        //响应单选框组内的选中项发生变化时的事件
+        active_typeG4.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                active_typeG2.clearCheck();
+                active_typeG3.clearCheck();
+                active_typeG1.clearCheck();
+            }
+        });
+
+
     }
 
-    /** 查找radioButton控件 */
+    /**
+     * 查找radioButton控件
+     */
     public RadioButton findRadioButton(ViewGroup group) {
         RadioButton resBtn = null;
         int len = group.getChildCount();
@@ -54,7 +98,7 @@ public class NearbyFilterDialog extends BaseAlertDialog {
                 resBtn = (RadioButton) group.getChildAt(i);
                 group.addView(resBtn);
             } else if (group.getChildAt(i) instanceof ViewGroup) {
-                resBtn=findRadioButton((ViewGroup) group.getChildAt(i));
+                resBtn = findRadioButton((ViewGroup) group.getChildAt(i));
                 group.addView(resBtn);
             }
         }

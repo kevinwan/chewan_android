@@ -54,7 +54,7 @@ public class AnimButtonView2 extends RelativeLayout {
 
 
         RelativeLayout.LayoutParams pa = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-        int margin = DhUtil.dip2px(mContext, 20);
+        int margin = DhUtil.dip2px(mContext, 15);
 
         pa.setMargins(margin, margin, margin, margin);
         image1 = new ImageView(mContext);
