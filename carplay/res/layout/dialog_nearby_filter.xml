@@ -32,21 +32,26 @@
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
-
-            <RadioGroup
-                android:id="@+id/active_type"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:layout_marginTop="12dp"
+                android:layout_margin="12dp"
                 android:background="@drawable/btn_white_fillet"
-                android:paddingBottom="12dp"
-                android:paddingTop="12dp">
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
-                <LinearLayout
+
+                <RadioGroup
+                    android:id="@+id/active_type1"
                     android:layout_width="match_parent"
-                    android:layout_height="28dp">
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:background="@drawable/btn_white_fillet"
+                    android:orientation="horizontal"
+                    android:paddingBottom="6dp"
+                    android:paddingTop="6dp">
+
 
                     <RadioButton
                         android:layout_width="match_parent"
@@ -56,6 +61,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/nearby_radio_btn"
                         android:button="@null"
+                        android:checked="false"
                         android:gravity="center"
                         android:text="吃饭"
                         android:textColor="@color/white"
@@ -88,12 +94,18 @@
                         android:textColor="@color/white"
                         android:textSize="@dimen/text_small" />
 
-                </LinearLayout>
+                </RadioGroup>
 
-                <LinearLayout
+
+                <RadioGroup
+                    android:id="@+id/active_type2"
                     android:layout_width="match_parent"
-                    android:layout_height="28dp"
-                    android:layout_marginTop="6dp">
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="6dp"
+                    android:paddingTop="6dp">
 
                     <RadioButton
                         android:layout_width="match_parent"
@@ -134,12 +146,18 @@
                         android:textColor="@color/white"
                         android:textSize="@dimen/text_small" />
 
-                </LinearLayout>
+                </RadioGroup>
 
-                <LinearLayout
+                <RadioGroup
+                    android:id="@+id/active_type3"
                     android:layout_width="match_parent"
-                    android:layout_height="28dp"
-                    android:layout_marginTop="6dp">
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:background="@drawable/btn_white_fillet"
+                    android:orientation="horizontal"
+                    android:paddingBottom="6dp"
+                    android:paddingTop="6dp">
 
                     <RadioButton
                         android:layout_width="match_parent"
@@ -180,16 +198,22 @@
                         android:textColor="@color/white"
                         android:textSize="@dimen/text_small" />
 
-                </LinearLayout>
+                </RadioGroup>
 
-                <LinearLayout
+                <RadioGroup
+                    android:id="@+id/active_type4"
                     android:layout_width="match_parent"
-                    android:layout_height="28dp"
-                    android:layout_marginTop="6dp">
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:background="@drawable/btn_white_fillet"
+                    android:orientation="horizontal"
+                    android:paddingBottom="6dp"
+                    android:paddingTop="6dp">
 
                     <RadioButton
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="28dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
@@ -214,7 +238,61 @@
                         android:layout_marginRight="10dp"
                         android:layout_weight="1" />
 
-                </LinearLayout>
+                </RadioGroup>
+
+            </LinearLayout>
+
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:background="@drawable/btn_white_fillet"
+                android:orientation="horizontal"
+                android:paddingBottom="12dp"
+                android:paddingTop="12dp">
+
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="28dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/nearby_radio_btn"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="请我吧"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_small" />
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="28dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/nearby_radio_btn"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="我请客"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_small" />
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="28dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/nearby_radio_btn"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="不限"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_small" />
+
 
             </RadioGroup>
 
@@ -224,106 +302,50 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
                 android:layout_marginTop="12dp"
-                android:orientation="horizontal"
                 android:background="@drawable/btn_white_fillet"
+                android:orientation="horizontal"
                 android:paddingBottom="12dp"
                 android:paddingTop="12dp">
 
 
-                    <RadioButton
-                        android:layout_width="match_parent"
-                        android:layout_height="28dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/nearby_radio_btn"
-                        android:button="@null"
-                        android:gravity="center"
-                        android:text="请我吧"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/text_small" />
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="28dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/nearby_radio_btn"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="男"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_small" />
 
-                    <RadioButton
-                        android:layout_width="match_parent"
-                        android:layout_height="28dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/nearby_radio_btn"
-                        android:button="@null"
-                        android:gravity="center"
-                        android:text="我请客"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/text_small" />
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="28dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/nearby_radio_btn"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="女"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_small" />
 
-                    <RadioButton
-                        android:layout_width="match_parent"
-                        android:layout_height="28dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/nearby_radio_btn"
-                        android:button="@null"
-                        android:gravity="center"
-                        android:text="不限"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/text_small" />
-
-
-            </RadioGroup>
-
-            <RadioGroup
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:layout_marginTop="12dp"
-                android:orientation="horizontal"
-                android:background="@drawable/btn_white_fillet"
-                android:paddingBottom="12dp"
-                android:paddingTop="12dp">
-
-
-
-                    <RadioButton
-                        android:layout_width="match_parent"
-                        android:layout_height="28dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/nearby_radio_btn"
-                        android:button="@null"
-                        android:gravity="center"
-                        android:text="男"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/text_small" />
-
-                    <RadioButton
-                        android:layout_width="match_parent"
-                        android:layout_height="28dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/nearby_radio_btn"
-                        android:button="@null"
-                        android:gravity="center"
-                        android:text="女"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/text_small" />
-
-                    <RadioButton
-                        android:layout_width="match_parent"
-                        android:layout_height="28dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/nearby_radio_btn"
-                        android:button="@null"
-                        android:gravity="center"
-                        android:text="不限"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/text_small" />
-
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="28dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/nearby_radio_btn"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="不限"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_small" />
 
 
             </RadioGroup>
@@ -344,9 +366,9 @@
             <Button
                 android:layout_width="160dp"
                 android:layout_height="50dp"
+                android:layout_marginBottom="21dp"
                 android:background="@drawable/btn_red_fillet"
                 android:text="发送邀请"
-                android:layout_marginBottom="21dp"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_medium" />
         </LinearLayout>
