@@ -223,7 +223,8 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
                         if (response.isSuccess()) {
                             showToast("认证车主申请成功,请等待审核!");
                             Intent it = getIntent();
-                            setResult(Activity.RESULT_OK, it);
+                            it.putExtra("statuss", "认证中");
+                            setResult(self.RESULT_OK, it);
                             finish();
 //                            showToast(response.isSuccess() + "");
                         }

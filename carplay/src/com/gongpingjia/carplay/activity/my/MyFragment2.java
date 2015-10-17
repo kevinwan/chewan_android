@@ -37,7 +37,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
     static MyFragment2 instance;
     private RoundImageView headI;
     private ImageView sexI, photo_bgI;
-    private TextView attestationT, nameT, ageT, completenessT,txtphotoAuthStatusT,attestation_txtT;
+    private TextView attestationT, nameT, ageT, completenessT, txtphotoAuthStatusT, attestation_txtT;
     private Button perfectBtn;
     private RelativeLayout sexbgR;
     private LinearLayout myphotoL, myactiveL, myattentionL, headattestationL, carattestationL;
@@ -51,6 +51,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
     }
 
     User user;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -105,7 +106,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
 
                     ViewUtil.bindView(nameT, JSONUtil.getString(jo, "nickname"));
                     String gender = JSONUtil.getString(jo, "gender");
-                    if (gender.equals("男")) {
+                    if (("男").equals(gender)) {
                         sexbgR.setBackgroundResource(R.drawable.radio_sex_man_normal);
                         sexI.setBackgroundResource(R.drawable.icon_man3x);
                     } else {
@@ -171,7 +172,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                 break;
             //完善信息
             case R.id.perfect:
-                NearbyFilterDialog nearbyFilterDialog=new NearbyFilterDialog(getActivity());
+                NearbyFilterDialog nearbyFilterDialog = new NearbyFilterDialog(getActivity());
                 nearbyFilterDialog.show();
                 break;
             //我的活动
@@ -181,7 +182,8 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                 break;
             //我的关注
             case R.id.myattention:
-
+                it = new Intent(getActivity(), SubscribeActivity2.class);
+                startActivity(it);
                 break;
             //头像认证
             case R.id.headattestation:
