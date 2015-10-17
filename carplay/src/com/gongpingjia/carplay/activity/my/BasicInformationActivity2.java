@@ -3,6 +3,7 @@ package com.gongpingjia.carplay.activity.my;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -168,7 +169,11 @@ public class BasicInformationActivity2 extends CarPlayBaseActivity implements Vi
 
 
     private void register() {
-        DhNet net = new DhNet(API2.register);
+
+        if (TextUtils.isEmpty(mEditNickname.getText().toString())) {
+            showToast("请输入昵称");
+            return;
+        }
 
         if (mBirthday <= 0) {
             showToast("请选择生日");
@@ -179,7 +184,7 @@ public class BasicInformationActivity2 extends CarPlayBaseActivity implements Vi
             showToast("请上传头像");
             return;
         }
-
+        DhNet net = new DhNet(API2.register);
         String gender = mGroupSex.getCheckedRadioButtonId() == R.id.rb_female ? "女" : "男";
         if (getIntent().getStringExtra("phone") != null) {
             //手机号登陆
