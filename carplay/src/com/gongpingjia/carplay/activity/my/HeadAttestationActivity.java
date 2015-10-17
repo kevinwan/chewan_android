@@ -108,7 +108,8 @@ public class HeadAttestationActivity extends CarPlayBaseActivity implements View
                     public void doInUI(Response response, Integer transfer) {
                         if(response.isSuccess()){
                             Intent intent = getIntent();
-                            self.setResult(RESULT_OK,intent);
+                            intent.putExtra("status", "认证中");
+                            setResult(self.RESULT_OK, intent);
                             finish();
                         }
                     }
