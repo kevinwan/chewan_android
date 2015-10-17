@@ -48,7 +48,7 @@
             android:gravity="center"
             android:maxWidth="200dp"
             android:singleLine="true"
-            android:textColor="@color/white"
+            android:textColor="@color/text_black"
             android:textSize="@dimen/text_title"
             />
         <ImageView
@@ -69,7 +69,7 @@
             android:layout_centerVertical="true"
             android:gravity="center"
             android:paddingRight="12dp"
-            android:textColor="@color/white"
+            android:textColor="@color/text_black"
             android:textSize="@dimen/text_medium"
             android:visibility="gone" />
 

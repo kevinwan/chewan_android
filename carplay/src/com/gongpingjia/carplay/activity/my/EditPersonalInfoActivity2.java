@@ -93,6 +93,7 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
     TextView right_txt;
     private long mBirthday;
     String head_url;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,18 +110,31 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
 
         View backV = findViewById(R.id.backLayout);
         right_txt = (TextView) findViewById(R.id.right_text);
+        right_txt.setVisibility(View.VISIBLE);
         right_txt.setText("保存");
+        right_txt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // 如果没有改动 直接关闭本页
+                if (isModify()) {
+                    modification();
+                } else {
+                    finish();
+                }
+            }
+        });
+
         if (backV != null) {
             backV.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View arg0) {
                     // 如果没有改动 直接关闭本页
-                    if (isModify()) {
-                        modification();
-                    } else {
-                        finish();
-                    }
+//                    if (isModify()) {
+//                        modification();
+//                    } else {
+                    finish();
+//                    }
 
                 }
             });
@@ -131,7 +145,7 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
 
             photoUid = getIntent().getStringExtra("photoId");
         }
-         carlogo = (ImageView) findViewById(R.id.person_carlogo);
+        carlogo = (ImageView) findViewById(R.id.person_carlogo);
         headI = (RoundImageView) findViewById(R.id.head);
         sexT = (TextView) findViewById(R.id.sex);
         head_approve = (TextView) findViewById(R.id.head_approve);
@@ -148,6 +162,7 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
         approve_layout_head.setOnClickListener(this);
         approve_layout_car.setOnClickListener(this);
         getMyDetails();
+
     }
 
     /**
@@ -172,11 +187,11 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
                 edit_ageT.setText(age);
                 head_approve.setText(photoAuthStatus);
                 car_approve.setText(licenseAuthStatus);
-                JSONObject ob =  JSONUtil.getJSONObject(jo, "car");
-                String logo = JSONUtil.getString(ob,"logo");
-                if (licenseAuthStatus.equals("认证通过")){
+                JSONObject ob = JSONUtil.getJSONObject(jo, "car");
+                String logo = JSONUtil.getString(ob, "logo");
+                if (licenseAuthStatus.equals("认证通过")) {
 
-                    ViewUtil.bindNetImage(carlogo, logo,"carlogo");
+                    ViewUtil.bindNetImage(carlogo, logo, "default");
                     approve_layout_car.setEnabled(false);
                 }
 //                if (photoAuthStatus.equals("认证通过")){
@@ -211,10 +226,11 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
         }
         return false;
     }
+
     private void uploadHead(String path) {
         Bitmap bmp = PhotoUtil.getLocalImage(new File(path));
         headI.setImageBitmap(bmp);
-        DhNet net = new DhNet(API2.CWBaseurl +"/user/"+user.getUserId()+ "/avatar?token=" + user.getToken());
+        DhNet net = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId() + "/avatar?token=" + user.getToken());
         net.upload(new FileInfo("attach", new File(path)), new NetTask(self) {
 
             @Override
@@ -224,7 +240,7 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
                     JSONObject jo = response.jSONFromData();
                     photoUid = JSONUtil.getString(jo, "photoId");
                     head_url = JSONUtil.getString(jo, "photoUrl");
-                    System.out.println("更改头像返回："+JSONUtil.getString(jo, "photoUrl"));
+                    System.out.println("更改头像返回：" + JSONUtil.getString(jo, "photoUrl"));
                     showToast("上传成功");
 //
                 } else {
@@ -342,14 +358,6 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
         });
     }
 
-    public void save() {
-        right_txt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                modification();
-            }
-        });
-    }
 
     @Override
     public void onClick(View view) {
@@ -368,7 +376,7 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
             case R.id.approve_layout_head:
 //                showToast("头像认证");
                 Intent intent = new Intent(self, HeadAttestationActivity.class);
-                startActivityForResult(intent,APPROVE_HEAD);
+                startActivityForResult(intent, APPROVE_HEAD);
 
                 break;
             case R.id.approve_layout_car:
@@ -393,7 +401,7 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
 
                         //出生年
                         long yearL = Long.parseLong(year);
-                         years = str - yearL + "";
+                        years = str - yearL + "";
                         edit_ageT.setText(years);
 //                        System.out.println(years);
                     }
@@ -453,7 +461,7 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
 //            if (isModify()) {
 //                modification();
 //            } else {
-                finish();
+            finish();
 //            }
             return true;
         }
