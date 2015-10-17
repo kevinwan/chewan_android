@@ -210,17 +210,21 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
                     }
 
 
-                    /** 文字变色 */
-//                    SpannableStringBuilder style = new SpannableStringBuilder(newcontent);
-//                        style.setSpan(new ForegroundColorSpan(context.getResources()
-//                                        .getColor(R.color.text_orange)), day_start,
-//                                day_start + day.length(),
-//                                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
                 }
             }
         });
     }
+
+
+//    private SpannableStringBuilder setTextColor(String newcontent){
+//        /** 文字变色 */
+//                    SpannableStringBuilder style = new SpannableStringBuilder(newcontent);
+//        style.setSpan(new ForegroundColorSpan(self.getResources()
+//                        .getColor(R.color.text_orange)), day_start,
+//                day_start + day.length(),
+//                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+//    }
 
     @Override
     public void onClick(View v) {
