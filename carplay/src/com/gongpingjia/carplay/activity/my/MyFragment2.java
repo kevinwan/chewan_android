@@ -106,7 +106,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
 
                     ViewUtil.bindView(nameT, JSONUtil.getString(jo, "nickname"));
                     String gender = JSONUtil.getString(jo, "gender");
-                    if (gender.equals("男")) {
+                    if (("男").equals(gender)) {
                         sexbgR.setBackgroundResource(R.drawable.radio_sex_man_normal);
                         sexI.setBackgroundResource(R.drawable.icon_man3x);
                     } else {
