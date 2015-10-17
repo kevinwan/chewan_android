@@ -175,9 +175,8 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
                 JSONObject ob =  JSONUtil.getJSONObject(jo, "car");
                 String logo = JSONUtil.getString(ob,"logo");
                 if (licenseAuthStatus.equals("认证通过")){
+
                     ViewUtil.bindNetImage(carlogo, logo,"carlogo");
-                }else{
-                    carlogo.setVisibility(View.GONE);
                 }
 
                 nicknameT.setText(nickname);
@@ -208,6 +207,31 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
         }
         return false;
     }
+    private void uploadHead(String path) {
+        Bitmap bmp = PhotoUtil.getLocalImage(new File(path));
+        headI.setImageBitmap(bmp);
+        DhNet net = new DhNet(API2.CWBaseurl +"/user/"+user.getUserId()+ "/avatar?token=" + user.getToken());
+        net.upload(new FileInfo("attach", new File(path)), new NetTask(self) {
+
+            @Override
+            public void doInUI(Response response, Integer transfer) {
+                hidenProgressDialog();
+                if (response.isSuccess()) {
+                    JSONObject jo = response.jSONFromData();
+                    photoUid = JSONUtil.getString(jo, "photoId");
+                    head_url = JSONUtil.getString(jo, "photoUrl");
+                    System.out.println("更改头像返回："+JSONUtil.getString(jo, "photoUrl"));
+                    showToast("上传成功");
+//
+                } else {
+                    headI.setImageResource(R.drawable.head_icon);
+                    photoUid = "";
+                    showToast("上传失败,重新上传");
+                }
+            }
+        });
+    }
+
 //    private void uploadHead(String path) {
 //        Bitmap bmp = PhotoUtil.getLocalImage(new File(path));
 //        headI.setImageBitmap(bmp);
@@ -216,11 +240,61 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
 //
 //            @Override
 //            public void doInUI(Response response, Integer transfer) {
-//                hidenProgressDialog();
 //                if (response.isSuccess()) {
 //                    JSONObject jo = response.jSONFromData();
+//                    User.getInstance().setHeadUrl(
+//                            JSONUtil.getString(jo, "photoUrl"));
+//                    head_url = JSONUtil.getString(jo, "photoUrl");
 //                    photoUid = JSONUtil.getString(jo, "photoId");
+//                    boolean a = ImageLoader.getInstance().getDiskCache()
+//                            .remove(photo);
+//                    Bitmap b = ImageLoader.getInstance().getMemoryCache()
+//                            .remove(photo);
+//                    System.out.println("a" + a);
+//                    System.out.println("b" + b);
+//                    EditHeadPhotoEB eb = new EditHeadPhotoEB();
+//                    eb.setHeadUrl(photo);
+//                    EventBus.getDefault().post(eb);
 //
+//                    List<EMGroup> list = EMGroupManager.getInstance()
+//                            .getAllGroups();
+//
+//                    for (int i = 0; i < list.size(); i++) {
+//                        EMGroup group = list.get(i);
+//                        System.out.println("group:" + group.getGroupId());
+//                        EMMessage cmdMsg = EMMessage
+//                                .createSendMessage(EMMessage.Type.CMD);
+//
+//                        // 支持单聊和群聊，默认单聊，如果是群聊添加下面这行
+//                        cmdMsg.setChatType(EMMessage.ChatType.GroupChat);
+//
+//                        String action = "updateAvatar";// action可以自定义，在广播接收时可以收到
+//                        CmdMessageBody cmdBody = new CmdMessageBody(action);
+//                        String toUsername = group.getGroupId();// 发送给某个人
+//                        cmdMsg.setReceipt(toUsername);
+//                        cmdMsg.setAttribute("photoUrl", photo);// 支持自定义扩展
+//                        cmdMsg.addBody(cmdBody);
+//                        EMChatManager.getInstance().sendMessage(cmdMsg,
+//                                new EMCallBack() {
+//
+//                                    @Override
+//                                    public void onSuccess() {
+//                                        System.out.println("发布成功!");
+//                                    }
+//
+//                                    @Override
+//                                    public void onProgress(int arg0, String arg1) {
+//                                        // TODO Auto-generated method stub
+//
+//                                    }
+//
+//                                    @Override
+//                                    public void onError(int arg0, String arg1) {
+//                                        // TODO Auto-generated method stub
+//
+//                                    }
+//                                });
+//                    }
 //                } else {
 //                    headI.setImageResource(R.drawable.head_icon);
 //                    photoUid = "";
@@ -229,78 +303,6 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
 //            }
 //        });
 //    }
-
-    private void uploadHead(String path) {
-        Bitmap bmp = PhotoUtil.getLocalImage(new File(path));
-        headI.setImageBitmap(bmp);
-        DhNet net = new DhNet(API2.CWBaseurl +"/user/"+user.getUserId()+ "avatar?token=" + user.getToken());
-        net.upload(new FileInfo("attach", new File(path)), new NetTask(self) {
-
-            @Override
-            public void doInUI(Response response, Integer transfer) {
-                if (response.isSuccess()) {
-                    JSONObject jo = response.jSONFromData();
-                    User.getInstance().setHeadUrl(
-                            JSONUtil.getString(jo, "photoUrl"));
-                     head_url = JSONUtil.getString(jo, "photoUrl");
-                    photoUid = JSONUtil.getString(jo, "photoId");
-                    boolean a = ImageLoader.getInstance().getDiskCache()
-                            .remove(photo);
-                    Bitmap b = ImageLoader.getInstance().getMemoryCache()
-                            .remove(photo);
-                    System.out.println("a" + a);
-                    System.out.println("b" + b);
-                    EditHeadPhotoEB eb = new EditHeadPhotoEB();
-                    eb.setHeadUrl(photo);
-                    EventBus.getDefault().post(eb);
-
-                    List<EMGroup> list = EMGroupManager.getInstance()
-                            .getAllGroups();
-
-                    for (int i = 0; i < list.size(); i++) {
-                        EMGroup group = list.get(i);
-                        System.out.println("group:" + group.getGroupId());
-                        EMMessage cmdMsg = EMMessage
-                                .createSendMessage(EMMessage.Type.CMD);
-
-                        // 支持单聊和群聊，默认单聊，如果是群聊添加下面这行
-                        cmdMsg.setChatType(EMMessage.ChatType.GroupChat);
-
-                        String action = "updateAvatar";// action可以自定义，在广播接收时可以收到
-                        CmdMessageBody cmdBody = new CmdMessageBody(action);
-                        String toUsername = group.getGroupId();// 发送给某个人
-                        cmdMsg.setReceipt(toUsername);
-                        cmdMsg.setAttribute("photoUrl", photo);// 支持自定义扩展
-                        cmdMsg.addBody(cmdBody);
-                        EMChatManager.getInstance().sendMessage(cmdMsg,
-                                new EMCallBack() {
-
-                                    @Override
-                                    public void onSuccess() {
-                                        System.out.println("发布成功!");
-                                    }
-
-                                    @Override
-                                    public void onProgress(int arg0, String arg1) {
-                                        // TODO Auto-generated method stub
-
-                                    }
-
-                                    @Override
-                                    public void onError(int arg0, String arg1) {
-                                        // TODO Auto-generated method stub
-
-                                    }
-                                });
-                    }
-                }else{
-                    headI.setImageResource(R.drawable.head_icon);
-                    photoUid = "";
-                    showToast("上传失败,重新上传");
-                }
-            }
-        });
-    }
 
     private void modification() {
         final String nickname = nicknameT.getText().toString().trim();
@@ -325,8 +327,8 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
                     showToast("修改信息成功");
                     Intent it = getIntent();
                     it.putExtra("name", nickname);
-                    it.putExtra("age",  years);
-                    it.putExtra("head",  head_url);
+                    it.putExtra("age", years);
+                    it.putExtra("head", head_url);
                     setResult(self.RESULT_OK, it);
                     finish();
                 } else {
@@ -360,13 +362,13 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
 //                startActivity(intent);
 //                break;
             case R.id.approve_layout_head:
-                showToast("头像认证");
+//                showToast("头像认证");
                 Intent intent = new Intent(self, HeadAttestationActivity.class);
                 startActivityForResult(intent,APPROVE_HEAD);
 
                 break;
             case R.id.approve_layout_car:
-                showToast("车主认证");
+//                showToast("车主认证");
                 Intent it = new Intent(self, AuthenticateOwnersActivity2.class);
                 startActivityForResult(it, APPROVE_CAR);
 
