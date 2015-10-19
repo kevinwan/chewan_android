@@ -20,6 +20,11 @@
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                  />
+            <TextView
+                android:id="@+id/photo_bg_txt"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
 
             <com.gongpingjia.carplay.view.RoundImageView
                 android:id="@+id/head"

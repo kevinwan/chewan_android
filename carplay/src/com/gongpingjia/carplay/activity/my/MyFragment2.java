@@ -99,7 +99,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
 
             @Override
             public void doInUI(Response response, Integer transfer) {
-//                System.out.println(user.getUserId()+"---------"+user.getToken()); 
+                System.out.println(user.getUserId()+"---------"+user.getToken());
                 if (response.isSuccess()) {
                     JSONObject jo = response.jSONFromData();
 
@@ -115,9 +115,13 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                     String headimg = JSONUtil.getString(jo, "avatar");
 
                     ViewUtil.bindNetImage(headI, headimg, "head");
-                    ViewUtil.bindNetImage(photo_bgI, headimg, "head");
+                    ViewUtil.bindNetImage(photo_bgI, headimg, "default");
 //                    photo_bgI.setBackgroundResource(R.drawable.vp_third);
                     ViewUtil.bindView(ageT, JSONUtil.getInt(jo, "age"));
+//                    //设置高斯模糊
+//                    Fglass.blur(ageT, mainV.findViewById(R.id.photo_bg_txt), 2, 8);
+
+
 //                    Blurry.with(getActivity())
 //                            .radius(10)
 //                            .sampling(8)
@@ -177,7 +181,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                 break;
             //我的活动
             case R.id.myactive:
-                it = new Intent(getActivity(), PersonDetailActivity2.class);
+                it = new Intent(getActivity(), AttentionMeActivity.class);
                 startActivity(it);
                 break;
             //我的关注

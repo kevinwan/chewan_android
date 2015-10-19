@@ -211,5 +211,5 @@
                 android:text="3分钟前" />
         </LinearLayout>
     </LinearLayout>
-
+    <View style="@style/line_horizontal" />
 </LinearLayout>

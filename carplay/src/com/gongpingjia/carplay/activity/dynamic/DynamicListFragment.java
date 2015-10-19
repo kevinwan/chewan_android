@@ -20,6 +20,8 @@ import com.gongpingjia.carplay.activity.CarPlayBaseFragment;
 import com.gongpingjia.carplay.activity.main.MainActivity;
 import com.gongpingjia.carplay.activity.main.MainActivity2;
 import com.gongpingjia.carplay.activity.my.DynamicActivity;
+import com.gongpingjia.carplay.activity.main.MainActivity2;
+import com.gongpingjia.carplay.adapter.FragmentMsgAdapter;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
@@ -44,8 +46,8 @@ public class DynamicListFragment extends CarPlayBaseFragment implements PullToRe
     View mainV;
 
     ListView listV;
-
     PSAdapter adapter;
+    private FragmentMsgAdapter mAdapter;
 
     View headV;
     List<EMConversation> conversationList = new ArrayList<EMConversation>();
@@ -73,7 +75,7 @@ public class DynamicListFragment extends CarPlayBaseFragment implements PullToRe
         headV = LayoutInflater.from(getActivity()).inflate(R.layout.head_dynamic, null);
         listV = pullToRefreshListView.getRefreshableView();
         listV.addHeaderView(headV);
-        adapter = new PSAdapter(getActivity(), R.layout.item_group_message2);
+         adapter = new PSAdapter(getActivity(), R.layout.item_group_message2);
         listV.setAdapter(adapter);
         LinearLayout people_interested  = (LinearLayout) headV.findViewById(R.id.interested_people);
         people_interested.setOnClickListener(new View.OnClickListener() {
@@ -84,6 +86,8 @@ public class DynamicListFragment extends CarPlayBaseFragment implements PullToRe
             }
         });
 
+        mAdapter = new FragmentMsgAdapter(getActivity());
+        listV.setAdapter(mAdapter);
     }
 
 
@@ -93,13 +97,14 @@ public class DynamicListFragment extends CarPlayBaseFragment implements PullToRe
 
         conversationList.clear();
         conversationList = loadConversationsWithRecentChat();
-        adapter.clear();
-        adapter.addAll(conversationList);
+        mAdapter.setGroupMessageData(conversationList);
         // 更新消息未读数
         ((MainActivity2) getActivity()).updateUnreadLabel();
         if (!hidden && !((MainActivity2) getActivity()).isConflict) {
-
+//        ((MainActivity) getActivity()).updateUnreadLabel();
+//        if (!hidden && !((MainActivity) getActivity()).isConflict) {
 //            getHeadImg();
+//        }
         }
     }
 
@@ -148,8 +153,11 @@ public class DynamicListFragment extends CarPlayBaseFragment implements PullToRe
 
     /**
      * 根据最后一条消息的时间排序
+<<<<<<< HEAD
      *
      * @param conversationList
+=======
+>>>>>>> origin/develop-2.0
      */
     private void sortConversationByLastChatTime(
             List<Pair<Long, EMConversation>> conversationList) {

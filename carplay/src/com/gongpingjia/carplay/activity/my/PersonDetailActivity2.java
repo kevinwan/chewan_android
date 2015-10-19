@@ -99,7 +99,7 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
                     String headimg = JSONUtil.getString(jo, "avatar");
 
                     ViewUtil.bindNetImage(headI, headimg, "head");
-                    ViewUtil.bindNetImage(photo_bgI, headimg, "head");
+                    ViewUtil.bindNetImage(photo_bgI, headimg, "default");
 //                    photo_bgI.setBackgroundResource(R.drawable.vp_third);
 //                    Blurry.with(getActivity())
 //                            .radius(10)
