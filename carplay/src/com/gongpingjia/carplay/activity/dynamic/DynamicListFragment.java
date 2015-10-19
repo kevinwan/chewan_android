@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMConversation;
@@ -17,10 +16,9 @@ import com.easemob.chat.EMGroupManager;
 import com.gongpingjia.carplay.ILoadSuccess;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseFragment;
-import com.gongpingjia.carplay.activity.main.MainActivity;
 import com.gongpingjia.carplay.activity.main.MainActivity2;
+import com.gongpingjia.carplay.activity.my.AttentionMeActivity;
 import com.gongpingjia.carplay.activity.my.DynamicActivity;
-import com.gongpingjia.carplay.activity.main.MainActivity2;
 import com.gongpingjia.carplay.adapter.FragmentMsgAdapter;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -39,7 +37,7 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by Administrator on 2015/10/13.
  */
-public class DynamicListFragment extends CarPlayBaseFragment implements PullToRefreshBase.OnRefreshListener<RecyclerViewPager>, ILoadSuccess {
+public class DynamicListFragment extends CarPlayBaseFragment implements PullToRefreshBase.OnRefreshListener<RecyclerViewPager>, ILoadSuccess,View.OnClickListener {
 
     static DynamicListFragment instance;
 
@@ -48,6 +46,8 @@ public class DynamicListFragment extends CarPlayBaseFragment implements PullToRe
     ListView listV;
     PSAdapter adapter;
     private FragmentMsgAdapter mAdapter;
+
+    private LinearLayout people_interested,attentionme,visit;
 
     View headV;
     List<EMConversation> conversationList = new ArrayList<EMConversation>();
@@ -77,14 +77,13 @@ public class DynamicListFragment extends CarPlayBaseFragment implements PullToRe
         listV.addHeaderView(headV);
          adapter = new PSAdapter(getActivity(), R.layout.item_group_message2);
         listV.setAdapter(adapter);
-        LinearLayout people_interested  = (LinearLayout) headV.findViewById(R.id.interested_people);
-        people_interested.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent it = new Intent(getActivity(), DynamicActivity.class);
-                startActivity(it);
-            }
-        });
+        people_interested  = (LinearLayout) headV.findViewById(R.id.interested_people);
+        attentionme = (LinearLayout) headV.findViewById(R.id.attentionme);
+        visit = (LinearLayout) headV.findViewById(R.id.visit);
+
+        visit.setOnClickListener(this);
+        attentionme .setOnClickListener(this);
+        people_interested.setOnClickListener(this);
 
         mAdapter = new FragmentMsgAdapter(getActivity());
         listV.setAdapter(mAdapter);
@@ -153,11 +152,8 @@ public class DynamicListFragment extends CarPlayBaseFragment implements PullToRe
 
     /**
      * 根据最后一条消息的时间排序
-<<<<<<< HEAD
      *
      * @param conversationList
-=======
->>>>>>> origin/develop-2.0
      */
     private void sortConversationByLastChatTime(
             List<Pair<Long, EMConversation>> conversationList) {
@@ -196,4 +192,22 @@ public class DynamicListFragment extends CarPlayBaseFragment implements PullToRe
     }
 
 
+    @Override
+    public void onClick(View v) {
+        Intent it;
+        switch (v.getId()){
+            case R.id.interested_people:
+                it = new Intent(getActivity(), DynamicActivity.class);
+                startActivity(it);
+            break;
+            case R.id.visit:
+//                it = new Intent(getActivity(), DynamicActivity.class);
+//                startActivity(it);
+                break;
+            case R.id.attentionme:
+                it = new Intent(getActivity(), AttentionMeActivity.class);
+                startActivity(it);
+                break;
+        }
+    }
 }
