@@ -1,28 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:my="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="5dp">
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
         android:background="@drawable/active_bg"
-
         android:orientation="vertical"
-
-        android:paddingBottom="15dp">
+        android:paddingBottom="12dp"
+        android:paddingTop="12dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -35,10 +32,9 @@
                 android:id="@+id/head_att"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:src="@drawable/headaut_dl"
-                />
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:src="@drawable/headaut_dl" />
 
             <ImageView
                 android:id="@+id/iv_car_logo"
@@ -49,7 +45,7 @@
             <TextView
                 android:id="@+id/tv_car_name"
                 style="@style/text_grey_small"
-                android:layout_marginLeft="3dp"
+                android:layout_marginLeft="7dp"
                 android:text="宝马" />
 
             <LinearLayout
@@ -70,13 +66,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="5dp">
+            android:padding="10dp">
 
             <include layout="@layout/include_sex" />
 
@@ -84,23 +76,22 @@
                 android:id="@+id/pay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:textColor="@color/text_red"
-                android:text="请我吧 " />
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:text="请我吧 "
+                android:textColor="@color/text_red" />
 
             <TextView
                 android:id="@+id/transfer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/text_skyblue"
-                android:text="包接送 " />
+                android:text="包接送 "
+                android:textColor="@color/text_skyblue" />
         </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="8dp"
             android:layout_weight="1">
 
             <ImageView
@@ -113,21 +104,18 @@
 
             <com.gongpingjia.carplay.view.AnimButtonView
                 android:id="@+id/invite"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
+                android:layout_width="95dp"
+                android:layout_height="95dp"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="8dp"
                 my:bg="@drawable/red_circle"
-                my:src="@drawable/red_circle"
-
-
-                >
+                my:src="@drawable/red_circle">
 
                 <TextView
-                    style="@style/text_white_small"
+                    style="@style/text_white_medium"
                     android:layout_centerInParent="true"
-                    android:text="邀请" />
+                    android:text="邀 Ta" />
             </com.gongpingjia.carplay.view.AnimButtonView>
 
 
@@ -135,7 +123,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="12dp"
                 android:layout_marginTop="16dp"
                 android:orientation="vertical">
 
@@ -156,9 +144,9 @@
                     android:layout_marginTop="10dp"
                     android:background="@drawable/white_btn_bg"
                     android:text="拍照"
-                    android:visibility="gone"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_medium" />
+                    android:textSize="@dimen/text_medium"
+                    android:visibility="gone" />
 
                 <Button
                     android:id="@+id/album"
@@ -166,9 +154,9 @@
                     android:layout_height="35dp"
                     android:background="@drawable/white_btn_bg"
                     android:text="相册"
-                    android:visibility="gone"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_medium" />
+                    android:textSize="@dimen/text_medium"
+                    android:visibility="gone" />
             </LinearLayout>
         </RelativeLayout>
 
@@ -177,7 +165,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="8dp">
+            android:layout_marginTop="10dp">
 
             <TextView
                 android:id="@+id/location"
@@ -192,14 +180,15 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:text="20m" />
+                android:text="20m"
+                android:textColor="@color/text_green" />
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="20dp"
+                android:layout_height="25dp"
                 android:layout_marginRight="3dp"
                 android:layout_toLeftOf="@id/tv_distance"
-                android:src="@drawable/icon_location" />
+                android:src="@drawable/distance_icon" />
         </RelativeLayout>
     </LinearLayout>
 
