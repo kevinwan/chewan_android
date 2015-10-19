@@ -6,9 +6,6 @@
 
     <include layout="@layout/include_title_bar" />
 
-    <com.handmark.pulltorefresh.library.PullToRefreshListView
-        android:id="@+id/refresh_list_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <include layout="@layout/include_refreshlistview2"/>
 
 </LinearLayout>
