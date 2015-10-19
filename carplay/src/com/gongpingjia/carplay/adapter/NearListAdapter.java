@@ -119,7 +119,7 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
             holder.sexLayout.setBackgroundResource(R.drawable.radion_sex_woman_normal);
             holder.sex.setImageResource(R.drawable.icon_woman3x);
         }
-        ViewUtil.bindNetImage(holder.active_bg, JSONUtil.getString(userjo, "avatar"), "head");
+        ViewUtil.bindNetImage(holder.active_bg, JSONUtil.getString(userjo, "avatar"), "default");
 
         //头像认证,车主认证
         String headatt = JSONUtil.getString(userjo, "photoAuthStatus");
