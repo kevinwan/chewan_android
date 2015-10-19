@@ -99,7 +99,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
 
             @Override
             public void doInUI(Response response, Integer transfer) {
-//                System.out.println(user.getUserId()+"---------"+user.getToken()); 
+                System.out.println(user.getUserId()+"---------"+user.getToken());
                 if (response.isSuccess()) {
                     JSONObject jo = response.jSONFromData();
 
@@ -181,7 +181,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                 break;
             //我的活动
             case R.id.myactive:
-                it = new Intent(getActivity(), PersonDetailActivity2.class);
+                it = new Intent(getActivity(), AttentionMeActivity.class);
                 startActivity(it);
                 break;
             //我的关注

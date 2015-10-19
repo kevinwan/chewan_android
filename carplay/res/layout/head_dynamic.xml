@@ -6,6 +6,7 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/interested_people"
         android:layout_width="match_parent"
         android:layout_height="68dp"
         android:gravity="center_vertical"
