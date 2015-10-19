@@ -47,7 +47,7 @@ public class DynamicListFragment extends CarPlayBaseFragment implements PullToRe
     PSAdapter adapter;
     private FragmentMsgAdapter mAdapter;
 
-    private LinearLayout people_interested,attentionme,visit;
+    private LinearLayout people_interested,attentionme,visit,avtivity_dynamic;
 
     View headV;
     List<EMConversation> conversationList = new ArrayList<EMConversation>();
@@ -80,6 +80,7 @@ public class DynamicListFragment extends CarPlayBaseFragment implements PullToRe
         people_interested  = (LinearLayout) headV.findViewById(R.id.interested_people);
         attentionme = (LinearLayout) headV.findViewById(R.id.attentionme);
         visit = (LinearLayout) headV.findViewById(R.id.visit);
+        avtivity_dynamic = (LinearLayout) headV.findViewById(R.id.avtivity_dynamic);
 
         visit.setOnClickListener(this);
         attentionme .setOnClickListener(this);
@@ -196,7 +197,7 @@ public class DynamicListFragment extends CarPlayBaseFragment implements PullToRe
     public void onClick(View v) {
         Intent it;
         switch (v.getId()){
-            case R.id.interested_people:
+            case R.id.avtivity_dynamic:
                 it = new Intent(getActivity(), DynamicActivity.class);
                 startActivity(it);
             break;
@@ -207,6 +208,9 @@ public class DynamicListFragment extends CarPlayBaseFragment implements PullToRe
             case R.id.attentionme:
                 it = new Intent(getActivity(), AttentionMeActivity.class);
                 startActivity(it);
+                break;
+            case R.id.interested_people:
+
                 break;
         }
     }

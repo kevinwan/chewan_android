@@ -39,6 +39,7 @@
     <View style="@style/line" />
 
     <LinearLayout
+        android:id="@+id/avtivity_dynamic"
         android:layout_width="match_parent"
         android:layout_height="68dp"
         android:gravity="center_vertical"
