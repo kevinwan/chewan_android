@@ -160,7 +160,7 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
                     JSONObject jo = response.jSONFromData();
                     picUid = JSONUtil.getString(jo, "photoId");
                     imgs = JSONUtil.getString(jo, "photoUrl");
-                    System.out.println("行驶证："+JSONUtil.getString(jo, "photoId"));
+//                    System.out.println("行驶证："+JSONUtil.getString(jo, "photoId"));
 //                    System.out.println("********"+JSONUtil.getString(jo, "photoUrl"));
 //                    Toast.makeText(self, "111" + JSONUtil.getString(jo, "photoUrl"), Toast.LENGTH_SHORT).show();
                 } else {
@@ -183,7 +183,7 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
                 if (response.isSuccess()) {
                     JSONObject jo = response.jSONFromData();
                     picUids = JSONUtil.getString(jo, "photoId");
-                    System.out.println("驾驶证："+JSONUtil.getString(jo, "photoId"));
+//                    System.out.println("驾驶证："+JSONUtil.getString(jo, "photoId"));
                     img = JSONUtil.getString(jo, "photoUrl");
 //                    Toast.makeText(self, "2222" + response.isSuccess(), Toast.LENGTH_SHORT).show();
                 } else {

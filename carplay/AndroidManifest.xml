@@ -205,13 +205,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--
-        <activity
-            android:name=".activity.main.MainActivity2"
-            android:screenOrientation="portrait">
-
-        </activity>
-        -->
 
         <activity
             android:name=".activity.my.BasicInformationActivity2"
@@ -228,12 +221,15 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity android:name=".activity.main.MainActivity2" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
+            android:screenOrientation="portrait"/>
+        <!--<activity android:name=".activity.main.MainActivity2">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
+
         <activity
             android:name=".activity.my.AboutUsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

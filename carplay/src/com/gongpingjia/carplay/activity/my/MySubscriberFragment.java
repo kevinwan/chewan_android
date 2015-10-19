@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.gongpingjia.carplay.R;
-import com.gongpingjia.carplay.adapter.MySubscriberAdapter;
+import com.gongpingjia.carplay.adapter.MySubscriberAdapter2;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.User;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -31,7 +31,7 @@ import org.json.JSONObject;
 public class MySubscriberFragment extends Fragment {
 
     private PullToRefreshListView mListView;
-    private MySubscriberAdapter mySubscriberAdapter;
+    private MySubscriberAdapter2 mySubscriberAdapter;
 
     @Override
     public void onAttach(Activity activity) {
@@ -54,7 +54,7 @@ public class MySubscriberFragment extends Fragment {
                             try {
                                 JSONObject jsonObject = response.jSONFromData();
                                 JSONArray jsonArray = jsonObject.getJSONArray("mySubscribe");
-                                mySubscriberAdapter = new MySubscriberAdapter(getActivity(), jsonArray);
+                                mySubscriberAdapter = new MySubscriberAdapter2(getActivity(), jsonArray);
                                 mListView.setAdapter(mySubscriberAdapter);
                             } catch (JSONException e) {
                                 e.printStackTrace();
