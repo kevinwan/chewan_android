@@ -62,7 +62,7 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
         mRecyclerView.setAdapter(adapter);
         setOnLoadSuccess(this);
         fromWhat("data");
-        setUrl("http://cwapi.gongpingjia.com:8080/v2/activity/list?latitude=32&longitude=118&maxDistance=5000&token="+user.getToken()+"&userId="+user.getUserId());
+        setUrl("http://cwapi.gongpingjia.com:8080/v2/activity/list?latitude=32&longitude=118&maxDistance=5000&token=" + user.getToken() + "&userId=" + user.getUserId());
 //        addParams("token", user.getToken());
 //        addParams("type", "吃饭");
 //        addParams("pay", "AA");

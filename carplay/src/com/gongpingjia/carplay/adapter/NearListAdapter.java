@@ -18,9 +18,13 @@ package com.gongpingjia.carplay.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -45,12 +49,14 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
     private List<JSONObject> data;
 
     private boolean uploadFlag = true;
+
     public static class SimpleViewHolder extends RecyclerView.ViewHolder {
-        TextView nickname,car_name,age,pay,transfer,location,distance;
-        ImageView headatt,car_logo,attention,sex,active_bg;
+        TextView nickname, car_name, age, pay, transfer, location, distance;
+        ImageView headatt, car_logo, attention, sex, active_bg;
         RelativeLayout sexLayout;
         AnimButtonView invite;
-        Button upload,takephotos,album;
+        Button upload, takephotos, album;
+
         public SimpleViewHolder(View view) {
             super(view);
             nickname = (TextView) view.findViewById(R.id.tv_nickname);
@@ -64,7 +70,7 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
             pay = (TextView) view.findViewById(R.id.pay);
             transfer = (TextView) view.findViewById(R.id.transfer);
             active_bg = (ImageView) view.findViewById(R.id.active_bg);
-            invite  = (AnimButtonView) view.findViewById(R.id.invite);
+            invite = (AnimButtonView) view.findViewById(R.id.invite);
             location = (TextView) view.findViewById(R.id.location);
             distance = (TextView) view.findViewById(R.id.tv_distance);
             upload = (Button) view.findViewById(R.id.upload);
@@ -85,6 +91,7 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
         notifyItemRemoved(position);
     }
 
+
     @Override
     public SimpleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(mContext).inflate(R.layout.list_item_nearby, parent, false);
@@ -93,35 +100,37 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
 
     @Override
     public void onBindViewHolder(SimpleViewHolder holder, int position) {
+
+
 //        holder.title.setText(mItems.get(position).toString());
         final JSONObject jo = getItem(position);
 
         //用户信息
-        JSONObject userjo = JSONUtil.getJSONObject(jo,"organizer");
+        JSONObject userjo = JSONUtil.getJSONObject(jo, "organizer");
         //昵称,活动类型,年龄,性别,头像
         String activetype = JSONUtil.getString(jo, "type");
-        holder.nickname.setText(JSONUtil.getString(userjo,"nickname")+"想约人"+activetype);
+        holder.nickname.setText(JSONUtil.getString(userjo, "nickname") + "想约人" + activetype);
         holder.age.setText(JSONUtil.getInt(userjo, "age") + "");
         String sex = JSONUtil.getString(userjo, "gender");
-        if ("男".equals(sex)){
+        if ("男".equals(sex)) {
             holder.sexLayout.setBackgroundResource(R.drawable.radio_sex_man_normal);
             holder.sex.setImageResource(R.drawable.icon_man3x);
-        }else {
+        } else {
             holder.sexLayout.setBackgroundResource(R.drawable.radion_sex_woman_normal);
             holder.sex.setImageResource(R.drawable.icon_woman3x);
         }
         ViewUtil.bindNetImage(holder.active_bg, JSONUtil.getString(userjo, "avatar"), "head");
 
         //头像认证,车主认证
-        String headatt =JSONUtil.getString(userjo, "photoAuthStatus");
-        holder.headatt.setImageResource("未认证".equals(headatt)?R.drawable.headaut_dl : R.drawable.headaut_no);
+        String headatt = JSONUtil.getString(userjo, "photoAuthStatus");
+        holder.headatt.setImageResource("未认证".equals(headatt) ? R.drawable.headaut_dl : R.drawable.headaut_no);
 
         //关注,是否包接送,付费类型,活动类型
         holder.attention.setImageResource(JSONUtil.getBoolean(userjo, "subscribeFlag") ? R.drawable.icon_heart : R.drawable.icon_heart);
         boolean transfer = JSONUtil.getBoolean(jo, "transfer");
-        String  pay = JSONUtil.getString(jo, "pay");
+        String pay = JSONUtil.getString(jo, "pay");
         holder.pay.setText(pay);
-        holder.transfer.setText(transfer ? "包接送":"不包接送");
+        holder.transfer.setText(transfer ? "包接送" : "不包接送");
 
         final View itemView = holder.itemView;
         itemView.setOnClickListener(new View.OnClickListener() {
@@ -130,7 +139,11 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
                 Toast.makeText(mContext, "", Toast.LENGTH_SHORT).show();
             }
         });
-        holder.invite.startScaleAnimation();
+        Log.d("msg", position + "   getView()");
+//        holder.invite.clearAnimation();
+
+
+//        holder.invite.startScaleAnimation();
 
         holder.upload.setOnClickListener(new MyOnClick(holder));
 
@@ -139,36 +152,48 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
         holder.album.setOnClickListener(new MyOnClick(holder));
     }
 
-    class MyOnClick implements View.OnClickListener{
+    class MyOnClick implements View.OnClickListener {
         SimpleViewHolder holder;
-        public MyOnClick(SimpleViewHolder holder){
-            this.holder=holder;
+
+        public MyOnClick(SimpleViewHolder holder) {
+            this.holder = holder;
         }
+
         @Override
         public void onClick(View v) {
-            switch (v.getId()){
+            switch (v.getId()) {
                 //上传
                 case R.id.upload:
-                if (uploadFlag){
-                    uploadFlag = !uploadFlag;
-                    holder.takephotos.setVisibility(View.VISIBLE);
-                    holder.album.setVisibility(View.VISIBLE);
-                }else{
-                    uploadFlag = !uploadFlag;
-                    holder.takephotos.setVisibility(View.GONE);
-                    holder.album.setVisibility(View.GONE);
-                }
-                break;
+                    if (uploadFlag) {
+                        uploadFlag = !uploadFlag;
+                        holder.takephotos.setVisibility(View.VISIBLE);
+                        holder.album.setVisibility(View.VISIBLE);
+                    } else {
+                        uploadFlag = !uploadFlag;
+                        holder.takephotos.setVisibility(View.GONE);
+                        holder.album.setVisibility(View.GONE);
+                    }
+                    break;
                 //拍照
                 case R.id.takephotos:
 
-                break;
+                    break;
                 //相册
                 case R.id.album:
 
-                break;
+                    break;
             }
         }
+    }
+
+    @Override
+    public void onViewAttachedToWindow(NearListAdapter.SimpleViewHolder holder) {
+        RotateAnimation rotateAnimation = new RotateAnimation(0f, 360f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        rotateAnimation.setDuration(1000);
+        rotateAnimation.setRepeatCount(-1);
+        rotateAnimation.setInterpolator(new LinearInterpolator());
+        holder.invite.setAnimation(rotateAnimation);
+        rotateAnimation.start();
     }
 
     @Override
