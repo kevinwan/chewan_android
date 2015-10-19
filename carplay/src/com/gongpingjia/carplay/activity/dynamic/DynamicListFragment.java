@@ -15,6 +15,7 @@ import com.gongpingjia.carplay.ILoadSuccess;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseFragment;
 import com.gongpingjia.carplay.activity.main.MainActivity;
+import com.gongpingjia.carplay.activity.main.MainActivity2;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
@@ -82,8 +83,8 @@ public class DynamicListFragment extends CarPlayBaseFragment implements PullToRe
         adapter.clear();
         adapter.addAll(conversationList);
         // 更新消息未读数
-        ((MainActivity) getActivity()).updateUnreadLabel();
-        if (!hidden && !((MainActivity) getActivity()).isConflict) {
+        ((MainActivity2) getActivity()).updateUnreadLabel();
+        if (!hidden && !((MainActivity2) getActivity()).isConflict) {
 
 //            getHeadImg();
         }

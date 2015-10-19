@@ -52,7 +52,7 @@ public class CarPlayListActivity extends CarPlayBaseActivity {
         net.setMethod(DhNet.METHOD_GET);
         useCache(CachePolicy.POLICY_BEFORE_AND_AFTER_NET);
         mVaules = new ArrayList<JSONObject>();
-        nettask = new NetTask(self) {
+        nettask = new NetTask(CarPlayListActivity.this) {
             @Override
             public void doInBackground(Response response) {
                 // 后台处理主要是数据封装
