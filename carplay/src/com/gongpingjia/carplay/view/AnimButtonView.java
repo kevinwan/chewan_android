@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
@@ -43,6 +44,7 @@ public class AnimButtonView extends RelativeLayout {
 
     public AnimButtonView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        Log.d("msg", "执行");
         this.mContext = context;
         TypedArray a = mContext.obtainStyledAttributes(attrs, R.styleable.AnimButtonView);
 
@@ -100,18 +102,30 @@ public class AnimButtonView extends RelativeLayout {
 
 
     public void startScaleAnimation() {
+
+//        ScaleAnimation sa = new ScaleAnimation(1f, 1.3f, 1f, 1.3f,
+//                ScaleAnimation.RELATIVE_TO_SELF, 0.5f,
+//                ScaleAnimation.RELATIVE_TO_SELF, 0.5f);
+//        sa.setDuration(1000);
+//        sa.setRepeatCount(Animation.INFINITE);// 设置循环
+//        sa.setInterpolator(new LinearInterpolator());
+//        image1.startAnimation(sa);
+        Log.d("msg", "执行startScaleAnimation");
         image1.startAnimation(mAnimationSet1);
         mHandler.sendEmptyMessageDelayed(MSG_WAVE2_ANIMATION, OFFSET);
     }
+
 
     public void clearAnimation() {
 
         if (mAnimationSet1 != null) {
             mAnimationSet1.cancel();
+            Log.d("msg", "mAnimationSet1   Cancle");
         }
 
         if (mAnimationSet2 != null) {
             mAnimationSet2.cancel();
+            Log.d("msg", "mAnimationSet2   Cancle");
         }
     }
 
