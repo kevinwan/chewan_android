@@ -69,6 +69,8 @@
     <color name="btn_chatcopy_focused">#75D2D4</color>
     <color name="btn_chatdel_focused">#FC927D</color>
     <color name="btn_head_grey">#CCD1D9</color>
+    <color name="btn_dyanmic_blue">#78BBF2</color>
+    <color name="btn_dyanmic_green">#97D872</color>
 
     <color name="radio_sex_blue">#77BBF2</color>
     <color name="radio_sex_grey">#DDD</color>

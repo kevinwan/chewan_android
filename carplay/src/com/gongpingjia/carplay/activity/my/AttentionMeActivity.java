@@ -41,6 +41,7 @@ public class AttentionMeActivity extends CarPlayListActivity implements PullToRe
         listV.setOnRefreshListener(this);
 
         mRecyclerView = listV.getRefreshableView();
+//        mRecyclerView.setEmptyView(findViewById(R.id.));
         adapter = new AttentionMeAdapter(self);
         mRecyclerView.setAdapter(adapter);
         setOnLoadSuccess(this);

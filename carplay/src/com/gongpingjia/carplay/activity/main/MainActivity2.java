@@ -47,6 +47,7 @@ import com.gongpingjia.carplay.activity.my.ManageAlbumActivity;
 import com.gongpingjia.carplay.activity.my.MyFragment2;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.api.Constant;
+import com.gongpingjia.carplay.bean.FilterPreference2;
 import com.gongpingjia.carplay.bean.TabEB;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.chat.DemoHXSDKHelper;
@@ -54,6 +55,7 @@ import com.gongpingjia.carplay.chat.bean.GroupEB;
 import com.gongpingjia.carplay.chat.controller.HXSDKHelper;
 import com.gongpingjia.carplay.service.MsgService;
 import com.gongpingjia.carplay.util.CarPlayPerference;
+import com.gongpingjia.carplay.view.dialog.NearbyFilterDialog;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import net.duohuo.dhroid.activity.ActivityTack;
@@ -123,6 +125,8 @@ public class MainActivity2 extends BaseFragmentActivity implements
 
     TextView rightT;
 
+    FilterPreference2 pre;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -170,10 +174,24 @@ public class MainActivity2 extends BaseFragmentActivity implements
         tabV = (LinearLayout) findViewById(R.id.tab);
         titleBar = findViewById(R.id.titlebar);
         rightT = (TextView) findViewById(R.id.right_text);
+        //筛选
         rightT.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                NearbyFilterDialog dialog = new NearbyFilterDialog(self);
+                dialog.show();
+                dialog.setOnNearbyFilterResultListener(new NearbyFilterDialog.OnNearbyFilterResultListener() {
+                    @Override
+                    public void onResult(String type, String pay, String gender, boolean transfer) {
+                        pre=IocContainer.getShare().get(FilterPreference2.class);
+                        pre.setType(type);
+                        pre.setPay(pay);
+                        pre.setGender(gender);
+                        pre.setTransfer(transfer);
+                        pre.commit();
+                        EventBus.getDefault().post(pre);
+                    }
+                });
             }
         });
         initTab();

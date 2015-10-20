@@ -1,12 +1,11 @@
 package com.gongpingjia.carplay.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -15,7 +14,9 @@ import android.widget.TextView;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.User;
+import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.view.AnimButtonView;
+import com.gongpingjia.carplay.view.dialog.ActiveDialog;
 import com.gongpingjia.carplay.view.dialog.ActivityDialog;
 
 import net.duohuo.dhroid.net.DhNet;
@@ -24,62 +25,25 @@ import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.util.ViewUtil;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DecimalFormat;
 import java.util.List;
 
+
 /**
- * Created by Administrator on 2015/10/19.
+ * Created by Administrator on 2015/10/20.
  */
-public class DynamicActivityAdapter extends RecyclerView.Adapter<DynamicActivityAdapter.SimpleViewHolder> {
+public class DyanmicBaseAdapter extends BaseAdapter {
     private final Context mContext;
+
     private List<JSONObject> data;
+
     User user = User.getInstance();
 
-    public static class SimpleViewHolder extends RecyclerView.ViewHolder {
-        TextView titleT, dynamic_carname, pay_type, travelmode, activity_place, activity_distance, ageT;
-        ImageView dynamic_carlogo, activity_beijing, certification_achievement, sexI;
-        AnimButtonView dyanmic_one, dyanmic_two, yingyao, hulue;
-        LinearLayout yingyao_layout, yingyaohou;
-        private RelativeLayout sexbgR;
-
-        public SimpleViewHolder(View view) {
-            super(view);
-
-            yingyao_layout = (LinearLayout) view.findViewById(R.id.yingyao_layout);
-            yingyaohou = (LinearLayout) view.findViewById(R.id.yingyaohou);
-
-            titleT = (TextView) view.findViewById(R.id.dynamic_title);
-            dynamic_carname = (TextView) view.findViewById(R.id.dynamic_carname);
-            pay_type = (TextView) view.findViewById(R.id.pay_type);
-            travelmode = (TextView) view.findViewById(R.id.travelmode);
-            activity_place = (TextView) view.findViewById(R.id.activity_place);
-
-            sexbgR = (RelativeLayout) view.findViewById(R.id.layout_sex_and_age);
-            sexI = (ImageView) view.findViewById(R.id.iv_sex);
-            ageT = (TextView) view.findViewById(R.id.tv_age);
-
-
-            dynamic_carlogo = (ImageView) view.findViewById(R.id.dynamic_carlogo);
-            certification_achievement = (ImageView) view.findViewById(R.id.certification_achievement);
-            activity_beijing = (ImageView) view.findViewById(R.id.activity_beijing);
-
-
-            dyanmic_one = (AnimButtonView) view.findViewById(R.id.dyanmic_one);
-            dyanmic_two = (AnimButtonView) view.findViewById(R.id.dyanmic_two);
-            yingyao = (AnimButtonView) view.findViewById(R.id.yingyao);
-            hulue = (AnimButtonView) view.findViewById(R.id.hulue);
-
-            activity_distance = (TextView) view.findViewById(R.id.activity_distance);
-        }
-    }
-
-
-    public DynamicActivityAdapter(Context context) {
+    public DyanmicBaseAdapter(Context context) {
         mContext = context;
+
     }
 
     public void setData(List<JSONObject> data) {
@@ -88,37 +52,102 @@ public class DynamicActivityAdapter extends RecyclerView.Adapter<DynamicActivity
     }
 
     @Override
-    public SimpleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        final View view = LayoutInflater.from(mContext).inflate(R.layout.item_activelist, parent, false);
-        return new SimpleViewHolder(view);
+    public int getCount() {
+        if (data == null) {
+            return 0;
+        }
+        return data.size();
     }
 
     @Override
-    public void onBindViewHolder(final SimpleViewHolder holder, final int position) {
-        final JSONObject jo = getItem(position);
+    public Object getItem(int i) {
+        JSONObject item = null;
+        if (null != data) {
+            item = data.get(i);
+        }
+        return item;
+    }
+
+    @Override
+    public long getItemId(int i) {
+        return i;
+    }
+
+    @Override
+    public View getView(int i, View view, ViewGroup viewGroup) {
+        final ViewHolder holder;
+
+        if (view == null) {
+            holder = new ViewHolder();
+            view = LayoutInflater.from(mContext).inflate(R.layout.item_activelist, viewGroup, false);
+
+            holder.yingyaohou = (LinearLayout) view.findViewById(R.id.yingyaohou);
+            holder.yingyao_layout = (LinearLayout) view.findViewById(R.id.yingyao_layout);
+            holder.titleT = (TextView) view.findViewById(R.id.dynamic_title);
+            holder.dynamic_carname = (TextView) view.findViewById(R.id.dynamic_carname);
+            holder.pay_type = (TextView) view.findViewById(R.id.pay_type);
+            holder.travelmode = (TextView) view.findViewById(R.id.travelmode);
+            holder.activity_place = (TextView) view.findViewById(R.id.activity_place);
+
+            holder.sexbgR = (RelativeLayout) view.findViewById(R.id.layout_sex_and_age);
+            holder.sexI = (ImageView) view.findViewById(R.id.iv_sex);
+            holder.ageT = (TextView) view.findViewById(R.id.tv_age);
 
 
+            holder.dynamic_carlogo = (ImageView) view.findViewById(R.id.dynamic_carlogo);
+            holder.certification_achievement = (ImageView) view.findViewById(R.id.certification_achievement);
+            holder.activity_beijing = (ImageView) view.findViewById(R.id.activity_beijing);
+
+
+            holder.dyanmic_one = (AnimButtonView) view.findViewById(R.id.dyanmic_one);
+            holder.dyanmic_two = (AnimButtonView) view.findViewById(R.id.dyanmic_two);
+            holder.yingyao = (AnimButtonView) view.findViewById(R.id.yingyao);
+            holder.hulue = (AnimButtonView) view.findViewById(R.id.hulue);
+
+            holder.activity_distance = (TextView) view.findViewById(R.id.activity_distance);
+
+
+//
+            view.setTag(holder);
+
+        } else {
+            holder = (ViewHolder) view.getTag();
+
+        }
+
+        JSONObject jo = (JSONObject) getItem(i);
         JSONObject js = JSONUtil.getJSONObject(jo, "applicant");
         JSONObject json = JSONUtil.getJSONObject(jo, "destination");
         JSONObject ob = JSONUtil.getJSONObject(js, "car");
         //活动id
         String activityId = JSONUtil.getString(jo, "activityId");
-        String status = JSONUtil.getString(jo,"status");
-        if (status.equals("应邀")){
-            holder.yingyao_layout.setVisibility(View.GONE);
-            holder.yingyaohou.setVisibility(View.VISIBLE);
-        }else if (status.equals("邀请中")){
+        String status = JSONUtil.getString(jo, "status");
+        final String appointmentId = JSONUtil.getString(jo, "appointmentId");
+        View[] views = {holder.dyanmic_one, holder.dyanmic_two, holder.yingyao_layout, holder.yingyaohou};
+        View[] viewstwo = {holder.hulue, holder.yingyao, holder.yingyao_layout, holder.yingyaohou};
+
+        CarPlayUtil.bindActiveButton("邀请中", appointmentId, mContext, views);
+        CarPlayUtil.bindActiveButton("应邀", appointmentId, mContext, viewstwo);
+//                CarPlayUtil.bindActiveButton("拒绝".views);
+
+
+        if (status.equals("应邀")) {
             holder.yingyao_layout.setVisibility(View.VISIBLE);
             holder.yingyaohou.setVisibility(View.GONE);
+        } else if (status.equals("邀请中")) {
+            holder.yingyao_layout.setVisibility(View.GONE);
+            holder.yingyaohou.setVisibility(View.VISIBLE);
         }
-        final String appointmentId = JSONUtil.getString(jo, "appointmentId");
+
 
         String licenseAuthStatus = JSONUtil.getString(js, "licenseAuthStatus");
         String photoAuthStatus = JSONUtil.getString(js, "photoAuthStatus");
         String typeT = JSONUtil.getString(jo, "type");
         String name = JSONUtil.getString(js, "nickname");
         String gender = JSONUtil.getString(js, "gender");
-        holder.activity_place.setText(JSONUtil.getString(json, "street"));
+
+        String jied = JSONUtil.getString(json, "street");
+        holder.activity_place.setText(jied);
 
         double distance = JSONUtil.getDouble(js, "distance");
         DecimalFormat df = new DecimalFormat("0.00");
@@ -157,11 +186,11 @@ public class DynamicActivityAdapter extends RecyclerView.Adapter<DynamicActivity
         holder.yingyao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                JSONObject jo = getItem(position);
-                if (TextUtils.isEmpty(user.getPhone())) {
-                    System.out.println("获取:"+user.getPhone());
-                    ActivityDialog dialog = new ActivityDialog(mContext, appointmentId);
-                    dialog.setOnPickResultListener(new ActivityDialog.OnPickResultListener() {
+//                    JSONObject jo = getItem(i);
+                if (!TextUtils.isEmpty(user.getPhone())) {
+                    System.out.println("获取:" + user.getPhone());
+                    ActiveDialog dialog = new ActiveDialog(mContext, appointmentId);
+                    dialog.setOnPickResultListener(new ActiveDialog.OnPickResultListener() {
 
                         @Override
                         public void onResult(int result) {
@@ -192,7 +221,7 @@ public class DynamicActivityAdapter extends RecyclerView.Adapter<DynamicActivity
         holder.hulue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                JSONObject jo = getItem(position);
+//                    JSONObject jo = getItem(position);
 //                DhNet net = new DhNet(API2.CWBaseurl+"application/"+appointmentId+"/process?userId="+user.getUserId()+"&token="+user.getToken());
                 DhNet net = new DhNet(API2.CWBaseurl + "application/" + appointmentId + "/process?userId=5609eb2c0cf224e7d878f693&token=67666666-f2ff-456d-a9cc-e83761749a6a");
                 net.addParam("accept", "false");
@@ -219,17 +248,15 @@ public class DynamicActivityAdapter extends RecyclerView.Adapter<DynamicActivity
             }
         });
 
+
+        return view;
     }
 
-    public JSONObject getItem(int position) {
-        return data.get(position);
-    }
-
-    @Override
-    public int getItemCount() {
-        if (data == null) {
-            return 0;
-        }
-        return data.size();
+    class ViewHolder {
+        TextView titleT, dynamic_carname, pay_type, travelmode, activity_place, activity_distance, ageT;
+        ImageView dynamic_carlogo, activity_beijing, certification_achievement, sexI;
+        AnimButtonView dyanmic_one, dyanmic_two, yingyao, hulue;
+        LinearLayout yingyao_layout, yingyaohou;
+        private RelativeLayout sexbgR;
     }
 }

@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.activity.my.DynamicActivity;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
 
@@ -74,6 +75,9 @@ public class PullToRefreshRecyclerViewVertical extends PullToRefreshBase<Recycle
                 fistVisibleItem = layout.findFirstVisibleItemPosition();
                 lastVisibleItem = layout.findLastVisibleItemPosition();
                 int childCount = recyclerView.getChildCount();
+                if (childCount == 0) {
+                    return;
+                }
                 int height = recyclerView.getChildAt(0).getHeight();
                 int padding = (recyclerView.getHeight() - height) / 2;
 
@@ -149,6 +153,7 @@ public class PullToRefreshRecyclerViewVertical extends PullToRefreshBase<Recycle
 
         return isScrollOnFooter;
     }
+
 
 }
 

@@ -3,7 +3,10 @@ package com.gongpingjia.carplay.util;
 import java.io.File;
 import java.text.SimpleDateFormat;
 
+import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
+import net.duohuo.dhroid.net.NetTask;
+import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.util.ViewUtil;
 
 import org.json.JSONObject;
@@ -19,12 +22,112 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.main.PhotoSelectorActivity;
+import com.gongpingjia.carplay.api.API2;
+import com.gongpingjia.carplay.bean.User;
+import com.gongpingjia.carplay.view.AnimButtonView;
+import com.gongpingjia.carplay.view.dialog.ActivityDialog;
 
 public class CarPlayUtil {
+
+	public static void   bindActiveButton(String type, String appointmentId,Context context,View... activeButton) {
+		View[] views=activeButton;
+		View[] viewtwo=activeButton;
+		  final User user = User.getInstance();
+		final String appID = appointmentId;
+		final Context mContext = context;
+
+		switch (type) {
+			case "应邀":
+					AnimButtonView hulue =  (AnimButtonView)viewtwo[0];
+					AnimButtonView yingyao =  (AnimButtonView)viewtwo[1];
+					final LinearLayout yingyao_layout =  (LinearLayout)viewtwo[2];
+					final LinearLayout yingyao_layouts =  (LinearLayout)viewtwo[3];
+					yingyao_layout.setVisibility(View.VISIBLE);
+				yingyao_layouts.setVisibility(View.GONE);
+				yingyao.setOnClickListener(new View.OnClickListener() {
+
+					@Override
+					public void onClick(View view) {
+						if (TextUtils.isEmpty(user.getPhone())) {
+							System.out.println("获取:"+user.getPhone());
+							ActivityDialog dialog = new ActivityDialog(mContext, appID);
+							dialog.setOnPickResultListener(new ActivityDialog.OnPickResultListener() {
+
+								@Override
+								public void onResult(int result) {
+									if (result == 1) {
+										yingyao_layout.setVisibility(View.GONE);
+										yingyao_layouts.setVisibility(View.VISIBLE);
+									}
+								}
+							});
+							dialog.show();
+						}else{
+							DhNet net = new DhNet(API2.CWBaseurl + "application/" + appID + "/process?userId=5609eb2c0cf224e7d878f693&token=67666666-f2ff-456d-a9cc-e83761749a6a");
+							net.addParam("accept", "true");
+							net.doPostInDialog(new NetTask(mContext) {
+								@Override
+								public void doInUI(Response response, Integer transfer) {
+									if (response.isSuccess()) {
+										yingyao_layout.setVisibility(View.GONE);
+										yingyao_layouts.setVisibility(View.VISIBLE);
+										System.out.println("应邀：" + response.isSuccess());
+									}
+								}
+							});
+						}
+
+					}
+				});
+				hulue.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						DhNet net = new DhNet(API2.CWBaseurl + "application/" + appID + "/process?userId=5609eb2c0cf224e7d878f693&token=67666666-f2ff-456d-a9cc-e83761749a6a");
+						net.addParam("accept", "false");
+						net.doPostInDialog(new NetTask(mContext) {
+							@Override
+							public void doInUI(Response response, Integer transfer) {
+								if (response.isSuccess()) {
+									System.out.println("忽略：" + response.isSuccess());
+								}
+							}
+						});
+					}
+				});
+
+				break;
+
+			case "邀请中":
+				AnimButtonView dyanmic_one =  (AnimButtonView)views[0];
+				AnimButtonView dyanmic_two =  (AnimButtonView)views[1];
+				final LinearLayout dyanmic_layout =  (LinearLayout)views[2];
+				final LinearLayout dyanmic_layouts =  (LinearLayout)views[3];
+				dyanmic_layout.setVisibility(View.VISIBLE);
+				dyanmic_layouts.setVisibility(View.GONE);
+				dyanmic_one.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						//跳转聊天
+					}
+				});
+				dyanmic_two.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						//拨打电话
+					}
+				});
+				break;
+
+
+		}
+
+	}
+
 	public static void bindSexView(String gender, View sexBg) {
 		if (!TextUtils.isEmpty(gender)) {
 			if (gender.equals("男")) {
