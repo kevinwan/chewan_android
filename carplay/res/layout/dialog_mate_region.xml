@@ -38,6 +38,7 @@
         </RelativeLayout>
 
         <TextView
+            android:id="@+id/tv_tip"
             android:layout_width="match_parent"
             android:layout_height="25dp"
             android:background="@color/line_grey"
@@ -47,7 +48,16 @@
             android:textColor="@color/text_black_light"
             android:textSize="@dimen/text_smaller" />
 
+        <TextView
+            android:id="@+id/tv_select_place"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/line_grey"
+            android:padding="5dp"
+            android:visibility="gone" />
+
         <LinearLayout
+            android:id="@+id/layout_place"
             android:layout_width="match_parent"
             android:layout_height="88dp"
             android:background="@color/white"
@@ -55,6 +65,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_gps_place"
                 style="@style/text_black_small"
                 android:ellipsize="end"
                 android:singleLine="true"
@@ -64,18 +75,21 @@
         </LinearLayout>
 
         <ListView
+            android:id="@+id/lv_dlg_places"
             android:layout_width="match_parent"
             android:layout_height="186dp"
             android:background="@color/white"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <LinearLayout
+            android:id="@+id/layout_btns"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@color/white"
             android:gravity="center">
 
             <Button
+                android:id="@+id/btn_dlg_confirm"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="18dp"
@@ -87,6 +101,7 @@
                 android:textSize="@dimen/text_big" />
 
             <Button
+                android:id="@+id/btn_dlg_reselect"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="9dp"
