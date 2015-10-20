@@ -39,6 +39,7 @@ import com.easemob.chat.EMGroupManager;
 import com.easemob.chat.EMMessage;
 import com.easemob.exceptions.EaseMobException;
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.activity.active.MateFragment;
 import com.gongpingjia.carplay.activity.active.NearListFragment;
 import com.gongpingjia.carplay.activity.active.RecommendListFragment;
 import com.gongpingjia.carplay.activity.dynamic.DynamicListFragment;
@@ -131,7 +132,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
 
         initView();
         isAuthen();
-        updateApp();
+//        updateApp();
 
         IntentFilter cmdIntentFilter = new IntentFilter(EMChatManager
                 .getInstance().getCmdMessageBroadcastAction());
@@ -248,9 +249,6 @@ public class MainActivity2 extends BaseFragmentActivity implements
 
         for (int i = 0; i < tabV.getChildCount(); i++) {
             View childV = tabV.getChildAt(i);
-            if (i == 2) {
-                continue;
-            }
             View imgLayout = childV.findViewById(R.id.img_layout);
             final ImageView img = (ImageView) imgLayout.findViewById(R.id.img);
             TextView text = (TextView) childV.findViewById(R.id.text);
@@ -269,7 +267,10 @@ public class MainActivity2 extends BaseFragmentActivity implements
                         img.setImageResource(R.drawable.icon_nav_tuijian_f);
                         switchContent(RecommendListFragment.getInstance());
                         break;
-
+                    case 2:
+                        setTitle("匹配意向");
+                        switchContent(MateFragment.getInstance());
+                        break;
                     case 3:
                         setTitle("动态");
                         img.setImageResource(R.drawable.icon_nav_dongtai_f);

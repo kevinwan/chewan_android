@@ -313,6 +313,8 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"></activity>
 
+        <activity android:name=".activity.active.LookAroundActivity"/>
+
 
         <activity
             android:name=".activity.my.HeadAttestationActivity"
@@ -339,7 +341,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.active.MateActivity"
+            android:name=".activity.active.MateFragment"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity

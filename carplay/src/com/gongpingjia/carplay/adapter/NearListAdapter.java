@@ -187,13 +187,17 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
     }
 
     @Override
-    public void onViewAttachedToWindow(NearListAdapter.SimpleViewHolder holder) {
+    public void onViewAttachedToWindow(SimpleViewHolder holder) {
+        Log.d("msg", "执行了啊");
+        super.onViewAttachedToWindow(holder);
         RotateAnimation rotateAnimation = new RotateAnimation(0f, 360f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         rotateAnimation.setDuration(1000);
         rotateAnimation.setRepeatCount(-1);
         rotateAnimation.setInterpolator(new LinearInterpolator());
         holder.invite.setAnimation(rotateAnimation);
         rotateAnimation.start();
+
+
     }
 
     @Override
