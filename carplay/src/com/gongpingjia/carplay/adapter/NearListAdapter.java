@@ -32,6 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.view.AnimButtonView;
 
 import net.duohuo.dhroid.net.JSONUtil;
@@ -144,7 +145,7 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
 
         //所在地,距离
         int distance = (int)Math.floor(JSONUtil.getDouble(jo, "distance"));
-        holder.distance.setText(numberWithDelimiter(distance));
+        holder.distance.setText(CarPlayUtil.numberWithDelimiter(distance));
         holder.location.setText(JSONUtil.getString(distancejo, "province")+JSONUtil.getString(distancejo, "city")+JSONUtil.getString(distancejo, "district")+JSONUtil.getString(distancejo, "street"));
 
         //car logo ,car name
@@ -247,13 +248,5 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
         return data.get(position);
     }
 
-    private String numberWithDelimiter(int num) {
-        StringBuilder accum = new StringBuilder();
-        int len = accum.append(num).length();
-        if (len <= 3) return accum.append("米").toString();   //如果长度小于等于3不做处理
-        while ((len -= 3) > 0) { //从个位开始倒序插入
-            accum.insert(len, ",");
-        }
-        return accum.append("公里").toString();
-    }
+
 }

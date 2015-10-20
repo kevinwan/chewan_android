@@ -84,8 +84,16 @@ public class OfficialMessageAdapter extends BaseAdapter {
         final JSONObject jo = getItem(position);
         ViewUtil.bindNetImage(holder.headI, JSONUtil.getString(jo, "avatar"), "head");
         ViewUtil.bindView(holder.nicknameT, JSONUtil.getString(jo, "nickname"));
-        ViewUtil.bindView(holder.messageT, JSONUtil.getString(jo, "type"));
-        ViewUtil.bindView(holder.contentT, JSONUtil.getString(jo, "content"));
+
+        String status = JSONUtil.getString(jo, "status");
+        if ("认证通过".equals(status)){
+            holder.contentT.setVisibility(View.GONE);
+            ViewUtil.bindView(holder.messageT, JSONUtil.getString(jo, "type")+"审核通过");
+        }else {
+            holder.contentT.setVisibility(View.VISIBLE);
+            ViewUtil.bindView(holder.contentT,"原因:  " + JSONUtil.getString(jo, "content"));
+            ViewUtil.bindView(holder.messageT, JSONUtil.getString(jo, "type")+"审核未通过");
+        }
 
         String time=CarPlayValueFix.converTime((long)JSONUtil.getInt(jo, "authTime"));
         ViewUtil.bindView(holder.timeT,time);

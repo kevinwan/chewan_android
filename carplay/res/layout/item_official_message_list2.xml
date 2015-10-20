@@ -6,6 +6,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
+        android:background="@color/white"
         android:padding="14dp">
 
         <com.gongpingjia.carplay.view.RoundImageView
@@ -51,8 +52,8 @@
             <TextView
                 android:id="@+id/time"
                 style="@style/text_grey_smaller"
-                android:layout_marginTop="14dp"
                 android:text="3分钟前" />
         </LinearLayout>
     </LinearLayout>
+    <View style="@style/line"/>
 </LinearLayout>
