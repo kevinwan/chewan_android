@@ -253,6 +253,8 @@ public class PullToRefreshListView extends PullToRefreshAdapterViewBase<ListView
 		}
 	}
 
+
+
 	@TargetApi(9)
 	final class InternalListViewSDK9 extends InternalListView {
 

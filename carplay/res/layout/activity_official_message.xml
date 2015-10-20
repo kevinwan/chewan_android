@@ -3,18 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.gongpingjia.carplay.activity.active.MyActiveActivity">
+    tools:context="com.gongpingjia.carplay.activity.my.OfficialMessageActivity">
 
     <include layout="@layout/include_title_bar"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:background="@color/line_grey"
-        android:paddingBottom="12dp"
-        android:paddingTop="12dp">
 
-    </LinearLayout>
+    <TextView
+        style="@style/text_black_medium"
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:background="@color/line_grey"/>
 
     <include layout="@layout/include_refreshlistview2"/>
 

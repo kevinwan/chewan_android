@@ -1,19 +1,3 @@
-/*
- * Copyright (C) 2014 Lucas Rocha
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.gongpingjia.carplay.adapter;
 
 import android.content.Context;
@@ -21,8 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gongpingjia.carplay.CarPlayValueFix;
@@ -36,14 +18,18 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-public class AttentionMeAdapter extends BaseAdapter{
+/**
+ * Created by Administrator on 2015/10/20.
+ */
+public class OfficialMessageAdapter extends BaseAdapter {
+
     private static final int COUNT = 5;
 
     private final Context mContext;
 
     private List<JSONObject> data;
 
-    public AttentionMeAdapter(Context context) {
+    public OfficialMessageAdapter(Context context) {
         mContext = context;
     }
 
@@ -82,15 +68,12 @@ public class AttentionMeAdapter extends BaseAdapter{
         if (null == convertView)
         {
             holder = new ViewHolder();
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_attention_me_list2, null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_official_message_list2, null);
             holder.headI = (RoundImageView) convertView.findViewById(R.id.head);
             holder.nicknameT = (TextView) convertView.findViewById(R.id.nickname);
+            holder.contentT = (TextView) convertView.findViewById(R.id.content);
             holder.timeT = (TextView) convertView.findViewById(R.id.time);
-            holder.distanceT = (TextView) convertView.findViewById(R.id.distance);
-            holder.sexLayoutR = (RelativeLayout) convertView.findViewById(R.id.layout_sex_and_age);
-            holder.sexI = (ImageView) convertView.findViewById(R.id.iv_sex);
-            holder.ageT = (TextView) convertView.findViewById(R.id.tv_age);
-
+            holder.messageT = (TextView) convertView.findViewById(R.id.message);
             convertView.setTag(holder);
         }
         else
@@ -99,31 +82,27 @@ public class AttentionMeAdapter extends BaseAdapter{
         }
 
         final JSONObject jo = getItem(position);
-
         ViewUtil.bindNetImage(holder.headI, JSONUtil.getString(jo, "avatar"), "head");
         ViewUtil.bindView(holder.nicknameT, JSONUtil.getString(jo, "nickname"));
-        ViewUtil.bindView(holder.distanceT,JSONUtil.getInt(jo, "distance")+"米");
-        ViewUtil.bindView(holder.ageT,JSONUtil.getInt(jo, "age"));
 
-        String time= CarPlayValueFix.converTime((long) JSONUtil.getInt(jo, "subscribeTime"));
-        ViewUtil.bindView(holder.timeT,time);
-
-        String sex = JSONUtil.getString(jo, "gender");
-        if (("男").equals(sex)) {
-            holder.sexLayoutR.setBackgroundResource(R.drawable.radio_sex_man_normal);
-            holder.sexI.setBackgroundResource(R.drawable.icon_man3x);
-        } else {
-            holder.sexLayoutR.setBackgroundResource(R.drawable.radion_sex_woman_normal);
-            holder.sexI.setBackgroundResource(R.drawable.icon_woman3x);
+        String status = JSONUtil.getString(jo, "status");
+        if ("认证通过".equals(status)){
+            holder.contentT.setVisibility(View.GONE);
+            ViewUtil.bindView(holder.messageT, JSONUtil.getString(jo, "type")+"审核通过");
+        }else {
+            holder.contentT.setVisibility(View.VISIBLE);
+            ViewUtil.bindView(holder.contentT,"原因:  " + JSONUtil.getString(jo, "content"));
+            ViewUtil.bindView(holder.messageT, JSONUtil.getString(jo, "type")+"审核未通过");
         }
+
+        String time=CarPlayValueFix.converTime((long)JSONUtil.getInt(jo, "authTime"));
+        ViewUtil.bindView(holder.timeT,time);
 
         return convertView;
     }
 
     class ViewHolder{
         RoundImageView headI;
-        ImageView sexI;
-        RelativeLayout sexLayoutR;
-        TextView nicknameT,timeT,distanceT,ageT;
+        TextView nicknameT,messageT,contentT,timeT;
     }
 }
