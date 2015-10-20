@@ -19,6 +19,7 @@ import com.gongpingjia.carplay.activity.CarPlayBaseFragment;
 import com.gongpingjia.carplay.activity.main.MainActivity2;
 import com.gongpingjia.carplay.activity.my.AttentionMeActivity;
 import com.gongpingjia.carplay.activity.my.DynamicActivity;
+import com.gongpingjia.carplay.activity.my.OfficialMessageActivity;
 import com.gongpingjia.carplay.adapter.FragmentMsgAdapter;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -47,7 +48,7 @@ public class DynamicListFragment extends CarPlayBaseFragment implements PullToRe
     PSAdapter adapter;
     private FragmentMsgAdapter mAdapter;
 
-    private LinearLayout people_interested,attentionme,visit,avtivity_dynamic;
+    private LinearLayout people_interested,attentionme,visit,avtivity_dynamic,official;
 
     View headV;
     List<EMConversation> conversationList = new ArrayList<EMConversation>();
@@ -81,11 +82,13 @@ public class DynamicListFragment extends CarPlayBaseFragment implements PullToRe
         attentionme = (LinearLayout) headV.findViewById(R.id.attentionme);
         visit = (LinearLayout) headV.findViewById(R.id.visit);
         avtivity_dynamic = (LinearLayout) headV.findViewById(R.id.avtivity_dynamic);
+        official = (LinearLayout) headV.findViewById(R.id.official);
 
         visit.setOnClickListener(this);
         attentionme .setOnClickListener(this);
         people_interested.setOnClickListener(this);
         avtivity_dynamic.setOnClickListener(this);
+        official.setOnClickListener(this);
 
         mAdapter = new FragmentMsgAdapter(getActivity());
         listV.setAdapter(mAdapter);
@@ -212,6 +215,10 @@ public class DynamicListFragment extends CarPlayBaseFragment implements PullToRe
                 break;
             case R.id.interested_people:
 
+                break;
+            case R.id.official:
+                it = new Intent(getActivity(), OfficialMessageActivity.class);
+                startActivity(it);
                 break;
         }
     }

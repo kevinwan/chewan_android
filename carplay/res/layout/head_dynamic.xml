@@ -171,6 +171,7 @@
     <View style="@style/line" />
 
     <LinearLayout
+        android:id="@+id/official"
         android:layout_width="match_parent"
         android:layout_height="68dp"
         android:gravity="center_vertical"

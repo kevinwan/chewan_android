@@ -17,7 +17,6 @@ import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.view.AnimButtonView;
 import com.gongpingjia.carplay.view.dialog.ActiveDialog;
-import com.gongpingjia.carplay.view.dialog.ActivityDialog;
 
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
@@ -123,12 +122,15 @@ public class DyanmicBaseAdapter extends BaseAdapter {
         String activityId = JSONUtil.getString(jo, "activityId");
         String status = JSONUtil.getString(jo, "status");
         final String appointmentId = JSONUtil.getString(jo, "appointmentId");
-        View[] views = {holder.dyanmic_one, holder.dyanmic_two, holder.yingyao_layout, holder.yingyaohou};
-        View[] viewstwo = {holder.hulue, holder.yingyao, holder.yingyao_layout, holder.yingyaohou};
 
-        CarPlayUtil.bindActiveButton("邀请中", appointmentId, mContext, views);
-        CarPlayUtil.bindActiveButton("应邀", appointmentId, mContext, viewstwo);
+//        View[] views = {holder.dyanmic_one, holder.dyanmic_two, holder.yingyao_layout, holder.yingyaohou};
+//        View[] viewstwo = {holder.hulue, holder.yingyao, holder.yingyao_layout, holder.yingyaohou};
+//
+//        CarPlayUtil.bindActiveButton("邀请中", appointmentId, mContext, views);
+//        CarPlayUtil.bindActiveButton("应邀", appointmentId, mContext, viewstwo);
 //                CarPlayUtil.bindActiveButton("拒绝".views);
+
+        CarPlayUtil.bindActiveButton2("邀请中", appointmentId, mContext,  holder.yingyao_layout, holder.yingyaohou);
 
 
         if (status.equals("应邀")) {
@@ -187,7 +189,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
 //                    JSONObject jo = getItem(i);
-                if (!TextUtils.isEmpty(user.getPhone())) {
+                if (TextUtils.isEmpty(user.getPhone())) {
                     System.out.println("获取:" + user.getPhone());
                     ActiveDialog dialog = new ActiveDialog(mContext, appointmentId);
                     dialog.setOnPickResultListener(new ActiveDialog.OnPickResultListener() {
