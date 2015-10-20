@@ -56,8 +56,7 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
         listV = (PullToRefreshRecyclerViewVertical) mainV.findViewById(R.id.list);
         listV.setMode(PullToRefreshBase.Mode.BOTH);
         listV.setOnRefreshListener(this);
-        mRecyclerView
-                = listV.getRefreshableView();
+        mRecyclerView = listV.getRefreshableView();
         adapter = new NearListAdapter(getActivity());
         mRecyclerView.setAdapter(adapter);
         setOnLoadSuccess(this);

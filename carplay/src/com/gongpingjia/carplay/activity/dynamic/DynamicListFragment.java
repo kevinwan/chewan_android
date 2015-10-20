@@ -85,6 +85,7 @@ public class DynamicListFragment extends CarPlayBaseFragment implements PullToRe
         visit.setOnClickListener(this);
         attentionme .setOnClickListener(this);
         people_interested.setOnClickListener(this);
+        avtivity_dynamic.setOnClickListener(this);
 
         mAdapter = new FragmentMsgAdapter(getActivity());
         listV.setAdapter(mAdapter);

@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.activity.my.DynamicActivity;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
 
@@ -149,6 +150,7 @@ public class PullToRefreshRecyclerViewVertical extends PullToRefreshBase<Recycle
 
         return isScrollOnFooter;
     }
+
 
 }
 

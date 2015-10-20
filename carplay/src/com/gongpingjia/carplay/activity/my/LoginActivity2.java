@@ -151,7 +151,7 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
 
     //手机号码登陆
     private void login() {
-        String num = mEditNum.getText().toString().trim();
+        final String num = mEditNum.getText().toString().trim();
         String password = mEditPassword.getText().toString().trim();
         if (TextUtils.isEmpty(num) || TextUtils.isEmpty(password)) {
             showToast("手机号或密码不能为空");
@@ -168,6 +168,7 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
                     showToast("登陆成功");
                     JSONObject json = response.jSONFrom("data");
                     User user = User.getInstance();
+                    user.setPhone(mEditNum.getText().toString().trim());
                     try {
                         user.setUserId(json.getString("userId"));
                         user.setToken(json.getString("token"));
