@@ -134,11 +134,11 @@ public class DyanmicBaseAdapter extends BaseAdapter {
 
 
         if (status.equals("应邀")) {
-            holder.yingyao_layout.setVisibility(View.VISIBLE);
-            holder.yingyaohou.setVisibility(View.GONE);
-        } else if (status.equals("邀请中")) {
             holder.yingyao_layout.setVisibility(View.GONE);
             holder.yingyaohou.setVisibility(View.VISIBLE);
+        } else if (status.equals("邀请中")) {
+            holder.yingyao_layout.setVisibility(View.VISIBLE);
+            holder.yingyaohou.setVisibility(View.GONE);
         }
 
 

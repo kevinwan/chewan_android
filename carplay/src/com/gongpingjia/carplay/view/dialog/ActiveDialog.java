@@ -57,28 +57,41 @@ public class ActiveDialog extends Dialog {
         btn_get_verification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (TextUtils.isEmpty(edit_pwd.getText().toString())) {
-                    Toast.makeText(mContext, "请输入验证码", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                DhNet net = new DhNet(API2.CWBaseurl + "/application/" + appointmentId + "/process?userId=" + user.getUserId() + "&token=" + user.getToken());
-                net.addParam("accept", "true");
-                net.doPostInDialog(new NetTask(mContext) {
-                    @Override
-                    public void doInUI(Response response, Integer transfer) {
-                        if (response.isSuccess()) {
-                            showSelectedResult(1);
-                            dismiss();
-                            System.out.println("应邀：" + response.isSuccess());
-                        }
-                    }
-                });
+                getVerification(edit_phone.getText().toString());
             }
         });
         btn_finish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getVerification(edit_phone.getText().toString());
+                if (TextUtils.isEmpty(edit_pwd.getText().toString())) {
+                    Toast.makeText(mContext, "请输入验证码", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                DhNet dnet = new DhNet(API2.CWBaseurl + "userId=" + user.getUserId() + "/binding?&token=" + user.getToken());
+                dnet.addParam("phone", edit_phone.getText().toString());
+                dnet.addParam("code", edit_pwd.getText().toString());
+                dnet.doPostInDialog(new NetTask(mContext) {
+                    @Override
+                    public void doInUI(Response response, Integer transfer) {
+                        if (response.isSuccess()) {
+                            //  DhNet net = new DhNet(API2.CWBaseurl+"/application/"+appointmentId+"/process?userId="+user.getUserId() + "&token=" + user.getToken());
+                            DhNet net = new DhNet(API2.CWBaseurl + "application/" + appointmentId + "/process?userId=5609eb2c0cf224e7d878f693&token=67666666-f2ff-456d-a9cc-e83761749a6a");
+                            net.addParam("accept", "true");
+                            net.doPostInDialog(new NetTask(mContext) {
+                                @Override
+                                public void doInUI(Response response, Integer transfer) {
+                                    if (response.isSuccess()) {
+                                        showSelectedResult(1);
+                                        dismiss();
+                                        System.out.println("应邀：" + response.isSuccess());
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+
+
             }
         });
 

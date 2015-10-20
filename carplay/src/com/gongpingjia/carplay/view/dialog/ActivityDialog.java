@@ -96,7 +96,7 @@ public class ActivityDialog implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btn_finish:
-                if (TextUtils.isEmpty(edit_pwd.getText().toString())) {
+                if (TextUtils.isEmpty(edit_phone.getText().toString())) {
                     Toast.makeText(mContext,"请输入验证码",Toast.LENGTH_SHORT).show();
                     return;
                 }
