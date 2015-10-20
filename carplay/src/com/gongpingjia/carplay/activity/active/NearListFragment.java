@@ -9,10 +9,16 @@ import com.gongpingjia.carplay.ILoadSuccess;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseFragment;
 import com.gongpingjia.carplay.adapter.NearListAdapter;
+import com.gongpingjia.carplay.api.API2;
+import com.gongpingjia.carplay.bean.FilterPreference2;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.view.PullToRefreshRecyclerViewVertical;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
+
+import net.duohuo.dhroid.ioc.IocContainer;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by Administrator on 2015/10/8.
@@ -30,6 +36,7 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
 
     User user;
 
+    FilterPreference2 pre;
 
     View mainV;
 
@@ -44,6 +51,7 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mainV = inflater.inflate(R.layout.activity_near_list, null);
+        EventBus.getDefault().register(this);
         initView();
         return mainV;
     }
@@ -52,6 +60,8 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
     private void initView() {
 
         user = User.getInstance();
+        pre= IocContainer.getShare().get(FilterPreference2.class);
+        pre.load();
 
         listV = (PullToRefreshRecyclerViewVertical) mainV.findViewById(R.id.list);
         listV.setMode(PullToRefreshBase.Mode.BOTH);
@@ -61,17 +71,18 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
         mRecyclerView.setAdapter(adapter);
         setOnLoadSuccess(this);
         fromWhat("data");
-        setUrl("http://cwapi.gongpingjia.com:8080/v2/activity/list?latitude=32&longitude=118&maxDistance=5000000&token="+user.getToken()+"&userId="+user.getUserId());
-//        addParams("token", user.getToken());
-//        addParams("type", "吃饭");
-//        addParams("pay", "AA");
-//        addParams("province", "");
-//        addParams("city", "");
-//        addParams("district", "");
-//        addParams("street", "");
-//        addParams("longitude","118");
-//        addParams("latitude", "32 ");
-//        addParams("maxDistance", "5609");
+        setUrl(API2.CWBaseurl + "activity/list?");
+//        setUrl("http://cwapi.gongpingjia.com:8080/v2/activity/list?latitude=32&longitude=118&maxDistance=5000000&token="+user.getToken()+"&userId="+user.getUserId());
+                addParams("latitude", "32");
+        addParams("longitude", "118");
+        addParams("maxDistance", "5000000");
+        addParams("type", pre.getType());
+        addParams("pay", pre.getPay());
+        addParams("gender", pre.getGender());
+        addParams("transfer", pre.isTransfer());
+        addParams("token", user.getToken());
+        addParams("userId", user.getUserId());
+//        Toast.makeText(getActivity(), pre.getType() + "--" + pre.getPay() + "---" + pre.getGender() + "---" + pre.isTransfer(), Toast.LENGTH_LONG).show();
         showNext();
     }
 
@@ -94,4 +105,21 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
 
 
     }
+
+    public void onEventMainThread(FilterPreference2 pre) {
+        pre= IocContainer.getShare().get(FilterPreference2.class);
+        pre.load();
+        addParams("type", pre.getType());
+        addParams("pay", pre.getPay());
+        addParams("gender", pre.getGender());
+        addParams("transfer", pre.isTransfer());
+        refresh();
+    }
+
+    @Override
+    public void onDestroyView() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroyView();
+    }
+
 }
