@@ -6,6 +6,7 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/interested_people"
         android:layout_width="match_parent"
         android:layout_height="68dp"
         android:gravity="center_vertical"
@@ -38,6 +39,7 @@
     <View style="@style/line" />
 
     <LinearLayout
+        android:id="@+id/avtivity_dynamic"
         android:layout_width="match_parent"
         android:layout_height="68dp"
         android:gravity="center_vertical"
@@ -73,6 +75,7 @@
     <View style="@style/line" />
 
     <LinearLayout
+        android:id="@+id/visit"
         android:layout_width="match_parent"
         android:layout_height="68dp"
         android:gravity="center_vertical"
@@ -120,6 +123,7 @@
     <View style="@style/line" />
 
     <LinearLayout
+        android:id="@+id/attentionme"
         android:layout_width="match_parent"
         android:layout_height="68dp"
         android:gravity="center_vertical"

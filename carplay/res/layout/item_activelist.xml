@@ -32,6 +32,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/dynamic_title"
                     style="@style/text_black_medium"
                     android:ellipsize="end"
                     android:maxWidth="210dp"
@@ -39,18 +40,22 @@
                     android:text="陈信宏想邀请你吃个饭" />
 
                 <ImageView
+                    android:id="@+id/certification_achievement"
                     android:layout_width="21dp"
                     android:layout_height="21dp"
                     android:layout_marginLeft="12dp"
-                    android:src="@drawable/headaut_dl" />
+                    android:src="@drawable/headaut_dl"
+                    android:visibility="gone"/>
 
                 <ImageView
+                    android:id="@+id/dynamic_carlogo"
                     android:layout_width="21dp"
                     android:layout_height="21dp"
                     android:layout_marginLeft="12dp"
                     android:src="@drawable/headaut_dl" />
 
                 <TextView
+                    android:id="@+id/dynamic_carname"
                     style="@style/text_grey_small"
                     android:layout_marginLeft="9dp"
                     android:text="328i" />
@@ -67,12 +72,14 @@
                 <include layout="@layout/include_sex" />
 
                 <TextView
+                    android:id="@+id/pay_type"
                     style="@style/text_black_small"
                     android:layout_marginLeft="9dp"
                     android:text="请我吧"
                     android:textColor="@color/text_pink" />
 
                 <TextView
+                    android:id="@+id/travelmode"
                     style="@style/text_black_small"
                     android:layout_marginLeft="9dp"
                     android:text="包接送"
@@ -87,6 +94,7 @@
             android:layout_height="300dp">
 
             <ImageView
+                android:id="@+id/activity_beijing"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
@@ -115,14 +123,16 @@
 
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/yingyao_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:gravity="center_horizontal"
-                android:visibility="gone"
+
                 android:orientation="horizontal">
 
                 <com.gongpingjia.carplay.view.AnimButtonView
+                    android:id="@+id/yingyao"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:layout_marginBottom="10dp"
@@ -136,6 +146,7 @@
                 </com.gongpingjia.carplay.view.AnimButtonView>
 
                 <com.gongpingjia.carplay.view.AnimButtonView
+                    android:id="@+id/hulue"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:layout_marginLeft="30dp"
@@ -152,13 +163,16 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/yingyaohou"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:gravity="center_horizontal"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <com.gongpingjia.carplay.view.AnimButtonView
+                    android:id="@+id/dyanmic_one"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:layout_marginBottom="10dp"
@@ -173,6 +187,7 @@
                 </com.gongpingjia.carplay.view.AnimButtonView>
 
                 <com.gongpingjia.carplay.view.AnimButtonView
+                    android:id="@+id/dyanmic_two"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:layout_marginLeft="30dp"
@@ -200,6 +215,7 @@
             android:paddingBottom="21dp">
 
             <TextView
+                android:id="@+id/activity_place"
                 style="@style/text_grey_small"
                 android:text="北京烤鸭大酒店"/>
 
@@ -215,6 +231,7 @@
                     android:src="@drawable/distance_icon"/>
 
                 <TextView
+                    android:id="@+id/activity_distance"
                     style="@style/text_black_small"
                     android:text="20m"
                     android:textColor="@color/text_skyblue"/>
