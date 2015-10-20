@@ -7,7 +7,6 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.gongpingjia.carplay.R;
-import com.gongpingjia.carplay.activity.my.DynamicActivity;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
 
@@ -16,6 +15,13 @@ import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
  */
 public class PullToRefreshRecyclerViewVertical extends PullToRefreshBase<RecyclerViewPager> {
     LinearLayoutManager layout;
+
+
+    public void setOnPageChange(OnPageChange onPageChange) {
+        this.onPageChange = onPageChange;
+    }
+
+    OnPageChange  onPageChange;
 
 
     public PullToRefreshRecyclerViewVertical(Context context) {
@@ -83,6 +89,10 @@ public class PullToRefreshRecyclerViewVertical extends PullToRefreshBase<Recycle
 
                 for (int j = 0; j < childCount; j++) {
                     View v = recyclerView.getChildAt(j);
+
+                    if(onPageChange!=null) {
+                        onPageChange.change(v);
+                    }
                     //往左 从 padding 到 -(v.getWidth()-padding) 的过程中，由大到小
                     float rate = 0;
                     ;
@@ -152,6 +162,10 @@ public class PullToRefreshRecyclerViewVertical extends PullToRefreshBase<Recycle
     protected boolean isReadyForPullEnd() {
 
         return isScrollOnFooter;
+    }
+
+    public interface OnPageChange {
+        void change(View currentview);
     }
 
 

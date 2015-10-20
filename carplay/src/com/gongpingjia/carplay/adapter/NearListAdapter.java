@@ -60,6 +60,7 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
 
         public SimpleViewHolder(View view) {
             super(view);
+            Log.d("msg", "SimpleViewHolder");
             nickname = (TextView) view.findViewById(R.id.tv_nickname);
             headatt = (ImageView) view.findViewById(R.id.head_att);
             car_logo = (ImageView) view.findViewById(R.id.iv_car_logo);
@@ -96,12 +97,14 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
     @Override
     public SimpleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(mContext).inflate(R.layout.list_item_nearby, parent, false);
+
+        Log.d("msg", "onCreateViewHolder");
         return new SimpleViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(SimpleViewHolder holder, int position) {
-
+        Log.d("msg", "onBindViewHolder");
 
 //        holder.title.setText(mItems.get(position).toString());
         final JSONObject jo = getItem(position);
@@ -110,7 +113,7 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
         JSONObject userjo = JSONUtil.getJSONObject(jo, "organizer");
         JSONObject distancejo = JSONUtil.getJSONObject(jo, "destination");
         JSONObject carjo = JSONUtil.getJSONObject(jo, "car");
-        JSONArray albumjsa = JSONUtil.getJSONArray(userjo,"album");
+        JSONArray albumjsa = JSONUtil.getJSONArray(userjo, "album");
         //昵称,活动类型,年龄,性别,头像
         String activetype = JSONUtil.getString(jo, "type");
         holder.nickname.setText(JSONUtil.getString(userjo, "nickname") + "想约人" + activetype);
@@ -134,32 +137,32 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
         boolean transfer = JSONUtil.getBoolean(jo, "transfer");
         String pay = JSONUtil.getString(jo, "pay");
         holder.pay.setText(pay);
-        if (transfer){
+        if (transfer) {
             holder.transfer.setVisibility(View.VISIBLE);
             holder.transfer.setText("包接送");
-        }else {
+        } else {
             holder.transfer.setVisibility(View.GONE);
             holder.transfer.setText("不包接送");
         }
 
         //所在地,距离
-        int distance = (int)Math.floor(JSONUtil.getDouble(jo, "distance"));
+        int distance = (int) Math.floor(JSONUtil.getDouble(jo, "distance"));
         holder.distance.setText(numberWithDelimiter(distance));
-        holder.location.setText(JSONUtil.getString(distancejo, "province")+JSONUtil.getString(distancejo, "city")+JSONUtil.getString(distancejo, "district")+JSONUtil.getString(distancejo, "street"));
+        holder.location.setText(JSONUtil.getString(distancejo, "province") + JSONUtil.getString(distancejo, "city") + JSONUtil.getString(distancejo, "district") + JSONUtil.getString(distancejo, "street"));
 
         //car logo ,car name
-        if (carjo==null){
+        if (carjo == null) {
             holder.car_logo.setVisibility(View.GONE);
             holder.car_name.setVisibility(View.GONE);
-        }else{
+        } else {
             holder.car_logo.setVisibility(View.VISIBLE);
             holder.car_name.setVisibility(View.VISIBLE);
             ViewUtil.bindNetImage(holder.car_logo, JSONUtil.getString(carjo, "logo"), "head");
-            ViewUtil.bindView(holder.car_name,JSONUtil.getString(carjo,"model"));
+            ViewUtil.bindView(holder.car_name, JSONUtil.getString(carjo, "model"));
         }
 
         //相册为空模糊效果
-        if (albumjsa==null){
+        if (albumjsa == null) {
 
         }
 
@@ -170,8 +173,6 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
                 Toast.makeText(mContext, "", Toast.LENGTH_SHORT).show();
             }
         });
-        Log.d("msg", position + "   getView()");
-//        holder.invite.clearAnimation();
 
 
 //        holder.invite.startScaleAnimation();

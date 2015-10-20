@@ -1,6 +1,5 @@
 package com.gongpingjia.carplay.activity.active;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,6 +12,7 @@ import android.widget.RelativeLayout;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseFragment;
 import com.gongpingjia.carplay.view.AnimButtonView2;
+import com.gongpingjia.carplay.view.pop.LookAroundPop;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,10 +62,13 @@ public class MateFragment extends CarPlayBaseFragment implements Runnable {
         mainV.findViewById(R.id.btn_click).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent it = new Intent(getActivity(), LookAroundActivity.class);
-                startActivity(it);
-                getActivity().overridePendingTransition(R.anim.zoom_in,
-                        R.anim.zoom_out);
+                LookAroundPop pop = LookAroundPop.getInstance(getActivity());
+                pop.show();
+
+//                Intent it = new Intent(getActivity(), LookAroundActivity.class);
+//                startActivity(it);
+//                getActivity().overridePendingTransition(R.anim.zoom_in,
+//                        R.anim.zoom_out);
             }
         });
         new Thread(this).start();

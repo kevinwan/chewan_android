@@ -12,6 +12,7 @@ import com.gongpingjia.carplay.adapter.NearListAdapter;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.FilterPreference2;
 import com.gongpingjia.carplay.bean.User;
+import com.gongpingjia.carplay.view.AnimButtonView;
 import com.gongpingjia.carplay.view.PullToRefreshRecyclerViewVertical;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
@@ -66,14 +67,17 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
         listV = (PullToRefreshRecyclerViewVertical) mainV.findViewById(R.id.list);
         listV.setMode(PullToRefreshBase.Mode.BOTH);
         listV.setOnRefreshListener(this);
+        listV.setOnPageChange(new PullToRefreshRecyclerViewVertical.OnPageChange() {
+            @Override
+            public void change(View currentview) {
+                AnimButtonView animButtonView = (AnimButtonView) currentview.findViewById(R.id.invite);
+                animButtonView.clearAnimation();
+                animButtonView.startScaleAnimation();
+            }
+        });
         mRecyclerView = listV.getRefreshableView();
         adapter = new NearListAdapter(getActivity());
         mRecyclerView.setAdapter(adapter);
-//        mRecyclerView.addOnPageChangedListener(new RecyclerViewPager.OnPageChangedListener() {
-//            @Override
-//            public void OnPageChanged(int oldPosition, int newPosition) {
-//            }
-//        });
         setOnLoadSuccess(this);
         fromWhat("data");
         setUrl(API2.CWBaseurl + "activity/list?");

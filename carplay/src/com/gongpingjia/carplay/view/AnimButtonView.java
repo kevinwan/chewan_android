@@ -72,6 +72,7 @@ public class AnimButtonView extends RelativeLayout {
         mAnimationSet1 = initAnimationSet();
         mAnimationSet2 = initAnimationSet();
         a.recycle();
+
     }
 
 
@@ -110,7 +111,7 @@ public class AnimButtonView extends RelativeLayout {
 //        sa.setRepeatCount(Animation.INFINITE);// 设置循环
 //        sa.setInterpolator(new LinearInterpolator());
 //        image1.startAnimation(sa);
-        Log.d("msg", "执行startScaleAnimation");
+        Log.d("msg","工号:");
         image1.startAnimation(mAnimationSet1);
         mHandler.sendEmptyMessageDelayed(MSG_WAVE2_ANIMATION, OFFSET);
     }

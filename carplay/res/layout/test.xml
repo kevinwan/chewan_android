@@ -4,48 +4,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <RadioGroup
+
+    <ListView
+        android:id="@+id/listview"
         android:layout_width="fill_parent"
-        android:layout_height="55dp"
-        android:gravity="center_vertical"
-        android:paddingTop="5dp"
-        android:orientation="horizontal" >
+        android:layout_height="fill_parent"></ListView>
 
-        <RadioButton
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:button="@null"
-            android:drawablePadding="3dp"
-            android:drawableTop="@drawable/city_n"
-            android:gravity="center_horizontal"
-            android:text="同城"
-            android:textColor="@color/text_grey"
-            android:textSize="12sp" />
-
-        <RadioButton
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:button="@null"
-            android:drawablePadding="3dp"
-            android:drawableTop="@drawable/city_n"
-            android:gravity="center_horizontal"
-            android:text="同城"
-            android:textColor="@color/text_grey"
-            android:textSize="12sp" />
-
-        <RadioButton
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:button="@null"
-            android:drawablePadding="3dp"
-            android:drawableTop="@drawable/city_n"
-            android:gravity="center_horizontal"
-            android:text="同城"
-            android:textColor="@color/text_grey"
-            android:textSize="12sp" />
-    </RadioGroup>
 
 </LinearLayout>
