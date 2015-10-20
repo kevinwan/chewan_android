@@ -9,6 +9,10 @@ public class User {
 
 	String token = "";
 
+
+
+	String phone = "";
+
 	// 为1代表已认证
 	int isAuthenticated;
 
@@ -140,7 +144,12 @@ public class User {
 	public void setDisconnect(boolean isDisconnect) {
 		this.isDisconnect = isDisconnect;
 	}
-	
-	
 
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 }

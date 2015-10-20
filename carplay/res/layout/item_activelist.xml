@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:my="http://schemas.android.com/tools"
+    xmlns:my="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/line_grey"
+    android:background="@drawable/active_bg"
     android:orientation="vertical"
-    my:android="http://schemas.android.com/apk/res/com.gongpingjia.carplay">
+   >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,10 +19,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="16dp"
+            android:paddingBottom="10dp"
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
-            android:paddingTop="21dp">
+            android:paddingTop="15dp">
 
 
             <LinearLayout
@@ -100,109 +100,7 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/model_pic" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:gravity="center_horizontal"
-                android:visibility="gone"
-                android:orientation="horizontal">
-
-                <com.gongpingjia.carplay.view.AnimButtonView
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:layout_marginBottom="10dp"
-                    my:bg="@drawable/red_circle"
-                    my:src="@drawable/red_circle">
-
-                    <TextView
-                        style="@style/text_white_medium"
-                        android:layout_centerInParent="true"
-                        android:text="邀 TA" />
-                </com.gongpingjia.carplay.view.AnimButtonView>
-
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/yingyao_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:gravity="center_horizontal"
-
-                android:orientation="horizontal">
-
-                <com.gongpingjia.carplay.view.AnimButtonView
-                    android:id="@+id/yingyao"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:layout_marginBottom="10dp"
-                    my:bg="@drawable/red_circle"
-                    my:src="@drawable/red_circle">
-
-                    <TextView
-                        style="@style/text_white_medium"
-                        android:layout_centerInParent="true"
-                        android:text="应邀" />
-                </com.gongpingjia.carplay.view.AnimButtonView>
-
-                <com.gongpingjia.carplay.view.AnimButtonView
-                    android:id="@+id/hulue"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginBottom="10dp"
-                    my:bg="@drawable/red_circle"
-                    my:src="@drawable/red_circle">
-
-                    <TextView
-                        style="@style/text_white_medium"
-                        android:layout_centerInParent="true"
-                        android:text="忽略" />
-                </com.gongpingjia.carplay.view.AnimButtonView>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/yingyaohou"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:gravity="center_horizontal"
-                android:visibility="gone"
-                android:orientation="horizontal">
-
-                <com.gongpingjia.carplay.view.AnimButtonView
-                    android:id="@+id/dyanmic_one"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:layout_marginBottom="10dp"
-                    my:bg="@drawable/red_circle"
-                    my:src="@drawable/red_circle">
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_centerInParent="true"
-                        android:src="@drawable/chat_icon"/>
-                </com.gongpingjia.carplay.view.AnimButtonView>
-
-                <com.gongpingjia.carplay.view.AnimButtonView
-                    android:id="@+id/dyanmic_two"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginBottom="10dp"
-                    my:bg="@drawable/red_circle"
-                    my:src="@drawable/red_circle">
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_centerInParent="true"
-                        android:src="@drawable/phon_icon"/>
-                </com.gongpingjia.carplay.view.AnimButtonView>
-
-            </LinearLayout>
+           <include   layout="@layout/include_active_button"/>
 
         </RelativeLayout>
 
@@ -212,7 +110,7 @@
             android:paddingRight="12dp"
             android:paddingLeft="12dp"
             android:paddingTop="13dp"
-            android:paddingBottom="21dp">
+            android:paddingBottom="10dp">
 
             <TextView
                 android:id="@+id/activity_place"
@@ -242,13 +140,13 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:paddingBottom="12dp"
-        android:paddingTop="12dp">
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:gravity="center_horizontal"-->
+        <!--android:paddingBottom="12dp"-->
+        <!--android:paddingTop="12dp">-->
 
-    </LinearLayout>
+    <!--</LinearLayout>-->
 
 </LinearLayout>

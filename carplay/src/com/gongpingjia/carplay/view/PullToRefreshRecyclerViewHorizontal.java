@@ -75,6 +75,9 @@ public class PullToRefreshRecyclerViewHorizontal extends PullToRefreshBase<Recyc
                 lastVisibleItem = layout.findLastVisibleItemPosition();
 
                 int childCount = recyclerView.getChildCount();
+                if (childCount == 0) {
+                    return;
+                }
                 int width = recyclerView.getChildAt(0).getWidth();
                 int padding = (recyclerView.getWidth() - width) / 2;
 

@@ -390,6 +390,8 @@ public class RecyclerViewPager extends RecyclerView {
         return position;
     }
 
+
+
     public interface OnPageChangedListener {
         void OnPageChanged(int oldPosition, int newPosition);
     }

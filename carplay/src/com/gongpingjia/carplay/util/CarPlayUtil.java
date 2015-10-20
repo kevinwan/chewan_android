@@ -25,6 +25,24 @@ import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.main.PhotoSelectorActivity;
 
 public class CarPlayUtil {
+
+	public static void   bindActiveButton ( View activeButton,int type) {
+
+		switch (type) {
+			case 0:
+				break;
+
+			case 1:
+
+				break;
+
+			case  2:
+
+				break;
+		}
+
+	}
+
 	public static void bindSexView(String gender, View sexBg) {
 		if (!TextUtils.isEmpty(gender)) {
 			if (gender.equals("男")) {

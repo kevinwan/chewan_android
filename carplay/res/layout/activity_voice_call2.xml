@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#252C39"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <include
+        android:id="@id/title_bar"
+        layout="@layout/include_title_bar"
+        android:background="#252C39" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title_bar"
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <com.gongpingjia.carplay.view.RoundImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/head_icon" />
+
+        <TextView
+            android:id="@+id/tv_nickname"
+            style="@style/text_white_medium"
+            android:layout_marginTop="5dp"
+            android:text="李潇潇" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:padding="30dp">
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitCenter"
+                android:src="@drawable/icon_horn" />
+
+            <TextView
+                style="@style/text_white_medium"
+                android:layout_marginTop="3dp"
+                android:gravity="center"
+                android:text="@string/Hands_free" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitCenter"
+                android:src="@drawable/icon_mute" />
+
+            <TextView
+                style="@style/text_white_medium"
+                android:layout_marginTop="3dp"
+                android:gravity="center"
+                android:text="@string/Hands_free" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/btn_red_fillet"
+            android:minHeight="40dp"
+            android:minWidth="150dp"
+            android:scaleType="center"
+            android:src="@drawable/icon_dialog_refuse" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

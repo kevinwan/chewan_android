@@ -37,6 +37,7 @@ import com.gongpingjia.carplay.view.AnimButtonView;
 import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.util.ViewUtil;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.List;
@@ -105,8 +106,11 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
 //        holder.title.setText(mItems.get(position).toString());
         final JSONObject jo = getItem(position);
 
-        //用户信息
+        //用户信息,所在地,car信息,头像信息
         JSONObject userjo = JSONUtil.getJSONObject(jo, "organizer");
+        JSONObject distancejo = JSONUtil.getJSONObject(jo, "destination");
+        JSONObject carjo = JSONUtil.getJSONObject(jo, "car");
+        JSONArray albumjsa = JSONUtil.getJSONArray(userjo,"album");
         //昵称,活动类型,年龄,性别,头像
         String activetype = JSONUtil.getString(jo, "type");
         holder.nickname.setText(JSONUtil.getString(userjo, "nickname") + "想约人" + activetype);
@@ -130,7 +134,34 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
         boolean transfer = JSONUtil.getBoolean(jo, "transfer");
         String pay = JSONUtil.getString(jo, "pay");
         holder.pay.setText(pay);
-        holder.transfer.setText(transfer ? "包接送" : "不包接送");
+        if (transfer){
+            holder.transfer.setVisibility(View.VISIBLE);
+            holder.transfer.setText("包接送");
+        }else {
+            holder.transfer.setVisibility(View.GONE);
+            holder.transfer.setText("不包接送");
+        }
+
+        //所在地,距离
+        int distance = (int)Math.floor(JSONUtil.getDouble(jo, "distance"));
+        holder.distance.setText(numberWithDelimiter(distance));
+        holder.location.setText(JSONUtil.getString(distancejo, "province")+JSONUtil.getString(distancejo, "city")+JSONUtil.getString(distancejo, "district")+JSONUtil.getString(distancejo, "street"));
+
+        //car logo ,car name
+        if (carjo==null){
+            holder.car_logo.setVisibility(View.GONE);
+            holder.car_name.setVisibility(View.GONE);
+        }else{
+            holder.car_logo.setVisibility(View.VISIBLE);
+            holder.car_name.setVisibility(View.VISIBLE);
+            ViewUtil.bindNetImage(holder.car_logo, JSONUtil.getString(carjo, "logo"), "head");
+            ViewUtil.bindView(holder.car_name,JSONUtil.getString(carjo,"model"));
+        }
+
+        //相册为空模糊效果
+        if (albumjsa==null){
+
+        }
 
         final View itemView = holder.itemView;
         itemView.setOnClickListener(new View.OnClickListener() {
@@ -214,6 +245,19 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
     }
 
     public JSONObject getItem(int position) {
+        if (data == null) {
+            return null;
+        }
         return data.get(position);
+    }
+
+    private String numberWithDelimiter(int num) {
+        StringBuilder accum = new StringBuilder();
+        int len = accum.append(num).length();
+        if (len <= 3) return accum.append("米").toString();   //如果长度小于等于3不做处理
+        while ((len -= 3) > 0) { //从个位开始倒序插入
+            accum.insert(len, ",");
+        }
+        return accum.append("公里").toString();
     }
 }
