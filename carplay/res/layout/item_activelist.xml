@@ -44,8 +44,7 @@
                     android:layout_width="21dp"
                     android:layout_height="21dp"
                     android:layout_marginLeft="12dp"
-                    android:src="@drawable/headaut_dl"
-                    android:visibility="gone"/>
+                    android:src="@drawable/headaut_dl"/>
 
                 <ImageView
                     android:id="@+id/dynamic_carlogo"

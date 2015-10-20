@@ -16,13 +16,6 @@
 
     </LinearLayout>
 
-    <com.gongpingjia.carplay.view.swipeMenuListView.SwipeMenuListView
-        android:id="@+id/listView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/nothing"
-        android:divider="@color/nothing"
-        android:dividerHeight="1dp"
-        android:paddingBottom="120dp" />
+    <include layout="@layout/include_refreshlistview2"/>
 
 </LinearLayout>
