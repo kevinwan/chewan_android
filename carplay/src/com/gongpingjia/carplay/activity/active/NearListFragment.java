@@ -78,6 +78,7 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
 //        addParams("longitude","118");
 //        addParams("latitude", "32 ");
 //        addParams("maxDistance", "5609");
+
         showNext();
     }
 
