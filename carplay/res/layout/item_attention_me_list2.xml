@@ -1,56 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="68dp"
+    android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:paddingLeft="12dp"
-    android:paddingRight="12dp">
+    android:padding="12dp" >
 
-        <com.gongpingjia.carplay.view.RoundImageView
-            android:id="@+id/head"
-            android:layout_width="46dp"
-            android:layout_height="46dp"
-            android:src="@drawable/trends_official" />
+    <com.gongpingjia.carplay.view.RoundImageView
+        android:id="@+id/head"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/trends_official" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
 
-            <TextView
-                android:id="@+id/nickname"
-                style="@style/text_black_medium"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:text="车玩官方" />
+        <TextView
+            android:id="@+id/nickname"
+            style="@style/text_black_medium"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:text="车玩官方" />
 
-            <include layout="@layout/include_sex"/>
+        <include layout="@layout/include_sex" />
 
-        </LinearLayout>
+    </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical|right"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/time"
-                style="@style/text_grey_smaller"
-                android:text="3分钟前" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:gravity="center_vertical|right"
+        android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/distance"
-                style="@style/text_grey_smaller"
-                android:layout_marginTop="12dp"
-                android:text="200米" />
+        <TextView
+            android:id="@+id/time"
+            style="@style/text_grey_smaller"
+            android:text="3分钟前" />
 
-        </LinearLayout>
+        <TextView
+            android:id="@+id/distance"
+            style="@style/text_grey_smaller"
+            android:layout_marginTop="12dp"
+            android:text="200米" />
 
+    </LinearLayout>
 
-
-
-
+    <View style="@style/line" />
 
 
 </LinearLayout>

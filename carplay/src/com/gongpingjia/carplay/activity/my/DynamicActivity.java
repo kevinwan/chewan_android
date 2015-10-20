@@ -43,7 +43,8 @@ public class DynamicActivity extends CarPlayListActivity implements PullToRefres
         recyclerView.setAdapter(adapter);
         setOnLoadSuccess(this);
         fromWhat("data");
-        setUrl(API2.CWBaseurl+"/user/"+ user.getUserId()+"/appointment/list?token="+ user.getToken());
+//        setUrl(API2.CWBaseurl+"/user/"+ user.getUserId()+"/appointment/list?token="+ user.getToken());
+        setUrl(API2.CWBaseurl+"user/5609eb2c0cf224e7d878f693/appointment/list?token=67666666-f2ff-456d-a9cc-e83761749a6a");
         getData();
     }
 

@@ -106,8 +106,10 @@ public class DynamicActivityAdapter extends RecyclerView.Adapter<DynamicActivity
         String photoAuthStatus = JSONUtil.getString(ob,"photoAuthStatus");
         String typeT = JSONUtil.getString(jo,"type");
         String name = JSONUtil.getString(js,"nickname");
-        String gender = JSONUtil.getString(js,"gender");
-        holder.activity_place.setText(JSONUtil.getString(json,"street"));
+        String gender = JSONUtil.getString(js, "gender");
+        holder.activity_place.setText(JSONUtil.getString(json, "street"));
+        String distance = JSONUtil.getDouble(js, "distance").toString();
+        holder.activity_distance.setText(distance);
         if (("男").equals(gender)) {
             holder.sexbgR.setBackgroundResource(R.drawable.radio_sex_man_normal);
             holder.sexI.setBackgroundResource(R.drawable.icon_man3x);
