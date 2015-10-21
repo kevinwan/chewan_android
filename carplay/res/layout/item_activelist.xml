@@ -3,9 +3,9 @@
     xmlns:my="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/active_bg"
-    android:orientation="vertical"
-   >
+    android:layout_marginBottom="10dp"
+    android:background="@drawable/btn_white_fillet"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -44,7 +44,7 @@
                     android:layout_width="21dp"
                     android:layout_height="21dp"
                     android:layout_marginLeft="12dp"
-                    android:src="@drawable/headaut_dl"/>
+                    android:src="@drawable/headaut_dl" />
 
                 <ImageView
                     android:id="@+id/dynamic_carlogo"
@@ -99,22 +99,22 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/model_pic" />
 
-           <include   layout="@layout/include_active_button"/>
+            <include layout="@layout/include_active_button" />
 
         </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingRight="12dp"
+            android:paddingBottom="10dp"
             android:paddingLeft="12dp"
-            android:paddingTop="13dp"
-            android:paddingBottom="10dp">
+            android:paddingRight="12dp"
+            android:paddingTop="13dp">
 
             <TextView
                 android:id="@+id/activity_place"
                 style="@style/text_grey_small"
-                android:text="北京烤鸭大酒店"/>
+                android:text="北京烤鸭大酒店" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -125,13 +125,13 @@
                     android:layout_width="21dp"
                     android:layout_height="21dp"
                     android:layout_marginRight="6dp"
-                    android:src="@drawable/distance_icon"/>
+                    android:src="@drawable/distance_icon" />
 
                 <TextView
                     android:id="@+id/activity_distance"
                     style="@style/text_black_small"
                     android:text="20m"
-                    android:textColor="@color/text_skyblue"/>
+                    android:textColor="@color/text_skyblue" />
 
             </LinearLayout>
 
@@ -139,13 +139,14 @@
 
     </LinearLayout>
 
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:gravity="center_horizontal"-->
-        <!--android:paddingBottom="12dp"-->
-        <!--android:paddingTop="12dp">-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:background="@color/new_bg_grey"
+        android:paddingBottom="12dp"
+        android:paddingTop="12dp">
 
-    <!--</LinearLayout>-->
+    </LinearLayout>
 
 </LinearLayout>

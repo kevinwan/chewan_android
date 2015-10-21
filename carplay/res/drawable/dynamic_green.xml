@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="ring"
+    android:shape="oval"
     android:useLevel="false" >
 
-    <solid android:color="@color/btn_dyanmic_green" />
-
-    <stroke
-        android:width="3dp"
-        android:color="@color/btn_dyanmic_green" />
+    <!--<solid android:color="@color/btn_dyanmic_green" />-->
+    <solid android:color="#97D872" />
 
     <size
         android:height="50dp"
