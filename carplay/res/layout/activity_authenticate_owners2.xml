@@ -6,6 +6,7 @@
         android:orientation="vertical"
         android:gravity="center_horizontal"
         tools:context="com.gongpingjia.carplay.activity.my.AuthenticateOwnersActivity2" >
+    <include layout="@layout/include_title_bar" />
 
         <LinearLayout
             android:layout_width="match_parent"

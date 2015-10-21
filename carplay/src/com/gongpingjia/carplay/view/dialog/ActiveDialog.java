@@ -74,9 +74,9 @@ public class ActiveDialog extends Dialog {
                     @Override
                     public void doInUI(Response response, Integer transfer) {
                         if (response.isSuccess()) {
-                            //  DhNet net = new DhNet(API2.CWBaseurl+"/application/"+appointmentId+"/process?userId="+user.getUserId() + "&token=" + user.getToken());
-                            DhNet net = new DhNet(API2.CWBaseurl + "application/" + appointmentId + "/process?userId=5609eb2c0cf224e7d878f693&token=67666666-f2ff-456d-a9cc-e83761749a6a");
-                            net.addParam("accept", "true");
+                              DhNet net = new DhNet(API2.CWBaseurl+"/application/"+appointmentId+"/process?userId="+user.getUserId() + "&token=" + user.getToken());
+//                            DhNet net = new DhNet(API2.CWBaseurl + "application/" + appointmentId + "/process?userId=5609eb6d0cf224e7d878f695&token=a767ead8-7c00-4b90-b6de-9dcdb4d5bc41");
+                            net.addParam("accept", true);
                             net.doPostInDialog(new NetTask(mContext) {
                                 @Override
                                 public void doInUI(Response response, Integer transfer) {

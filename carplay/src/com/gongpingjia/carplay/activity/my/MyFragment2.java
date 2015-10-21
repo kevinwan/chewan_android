@@ -156,6 +156,15 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                     } else if (licenseAuthStatus.equals("认证中")) {
                         carattestationL.setEnabled(true);
                     }
+                    if (licenseAuthStatus.equals("未认证")&&photoAuthStatus.equals("未认证")){
+                        completenessT.setText("资料完成度60%,越高越吸引人");
+                    }else if(licenseAuthStatus.equals("认证中")&&photoAuthStatus.equals("认证中")){
+                        completenessT.setText("资料完成度60%,越高越吸引人");
+                    } else if(licenseAuthStatus.equals("认证通过")||photoAuthStatus.equals("认证通过")){
+                        completenessT.setText("资料完成度80%,越高越吸引人");
+                    }else if(licenseAuthStatus.equals("认证通过")&&photoAuthStatus.equals("认证通过")){
+                        completenessT.setText("资料完成度100%,越高越吸引人");
+                    }
 
 
                 }
@@ -175,9 +184,11 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                 break;
             //完善信息
             case R.id.perfect:
+                it = new Intent(getActivity(), EditPersonalInfoActivity2.class);
+                startActivity(it);
 //                NearbyFilterDialog nearbyFilterDialog = new NearbyFilterDialog(getActivity());
 //                nearbyFilterDialog.show();
-                getMyDetails();
+//                getMyDetails();
                 break;
             //我的活动
             case R.id.myactive:

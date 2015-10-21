@@ -48,6 +48,7 @@ public class HeadAttestationActivity extends CarPlayBaseActivity implements View
 
     @Override
     public void initView() {
+        setTitle("头像认证");
         mCacheDir = new File(getExternalCacheDir(), "CarPlay");
         mCacheDir.mkdirs();
          head_authenticate = (Button) findViewById(R.id.head_authenticate);

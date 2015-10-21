@@ -67,7 +67,7 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
     /**
      * 昵称
      */
-    private EditText nicknameT;
+    private TextView nicknameT;
 
     private TextView edit_ageT;
     private String nickname;
@@ -83,6 +83,7 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
     ImageView carlogo;
     public static final int APPROVE_HEAD = 2;
     public static final int APPROVE_CAR = 3;
+    public static final int NICKNAME = 4;
     String years;
     User user;
     TextView head_approve, car_approve;
@@ -109,20 +110,20 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
         user = User.getInstance();
 
         View backV = findViewById(R.id.backLayout);
-        right_txt = (TextView) findViewById(R.id.right_text);
-        right_txt.setVisibility(View.VISIBLE);
-        right_txt.setText("保存");
-        right_txt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // 如果没有改动 直接关闭本页
-                if (isModify()) {
-                    modification();
-                } else {
-                    finish();
-                }
-            }
-        });
+//        right_txt = (TextView) findViewById(R.id.right_text);
+//        right_txt.setVisibility(View.VISIBLE);
+//        right_txt.setText("保存");
+//        right_txt.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                // 如果没有改动 直接关闭本页
+//                if (isModify()) {
+//                    modification();
+//                } else {
+//                    finish();
+//                }
+//            }
+//        });
 
         if (backV != null) {
             backV.setOnClickListener(new View.OnClickListener() {
@@ -150,7 +151,7 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
         sexT = (TextView) findViewById(R.id.sex);
         head_approve = (TextView) findViewById(R.id.head_approve);
         car_approve = (TextView) findViewById(R.id.car_approve);
-        nicknameT = (EditText) findViewById(R.id.nickname);
+        nicknameT = (TextView) findViewById(R.id.nickname);
         edit_ageT = (TextView) findViewById(R.id.edit_age);
         approve_layout_head = (LinearLayout) findViewById(R.id.approve_layout_head);
         approve_layout_car = (LinearLayout) findViewById(R.id.approve_layout_car);
@@ -331,10 +332,10 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
             showToast("昵称不能大于8个字符或者不能为空");
             return;
         }
-        if (mBirthday <= 0) {
-            showToast("请选择生日");
-            return;
-        }
+//        if (mBirthday <= 0) {
+//            showToast("请选择生日");
+//            return;
+//        }
         DhNet net = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId() + "/info?token=" + user.getToken());
         net.addParam("nickname", nickname);
         net.addParam("birthday", mBirthday);
@@ -350,7 +351,7 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
                     it.putExtra("age", years);
                     it.putExtra("head", head_url);
                     setResult(self.RESULT_OK, it);
-                    finish();
+//                    finish();
                 } else {
                     showToast("修改信息失败");
                 }
@@ -368,11 +369,11 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
                 PhotoUtil.getPhoto(self, Constant.TAKE_PHOTO, Constant.PICK_PHOTO,
                         new File(mPhotoPath));
                 break;
-//            case R.id.name_layout:
-//               Intent intent = new Intent(self,ModifyName.class);
-//                intent.putExtra("name",nicknameT.getText().toString());
-//                startActivity(intent);
-//                break;
+            case R.id.name_layout:
+               Intent inte = new Intent(self,ModifyName.class);
+                inte.putExtra("name",nicknameT.getText().toString());
+                startActivityForResult(inte, NICKNAME);
+                break;
             case R.id.approve_layout_head:
 //                showToast("头像认证");
                 Intent intent = new Intent(self, HeadAttestationActivity.class);
@@ -403,6 +404,7 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
                         long yearL = Long.parseLong(year);
                         years = str - yearL + "";
                         edit_ageT.setText(years);
+                            modification();
 //                        System.out.println(years);
                     }
                 });
@@ -448,6 +450,10 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
 
                     car_approve.setText(data.getStringExtra("statuss"));
 
+                    break;
+                case NICKNAME:
+
+                    nicknameT.setText(data.getStringExtra("nickname"));
                     break;
 
             }

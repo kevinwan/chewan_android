@@ -1,7 +1,9 @@
 package com.gongpingjia.carplay.activity.my;
 
 import android.content.Intent;
+import android.content.SyncStatusObserver;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
@@ -188,6 +190,30 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
                     loginHX(MD5Util.string2MD5(JSONUtil.getString(json, "userId")),
                             MD5Util.string2MD5(password),
                             json, num);
+                    User user = User.getInstance();
+                    user.setPhone(mEditNum.getText().toString().trim());
+                    try {
+                        user.setUserId(json.getString("userId"));
+                        user.setToken(json.getString("token"));
+                        user.setBrand(json.getString("brand"));
+                        user.setBrandLogo(json.getString("brandLogo"));
+                        user.setHeadUrl(json.getString("avatar"));
+                        user.setNickName(json.getString("nickname"));
+                        user.setModel(json.getString("model"));
+                        User.getInstance().setLogin(true);
+
+//                            LoginEB loginEB = new LoginEB();
+//                            loginEB.setIslogin(true);
+//                            EventBus.getDefault().post(loginEB);
+
+//                            loginHX(MD5Util.string2MD5(JSONUtil.getString(json, "userId")),
+//                                    MD5Util.string2MD5(per.thirdId + per.channel + "com.gongpingjia.carplay"),
+//                                    json);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    Intent it = new Intent(self, MainActivity2.class);
+                    startActivity(it);
                 } else {
                     hidenProgressDialog();
                 }

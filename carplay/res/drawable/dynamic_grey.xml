@@ -3,11 +3,8 @@
     android:shape="oval"
     android:useLevel="false" >
 
-    <solid android:color="@color/btn_dyanmic_blue" />
+    <solid android:color="#cccccc" />
 
-    <stroke
-        android:width="3dp"
-        android:color="@color/btn_dyanmic_blue" />
 
     <size
         android:height="50dp"
