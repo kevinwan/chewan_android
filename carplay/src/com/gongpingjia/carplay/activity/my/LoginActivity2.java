@@ -212,8 +212,6 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    Intent it = new Intent(self, MainActivity2.class);
-                    startActivity(it);
                 } else {
                     hidenProgressDialog();
                 }
