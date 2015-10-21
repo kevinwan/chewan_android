@@ -368,11 +368,11 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
                 PhotoUtil.getPhoto(self, Constant.TAKE_PHOTO, Constant.PICK_PHOTO,
                         new File(mPhotoPath));
                 break;
-//            case R.id.name_layout:
-//               Intent intent = new Intent(self,ModifyName.class);
-//                intent.putExtra("name",nicknameT.getText().toString());
-//                startActivity(intent);
-//                break;
+            case R.id.name_layout:
+               Intent inte = new Intent(self,ModifyName.class);
+                inte.putExtra("name",nicknameT.getText().toString());
+                startActivity(inte);
+                break;
             case R.id.approve_layout_head:
 //                showToast("头像认证");
                 Intent intent = new Intent(self, HeadAttestationActivity.class);

@@ -144,12 +144,9 @@ public class DyanmicBaseAdapter extends BaseAdapter {
 
         String licenseAuthStatus = JSONUtil.getString(js, "licenseAuthStatus");
         String photoAuthStatus = JSONUtil.getString(js, "photoAuthStatus");
-        System.out.println(photoAuthStatus);
         if (photoAuthStatus.equals("认证通过")) {
-            System.out.println("AAAAAAAAAAAAAAAAAA");
             holder.certification_achievement.setImageResource(R.drawable.headaut_dl);
         }else if(photoAuthStatus.equals("未认证")){
-            System.out.println("BBBBBBBBBBBBBB");
             holder.certification_achievement.setImageResource(R.drawable.headaut_no);
         }
         String typeT = JSONUtil.getString(jo, "type");
