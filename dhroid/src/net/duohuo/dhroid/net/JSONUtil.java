@@ -1,14 +1,14 @@
 package net.duohuo.dhroid.net;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import android.text.TextUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.text.TextUtils;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * json 工具
@@ -299,5 +299,6 @@ public class JSONUtil {
 		}
 		return map;
 	}
+
 
 }

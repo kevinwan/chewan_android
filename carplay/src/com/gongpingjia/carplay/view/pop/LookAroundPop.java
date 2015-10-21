@@ -2,11 +2,15 @@ package com.gongpingjia.carplay.view.pop;
 
 import android.app.Activity;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Handler;
+import android.os.Message;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.AnimationSet;
+import android.view.animation.ScaleAnimation;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -22,8 +26,11 @@ import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.net.cache.CachePolicy;
+import net.duohuo.dhroid.util.ViewUtil;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by Administrator on 2015/10/20.
@@ -100,11 +107,26 @@ public class LookAroundPop {
             for (int i = 0; i < layoutR.getChildCount(); i++) {
                 LinearLayout linear = (LinearLayout) layoutR.getChildAt(i);
                 for (int j = 0; j < linear.getChildCount(); j++) {
-                    RoundImageView img = (RoundImageView) ((LinearLayout)linear.getChildAt(j)).getChildAt(0);
-                    TextView txt = (TextView) ((LinearLayout)linear.getChildAt(j)).getChildAt(1);
-                    JSONUtil.getJSONObjectAt(jsa,position);
-//                    ViewUtil.bindNetImage(img, JSONUtil.getJSONObject(position));
-                    position = position + 1;
+                    RoundImageView img;
+                    TextView txt;
+                    if (!(i == 1 && j == 0)) {
+
+
+                        img = (RoundImageView) ((LinearLayout) linear.getChildAt(j)).getChildAt(0);
+                        txt = (TextView) ((LinearLayout) linear.getChildAt(j)).getChildAt(1);
+
+
+                        try {
+                            JSONObject jo = JSONUtil.getJSONObjectAt(jsa, position).getJSONObject("organizer");
+                            ViewUtil.bindNetImage(img, jo.getString("avatar"), "head");
+                            ViewUtil.bindView(txt, JSONUtil.getJSONObjectAt(jsa, position).getString("type"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        new mHandler((LinearLayout) linear.getChildAt(j)).sendEmptyMessageDelayed(0, position * 1000);
+                        position = position + 1;
+                    }
+
                 }
             }
         }
@@ -118,5 +140,33 @@ public class LookAroundPop {
         // }
     }
 
+    private AnimationSet initAnimationSet_bg() {
+        AnimationSet as = new AnimationSet(true);
+        ScaleAnimation sa = new ScaleAnimation(0f, 1f, 0f, 1f,
+                ScaleAnimation.RELATIVE_TO_SELF, 0.5f,
+                ScaleAnimation.RELATIVE_TO_SELF, 0.5f);
+        sa.setDuration(800);
+        as.addAnimation(sa);
+        return as;
+    }
+
+    class mHandler extends Handler {
+        View bg;
+
+        public mHandler(View bg) {
+            this.bg = bg;
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0:
+                    bg.startAnimation(initAnimationSet_bg());
+                    bg.setVisibility(View.VISIBLE);
+                    break;
+            }
+            super.handleMessage(msg);
+        }
+    }
 
 }

@@ -1,5 +1,6 @@
 package com.gongpingjia.carplay.activity.my;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -35,7 +36,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
     View mainV;
     static MyFragment2 instance;
     private RoundImageView headI;
-    private ImageView sexI, photo_bgI;
+    private ImageView sexI, photo_bgI,addPhoto,right_icon;
     private TextView attestationT, nameT, ageT, completenessT, txtphotoAuthStatusT, attestation_txtT;
     private Button perfectBtn;
     private RelativeLayout sexbgR;
@@ -49,6 +50,8 @@ public class MyFragment2 extends Fragment implements OnClickListener {
         return instance;
     }
 
+    Context mContext;
+
     User user;
 
     @Override
@@ -56,6 +59,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                              Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         mainV = inflater.inflate(R.layout.fragment_my2, null);
+        mContext = getActivity();
         user = User.getInstance();
         initView();
         return mainV;
@@ -67,6 +71,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
         nameT = (TextView) mainV.findViewById(R.id.name);
         sexbgR = (RelativeLayout) mainV.findViewById(R.id.layout_sex_and_age);
         sexI = (ImageView) mainV.findViewById(R.id.iv_sex);
+        right_icon = (ImageView) mainV.findViewById(R.id.right_icon);
         ageT = (TextView) mainV.findViewById(R.id.tv_age);
         completenessT = (TextView) mainV.findViewById(R.id.txt_completeness);
         perfectBtn = (Button) mainV.findViewById(R.id.perfect);
@@ -78,6 +83,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
         carattestationL = (LinearLayout) mainV.findViewById(R.id.carattestation);
         txtphotoAuthStatusT = (TextView) mainV.findViewById(R.id.txtphotoAuthStatus);
         attestation_txtT = (TextView) mainV.findViewById(R.id.attestation_txt);
+        addPhoto = (ImageView) mainV.findViewById(R.id.addphoto);
 
         perfectBtn.setOnClickListener(this);
         myactiveL.setOnClickListener(this);
@@ -85,17 +91,19 @@ public class MyFragment2 extends Fragment implements OnClickListener {
         headattestationL.setOnClickListener(this);
         carattestationL.setOnClickListener(this);
         headI.setOnClickListener(this);
+        addPhoto.setOnClickListener(this);
+        right_icon.setOnClickListener(this);
 
-//        if (user.isLogin()) {
         getMyDetails();
 //        }
     }
+
 
     public void getMyDetails() {
 
         DhNet verifyNet = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId()
                 + "/info?viewUser=" + user.getUserId() + "&token=" + user.getToken());
-        verifyNet.doGetInDialog(new NetTask(getActivity()) {
+        verifyNet.doGetInDialog(new NetTask(mContext) {
 
             @Override
             public void doInUI(Response response, Integer transfer) {
@@ -179,7 +187,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
         switch (v.getId()) {
             //编辑资料
             case R.id.head:
-                it = new Intent(getActivity(), EditPersonalInfoActivity2.class);
+                it = new Intent(mContext, EditPersonalInfoActivity2.class);
                 startActivity(it);
                 break;
             //完善信息
@@ -192,27 +200,37 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                 break;
             //我的活动
             case R.id.myactive:
-                it = new Intent(getActivity(), AttentionMeActivity.class);
+                it = new Intent(mContext, AttentionMeActivity.class);
                 startActivity(it);
                 break;
             //我的关注
             case R.id.myattention:
-                it = new Intent(getActivity(), SubscribeActivity2.class);
+                it = new Intent(mContext, SubscribeActivity2.class);
                 startActivity(it);
                 break;
             //头像认证
             case R.id.headattestation:
-                it = new Intent(getActivity(), HeadAttestationActivity.class);
+                it = new Intent(mContext, HeadAttestationActivity.class);
                 startActivity(it);
                 break;
             //车主认证
             case R.id.carattestation:
-                it = new Intent(getActivity(), AuthenticateOwnersActivity2.class);
+                it = new Intent(mContext, AuthenticateOwnersActivity2.class);
                 startActivity(it);
+                break;
+            //上传相册
+            case R.id.addphoto:
+
+                break;
+            case R.id.right_icon:
+                //设置
                 break;
 
             default:
                 break;
         }
     }
+
+
+
 }
