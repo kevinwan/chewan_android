@@ -16,7 +16,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -65,7 +64,6 @@ import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.net.upload.FileInfo;
 import net.duohuo.dhroid.util.PhotoUtil;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -307,14 +305,14 @@ public class MainActivity extends BaseFragmentActivity implements
 					// TODO Auto-generated method stub
 					if (response.isSuccess()) {
 						JSONObject json = response.jSONFrom("data");
-						try {
-							User user = User.getInstance();
-							user.setIsAuthenticated(json
-									.getInt("isAuthenticated"));
-							// 认证车主
-						} catch (JSONException e) {
-							e.printStackTrace();
-						}
+//						try {
+//							User user = User.getInstance();
+//							user.setIsAuthenticated(json
+//									.getInt("isAuthenticated"));
+//							// 认证车主
+//						} catch (JSONException e) {
+//							e.printStackTrace();
+//						}
 					}
 				}
 			});

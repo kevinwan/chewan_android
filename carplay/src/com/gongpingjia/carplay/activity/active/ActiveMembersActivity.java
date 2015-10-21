@@ -1,33 +1,15 @@
 package com.gongpingjia.carplay.activity.active;
 
-import net.duohuo.dhroid.adapter.FieldMap;
-import net.duohuo.dhroid.adapter.NetJSONAdapter;
-import net.duohuo.dhroid.ioc.IocContainer;
-import net.duohuo.dhroid.net.DhNet;
-import net.duohuo.dhroid.net.JSONUtil;
-import net.duohuo.dhroid.net.NetTask;
-import net.duohuo.dhroid.net.Response;
-import net.duohuo.dhroid.util.ViewUtil;
-import net.duohuo.dhroid.view.NetRefreshAndMoreListView;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
-import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
@@ -39,16 +21,26 @@ import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.bean.JoinEB;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.CarPlayPerference;
-import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.util.CarSeatUtil;
 import com.gongpingjia.carplay.util.CarSeatUtil.OnSeatClickListener;
 import com.gongpingjia.carplay.view.RoundImageView;
 import com.gongpingjia.carplay.view.dialog.ActiveMsgDialog;
-import com.gongpingjia.carplay.view.dialog.CarSeatSelectDialog;
 import com.gongpingjia.carplay.view.dialog.ActiveMsgDialog.OnClickResultListener;
-import com.gongpingjia.carplay.view.dialog.CarSeatSelectDialog.OnSelectResultListener;
 import com.gongpingjia.carplay.view.dialog.SeatDialog;
 import com.gongpingjia.carplay.view.dialog.SeatDialog.OnGradResultListener;
+
+import net.duohuo.dhroid.adapter.FieldMap;
+import net.duohuo.dhroid.adapter.NetJSONAdapter;
+import net.duohuo.dhroid.ioc.IocContainer;
+import net.duohuo.dhroid.net.DhNet;
+import net.duohuo.dhroid.net.JSONUtil;
+import net.duohuo.dhroid.net.NetTask;
+import net.duohuo.dhroid.net.Response;
+import net.duohuo.dhroid.util.ViewUtil;
+import net.duohuo.dhroid.view.NetRefreshAndMoreListView;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import de.greenrobot.event.EventBus;
 
@@ -420,31 +412,31 @@ public class ActiveMembersActivity extends CarPlayBaseActivity implements
 			public void doInUI(Response response, Integer transfer) {
 				// TODO Auto-generated method stub
 				if (response.isSuccess()) {
-					JSONObject json = response.jSONFrom("data");
-					try {
-						User user = User.getInstance();
-						user.setIsAuthenticated(json.getInt("isAuthenticated"));
-
-						if (user.getIsAuthenticated() == 1) {
-							CarSeatSelectDialog dialog = new CarSeatSelectDialog(
-									self, activityId);
-							dialog.setOnSelectResultListener(new OnSelectResultListener() {
-
-								@Override
-								public void click(int seatCount) {
-									joinActive(seatCount);
-								}
-							});
-
-							dialog.show();
-						} else {
-							joinActive(0);
-
-						}
-						// 认证车主
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
+//					JSONObject json = response.jSONFrom("data");
+//					try {
+//						User user = User.getInstance();
+////						user.setIsAuthenticated(json.getInt("isAuthenticated"));
+//
+////						if (user.getIsAuthenticated() == 1) {
+////							CarSeatSelectDialog dialog = new CarSeatSelectDialog(
+////									self, activityId);
+////							dialog.setOnSelectResultListener(new OnSelectResultListener() {
+////
+////								@Override
+////								public void click(int seatCount) {
+////									joinActive(seatCount);
+////								}
+////							});
+////
+////							dialog.show();
+////						} else {
+////							joinActive(0);
+////
+////						}
+//						// 认证车主
+//					} catch (JSONExceptiontion e) {
+//						e.printStackTrace();
+//					}
 				}
 			}
 		});

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -11,11 +12,20 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.easemob.EMCallBack;
+import com.easemob.chat.EMChatManager;
+import com.easemob.chat.EMGroupManager;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.activity.main.MainActivity2;
 import com.gongpingjia.carplay.api.API2;
+import com.gongpingjia.carplay.bean.LoginEB;
 import com.gongpingjia.carplay.bean.User;
+import com.gongpingjia.carplay.chat.Constant;
+import com.gongpingjia.carplay.chat.DemoHXSDKHelper;
+import com.gongpingjia.carplay.chat.bean.ChatUser;
+import com.gongpingjia.carplay.chat.controller.HXSDKHelper;
+import com.gongpingjia.carplay.chat.db.UserDao;
 import com.gongpingjia.carplay.util.CarPlayPerference;
 import com.gongpingjia.carplay.util.MD5Util;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -29,13 +39,19 @@ import com.umeng.socialize.weixin.controller.UMWXHandler;
 
 import net.duohuo.dhroid.ioc.IocContainer;
 import net.duohuo.dhroid.net.DhNet;
+import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by Administrator on 2015/10/13.
@@ -47,7 +63,6 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
     private TextView mTextForgetPasswd;
     private ImageView mImgWeixin, mImgQQ, mImgWeibo;
     private CheckBox mImgShowOrHidePassword;
-
 
     private UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.login");
 
@@ -150,47 +165,31 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
 
     //手机号码登陆
     private void login() {
-//        String num = mEditNum.getText().toString().trim();
-//        String password = mEditPassword.getText().toString().trim();
+//        final String num = mEditNum.getText().toString().trim();
+//        final String password = mEditPassword.getText().toString().trim();
 //        if (TextUtils.isEmpty(num) || TextUtils.isEmpty(password)) {
 //            showToast("手机号或密码不能为空");
 //            return;
 //        }
+        final String num = "18000000000";
+        final String password = "123456";
+
 
         DhNet dhNet = new DhNet(API2.login);
-        dhNet.addParam("phone", "18000000000");
-        dhNet.addParam("password", MD5Util.string2MD5("123456"));
-        dhNet.doPostInDialog("登陆中...", new NetTask(self) {
+        dhNet.addParam("phone", num);
+        dhNet.addParam("password", MD5Util.string2MD5(password));
+        showProgressDialog("登录中...");
+        dhNet.doPost(new NetTask(self) {
             @Override
             public void doInUI(Response response, Integer transfer) {
                 if (response.isSuccess()) {
-                    showToast("登陆成功");
                     JSONObject json = response.jSONFrom("data");
-                    User user = User.getInstance();
-                    try {
-                        user.setUserId(json.getString("userId"));
-                        user.setToken(json.getString("token"));
-                        user.setBrand(json.getString("brand"));
-                        user.setBrandLogo(json.getString("brandLogo"));
-                        user.setHeadUrl(json.getString("avatar"));
-                        user.setNickName(json.getString("nickname"));
-                        user.setModel(json.getString("model"));
-                        User.getInstance().setLogin(true);
 
-//                            LoginEB loginEB = new LoginEB();
-//                            loginEB.setIslogin(true);
-//                            EventBus.getDefault().post(loginEB);
-
-//                            loginHX(MD5Util.string2MD5(JSONUtil.getString(json, "userId")),
-//                                    MD5Util.string2MD5(per.thirdId + per.channel + "com.gongpingjia.carplay"),
-//                                    json);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    Intent it = new Intent(self, MainActivity2.class);
-                    startActivity(it);
+                    loginHX(MD5Util.string2MD5(JSONUtil.getString(json, "userId")),
+                            MD5Util.string2MD5(password),
+                            json, num);
                 } else {
-                    showToast("登陆失败");
+                    hidenProgressDialog();
                 }
             }
         });
@@ -205,13 +204,15 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
         net.addParam("uid", mUid);
         net.addParam("channel", mChannel);
         net.addParam("password", password);
-        net.doPostInDialog("跳转中...", new NetTask(self) {
+        showProgressDialog("跳转中...");
+        net.doPost(new NetTask(self) {
 
             @Override
             public void doInUI(Response response, Integer transfer) {
                 if (response.isSuccess()) {
                     JSONObject json = response.jSONFrom("data");
                     if (!json.has("token")) {
+                        hidenProgressDialog();
                         //数据库没有该用户
                         Intent it = new Intent(self, BasicInformationActivity2.class);
                         Bundle bundle = new Bundle();
@@ -228,44 +229,19 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
                         startActivity(it);
                     } else {
                         //数据库中有该用户
-                        showToast("登录成功");
-                        CarPlayPerference per = IocContainer.getShare().get(CarPlayPerference.class);
-                        per.load();
-                        per.thirdId = mUid;
-                        per.channel = mChannel;
-                        per.commit();
+                        loginHX(MD5Util.string2MD5(JSONUtil.getString(json, "userId")),
+                                MD5Util.string2MD5(mUid + mChannel + "com.gongpingjia.carplay"),
+                                json, null);
 
-                        User user = User.getInstance();
-                        try {
-                            user.setUserId(json.getString("userId"));
-                            user.setToken(json.getString("token"));
-                            user.setBrand(json.getString("brand"));
-                            user.setBrandLogo(json.getString("brandLogo"));
-                            user.setHeadUrl(json.getString("avatar"));
-                            user.setNickName(json.getString("nickname"));
-                            user.setModel(json.getString("model"));
-                            User.getInstance().setLogin(true);
 
-//                            LoginEB loginEB = new LoginEB();
-//                            loginEB.setIslogin(true);
-//                            EventBus.getDefault().post(loginEB);
-
-//                            loginHX(MD5Util.string2MD5(JSONUtil.getString(json, "userId")),
-//                                    MD5Util.string2MD5(per.thirdId + per.channel + "com.gongpingjia.carplay"),
-//                                    json);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-//                        从退出登陆过来
+                        //                        从退出登陆过来
 //                        if (isFromLogout) {
 //                            Intent it = new Intent(self, MainActivity.class);
 //                            startActivity(it);
 //                        }
-                        Intent it = new Intent(self, MainActivity2.class);
-                        startActivity(it);
-                        self.finish();
                     }
                 } else {
+                    hidenProgressDialog();
                     showToast("登录失败");
                 }
             }
@@ -359,4 +335,125 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
         });
     }
 
+
+    private void loginHX(String currentUsername, String currentPassword, final JSONObject jo, final String phone) {
+        EMChatManager.getInstance().login(currentUsername, currentPassword, new EMCallBack() {
+
+            @Override
+            public void onSuccess() {
+
+                try {
+                    // ** 第一次登录或者之前logout后再登录，加载所有本地群和回话
+                    // ** manually load all local groups and
+                    EMGroupManager.getInstance().loadAllGroups();
+                    EMChatManager.getInstance().loadAllConversations();
+                    // 处理好友和群组
+                    initializeContacts();
+
+
+                    User user = User.getInstance();
+
+                    user.setUserId(jo.getString("userId"));
+                    user.setToken(jo.getString("token"));
+                    user.setHeadUrl(jo.getString("avatar"));
+                    user.setNickName(jo.getString("nickname"));
+                    user.setLicenseAuthStatus("认证通过".equals(jo.getString("licenseAuthStatus")));
+                    user.setPhotoAuthStatus("认证通过".equals(jo.getString("photoAuthStatus")));
+                    user.setEmName(jo.getString("emchatName"));
+                    User.getInstance().setLogin(true);
+
+                    LoginEB loginEB = new LoginEB();
+                    loginEB.setIslogin(true);
+                    EventBus.getDefault().post(loginEB);
+                    LoginActivity.asyncFetchGroupsFromServer();
+                    CarPlayPerference per = IocContainer.getShare().get(CarPlayPerference.class);
+                    per.load();
+                    per.thirdId = mUid;
+                    per.channel = mChannel;
+                    if (phone != null) {
+                        per.phone = phone;
+                    }
+                    per.commit();
+                    hidenProgressDialog();
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            DemoHXSDKHelper.getInstance().logout(true, null);
+                            showToast("登录成功!");
+                        }
+                    });
+                    Intent it = new Intent(self, MainActivity2.class);
+                    startActivity(it);
+                    self.finish();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    // 取好友或者群聊失败，不让进入主页面
+                    hidenProgressDialog();
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            DemoHXSDKHelper.getInstance().logout(true, null);
+                            showToast(getString(R.string.login_failure_failed));
+                        }
+                    });
+                    return;
+                }
+                // 更新当前用户的nickname 此方法的作用是在ios离线推送时能够显示用户nick
+                boolean updatenick = EMChatManager.getInstance()
+                        .updateCurrentUserNick(User.getInstance().getNickName());
+                if (!updatenick) {
+                    Log.e("LoginActivity", "update current user nick fail");
+                }
+                // if (!LoginActivity.this.isFinishing() &&
+                // pd.isShowing()) {
+                // pd.dismiss();
+                // }
+                // 进入主页面
+
+            }
+
+            @Override
+            public void onProgress(int progress, String status) {
+                hidenProgressDialog();
+            }
+
+            @Override
+            public void onError(final int code, final String message) {
+                hidenProgressDialog();
+            }
+        });
+
+    }
+
+
+    private void initializeContacts() {
+        Map<String, ChatUser> userlist = new HashMap<String, ChatUser>();
+        // 添加user"申请与通知"
+        ChatUser newFriends = new ChatUser();
+        newFriends.setUsername(Constant.NEW_FRIENDS_USERNAME);
+        String strChat = getResources().getString(R.string.Application_and_notify);
+        newFriends.setNick(strChat);
+
+        userlist.put(Constant.NEW_FRIENDS_USERNAME, newFriends);
+        // 添加"群聊"
+        ChatUser groupUser = new ChatUser();
+        String strGroup = getResources().getString(R.string.group_chat);
+        groupUser.setUsername(Constant.GROUP_USERNAME);
+        groupUser.setNick(strGroup);
+        groupUser.setHeader("");
+        userlist.put(Constant.GROUP_USERNAME, groupUser);
+
+        // 添加"Robot"
+        ChatUser robotUser = new ChatUser();
+        String strRobot = getResources().getString(R.string.robot_chat);
+        robotUser.setUsername(Constant.CHAT_ROBOT);
+        robotUser.setNick(strRobot);
+        robotUser.setHeader("");
+        userlist.put(Constant.CHAT_ROBOT, robotUser);
+
+        // 存入内存
+        ((DemoHXSDKHelper) HXSDKHelper.getInstance()).setContactList(userlist);
+        // 存入db
+        UserDao dao = new UserDao(LoginActivity2.this);
+        List<ChatUser> users = new ArrayList<ChatUser>(userlist.values());
+        dao.saveContactList(users);
+    }
 }

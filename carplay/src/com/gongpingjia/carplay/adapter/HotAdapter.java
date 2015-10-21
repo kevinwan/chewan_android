@@ -1,24 +1,5 @@
 package com.gongpingjia.carplay.adapter;
 
-import java.text.SimpleDateFormat;
-import java.util.Iterator;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import net.duohuo.dhroid.adapter.NetJSONAdapter;
-import net.duohuo.dhroid.dialog.IDialog;
-import net.duohuo.dhroid.ioc.IocContainer;
-import net.duohuo.dhroid.net.DhNet;
-import net.duohuo.dhroid.net.JSONUtil;
-import net.duohuo.dhroid.net.NetTask;
-import net.duohuo.dhroid.net.Response;
-import net.duohuo.dhroid.util.DhUtil;
-import net.duohuo.dhroid.util.ViewUtil;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -27,12 +8,10 @@ import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.Display;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -49,11 +28,26 @@ import com.gongpingjia.carplay.manage.UserInfoManage;
 import com.gongpingjia.carplay.manage.UserInfoManage.LoginCallBack;
 import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.util.PicLayoutUtil;
-import com.gongpingjia.carplay.view.CarPlayGallery;
-import com.gongpingjia.carplay.view.HotGallery;
 import com.gongpingjia.carplay.view.RoundImageView;
-import com.gongpingjia.carplay.view.dialog.CarSeatSelectDialog;
-import com.gongpingjia.carplay.view.dialog.CarSeatSelectDialog.OnSelectResultListener;
+
+import net.duohuo.dhroid.adapter.NetJSONAdapter;
+import net.duohuo.dhroid.dialog.IDialog;
+import net.duohuo.dhroid.ioc.IocContainer;
+import net.duohuo.dhroid.net.DhNet;
+import net.duohuo.dhroid.net.JSONUtil;
+import net.duohuo.dhroid.net.NetTask;
+import net.duohuo.dhroid.net.Response;
+import net.duohuo.dhroid.util.DhUtil;
+import net.duohuo.dhroid.util.ViewUtil;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.Iterator;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import de.greenrobot.event.EventBus;
 
@@ -533,36 +527,32 @@ public class HotAdapter extends NetJSONAdapter {
 				// TODO Auto-generated method stub
 				if (response.isSuccess()) {
 					JSONObject json = response.jSONFrom("data");
-					try {
-						User user = User.getInstance();
-						user.setIsAuthenticated(json.getInt("isAuthenticated"));
-
-						if (user.getIsAuthenticated() == 1) {
-							if (progressdialog != null) {
-								progressdialog.dismiss();
-							}
-							CarSeatSelectDialog dialog = new CarSeatSelectDialog(
-									mContext, activityId);
-							dialog.setOnSelectResultListener(new OnSelectResultListener() {
-
-								@Override
-								public void click(int seatCount) {
-									progressdialog = dialoger
-											.showProgressDialog(mContext,
-													"申请加入中...");
-									joinActive(activityId, seatCount, jo);
-								}
-							});
-
-							dialog.show();
-						} else {
-							joinActive(activityId, 0, jo);
-
-						}
-						// 认证车主
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
+					User user = User.getInstance();
+//						user.setIsAuthenticated(json.getInt("isAuthenticated"));
+//
+//						if (user.getIsAuthenticated() == 1) {
+//							if (progressdialog != null) {
+//								progressdialog.dismiss();
+//							}
+//							CarSeatSelectDialog dialog = new CarSeatSelectDialog(
+//									mContext, activityId);
+//							dialog.setOnSelectResultListener(new OnSelectResultListener() {
+//
+//								@Override
+//								public void click(int seatCount) {
+//									progressdialog = dialoger
+//											.showProgressDialog(mContext,
+//													"申请加入中...");
+//									joinActive(activityId, seatCount, jo);
+//								}
+//							});
+//
+//							dialog.show();
+//						} else {
+//							joinActive(activityId, 0, jo);
+//
+//						}
+					// 认证车主
 				}
 			}
 		});

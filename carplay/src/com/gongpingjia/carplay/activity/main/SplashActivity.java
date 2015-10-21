@@ -1,32 +1,16 @@
 package com.gongpingjia.carplay.activity.main;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import net.duohuo.dhroid.ioc.IocContainer;
-import net.duohuo.dhroid.net.DhNet;
-import net.duohuo.dhroid.net.JSONUtil;
-import net.duohuo.dhroid.net.NetTask;
-import net.duohuo.dhroid.net.Response;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.easemob.EMCallBack;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMGroupManager;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
-import com.gongpingjia.carplay.activity.my.BasicMessageActivity;
 import com.gongpingjia.carplay.activity.my.LoginActivity;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.bean.LoginEB;
@@ -38,6 +22,19 @@ import com.gongpingjia.carplay.chat.controller.HXSDKHelper;
 import com.gongpingjia.carplay.chat.db.UserDao;
 import com.gongpingjia.carplay.util.CarPlayPerference;
 import com.gongpingjia.carplay.util.MD5Util;
+
+import net.duohuo.dhroid.ioc.IocContainer;
+import net.duohuo.dhroid.net.DhNet;
+import net.duohuo.dhroid.net.JSONUtil;
+import net.duohuo.dhroid.net.NetTask;
+import net.duohuo.dhroid.net.Response;
+
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import de.greenrobot.event.EventBus;
 
@@ -212,10 +209,10 @@ public class SplashActivity extends CarPlayBaseActivity {
 							user.setBrandLogo(JSONUtil.getString(jo,
 									"brandLogo"));
 							user.setModel(JSONUtil.getString(jo, "model"));
-							user.setSeatNumber(JSONUtil
-									.getInt(jo, "seatNumber"));
-							user.setIsAuthenticated(JSONUtil.getInt(jo,
-									"isAuthenticated"));
+//							user.setSeatNumber(JSONUtil
+//									.getInt(jo, "seatNumber"));
+//							user.setIsAuthenticated(JSONUtil.getInt(jo,
+//									"isAuthenticated"));
 							user.setNickName(JSONUtil.getString(jo, "nickname"));
 							user.setHeadUrl(JSONUtil.getString(jo, "photo"));
 							User.getInstance().setLogin(true);
@@ -232,9 +229,9 @@ public class SplashActivity extends CarPlayBaseActivity {
 								public void run() {
 									DemoHXSDKHelper.getInstance().logout(true,
 											null);
-									Toast.makeText(getApplicationContext(),
-											R.string.login_failure_failed, 1)
-											.show();
+//									Toast.makeText(getApplicationContext(),
+//											R.string.login_failure_failed, 1)
+//											.show();
 								}
 							});
 							notFirst();

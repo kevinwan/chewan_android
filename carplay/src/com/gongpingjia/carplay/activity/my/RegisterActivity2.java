@@ -96,8 +96,6 @@ public class RegisterActivity2 extends CarPlayBaseActivity implements View.OnCli
                     it.putExtra("password", password);
                     it.putExtra("code", code);
                     startActivity(it);
-                } else {
-                    showToast("验证失败,请重试");
                 }
             }
         });

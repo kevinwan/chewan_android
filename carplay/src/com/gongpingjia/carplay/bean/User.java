@@ -3,153 +3,176 @@ package com.gongpingjia.carplay.bean;
 import com.gongpingjia.carplay.util.MD5Util;
 
 public class User {
-	static User user;
+    static User user;
 
-	String userId = "";
+    String userId = "";
 
-	String token = "";
+    String token = "";
+
+
+    String phone = "";
+
+    // 为1代表已认证
+    boolean licenseAuthStatus = false;
+
+
+    boolean photoAuthStatus = false;
+
+    String brand = "";
+
+    String brandLogo = "";
+
+    String model = "";
+
+    public String nickName;
+
+    public String headUrl;
+
+    public boolean isLogin = false;
+    public String psaaword;
+
+    public String emName ;
+
+    private boolean isDisconnect = false;
 
 
 
-	String phone = "";
+   public static User getInstance() {
+        if (user == null) {
+            user = new User();
+        }
+        return user;
+    }
 
-	// 为1代表已认证
-	int isAuthenticated;
+    public String getUserId() {
+        return userId;
+    }
 
-	String brand = "";
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
-	String brandLogo = "";
+    public String getToken() {
+        return token;
+    }
 
-	String model = "";
+    public void setToken(String token) {
+        this.token = token;
+    }
 
-	int seatNumber;
 
-	public String nickName;
+    public String getBrand() {
+        return brand;
+    }
 
-	public String headUrl;
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
 
-	public boolean isLogin = false;
+    public String getBrandLogo() {
+        return brandLogo;
+    }
 
-	public String psaaword;
+    public void setBrandLogo(String brandLogo) {
+        this.brandLogo = brandLogo;
+    }
 
-	private boolean isDisconnect = false;
+    public String getModel() {
+        return model;
+    }
 
-	public static User getInstance() {
-		if (user == null) {
-			user = new User();
-		}
-		return user;
-	}
+    public void setModel(String model) {
+        this.model = model;
+    }
 
-	public String getUserId() {
-		return userId;
-	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
+    public boolean isLogin() {
+        return isLogin;
+    }
 
-	public String getToken() {
-		return token;
-	}
+    public void setLogin(boolean isLogin) {
+        this.isLogin = isLogin;
+    }
 
-	public void setToken(String token) {
-		this.token = token;
-	}
+    public String getChatUserId() {
+        return MD5Util.string2MD5(userId);
+    }
 
-	public int getIsAuthenticated() {
-		return isAuthenticated;
-	}
+    public String getPsaaword() {
+        return psaaword;
+    }
 
-	public void setIsAuthenticated(int isAuthenticated) {
-		this.isAuthenticated = isAuthenticated;
-	}
+    public void setPsaaword(String psaaword) {
+        this.psaaword = psaaword;
+    }
 
-	public String getBrand() {
-		return brand;
-	}
+    public String getChatUserPassword() {
+        return psaaword;
+    }
 
-	public void setBrand(String brand) {
-		this.brand = brand;
-	}
+    public String getNickName() {
+        return nickName;
+    }
 
-	public String getBrandLogo() {
-		return brandLogo;
-	}
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
 
-	public void setBrandLogo(String brandLogo) {
-		this.brandLogo = brandLogo;
-	}
+    public String getHeadUrl() {
+        return headUrl;
+    }
 
-	public String getModel() {
-		return model;
-	}
+    public void setHeadUrl(String headUrl) {
+        this.headUrl = headUrl;
+    }
 
-	public void setModel(String model) {
-		this.model = model;
-	}
+    public boolean isDisconnect() {
+        return isDisconnect;
+    }
 
-	public int getSeatNumber() {
-		return seatNumber;
-	}
+    public void setDisconnect(boolean isDisconnect) {
+        this.isDisconnect = isDisconnect;
+    }
 
-	public void setSeatNumber(int seatNumber) {
-		this.seatNumber = seatNumber;
-	}
+    public String getPhone() {
+        return phone;
+    }
 
-	public boolean isLogin() {
-		return isLogin;
-	}
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
-	public void setLogin(boolean isLogin) {
-		this.isLogin = isLogin;
-	}
+    public boolean isLicenseAuthStatus() {
+        return licenseAuthStatus;
+    }
 
-	public String getChatUserId() {
-		return MD5Util.string2MD5(userId);
-	}
+    public void setLicenseAuthStatus(boolean licenseAuthStatus) {
+        this.licenseAuthStatus = licenseAuthStatus;
+    }
 
-	public String getPsaaword() {
-		return psaaword;
-	}
+    public boolean isPhotoAuthStatus() {
+        return photoAuthStatus;
+    }
 
-	public void setPsaaword(String psaaword) {
-		this.psaaword = psaaword;
-	}
+    public void setPhotoAuthStatus(boolean photoAuthStatus) {
+        this.photoAuthStatus = photoAuthStatus;
+    }
 
-	public String getChatUserPassword() {
-		return psaaword;
-	}
+    public void setIsLogin(boolean isLogin) {
+        this.isLogin = isLogin;
+    }
 
-	public String getNickName() {
-		return nickName;
-	}
+    public void setIsDisconnect(boolean isDisconnect) {
+        this.isDisconnect = isDisconnect;
+    }
 
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
-	}
 
-	public String getHeadUrl() {
-		return headUrl;
-	}
+    public String getEmName() {
+        return emName;
+    }
 
-	public void setHeadUrl(String headUrl) {
-		this.headUrl = headUrl;
-	}
+    public void setEmName(String emName) {
+        this.emName = emName;
+    }
 
-	public boolean isDisconnect() {
-		return isDisconnect;
-	}
-
-	public void setDisconnect(boolean isDisconnect) {
-		this.isDisconnect = isDisconnect;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
 }

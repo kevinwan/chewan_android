@@ -10,7 +10,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.easemob.EMCallBack;
 import com.easemob.chat.EMChatManager;
@@ -278,8 +277,8 @@ public class LoginActivity extends CarPlayBaseActivity implements OnClickListene
                     user.setBrandLogo(JSONUtil.getString(jo, "brandLogo"));
                     user.setModel(JSONUtil.getString(jo, "model"));
                     user.setPsaaword(currentPassword);
-                    user.setSeatNumber(JSONUtil.getInt(jo, "seatNumber"));
-                    user.setIsAuthenticated(JSONUtil.getInt(jo, "isAuthenticated"));
+//                    user.setSeatNumber(JSONUtil.getInt(jo, "seatNumber"));
+//                    user.setIsAuthenticated(JSONUtil.getInt(jo, "isAuthenticated"));
                     user.setNickName(JSONUtil.getString(jo, "nickname"));
                     user.setHeadUrl(JSONUtil.getString(jo, "photo"));
                     CarPlayPerference per = IocContainer.getShare().get(CarPlayPerference.class);
@@ -307,7 +306,7 @@ public class LoginActivity extends CarPlayBaseActivity implements OnClickListene
                     runOnUiThread(new Runnable() {
                         public void run() {
                             DemoHXSDKHelper.getInstance().logout(true, null);
-                            Toast.makeText(getApplicationContext(), R.string.login_failure_failed, 1).show();
+//                            Toast.makeText(getApplicationContext(), R.string.login_failure_failed, 1).show();
                         }
                     });
                     return;
@@ -521,7 +520,7 @@ public class LoginActivity extends CarPlayBaseActivity implements OnClickListene
                                         user.setBrand(json.getString("brand"));
                                         user.setBrandLogo(json.getString("brandLogo"));
                                         user.setNickName(json.getString("nickname"));
-                                        user.setSeatNumber(json.getInt("seatNumber"));
+//                                        user.setSeatNumber(json.getInt("seatNumber"));
                                         user.setModel(json.getString("model"));
                                         User.getInstance().setLogin(true);
 //                                        LoginEB loginEB = new LoginEB();
@@ -597,8 +596,8 @@ public class LoginActivity extends CarPlayBaseActivity implements OnClickListene
                     user.setBrand(JSONUtil.getString(jo, "brand"));
                     user.setBrandLogo(JSONUtil.getString(jo, "brandLogo"));
                     user.setModel(JSONUtil.getString(jo, "model"));
-                    user.setSeatNumber(JSONUtil.getInt(jo, "seatNumber"));
-                    user.setIsAuthenticated(JSONUtil.getInt(jo, "isAuthenticated"));
+//                    user.setSeatNumber(JSONUtil.getInt(jo, "seatNumber"));
+//                    user.setIsAuthenticated(JSONUtil.getInt(jo, "isAuthenticated"));
                     user.setNickName(JSONUtil.getString(jo, "nickname"));
                     user.setHeadUrl(JSONUtil.getString(jo, "photo"));
                     User.getInstance().setLogin(true);
@@ -612,7 +611,7 @@ public class LoginActivity extends CarPlayBaseActivity implements OnClickListene
                     runOnUiThread(new Runnable() {
                         public void run() {
                             DemoHXSDKHelper.getInstance().logout(true, null);
-                            Toast.makeText(getApplicationContext(), R.string.login_failure_failed, 1).show();
+//                            Toast.makeText(getApplicationContext(), R.string.login_failure_failed, 1).show();
                         }
                     });
                     return;

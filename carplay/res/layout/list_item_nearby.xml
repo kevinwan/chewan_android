@@ -19,7 +19,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -51,13 +50,13 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
                 android:gravity="right">
 
-                <ImageView
+                <com.gongpingjia.carplay.view.AttentionImageView
                     android:id="@+id/attention"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
+                    android:layout_marginRight="12dp"
                     android:gravity="right"
                     android:src="@drawable/icon_heart" />
             </LinearLayout>
@@ -125,6 +124,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="12dp"
                 android:layout_marginTop="16dp"
+                android:animateLayoutChanges="true"
                 android:orientation="vertical">
 
                 <Button

@@ -807,32 +807,28 @@ public class ActiveDetailsActivity extends CarPlayBaseActivity implements
                 // TODO Auto-generated method stub
                 if (response.isSuccess()) {
                     JSONObject json = response.jSONFrom("data");
-                    try {
-                        User user = User.getInstance();
-                        user.setIsAuthenticated(json.getInt("isAuthenticated"));
+                    User user = User.getInstance();
+//                        user.setIsAuthenticated(json.getInt("isAuthenticated"));
 
-                        if (user.getIsAuthenticated() == 1) {
-                            hidenProgressDialog();
-                            CarSeatSelectDialog dialog = new CarSeatSelectDialog(
-                                    self, activityId);
-                            dialog.setOnSelectResultListener(new OnSelectResultListener() {
-
-                                @Override
-                                public void click(int seatCount) {
-                                    showProgressDialog("申请加入中...");
-                                    joinActive(seatCount);
-                                }
-                            });
-
-                            dialog.show();
-                        } else {
-                            joinActive(0);
-
-                        }
-                        // 认证车主
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+//                        if (user.getIsAuthenticated() == 1) {
+//                            hidenProgressDialog();
+//                            CarSeatSelectDialog dialog = new CarSeatSelectDialog(
+//                                    self, activityId);
+//                            dialog.setOnSelectResultListener(new OnSelectResultListener() {
+//
+//                                @Override
+//                                public void click(int seatCount) {
+//                                    showProgressDialog("申请加入中...");
+//                                    joinActive(seatCount);
+//                                }
+//                            });
+//
+//                            dialog.show();
+//                        } else {
+//                            joinActive(0);
+//
+//                        }
+                    // 认证车主
                 }
             }
         });

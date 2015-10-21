@@ -39,7 +39,6 @@ import com.easemob.chat.EMGroupManager;
 import com.easemob.chat.EMMessage;
 import com.easemob.exceptions.EaseMobException;
 import com.gongpingjia.carplay.R;
-import com.gongpingjia.carplay.activity.active.MateFragment;
 import com.gongpingjia.carplay.activity.active.NearListFragment;
 import com.gongpingjia.carplay.activity.active.RecommendListFragment;
 import com.gongpingjia.carplay.activity.dynamic.DynamicListFragment;
@@ -57,6 +56,7 @@ import com.gongpingjia.carplay.chat.controller.HXSDKHelper;
 import com.gongpingjia.carplay.service.MsgService;
 import com.gongpingjia.carplay.util.CarPlayPerference;
 import com.gongpingjia.carplay.view.dialog.NearbyFilterDialog;
+import com.gongpingjia.carplay.view.pop.MatePop;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import net.duohuo.dhroid.activity.ActivityTack;
@@ -69,7 +69,6 @@ import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.net.upload.FileInfo;
 import net.duohuo.dhroid.util.PhotoUtil;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -184,7 +183,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
                 dialog.setOnNearbyFilterResultListener(new NearbyFilterDialog.OnNearbyFilterResultListener() {
                     @Override
                     public void onResult(String type, String pay, String gender, boolean transfer) {
-                        pre=IocContainer.getShare().get(FilterPreference2.class);
+                        pre = IocContainer.getShare().get(FilterPreference2.class);
                         pre.setType(type);
                         pre.setPay(pay);
                         pre.setGender(gender);
@@ -286,8 +285,8 @@ public class MainActivity2 extends BaseFragmentActivity implements
                         switchContent(RecommendListFragment.getInstance());
                         break;
                     case 2:
-                        setTitle("匹配意向");
-                        switchContent(MateFragment.getInstance());
+                        MatePop.getInstance(self).show();
+//                        switchContent(MateFragment.getInstance());
                         break;
                     case 3:
                         setTitle("动态");
@@ -360,26 +359,26 @@ public class MainActivity2 extends BaseFragmentActivity implements
     private void isAuthen() {
         User user = User.getInstance();
         if (user.isLogin()) {
-            DhNet mDhNet = new DhNet(API.availableSeat + user.getUserId()
-                    + "/seats?token=" + user.getToken());
-            mDhNet.doGet(new NetTask(self) {
-
-                @Override
-                public void doInUI(Response response, Integer transfer) {
-                    // TODO Auto-generated method stub
-                    if (response.isSuccess()) {
-                        JSONObject json = response.jSONFrom("data");
-                        try {
-                            User user = User.getInstance();
-                            user.setIsAuthenticated(json
-                                    .getInt("isAuthenticated"));
-                            // 认证车主
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            });
+//            DhNet mDhNet = new DhNet(API.availableSeat + user.getUserId()
+//                    + "/seats?token=" + user.getToken());
+//            mDhNet.doGet(new NetTask(self) {
+//
+//                @Override
+//                public void doInUI(Response response, Integer transfer) {
+//                    // TODO Auto-generated method stub
+//                    if (response.isSuccess()) {
+//                        JSONObject json = response.jSONFrom("data");
+////                        try {
+////                            User user = User.getInstance();
+////                            user.setIsAuthenticated(json
+////                                    .getInt("isAuthenticated"));
+////                            // 认证车主
+////                        } catch (JSONException e) {
+////                            e.printStackTrace();
+////                        }
+//                    }
+//                }
+//            });
         }
     }
 
