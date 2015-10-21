@@ -19,6 +19,7 @@ import com.gongpingjia.carplay.activity.CarPlayBaseFragment;
 import com.gongpingjia.carplay.activity.main.MainActivity2;
 import com.gongpingjia.carplay.activity.my.AttentionMeActivity;
 import com.gongpingjia.carplay.activity.my.DynamicActivity;
+import com.gongpingjia.carplay.activity.my.InterestedPersonActivity;
 import com.gongpingjia.carplay.activity.my.OfficialMessageActivity;
 import com.gongpingjia.carplay.adapter.FragmentMsgAdapter;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -214,7 +215,8 @@ public class DynamicListFragment extends CarPlayBaseFragment implements PullToRe
                 startActivity(it);
                 break;
             case R.id.interested_people:
-
+                it = new Intent(getActivity(), InterestedPersonActivity.class);
+                startActivity(it);
                 break;
             case R.id.official:
                 it = new Intent(getActivity(), OfficialMessageActivity.class);

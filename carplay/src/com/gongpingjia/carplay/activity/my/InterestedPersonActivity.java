@@ -48,7 +48,7 @@ public class InterestedPersonActivity extends CarPlayListActivity implements Pul
         mRecyclerView.setAdapter(adapter);
         setOnLoadSuccess(this);
         fromWhat("data");
-        setUrl(API2.CWBaseurl + "user/" + user.getUserId() + "/authentication/history?token=" + user.getToken());
+        setUrl(API2.CWBaseurl + "user/" + user.getUserId() + "/interest/list?token=" + user.getToken());
         showNext();
 
     }

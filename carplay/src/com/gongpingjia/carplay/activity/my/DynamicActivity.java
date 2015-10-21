@@ -49,12 +49,10 @@ public class DynamicActivity extends CarPlayListActivity implements PullToRefres
     @Override
     public void initView() {
         setTitle("活动动态");
-        String [] str = {"邀请中","应邀"};
-        JSONArray jsonarray = new JSONArray();
-//        JSONObject SO1=new JSONObject();
-//        SO1.
-        jsonarray.put("邀请中");
-        jsonarray.put("应邀");
+//        String [] str = {"邀请中","应邀"};
+//        JSONArray jsonarray = new JSONArray();
+//        jsonarray.put("邀请中");
+//        jsonarray.put("应邀");
 
         listV = (PullToRefreshListView) findViewById(R.id.listview);
         listV.setMode(PullToRefreshBase.Mode.BOTH);

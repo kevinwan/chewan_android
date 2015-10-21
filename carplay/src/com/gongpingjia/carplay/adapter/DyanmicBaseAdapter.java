@@ -144,6 +144,11 @@ public class DyanmicBaseAdapter extends BaseAdapter {
 
         String licenseAuthStatus = JSONUtil.getString(js, "licenseAuthStatus");
         String photoAuthStatus = JSONUtil.getString(js, "photoAuthStatus");
+        if (photoAuthStatus.equals("认证通过")) {
+            holder.certification_achievement.setImageResource(R.drawable.headaut_dl);
+        }else if(photoAuthStatus.equals("未认证")){
+            holder.certification_achievement.setImageResource(R.drawable.headaut_no);
+        }
         String typeT = JSONUtil.getString(jo, "type");
         String name = JSONUtil.getString(js, "nickname");
         String gender = JSONUtil.getString(js, "gender");
@@ -151,9 +156,9 @@ public class DyanmicBaseAdapter extends BaseAdapter {
         String jied = JSONUtil.getString(json, "street");
         holder.activity_place.setText(jied);
 
-        double distance = JSONUtil.getDouble(js, "distance");
-        DecimalFormat df = new DecimalFormat("0.00");
-        holder.activity_distance.setText(df.format(distance));
+        int distance = (int)Math.floor(JSONUtil.getDouble(js, "distance"));
+//        DecimalFormat df = new DecimalFormat("0.00");
+        holder.activity_distance.setText(CarPlayUtil.numberWithDelimiter(distance));
         if (("男").equals(gender)) {
             holder.sexbgR.setBackgroundResource(R.drawable.radio_sex_man_normal);
             holder.sexI.setBackgroundResource(R.drawable.icon_man3x);
@@ -161,11 +166,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
             holder.sexbgR.setBackgroundResource(R.drawable.radion_sex_woman_normal);
             holder.sexI.setBackgroundResource(R.drawable.icon_woman3x);
         }
-        if (photoAuthStatus.equals("认证通过")) {
-            holder.certification_achievement.setVisibility(View.VISIBLE);
-        } else {
-            holder.certification_achievement.setVisibility(View.GONE);
-        }
+
         if (licenseAuthStatus.equals("认证通过")) {
             ViewUtil.bindNetImage(holder.dynamic_carlogo, JSONUtil.getString(ob, "logo"), "default");
             holder.dynamic_carname.setText(JSONUtil.getString(ob, "model"));

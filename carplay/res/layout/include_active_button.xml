@@ -58,8 +58,8 @@
             android:layout_height="80dp"
             android:layout_marginLeft="30dp"
             android:layout_marginBottom="10dp"
-            my:bg="@drawable/red_circle"
-            my:src="@drawable/red_circle">
+            my:bg="@drawable/dynamic_grey"
+            my:src="@drawable/dynamic_grey">
 
             <TextView
                 style="@style/text_white_medium"
