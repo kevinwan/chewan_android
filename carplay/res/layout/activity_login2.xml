@@ -30,6 +30,7 @@
             android:drawableLeft="@drawable/ic_phone"
             android:drawablePadding="5dp"
             android:inputType="phone"
+            android:text="15205152201"
             android:textColor="@color/text_red" />
 
         <View
@@ -48,6 +49,7 @@
                 android:background="@color/nothing"
                 android:drawableLeft="@drawable/ic_lock"
                 android:drawablePadding="5dp"
+                android:text="111111"
                 android:inputType="textPassword"
                 android:textColor="@color/text_red" />
 
