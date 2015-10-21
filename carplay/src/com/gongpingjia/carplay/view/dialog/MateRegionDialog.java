@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -39,6 +40,7 @@ public class MateRegionDialog extends BaseAlertDialog implements View.OnClickLis
     TextView mTextGpsPlace;
     TextView mTextSelectPlace;
     TextView mTextTip;
+    ImageView mImgClose;
 
     public MateRegionDialog(Context context) {
         super(context);
@@ -64,10 +66,12 @@ public class MateRegionDialog extends BaseAlertDialog implements View.OnClickLis
         mTextTip = (TextView) findViewById(R.id.tv_tip);
         mTextSelectPlace = (TextView) findViewById(R.id.tv_select_place);
         mTextGpsPlace = (TextView) findViewById(R.id.tv_gps_place);
+        mImgClose = (ImageView) findViewById(R.id.iv_dlg_close);
 
         mTextGpsPlace.setText(UserLocation.getInstance().getProvice() + " " + UserLocation.getInstance().getCity() + " " + UserLocation.getInstance().getDistrict());
         mBtnReselect.setOnClickListener(this);
         mBtnReselect.setOnClickListener(this);
+        mImgClose.setOnClickListener(this);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -80,7 +84,9 @@ public class MateRegionDialog extends BaseAlertDialog implements View.OnClickLis
                         getDatum(String.valueOf(item));
                     } else {
                         //返回结果
-                        mateRegionResultListener.onResult(mTextSelectPlace.getText().toString());
+                        if (mateRegionResultListener != null)
+                            mateRegionResultListener.onResult(mTextSelectPlace.getText().toString());
+                        dismiss();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -104,6 +110,10 @@ public class MateRegionDialog extends BaseAlertDialog implements View.OnClickLis
 
                 //第一次获取省份信息
                 getDatum(String.valueOf(0));
+                break;
+
+            case R.id.iv_dlg_close:
+                dismiss();
                 break;
         }
     }
