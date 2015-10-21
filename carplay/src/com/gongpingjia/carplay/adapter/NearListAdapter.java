@@ -110,7 +110,7 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
         //用户信息,所在地,car信息,头像信息
         JSONObject userjo = JSONUtil.getJSONObject(jo, "organizer");
         JSONObject distancejo = JSONUtil.getJSONObject(jo, "destination");
-        JSONObject carjo = JSONUtil.getJSONObject(jo, "car");
+        JSONObject carjo = JSONUtil.getJSONObject(userjo, "car");
         JSONArray albumjsa = JSONUtil.getJSONArray(userjo,"album");
         //昵称,活动类型,年龄,性别,头像
         String activetype = JSONUtil.getString(jo, "type");
