@@ -7,7 +7,7 @@ import android.widget.TextView;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.bean.Matching;
-import com.gongpingjia.carplay.view.dialog.MatchingDialog;
+import com.gongpingjia.carplay.view.dialog.MateRegionDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +30,11 @@ public class TestActivity extends CarPlayBaseActivity {
         nickName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MatchingDialog dialog = new MatchingDialog(self,datum);
-                dialog.show();
+//                MatchingDialog dialog = new MatchingDialog(self,datum);
+//                dialog.show();
+
+                MateRegionDialog dlg = new MateRegionDialog(self);
+                dlg.show();
             }
         });
     }

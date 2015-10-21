@@ -16,6 +16,7 @@ import com.gongpingjia.carplay.view.BaseAlertDialog;
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
+import net.duohuo.dhroid.util.UserLocation;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,6 +38,7 @@ public class MateRegionDialog extends BaseAlertDialog implements View.OnClickLis
     ListView mListView;
     TextView mTextGpsPlace;
     TextView mTextSelectPlace;
+    TextView mTextTip;
 
     public MateRegionDialog(Context context) {
         super(context);
@@ -59,8 +61,11 @@ public class MateRegionDialog extends BaseAlertDialog implements View.OnClickLis
         mLayoutPlace = findViewById(R.id.layout_place);
         mLayoutBtns = findViewById(R.id.layout_btns);
 
+        mTextTip = (TextView) findViewById(R.id.tv_tip);
         mTextSelectPlace = (TextView) findViewById(R.id.tv_select_place);
         mTextGpsPlace = (TextView) findViewById(R.id.tv_gps_place);
+
+        mTextGpsPlace.setText(UserLocation.getInstance().getProvice() + " " + UserLocation.getInstance().getCity() + " " + UserLocation.getInstance().getDistrict());
         mBtnReselect.setOnClickListener(this);
         mBtnReselect.setOnClickListener(this);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -69,8 +74,14 @@ public class MateRegionDialog extends BaseAlertDialog implements View.OnClickLis
                 JSONObject object = (JSONObject) mListView.getAdapter().getItem(position);
                 try {
                     int item = object.getInt("code");
-                    mTextSelectPlace.setText(mTextSelectPlace.getText() + object.getString("name"));
-                    getDatum(String.valueOf(item));
+                    mTextSelectPlace.setText(mTextSelectPlace.getText() + " " + object.getString("name"));
+                    if (object.getInt("level") != 4) {
+                        //不是最底层的城市
+                        getDatum(String.valueOf(item));
+                    } else {
+                        //返回结果
+                        mateRegionResultListener.onResult(mTextSelectPlace.getText().toString());
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -82,18 +93,26 @@ public class MateRegionDialog extends BaseAlertDialog implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_dlg_confirm:
-
+                mateRegionResultListener.onResult(mTextGpsPlace.getText().toString());
                 break;
             case R.id.btn_dlg_reselect:
                 mLayoutPlace.setVisibility(View.GONE);
                 mLayoutBtns.setVisibility(View.GONE);
                 mListView.setVisibility(View.VISIBLE);
+                mTextSelectPlace.setVisibility(View.VISIBLE);
+                mTextTip.setText("请选择地点");
+
                 //第一次获取省份信息
                 getDatum(String.valueOf(0));
                 break;
         }
     }
 
+    /**
+     * 获取地域信息
+     *
+     * @param id 地域id
+     */
     private void getDatum(String id) {
         DhNet dhNet = new DhNet(API2.getPlaces(id));
         dhNet.doGet(new NetTask(mContext) {
@@ -109,7 +128,7 @@ public class MateRegionDialog extends BaseAlertDialog implements View.OnClickLis
     }
 
     public interface OnMateRegionResultListener {
-        void onResult(String province, String city, String district);
+        void onResult(String place);
     }
 
     public OnMateRegionResultListener getOnMateRegionResultListener() {
