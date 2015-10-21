@@ -12,5 +12,12 @@
     <dimen name="text_small">11sp</dimen>
     <dimen name="text_smaller">9sp</dimen>
     <dimen name="text_hot_small">13sp</dimen>
-	<dimen name="text_time_small">11sp</dimen>
+    <dimen name="text_time_small">11sp</dimen>
+
+    <dimen name="lookaround_head_small">46dp</dimen>
+    <dimen name="lookaround_head_medium">53dp</dimen>
+
+    <dimen name="lookaround_head_big">60dp</dimen>
+    <dimen name="lookaround_marginleft">40dp</dimen>
+    <dimen name="lookaround_marginright">36dp</dimen>
 </resources>

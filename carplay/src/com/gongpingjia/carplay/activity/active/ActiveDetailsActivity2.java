@@ -231,7 +231,7 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
         switch (v.getId()){
             //报名参加
             case R.id.join:
-                Intent it = new Intent(self,MateActivity.class);
+                Intent it = new Intent(self,MateFragment.class);
                 startActivity(it);
                 break;
             //活动描述

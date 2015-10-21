@@ -12,6 +12,7 @@ import com.gongpingjia.carplay.adapter.NearListAdapter;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.FilterPreference2;
 import com.gongpingjia.carplay.bean.User;
+import com.gongpingjia.carplay.view.AnimButtonView;
 import com.gongpingjia.carplay.view.PullToRefreshRecyclerViewVertical;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
@@ -60,12 +61,20 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
     private void initView() {
 
         user = User.getInstance();
-        pre= IocContainer.getShare().get(FilterPreference2.class);
+        pre = IocContainer.getShare().get(FilterPreference2.class);
         pre.load();
 
         listV = (PullToRefreshRecyclerViewVertical) mainV.findViewById(R.id.list);
         listV.setMode(PullToRefreshBase.Mode.BOTH);
         listV.setOnRefreshListener(this);
+        listV.setOnPageChange(new PullToRefreshRecyclerViewVertical.OnPageChange() {
+            @Override
+            public void change(View currentview) {
+                AnimButtonView animButtonView = (AnimButtonView) currentview.findViewById(R.id.invite);
+                animButtonView.clearAnimation();
+                animButtonView.startScaleAnimation();
+            }
+        });
         mRecyclerView = listV.getRefreshableView();
         adapter = new NearListAdapter(getActivity());
         mRecyclerView.setAdapter(adapter);
@@ -73,7 +82,7 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
         fromWhat("data");
         setUrl(API2.CWBaseurl + "activity/list?");
 //        setUrl("http://cwapi.gongpingjia.com:8080/v2/activity/list?latitude=32&longitude=118&maxDistance=5000000&token="+user.getToken()+"&userId="+user.getUserId());
-                addParams("latitude", "32");
+        addParams("latitude", "32");
         addParams("longitude", "118");
         addParams("maxDistance", "5000000");
         addParams("type", pre.getType());
@@ -107,7 +116,7 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
     }
 
     public void onEventMainThread(FilterPreference2 pre) {
-        pre= IocContainer.getShare().get(FilterPreference2.class);
+        pre = IocContainer.getShare().get(FilterPreference2.class);
         pre.load();
         addParams("type", pre.getType());
         addParams("pay", pre.getPay());

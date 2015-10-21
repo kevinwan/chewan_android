@@ -14,5 +14,11 @@
     <dimen name="text_hot_small">12sp</dimen>
     <dimen name="text_smaller">8sp</dimen>
     <dimen name="text_time_small">10sp</dimen>
+    <dimen name="lookaround_head_small">44dp</dimen>
+    <dimen name="lookaround_head_medium">51dp</dimen>
+
+    <dimen name="lookaround_head_big">58dp</dimen>
+    <dimen name="lookaround_marginleft">40dp</dimen>
+    <dimen name="lookaround_marginright">36dp</dimen>
 
 </resources>

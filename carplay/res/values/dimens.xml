@@ -24,11 +24,15 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="image_thumbnail_size">100dp</dimen>
     <dimen name="image_thumbnail_spacing">1dp</dimen>
-     <dimen name="text_hot_small">15sp</dimen>
-     <dimen name="text_time_small">14sp</dimen>
-     
-     
-      <!-- Album相关 -->
+    <dimen name="text_hot_small">15sp</dimen>
+    <dimen name="text_time_small">14sp</dimen>
+    <dimen name="lookaround_head_small">51dp</dimen>
+    <dimen name="lookaround_head_medium">58dp</dimen>
+
+    <dimen name="lookaround_head_big">65dp</dimen>
+
+
+    <!-- Album相关 -->
     <dimen name="albumitem_height">100dp</dimen>
     <dimen name="albumitem_content_height">80dp</dimen>
     <dimen name="albumitem_image_height">20dp</dimen>
@@ -40,14 +44,12 @@
     <dimen name="layout_title_heigh">45dp</dimen>
     <dimen name="layout_title_content_heigh">30dp</dimen>
     <dimen name="layout_title_mini_textsize">16sp</dimen>
-    
+
     <!-- 图片选择界面Item相关 -->
     <dimen name="sticky_item_horizontalSpacing">2dp</dimen>
     <dimen name="sticky_item_verticalSpacing">2dp</dimen>
     <dimen name="collection_photo_toolbar_height">45dp</dimen>
 
-
-
-
-
+    <dimen name="lookaround_marginleft">46dp</dimen>
+    <dimen name="lookaround_marginright">42dp</dimen>
 </resources>

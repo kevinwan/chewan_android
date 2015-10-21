@@ -61,6 +61,7 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
 
         public SimpleViewHolder(View view) {
             super(view);
+            Log.d("msg", "SimpleViewHolder");
             nickname = (TextView) view.findViewById(R.id.tv_nickname);
             headatt = (ImageView) view.findViewById(R.id.head_att);
             car_logo = (ImageView) view.findViewById(R.id.iv_car_logo);
@@ -97,12 +98,14 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
     @Override
     public SimpleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(mContext).inflate(R.layout.list_item_nearby, parent, false);
+
+        Log.d("msg", "onCreateViewHolder");
         return new SimpleViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(SimpleViewHolder holder, int position) {
-
+        Log.d("msg", "onBindViewHolder");
 
 //        holder.title.setText(mItems.get(position).toString());
         final JSONObject jo = getItem(position);
@@ -135,10 +138,10 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
         boolean transfer = JSONUtil.getBoolean(jo, "transfer");
         String pay = JSONUtil.getString(jo, "pay");
         holder.pay.setText(pay);
-        if (transfer){
+        if (transfer) {
             holder.transfer.setVisibility(View.VISIBLE);
             holder.transfer.setText("包接送");
-        }else {
+        } else {
             holder.transfer.setVisibility(View.GONE);
             holder.transfer.setText("不包接送");
         }
@@ -149,18 +152,18 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
         holder.location.setText(JSONUtil.getString(distancejo, "province")+JSONUtil.getString(distancejo, "city")+JSONUtil.getString(distancejo, "district")+JSONUtil.getString(distancejo, "street"));
 
         //car logo ,car name
-        if (carjo==null){
+        if (carjo == null) {
             holder.car_logo.setVisibility(View.GONE);
             holder.car_name.setVisibility(View.GONE);
-        }else{
+        } else {
             holder.car_logo.setVisibility(View.VISIBLE);
             holder.car_name.setVisibility(View.VISIBLE);
             ViewUtil.bindNetImage(holder.car_logo, JSONUtil.getString(carjo, "logo"), "head");
-            ViewUtil.bindView(holder.car_name,JSONUtil.getString(carjo,"model"));
+            ViewUtil.bindView(holder.car_name, JSONUtil.getString(carjo, "model"));
         }
 
         //相册为空模糊效果
-        if (albumjsa==null){
+        if (albumjsa == null) {
 
         }
 
@@ -171,8 +174,6 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
                 Toast.makeText(mContext, "", Toast.LENGTH_SHORT).show();
             }
         });
-        Log.d("msg", position + "   getView()");
-//        holder.invite.clearAnimation();
 
 
 //        holder.invite.startScaleAnimation();
@@ -219,13 +220,17 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
     }
 
     @Override
-    public void onViewAttachedToWindow(NearListAdapter.SimpleViewHolder holder) {
+    public void onViewAttachedToWindow(SimpleViewHolder holder) {
+        Log.d("msg", "执行了啊");
+        super.onViewAttachedToWindow(holder);
         RotateAnimation rotateAnimation = new RotateAnimation(0f, 360f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         rotateAnimation.setDuration(1000);
         rotateAnimation.setRepeatCount(-1);
         rotateAnimation.setInterpolator(new LinearInterpolator());
         holder.invite.setAnimation(rotateAnimation);
         rotateAnimation.start();
+
+
     }
 
     @Override

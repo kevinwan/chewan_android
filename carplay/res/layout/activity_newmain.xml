@@ -134,7 +134,38 @@
                     android:layout_height="fill_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="vertical"></LinearLayout>
+                    android:orientation="vertical">
+
+
+                    <RelativeLayout
+                        android:id="@+id/img_layout"
+                        android:layout_width="33dp"
+                        android:layout_height="33dp">
+
+                        <ImageView
+                            android:id="@+id/img"
+                            android:layout_width="33dp"
+                            android:layout_height="33dp"
+                            android:layout_centerHorizontal="true" />
+
+                        <ImageView
+                            android:id="@+id/msg_point"
+                            android:layout_width="8dp"
+                            android:layout_height="8dp"
+                            android:layout_alignParentRight="true"
+                            android:src="@drawable/red_point"
+                            android:visibility="gone" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_grey"
+                        android:textSize="12sp" />
+
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/layout"

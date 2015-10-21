@@ -200,6 +200,12 @@
         <item name="android:windowExitAnimation">@anim/menu_out</item>
     </style>
 
+
+    <style name="PopupLookAround" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/zoom_in</item>
+        <item name="android:windowExitAnimation">@anim/zoom_out</item>
+    </style>
+
     <style name="chat_text_date_style">
         <item name="android:paddingTop">2dip</item>
         <item name="android:paddingBottom">2dip</item>
@@ -259,7 +265,7 @@
     </style>
 
     <declare-styleable name="refreshableView">
-        <attr name="interceptAllMoveEvents" format="boolean"/>
+        <attr name="interceptAllMoveEvents" format="boolean" />
     </declare-styleable>
 
 

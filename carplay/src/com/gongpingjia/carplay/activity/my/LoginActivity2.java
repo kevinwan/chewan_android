@@ -2,7 +2,6 @@ package com.gongpingjia.carplay.activity.my;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
@@ -151,16 +150,16 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
 
     //手机号码登陆
     private void login() {
-        final String num = mEditNum.getText().toString().trim();
-        String password = mEditPassword.getText().toString().trim();
-        if (TextUtils.isEmpty(num) || TextUtils.isEmpty(password)) {
-            showToast("手机号或密码不能为空");
-            return;
-        }
+//        String num = mEditNum.getText().toString().trim();
+//        String password = mEditPassword.getText().toString().trim();
+//        if (TextUtils.isEmpty(num) || TextUtils.isEmpty(password)) {
+//            showToast("手机号或密码不能为空");
+//            return;
+//        }
 
         DhNet dhNet = new DhNet(API2.login);
-        dhNet.addParam("phone", num);
-        dhNet.addParam("password", MD5Util.string2MD5(password));
+        dhNet.addParam("phone", "18000000000");
+        dhNet.addParam("password", MD5Util.string2MD5("123456"));
         dhNet.doPostInDialog("登陆中...", new NetTask(self) {
             @Override
             public void doInUI(Response response, Integer transfer) {
@@ -168,7 +167,6 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
                     showToast("登陆成功");
                     JSONObject json = response.jSONFrom("data");
                     User user = User.getInstance();
-                    user.setPhone(mEditNum.getText().toString().trim());
                     try {
                         user.setUserId(json.getString("userId"));
                         user.setToken(json.getString("token"));
