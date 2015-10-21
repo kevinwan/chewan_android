@@ -1,9 +1,7 @@
 package com.gongpingjia.carplay.activity.my;
 
 import android.content.Intent;
-import android.content.SyncStatusObserver;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
@@ -212,8 +210,6 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    Intent it = new Intent(self, MainActivity2.class);
-                    startActivity(it);
                 } else {
                     hidenProgressDialog();
                 }
