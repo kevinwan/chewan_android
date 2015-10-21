@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_title_bar" />
+
+    <LinearLayout
+        android:id="@+id/name_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp">
+
+        <TextView
+            style="@style/text_grey_medium"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text=" 新昵称" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center_vertical|right"
+            android:orientation="horizontal">
+
+            <!--<EditText-->
+            <!--android:id="@+id/nickname"-->
+            <!--style="@style/text_blacklight_medium"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="60dp"-->
+            <!--android:background="@color/nothing"-->
+            <!--android:gravity="center_vertical|right"-->
+            <!--android:hint="请输入昵称"-->
+            <!--android:singleLine="true" />-->
+            <EditText
+                android:id="@+id/Newnickname"
+                style="@style/text_blacklight_medium"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/nothing"
+                android:gravity="center_vertical|right"
+                android:hint="请输入昵称"
+                android:singleLine="true" />
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="22dp"
+                android:src="@drawable/right_btn" />
+        </LinearLayout>
+
+    </LinearLayout>
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="#e6e9ed" />
+</LinearLayout>

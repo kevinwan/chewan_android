@@ -353,6 +353,11 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"></activity>
         <activity android:name=".activity.my.OfficialMessageActivity"></activity>
+        <activity android:name=".activity.my.ModifyName"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait">
+
+        </activity>
     </application>
 
 </manifest>

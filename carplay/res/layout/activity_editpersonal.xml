@@ -71,7 +71,16 @@
                 android:gravity="center_vertical|right"
                 android:orientation="horizontal">
 
-                <EditText
+                <!--<EditText-->
+                    <!--android:id="@+id/nickname"-->
+                    <!--style="@style/text_blacklight_medium"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="60dp"-->
+                    <!--android:background="@color/nothing"-->
+                    <!--android:gravity="center_vertical|right"-->
+                    <!--android:hint="请输入昵称"-->
+                    <!--android:singleLine="true" />-->
+                <TextView
                     android:id="@+id/nickname"
                     style="@style/text_blacklight_medium"
                     android:layout_width="match_parent"
@@ -157,11 +166,11 @@
                     android:gravity="center_vertical|right"
                     android:singleLine="true" />
 
-                <ImageView
-                    android:layout_width="18dp"
-                    android:layout_height="22dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/right_btn" />
+                <!--<ImageView-->
+                    <!--android:layout_width="18dp"-->
+                    <!--android:layout_height="22dp"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:src="@drawable/right_btn" />-->
             </LinearLayout>
 
 
