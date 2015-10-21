@@ -107,6 +107,7 @@
             android:paddingTop="18dp">
 
             <ImageView
+                android:id="@+id/addphoto"
                 android:layout_width="77dp"
                 android:layout_height="77dp"
                 android:src="@drawable/my_camera" />
