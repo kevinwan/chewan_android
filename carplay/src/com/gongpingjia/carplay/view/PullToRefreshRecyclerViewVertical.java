@@ -21,7 +21,7 @@ public class PullToRefreshRecyclerViewVertical extends PullToRefreshBase<Recycle
         this.onPageChange = onPageChange;
     }
 
-    OnPageChange  onPageChange;
+    OnPageChange onPageChange;
 
 
     public PullToRefreshRecyclerViewVertical(Context context) {
@@ -90,7 +90,7 @@ public class PullToRefreshRecyclerViewVertical extends PullToRefreshBase<Recycle
                 for (int j = 0; j < childCount; j++) {
                     View v = recyclerView.getChildAt(j);
 
-                    if(onPageChange!=null) {
+                    if (onPageChange != null) {
                         onPageChange.change(v);
                     }
                     //往左 从 padding 到 -(v.getWidth()-padding) 的过程中，由大到小
@@ -130,6 +130,9 @@ public class PullToRefreshRecyclerViewVertical extends PullToRefreshBase<Recycle
                             View v1 = recyclerView.getChildAt(1);
                             v1.setScaleY(0.9f);
                             v1.setScaleX(0.9f);
+                            if (onPageChange != null) {
+                                onPageChange.change(v);
+                            }
                         }
                     }
                 } else {

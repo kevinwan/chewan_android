@@ -41,6 +41,9 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
 
     View mainV;
 
+
+    View  currentview;
+
     public static NearListFragment getInstance() {
         if (instance == null) {
             instance = new NearListFragment();
@@ -70,6 +73,7 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
         listV.setOnPageChange(new PullToRefreshRecyclerViewVertical.OnPageChange() {
             @Override
             public void change(View currentview) {
+                NearListFragment.this.currentview = currentview;
                 AnimButtonView animButtonView = (AnimButtonView) currentview.findViewById(R.id.invite);
                 animButtonView.clearAnimation();
                 animButtonView.startScaleAnimation();
@@ -100,6 +104,16 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
         adapter.setData(mVaules);
         listV.onRefreshComplete();
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(currentview!=null) {
+            AnimButtonView animButtonView = (AnimButtonView) currentview.findViewById(R.id.invite);
+            animButtonView.clearAnimation();
+            animButtonView.startScaleAnimation();
+        }
     }
 
 
