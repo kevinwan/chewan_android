@@ -83,8 +83,7 @@ public class BasicInformationActivity2 extends CarPlayBaseActivity implements Vi
         mEditNickname = (EditText) findViewById(R.id.et_nickname);
         mTextBirthday = (TextView) findViewById(R.id.tv_birthday);
         mImgAvatar = (ImageView) findViewById(R.id.iv_avatar);
-        Button mBtnFinish = (Button) findViewById(R.id.btn_finish);
-        mBtnFinish.setOnClickListener(this);
+
 
         mImgAvatar.setOnClickListener(this);
         mTextBirthday.setOnClickListener(this);

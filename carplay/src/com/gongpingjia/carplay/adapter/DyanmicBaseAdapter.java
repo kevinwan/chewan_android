@@ -120,7 +120,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
         JSONObject ob = JSONUtil.getJSONObject(js, "car");
         //活动id
         String activityId = JSONUtil.getString(jo, "activityId");
-        String status = JSONUtil.getString(jo, "status");
+        int status = JSONUtil.getInt(jo, "status");
         final String appointmentId = JSONUtil.getString(jo, "appointmentId");
 
 //        View[] views = {holder.dyanmic_one, holder.dyanmic_two, holder.yingyao_layout, holder.yingyaohou};
@@ -133,10 +133,10 @@ public class DyanmicBaseAdapter extends BaseAdapter {
         CarPlayUtil.bindActiveButton2("邀请中", appointmentId, mContext,  holder.yingyao_layout, holder.yingyaohou);
 
 
-        if (status.equals("应邀")) {
+        if (status == 2) {
             holder.yingyao_layout.setVisibility(View.GONE);
             holder.yingyaohou.setVisibility(View.VISIBLE);
-        } else if (status.equals("邀请中")) {
+        } else if (status== 1) {
             holder.yingyao_layout.setVisibility(View.VISIBLE);
             holder.yingyaohou.setVisibility(View.GONE);
         }

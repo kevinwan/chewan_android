@@ -35,7 +35,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
     View mainV;
     static MyFragment2 instance;
     private RoundImageView headI;
-    private ImageView sexI, photo_bgI;
+    private ImageView sexI, photo_bgI,right_icon;
     private TextView attestationT, nameT, ageT, completenessT, txtphotoAuthStatusT, attestation_txtT;
     private Button perfectBtn;
     private RelativeLayout sexbgR;
@@ -67,6 +67,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
         nameT = (TextView) mainV.findViewById(R.id.name);
         sexbgR = (RelativeLayout) mainV.findViewById(R.id.layout_sex_and_age);
         sexI = (ImageView) mainV.findViewById(R.id.iv_sex);
+        right_icon = (ImageView) mainV.findViewById(R.id.right_icon);
         ageT = (TextView) mainV.findViewById(R.id.tv_age);
         completenessT = (TextView) mainV.findViewById(R.id.txt_completeness);
         perfectBtn = (Button) mainV.findViewById(R.id.perfect);
