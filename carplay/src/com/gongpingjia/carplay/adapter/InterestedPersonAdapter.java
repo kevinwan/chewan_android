@@ -97,7 +97,7 @@ public class InterestedPersonAdapter extends BaseAdapter {
         //用户信息,所在地,car信息,头像信息
         JSONObject userjo = JSONUtil.getJSONObject(jo, "organizer");
         JSONObject distancejo = JSONUtil.getJSONObject(jo, "destination");
-        JSONObject carjo = JSONUtil.getJSONObject(jo, "car");
+        JSONObject carjo = JSONUtil.getJSONObject(userjo, "car");
 //        JSONArray albumjsa = JSONUtil.getJSONArray(userjo, "album");
 
         //题头,性别,年龄,头像
@@ -111,16 +111,23 @@ public class InterestedPersonAdapter extends BaseAdapter {
             holder.sexLayoutR.setBackgroundResource(R.drawable.radion_sex_woman_normal);
             holder.sexI.setImageResource(R.drawable.icon_woman3x);
         }
-        ViewUtil.bindNetImage(holder.headbgI,JSONUtil.getString(userjo, "avatar"),"default");
+        ViewUtil.bindNetImage(holder.headbgI, JSONUtil.getString(userjo, "avatar"), "default");
 
         //头像认证状态,车主认证状态
         String photoAuthStatus=JSONUtil.getString(userjo,"photoAuthStatus");
+        holder.headStateI.setImageResource("未认证".equals(photoAuthStatus) ? R.drawable.headaut_dl : R.drawable.headaut_no);
         String licenseAuthStatus=JSONUtil.getString(userjo,"licenseAuthStatus");
 
         //付费类型,是否包接送
         ViewUtil.bindView(holder.payT, JSONUtil.getString(jo, "pay"));
-        boolean transfer =  JSONUtil.getBoolean(jo,"transfer");
-
+        boolean transfer =  JSONUtil.getBoolean(jo, "transfer");
+        if (transfer) {
+            holder.transferT.setVisibility(View.VISIBLE);
+            holder.transferT.setText("包接送");
+        } else {
+            holder.transferT.setVisibility(View.GONE);
+            holder.transferT.setText("不包接送");
+        }
         //所在地,距离
         int distance = (int)Math.floor(JSONUtil.getDouble(jo, "distance"));
         holder.DistanceT.setText(CarPlayUtil.numberWithDelimiter(distance));
