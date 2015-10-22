@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/new_bg_grey"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingBottom="20dp"
+        android:paddingTop="10dp" >
+
+        <ImageView
+            android:id="@+id/icon_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/empty_img" />
+
+        <TextView
+            android:id="@+id/msg"
+            style="@style/text_grey_small"
+            android:layout_marginTop="12dp"
+            android:text="暂无互相关注的人"
+            android:textColor="@color/text_grey_new"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

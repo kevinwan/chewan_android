@@ -17,7 +17,7 @@ public class CarPlayValueFix implements ValueFix {
 	static Map<String, DisplayImageOptions> imageOptions;
 
 	public static DisplayImageOptions optionsDefault, headOptions,
-			carLogoOptions, carBigLogoOptions, bigPicOptions;
+			carLogoOptions, carBigLogoOptions, bigPicOptions,backOptions;
 	static {
 
 		imageOptions = new HashMap<String, DisplayImageOptions>();
@@ -36,6 +36,13 @@ public class CarPlayValueFix implements ValueFix {
 				.showImageOnFail(R.drawable.head_icon).cacheInMemory(true)
 				.cacheOnDisk(true).resetViewBeforeLoading(true).build();
 		imageOptions.put("head", headOptions);
+
+		backOptions = new DisplayImageOptions.Builder()
+				.showImageOnLoading(R.drawable.back)
+				.showImageForEmptyUri(R.drawable.back)
+				.showImageOnFail(R.drawable.back).cacheInMemory(true)
+				.cacheOnDisk(true).resetViewBeforeLoading(true).build();
+		imageOptions.put("back", backOptions);
 
 		carLogoOptions = new DisplayImageOptions.Builder().cacheInMemory(true)
 				.cacheOnDisk(true).resetViewBeforeLoading(true)
