@@ -36,7 +36,7 @@ public class InterestedPersonActivity extends CarPlayListActivity implements Pul
 
         user = User.getInstance();
 
-        setTitle("感兴趣的人");
+        setTitle("感兴趣的");
 
         listV = (PullToRefreshListView) findViewById(R.id.listview);
         listV.setMode(PullToRefreshBase.Mode.BOTH);

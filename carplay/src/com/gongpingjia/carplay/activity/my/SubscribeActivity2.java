@@ -28,7 +28,7 @@ public class SubscribeActivity2 extends CarPlayListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_follower2);
-
+        setTitle("我的关注");
         View decor = getWindow().getDecorView();
         mViewPager = find(decor, R.id.vp_follower);
         mTabLayout = find(decor, R.id.tab_layout);

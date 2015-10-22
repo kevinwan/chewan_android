@@ -160,7 +160,13 @@ public class DyanmicBaseAdapter extends BaseAdapter {
         String gender = JSONUtil.getString(js, "gender");
 
 //        String jied = JSONUtil.getString(json, "street");
-        holder.activity_place.setText(JSONUtil.getString(json, "province") + JSONUtil.getString(json, "city") + JSONUtil.getString(json, "district") + JSONUtil.getString(json, "street"));
+        if(json ==null){
+            holder.activity_place.setVisibility(View.GONE);
+        }else{
+            holder.activity_place.setVisibility(View.VISIBLE);
+            holder.activity_place.setText(JSONUtil.getString(json, "province") + JSONUtil.getString(json, "city") + JSONUtil.getString(json, "district") + JSONUtil.getString(json, "street"));
+        }
+
 
         int distance = (int)Math.floor(JSONUtil.getDouble(js, "distance"));
 //        DecimalFormat df = new DecimalFormat("0.00");
