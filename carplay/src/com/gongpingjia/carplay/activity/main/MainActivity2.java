@@ -171,6 +171,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
         tabV = (LinearLayout) findViewById(R.id.tab);
         titleBar = findViewById(R.id.titlebar);
         rightT = (TextView) findViewById(R.id.right_text);
+
         //筛选
         rightT.setOnClickListener(new OnClickListener() {
             @Override
@@ -189,6 +190,15 @@ public class MainActivity2 extends BaseFragmentActivity implements
                         EventBus.getDefault().post(pre);
                     }
                 });
+            }
+        });
+        right_icon = (ImageView)findViewById(R.id.right_icon);
+        right_icon.setImageResource(R.drawable.setting);
+        right_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //设置
+                showToast("设置");
             }
         });
         initTab();
@@ -260,6 +270,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
 
 
         rightT.setVisibility(index == 0 ? View.VISIBLE : View.GONE);
+        right_icon.setVisibility(index == 4 ? View.VISIBLE : View.GONE);
 
         for (int i = 0; i < tabV.getChildCount(); i++) {
             View childV = tabV.getChildAt(i);
@@ -292,18 +303,10 @@ public class MainActivity2 extends BaseFragmentActivity implements
                         break;
                     case 4:
                         setTitle("我的");
-                        right_icon = (ImageView)findViewById(R.id.right_icon);
-                        right_icon.setVisibility(View.VISIBLE);
-                        right_icon.setImageResource(R.drawable.setting);
+
                         switchContent(MyFragment2.getInstance());
                         img.setImageResource(R.drawable.icon_nav_mine_f);
-                        right_icon.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                //设置
-                                showToast("设置");
-                            }
-                        });
+
                         break;
 
 
@@ -327,6 +330,8 @@ public class MainActivity2 extends BaseFragmentActivity implements
                         break;
                     case 4:
                         img.setImageResource(R.drawable.icon_nav_mine);
+
+
                         break;
 
 
