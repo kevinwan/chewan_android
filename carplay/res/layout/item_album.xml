@@ -5,6 +5,8 @@
     <ImageView
         android:id="@+id/photo"
         android:layout_width="77dp"
-        android:layout_height="77dp" />
+        android:layout_height="77dp"
+        android:layout_marginRight="10dp"
+        android:scaleType="fitXY"/>
 
 </LinearLayout>

@@ -24,6 +24,8 @@ import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.PhotoState;
 import com.gongpingjia.carplay.bean.User;
+import com.gongpingjia.carplay.photo.model.PhotoModel;
+import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.view.RoundImageView;
 
 import net.duohuo.dhroid.net.DhNet;
@@ -35,6 +37,7 @@ import net.duohuo.dhroid.util.PhotoUtil;
 import net.duohuo.dhroid.util.ViewUtil;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -72,13 +75,14 @@ public class MyFragment2 extends Fragment implements OnClickListener {
     // 图片缓存根目录
     private File mCacheDir;
     private String mPhotoPath;
-    String photoUid;
 
     MyFragmentAlbumAdapter mAdapter;
 
     private List<PhotoState> mPhotoStates;
 
     List<JSONObject> album;
+
+    List<JSONObject> newAlbm;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -89,6 +93,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
         user = User.getInstance();
 
         album = new ArrayList<JSONObject>();
+        newAlbm = new ArrayList<JSONObject>();
         mCacheDir = new File(mContext.getExternalCacheDir(), "CarPlay");
         mCacheDir.mkdirs();
         initView();
@@ -127,6 +132,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        mAdapter = new MyFragmentAlbumAdapter(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mAdapter);
         getMyDetails();
@@ -134,8 +140,15 @@ public class MyFragment2 extends Fragment implements OnClickListener {
     }
 
     private void  getAlbum(JSONArray albumJsa){
-
-//        mAdapter.setData(albumJsa);
+        album.clear();
+        for (int i=0;i<albumJsa.length();i++){
+            try {
+                album.add(albumJsa.getJSONObject(i));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+            mAdapter.setData(album);
     }
 
 
@@ -268,12 +281,12 @@ public class MyFragment2 extends Fragment implements OnClickListener {
 //                        + ".jpg").getAbsolutePath();
 //                PhotoUtil.getPhoto(getActivity(), Constant.TAKE_PHOTO, Constant.PICK_PHOTO,
 //                        new File(mPhotoPath));
-
-//                mPhotoPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg").getAbsolutePath();
-//                // CarPlayUtil.getPhoto(self, Constant.TAKE_PHOTO,
-//                // Constant.PICK_PHOTO, new File(mCurPath));
-//                CarPlayUtil.getPhoto(mContext, Constant.TAKE_PHOTO, Constant.PICK_PHOTO, new File(mPhotoPath),
-//                        10 - mPhotoStates.size());
+                newAlbm.clear();
+                mPhotoPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg").getAbsolutePath();
+                // CarPlayUtil.getPhoto(self, Constant.TAKE_PHOTO,
+                // Constant.PICK_PHOTO, new File(mCurPath));
+                CarPlayUtil.getPhoto(getActivity(), Constant.TAKE_PHOTO, Constant.PICK_PHOTO, new File(mPhotoPath),
+                        10);
                 break;
 
 
@@ -287,12 +300,40 @@ public class MyFragment2 extends Fragment implements OnClickListener {
         if (resultCode == getActivity().RESULT_OK){
             switch (requestCode){
                 case Constant.PICK_PHOTO:
-                    Bitmap btp = PhotoUtil.checkImage(getActivity(), data);
-                    PhotoUtil.saveLocalImage(btp, new File(mPhotoPath));
-                    btp.recycle();
-                    ((MainActivity2)getActivity()).showProgressDialog("上传头像中...");
-                    System.out.println("上传成功+++++++++++++");
-                    uploadHead(mPhotoPath);
+//                    Bitmap btp = PhotoUtil.checkImage(getActivity(), data);
+//                    PhotoUtil.saveLocalImage(btp, new File(mPhotoPath));
+//                    btp.recycle();
+//                    ((MainActivity2)getActivity()).showProgressDialog("上传头像中...");
+//                    System.out.println("上传成功+++++++++++++");
+//                    uploadHead(mPhotoPath);
+
+                    ((MainActivity2)getActivity()).showProgressDialog("图片上传中...");
+                    if (data != null && data.getExtras() != null) {
+                        @SuppressWarnings("unchecked")
+                        List<PhotoModel> photos = (List<PhotoModel>) data.getExtras().getSerializable("photos");
+                        if (photos == null || photos.isEmpty()) {
+                            ((MainActivity2)getActivity()).showToast("没有选择图片!");
+                        } else {
+//                            mSize = photos.size();
+                            for (int i = 0; i < photos.size(); i++) {
+                                String newPhotoPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg")
+                                        .getAbsolutePath();
+                                Bitmap btp = PhotoUtil.getLocalImage(new File(photos.get(i).getOriginalPath()));
+                                PhotoUtil.saveLocalImage(btp, new File(newPhotoPath));
+                                uploadHead(newPhotoPath);
+//                                if (i==photos.size()-1){
+//                                    album.addAll(0,newAlbm);
+//                                    mAdapter.setData(album);
+//                                }
+                            }
+//                            if (newAlbm!=null){
+//                                for (int i=0;i<newAlbm.size();i++){
+//                                    album.add(0,newAlbm.get(i));
+//                                }
+//                                mAdapter.setData(album);
+//                            }
+                        }
+                    }
                     break;
                 case Constant.TAKE_PHOTO:
                     Bitmap btp1 = PhotoUtil.getLocalImage(new File(mPhotoPath));
@@ -311,6 +352,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
     }
 
     private void uploadHead(String path) {
+
         Bitmap bmp = PhotoUtil.getLocalImage(new File(path));
 //        addPhoto.setImageBitmap(bmp);
         DhNet net = new DhNet(API2.CWBaseurl+"user/"+user.getUserId()+"/album/upload?token="+user.getToken());
@@ -321,8 +363,16 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                 ((MainActivity2)getActivity()).hidenProgressDialog();
                 if (response.isSuccess()) {
                     JSONObject jo = response.jSONFromData();
-                    photoUid = JSONUtil.getString(jo, "photoId");
-                            ((MainActivity2) getActivity()).showToast("上传成功");
+                    String photoUrl = JSONUtil.getString(jo, "photoUrl");
+                    ((MainActivity2) getActivity()).showToast("上传成功");
+
+                    try {
+//                        newAlbm.add(new JSONObject().put("url",photoUrl));
+                        album.add(0, new JSONObject().put("url",photoUrl));
+                        mAdapter.setData(album);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 } else {
                     ((MainActivity2)getActivity()).showToast("上传失败,重新上传");
                     System.out.println("上传失败----------------");

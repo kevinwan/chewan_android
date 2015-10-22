@@ -1,6 +1,7 @@
 package com.gongpingjia.carplay.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,7 +10,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.view.ImageGallery;
 
+import net.duohuo.dhroid.net.JSONUtil;
+import net.duohuo.dhroid.util.ViewUtil;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
@@ -47,7 +53,27 @@ public class MyFragmentAlbumAdapter extends RecyclerView.Adapter<MyFragmentAlbum
 
     @Override
     public void onBindViewHolder(SimpleViewHolder holder, int position) {
-//        holder.photoT
+        final JSONObject jo = getItem(position);
+        final int current=position;
+        ViewUtil.bindNetImage(holder.photoT, JSONUtil.getString(jo,"url"),"default");
+        holder.photoT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent it = new Intent(mContext, ImageGallery.class);
+                String[] photos =new String[data.size()];
+                for (int i=0;i<data.size();i++){
+                    try {
+                        photos[i]= (String) data.get(i).get("url");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                it.putExtra("imgurls", photos);
+                it.putExtra("currentItem", current);
+                mContext.startActivity(it);
+            }
+        });
 
     }
 
