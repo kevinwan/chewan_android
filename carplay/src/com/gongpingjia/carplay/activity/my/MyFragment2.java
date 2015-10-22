@@ -102,6 +102,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
         nameT = (TextView) mainV.findViewById(R.id.name);
         sexbgR = (RelativeLayout) mainV.findViewById(R.id.layout_sex_and_age);
         sexI = (ImageView) mainV.findViewById(R.id.iv_sex);
+
         ageT = (TextView) mainV.findViewById(R.id.tv_age);
         completenessT = (TextView) mainV.findViewById(R.id.txt_completeness);
         perfectBtn = (Button) mainV.findViewById(R.id.perfect);
@@ -274,6 +275,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
 //                CarPlayUtil.getPhoto(mContext, Constant.TAKE_PHOTO, Constant.PICK_PHOTO, new File(mPhotoPath),
 //                        10 - mPhotoStates.size());
                 break;
+
 
             default:
                 break;

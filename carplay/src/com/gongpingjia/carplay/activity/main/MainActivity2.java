@@ -123,7 +123,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
     TextView rightT;
 
     FilterPreference2 pre;
-
+    private ImageView right_icon;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -292,8 +292,18 @@ public class MainActivity2 extends BaseFragmentActivity implements
                         break;
                     case 4:
                         setTitle("我的");
+                        right_icon = (ImageView)findViewById(R.id.right_icon);
+                        right_icon.setVisibility(View.VISIBLE);
+                        right_icon.setImageResource(R.drawable.setting);
                         switchContent(MyFragment2.getInstance());
                         img.setImageResource(R.drawable.icon_nav_mine_f);
+                        right_icon.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                //设置
+                                showToast("设置");
+                            }
+                        });
                         break;
 
 

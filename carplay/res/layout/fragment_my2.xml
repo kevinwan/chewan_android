@@ -196,7 +196,7 @@
                     android:layout_height="58dp"
                     android:layout_marginRight="5dp"
                     android:gravity="center_vertical"
-                    android:text="已认证" />
+                    android:text="未认证" />
 
                 <com.gongpingjia.carplay.view.RoundImageView
                     android:layout_width="28dp"
@@ -235,7 +235,7 @@
                     android:layout_height="58dp"
                     android:layout_marginRight="5dp"
                     android:gravity="center_vertical"
-                    android:text="已认证" />
+                    android:text="未认证" />
 
                 <com.gongpingjia.carplay.view.RoundImageView
                     android:id="@+id/carlogo"
