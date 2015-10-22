@@ -170,11 +170,11 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
      * 获取个人资料
      */
     private void getMyDetails() {
-        DhNet net = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId() + "/info?viewUser=" + user.getUserId() + "&token=" + user.getToken());
-        DhNet dhNet = net.doGetInDialog(new NetTask(this) {
-
+        DhNet verifyNet = new DhNet(API2.CWBaseurl +"/user/"+user.getUserId()+"/info?viewUser="+user.getUserId()+"&token="+user.getToken());
+        verifyNet.doGetInDialog(new NetTask(this) {
             @Override
             public void doInUI(Response response, Integer transfer) {
+                System.out.println("编辑资料："+user.getUserId() + "---------" + user.getToken());
                 JSONObject jo = response.jSONFromData();
 
                 nickname = JSONUtil.getString(jo, "nickname");
@@ -231,11 +231,12 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
     private void uploadHead(String path) {
         Bitmap bmp = PhotoUtil.getLocalImage(new File(path));
         headI.setImageBitmap(bmp);
-        DhNet net = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId() + "/avatar?token=" + user.getToken());
+        DhNet net = new DhNet(API2.CWBaseurl+"/user/"+user.getUserId()+"/avatar?token="+user.getToken());
         net.upload(new FileInfo("attach", new File(path)), new NetTask(self) {
 
             @Override
             public void doInUI(Response response, Integer transfer) {
+                System.out.println("更改头像返回："+user.getUserId() + "---------" + user.getToken());
                 hidenProgressDialog();
                 if (response.isSuccess()) {
                     JSONObject jo = response.jSONFromData();

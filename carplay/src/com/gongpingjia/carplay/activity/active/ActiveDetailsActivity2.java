@@ -78,7 +78,7 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
     @Override
     public void initView() {
         user=User.getInstance();
-
+        setTitle("活动详情");
         mInflater=LayoutInflater.from(self);
         mHeadView=mInflater.inflate(R.layout.item_active_details2_headview, null);
         mFootView=mInflater.inflate(R.layout.item_active_details2_footview, null);

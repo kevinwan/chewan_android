@@ -22,7 +22,7 @@
         <TextView
             style="@style/text_black_medium"
             android:layout_marginLeft="14dp"
-            android:text="感兴趣的人" />
+            android:text="感兴趣的" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -61,7 +61,7 @@
 
             <TextView
                 style="@style/text_black_medium"
-                android:text="活动状态" />
+                android:text="活动动态" />
 
             <TextView
                 style="@style/text_grey_small"

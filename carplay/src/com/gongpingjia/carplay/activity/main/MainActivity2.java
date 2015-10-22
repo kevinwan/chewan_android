@@ -279,7 +279,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
             TextView text = (TextView) childV.findViewById(R.id.text);
             if (index == i) {
                 text.setTextColor(getResources().getColor(
-                        R.color.text_blue_light));
+                        R.color.xiangce_rad));
                 switch (index) {
                     case 0:
                         setTitle("附近");

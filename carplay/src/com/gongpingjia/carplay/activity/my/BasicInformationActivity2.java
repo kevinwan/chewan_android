@@ -64,7 +64,7 @@ public class BasicInformationActivity2 extends CarPlayBaseActivity implements Vi
 
     @Override
     public void initView() {
-        setTitle("注册");
+        setTitle("个人信息");
         setLeftAction(R.drawable.action_cancel, null, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
