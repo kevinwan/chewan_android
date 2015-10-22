@@ -18,6 +18,9 @@ package com.gongpingjia.carplay.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,7 +33,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.activity.main.MainActivity2;
+import com.gongpingjia.carplay.activity.main.PhotoSelectorActivity;
 import com.gongpingjia.carplay.api.API2;
+import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.manage.UserInfoManage;
 import com.gongpingjia.carplay.util.CarPlayUtil;
@@ -47,6 +53,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.List;
 
 public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.SimpleViewHolder> {
@@ -57,6 +64,10 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
     private List<JSONObject> data;
 
     private boolean uploadFlag = true;
+
+    // 图片缓存根目录
+    private File mCacheDir;
+    private String mPhotoPath;
 
     public static class SimpleViewHolder extends RecyclerView.ViewHolder {
         TextView nickname, car_name, age, pay, transfer, location, distance;
@@ -113,7 +124,8 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
     @Override
     public void onBindViewHolder(SimpleViewHolder holder, int position) {
         Log.d("msg", "onBindViewHolder");
-
+        mCacheDir = new File(mContext.getExternalCacheDir(), "CarPlay");
+        mCacheDir.mkdirs();
 //        holder.title.setText(mItems.get(position).toString());
         final JSONObject jo = getItem(position);
 
@@ -121,7 +133,7 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
         JSONObject userjo = JSONUtil.getJSONObject(jo, "organizer");
         JSONObject distancejo = JSONUtil.getJSONObject(jo, "destination");
         JSONObject carjo = JSONUtil.getJSONObject(userjo, "car");
-        JSONArray albumjsa = JSONUtil.getJSONArray(userjo,"album");
+        JSONArray albumjsa = JSONUtil.getJSONArray(userjo, "album");
         //昵称,活动类型,年龄,性别,头像
         String activetype = JSONUtil.getString(jo, "type");
         holder.nickname.setText(JSONUtil.getString(userjo, "nickname") + "想约人" + activetype);
@@ -226,10 +238,23 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
                     break;
                 //拍照
                 case R.id.takephotos:
-
+                    mPhotoPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg").getAbsolutePath();
+                    Intent getImageByCamera = new Intent(
+                            "android.media.action.IMAGE_CAPTURE");
+                    getImageByCamera.putExtra(MediaStore.EXTRA_OUTPUT,
+                            Uri.fromFile(new File(mPhotoPath)));
+                    ((MainActivity2) mContext).startActivityForResult(getImageByCamera,
+                            Constant.TAKE_PHOTO);
                     break;
                 //相册
                 case R.id.album:
+                    mPhotoPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg").getAbsolutePath();
+                    Intent intent = new Intent(mContext,
+                            PhotoSelectorActivity.class);
+                    intent.putExtra(PhotoSelectorActivity.KEY_MAX,
+                            10);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    ((MainActivity2) mContext).startActivityForResult(intent, Constant.PICK_PHOTO);
 
                     break;
 
@@ -310,5 +335,6 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
             }
         });
     }
+
 
 }

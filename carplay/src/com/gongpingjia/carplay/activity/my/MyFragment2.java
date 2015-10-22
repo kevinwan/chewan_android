@@ -297,9 +297,12 @@ public class MyFragment2 extends Fragment implements OnClickListener {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        ((MainActivity2)getActivity()).showToast("11111111111111");
         if (resultCode == getActivity().RESULT_OK){
+//            ((MainActivity2)getActivity()).showToast(requestCode+"++++++++++++");
             switch (requestCode){
                 case Constant.PICK_PHOTO:
+                    ((MainActivity2)getActivity()).showToast(Constant.PICK_PHOTO+"");
 //                    Bitmap btp = PhotoUtil.checkImage(getActivity(), data);
 //                    PhotoUtil.saveLocalImage(btp, new File(mPhotoPath));
 //                    btp.recycle();
@@ -336,6 +339,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                     }
                     break;
                 case Constant.TAKE_PHOTO:
+//                    ((MainActivity2)getActivity()).showToast(Constant.TAKE_PHOTO+"");
                     Bitmap btp1 = PhotoUtil.getLocalImage(new File(mPhotoPath));
                     String newPath = new File(mCacheDir, System.currentTimeMillis()
                             + ".jpg").getAbsolutePath();
