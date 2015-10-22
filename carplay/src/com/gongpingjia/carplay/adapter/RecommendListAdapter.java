@@ -74,9 +74,9 @@ public class RecommendListAdapter extends RecyclerView.Adapter<RecommendListAdap
         holder.priceDescT.setText(JSONUtil.getString(jo, "priceDesc"));
         holder.infoT.setText(JSONUtil.getString(jo, "title"));
         holder.maleLimitT.setText(JSONUtil.getString(jo, "maleLimit"));
-        holder.maleNumT.setText(JSONUtil.getString(jo, "maleNum"));
+        holder.maleNumT.setText(JSONUtil.getString(jo, "maleNum")+"/");
         holder.femaleLimitT.setText(JSONUtil.getString(jo, "femaleLimit"));
-        holder.femaleNumT.setText(JSONUtil.getString(jo, "femaleNum"));
+        holder.femaleNumT.setText(JSONUtil.getString(jo, "femaleNum")+"/");
 
         JSONObject locationJo = JSONUtil.getJSONObject(jo, "destination");
         holder.locationT.setText(JSONUtil.getString(locationJo, "detail"));
