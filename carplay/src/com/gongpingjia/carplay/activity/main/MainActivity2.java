@@ -457,6 +457,8 @@ public class MainActivity2 extends BaseFragmentActivity implements
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // TODO Auto-generated method stub
         super.onActivityResult(requestCode, resultCode, data);
+
+
         MyFragment2.getInstance().onActivityResult(requestCode, resultCode, data);
 //        if (resultCode == RESULT_OK) {
 //            switch (requestCode) {

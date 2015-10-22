@@ -285,6 +285,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                 mPhotoPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg").getAbsolutePath();
                 // CarPlayUtil.getPhoto(self, Constant.TAKE_PHOTO,
                 // Constant.PICK_PHOTO, new File(mCurPath));
+
                 CarPlayUtil.getPhoto(getActivity(), Constant.TAKE_PHOTO, Constant.PICK_PHOTO, new File(mPhotoPath),
                         10);
                 break;

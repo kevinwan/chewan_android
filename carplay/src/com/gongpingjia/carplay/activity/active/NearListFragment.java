@@ -58,6 +58,7 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
         mainV = inflater.inflate(R.layout.activity_near_list, null);
         EventBus.getDefault().register(this);
         initView();
+
         return mainV;
     }
 

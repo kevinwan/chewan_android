@@ -7,7 +7,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
-import com.gongpingjia.carplay.data.CityDataManage;
 import com.gongpingjia.carplay.view.BaseAlertDialog;
 import com.gongpingjia.carplay.view.wheel.OnWheelChangedListener;
 import com.gongpingjia.carplay.view.wheel.WheelView;
@@ -33,16 +32,9 @@ public class DateTimerDialog2 extends BaseAlertDialog implements
 
     OnDateTimerResultListener dateTimerResultListener;
 
-    public DateTimerDialog2(Context context, boolean showDistrict) {
-        super(context);
-        this.mContext = context;
-        CityDataManage.initProvinceDatas(0);
-    }
-
     public DateTimerDialog2(Context context) {
         super(context);
         this.mContext = context;
-        CityDataManage.initProvinceDatas(1);
     }
 
     @Override
