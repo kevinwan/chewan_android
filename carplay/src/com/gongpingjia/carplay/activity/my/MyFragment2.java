@@ -2,8 +2,11 @@ package com.gongpingjia.carplay.activity.my;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,7 +18,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.activity.main.MainActivity2;
+import com.gongpingjia.carplay.adapter.MyFragmentAlbumAdapter;
 import com.gongpingjia.carplay.api.API2;
+import com.gongpingjia.carplay.api.Constant;
+import com.gongpingjia.carplay.bean.PhotoState;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.view.RoundImageView;
 
@@ -23,9 +30,16 @@ import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
+import net.duohuo.dhroid.net.upload.FileInfo;
+import net.duohuo.dhroid.util.PhotoUtil;
 import net.duohuo.dhroid.util.ViewUtil;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -41,6 +55,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
     private Button perfectBtn;
     private RelativeLayout sexbgR;
     private LinearLayout myphotoL, myactiveL, myattentionL, headattestationL, carattestationL;
+    private RecyclerView recyclerView;
 
     public static MyFragment2 getInstance() {
         if (instance == null) {
@@ -54,6 +69,17 @@ public class MyFragment2 extends Fragment implements OnClickListener {
 
     User user;
 
+    // 图片缓存根目录
+    private File mCacheDir;
+    private String mPhotoPath;
+    String photoUid;
+
+    MyFragmentAlbumAdapter mAdapter;
+
+    private List<PhotoState> mPhotoStates;
+
+    List<JSONObject> album;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -61,8 +87,13 @@ public class MyFragment2 extends Fragment implements OnClickListener {
         mainV = inflater.inflate(R.layout.fragment_my2, null);
         mContext = getActivity();
         user = User.getInstance();
+
+        album = new ArrayList<JSONObject>();
+        mCacheDir = new File(mContext.getExternalCacheDir(), "CarPlay");
+        mCacheDir.mkdirs();
         initView();
         return mainV;
+
     }
 
     private void initView() {
@@ -83,6 +114,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
         txtphotoAuthStatusT = (TextView) mainV.findViewById(R.id.txtphotoAuthStatus);
         attestation_txtT = (TextView) mainV.findViewById(R.id.attestation_txt);
         addPhoto = (ImageView) mainV.findViewById(R.id.addphoto);
+        recyclerView = (RecyclerView) mainV.findViewById(R.id.recyclerView);
 
         perfectBtn.setOnClickListener(this);
         myactiveL.setOnClickListener(this);
@@ -92,8 +124,17 @@ public class MyFragment2 extends Fragment implements OnClickListener {
         headI.setOnClickListener(this);
         addPhoto.setOnClickListener(this);
 
+        LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(mAdapter);
         getMyDetails();
-//        }
+
+    }
+
+    private void  getAlbum(JSONArray albumJsa){
+
+//        mAdapter.setData(albumJsa);
     }
 
 
@@ -105,7 +146,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
 
             @Override
             public void doInUI(Response response, Integer transfer) {
-                System.out.println(user.getUserId()+"---------"+user.getToken());
+                System.out.println(user.getUserId() + "---------" + user.getToken());
                 if (response.isSuccess()) {
                     JSONObject jo = response.jSONFromData();
 
@@ -162,16 +203,18 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                     } else if (licenseAuthStatus.equals("认证中")) {
                         carattestationL.setEnabled(true);
                     }
-                    if (licenseAuthStatus.equals("未认证")&&photoAuthStatus.equals("未认证")){
+                    if (licenseAuthStatus.equals("未认证") && photoAuthStatus.equals("未认证")) {
                         completenessT.setText("资料完成度60%,越高越吸引人");
-                    }else if(licenseAuthStatus.equals("认证中")&&photoAuthStatus.equals("认证中")){
+                    } else if (licenseAuthStatus.equals("认证中") && photoAuthStatus.equals("认证中")) {
                         completenessT.setText("资料完成度60%,越高越吸引人");
-                    } else if(licenseAuthStatus.equals("认证通过")||photoAuthStatus.equals("认证通过")){
+                    } else if (licenseAuthStatus.equals("认证通过") || photoAuthStatus.equals("认证通过")) {
                         completenessT.setText("资料完成度80%,越高越吸引人");
-                    }else if(licenseAuthStatus.equals("认证通过")&&photoAuthStatus.equals("认证通过")){
+                    } else if (licenseAuthStatus.equals("认证通过") && photoAuthStatus.equals("认证通过")) {
                         completenessT.setText("资料完成度100%,越高越吸引人");
                     }
 
+                    JSONArray albumJsa = JSONUtil.getJSONArray(jo,"album");
+                    getAlbum(albumJsa);
 
                 }
             }
@@ -218,7 +261,18 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                 break;
             //上传相册
             case R.id.addphoto:
+//                it = new Intent(mContext, CreateActiveActivity.class);
+//                startActivity(it);
+//                mPhotoPath = new File(mCacheDir, System.currentTimeMillis()
+//                        + ".jpg").getAbsolutePath();
+//                PhotoUtil.getPhoto(getActivity(), Constant.TAKE_PHOTO, Constant.PICK_PHOTO,
+//                        new File(mPhotoPath));
 
+//                mPhotoPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg").getAbsolutePath();
+//                // CarPlayUtil.getPhoto(self, Constant.TAKE_PHOTO,
+//                // Constant.PICK_PHOTO, new File(mCurPath));
+//                CarPlayUtil.getPhoto(mContext, Constant.TAKE_PHOTO, Constant.PICK_PHOTO, new File(mPhotoPath),
+//                        10 - mPhotoStates.size());
                 break;
 
             default:
@@ -226,6 +280,52 @@ public class MyFragment2 extends Fragment implements OnClickListener {
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == getActivity().RESULT_OK){
+            switch (requestCode){
+                case Constant.PICK_PHOTO:
+                    Bitmap btp = PhotoUtil.checkImage(getActivity(), data);
+                    PhotoUtil.saveLocalImage(btp, new File(mPhotoPath));
+                    btp.recycle();
+                    ((MainActivity2)getActivity()).showProgressDialog("上传头像中...");
+                    System.out.println("上传成功+++++++++++++");
+                    uploadHead(mPhotoPath);
+                    break;
+                case Constant.TAKE_PHOTO:
+                    Bitmap btp1 = PhotoUtil.getLocalImage(new File(mPhotoPath));
+                    String newPath = new File(mCacheDir, System.currentTimeMillis()
+                            + ".jpg").getAbsolutePath();
+                    int degree = PhotoUtil.getBitmapDegree(mPhotoPath);
+                    PhotoUtil.saveLocalImage(btp1, new File(newPath), degree);
+                    btp1.recycle();
+                    ((MainActivity2)getActivity()).showProgressDialog("上传头像中...");
+                    System.out.println("上传成功+++++++++++++");
+                    uploadHead(newPath);
+                    break;
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
+    private void uploadHead(String path) {
+        Bitmap bmp = PhotoUtil.getLocalImage(new File(path));
+//        addPhoto.setImageBitmap(bmp);
+        DhNet net = new DhNet(API2.CWBaseurl+"user/"+user.getUserId()+"/album/upload?token="+user.getToken());
+        net.upload(new FileInfo("attach", new File(path)), new NetTask(mContext) {
 
+            @Override
+            public void doInUI(Response response, Integer transfer) {
+                ((MainActivity2)getActivity()).hidenProgressDialog();
+                if (response.isSuccess()) {
+                    JSONObject jo = response.jSONFromData();
+                    photoUid = JSONUtil.getString(jo, "photoId");
+                            ((MainActivity2) getActivity()).showToast("上传成功");
+                } else {
+                    ((MainActivity2)getActivity()).showToast("上传失败,重新上传");
+                    System.out.println("上传失败----------------");
+                }
+            }
+        });
+    }
 }

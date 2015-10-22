@@ -111,6 +111,13 @@
                 android:layout_width="77dp"
                 android:layout_height="77dp"
                 android:src="@drawable/my_camera" />
+
+            <android.support.v7.widget.RecyclerView
+            	android:id="@+id/recyclerView"
+            	android:layout_width="match_parent"
+            	android:layout_height="match_parent"
+            	android:scrollbars="horizontal"
+                android:layout_marginLeft="10dp"/>
         </LinearLayout>
 
         <View
