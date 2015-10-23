@@ -103,6 +103,7 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
         mContext = context;
         mCacheDir = new File(mContext.getExternalCacheDir(), "CarPlay");
         mCacheDir.mkdirs();
+
     }
 
 
