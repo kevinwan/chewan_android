@@ -54,7 +54,7 @@
                     android:layout_width="@dimen/lookaround_head_small"
                     android:layout_height="@dimen/lookaround_head_small"
                     android:background="@drawable/circle_white"
-                    android:padding="4dp"
+                    android:padding="3dp"
                     android:src="@drawable/head_icon" />
 
 
@@ -80,7 +80,7 @@
                     android:layout_width="@dimen/lookaround_head_medium"
                     android:layout_height="@dimen/lookaround_head_medium"
                     android:background="@drawable/circle_white"
-                    android:padding="4dp"
+                    android:padding="3dp"
                     android:src="@drawable/head_icon" />
 
 
@@ -105,7 +105,7 @@
                     android:layout_width="@dimen/lookaround_head_small"
                     android:layout_height="@dimen/lookaround_head_small"
                     android:background="@drawable/circle_white"
-                    android:padding="4dp"
+                    android:padding="3dp"
                     android:src="@drawable/head_icon" />
 
 
@@ -132,7 +132,7 @@
                     android:layout_width="@dimen/lookaround_head_small"
                     android:layout_height="@dimen/lookaround_head_small"
                     android:background="@drawable/circle_white"
-                    android:padding="4dp"
+                    android:padding="3dp"
                     android:src="@drawable/head_icon" />
 
 
@@ -160,8 +160,8 @@
                 android:layout_weight="1.05"
                 android:gravity="center_horizontal|bottom"
                 android:orientation="vertical"
-                android:visibility="invisible">
-            </LinearLayout>
+                android:visibility="invisible"></LinearLayout>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
@@ -176,7 +176,7 @@
                     android:layout_width="@dimen/lookaround_head_small"
                     android:layout_height="@dimen/lookaround_head_small"
                     android:background="@drawable/circle_white"
-                    android:padding="4dp"
+                    android:padding="3dp"
                     android:src="@drawable/head_icon" />
 
 
@@ -202,7 +202,7 @@
                     android:layout_width="@dimen/lookaround_head_medium"
                     android:layout_height="@dimen/lookaround_head_medium"
                     android:background="@drawable/circle_white"
-                    android:padding="4dp"
+                    android:padding="3dp"
                     android:src="@drawable/head_icon" />
 
 
@@ -241,7 +241,7 @@
                     android:layout_width="@dimen/lookaround_head_small"
                     android:layout_height="@dimen/lookaround_head_small"
                     android:background="@drawable/circle_white"
-                    android:padding="4dp"
+                    android:padding="3dp"
                     android:src="@drawable/head_icon" />
 
 
@@ -266,7 +266,7 @@
                     android:layout_width="@dimen/lookaround_head_big"
                     android:layout_height="@dimen/lookaround_head_big"
                     android:background="@drawable/circle_white"
-                    android:padding="4dp"
+                    android:padding="3dp"
                     android:src="@drawable/head_icon" />
 
 
@@ -292,7 +292,7 @@
                     android:layout_width="@dimen/lookaround_head_small"
                     android:layout_height="@dimen/lookaround_head_small"
                     android:background="@drawable/circle_white"
-                    android:padding="4dp"
+                    android:padding="3dp"
                     android:src="@drawable/head_icon" />
 
 
@@ -309,7 +309,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:gravity="center_horizontal"
+                android:gravity="center_horizontal|bottom"
                 android:orientation="vertical"
                 android:visibility="invisible">
 
@@ -318,7 +318,7 @@
                     android:layout_width="@dimen/lookaround_head_small"
                     android:layout_height="@dimen/lookaround_head_small"
                     android:background="@drawable/circle_white"
-                    android:padding="4dp"
+                    android:padding="3dp"
                     android:src="@drawable/head_icon" />
 
 

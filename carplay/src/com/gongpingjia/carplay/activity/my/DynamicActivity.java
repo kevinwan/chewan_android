@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.gongpingjia.carplay.ILoadSuccess;
 import com.gongpingjia.carplay.R;
@@ -39,11 +40,11 @@ public class DynamicActivity extends CarPlayListActivity implements PullToRefres
     private ListView recyclerView;
 
     PullToRefreshListView listV;
-
+    LinearLayout empty;
+    TextView msg;
     User user = User.getInstance();
     //    DynamicActivityAdapter adapter;
     DyanmicBaseAdapter adapter;
-    LinearLayout layout,listview_laytou;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,8 +60,9 @@ public class DynamicActivity extends CarPlayListActivity implements PullToRefres
 //        JSONArray jsonarray = new JSONArray();
 //        jsonarray.put("邀请中");
 //        jsonarray.put("应邀");
-         layout = (LinearLayout) findViewById(R.id.dyna_empty);
-        listview_laytou = (LinearLayout) findViewById(R.id.listview_laytou);
+         empty = (LinearLayout) findViewById(R.id.empty);
+         msg = (TextView) findViewById(R.id.msg);
+
         listV = (PullToRefreshListView) findViewById(R.id.listview);
         listV.setMode(PullToRefreshBase.Mode.BOTH);
         listV.setOnRefreshListener(this);
@@ -81,15 +83,13 @@ public class DynamicActivity extends CarPlayListActivity implements PullToRefres
     public void loadSuccess() {
         adapter.setData(mVaules);
         listV.onRefreshComplete();
-        if(mVaules.isEmpty()){
-            listview_laytou.setVisibility(View.GONE);
-            layout.setVisibility(View.VISIBLE);
-        }
+
     }
 
     @Override
     public void loadSuccessOnFirst() {
-
+        empty.setVisibility(View.VISIBLE);
+        msg.setText("此处暂无活动");
 
     }
 

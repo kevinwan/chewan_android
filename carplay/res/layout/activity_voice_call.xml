@@ -137,7 +137,7 @@
                 android:layout_width="2dp"
                 android:layout_height="2dp"
                 android:background="@drawable/point"
-                android:layout_marginRight="15  dp"
+                android:layout_marginRight="15dp"
                 android:layout_alignParentRight="true"
                 />
         </RelativeLayout>

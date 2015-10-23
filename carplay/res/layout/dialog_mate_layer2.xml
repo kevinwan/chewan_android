@@ -1,29 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_margin="40dp"
-    android:background="@drawable/btn_white_fillet">
-
-    <TextView
-        android:id="@+id/tv_top"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="10dp"
-        android:text="意向选择"
-        android:textColor="@color/text_red"
-        android:textSize="@dimen/text_title" />
-
-    <View
-        style="@style/line_horizontal"
-        android:layout_below="@id/tv_top" />
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv_top"
         android:layout_centerInParent="true"
+        android:layout_margin="40dp"
+        android:layout_marginLeft="45dp"
+        android:background="@drawable/btn_white_fillet"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
