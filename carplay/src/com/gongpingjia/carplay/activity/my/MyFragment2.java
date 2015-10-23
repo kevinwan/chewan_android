@@ -141,14 +141,16 @@ public class MyFragment2 extends Fragment implements OnClickListener {
 
     private void  getAlbum(JSONArray albumJsa){
         album.clear();
-        for (int i=0;i<albumJsa.length();i++){
-            try {
-                album.add(albumJsa.getJSONObject(i));
-            } catch (JSONException e) {
-                e.printStackTrace();
+        if(albumJsa!=null) {
+            for (int i = 0; i < albumJsa.length(); i++) {
+                try {
+                    album.add(albumJsa.getJSONObject(i));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
-        }
             mAdapter.setData(album);
+        }
     }
 
 
