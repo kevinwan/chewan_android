@@ -111,6 +111,13 @@
                 android:layout_width="77dp"
                 android:layout_height="77dp"
                 android:src="@drawable/my_camera" />
+
+            <android.support.v7.widget.RecyclerView
+            	android:id="@+id/recyclerView"
+            	android:layout_width="match_parent"
+            	android:layout_height="match_parent"
+            	android:scrollbars="horizontal"
+                android:layout_marginLeft="10dp"/>
         </LinearLayout>
 
         <View
@@ -189,7 +196,7 @@
                     android:layout_height="58dp"
                     android:layout_marginRight="5dp"
                     android:gravity="center_vertical"
-                    android:text="已认证" />
+                    android:text="未认证" />
 
                 <com.gongpingjia.carplay.view.RoundImageView
                     android:layout_width="28dp"
@@ -228,7 +235,7 @@
                     android:layout_height="58dp"
                     android:layout_marginRight="5dp"
                     android:gravity="center_vertical"
-                    android:text="已认证" />
+                    android:text="未认证" />
 
                 <com.gongpingjia.carplay.view.RoundImageView
                     android:id="@+id/carlogo"

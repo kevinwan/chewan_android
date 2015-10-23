@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
@@ -35,6 +36,15 @@ public class RegisterActivity2 extends CarPlayBaseActivity implements View.OnCli
 
     @Override
     public void initView() {
+        setTitle("注册");
+        ImageView close = (ImageView) findViewById(R.id.back);
+        close.setImageResource(R.drawable.icon_close);
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         mEditNum = (EditText) findViewById(R.id.et_phone_num);
         mEditPassword = (EditText) findViewById(R.id.et_password);
         mBtnRegister = (Button) findViewById(R.id.btn_register);

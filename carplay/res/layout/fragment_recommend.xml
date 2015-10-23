@@ -15,5 +15,34 @@
         android:paddingRight="30dp"
         app:ptrDrawable="@drawable/lun"
         app:triggerOffset="0.1" />
+    <LinearLayout
+        android:id="@+id/empty"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingBottom="20dp"
+            android:paddingTop="10dp">
+
+            <ImageView
+                android:id="@+id/icon_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/empty_img" />
+
+            <TextView
+                android:id="@+id/msg"
+                style="@style/text_grey_small"
+                android:layout_marginTop="12dp"
+                android:text="此处暂无活动" />
+        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>

@@ -31,6 +31,7 @@ import android.widget.Toast;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.api.API2;
+import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.manage.UserInfoManage;
 import com.gongpingjia.carplay.util.CarPlayUtil;
@@ -47,7 +48,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.SimpleViewHolder> {
     private static final int COUNT = 5;
@@ -57,6 +61,10 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
     private List<JSONObject> data;
 
     private boolean uploadFlag = true;
+
+    // 图片缓存根目录
+    private File mCacheDir;
+    private String mPhotoPath;
 
     public static class SimpleViewHolder extends RecyclerView.ViewHolder {
         TextView nickname, car_name, age, pay, transfer, location, distance;
@@ -93,6 +101,8 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
 
     public NearListAdapter(Context context) {
         mContext = context;
+        mCacheDir = new File(mContext.getExternalCacheDir(), "CarPlay");
+        mCacheDir.mkdirs();
     }
 
 
@@ -112,6 +122,7 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
     @Override
     public void onBindViewHolder(SimpleViewHolder holder, int position) {
 
+        Log.d("msg", "onBindViewHolder");
 //        holder.title.setText(mItems.get(position).toString());
         final JSONObject jo = getItem(position);
 
@@ -119,7 +130,7 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
         JSONObject userjo = JSONUtil.getJSONObject(jo, "organizer");
         JSONObject distancejo = JSONUtil.getJSONObject(jo, "destination");
         JSONObject carjo = JSONUtil.getJSONObject(userjo, "car");
-        JSONArray albumjsa = JSONUtil.getJSONArray(userjo,"album");
+        JSONArray albumjsa = JSONUtil.getJSONArray(userjo, "album");
         //昵称,活动类型,年龄,性别,头像
         String activetype = JSONUtil.getString(jo, "type");
         holder.nickname.setText(JSONUtil.getString(userjo, "nickname") + "想约人" + activetype);
@@ -224,10 +235,13 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
                     break;
                 //拍照
                 case R.id.takephotos:
-
+                    Integer takephotos = Constant.TAKE_PHOTO;
+                    EventBus.getDefault().post(takephotos);
                     break;
                 //相册
                 case R.id.album:
+                    Integer album = Constant.PICK_PHOTO;
+                    EventBus.getDefault().post(album);
 
                     break;
 
@@ -308,5 +322,6 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
             }
         });
     }
+
 
 }

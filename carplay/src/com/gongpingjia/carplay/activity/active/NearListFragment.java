@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.gongpingjia.carplay.ILoadSuccess;
 import com.gongpingjia.carplay.R;
@@ -41,7 +42,7 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
 
     View mainV;
 
-
+    LinearLayout near_layout;
     View  currentview;
 
     public static NearListFragment getInstance() {
@@ -57,6 +58,7 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
         mainV = inflater.inflate(R.layout.activity_near_list, null);
         EventBus.getDefault().register(this);
         initView();
+
         return mainV;
     }
 
@@ -66,7 +68,7 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
         user = User.getInstance();
         pre = IocContainer.getShare().get(FilterPreference2.class);
         pre.load();
-
+         near_layout = (LinearLayout)mainV.findViewById(R.id.near_empty);
         listV = (PullToRefreshRecyclerViewVertical) mainV.findViewById(R.id.list);
         listV.setMode(PullToRefreshBase.Mode.BOTH);
         listV.setOnRefreshListener(this);
@@ -103,7 +105,10 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
     public void loadSuccess() {
         adapter.setData(mVaules);
         listV.onRefreshComplete();
-
+        if(mVaules.isEmpty()){
+            listV.setVisibility(View.GONE);
+            near_layout.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

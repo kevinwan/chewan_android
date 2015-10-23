@@ -33,8 +33,14 @@ public class API2 {
 
     public static final String recommendList = CWBaseurl + "/official/activity/list";
 
+    //获取地点信息
     public static String getPlaces(String id) {
         return "http://cwapi.gongpingjia.com:8080/v2/area/list?parentId=" + id;
+    }
+
+    //匹配活动
+    public static String getMatchUrl(String userId, String token) {
+        return String.format(CWBaseurl + "activity/register?userId=%s&token=%s", userId, token);
     }
 
 }

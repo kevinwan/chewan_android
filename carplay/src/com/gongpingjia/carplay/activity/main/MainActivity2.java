@@ -10,10 +10,10 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -42,9 +42,9 @@ import com.gongpingjia.carplay.activity.active.NearListFragment;
 import com.gongpingjia.carplay.activity.active.RecommendListFragment;
 import com.gongpingjia.carplay.activity.dynamic.DynamicListFragment;
 import com.gongpingjia.carplay.activity.my.LoginActivity;
-import com.gongpingjia.carplay.activity.my.ManageAlbumActivity;
 import com.gongpingjia.carplay.activity.my.MyFragment2;
 import com.gongpingjia.carplay.api.API;
+import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.FilterPreference2;
 import com.gongpingjia.carplay.bean.TabEB;
@@ -52,6 +52,7 @@ import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.chat.DemoHXSDKHelper;
 import com.gongpingjia.carplay.chat.bean.GroupEB;
 import com.gongpingjia.carplay.chat.controller.HXSDKHelper;
+import com.gongpingjia.carplay.photo.model.PhotoModel;
 import com.gongpingjia.carplay.service.MsgService;
 import com.gongpingjia.carplay.util.CarPlayPerference;
 import com.gongpingjia.carplay.view.dialog.NearbyFilterDialog;
@@ -92,7 +93,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
 
     CarPlayPerference per;
 
-    String tempPath;
+    String mPhotoPath;
 
     File mCacheDir;
 
@@ -125,7 +126,9 @@ public class MainActivity2 extends BaseFragmentActivity implements
     TextView rightT;
 
     FilterPreference2 pre;
+    private ImageView right_icon;
 
+    User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -170,12 +173,17 @@ public class MainActivity2 extends BaseFragmentActivity implements
     }
 
     public void initView() {
+        user = User.getInstance();
+        mCacheDir = new File(getExternalCacheDir(), "CarPlay");
+        mCacheDir.mkdirs();
+
         mHandler = new Handler();
         slist = new Stack<Fragment>();
         fm = getSupportFragmentManager();
         tabV = (LinearLayout) findViewById(R.id.tab);
         titleBar = findViewById(R.id.titlebar);
         rightT = (TextView) findViewById(R.id.right_text);
+
         //筛选
         rightT.setOnClickListener(new OnClickListener() {
             @Override
@@ -194,6 +202,15 @@ public class MainActivity2 extends BaseFragmentActivity implements
                         EventBus.getDefault().post(pre);
                     }
                 });
+            }
+        });
+        right_icon = (ImageView)findViewById(R.id.right_icon);
+        right_icon.setImageResource(R.drawable.setting);
+        right_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //设置
+                showToast("设置");
             }
         });
         initTab();
@@ -265,6 +282,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
 
 
         rightT.setVisibility(index == 0 ? View.VISIBLE : View.GONE);
+        right_icon.setVisibility(index == 4 ? View.VISIBLE : View.GONE);
 
         for (int i = 0; i < tabV.getChildCount(); i++) {
             View childV = tabV.getChildAt(i);
@@ -273,7 +291,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
             TextView text = (TextView) childV.findViewById(R.id.text);
             if (index == i) {
                 text.setTextColor(getResources().getColor(
-                        R.color.text_blue_light));
+                        R.color.xiangce_rad));
                 switch (index) {
                     case 0:
                         setTitle("附近");
@@ -297,8 +315,10 @@ public class MainActivity2 extends BaseFragmentActivity implements
                         break;
                     case 4:
                         setTitle("我的");
+
                         switchContent(MyFragment2.getInstance());
                         img.setImageResource(R.drawable.icon_nav_mine_f);
+
                         break;
 
 
@@ -322,6 +342,8 @@ public class MainActivity2 extends BaseFragmentActivity implements
                         break;
                     case 4:
                         img.setImageResource(R.drawable.icon_nav_mine);
+
+
                         break;
 
 
@@ -446,59 +468,68 @@ public class MainActivity2 extends BaseFragmentActivity implements
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // TODO Auto-generated method stub
-        super.onActivityResult(requestCode, resultCode, data);
+
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
-                // case Constant.TAKE_PHOTO:
-                // String newPath = new File(mCacheDir, System.currentTimeMillis()
-                // + ".jpg").getAbsolutePath();
-                // String path = PhotoUtil.onPhotoFromCamera(self,
-                // Constant.ZOOM_PIC, tempPath, 3, 2, 1000, newPath);
-                // tempPath = path;
-                // break;
-                // case Constant.PICK_PHOTO:
-                // PhotoUtil.onPhotoFromPick(self, Constant.ZOOM_PIC, tempPath,
-                // data, 3, 2, 1000);
-                // break;
-                // case Constant.ZOOM_PIC:
-                // upLoadPic(tempPath);
-                // break;
-
                 case Constant.PICK_PHOTO:
-                    Bitmap btp = PhotoUtil.checkImage(self, data);
-                    PhotoUtil.saveLocalImage(btp, new File(tempPath));
-                    btp.recycle();
-                    upLoadPic(tempPath);
+                    showProgressDialog("图片上传中...");
+                    if (data != null && data.getExtras() != null) {
+                        @SuppressWarnings("unchecked")
+                        List<PhotoModel> photos = (List<PhotoModel>) data.getExtras().getSerializable("photos");
+                        if (photos == null || photos.isEmpty()) {
+                            showToast("没有选择图片!");
+                        } else {
+                            for (int i = 0; i < photos.size(); i++) {
+                                String newPhotoPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg")
+                                        .getAbsolutePath();
+                                Bitmap btp = PhotoUtil.getLocalImage(new File(photos.get(i).getOriginalPath()));
+                                PhotoUtil.saveLocalImage(btp, new File(newPhotoPath));
+                                uploadHead(newPhotoPath);
+                            }
+                        }
+                    }
                     break;
                 case Constant.TAKE_PHOTO:
-                    Bitmap btp1 = PhotoUtil.getLocalImage(new File(tempPath));
+                    Bitmap btp1 = PhotoUtil.getLocalImage(new File(mPhotoPath));
                     String newPath = new File(mCacheDir, System.currentTimeMillis()
                             + ".jpg").getAbsolutePath();
-                    int degree = PhotoUtil.getBitmapDegree(tempPath);
+                    int degree = PhotoUtil.getBitmapDegree(mPhotoPath);
                     PhotoUtil.saveLocalImage(btp1, new File(newPath), degree);
                     btp1.recycle();
-                    upLoadPic(newPath);
+                    showProgressDialog("上传头像中...");
+                    uploadHead(newPath);
                     break;
             }
         }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void upLoadPic(String path) {
-        User user = User.getInstance();
-        DhNet net = new DhNet(API.uploadAlbum + user.getUserId()
-                + "/album/upload?token=" + user.getToken());
-        Log.e("url", net.getUrl());
+    private void uploadHead(String path) {
+
+        Bitmap bmp = PhotoUtil.getLocalImage(new File(path));
+//        addPhoto.setImageBitmap(bmp);
+        DhNet net = new DhNet(API2.CWBaseurl + "user/" + user.getUserId() + "/album/upload?token=" + user.getToken());
         net.upload(new FileInfo("attach", new File(path)), new NetTask(self) {
 
             @Override
             public void doInUI(Response response, Integer transfer) {
+                hidenProgressDialog();
                 if (response.isSuccess()) {
-                    IocContainer.getShare().get(IDialog.class)
-                            .showToastShort(self, "图片上传成功!");
-                    Intent it = new Intent(MainActivity2.this,
-                            ManageAlbumActivity.class);
-                    it.putExtra("tempPath", tempPath);
-                    startActivity(it);
+//                    JSONObject jo = response.jSONFromData();
+//                    String photoUrl = JSONUtil.getString(jo, "photoUrl");
+                    showToast("上传成功");
+                    String success="上传成功";
+                    EventBus.getDefault().post(success);
+//                    try {
+//                        newAlbm.add(new JSONObject().put("url",photoUrl));
+//                        album.add(0, new JSONObject().put("url", photoUrl));
+//                        mAdapter.setData(album);
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+                } else {
+                    showToast("上传失败,重新上传");
+                    System.out.println("上传失败----------------");
                 }
             }
         });
@@ -522,6 +553,31 @@ public class MainActivity2 extends BaseFragmentActivity implements
 
     public void onEventMainThread(TabEB tab) {
         setTab(0);
+    }
+
+    //附近adapter,随便看看dialog
+    public void onEventMainThread(Integer photo) {
+//        showToast(photo+"photo");
+        switch (photo){
+            case Constant.TAKE_PHOTO:
+                mPhotoPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg").getAbsolutePath();
+                Intent getImageByCamera = new Intent(
+                        "android.media.action.IMAGE_CAPTURE");
+                getImageByCamera.putExtra(MediaStore.EXTRA_OUTPUT,
+                        Uri.fromFile(new File(mPhotoPath)));
+                startActivityForResult(getImageByCamera,
+                        Constant.TAKE_PHOTO);
+            break;
+            case Constant.PICK_PHOTO:
+                mPhotoPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg").getAbsolutePath();
+                Intent intent = new Intent(self,
+                        PhotoSelectorActivity.class);
+                intent.putExtra(PhotoSelectorActivity.KEY_MAX,
+                        10);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivityForResult(intent, Constant.PICK_PHOTO);
+            break;
+        }
     }
 
     public static void asyncFetchGroupsFromServer() {
@@ -668,7 +724,6 @@ public class MainActivity2 extends BaseFragmentActivity implements
                 showToast("接受消息");
             }
         });
-        Log.d("msg", event.getEvent() + "");
 
         switch (event.getEvent()) {
             case EventNewMessage: // 普通消息

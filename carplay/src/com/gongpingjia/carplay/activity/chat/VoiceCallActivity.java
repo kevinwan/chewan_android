@@ -16,6 +16,7 @@ package com.gongpingjia.carplay.activity.chat;
 
 import java.util.UUID;
 
+import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.RingtoneManager;
 import android.media.SoundPool;
@@ -32,6 +33,7 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +42,7 @@ import com.easemob.chat.EMChatManager;
 import com.easemob.exceptions.EMServiceNotReadyException;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.chat.controller.HXSDKHelper;
+import com.gongpingjia.carplay.view.AnimButtonView;
 
 /**
  * 语音通话页面
@@ -47,11 +50,11 @@ import com.gongpingjia.carplay.chat.controller.HXSDKHelper;
  */
 public class VoiceCallActivity extends CallActivity implements OnClickListener {
 	private LinearLayout comingBtnContainer;
-	private Button hangupBtn;
-	private Button refuseBtn;
-	private Button answerBtn;
-	private ImageView muteImage;
-	private ImageView handsFreeImage;
+	private ImageView hangupBtn;
+	private ImageView refuseBtn;
+	private ImageView answerBtn;
+	private RadioButton muteImage;
+	private RadioButton handsFreeImage;
 
 	private boolean isMuteState;
 	private boolean isHandsfreeState;
@@ -62,11 +65,14 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
 	private Handler handler = new Handler();
 	private TextView nickTextView;
 	private TextView durationTextView;
+	private TextView txt_mute;
+	private TextView txt_handsfree;
 	private Chronometer chronometer;
 	String st1;
 	private boolean isAnswered;
-	private LinearLayout voiceContronlLayout;
-
+	private LinearLayout answering_layout,call_layout;
+//	private LinearLayout voiceContronlLayout;
+	AnimButtonView swing_card;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -77,18 +83,23 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
 		setContentView(R.layout.activity_voice_call);
 
 		HXSDKHelper.getInstance().isVoiceCalling = true;
-
-		comingBtnContainer = (LinearLayout) findViewById(R.id.ll_coming_call);
-		refuseBtn = (Button) findViewById(R.id.btn_refuse_call);
-		answerBtn = (Button) findViewById(R.id.btn_answer_call);
-		hangupBtn = (Button) findViewById(R.id.btn_hangup_call);
-		muteImage = (ImageView) findViewById(R.id.iv_mute);
-		handsFreeImage = (ImageView) findViewById(R.id.iv_handsfree);
+		swing_card = (AnimButtonView) findViewById(R.id.swing_card);
+//		comingBtnContainer = (LinearLayout) findViewById(R.id.ll_coming_call);
+		refuseBtn = (ImageView) findViewById(R.id.btn_refuse_call);
+		answerBtn = (ImageView) findViewById(R.id.btn_answer_call);
+		hangupBtn = (ImageView) findViewById(R.id.btn_hangup_call);
+		muteImage = (RadioButton) findViewById(R.id.iv_mute);
+		handsFreeImage = (RadioButton) findViewById(R.id.iv_handsfree);
 		callStateTextView = (TextView) findViewById(R.id.tv_call_state);
 		nickTextView = (TextView) findViewById(R.id.tv_nick);
+		txt_handsfree = (TextView) findViewById(R.id.txt_handsfree);
+		txt_mute = (TextView) findViewById(R.id.txt_mute);
 		durationTextView = (TextView) findViewById(R.id.tv_calling_duration);
 		chronometer = (Chronometer) findViewById(R.id.chronometer);
-		voiceContronlLayout = (LinearLayout) findViewById(R.id.ll_voice_control);
+		//接听、挂断
+		answering_layout = (LinearLayout) findViewById(R.id.answering_layout);
+		//接听后、免提、静音
+		call_layout = (LinearLayout) findViewById(R.id.call_layout);
 
 		refuseBtn.setOnClickListener(this);
 		answerBtn.setOnClickListener(this);
@@ -116,7 +127,8 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
 			soundPool = new SoundPool(1, AudioManager.STREAM_RING, 0);
 			outgoing = soundPool.load(this, R.raw.outgoing, 1);
 
-			comingBtnContainer.setVisibility(View.INVISIBLE);
+//			comingBtnContainer.setVisibility(View.INVISIBLE);
+			answering_layout.setVisibility(View.INVISIBLE);
 			hangupBtn.setVisibility(View.VISIBLE);
 			st1 = getResources()
 					.getString(R.string.Are_connected_to_each_other);
@@ -135,12 +147,13 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
 						R.string.Is_not_yet_connected_to_the_server);
 				runOnUiThread(new Runnable() {
 					public void run() {
-						Toast.makeText(VoiceCallActivity.this, st2, 0).show();
+						Toast.makeText(VoiceCallActivity.this, st2, Toast.LENGTH_SHORT).show();
 					}
 				});
 			}
 		} else { // 有电话进来
-			voiceContronlLayout.setVisibility(View.INVISIBLE);
+//			voiceContronlLayout.setVisibility(View.INVISIBLE);
+			answering_layout.setVisibility(View.INVISIBLE);
 			Uri ringUri = RingtoneManager
 					.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
 			audioManager.setMode(AudioManager.MODE_RINGTONE);
@@ -340,6 +353,8 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
 			if (isInComingCall) {
 				try {
 					callStateTextView.setText("正在接听...");
+
+
 					EMChatManager.getInstance().answerCall();
 					isAnswered = true;
 				} catch (Exception e) {
@@ -350,9 +365,16 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
 					return;
 				}
 			}
-			comingBtnContainer.setVisibility(View.INVISIBLE);
+
+//			comingBtnContainer.setVisibility(View.INVISIBLE);
+			answering_layout.setVisibility(View.INVISIBLE);
 			hangupBtn.setVisibility(View.VISIBLE);
-			voiceContronlLayout.setVisibility(View.VISIBLE);
+
+			answering_layout.setVisibility(View.GONE);
+			call_layout.setVisibility(View.VISIBLE);
+//
+// 			voiceContronlLayout.setVisibility(View.VISIBLE);
+			answering_layout.setVisibility(View.VISIBLE);
 			closeSpeakerOn();
 			break;
 
@@ -372,29 +394,32 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
 				finish();
 			}
 			break;
-
 		case R.id.iv_mute: // 静音开关
 			if (isMuteState) {
 				// 关闭静音
-				muteImage.setImageResource(R.drawable.icon_mute_normal);
+//				muteImage.setImageResource(R.drawable.icon_mute_normal);
 				audioManager.setMicrophoneMute(false);
+				txt_mute.setTextColor(this.getResources().getColor(R.color.text_call_bule));
 				isMuteState = false;
 			} else {
 				// 打开静音
-				muteImage.setImageResource(R.drawable.icon_mute_on);
+//				muteImage.setImageResource(R.drawable.icon_mute_on);
 				audioManager.setMicrophoneMute(true);
+				txt_mute.setTextColor(this.getResources().getColor(R.color.white));
 				isMuteState = true;
 			}
 			break;
 		case R.id.iv_handsfree: // 免提开关
 			if (isHandsfreeState) {
 				// 关闭免提
-				handsFreeImage.setImageResource(R.drawable.icon_speaker_normal);
+//				handsFreeImage.setImageResource(R.drawable.icon_speaker_normal);
 				closeSpeakerOn();
+				txt_handsfree.setTextColor(this.getResources().getColor(R.color.text_call_bule));
 				isHandsfreeState = false;
 			} else {
-				handsFreeImage.setImageResource(R.drawable.icon_speaker_on);
+//				handsFreeImage.setImageResource(R.drawable.icon_speaker_on);
 				openSpeakerOn();
+				txt_handsfree.setTextColor(this.getResources().getColor(R.color.white));
 				isHandsfreeState = true;
 			}
 			break;

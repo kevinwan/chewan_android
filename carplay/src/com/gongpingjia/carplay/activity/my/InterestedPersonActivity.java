@@ -1,6 +1,8 @@
 package com.gongpingjia.carplay.activity.my;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.gongpingjia.carplay.ILoadSuccess;
@@ -13,7 +15,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 /**
- * 感兴趣的人
+ * 感兴趣的
  */
 public class InterestedPersonActivity extends CarPlayListActivity implements PullToRefreshBase.OnRefreshListener<ListView>, ILoadSuccess {
 
@@ -24,7 +26,7 @@ public class InterestedPersonActivity extends CarPlayListActivity implements Pul
     InterestedPersonAdapter adapter;
 
     User user;
-
+    LinearLayout layout,listview_laytou;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,8 +38,9 @@ public class InterestedPersonActivity extends CarPlayListActivity implements Pul
 
         user = User.getInstance();
 
-        setTitle("感兴趣的人");
-
+        setTitle("感兴趣的");
+        layout = (LinearLayout) findViewById(R.id.dyna_empty);
+        listview_laytou = (LinearLayout) findViewById(R.id.listview_laytou);
         listV = (PullToRefreshListView) findViewById(R.id.listview);
         listV.setMode(PullToRefreshBase.Mode.BOTH);
         listV.setOnRefreshListener(this);
@@ -48,8 +51,8 @@ public class InterestedPersonActivity extends CarPlayListActivity implements Pul
         mRecyclerView.setAdapter(adapter);
         setOnLoadSuccess(this);
         fromWhat("data");
-//        setUrl(API2.CWBaseurl + "user/" + user.getUserId() + "/interest/list?token=" + user.getToken());
-        setUrl(API2.CWBaseurl + "user/" + "561f755b0cf24f3b99211d12" + "/interest/list?token=" + "ea9f3e5e-d52c-4be3-9d87-962be9bbb83c");
+        setUrl(API2.CWBaseurl + "user/" + user.getUserId() + "/interest/list?token=" + user.getToken());
+//        setUrl(API2.CWBaseurl + "user/" + "561f755b0cf24f3b99211d12" + "/interest/list?token=" + "ea9f3e5e-d52c-4be3-9d87-962be9bbb83c");
         showNext();
 
     }
@@ -58,6 +61,11 @@ public class InterestedPersonActivity extends CarPlayListActivity implements Pul
     public void loadSuccess() {
         adapter.setData(mVaules);
         listV.onRefreshComplete();
+        if(mVaules.isEmpty()){
+            listview_laytou.setVisibility(View.GONE);
+            layout.setVisibility(View.VISIBLE);
+        }
+
     }
 
     @Override

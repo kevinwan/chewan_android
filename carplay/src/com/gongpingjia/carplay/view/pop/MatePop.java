@@ -14,7 +14,9 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.bean.Matching;
 import com.gongpingjia.carplay.view.AnimButtonView2;
+import com.gongpingjia.carplay.view.dialog.MatchingDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +24,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2015/10/21.
  */
-public class MatePop implements Runnable {
+public class MatePop implements Runnable, View.OnClickListener {
     Activity context;
 
     View contentV;
@@ -36,11 +38,13 @@ public class MatePop implements Runnable {
     RelativeLayout vesselR;
 
     List<AnimButtonView2> list;
+    AnimButtonView2 eatView, sportView, movieView, dogView, songView;
 
 
-    public MatePop(Activity context) {
+    public MatePop(final Activity context) {
         this.context = context;
         contentV = LayoutInflater.from(context).inflate(R.layout.activity_mate, null);
+
         pop = new PopupWindow(contentV, ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT, true);
         // 需要设置一下此参数，点击外边可消失
         pop.setBackgroundDrawable(new BitmapDrawable());
@@ -82,6 +86,18 @@ public class MatePop implements Runnable {
 //                        R.anim.zoom_out);
             }
         });
+
+        eatView = (AnimButtonView2) contentV.findViewById(R.id.eat);
+        sportView = (AnimButtonView2) contentV.findViewById(R.id.exercise);
+        songView = (AnimButtonView2) contentV.findViewById(R.id.sing);
+        dogView = (AnimButtonView2) contentV.findViewById(R.id.dog);
+        movieView = (AnimButtonView2) contentV.findViewById(R.id.film);
+        eatView.setOnClickListener(this);
+        sportView.setOnClickListener(this);
+        songView.setOnClickListener(this);
+        dogView.setOnClickListener(this);
+        movieView.setOnClickListener(this);
+
         new Thread(this).start();
     }
 
@@ -123,4 +139,33 @@ public class MatePop implements Runnable {
     };
 
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.exercise:
+                showMatchingDialog("足球", "篮球", "羽毛球", "桌球", "健身");
+                break;
+            case R.id.dog:
+                break;
+            case R.id.film:
+
+                break;
+            case R.id.sing:
+                break;
+            case R.id.eat:
+                break;
+        }
+    }
+
+    private void showMatchingDialog(String... names) {
+        Matching matching;
+        List<Matching> data = new ArrayList<>();
+        for (String type : names) {
+            matching = new Matching();
+            matching.setName(type);
+            data.add(matching);
+        }
+        MatchingDialog dlg = new MatchingDialog(context, data);
+        dlg.show();
+    }
 }

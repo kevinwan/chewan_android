@@ -26,7 +26,6 @@ import net.duohuo.dhroid.util.ViewUtil;
 
 import org.json.JSONObject;
 
-import java.text.DecimalFormat;
 import java.util.List;
 
 
@@ -102,6 +101,13 @@ public class DyanmicBaseAdapter extends BaseAdapter {
             holder.dyanmic_two = (AnimButtonView) view.findViewById(R.id.dyanmic_two);
             holder.yingyao = (AnimButtonView) view.findViewById(R.id.yingyao);
             holder.hulue = (AnimButtonView) view.findViewById(R.id.hulue);
+            holder.dyanmic_one.startScaleAnimation();
+            holder.dyanmic_two.startScaleAnimation();
+            holder.yingyao.startScaleAnimation();
+            holder.hulue.startScaleAnimation();
+
+
+
 
             holder.activity_distance = (TextView) view.findViewById(R.id.activity_distance);
 
@@ -120,7 +126,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
         JSONObject ob = JSONUtil.getJSONObject(js, "car");
         //活动id
         String activityId = JSONUtil.getString(jo, "activityId");
-        String status = JSONUtil.getString(jo, "status");
+        int status = JSONUtil.getInt(jo, "status");
         final String appointmentId = JSONUtil.getString(jo, "appointmentId");
 
 //        View[] views = {holder.dyanmic_one, holder.dyanmic_two, holder.yingyao_layout, holder.yingyaohou};
@@ -133,10 +139,10 @@ public class DyanmicBaseAdapter extends BaseAdapter {
         CarPlayUtil.bindActiveButton2("邀请中", appointmentId, mContext,  holder.yingyao_layout, holder.yingyaohou);
 
 
-        if (status.equals("应邀")) {
+        if (status == 2) {
             holder.yingyao_layout.setVisibility(View.GONE);
             holder.yingyaohou.setVisibility(View.VISIBLE);
-        } else if (status.equals("邀请中")) {
+        } else if (status== 1) {
             holder.yingyao_layout.setVisibility(View.VISIBLE);
             holder.yingyaohou.setVisibility(View.GONE);
         }
@@ -153,8 +159,14 @@ public class DyanmicBaseAdapter extends BaseAdapter {
         String name = JSONUtil.getString(js, "nickname");
         String gender = JSONUtil.getString(js, "gender");
 
-        String jied = JSONUtil.getString(json, "street");
-        holder.activity_place.setText(jied);
+//        String jied = JSONUtil.getString(json, "street");
+        if(json ==null){
+            holder.activity_place.setVisibility(View.GONE);
+        }else{
+            holder.activity_place.setVisibility(View.VISIBLE);
+            holder.activity_place.setText(JSONUtil.getString(json, "province") + JSONUtil.getString(json, "city") + JSONUtil.getString(json, "district") + JSONUtil.getString(json, "street"));
+        }
+
 
         int distance = (int)Math.floor(JSONUtil.getDouble(js, "distance"));
 //        DecimalFormat df = new DecimalFormat("0.00");
@@ -184,7 +196,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
         } else {
             holder.travelmode.setText("");
         }
-        ViewUtil.bindNetImage(holder.activity_beijing, JSONUtil.getString(js, "avatar"), "default");
+        ViewUtil.bindNetImage(holder.activity_beijing, JSONUtil.getString(js, "avatar"), "back");
 
         holder.yingyao.setOnClickListener(new View.OnClickListener() {
             @Override

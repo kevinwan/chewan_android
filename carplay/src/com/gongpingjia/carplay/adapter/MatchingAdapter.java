@@ -48,14 +48,18 @@ public class MatchingAdapter extends BaseAdapter {
         final CheckBox radioButton = (CheckBox) view.findViewById(R.id.radio_matching);
         TextView textView = (TextView) view.findViewById(R.id.tv_matching_content);
         textView.setText(mDatas.get(position).getName());
-
         radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                //清除其他的选中状态
+                for (Matching match : mDatas) {
+                    match.setIsChecked(false);
+                }
                 mDatas.get(position).setIsChecked(isChecked);
-                radioButton.setBackgroundResource(isChecked ? R.drawable.radio_bubble_checked : R.drawable.radio_bubble_normal);
+                notifyDataSetChanged();
             }
         });
+        radioButton.setBackgroundResource(mDatas.get(position).isChecked() ? R.drawable.radio_bubble_checked : R.drawable.radio_bubble_normal);
         return view;
     }
 }

@@ -20,6 +20,7 @@ import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.view.RoundImageView;
+import com.gongpingjia.carplay.view.dialog.LookAroundDialog;
 
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
@@ -117,13 +118,24 @@ public class LookAroundPop {
 
 
                         try {
-                            JSONObject jo = JSONUtil.getJSONObjectAt(jsa, position).getJSONObject("organizer");
+                            final JSONObject json = JSONUtil.getJSONObjectAt(jsa, position);
+                            JSONObject jo = json.getJSONObject("organizer");
                             ViewUtil.bindNetImage(img, jo.getString("avatar"), "head");
-                            ViewUtil.bindView(txt, JSONUtil.getJSONObjectAt(jsa, position).getString("type"));
+                            ViewUtil.bindView(txt, json.getString("type"));
+
+                            img.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    LookAroundDialog dialog = new LookAroundDialog(context, json);
+                                    dialog.show();
+                                    ;
+                                }
+                            });
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                         new mHandler((LinearLayout) linear.getChildAt(j)).sendEmptyMessageDelayed(0, position * 1000);
+
                         position = position + 1;
                     }
 

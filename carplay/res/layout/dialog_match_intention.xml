@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/black40" />
-
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,21 +23,23 @@
             android:numColumns="3"
             android:verticalSpacing="10dp" />
 
-        <EditText
+        <TextView
+            android:id="@+id/tv_destination"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
             android:layout_marginTop="18dp"
             android:background="@drawable/edittext_bg"
-            android:hint="说句话打动妹子  (选填)"
+            android:gravity="center"
+            android:hint="什么地方(选填)"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:textColor="@color/text_black"
-            android:textColorHint="@color/text_grey"
             android:textSize="@dimen/text_small" />
 
         <CheckBox
+            android:id="@+id/chk_pick"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -57,6 +53,7 @@
 
 
         <Button
+            android:id="@+id/btn_match"
             android:layout_width="160dp"
             android:layout_height="50dp"
             android:layout_marginBottom="30dp"

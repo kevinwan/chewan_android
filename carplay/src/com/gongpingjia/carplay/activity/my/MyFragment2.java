@@ -1,13 +1,21 @@
 package com.gongpingjia.carplay.activity.my;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,17 +23,33 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.activity.main.MainActivity2;
+import com.gongpingjia.carplay.activity.main.PhotoSelectorActivity;
+import com.gongpingjia.carplay.adapter.MyFragmentAlbumAdapter;
 import com.gongpingjia.carplay.api.API2;
+import com.gongpingjia.carplay.api.Constant;
+import com.gongpingjia.carplay.bean.PhotoState;
 import com.gongpingjia.carplay.bean.User;
+import com.gongpingjia.carplay.photo.model.PhotoModel;
 import com.gongpingjia.carplay.view.RoundImageView;
 
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
+import net.duohuo.dhroid.net.upload.FileInfo;
+import net.duohuo.dhroid.util.PhotoUtil;
 import net.duohuo.dhroid.util.ViewUtil;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 
 /**
@@ -36,11 +60,12 @@ public class MyFragment2 extends Fragment implements OnClickListener {
     View mainV;
     static MyFragment2 instance;
     private RoundImageView headI;
-    private ImageView sexI, photo_bgI,addPhoto;
+    private ImageView sexI, photo_bgI, addPhoto;
     private TextView attestationT, nameT, ageT, completenessT, txtphotoAuthStatusT, attestation_txtT;
     private Button perfectBtn;
     private RelativeLayout sexbgR;
     private LinearLayout myphotoL, myactiveL, myattentionL, headattestationL, carattestationL;
+    private RecyclerView recyclerView;
 
     public static MyFragment2 getInstance() {
         if (instance == null) {
@@ -54,15 +79,36 @@ public class MyFragment2 extends Fragment implements OnClickListener {
 
     User user;
 
+    // 图片缓存根目录
+    private File mCacheDir;
+    private String mPhotoPath;
+
+    MyFragmentAlbumAdapter mAdapter;
+
+    private List<PhotoState> mPhotoStates;
+
+    List<JSONObject> album;
+
+    List<JSONObject> newAlbm;
+    int age;
+    String name,gender,headimg,photoAuthStatus,licenseAuthStatus,carbradn,carlogo,carmodel,carslug;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         mainV = inflater.inflate(R.layout.fragment_my2, null);
         mContext = getActivity();
+
+        EventBus.getDefault().register(this);
         user = User.getInstance();
+
+        album = new ArrayList<JSONObject>();
+        newAlbm = new ArrayList<JSONObject>();
+        mCacheDir = new File(mContext.getExternalCacheDir(), "CarPlay");
+        mCacheDir.mkdirs();
         initView();
         return mainV;
+
     }
 
     private void initView() {
@@ -71,6 +117,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
         nameT = (TextView) mainV.findViewById(R.id.name);
         sexbgR = (RelativeLayout) mainV.findViewById(R.id.layout_sex_and_age);
         sexI = (ImageView) mainV.findViewById(R.id.iv_sex);
+
         ageT = (TextView) mainV.findViewById(R.id.tv_age);
         completenessT = (TextView) mainV.findViewById(R.id.txt_completeness);
         perfectBtn = (Button) mainV.findViewById(R.id.perfect);
@@ -83,6 +130,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
         txtphotoAuthStatusT = (TextView) mainV.findViewById(R.id.txtphotoAuthStatus);
         attestation_txtT = (TextView) mainV.findViewById(R.id.attestation_txt);
         addPhoto = (ImageView) mainV.findViewById(R.id.addphoto);
+        recyclerView = (RecyclerView) mainV.findViewById(R.id.recyclerView);
 
         perfectBtn.setOnClickListener(this);
         myactiveL.setOnClickListener(this);
@@ -92,8 +140,27 @@ public class MyFragment2 extends Fragment implements OnClickListener {
         headI.setOnClickListener(this);
         addPhoto.setOnClickListener(this);
 
+        LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        mAdapter = new MyFragmentAlbumAdapter(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(mAdapter);
         getMyDetails();
-//        }
+
+    }
+
+    private void getAlbum(JSONArray albumJsa) {
+        album.clear();
+        if (albumJsa != null) {
+            for (int i = 0; i < albumJsa.length(); i++) {
+                try {
+                    album.add(albumJsa.getJSONObject(i));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            mAdapter.setData(album);
+        }
     }
 
 
@@ -105,12 +172,17 @@ public class MyFragment2 extends Fragment implements OnClickListener {
 
             @Override
             public void doInUI(Response response, Integer transfer) {
-                System.out.println(user.getUserId()+"---------"+user.getToken());
+                System.out.println(user.getUserId() + "---------" + user.getToken());
                 if (response.isSuccess()) {
                     JSONObject jo = response.jSONFromData();
-
+                    JSONObject car = JSONUtil.getJSONObject(jo, "car");
+                     carbradn = JSONUtil.getString(car, "brand");
+                     carlogo = JSONUtil.getString(car, "logo");
+                     carmodel = JSONUtil.getString(car, "model");
+                     carslug = JSONUtil.getString(car,"slug");
+                     name = JSONUtil.getString(jo, "nickname");
                     ViewUtil.bindView(nameT, JSONUtil.getString(jo, "nickname"));
-                    String gender = JSONUtil.getString(jo, "gender");
+                     gender = JSONUtil.getString(jo, "gender");
                     if (("男").equals(gender)) {
                         sexbgR.setBackgroundResource(R.drawable.radio_sex_man_normal);
                         sexI.setBackgroundResource(R.drawable.icon_man3x);
@@ -118,11 +190,12 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                         sexbgR.setBackgroundResource(R.drawable.radion_sex_woman_normal);
                         sexI.setBackgroundResource(R.drawable.icon_woman3x);
                     }
-                    String headimg = JSONUtil.getString(jo, "avatar");
+                     headimg = JSONUtil.getString(jo, "avatar");
 
                     ViewUtil.bindNetImage(headI, headimg, "head");
                     ViewUtil.bindNetImage(photo_bgI, headimg, "default");
 //                    photo_bgI.setBackgroundResource(R.drawable.vp_third);
+                     age = JSONUtil.getInt(jo, "age");
                     ViewUtil.bindView(ageT, JSONUtil.getInt(jo, "age"));
 //                    //设置高斯模糊
 //                    Fglass.blur(ageT, mainV.findViewById(R.id.photo_bg_txt), 2, 8);
@@ -135,8 +208,8 @@ public class MyFragment2 extends Fragment implements OnClickListener {
 //                            .capture(photo_bgI)
 //                            .into((ImageView) photo_bgI);
 
-                    String photoAuthStatus = JSONUtil.getString(jo, "photoAuthStatus");
-                    String licenseAuthStatus = JSONUtil.getString(jo, "licenseAuthStatus");
+                     photoAuthStatus = JSONUtil.getString(jo, "photoAuthStatus");
+                     licenseAuthStatus = JSONUtil.getString(jo, "licenseAuthStatus");
                     ViewUtil.bindView(txtphotoAuthStatusT, JSONUtil.getString(jo, "photoAuthStatus"));
                     ViewUtil.bindView(attestation_txtT, JSONUtil.getString(jo, "licenseAuthStatus"));
                     //头像认证
@@ -162,16 +235,18 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                     } else if (licenseAuthStatus.equals("认证中")) {
                         carattestationL.setEnabled(true);
                     }
-                    if (licenseAuthStatus.equals("未认证")&&photoAuthStatus.equals("未认证")){
+                    if (licenseAuthStatus.equals("未认证") && photoAuthStatus.equals("未认证")) {
                         completenessT.setText("资料完成度60%,越高越吸引人");
-                    }else if(licenseAuthStatus.equals("认证中")&&photoAuthStatus.equals("认证中")){
+                    } else if (licenseAuthStatus.equals("认证中") && photoAuthStatus.equals("认证中")) {
                         completenessT.setText("资料完成度60%,越高越吸引人");
-                    } else if(licenseAuthStatus.equals("认证通过")||photoAuthStatus.equals("认证通过")){
+                    } else if (licenseAuthStatus.equals("认证通过") || photoAuthStatus.equals("认证通过")) {
                         completenessT.setText("资料完成度80%,越高越吸引人");
-                    }else if(licenseAuthStatus.equals("认证通过")&&photoAuthStatus.equals("认证通过")){
+                    } else if (licenseAuthStatus.equals("认证通过") && photoAuthStatus.equals("认证通过")) {
                         completenessT.setText("资料完成度100%,越高越吸引人");
                     }
 
+                    JSONArray albumJsa = JSONUtil.getJSONArray(jo, "album");
+                    getAlbum(albumJsa);
 
                 }
             }
@@ -186,15 +261,22 @@ public class MyFragment2 extends Fragment implements OnClickListener {
             //编辑资料
             case R.id.head:
                 it = new Intent(mContext, EditPersonalInfoActivity2.class);
+                it.putExtra("name",name);
+                it.putExtra("gender",gender);
+                it.putExtra("headimg",headimg);
+                it.putExtra("photoAuthStatus",photoAuthStatus);
+                it.putExtra("licenseAuthStatus",licenseAuthStatus);
+//                it.putExtra("carbradn",carbradn);
+//                it.putExtra("carlogo",carlogo);
+//                it.putExtra("carmodel",carmodel);
+//                it.putExtra("carslug",carslug);
+                it.putExtra("age",age);
                 startActivity(it);
                 break;
             //完善信息
             case R.id.perfect:
                 it = new Intent(getActivity(), EditPersonalInfoActivity2.class);
                 startActivity(it);
-//                NearbyFilterDialog nearbyFilterDialog = new NearbyFilterDialog(getActivity());
-//                nearbyFilterDialog.show();
-//                getMyDetails();
                 break;
             //我的活动
             case R.id.myactive:
@@ -218,14 +300,118 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                 break;
             //上传相册
             case R.id.addphoto:
-
+                newAlbm.clear();
+                mPhotoPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg").getAbsolutePath();
+                final File tempFile = new File(mPhotoPath);
+                final CharSequence[] items = {"相册", "拍照"};
+                AlertDialog dlg = new AlertDialog.Builder(getActivity()).setTitle("选择图片")
+                        .setItems(items, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int item) {
+                                if (item == 1) {
+                                    Intent getImageByCamera = new Intent(
+                                            "android.media.action.IMAGE_CAPTURE");
+                                    getImageByCamera.putExtra(MediaStore.EXTRA_OUTPUT,
+                                            Uri.fromFile(tempFile));
+                                    startActivityForResult(getImageByCamera,
+                                            Constant.TAKE_PHOTO);
+                                } else {
+                                    Intent intent = new Intent(getActivity(),
+                                            PhotoSelectorActivity.class);
+                                    intent.putExtra(PhotoSelectorActivity.KEY_MAX,
+                                            9);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                    startActivityForResult(intent, Constant.PICK_PHOTO);
+                                }
+                            }
+                        }).create();
+                Window window = dlg.getWindow();
+                window.setWindowAnimations(R.style.mystyle);
+                dlg.show();
                 break;
+
 
             default:
                 break;
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == getActivity().RESULT_OK) {
+            switch (requestCode) {
+                case Constant.PICK_PHOTO:
+                    ((MainActivity2) getActivity()).showProgressDialog("图片上传中...");
+                    if (data != null && data.getExtras() != null) {
+                        @SuppressWarnings("unchecked")
+                        List<PhotoModel> photos = (List<PhotoModel>) data.getExtras().getSerializable("photos");
+                        if (photos == null || photos.isEmpty()) {
+                            ((MainActivity2) getActivity()).showToast("没有选择图片!");
+                        } else {
+                            for (int i = 0; i < photos.size(); i++) {
+                                String newPhotoPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg")
+                                        .getAbsolutePath();
+                                Bitmap btp = PhotoUtil.getLocalImage(new File(photos.get(i).getOriginalPath()));
+                                PhotoUtil.saveLocalImage(btp, new File(newPhotoPath));
+                                uploadHead(newPhotoPath);
+                            }
+                        }
+                    }
+                    break;
+                case Constant.TAKE_PHOTO:
+                    Bitmap btp1 = PhotoUtil.getLocalImage(new File(mPhotoPath));
+                    String newPath = new File(mCacheDir, System.currentTimeMillis()
+                            + ".jpg").getAbsolutePath();
+                    int degree = PhotoUtil.getBitmapDegree(mPhotoPath);
+                    PhotoUtil.saveLocalImage(btp1, new File(newPath), degree);
+                    btp1.recycle();
+                    ((MainActivity2) getActivity()).showProgressDialog("上传头像中...");
+                    uploadHead(newPath);
+                    break;
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void uploadHead(String path) {
+
+        Bitmap bmp = PhotoUtil.getLocalImage(new File(path));
+//        addPhoto.setImageBitmap(bmp);
+        DhNet net = new DhNet(API2.CWBaseurl + "user/" + user.getUserId() + "/album/upload?token=" + user.getToken());
+        net.upload(new FileInfo("attach", new File(path)), new NetTask(mContext) {
+
+            @Override
+            public void doInUI(Response response, Integer transfer) {
+                ((MainActivity2) getActivity()).hidenProgressDialog();
+                if (response.isSuccess()) {
+                    JSONObject jo = response.jSONFromData();
+                    String photoUrl = JSONUtil.getString(jo, "photoUrl");
+                    ((MainActivity2) getActivity()).showToast("上传成功");
+
+                    try {
+//                        newAlbm.add(new JSONObject().put("url",photoUrl));
+                        album.add(0, new JSONObject().put("url", photoUrl));
+                        mAdapter.setData(album);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    ((MainActivity2) getActivity()).showToast("上传失败,重新上传");
+                    System.out.println("上传失败----------------");
+                }
+            }
+        });
+    }
 
 
+    @Override
+    public void onDestroy(){
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
+
+    public void onEventMainThread(String success) {
+        if ("上传成功".equals(success)){
+            getMyDetails();
+        }
+    }
 }
