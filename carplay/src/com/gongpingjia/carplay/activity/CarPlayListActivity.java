@@ -158,6 +158,11 @@ public class CarPlayListActivity extends CarPlayBaseActivity {
                 if (onLoadSuccess != null && !response.isCache()) {
                     onLoadSuccess.loadSuccess();
                 }
+
+                if (onLoadSuccess != null && !response.isCache() && ignore == 0) {
+                    onLoadSuccess.loadSuccessOnFirst();
+                }
+
             }
         };
     }
