@@ -127,6 +127,7 @@ public class CarPlayUtil {
 
     }
 
+
 //    public static void bindActiveButton(String type, String appointmentId, Context context, View... activeButton) {
 //        View[] views = activeButton;
 //        View[] viewtwo = activeButton;
@@ -230,6 +231,17 @@ public class CarPlayUtil {
             }
         }
     }
+
+
+//    public static void bindSexView(String gender, View sexBg) {
+//        if (!TextUtils.isEmpty(gender)) {
+//            if (gender.equals("男")) {
+//                sexBg.setBackgroundResource(R.drawable.man);
+//            } else {
+//                sexBg.setBackgroundResource(R.drawable.woman);
+//            }
+//        }
+//    }
 
     public static void bindDriveAge(JSONObject jo, ImageView carLogoI,
                                     TextView driveAgeT) {

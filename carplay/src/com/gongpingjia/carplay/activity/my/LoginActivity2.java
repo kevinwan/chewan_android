@@ -171,7 +171,7 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
 //            showToast("手机号或密码不能为空");
 //            return;
 //        }
-        final String num = "18000000000";
+        final String num = "18000000001";
         final String password = "123456";
 
 
@@ -190,15 +190,14 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
                             json, num);
                     User user = User.getInstance();
                     user.setPhone(mEditNum.getText().toString().trim());
-                    try {
-                        user.setUserId(json.getString("userId"));
-                        user.setToken(json.getString("token"));
-                        user.setBrand(json.getString("brand"));
-                        user.setBrandLogo(json.getString("brandLogo"));
-                        user.setHeadUrl(json.getString("avatar"));
-                        user.setNickName(json.getString("nickname"));
-                        user.setModel(json.getString("model"));
-                        User.getInstance().setLogin(true);
+                    //                        user.setUserId(json.getString("userId"));
+//                        user.setToken(json.getString("token"));
+//                        user.setBrand(json.getString("brand"));
+//                        user.setBrandLogo(json.getString("brandLogo"));
+//                        user.setHeadUrl(json.getString("avatar"));
+//                        user.setNickName(json.getString("nickname"));
+//                        user.setModel(json.getString("model"));
+//                        User.getInstance().setLogin(true);
 
 //                            LoginEB loginEB = new LoginEB();
 //                            loginEB.setIslogin(true);
@@ -207,9 +206,6 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
 //                            loginHX(MD5Util.string2MD5(JSONUtil.getString(json, "userId")),
 //                                    MD5Util.string2MD5(per.thirdId + per.channel + "com.gongpingjia.carplay"),
 //                                    json);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
                 } else {
                     hidenProgressDialog();
                 }
@@ -399,7 +395,6 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
                     hidenProgressDialog();
                     runOnUiThread(new Runnable() {
                         public void run() {
-                            DemoHXSDKHelper.getInstance().logout(true, null);
                             showToast("登录成功!");
                         }
                     });

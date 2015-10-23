@@ -106,13 +106,11 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
     public SimpleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(mContext).inflate(R.layout.list_item_nearby, parent, false);
 
-        Log.d("msg", "onCreateViewHolder");
         return new SimpleViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(SimpleViewHolder holder, int position) {
-        Log.d("msg", "onBindViewHolder");
 
 //        holder.title.setText(mItems.get(position).toString());
         final JSONObject jo = getItem(position);

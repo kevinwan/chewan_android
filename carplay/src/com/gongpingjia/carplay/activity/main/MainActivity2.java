@@ -33,7 +33,6 @@ import com.easemob.EMNotifierEvent;
 import com.easemob.chat.CmdMessageBody;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMConversation;
-import com.easemob.chat.EMConversation.EMConversationType;
 import com.easemob.chat.EMGroup;
 import com.easemob.chat.EMGroupManager;
 import com.easemob.chat.EMMessage;
@@ -160,6 +159,9 @@ public class MainActivity2 extends BaseFragmentActivity implements
                 new EMNotifierEvent.Event[]{
                         EMNotifierEvent.Event.EventNewMessage,
                         EMNotifierEvent.Event.EventOfflineMessage,
+                        EMNotifierEvent.Event.EventNewCMDMessage,
+                        EMNotifierEvent.Event.EventDeliveryAck,
+                        EMNotifierEvent.Event.EventReadAck,
                         EMNotifierEvent.Event.EventConversationListChanged});
 
         // asyncFetchGroupsFromServer();
@@ -660,11 +662,20 @@ public class MainActivity2 extends BaseFragmentActivity implements
 
     @Override
     public void onEvent(EMNotifierEvent event) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                showToast("接受消息");
+            }
+        });
+        Log.d("msg", event.getEvent() + "");
+
         switch (event.getEvent()) {
             case EventNewMessage: // 普通消息
             {
 
                 EMMessage message = (EMMessage) event.getData();
+
                 runOnUiThread(new Runnable() {
                     public void run() {
                         updateUnreadLabel();
@@ -710,10 +721,9 @@ public class MainActivity2 extends BaseFragmentActivity implements
         unreadMsgCountTotal = EMChatManager.getInstance().getUnreadMsgsCount();
         for (EMConversation conversation : EMChatManager.getInstance()
                 .getAllConversations().values()) {
-            if (conversation.getType() == EMConversationType.GroupChat)
-                chatroomUnreadMsgCount = chatroomUnreadMsgCount
-                        + conversation.getUnreadMsgCount();
-
+//            if (conversation.getType() == EMConversationType.GroupChat)
+            chatroomUnreadMsgCount = chatroomUnreadMsgCount
+                    + conversation.getUnreadMsgCount();
             chatGroupCount = chatGroupCount + conversation.getUnreadMsgCount();
         }
         return chatGroupCount;
