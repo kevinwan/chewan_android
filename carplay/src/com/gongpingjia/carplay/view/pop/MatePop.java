@@ -1,6 +1,7 @@
 package com.gongpingjia.carplay.view.pop;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,6 +18,7 @@ import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.bean.Matching;
 import com.gongpingjia.carplay.view.AnimButtonView2;
 import com.gongpingjia.carplay.view.dialog.MatchingDialog;
+import com.gongpingjia.carplay.view.dialog.MateLayerDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +40,7 @@ public class MatePop implements Runnable, View.OnClickListener {
     RelativeLayout vesselR;
 
     List<AnimButtonView2> list;
-    AnimButtonView2 eatView, sportView, movieView, dogView, songView;
+    AnimButtonView2 eatView, sportView, movieView, dogView, songView, nightEatView, nightShopView, shopView, coffeeView, beerView;
 
 
     public MatePop(final Activity context) {
@@ -92,6 +94,19 @@ public class MatePop implements Runnable, View.OnClickListener {
         songView = (AnimButtonView2) contentV.findViewById(R.id.sing);
         dogView = (AnimButtonView2) contentV.findViewById(R.id.dog);
         movieView = (AnimButtonView2) contentV.findViewById(R.id.film);
+
+        shopView = (AnimButtonView2) contentV.findViewById(R.id.shop);
+        nightEatView = (AnimButtonView2) contentV.findViewById(R.id.night_eat);
+        nightShopView = (AnimButtonView2) contentV.findViewById(R.id.night_shop);
+        coffeeView = (AnimButtonView2) contentV.findViewById(R.id.coffee);
+        beerView = (AnimButtonView2) contentV.findViewById(R.id.beer);
+
+        shopView.setOnClickListener(this);
+        nightShopView.setOnClickListener(this);
+        nightEatView.setOnClickListener(this);
+        coffeeView.setOnClickListener(this);
+        beerView.setOnClickListener(this);
+
         eatView.setOnClickListener(this);
         sportView.setOnClickListener(this);
         songView.setOnClickListener(this);
@@ -139,24 +154,50 @@ public class MatePop implements Runnable, View.OnClickListener {
     };
 
 
+    /**
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.exercise:
                 showMatchingDialog("足球", "篮球", "羽毛球", "桌球", "健身");
                 break;
-            case R.id.dog:
-                break;
-            case R.id.film:
 
+            //不需要付费类型
+            case R.id.dog:
+                showMatchingDialog("遛狗");
+                break;
+            case R.id.shop:
+                showMatchingDialog("购物");
+                break;
+
+            //需要付费类型
+            case R.id.film:
+                showMatchingDialog(context, "看电影");
                 break;
             case R.id.sing:
+                showMatchingDialog(context, "唱歌");
                 break;
             case R.id.eat:
+                showMatchingDialog(context, "吃饭");
+                break;
+            case R.id.coffee:
+                showMatchingDialog(context, "咖啡");
+                break;
+            case R.id.night_eat:
+                showMatchingDialog(context, "夜宵");
+                break;
+            case R.id.night_shop:
+                showMatchingDialog(context, "夜店");
+                break;
+            case R.id.beer:
+                showMatchingDialog(context, "喝酒");
                 break;
         }
     }
 
+    //发布匹配意向一个参数直接代表活动类型，多个参数代表可以选择的运动类型
     private void showMatchingDialog(String... names) {
         Matching matching;
         List<Matching> data = new ArrayList<>();
@@ -165,7 +206,16 @@ public class MatePop implements Runnable, View.OnClickListener {
             matching.setName(type);
             data.add(matching);
         }
+        if (data.size() == 1) {
+            data.get(0).setIsChecked(true);
+        }
         MatchingDialog dlg = new MatchingDialog(context, data);
         dlg.show();
     }
+
+    private void showMatchingDialog(Context context, String type) {
+        MateLayerDialog dlg = new MateLayerDialog(context, type);
+        dlg.show();
+    }
+
 }

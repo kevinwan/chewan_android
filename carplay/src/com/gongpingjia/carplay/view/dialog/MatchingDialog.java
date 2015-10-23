@@ -30,12 +30,9 @@ import java.util.Map;
  */
 public class MatchingDialog extends BaseAlertDialog {
 
-    private GridView gridView;
     private List<Matching> mDatas;
-    private MatchingAdapter mAdapter;
     private CheckBox checkBox;
     private TextView textDestination;
-    private Button btnMatch;
     private Context context;
 
     public MatchingDialog(Context context, int theme) {
@@ -57,11 +54,18 @@ public class MatchingDialog extends BaseAlertDialog {
 
         checkBox = (CheckBox) findViewById(R.id.chk_pick);
         textDestination = (TextView) findViewById(R.id.tv_destination);
-        btnMatch = (Button) findViewById(R.id.btn_match);
+        Button btnMatch = (Button) findViewById(R.id.btn_match);
 
-        gridView = (GridView) findViewById(R.id.gv_matching);
-        mAdapter = new MatchingAdapter(getContext(), mDatas);
-        gridView.setAdapter(mAdapter);
+        GridView gridView = (GridView) findViewById(R.id.gv_matching);
+        MatchingAdapter mAdapter = new MatchingAdapter(getContext(), mDatas);
+
+        //只传一个参数时，直接表示类型，不需要选择
+        if (mDatas.size() == 1) {
+            //隐藏GridView
+            gridView.setVisibility(View.GONE);
+        } else {
+            gridView.setAdapter(mAdapter);
+        }
 
         btnMatch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,6 +127,7 @@ public class MatchingDialog extends BaseAlertDialog {
                 dhNet.doPost(new NetTask(context) {
                     @Override
                     public void doInUI(Response response, Integer transfer) {
+                        dismiss();
                         if (response.isSuccess()) {
                             Toast.makeText(context, "发布成功", Toast.LENGTH_SHORT).show();
                         }
