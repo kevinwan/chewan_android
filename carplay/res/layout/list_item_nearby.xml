@@ -5,6 +5,10 @@
     android:layout_height="wrap_content"
     android:paddingLeft="10dp"
     android:paddingRight="10dp">
+    <com.andexert.library.RippleView
+        rv_centered="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
 
     <LinearLayout
@@ -191,6 +195,6 @@
                 android:src="@drawable/distance_icon" />
         </RelativeLayout>
     </LinearLayout>
-
+    </com.andexert.library.RippleView>
 
 </LinearLayout>
