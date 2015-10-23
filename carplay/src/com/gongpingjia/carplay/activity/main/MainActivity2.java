@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -46,7 +45,6 @@ import com.gongpingjia.carplay.activity.my.LoginActivity;
 import com.gongpingjia.carplay.activity.my.ManageAlbumActivity;
 import com.gongpingjia.carplay.activity.my.MyFragment2;
 import com.gongpingjia.carplay.api.API;
-import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.FilterPreference2;
 import com.gongpingjia.carplay.bean.TabEB;
 import com.gongpingjia.carplay.bean.User;
@@ -67,7 +65,6 @@ import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.net.upload.FileInfo;
-import net.duohuo.dhroid.util.PhotoUtil;
 
 import org.json.JSONObject;
 
@@ -126,7 +123,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
     TextView rightT;
 
     FilterPreference2 pre;
-
+    private ImageView right_icon;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -174,6 +171,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
         tabV = (LinearLayout) findViewById(R.id.tab);
         titleBar = findViewById(R.id.titlebar);
         rightT = (TextView) findViewById(R.id.right_text);
+
         //筛选
         rightT.setOnClickListener(new OnClickListener() {
             @Override
@@ -192,6 +190,15 @@ public class MainActivity2 extends BaseFragmentActivity implements
                         EventBus.getDefault().post(pre);
                     }
                 });
+            }
+        });
+        right_icon = (ImageView)findViewById(R.id.right_icon);
+        right_icon.setImageResource(R.drawable.setting);
+        right_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //设置
+                showToast("设置");
             }
         });
         initTab();
@@ -263,6 +270,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
 
 
         rightT.setVisibility(index == 0 ? View.VISIBLE : View.GONE);
+        right_icon.setVisibility(index == 4 ? View.VISIBLE : View.GONE);
 
         for (int i = 0; i < tabV.getChildCount(); i++) {
             View childV = tabV.getChildAt(i);
@@ -271,7 +279,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
             TextView text = (TextView) childV.findViewById(R.id.text);
             if (index == i) {
                 text.setTextColor(getResources().getColor(
-                        R.color.text_blue_light));
+                        R.color.xiangce_rad));
                 switch (index) {
                     case 0:
                         setTitle("附近");
@@ -295,8 +303,10 @@ public class MainActivity2 extends BaseFragmentActivity implements
                         break;
                     case 4:
                         setTitle("我的");
+
                         switchContent(MyFragment2.getInstance());
                         img.setImageResource(R.drawable.icon_nav_mine_f);
+
                         break;
 
 
@@ -320,6 +330,8 @@ public class MainActivity2 extends BaseFragmentActivity implements
                         break;
                     case 4:
                         img.setImageResource(R.drawable.icon_nav_mine);
+
+
                         break;
 
 
@@ -445,40 +457,43 @@ public class MainActivity2 extends BaseFragmentActivity implements
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // TODO Auto-generated method stub
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            switch (requestCode) {
-                // case Constant.TAKE_PHOTO:
-                // String newPath = new File(mCacheDir, System.currentTimeMillis()
-                // + ".jpg").getAbsolutePath();
-                // String path = PhotoUtil.onPhotoFromCamera(self,
-                // Constant.ZOOM_PIC, tempPath, 3, 2, 1000, newPath);
-                // tempPath = path;
-                // break;
-                // case Constant.PICK_PHOTO:
-                // PhotoUtil.onPhotoFromPick(self, Constant.ZOOM_PIC, tempPath,
-                // data, 3, 2, 1000);
-                // break;
-                // case Constant.ZOOM_PIC:
-                // upLoadPic(tempPath);
-                // break;
 
-                case Constant.PICK_PHOTO:
-                    Bitmap btp = PhotoUtil.checkImage(self, data);
-                    PhotoUtil.saveLocalImage(btp, new File(tempPath));
-                    btp.recycle();
-                    upLoadPic(tempPath);
-                    break;
-                case Constant.TAKE_PHOTO:
-                    Bitmap btp1 = PhotoUtil.getLocalImage(new File(tempPath));
-                    String newPath = new File(mCacheDir, System.currentTimeMillis()
-                            + ".jpg").getAbsolutePath();
-                    int degree = PhotoUtil.getBitmapDegree(tempPath);
-                    PhotoUtil.saveLocalImage(btp1, new File(newPath), degree);
-                    btp1.recycle();
-                    upLoadPic(newPath);
-                    break;
-            }
-        }
+
+        MyFragment2.getInstance().onActivityResult(requestCode, resultCode, data);
+//        if (resultCode == RESULT_OK) {
+//            switch (requestCode) {
+//                // case Constant.TAKE_PHOTO:
+//                // String newPath = new File(mCacheDir, System.currentTimeMillis()
+//                // + ".jpg").getAbsolutePath();
+//                // String path = PhotoUtil.onPhotoFromCamera(self,
+//                // Constant.ZOOM_PIC, tempPath, 3, 2, 1000, newPath);
+//                // tempPath = path;
+//                // break;
+//                // case Constant.PICK_PHOTO:
+//                // PhotoUtil.onPhotoFromPick(self, Constant.ZOOM_PIC, tempPath,
+//                // data, 3, 2, 1000);
+//                // break;
+//                // case Constant.ZOOM_PIC:
+//                // upLoadPic(tempPath);
+//                // break;
+//
+//                case Constant.PICK_PHOTO:
+//                    Bitmap btp = PhotoUtil.checkImage(self, data);
+//                    PhotoUtil.saveLocalImage(btp, new File(tempPath));
+//                    btp.recycle();
+//                    upLoadPic(tempPath);
+//                    break;
+//                case Constant.TAKE_PHOTO:
+//                    Bitmap btp1 = PhotoUtil.getLocalImage(new File(tempPath));
+//                    String newPath = new File(mCacheDir, System.currentTimeMillis()
+//                            + ".jpg").getAbsolutePath();
+//                    int degree = PhotoUtil.getBitmapDegree(tempPath);
+//                    PhotoUtil.saveLocalImage(btp1, new File(newPath), degree);
+//                    btp1.recycle();
+//                    upLoadPic(newPath);
+//                    break;
+//            }
+//        }
     }
 
     private void upLoadPic(String path) {

@@ -68,13 +68,14 @@ public class ActiveDialog extends Dialog {
                     Toast.makeText(mContext, "请输入验证码", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                DhNet dnet = new DhNet(API2.CWBaseurl+"/user/"+user.getUserId()+"/binding?&token="+user.getToken());
+                DhNet dnet = new DhNet(API2.CWBaseurl+"user/"+user.getUserId()+"/binding?&token="+user.getToken());
                 dnet.addParam("phone",edit_phone.getText().toString());
                 dnet.addParam("code",edit_pwd.getText().toString());
                 dnet.doPostInDialog(new NetTask(mContext) {
                     @Override
                     public void doInUI(Response response, Integer transfer) {
                         if (response.isSuccess()) {
+                            System.out.println("绑定电话"+response.isSuccess());
                               DhNet net = new DhNet(API2.CWBaseurl+"/application/"+appointmentId+"/process?userId="+user.getUserId()+"&token="+user.getToken());
 //                            DhNet net = new DhNet(API2.CWBaseurl + "application/" + appointmentId + "/process?userId=5609eb6d0cf224e7d878f695&token=a767ead8-7c00-4b90-b6de-9dcdb4d5bc41");
                             net.addParam("accept", true);
@@ -82,9 +83,9 @@ public class ActiveDialog extends Dialog {
                                 @Override
                                 public void doInUI(Response response, Integer transfer) {
                                     if (response.isSuccess()) {
+                                        System.out.println("应邀：：：：："+response.isSuccess());
                                         showSelectedResult(1);
                                         dismiss();
-                                        System.out.println("应邀：" + response.isSuccess());
                                     }
                                 }
                             });

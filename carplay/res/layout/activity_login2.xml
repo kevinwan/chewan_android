@@ -93,7 +93,8 @@
             android:layout_marginTop="20dp"
             android:gravity="center"
             android:minHeight="20dp"
-            android:text="忘记密码" />
+            android:text="忘记密码?"
+            android:textColor="@color/text_grey"/>
     </LinearLayout>
 
     <LinearLayout
@@ -113,7 +114,7 @@
                 android:id="@+id/tv_tip"
                 style="@style/text_grey_medium"
                 android:layout_centerInParent="true"
-                android:text="您还可以选择第三方登录" />
+                android:text="第三方账号直接登录" />
 
             <View
                 android:layout_width="match_parent"

@@ -1,6 +1,8 @@
 package com.gongpingjia.carplay.activity.my;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.gongpingjia.carplay.ILoadSuccess;
@@ -19,6 +21,7 @@ import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
+import net.duohuo.dhroid.view.NetRefreshAndMoreListView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,7 +43,7 @@ public class DynamicActivity extends CarPlayListActivity implements PullToRefres
     User user = User.getInstance();
     //    DynamicActivityAdapter adapter;
     DyanmicBaseAdapter adapter;
-
+    LinearLayout layout,listview_laytou;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,11 +59,11 @@ public class DynamicActivity extends CarPlayListActivity implements PullToRefres
 //        JSONArray jsonarray = new JSONArray();
 //        jsonarray.put("邀请中");
 //        jsonarray.put("应邀");
-
+         layout = (LinearLayout) findViewById(R.id.dyna_empty);
+        listview_laytou = (LinearLayout) findViewById(R.id.listview_laytou);
         listV = (PullToRefreshListView) findViewById(R.id.listview);
         listV.setMode(PullToRefreshBase.Mode.BOTH);
         listV.setOnRefreshListener(this);
-
         recyclerView = listV.getRefreshableView();
         adapter = new DyanmicBaseAdapter(self);
         recyclerView.setAdapter(adapter);
@@ -68,7 +71,6 @@ public class DynamicActivity extends CarPlayListActivity implements PullToRefres
         fromWhat("data");
 
         setUrl(API2.CWBaseurl + "/user/"+user.getUserId()+"/appointment/list?token="+ user.getToken()+"&status="+1+"&status="+2);
-//        addParams("status",1);
 //        setUrl(API2.CWBaseurl + "user/5609eb2c0cf224e7d878f693/appointment/list?token=67666666-f2ff-456d-a9cc-e83761749a6a&status=邀请中&status=应邀");
 
         showNext();
@@ -79,10 +81,15 @@ public class DynamicActivity extends CarPlayListActivity implements PullToRefres
     public void loadSuccess() {
         adapter.setData(mVaules);
         listV.onRefreshComplete();
+        if(mVaules.isEmpty()){
+            listview_laytou.setVisibility(View.GONE);
+            layout.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
     public void loadSuccessOnFirst() {
+
 
     }
 

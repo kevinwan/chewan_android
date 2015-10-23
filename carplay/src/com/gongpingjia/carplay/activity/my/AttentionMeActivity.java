@@ -33,7 +33,7 @@ public class AttentionMeActivity extends CarPlayListActivity implements PullToRe
 
     @Override
     public void initView() {
-
+        setTitle("我的活动");
         user = User.getInstance();
 
         listV = (PullToRefreshListView) findViewById(R.id.listview);
