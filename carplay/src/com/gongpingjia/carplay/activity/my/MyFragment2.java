@@ -90,6 +90,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
     List<JSONObject> album;
 
     List<JSONObject> newAlbm;
+    int age;
     String name,gender,headimg,photoAuthStatus,licenseAuthStatus,carbradn,carlogo,carmodel,carslug;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -194,7 +195,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                     ViewUtil.bindNetImage(headI, headimg, "head");
                     ViewUtil.bindNetImage(photo_bgI, headimg, "default");
 //                    photo_bgI.setBackgroundResource(R.drawable.vp_third);
-                    int age = JSONUtil.getInt(jo, "age");
+                     age = JSONUtil.getInt(jo, "age");
                     ViewUtil.bindView(ageT, JSONUtil.getInt(jo, "age"));
 //                    //设置高斯模糊
 //                    Fglass.blur(ageT, mainV.findViewById(R.id.photo_bg_txt), 2, 8);
@@ -260,6 +261,16 @@ public class MyFragment2 extends Fragment implements OnClickListener {
             //编辑资料
             case R.id.head:
                 it = new Intent(mContext, EditPersonalInfoActivity2.class);
+                it.putExtra("name",name);
+                it.putExtra("gender",gender);
+                it.putExtra("headimg",headimg);
+                it.putExtra("photoAuthStatus",photoAuthStatus);
+                it.putExtra("licenseAuthStatus",licenseAuthStatus);
+//                it.putExtra("carbradn",carbradn);
+//                it.putExtra("carlogo",carlogo);
+//                it.putExtra("carmodel",carmodel);
+//                it.putExtra("carslug",carslug);
+                it.putExtra("age",age);
                 startActivity(it);
                 break;
             //完善信息

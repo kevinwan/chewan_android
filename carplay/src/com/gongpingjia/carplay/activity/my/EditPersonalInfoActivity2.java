@@ -108,7 +108,7 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
         mCacheDir.mkdirs();
         setTitle("编辑资料");
         user = User.getInstance();
-
+        Intent myIntent = getIntent();
         View backV = findViewById(R.id.backLayout);
 //        right_txt = (TextView) findViewById(R.id.right_text);
 //        right_txt.setVisibility(View.VISIBLE);
@@ -162,7 +162,37 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
         name_layout.setOnClickListener(this);
         approve_layout_head.setOnClickListener(this);
         approve_layout_car.setOnClickListener(this);
-        getMyDetails();
+//        getMyDetails();
+        ViewUtil.bindNetImage(headI, myIntent.getStringExtra("headimg"), "head");
+        sexT.setText(myIntent.getStringExtra("gender"));
+        nicknameT.setText(myIntent.getStringExtra("name"));
+        edit_ageT.setText(myIntent.getStringExtra("age"));
+//        String carbradn = myIntent.getStringExtra("carbradn");
+//        String carlogo = myIntent.getStringExtra("carlogo");
+//        String carmodel = myIntent.getStringExtra("carmodel");
+//        String carslug = myIntent.getStringExtra("carslug");
+        if (myIntent.getStringExtra("licenseAuthStatus").equals("认证中")){
+            car_approve.setText(myIntent.getStringExtra("licenseAuthStatus"));
+            approve_layout_car.setEnabled(true);
+        }else if(myIntent.getStringExtra("licenseAuthStatus").equals("未认证")){
+            car_approve.setText(myIntent.getStringExtra("licenseAuthStatus"));
+            approve_layout_car.setEnabled(true);
+        }else if(myIntent.getStringExtra("licenseAuthStatus").equals("已认证")){
+            car_approve.setText(myIntent.getStringExtra("licenseAuthStatus"));
+            approve_layout_car.setEnabled(false);
+        }
+        if (myIntent.getStringExtra("photoAuthStatus").equals("认证中")){
+            head_approve.setText(myIntent.getStringExtra("photoAuthStatus"));
+            approve_layout_head.setEnabled(true);
+        }else if(myIntent.getStringExtra("photoAuthStatus").equals("未认证")){
+            head_approve.setText(myIntent.getStringExtra("photoAuthStatus"));
+            approve_layout_head.setEnabled(true);
+        }else if(myIntent.getStringExtra("photoAuthStatus").equals("已认证")){
+            head_approve.setText(myIntent.getStringExtra("photoAuthStatus"));
+            approve_layout_head.setEnabled(false);
+        }
+
+
 
     }
 

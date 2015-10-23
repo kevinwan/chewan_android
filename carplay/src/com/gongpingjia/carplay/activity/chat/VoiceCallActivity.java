@@ -84,7 +84,7 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
 
 		HXSDKHelper.getInstance().isVoiceCalling = true;
 		swing_card = (AnimButtonView) findViewById(R.id.swing_card);
-		comingBtnContainer = (LinearLayout) findViewById(R.id.ll_coming_call);
+//		comingBtnContainer = (LinearLayout) findViewById(R.id.ll_coming_call);
 		refuseBtn = (ImageView) findViewById(R.id.btn_refuse_call);
 		answerBtn = (ImageView) findViewById(R.id.btn_answer_call);
 		hangupBtn = (ImageView) findViewById(R.id.btn_hangup_call);
@@ -127,7 +127,8 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
 			soundPool = new SoundPool(1, AudioManager.STREAM_RING, 0);
 			outgoing = soundPool.load(this, R.raw.outgoing, 1);
 
-			comingBtnContainer.setVisibility(View.INVISIBLE);
+//			comingBtnContainer.setVisibility(View.INVISIBLE);
+			answering_layout.setVisibility(View.INVISIBLE);
 			hangupBtn.setVisibility(View.VISIBLE);
 			st1 = getResources()
 					.getString(R.string.Are_connected_to_each_other);
@@ -365,7 +366,8 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
 				}
 			}
 
-			comingBtnContainer.setVisibility(View.INVISIBLE);
+//			comingBtnContainer.setVisibility(View.INVISIBLE);
+			answering_layout.setVisibility(View.INVISIBLE);
 			hangupBtn.setVisibility(View.VISIBLE);
 
 			answering_layout.setVisibility(View.GONE);
