@@ -18,9 +18,6 @@ package com.gongpingjia.carplay.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
-import android.provider.MediaStore;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,8 +30,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gongpingjia.carplay.R;
-import com.gongpingjia.carplay.activity.main.MainActivity2;
-import com.gongpingjia.carplay.activity.main.PhotoSelectorActivity;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.User;
@@ -55,6 +50,8 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.SimpleViewHolder> {
     private static final int COUNT = 5;
@@ -238,23 +235,13 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
                     break;
                 //拍照
                 case R.id.takephotos:
-                    mPhotoPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg").getAbsolutePath();
-                    Intent getImageByCamera = new Intent(
-                            "android.media.action.IMAGE_CAPTURE");
-                    getImageByCamera.putExtra(MediaStore.EXTRA_OUTPUT,
-                            Uri.fromFile(new File(mPhotoPath)));
-                    ((MainActivity2) mContext).startActivityForResult(getImageByCamera,
-                            Constant.TAKE_PHOTO);
+                    Integer takephotos = Constant.TAKE_PHOTO;
+                    EventBus.getDefault().post(takephotos);
                     break;
                 //相册
                 case R.id.album:
-                    mPhotoPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg").getAbsolutePath();
-                    Intent intent = new Intent(mContext,
-                            PhotoSelectorActivity.class);
-                    intent.putExtra(PhotoSelectorActivity.KEY_MAX,
-                            10);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                    ((MainActivity2) mContext).startActivityForResult(intent, Constant.PICK_PHOTO);
+                    Integer album = Constant.PICK_PHOTO;
+                    EventBus.getDefault().post(album);
 
                     break;
 
