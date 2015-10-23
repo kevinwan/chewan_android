@@ -220,7 +220,10 @@
             android:name=".activity.my.ForgetPasswordActivity2"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.main.MainActivity2" />
+        <activity android:name=".activity.main.MainActivity2"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".activity.my.AboutUsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
