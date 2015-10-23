@@ -1,34 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:my="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#252C39"
+    android:background="@drawable/badadianhuabeijing"
     android:orientation="vertical"
     android:paddingLeft="20dp"
-    android:paddingRight="20dp" >
+    android:paddingRight="20dp">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/topLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_alignParentTop="true"
         android:layout_marginTop="5dp"
-        android:layout_weight="1"
-        android:gravity="center_horizontal"
-        android:orientation="vertical" >
+        android:layout_weight="0.8"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_call_state"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
-            android:textColor="@color/voip_interface_text_color"
+            android:text="车玩语音"
+            android:textColor="@color/white"
             android:textSize="22sp"
             android:visibility="visible" />
 
-          <com.gongpingjia.carplay.chat.view.MyChronometer
+        <ImageView
+            android:layout_width="2dp"
+            android:layout_height="2dp"
+            android:layout_below="@id/tv_call_state"
+            android:layout_marginLeft="120dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/point" />
+        <ImageView
+            android:layout_width="2dp"
+            android:layout_height="2dp"
+            android:layout_below="@id/tv_call_state"
+            android:layout_marginLeft="110dp"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/point" />
+
+
+        <ImageView
+            android:id="@+id/dian_two"
+            android:layout_width="2dp"
+            android:layout_height="2dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/tv_call_state"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/point" />
+
+        <ImageView
+            android:layout_width="2dp"
+            android:layout_height="2dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/point" />
+
+        <com.gongpingjia.carplay.chat.view.MyChronometer
             android:id="@+id/chronometer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -49,22 +87,61 @@
             android:textColor="@color/voip_interface_text_color"
             android:textSize="15sp"
             android:visibility="visible" />
-    </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
         android:gravity="center_horizontal"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/swing_card"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="10dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/head_icon" />
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+           >
+
+            <com.gongpingjia.carplay.view.AnimButtonView2
+                android:id="@+id/swing_card"
+                android:layout_width="98dp"
+                android:layout_height="98dp"
+                android:layout_marginTop="10dp"
+                android:layout_centerHorizontal="true"
+                android:scaleType="fitXY"
+                my:bg="@drawable/head_icon"
+                my:src="@drawable/circle_kdy">
+            </com.gongpingjia.carplay.view.AnimButtonView2>
+
+            <ImageView
+                android:layout_width="2dp"
+                android:layout_height="2dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="50dp"
+                android:background="@drawable/point" />
+
+            <ImageView
+                android:layout_width="2dp"
+                android:layout_height="2dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginLeft="110dp"
+                android:background="@drawable/point" />
+            <ImageView
+                android:layout_width="2dp"
+                android:layout_height="2dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="80dp"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/point" />
+            <ImageView
+                android:layout_width="2dp"
+                android:layout_height="2dp"
+                android:background="@drawable/point"
+                android:layout_marginRight="15  dp"
+                android:layout_alignParentRight="true"
+                />
+        </RelativeLayout>
+
 
         <TextView
             android:id="@+id/tv_nick"
@@ -77,108 +154,304 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/answering_layout"
         android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"
-        android:orientation="vertical" >
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="30dp">
 
         <LinearLayout
-            android:id="@+id/ll_voice_control"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:id="@+id/refise_btn"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical" >
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/iv_mute"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/icon_mute_normal" />
+                <FrameLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <ImageView
+                        android:id="@+id/btn_refuse_call"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@drawable/btn_red_fillet"
+                        android:paddingBottom="18dp"
+                        android:paddingTop="18dp"
+                        android:src="@drawable/refuse" />
+
+
+                </FrameLayout>
 
                 <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp"
-                    android:gravity="center"
-                    android:text="@string/mute"
-                    android:textColor="#666167" />
+                    style="@style/text_white_medium"
+                    android:layout_marginTop="10dp"
+                    android:text="拒绝"
+                    android:textColor="@color/white" />
+
+
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical" >
 
-                <ImageView
-                    android:id="@+id/iv_handsfree"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/icon_speaker_normal" />
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp"
-                    android:gravity="center"
-                    android:text="@string/Hands_free"
-                    android:textColor="#666167" />
-            </LinearLayout>
         </LinearLayout>
 
-        <FrameLayout
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp" >
-
-            <Button
-                android:id="@+id/btn_hangup_call"
-                android:layout_width="fill_parent"
-                android:layout_height="60dp"
-                android:background="@drawable/call_hangup_bg"
-                android:gravity="center"
-                android:text="@string/hang_up"
-                android:textColor="@android:color/white"
-                android:textSize="20sp"
-                android:visibility="invisible" />
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
             <LinearLayout
-                android:id="@+id/ll_coming_call"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:id="@+id/answering_btn"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/btn_refuse_call"
-                    android:layout_width="wrap_content"
-                    android:layout_height="60dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/call_hangup_bg"
-                    android:gravity="center"
-                    android:text="@string/hang_up"
-                    android:textColor="@android:color/white"
-                    android:textSize="20sp" />
+                <FrameLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
 
-                <Button
-                    android:id="@+id/btn_answer_call"
-                    android:layout_width="wrap_content"
-                    android:layout_height="60dp"
-                    android:layout_marginLeft="30dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/call_answer_bg"
-                    android:gravity="center"
-                    android:text="@string/answer"
-                    android:textColor="@android:color/white"
-                    android:textSize="20sp" />
+
+                    <ImageView
+                        android:id="@+id/btn_answer_call"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@drawable/btn_green_fillet"
+                        android:paddingBottom="11dp"
+                        android:paddingTop="11dp"
+                        android:src="@drawable/answering" />
+
+
+                </FrameLayout>
+
+                <TextView
+                    style="@style/text_white_medium"
+                    android:layout_marginTop="10dp"
+                    android:text="接听"
+                    android:textColor="@color/white" />
+
+
             </LinearLayout>
-        </FrameLayout>
+
+
+        </LinearLayout>
+
+
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/call_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="30dp"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <RadioGroup
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:id="@+id/iv_handsfree"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/radio_call_btnhand"
+                    android:button="@null" />
+            </RadioGroup>
+
+            <!--<ImageView-->
+            <!-- -->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:src="@drawable/handsfree_up" />-->
+
+            <TextView
+                android:id="@+id/txt_handsfree"
+                style="@style/text_white_medium"
+                android:layout_marginTop="10dp"
+                android:text="免提" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/btn_hangup_call"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/btn_red_fillet"
+                android:paddingBottom="18dp"
+                android:paddingTop="18dp"
+                android:src="@drawable/refuse" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <RadioGroup
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:id="@+id/iv_mute"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/radio_call_btnhand"
+                    android:button="@null" />
+            </RadioGroup>
+
+            <!--<ImageView-->
+            <!--android:id="@+id/iv_mute"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:src="@drawable/mute_up" />-->
+
+            <TextView
+                android:id="@+id/txt_mute"
+                style="@style/text_white_medium"
+                android:layout_marginTop="10dp"
+                android:text="静音" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="fill_parent"-->
+    <!--android:layout_height="0dp"-->
+    <!--android:layout_weight="2"-->
+    <!--android:orientation="vertical">-->
+
+    <!--<LinearLayout-->
+    <!--android:id="@+id/ll_voice_control"-->
+    <!--android:layout_width="fill_parent"-->
+    <!--android:layout_height="wrap_content">-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1"-->
+    <!--android:gravity="center"-->
+    <!--android:orientation="vertical">-->
+
+    <!--<ImageView-->
+    <!--android:id="@+id/iv_mute"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:scaleType="fitCenter"-->
+    <!--android:src="@drawable/icon_mute_normal" />-->
+
+    <!--<TextView-->
+    <!--android:layout_width="fill_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="3dp"-->
+    <!--android:gravity="center"-->
+    <!--android:text="@string/mute"-->
+    <!--android:textColor="#666167" />-->
+    <!--</LinearLayout>-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1"-->
+    <!--android:gravity="center"-->
+    <!--android:orientation="vertical">-->
+
+    <!--<ImageView-->
+    <!--android:id="@+id/iv_handsfree"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:scaleType="fitCenter"-->
+    <!--android:src="@drawable/icon_speaker_normal" />-->
+
+    <!--<TextView-->
+    <!--android:layout_width="fill_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="3dp"-->
+    <!--android:gravity="center"-->
+    <!--android:text="@string/Hands_free"-->
+    <!--android:textColor="#666167" />-->
+    <!--</LinearLayout>-->
+    <!--</LinearLayout>-->
+
+    <!--<FrameLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="20dp">-->
+
+    <!--<Button-->
+    <!--android:id="@+id/btn_hangup_call"-->
+    <!--android:layout_width="fill_parent"-->
+    <!--android:layout_height="60dp"-->
+    <!--android:background="@drawable/call_hangup_bg"-->
+    <!--android:gravity="center"-->
+    <!--android:text="@string/hang_up"-->
+    <!--android:textColor="@android:color/white"-->
+    <!--android:textSize="20sp"-->
+    <!--android:visibility="invisible" />-->
+
+    <!--<LinearLayout-->
+    <!--android:id="@+id/ll_coming_call"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content">-->
+
+    <!--<Button-->
+    <!--android:id="@+id/btn_refuse_call"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="60dp"-->
+    <!--android:layout_weight="1"-->
+    <!--android:background="@drawable/call_hangup_bg"-->
+    <!--android:gravity="center"-->
+    <!--android:text="@string/hang_up"-->
+    <!--android:textColor="@android:color/white"-->
+    <!--android:textSize="20sp" />-->
+
+    <!--<Button-->
+    <!--android:id="@+id/btn_answer_call"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="60dp"-->
+    <!--android:layout_marginLeft="30dp"-->
+    <!--android:layout_weight="1"-->
+    <!--android:background="@drawable/call_answer_bg"-->
+    <!--android:gravity="center"-->
+    <!--android:text="@string/answer"-->
+    <!--android:textColor="@android:color/white"-->
+    <!--android:textSize="20sp" />-->
+    <!--</LinearLayout>-->
+    <!--</FrameLayout>-->
+    <!--</LinearLayout>-->
 
 </LinearLayout>
