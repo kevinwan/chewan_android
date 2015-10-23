@@ -89,6 +89,10 @@ public class MatchingDialog extends BaseAlertDialog {
                 dhNet.addParam("type", type);
                 dhNet.addParam("transfer", pickOrNot);
 
+                //暂时写死
+                dhNet.addParam("pay", "我请客");
+
+
                 //目的地信息
                 String[] destinations = textDestination.getText().toString().trim().split(" ");
                 Map<String, String> destination = new HashMap<String, String>();
@@ -102,6 +106,7 @@ public class MatchingDialog extends BaseAlertDialog {
                     //普通地区
                     destination.put("street", destinations[3]);
                 }
+                dhNet.addParam("destination", destination);
 
                 //发布地经纬度
                 Map<String, Double> estabPoint = new HashMap<String, Double>();

@@ -2,12 +2,14 @@ package com.gongpingjia.carplay.view.dialog;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.adapter.PlaceAdapter;
@@ -72,6 +74,7 @@ public class MateRegionDialog extends BaseAlertDialog implements View.OnClickLis
         mBtnReselect.setOnClickListener(this);
         mBtnReselect.setOnClickListener(this);
         mImgClose.setOnClickListener(this);
+        mBtnConfirm.setOnClickListener(this);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -99,7 +102,12 @@ public class MateRegionDialog extends BaseAlertDialog implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_dlg_confirm:
+                if (TextUtils.isEmpty(mTextGpsPlace.getText().toString().trim())) {
+                    Toast.makeText(mContext, "定位失败请重新选择", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 mateRegionResultListener.onResult(mTextGpsPlace.getText().toString());
+                dismiss();
                 break;
             case R.id.btn_dlg_reselect:
                 mLayoutPlace.setVisibility(View.GONE);
