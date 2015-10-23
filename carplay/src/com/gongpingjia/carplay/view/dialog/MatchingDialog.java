@@ -11,10 +11,19 @@ import android.widget.Toast;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.adapter.MatchingAdapter;
+import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.Matching;
+import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.view.BaseAlertDialog;
 
+import net.duohuo.dhroid.net.DhNet;
+import net.duohuo.dhroid.net.NetTask;
+import net.duohuo.dhroid.net.Response;
+import net.duohuo.dhroid.util.UserLocation;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2015/10/12.
@@ -58,10 +67,62 @@ public class MatchingDialog extends BaseAlertDialog {
             @Override
             public void onClick(View v) {
                 boolean pickOrNot = checkBox.isChecked();
-                if (textDestination.getText().toString().trim().length() == 0) {
+                String type = null;
+                if (textDestination.getText().toString().trim().length() == 0 || textDestination.getText().toString().trim().split(" ").length < 3) {
                     //请选择地点
+                    Toast.makeText(context, "请选择地点", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                for (Matching matching : mDatas) {
+                    if (matching.isChecked()) {
+                        type = matching.getName();
+                        break;
+                    }
+                }
+                if (type == null) {
+                    Toast.makeText(context, "请选择类型", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                DhNet dhNet = new DhNet(API2.getMatchUrl(User.getInstance().getUserId(), User.getInstance().getToken()));
+                //类型
+                dhNet.addParam("type", type);
+                dhNet.addParam("transfer", pickOrNot);
+
+                //目的地信息
+                String[] destinations = textDestination.getText().toString().trim().split(" ");
+                Map<String, String> destination = new HashMap<String, String>();
+                destination.put("province", destinations[0]);
+                destination.put("city", destinations[1]);
+                destination.put("district", destinations[2]);
+                if (destinations.length == 3) {
+                    //直辖市的情况
+                    destination.put("street", destinations[2]);
+                } else {
+                    //普通地区
+                    destination.put("street", destinations[3]);
+                }
+
+                //发布地经纬度
+                Map<String, Double> estabPoint = new HashMap<String, Double>();
+                estabPoint.put("longitude", UserLocation.getInstance().getLongitude());
+                estabPoint.put("latitude", UserLocation.getInstance().getLatitude());
+                dhNet.addParam("estabPoint", estabPoint);
+
+                //发布地地理位置信息
+                Map<String, String> establish = new HashMap<String, String>();
+                establish.put("province", UserLocation.getInstance().getProvice());
+                establish.put("city", UserLocation.getInstance().getCity());
+                establish.put("district", UserLocation.getInstance().getDistrict());
+                dhNet.addParam("establish", establish);
+                dhNet.doPost(new NetTask(context) {
+                    @Override
+                    public void doInUI(Response response, Integer transfer) {
+                        if (response.isSuccess()) {
+                            Toast.makeText(context, "发布成功", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
             }
         });
 
@@ -72,7 +133,7 @@ public class MatchingDialog extends BaseAlertDialog {
                 dlg.setOnMateRegionResultListener(new MateRegionDialog.OnMateRegionResultListener() {
                     @Override
                     public void onResult(String place) {
-                        Toast.makeText(context, place, Toast.LENGTH_SHORT).show();
+                        textDestination.setText(place);
                     }
                 });
                 dlg.show();
