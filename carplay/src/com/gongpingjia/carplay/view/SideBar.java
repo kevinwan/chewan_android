@@ -1,12 +1,10 @@
 package com.gongpingjia.carplay.view;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
-import android.graphics.drawable.ColorDrawable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,6 +12,8 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
+
+import com.gongpingjia.carplay.R;
 
 public class SideBar extends View {
     private char[] l;
@@ -26,8 +26,6 @@ public class SideBar extends View {
 
     private Paint mPaint = new Paint();
 
-    Bitmap mbitmap;
-
     Context context;
 
     public SideBar(Context context) {
@@ -36,16 +34,24 @@ public class SideBar extends View {
         init();
     }
 
-    public SideBar(Context context, char[] letters) {
-        super(context);
-        this.context = context;
-        l = letters;
-    }
-
     public SideBar(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
         init();
+    }
+
+    public void setLetters(char[] letters) {
+        int realLength = 1;
+        for (int i = 0; i < letters.length; i++) {
+            if (letters[i] == '\u0000') {
+                realLength = i;
+                break;
+            }
+        }
+        char[] arr = new char[realLength];
+        System.arraycopy(letters, 0, arr, 0, realLength);
+        l = arr;
+        invalidate();
     }
 
     private void init() {
@@ -70,8 +76,34 @@ public class SideBar extends View {
         this.mDialogText = mDialogText;
     }
 
-    public boolean onTouchEvent(MotionEvent event) {
 
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        setMeasuredDimension(widthMeasureSpec, 30 * l.length);
+    }
+
+    protected void onDraw(Canvas canvas) {
+        mPaint.setAntiAlias(true);
+        mPaint.setColor(Color.parseColor("#48d1d5"));
+        mPaint.setTextSize(25);
+        mPaint.setStyle(Style.FILL);
+        mPaint.setTextAlign(Paint.Align.CENTER);
+        float widthCenter = getMeasuredWidth() / 2;
+        if (l.length > 0) {
+            float height = getMeasuredHeight() / l.length;
+            for (int i = 0; i < l.length; i++) {
+                canvas.drawText(String.valueOf(l[i]), widthCenter, (i + 1) * height, mPaint);
+                if (l[i] == '\u0000')
+                    break;
+            }
+        }
+        this.invalidate();
+        mPaint.reset();
+        super.onDraw(canvas);
+    }
+
+    public boolean onTouchEvent(MotionEvent event) {
         super.onTouchEvent(event);
         int i = (int) event.getY();
 
@@ -88,7 +120,7 @@ public class SideBar extends View {
                 mDialogText.setText(String.valueOf(l[idx]));
                 mDialogText.setTextSize(34);
             }
-            if (sectionIndexter == null) {
+            if (sectionIndexter == null && list != null) {
                 sectionIndexter = (SectionIndexer) list.getAdapter();
             }
             if (sectionIndexter != null) {
@@ -99,30 +131,14 @@ public class SideBar extends View {
                 list.setSelection(position);
             }
         } else {
-            mDialogText.setVisibility(View.INVISIBLE);
+            if (mDialogText != null)
+                mDialogText.setVisibility(View.INVISIBLE);
 
         }
         if (event.getAction() == MotionEvent.ACTION_UP) {
-            setBackgroundDrawable(new ColorDrawable(0x00000000));
+            setBackgroundResource(R.color.white);
         }
         return true;
     }
 
-    protected void onDraw(Canvas canvas) {
-        mPaint.setAntiAlias(true);
-        mPaint.setColor(Color.parseColor("#48d1d5"));
-        mPaint.setTextSize(25);
-        mPaint.setStyle(Style.FILL);
-        mPaint.setTextAlign(Paint.Align.CENTER);
-        float widthCenter = getMeasuredWidth() / 2;
-        if (l.length > 0) {
-            float height = getMeasuredHeight() / l.length;
-            for (int i = 0; i < l.length; i++) {
-                canvas.drawText(String.valueOf(l[i]), widthCenter, (i + 1) * height, mPaint);
-            }
-        }
-        this.invalidate();
-        mPaint.reset();
-        super.onDraw(canvas);
-    }
 }

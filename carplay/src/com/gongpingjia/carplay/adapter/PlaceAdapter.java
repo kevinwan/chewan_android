@@ -9,37 +9,31 @@ import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.bean.Place;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.List;
 
 /**
  * Created by Administrator on 2015/10/20.
  */
 public class PlaceAdapter extends BaseAdapter implements SectionIndexer {
 
-    private JSONArray mDatum;
     private Context mContext;
+    private List<Place> mPlaces;
 
-    public PlaceAdapter(Context context, JSONArray data) {
-        this.mDatum = data;
+    public PlaceAdapter(Context context, List<Place> data) {
+        this.mPlaces = data;
         mContext = context;
     }
 
     @Override
     public int getCount() {
-        return mDatum == null ? 0 : mDatum.length();
+        return mPlaces == null ? 0 : mPlaces.size();
     }
 
     @Override
-    public JSONObject getItem(int position) {
-        try {
-            return mDatum.getJSONObject(position);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public Place getItem(int position) {
+        return mPlaces.get(position);
     }
 
     @Override
@@ -54,14 +48,18 @@ public class PlaceAdapter extends BaseAdapter implements SectionIndexer {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_dlg_place, parent, false);
             holder = new ViewHolder();
             holder.textPlace = (TextView) convertView.findViewById(R.id.tv_place);
+            holder.textLetter = (TextView) convertView.findViewById(R.id.tv_letter);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        try {
-            holder.textPlace.setText(getItem(position).getString("name"));
-        } catch (JSONException e) {
-            e.printStackTrace();
+        holder.textPlace.setText(getItem(position).getName());
+        //第一个或者是下一个和上一个不一致的情况下显示字母
+        if (position == 0 || !getItem(position).getFirstLetter().equals(getItem(position - 1).getFirstLetter())) {
+            holder.textLetter.setVisibility(View.VISIBLE);
+            holder.textLetter.setText(getItem(position).getFirstLetter());
+        } else {
+            holder.textLetter.setVisibility(View.GONE);
         }
         return convertView;
     }
@@ -73,6 +71,11 @@ public class PlaceAdapter extends BaseAdapter implements SectionIndexer {
 
     @Override
     public int getPositionForSection(int sectionIndex) {
+        for (Place place : mPlaces) {
+            if (place.getFirstLetter().charAt(0) == sectionIndex) {
+                return mPlaces.indexOf(place);
+            }
+        }
         return 0;
     }
 
@@ -81,7 +84,8 @@ public class PlaceAdapter extends BaseAdapter implements SectionIndexer {
         return 0;
     }
 
-    static class ViewHolder {
+    class ViewHolder {
         TextView textPlace;
+        TextView textLetter;
     }
 }

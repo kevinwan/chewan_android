@@ -14,13 +14,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/date_dialog_bg_top"
-            android:paddingBottom="15dp"
-            android:paddingTop="15dp">
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp">
 
             <ImageView
                 android:id="@+id/iv_dlg_close"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:layout_centerVertical="true"
                 android:layout_marginLeft="18dp"
                 android:src="@drawable/dialog_close" />
 
@@ -31,6 +32,17 @@
                 android:text="区域选择"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_big" />
+
+            <TextView
+                android:id="@+id/tv_last_step"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:padding="10dp"
+                android:text="上一步"
+                android:textColor="@color/text_black_light"
+                android:visibility="gone" />
         </RelativeLayout>
 
         <TextView
@@ -70,23 +82,27 @@
 
         </LinearLayout>
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <ListView
                 android:id="@+id/lv_dlg_places"
-                android:layout_width="match_parent"
-                android:layout_height="186dp"
-                android:background="@color/white"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:visibility="gone" />
 
             <com.gongpingjia.carplay.view.SideBar
                 android:id="@+id/sideBar"
                 android:layout_width="20dp"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/lv_dlg_places" />
-        </RelativeLayout>
+                android:background="@color/white"
+                android:visibility="gone" />
+        </LinearLayout>
 
 
         <LinearLayout
