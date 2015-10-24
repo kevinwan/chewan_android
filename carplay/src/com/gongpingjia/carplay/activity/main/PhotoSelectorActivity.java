@@ -44,7 +44,6 @@ import java.util.List;
 
 /**
  * @author Aizaz AZ
- *
  */
 public class PhotoSelectorActivity extends Activity implements onItemClickListener, onPhotoItemCheckedListener,
         OnItemClickListener, OnClickListener {
@@ -203,7 +202,9 @@ public class PhotoSelectorActivity extends Activity implements onItemClickListen
             catchPicture();
     }
 
-    /** 拍照 */
+    /**
+     * 拍照
+     */
     private void catchPicture() {
 //        CommonUtils.launchActivityForResult(this, new Intent(MediaStore.ACTION_IMAGE_CAPTURE), REQUEST_CAMERA);
         mPhotoPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg").getAbsolutePath();
@@ -244,18 +245,21 @@ public class PhotoSelectorActivity extends Activity implements onItemClickListen
             switch (requestCode) {
                 case Constant.TAKE_PHOTO:
                     Bitmap btp1 = PhotoUtil.getLocalImage(new File(mPhotoPath));
-                    String newPath = new File(mCacheDir, System.currentTimeMillis()
-                            + ".jpg").getAbsolutePath();
                     int degree = PhotoUtil.getBitmapDegree(mPhotoPath);
-                    PhotoUtil.saveLocalImage(btp1, new File(newPath), degree);
+                    String newPath = PhotoUtil.saveLocalImage(btp1, degree, PhotoSelectorActivity.this);
                     btp1.recycle();
-                    photoAdapter.notifyDataSetChanged();
+                    PhotoModel model = new PhotoModel();
+                    model.setChecked(false);
+                    model.setOriginalPath(newPath);
+                    photoAdapter.addData(model);
                     break;
             }
         }
     }
 
-    /** 完成 */
+    /**
+     * 完成
+     */
     private void ok() {
         if (selected.isEmpty()) {
             setResult(RESULT_CANCELED);
@@ -269,14 +273,18 @@ public class PhotoSelectorActivity extends Activity implements onItemClickListen
         finish();
     }
 
-    /** 预览照片 */
+    /**
+     * 预览照片
+     */
     private void priview() {
         Bundle bundle = new Bundle();
         bundle.putSerializable("photos", selected);
         CommonUtils.launchActivity(this, PhotoPreviewActivity.class, bundle);
     }
 
-    /** 预览照片 */
+    /**
+     * 预览照片
+     */
     private void priview(ArrayList<PhotoModel> photos, int position) {
         Bundle bundle = new Bundle();
         bundle.putSerializable("photos", photos);
@@ -292,21 +300,27 @@ public class PhotoSelectorActivity extends Activity implements onItemClickListen
         }
     }
 
-    /** 弹出相册列表 */
+    /**
+     * 弹出相册列表
+     */
     private void popAlbum() {
         layoutAlbum.setVisibility(View.VISIBLE);
         new AnimationUtil(getApplicationContext(), R.anim.translate_up_current).setLinearInterpolator().startAnimation(
                 layoutAlbum);
     }
 
-    /** 隐藏相册列表 */
+    /**
+     * 隐藏相册列表
+     */
     private void hideAlbum() {
         new AnimationUtil(getApplicationContext(), R.anim.translate_down).setLinearInterpolator().startAnimation(
                 layoutAlbum);
         layoutAlbum.setVisibility(View.GONE);
     }
 
-    /** 清空选中的图片 */
+    /**
+     * 清空选中的图片
+     */
     private void reset() {
         selected.clear();
 //        tvNumber.setText("(0/" + MAX_IMAGE + ")");
@@ -380,12 +394,16 @@ public class PhotoSelectorActivity extends Activity implements onItemClickListen
             photoSelectorDomain.getAlbum(current.getName(), reccentListener); // 获取选中相册的照片
     }
 
-    /** 获取本地图库照片回调 */
+    /**
+     * 获取本地图库照片回调
+     */
     public interface OnLocalReccentListener {
         public void onPhotoLoaded(List<PhotoModel> photos);
     }
 
-    /** 获取本地相册信息回调 */
+    /**
+     * 获取本地相册信息回调
+     */
     public interface OnLocalAlbumListener {
         public void onAlbumLoaded(List<AlbumModel> albums);
     }

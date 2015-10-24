@@ -49,6 +49,11 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
 
     User user;
 
+    String activeid;
+
+    //是否为成员
+    boolean isMember = false;
+
 
     /**
      * headview
@@ -78,6 +83,8 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
 
 //        http://cwapi.gongpingjia.com:8080/v2/official/activity/561f5eaa0cf2a1b735efa50a/info?userId=561ba2d60cf2429fb48e86bd&token=9927f747-c615-4362-bd43-a2ec31362205
     }
+
+
 
     @Override
     public void initView() {
@@ -146,7 +153,7 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
     }
 
     private void getActiveDetailsData() {
-        String activeid = getIntent().getStringExtra("activityId");
+        activeid = getIntent().getStringExtra("activityId");
 
         DhNet verifyNet = new DhNet(API2.ActiveDetails + activeid + "/info?userId=" + user.getUserId() + "&token=" + user.getToken());
         verifyNet.doGet(new NetTask(self) {
@@ -213,6 +220,13 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
                         mViewPager.setAdapter(adapter);
                     }
 
+                    isMember = JSONUtil.getBoolean(jo, "isMember");
+                    if (isMember){
+                        joinBtn.setText("进入群聊");
+                    }else {
+                        joinBtn.setText("报名参加");
+                    }
+
 
                 }
             }
@@ -234,6 +248,11 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
         switch (v.getId()) {
             //报名参加
             case R.id.join:
+                if(isMember){
+
+                }else {
+                    joinActive();
+                }
 
                 break;
             //活动描述
@@ -296,5 +315,21 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
             explainIconI.setImageResource(R.drawable.down_btn);
             explaintxtT.setVisibility(View.GONE);
         }
+    }
+
+    /**
+     * 加入活动
+     */
+    private void joinActive(){
+        DhNet joinnet = new DhNet(API2.joinActive+activeid+"/join?userId="+user.getUserId()+"&token="+user.getToken());
+        joinnet.doPost(new NetTask(self) {
+            @Override
+            public void doInUI(Response response, Integer transfer) {
+                if (response.isSuccess()) {
+                    joinBtn.setText("进人群聊");
+                    isMember = !isMember;
+                }
+            }
+        });
     }
 }

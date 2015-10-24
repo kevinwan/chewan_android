@@ -1,12 +1,12 @@
 package com.gongpingjia.carplay.photo.ui;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 
@@ -61,6 +61,7 @@ public class MBaseAdapter<T> extends BaseAdapter {
 		}
 		notifyDataSetChanged();
 	}
+
 
 	public ArrayList<T> getItems() {
 		return models;
