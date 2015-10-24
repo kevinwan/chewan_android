@@ -130,7 +130,10 @@
                 android:layout_marginTop="16dp"
                 android:animateLayoutChanges="true"
                 android:orientation="vertical">
-
+                <com.andexert.library.RippleView
+                    rv_centered="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
                 <Button
                     android:id="@+id/upload"
                     android:layout_width="70dp"
@@ -139,7 +142,7 @@
                     android:text="上传"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_medium" />
-
+                </com.andexert.library.RippleView>
                 <Button
                     android:id="@+id/takephotos"
                     android:layout_width="70dp"

@@ -31,14 +31,14 @@ public class MyDynamicActivity extends CarPlayListActivity implements PullToRefr
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dynamicactivity);
+        setContentView(R.layout.activity_my_dynamic);
 
     }
 
 
     @Override
     public void initView() {
-        setTitle("我的活动");
+//        setTitle("我的活动");
          empty = (LinearLayout) findViewById(R.id.empty);
          msg = (TextView) findViewById(R.id.msg);
 

@@ -15,10 +15,6 @@
         android:orientation="horizontal"
         android:visibility="gone">
 
-        <com.andexert.library.RippleView
-            rv_centered="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
 
 
             <com.gongpingjia.carplay.view.AnimButtonView
@@ -33,7 +29,6 @@
                     android:layout_centerInParent="true"
                     android:text="邀 TA" />
             </com.gongpingjia.carplay.view.AnimButtonView>
-        </com.andexert.library.RippleView>
     </LinearLayout>
 
     <LinearLayout
@@ -45,10 +40,7 @@
         android:orientation="horizontal"
         android:visibility="gone">
 
-        <com.andexert.library.RippleView
-            rv_centered="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+
 
             <com.gongpingjia.carplay.view.AnimButtonView
                 android:id="@+id/yingyao"
@@ -63,12 +55,7 @@
                     android:layout_centerInParent="true"
                     android:text="应邀" />
             </com.gongpingjia.carplay.view.AnimButtonView>
-        </com.andexert.library.RippleView>
 
-        <com.andexert.library.RippleView
-            rv_centered="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
 
             <com.gongpingjia.carplay.view.AnimButtonView
                 android:id="@+id/hulue"
@@ -84,7 +71,6 @@
                     android:layout_centerInParent="true"
                     android:text="忽略" />
             </com.gongpingjia.carplay.view.AnimButtonView>
-        </com.andexert.library.RippleView>
     </LinearLayout>
 
     <LinearLayout
@@ -96,10 +82,6 @@
         android:visibility="gone"
         android:orientation="horizontal">
 
-        <com.andexert.library.RippleView
-            rv_centered="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
 
             <com.gongpingjia.carplay.view.AnimButtonView
                 android:id="@+id/dyanmic_one"
@@ -115,12 +97,8 @@
                     android:layout_centerInParent="true"
                     android:src="@drawable/chat_icon" />
             </com.gongpingjia.carplay.view.AnimButtonView>
-        </com.andexert.library.RippleView>
 
-        <com.andexert.library.RippleView
-            rv_centered="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+
 
             <com.gongpingjia.carplay.view.AnimButtonView
                 android:id="@+id/dyanmic_two"
@@ -137,7 +115,6 @@
                     android:layout_centerInParent="true"
                     android:src="@drawable/phon_icon" />
             </com.gongpingjia.carplay.view.AnimButtonView>
-        </com.andexert.library.RippleView>
     </LinearLayout>
 
 </RelativeLayout>
