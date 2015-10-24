@@ -1,68 +1,73 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/bg_grey"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
-        tools:context="com.gongpingjia.carplay.activity.my.AuthenticateOwnersActivity2" >
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_grey"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context="com.gongpingjia.carplay.activity.my.AuthenticateOwnersActivity2">
+
     <include layout="@layout/include_title_bar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="26dp"
+        android:paddingLeft="14dp"
+        android:paddingTop="14dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="26dp"
-            android:paddingLeft="14dp"
-            android:paddingTop="14dp" >
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <ImageView
+                android:layout_width="21dp"
+                android:layout_height="21dp"
+                android:src="@drawable/aut_paiming" />
+
+            <TextView
+                style="@style/text_grey_new_hot_small"
                 android:gravity="center_vertical"
-                android:orientation="horizontal" >
-
-                <ImageView
-                    android:layout_width="21dp"
-                    android:layout_height="21dp"
-                    android:src="@drawable/aut_paiming" />
-
-                <TextView
-                    style="@style/text_grey_new_hot_small"
-                    android:paddingLeft="14dp"
-                    android:gravity="center_vertical"
-                    android:text="车主认证以后在附近排名靠前" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:layout_marginTop="14dp"
-                android:orientation="horizontal" >
-
-                <ImageView
-                    android:layout_width="21dp"
-                    android:layout_height="21dp"
-                    android:src="@drawable/aut_zungui" />
-
-                <TextView
-                    style="@style/text_grey_new_hot_small"
-                    android:paddingLeft="14dp"
-                    android:gravity="center_vertical"
-                    android:text="车主认证后将拥有尊贵图标" />
-            </LinearLayout>
-
+                android:paddingLeft="14dp"
+                android:text="车主认证以后在附近排名靠前" />
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="21dp"
+                android:layout_height="21dp"
+                android:src="@drawable/aut_zungui" />
+
+            <TextView
+                style="@style/text_grey_new_hot_small"
+                android:gravity="center_vertical"
+                android:paddingLeft="14dp"
+                android:text="车主认证后将拥有尊贵图标" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <com.andexert.library.RippleView
+        rv_centered="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:id="@+id/brandchoice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
             android:background="@color/white"
-             >
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <TextView
                 style="@style/text_grey_new_medium"
@@ -73,8 +78,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:gravity="right|center_vertical"
-                android:paddingRight="14dp"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:paddingRight="14dp">
 
                 <TextView
                     android:id="@+id/carName"
@@ -82,8 +87,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginRight="3dp"
-                    android:gravity="center_vertical|right"
-                    />
+                    android:gravity="center_vertical|right" />
 
                 <ImageView
                     android:layout_width="19dp"
@@ -91,17 +95,22 @@
                     android:src="@drawable/right_btn" />
             </LinearLayout>
         </LinearLayout>
+    </com.andexert.library.RippleView>
 
-        <View style="@style/line"/>
+    <View style="@style/line" />
+
+    <com.andexert.library.RippleView
+        rv_centered="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:id="@+id/drivinglicense_up"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
             android:background="@color/white"
-             >
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <TextView
                 style="@style/text_grey_new_medium"
@@ -111,17 +120,17 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:paddingRight="14dp"
                 android:gravity="right|center_vertical"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:paddingRight="14dp">
 
                 <ImageView
                     android:id="@+id/driving_img"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    android:layout_marginRight="5dp"
                     android:gravity="center_vertical|right"
-                    android:scaleType="centerCrop"
-                    android:layout_marginRight="5dp"/>
+                    android:scaleType="centerCrop" />
 
                 <ImageView
                     android:layout_width="19dp"
@@ -129,17 +138,22 @@
                     android:src="@drawable/right_btn" />
             </LinearLayout>
         </LinearLayout>
+    </com.andexert.library.RippleView>
 
-        <View style="@style/line"/>
+    <View style="@style/line" />
+
+    <com.andexert.library.RippleView
+        rv_centered="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:id="@+id/driverlicense_up"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
             android:background="@color/white"
-             >
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <TextView
                 style="@style/text_grey_new_medium"
@@ -149,33 +163,39 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:paddingRight="14dp"
                 android:gravity="right|center_vertical"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:paddingRight="14dp">
 
                 <ImageView
                     android:id="@+id/driver_img"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    android:layout_marginRight="5dp"
                     android:gravity="center_vertical|right"
-                    android:scaleType="centerCrop"
-                    android:layout_marginRight="5dp"/>
+                    android:scaleType="centerCrop" />
 
                 <ImageView
                     android:layout_width="19dp"
                     android:layout_height="19dp"
                     android:src="@drawable/right_btn" />
             </LinearLayout>
+
         </LinearLayout>
+    </com.andexert.library.RippleView>
+
+    <com.andexert.library.RippleView
+        rv_centered="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
         <Button
             android:id="@+id/up_button"
             android:layout_width="158dp"
             android:layout_height="43dp"
-            android:background="@drawable/button_owners_bg"
             android:layout_marginTop="27dp"
+            android:background="@drawable/button_owners_bg"
             android:text="提交认证"
-            android:textColor="@color/white"
-            />
-
-    </LinearLayout>
+            android:textColor="@color/white" />
+    </com.andexert.library.RippleView>
+</LinearLayout>

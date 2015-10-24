@@ -25,18 +25,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 />
-            <com.andexert.library.RippleView
-                rv_centered="true"
-                android:layout_width="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_height="wrap_content">
+            <!--<com.andexert.library.RippleView-->
+                <!--rv_centered="true"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--android:layout_height="wrap_content">-->
 
             <com.gongpingjia.carplay.view.RoundImageView
                 android:id="@+id/head"
                 android:layout_width="113dp"
                 android:layout_height="113dp"
+                android:layout_centerHorizontal="true"
                 android:layout_marginTop="28dp" />
-            </com.andexert.library.RippleView>
+            <!--</com.andexert.library.RippleView>-->
             <TextView
                 android:id="@+id/attestation"
                 style="@style/text_white_medium"
