@@ -181,6 +181,9 @@ public class MainActivity2 extends BaseFragmentActivity implements
     }
 
     public void initView() {
+
+
+
         user = User.getInstance();
         mCacheDir = new File(getExternalCacheDir(), "CarPlay");
         mCacheDir.mkdirs();
