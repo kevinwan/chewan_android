@@ -425,17 +425,17 @@ public class PhotoUtil {
             return;
         File file = f;
         try {
+//
+//            File appDir = new File(Environment
+//                    .getExternalStorageDirectory(), "carplay");
+//            if (!appDir.exists()) {
+//                appDir.mkdir();
+//            }
+//            String fileName = System.currentTimeMillis() + ".jpg";
+//            File file1 = new File(appDir, fileName);
 
-            File appDir = new File(Environment
-                    .getExternalStorageDirectory(), "carplay");
-            if (!appDir.exists()) {
-                appDir.mkdir();
-            }
-            String fileName = System.currentTimeMillis() + ".jpg";
-            File file1 = new File(appDir, fileName);
 
-
-//			file.createNewFile();
+			file.createNewFile();
 
             // ByteArrayOutputStream baos = new ByteArrayOutputStream();
             // // bm.compress(Bitmap.CompressFormat.JPEG, 100, baos);//
@@ -456,7 +456,7 @@ public class PhotoUtil {
                 bm = rotateBitmapByDegree(bm, degree);
             }
 
-            OutputStream outStream = new FileOutputStream(file1);
+            OutputStream outStream = new FileOutputStream(file);
             compressImage(bm, outStream);
             outStream.flush();
             outStream.close();

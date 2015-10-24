@@ -230,6 +230,12 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
                     JSONObject jo = response.jSONFromData();
                     photoUid = JSONUtil.getString(jo, "photoId");
                     head_url = JSONUtil.getString(jo, "photoUrl");
+                    boolean a = ImageLoader.getInstance().getDiskCache()
+                            .remove(head_url);
+                    Bitmap b = ImageLoader.getInstance().getMemoryCache()
+                            .remove(head_url);
+                    System.out.println("第一个：+++++++++++" + a);
+                    System.out.println("第二个：***************" + b);
                     System.out.println("更改头像返回：" + JSONUtil.getString(jo, "photoUrl"));
                     showToast("上传成功");
 //

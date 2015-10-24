@@ -64,7 +64,9 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
     String imgs = "";
     String img = "";
     String[] str;
+    String[] strid;
     String[] strs;
+    String[] strsid;
     String license = "";
 
     @Override
@@ -161,7 +163,7 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
                     picUid = JSONUtil.getString(jo, "photoId");
                     imgs = JSONUtil.getString(jo, "photoUrl");
 //                    System.out.println("行驶证："+JSONUtil.getString(jo, "photoId"));
-//                    System.out.println("********"+JSONUtil.getString(jo, "photoUrl"));
+                    System.out.println("********"+JSONUtil.getString(jo, "photoUrl"));
 //                    Toast.makeText(self, "111" + JSONUtil.getString(jo, "photoUrl"), Toast.LENGTH_SHORT).show();
                 } else {
                     showToast("上传失败，请重新上传");
@@ -264,8 +266,11 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
                     Intent it = new Intent(self, ImageGallery.class);
                     str = new String[1];
                     str[0] = imgs;
+                    strid = new String[1];
+                    strid [0] = picUid;
 //                    System.out.println("++++++++++"+str[0]);
                     it.putExtra("imgurls", str);
+                    it.putExtra("imgids", strid);
                     startActivity(it);
                 }
 
@@ -280,7 +285,11 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
                     Intent ten = new Intent(self, ImageGallery.class);
                     strs = new String[1];
                     strs[0] = img;
+                    strsid = new String[1];
+                    strsid [0] = picUids;
+
                     ten.putExtra("imgurls", strs);
+                    ten.putExtra("imgids", strsid);
                     startActivity(ten);
                 }
 
