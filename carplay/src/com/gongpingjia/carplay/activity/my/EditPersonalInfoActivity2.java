@@ -7,24 +7,14 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.easemob.EMCallBack;
-import com.easemob.chat.CmdMessageBody;
-import com.easemob.chat.EMChatManager;
-import com.easemob.chat.EMGroup;
-import com.easemob.chat.EMGroupManager;
-import com.easemob.chat.EMMessage;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
-import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.api.Constant;
-import com.gongpingjia.carplay.bean.EditHeadPhotoEB;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.view.RoundImageView;
 import com.gongpingjia.carplay.view.dialog.DateTimerDialog2;
@@ -35,7 +25,6 @@ import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.net.upload.FileInfo;
-import net.duohuo.dhroid.util.ImageUtil;
 import net.duohuo.dhroid.util.PhotoUtil;
 import net.duohuo.dhroid.util.ViewUtil;
 
@@ -43,13 +32,10 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.TimeZone;
 
 import de.greenrobot.event.EventBus;
 
@@ -139,6 +125,7 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
                         intent.putExtra("photoAuthStatus",car_approve.getText().toString());
                         intent.putExtra("licenseAuthStatus",head_approve.getText().toString());
                         setResult(self.RESULT_OK, intent);
+                        EventBus.getDefault().post("上传成功");
                         finish();
                     } else {
                     setValue();
@@ -474,9 +461,9 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
                 intent.putExtra("photoAuthStatus",car_approve.getText().toString());
                 intent.putExtra("licenseAuthStatus",head_approve.getText().toString());
                 setResult(self.RESULT_OK, intent);
+                EventBus.getDefault().post("上传成功");
                 finish();
             } else {
-
             finish();
             }
             return true;
