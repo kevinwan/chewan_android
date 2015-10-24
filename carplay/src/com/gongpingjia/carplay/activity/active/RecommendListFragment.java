@@ -80,13 +80,11 @@ public class RecommendListFragment extends CarPlayBaseFragment implements PullTo
     public void loadSuccess() {
         adapter.setData(mVaules);
         listV.onRefreshComplete();
-        if(mVaules.isEmpty()){
-            listV.setVisibility(View.GONE);
-            empty.setVisibility(View.VISIBLE);
-        }
+
     }
 
     @Override
     public void loadSuccessOnFirst() {
+        empty.setVisibility(View.VISIBLE);
     }
 }

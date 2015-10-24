@@ -13,6 +13,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,12 +51,6 @@ public class FragmentMsgAdapter extends BaseAdapter {
 
     private Context mContext;
 
-    BadgeView normalMsgBadgeT, applicationMsgBadgeT;
-
-    TextView applicationmsg_contentT, normsg_contentT, normalTimeT,
-            applicationTimeT;
-
-    View aaplication_layoutV, normsg_layoutV;
 
     JSONObject jo;
 
@@ -63,7 +58,6 @@ public class FragmentMsgAdapter extends BaseAdapter {
 
     List<JSONArray> headList;
     List<String> GroupIdlist;
-//	private User mUser;
 
     public FragmentMsgAdapter(Context context) {
         mContext = context;
@@ -97,77 +91,149 @@ public class FragmentMsgAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
+        int type = getItemViewType(position);
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.item_group_message2, null);
             holder = new ViewHolder();
-            holder.head_one = (RoundImageView) convertView
-                    .findViewById(R.id.head_one);
-            holder.head_two = (RelativeLayout) convertView
-                    .findViewById(R.id.head_two);
-            holder.head_three = (RelativeLayout) convertView
-                    .findViewById(R.id.head_three);
-            holder.head_four = (RelativeLayout) convertView
-                    .findViewById(R.id.head_four);
+            switch (type) {
+                case 0:
+                    convertView = mInflater.inflate(R.layout.item_dynamic_interested, null);
+                    holder.iconI = (ImageView) convertView.findViewById(R.id.icon);
+                    holder.right_headI = (ImageView) convertView.findViewById(R.id.right_head);
+
+                    break;
+                case 1:
+                    convertView = mInflater.inflate(R.layout.item_dynamic_admin, null);
+                    holder.iconI = (ImageView) convertView.findViewById(R.id.icon);
+                    holder.timeT = (TextView) convertView.findViewById(R.id.time);
+                    holder.contentT = (TextView) convertView.findViewById(R.id.content);
+                    break;
+
+                case 2:
+                    convertView = mInflater.inflate(R.layout.item_group_message2, null);
+                    holder.head_one = (RoundImageView) convertView
+                            .findViewById(R.id.head_one);
+                    holder.head_two = (RelativeLayout) convertView
+                            .findViewById(R.id.head_two);
+                    holder.head_three = (RelativeLayout) convertView
+                            .findViewById(R.id.head_three);
+                    holder.head_four = (RelativeLayout) convertView
+                            .findViewById(R.id.head_four);
+                    holder.timeT = (TextView) convertView.findViewById(R.id.time);
+                    holder.tv_ageT = (TextView) convertView.findViewById(R.id.tv_age);
+                    holder.contentT = (TextView) convertView.findViewById(R.id.content);
+                    break;
+
+            }
+            holder.titleT = (TextView) convertView.findViewById(R.id.title);
+            holder.msg_pointI = (ImageView) convertView.findViewById(R.id.msg_point);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
         EMConversation conversation = conversationList.get(position);
-        String username = conversation.getUserName();
-        EMGroup group = EMGroupManager.getInstance().getGroup(username);
-        if (group != null) {
-            ViewUtil.bindView(convertView.findViewById(R.id.title),
-                    group.getGroupName());
-            //判断当前群组
-            if (headList != null && GroupIdlist != null) {
-                for (int i = 0; i < GroupIdlist.size(); i++) {
-                    if (group.getGroupId().equals(GroupIdlist.get(i))) {
-//						System.out.println("");
-                        //设置头像
-                        setPicState(holder, headList.get(i), headList.get(i).length());
-                    }
-                }
-            }
+        switch (type) {
+            case 0:
 
+                break;
+
+            case 1:
+                String username = conversation.getUserName();
+                if (username.equals("UserViewAdmin")) {
+                    holder.titleT.setText("活动动态");
+                    holder.iconI.setImageResource(R.drawable.trends_active);
+                } else if (username.equals("ActivityStateAdmin")) {
+                    holder.titleT.setText("活动动态");
+
+                } else if (username.equals("SubscribeAdmin")) {
+                    holder.titleT.setText("活动动态");
+                } else {
+                    holder.titleT.setText("活动动态");
+                }
+
+                break;
+
+            case 2:
+                String username1 = conversation.getUserName();
+                EMGroup group = EMGroupManager.getInstance().getGroup(username1);
+                if (group != null) {
+                    ViewUtil.bindView(convertView.findViewById(R.id.title),
+                            group.getGroupName());
+                    String des = group.getDescription();
+                    Log.d("msg", "群组头像"+des);
+//                    //判断当前群组
+//                    if (headList != null && GroupIdlist != null) {
+//                        for (int i = 0; i < GroupIdlist.size(); i++) {
+//                            if (group.getGroupId().equals(GroupIdlist.get(i))) {
+////						System.out.println("");
+//                                //设置头像
+//                                setPicState(holder, headList.get(i), headList.get(i).length());
+//                            }
+//                        }
+//                    }
+
+                } else {
+                    ViewUtil.bindView(convertView.findViewById(R.id.title),
+                            username1);
+                    holder.head_one.setVisibility(View.VISIBLE);
+//                    ViewUtil.bindNetImage(holder.head_one,
+//                            message.getStringAttribute("headUrl", ""), "head");
+                }
+                break;
         }
 
-        convertView.findViewById(R.id.msg_point)
+
+        if (type != 0) {
+            if (conversation.getMsgCount() != 0) {
+
+                // 把最后一条消息的内容作为item的message内容
+                EMMessage lastMessage = conversation.getLastMessage();
+                holder.contentT.setText(
+
+                        SmileUtils.getSmiledText(mContext,
+                                getMessageDigest(lastMessage, (mContext))),
+                        BufferType.SPANNABLE);
+                holder.timeT.setVisibility(View.VISIBLE);
+                ViewUtil.bindView(holder.timeT, lastMessage.getMsgTime(), "neartime");
+                if (lastMessage.direct == EMMessage.Direct.SEND
+                        && lastMessage.status == EMMessage.Status.FAIL) {
+//                    msg_stateI.setVisibility(View.VISIBLE);
+                } else {
+//                    msg_stateI.setVisibility(View.GONE);
+                }
+            } else {
+                holder.contentT.setText("暂无消息");
+                holder.timeT.setVisibility(View.GONE);
+            }
+        }
+
+        holder.msg_pointI
                 .setVisibility(
                         conversation.getUnreadMsgCount() > 0 ? View.VISIBLE
                                 : View.GONE);
-        TextView contentT = (TextView) convertView.findViewById(R.id.content);
-        TextView timeT = (TextView) convertView.findViewById(R.id.time);
-        ImageView msg_stateI = (ImageView) convertView
-                .findViewById(R.id.msg_state);
-        if (conversation.getMsgCount() != 0) {
-            // 把最后一条消息的内容作为item的message内容
-            EMMessage lastMessage = conversation.getLastMessage();
-            contentT.setText(
-                    SmileUtils.getSmiledText(mContext,
-                            getMessageDigest(lastMessage, (mContext))),
-                    BufferType.SPANNABLE);
-            timeT.setVisibility(View.VISIBLE);
-            ViewUtil.bindView(timeT, lastMessage.getMsgTime(), "neartime");
-            if (lastMessage.direct == EMMessage.Direct.SEND
-                    && lastMessage.status == EMMessage.Status.FAIL) {
-                msg_stateI.setVisibility(View.VISIBLE);
-            } else {
-                msg_stateI.setVisibility(View.GONE);
-            }
-        } else {
-            contentT.setText("暂无消息");
-            timeT.setVisibility(View.GONE);
-        }
-        // }
 
         return convertView;
     }
 
-    // public void setData(JSONObject jo) {
-    // this.jo = jo;
-    // notifyDataSetChanged();
-    // }
+    @Override
+    public int getItemViewType(int position) {
+        EMConversation conversion = conversationList.get(position);
+        if (conversion.getUserName().equals("InterestAdmin")) {
+            return 0;
+        } else if (conversion.getUserName().equals("UserViewAdmin")
+                || conversion.getUserName().equals("ActivityStateAdmin")
+                || conversion.getUserName().equals("SubscribeAdmin")
+                || conversion.getUserName().equals("OfficialAdmin")) {
+            return 1;
+        } else {
+            return 2;
+        }
+    }
+
+    @Override
+    public int getViewTypeCount() {
+        return 3;
+    }
 
     /**
      * 根据消息内容和消息类型获取消息内容提示
@@ -293,6 +359,10 @@ public class FragmentMsgAdapter extends BaseAdapter {
     class ViewHolder {
         RoundImageView head_one;
         RelativeLayout head_two, head_three, head_four;
+        TextView titleT, contentT, timeT, tv_ageT;
+
+        ImageView iconI, right_headI, msg_pointI;
+
     }
 
     public void setListHead(List<JSONArray> jslist, List<String> jsGroupId) {

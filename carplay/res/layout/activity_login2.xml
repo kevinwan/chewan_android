@@ -67,24 +67,40 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp">
 
-            <Button
-                android:id="@+id/btn_login"
+            <com.andexert.library.RippleView
+                rv_centered="true"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="20dp"
-                android:layout_weight="1"
-                android:background="@drawable/btn_red_fillet"
-                android:text="登录"
-                android:textColor="@color/white" />
+                android:layout_weight="1">
 
-            <Button
-                android:id="@+id/btn_register"
+                <Button
+                    android:id="@+id/btn_login"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_red_fillet"
+                    android:text="登录"
+                    android:textColor="@color/white" />
+
+            </com.andexert.library.RippleView>
+
+
+            <com.andexert.library.RippleView
+                rv_centered="true"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/btn_blue_fillet"
-                android:text="注册"
-                android:textColor="@color/white" />
+                android:layout_weight="1">
+
+                <Button
+                    android:id="@+id/btn_register"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_blue_fillet"
+                    android:text="注册"
+                    android:textColor="@color/white" />
+
+            </com.andexert.library.RippleView>
         </LinearLayout>
 
         <TextView
@@ -94,7 +110,7 @@
             android:gravity="center"
             android:minHeight="20dp"
             android:text="忘记密码?"
-            android:textColor="@color/text_grey"/>
+            android:textColor="@color/text_grey" />
     </LinearLayout>
 
     <LinearLayout

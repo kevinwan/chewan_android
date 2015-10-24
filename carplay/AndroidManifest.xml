@@ -42,10 +42,10 @@
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="55c80d4be0f55af652003627" />
-        <!-- 正式版 -->
-        <!--<meta-data-->
-        <!--android:name="com.amap.api.v2.apikey"-->
-        <!--android:value="f5a41f709dd7b958bda5c51d3a0a247e" />-->
+       <!-- &lt;!&ndash; 正式版 &ndash;&gt;
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="f5a41f709dd7b958bda5c51d3a0a247e" />-->
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="427c3acc9b4358fd1fa1823194709ae3" />
@@ -220,10 +220,7 @@
             android:name=".activity.my.ForgetPasswordActivity2"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.main.MainActivity2"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"
-            />
+        <activity android:name=".activity.main.MainActivity2" />
         <activity
             android:name=".activity.my.AboutUsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -350,8 +347,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"></activity>
         <activity android:name=".activity.my.OfficialMessageActivity"></activity>
-        <activity
-            android:name=".activity.my.ModifyName"
+        <activity android:name=".activity.my.ModifyName"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait">
 

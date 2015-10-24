@@ -79,7 +79,10 @@
                     android:layout_marginTop="22dp"
                     android:text="资料完成度60%,越高越吸引人"
                     android:textStyle="bold" />
-
+                <com.andexert.library.RippleView
+                    rv_centered="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
                 <Button
                     android:id="@+id/perfect"
                     android:layout_width="195dp"
@@ -90,6 +93,7 @@
                     android:text="完善"
                     android:textColor="@color/white"
                     android:textStyle="bold" />
+                </com.andexert.library.RippleView>
 
             </LinearLayout>
         </RelativeLayout>
@@ -173,6 +177,10 @@
         <View
             style="@style/line"
             android:layout_height="10dp" />
+        <com.andexert.library.RippleView
+            rv_centered="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
         <LinearLayout
             android:id="@+id/headattestation"
@@ -210,9 +218,12 @@
                     android:src="@drawable/right_btn" />
             </LinearLayout>
         </LinearLayout>
-
+        </com.andexert.library.RippleView>
         <View style="@style/line" />
-
+        <com.andexert.library.RippleView
+            rv_centered="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
         <LinearLayout
             android:id="@+id/carattestation"
             style="@style/linearlayout"
@@ -251,7 +262,7 @@
                     android:src="@drawable/right_btn" />
             </LinearLayout>
         </LinearLayout>
-
+        </com.andexert.library.RippleView>
         <View
             style="@style/line"
             android:layout_width="match_parent"
