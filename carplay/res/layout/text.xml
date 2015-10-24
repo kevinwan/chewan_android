@@ -2,18 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
-    <net.duohuo.dhroid.view.swipelayout.NetSwipeRefreshAndMoreLayout
-        android:id="@+id/activity_main_swipe_refresh_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/my_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="vertical" />
-    </net.duohuo.dhroid.view.swipelayout.NetSwipeRefreshAndMoreLayout>
+
+    <com.gongpingjia.carplay.view.MyView1
+        android:id="@+id/test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"></com.gongpingjia.carplay.view.MyView1>
+
+    <com.gongpingjia.carplay.view.MyView1
+        android:id="@+id/test1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"></com.gongpingjia.carplay.view.MyView1>1
+
 
 </LinearLayout>

@@ -28,7 +28,7 @@ public class RecyclerViewPager extends RecyclerView {
     private float mFlingFactor = 0.15f;
     private float mTouchSpan;
     private List<OnPageChangedListener> mOnPageChangedListeners;
-    private int mSmoothScrollTargetPosition = -1;
+    public int mSmoothScrollTargetPosition = -1;
     private int mPositionBeforeScroll = -1;
 
     private boolean mSinglePageFling;
@@ -158,6 +158,12 @@ public class RecyclerViewPager extends RecyclerView {
         if (DEBUG) {
             Log.d("@", "smoothScrollToPosition:" + position);
         }
+
+        if(position==-1) {
+            return;
+        }
+        Log.d("msg", "position:" + position);
+        Log.d("msg", "smoothScrollToPosition:" + mSmoothScrollTargetPosition);
         mSmoothScrollTargetPosition = position;
         super.smoothScrollToPosition(position);
     }

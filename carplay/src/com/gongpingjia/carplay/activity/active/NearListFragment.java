@@ -19,13 +19,14 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
 
 import net.duohuo.dhroid.ioc.IocContainer;
+import net.duohuo.dhroid.util.UserLocation;
 
 import de.greenrobot.event.EventBus;
 
 /**
  * Created by Administrator on 2015/10/8.
  */
-public class NearListFragment extends CarPlayBaseFragment implements PullToRefreshBase.OnRefreshListener<RecyclerViewPager>, ILoadSuccess {
+public class NearListFragment extends CarPlayBaseFragment implements PullToRefreshBase.OnRefreshListener2<RecyclerViewPager>, ILoadSuccess {
 
 
     static NearListFragment instance;
@@ -59,6 +60,7 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
         EventBus.getDefault().register(this);
         initView();
 
+
         return mainV;
     }
 
@@ -87,9 +89,11 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
         setOnLoadSuccess(this);
         fromWhat("data");
         setUrl(API2.CWBaseurl + "activity/list?");
+
+        UserLocation location = UserLocation.getInstance();
 //        setUrl("http://cwapi.gongpingjia.com:8080/v2/activity/list?latitude=32&longitude=118&maxDistance=5000000&token="+user.getToken()+"&userId="+user.getUserId());
-        addParams("latitude", "32");
-        addParams("longitude", "118");
+        addParams("latitude", location.getLatitude());
+        addParams("longitude", location.getLongitude());
         addParams("maxDistance", "5000000");
         addParams("type", pre.getType());
         addParams("pay", pre.getPay());
@@ -119,12 +123,6 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
 
 
     @Override
-    public void onRefresh(PullToRefreshBase<RecyclerViewPager> refreshView) {
-        refresh();
-
-    }
-
-    @Override
     public void loadSuccessOnFirst() {
 //            listV.setVisibility(View.GONE);
         near_layout.setVisibility(View.VISIBLE);
@@ -147,4 +145,13 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
         super.onDestroyView();
     }
 
+    @Override
+    public void onPullDownToRefresh(PullToRefreshBase<RecyclerViewPager> refreshView) {
+        refresh();
+    }
+
+    @Override
+    public void onPullUpToRefresh(PullToRefreshBase<RecyclerViewPager> refreshView) {
+        showNext();
+    }
 }

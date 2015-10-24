@@ -5,10 +5,6 @@
     android:orientation="vertical">
 
     <View style="@style/line" />
-    <com.andexert.library.RippleView
-        rv_centered="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -184,5 +180,4 @@
 
 
     </LinearLayout>
-    </com.andexert.library.RippleView>
 </LinearLayout>

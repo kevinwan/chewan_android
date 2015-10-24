@@ -152,9 +152,9 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
 
         User user = User.getInstance();
         if (user.isLogin()) {
-            holder.attention.setVisibility(JSONUtil.getString(userjo, "userId").equals(user.getUserId()) ? View.GONE : View.VISIBLE);
+//            holder.attention.setVisibility(JSONUtil.getString(userjo, "userId").equals(user.getUserId()) ? View.GONE : View.VISIBLE);
         } else {
-            holder.attention.setVisibility(View.VISIBLE);
+//            holder.attention.setVisibility(View.VISIBLE);
         }
         //关注,是否包接送,付费类型,活动类型
         holder.attention.setImageResource(JSONUtil.getBoolean(userjo, "subscribeFlag") ? R.drawable.icon_hearted : R.drawable.icon_heart);

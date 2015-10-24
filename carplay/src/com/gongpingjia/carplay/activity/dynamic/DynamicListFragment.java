@@ -256,6 +256,14 @@ public class DynamicListFragment extends CarPlayBaseFragment implements PullToRe
         conversationList.clear();
         conversationList = loadConversationsWithRecentChat();
         mAdapter.setGroupMessageData(conversationList);
-        pullToRefreshListView.onRefreshComplete();
+        pullToRefreshListView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                pullToRefreshListView.onRefreshComplete();
+            }
+        }, 1000);
+
     }
+
+
 }

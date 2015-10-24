@@ -78,6 +78,7 @@ public class RecommendListFragment extends CarPlayBaseFragment implements PullTo
 
     @Override
     public void loadSuccess() {
+
         adapter.setData(mVaules);
         listV.onRefreshComplete();
 
