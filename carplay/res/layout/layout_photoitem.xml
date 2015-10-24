@@ -11,11 +11,13 @@
 
     <CheckBox
         android:id="@+id/cb_photo_lpsi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/btn_checkbox_selector"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/btn_album_selector"
         android:button="@null" />
 
 </RelativeLayout>
