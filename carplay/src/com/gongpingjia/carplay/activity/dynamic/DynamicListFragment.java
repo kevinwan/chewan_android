@@ -26,7 +26,6 @@ import com.gongpingjia.carplay.activity.my.OfficialMessageActivity;
 import com.gongpingjia.carplay.adapter.FragmentMsgAdapter;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -39,13 +38,15 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by Administrator on 2015/10/13.
  */
-public class DynamicListFragment extends CarPlayBaseFragment implements PullToRefreshBase.OnRefreshListener<RecyclerViewPager>, ILoadSuccess, View.OnClickListener {
+public class DynamicListFragment extends CarPlayBaseFragment implements PullToRefreshBase.OnRefreshListener<ListView>, ILoadSuccess, View.OnClickListener {
 
     static DynamicListFragment instance;
 
     View mainV;
 
     ListView listV;
+    PullToRefreshListView pullToRefreshListView;
+
     private FragmentMsgAdapter mAdapter;
 
     List<EMConversation> conversationList = new ArrayList<>();
@@ -71,9 +72,10 @@ public class DynamicListFragment extends CarPlayBaseFragment implements PullToRe
     }
 
     private void initView() {
-        PullToRefreshListView pullToRefreshListView = (PullToRefreshListView) mainV.findViewById(R.id.listview);
-        listV = pullToRefreshListView.getRefreshableView();
+        pullToRefreshListView = (PullToRefreshListView) mainV.findViewById(R.id.listview);
+        pullToRefreshListView.setOnRefreshListener(this);
 
+        listV = pullToRefreshListView.getRefreshableView();
         mAdapter = new FragmentMsgAdapter(getActivity());
         listV.setAdapter(mAdapter);
         listV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -221,13 +223,6 @@ public class DynamicListFragment extends CarPlayBaseFragment implements PullToRe
 
     }
 
-    @Override
-    public void onRefresh(PullToRefreshBase<RecyclerViewPager> refreshView) {
-        conversationList.clear();
-        conversationList = loadConversationsWithRecentChat();
-        mAdapter.setGroupMessageData(conversationList);
-    }
-
 
     @Override
     public void onClick(View v) {
@@ -254,5 +249,13 @@ public class DynamicListFragment extends CarPlayBaseFragment implements PullToRe
                 startActivity(it);
                 break;
         }
+    }
+
+    @Override
+    public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+        conversationList.clear();
+        conversationList = loadConversationsWithRecentChat();
+        mAdapter.setGroupMessageData(conversationList);
+        pullToRefreshListView.onRefreshComplete();
     }
 }

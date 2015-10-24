@@ -41,7 +41,7 @@ import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.active.NearListFragment;
 import com.gongpingjia.carplay.activity.active.RecommendListFragment;
 import com.gongpingjia.carplay.activity.dynamic.DynamicListFragment;
-import com.gongpingjia.carplay.activity.my.LoginActivity;
+import com.gongpingjia.carplay.activity.my.LoginActivity2;
 import com.gongpingjia.carplay.activity.my.MyFragment2;
 import com.gongpingjia.carplay.activity.my.SettingActivity;
 import com.gongpingjia.carplay.api.API;
@@ -649,7 +649,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
                             // 显示帐号在其他设备登陆dialog
                             showToast("账号在另一地点登录!");
                             isConflict = true;
-                            Intent it = new Intent(self, LoginActivity.class);
+                            Intent it = new Intent(self, LoginActivity2.class);
                             it.putExtra("action", "logout");
                             startActivity(it);
                             finish();
