@@ -15,12 +15,13 @@
 
         <RelativeLayout
 
-            android:layout_width="46dp"
-            android:layout_height="46dp">
+            android:layout_width="56dp"
+            android:layout_height="56dp">
 
             <ImageView
-                android:layout_width="46dp"
-                android:layout_height="46dp"
+                android:id="@+id/icon"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
                 android:src="@drawable/trends_visit" />
 
 
@@ -28,8 +29,8 @@
                 android:id="@+id/msg_point"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="36dp"
-                android:layout_marginTop="2dp"
+                android:layout_marginLeft="45dp"
+                android:layout_marginTop="5dp"
                 android:src="@drawable/red_point" />
 
         </RelativeLayout>

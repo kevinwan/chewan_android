@@ -7,24 +7,14 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.easemob.EMCallBack;
-import com.easemob.chat.CmdMessageBody;
-import com.easemob.chat.EMChatManager;
-import com.easemob.chat.EMGroup;
-import com.easemob.chat.EMGroupManager;
-import com.easemob.chat.EMMessage;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
-import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.api.Constant;
-import com.gongpingjia.carplay.bean.EditHeadPhotoEB;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.view.RoundImageView;
 import com.gongpingjia.carplay.view.dialog.DateTimerDialog2;
@@ -35,7 +25,6 @@ import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.net.upload.FileInfo;
-import net.duohuo.dhroid.util.ImageUtil;
 import net.duohuo.dhroid.util.PhotoUtil;
 import net.duohuo.dhroid.util.ViewUtil;
 
@@ -43,13 +32,10 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.TimeZone;
 
 import de.greenrobot.event.EventBus;
 
@@ -131,11 +117,20 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
                 @Override
                 public void onClick(View arg0) {
                     // 如果没有改动 直接关闭本页
-//                    if (isModify()) {
-//                        modification();
-//                    } else {
+                    if (isModify()) {
+                        Intent intent = getIntent();
+                        intent.putExtra("nickname",nicknameT.getText().toString());
+                        intent.putExtra("head",head_url);
+                        intent.putExtra("age",edit_ageT.getText().toString());
+                        intent.putExtra("photoAuthStatus",car_approve.getText().toString());
+                        intent.putExtra("licenseAuthStatus",head_approve.getText().toString());
+                        setResult(self.RESULT_OK, intent);
+                        EventBus.getDefault().post("上传成功");
+                        finish();
+                    } else {
+                    setValue();
                     finish();
-//                    }
+                    }
 
                 }
             });
@@ -196,45 +191,8 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
 
     }
 
-    /**
-     * 获取个人资料
-     */
-    private void getMyDetails() {
-        DhNet verifyNet = new DhNet(API2.CWBaseurl +"/user/"+user.getUserId()+"/info?viewUser="+user.getUserId()+"&token="+user.getToken());
-        verifyNet.doGetInDialog(new NetTask(this) {
-            @Override
-            public void doInUI(Response response, Integer transfer) {
-                System.out.println("编辑资料："+user.getUserId() + "---------" + user.getToken());
-                JSONObject jo = response.jSONFromData();
-
-                nickname = JSONUtil.getString(jo, "nickname");
-//                drivingExperience = JSONUtil.getInt(jo, "drivingExperience")
-//                        + "";
-                photo = JSONUtil.getString(jo, "avatar");
-                String gender = JSONUtil.getString(jo, "gender");
-                String photoAuthStatus = JSONUtil.getString(jo, "photoAuthStatus");
-                String licenseAuthStatus = JSONUtil.getString(jo, "licenseAuthStatus");
-                age = JSONUtil.getString(jo, "age");
-                edit_ageT.setText(age);
-                head_approve.setText(photoAuthStatus);
-                car_approve.setText(licenseAuthStatus);
-                JSONObject ob = JSONUtil.getJSONObject(jo, "car");
-                String logo = JSONUtil.getString(ob, "logo");
-                if (licenseAuthStatus.equals("认证通过")) {
-
-                    ViewUtil.bindNetImage(carlogo, logo, "default");
-                    approve_layout_car.setEnabled(false);
-                }
-//                if (photoAuthStatus.equals("认证通过")){
-//                    approve_layout_head.setEnabled(false);
-//                }
-
-                nicknameT.setText(nickname);
-                sexT.setText(gender);
-//                edit_ageT.setText(drivingExperience);
-                ViewUtil.bindNetImage(headI, photo, "head");
-            }
-        });
+//
+    public void setValue(){
 
     }
 
@@ -495,11 +453,19 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-//            if (isModify()) {
-//                modification();
-//            } else {
+            if (isModify()) {
+                Intent intent = getIntent();
+                intent.putExtra("nickname",nicknameT.getText().toString());
+                intent.putExtra("head",head_url);
+                intent.putExtra("age",edit_ageT.getText().toString());
+                intent.putExtra("photoAuthStatus",car_approve.getText().toString());
+                intent.putExtra("licenseAuthStatus",head_approve.getText().toString());
+                setResult(self.RESULT_OK, intent);
+                EventBus.getDefault().post("上传成功");
+                finish();
+            } else {
             finish();
-//            }
+            }
             return true;
         }
         return super.onKeyDown(keyCode, event);

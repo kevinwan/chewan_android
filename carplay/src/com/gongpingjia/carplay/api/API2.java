@@ -43,4 +43,7 @@ public class API2 {
         return String.format(CWBaseurl + "activity/register?userId=%s&token=%s", userId, token);
     }
 
+    //报名参加
+    public static final String joinActive = CWBaseurl + "official/activity/";
+
 }

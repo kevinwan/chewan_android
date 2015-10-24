@@ -140,15 +140,19 @@ public class FragmentMsgAdapter extends BaseAdapter {
             case 1:
                 String username = conversation.getUserName();
                 if (username.equals("UserViewAdmin")) {
-                    holder.titleT.setText("活动动态");
-                    holder.iconI.setImageResource(R.drawable.trends_active);
+                    holder.titleT.setText("最近访客");
+                    holder.iconI.setImageResource(R.drawable.trends_visit);
                 } else if (username.equals("ActivityStateAdmin")) {
                     holder.titleT.setText("活动动态");
+                    holder.iconI.setImageResource(R.drawable.trends_active);
 
                 } else if (username.equals("SubscribeAdmin")) {
-                    holder.titleT.setText("活动动态");
+                    holder.titleT.setText("谁关注我");
+                    holder.iconI.setImageResource(R.drawable.trends_attention);
+
                 } else {
-                    holder.titleT.setText("活动动态");
+                    holder.titleT.setText("车玩官方");
+                    holder.iconI.setImageResource(R.drawable.trends_official);
                 }
 
                 break;
@@ -160,7 +164,13 @@ public class FragmentMsgAdapter extends BaseAdapter {
                     ViewUtil.bindView(convertView.findViewById(R.id.title),
                             group.getGroupName());
                     String des = group.getDescription();
-                    Log.d("msg", "群组头像"+des);
+                    Log.d("msg", "群组头像" + des);
+                    String urls;
+                    urls = des.replaceAll("\\|", "/");
+                    Log.d("urls", urls);
+                    String[] urlArray = urls.split(";");
+                    Log.d("urlArray", urlArray.toString());
+                    setPicState(holder, urlArray, urlArray.length);
 //                    //判断当前群组
 //                    if (headList != null && GroupIdlist != null) {
 //                        for (int i = 0; i < GroupIdlist.size(); i++) {
@@ -307,7 +317,7 @@ public class FragmentMsgAdapter extends BaseAdapter {
      * @param holder
      * @param count
      */
-    private void setPicState(ViewHolder holder, JSONArray jsona, int poi) {
+    private void setPicState(ViewHolder holder, String[] urls, int poi) {
         holder.head_one.setVisibility(View.GONE);
         holder.head_two.setVisibility(View.GONE);
         holder.head_three.setVisibility(View.GONE);
@@ -317,24 +327,19 @@ public class FragmentMsgAdapter extends BaseAdapter {
                 break;
             case 1:
                 holder.head_one.setVisibility(View.VISIBLE);
-                try {
-                    ViewUtil.bindNetImage(holder.head_one, jsona.getString(0), "head");
-                } catch (JSONException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
+                ViewUtil.bindNetImage(holder.head_one, urls[0], "head");
                 break;
             case 2:
                 holder.head_two.setVisibility(View.VISIBLE);
-                setHeadImg(holder.head_two, jsona);
+                setHeadImg(holder.head_two, urls);
                 break;
             case 3:
                 holder.head_three.setVisibility(View.VISIBLE);
-                setHeadImg(holder.head_three, jsona);
+                setHeadImg(holder.head_three, urls);
                 break;
             default:
                 holder.head_four.setVisibility(View.VISIBLE);
-                setHeadImg(holder.head_four, jsona);
+                setHeadImg(holder.head_four, urls);
                 break;
         }
     }
@@ -344,15 +349,10 @@ public class FragmentMsgAdapter extends BaseAdapter {
      *
      * @param rel
      */
-    private void setHeadImg(RelativeLayout rel, JSONArray jsona) {
+    private void setHeadImg(RelativeLayout rel, String[] urls) {
         for (int i = 0; i < rel.getChildCount(); i++) {
             RoundImageView icon = (RoundImageView) rel.getChildAt(i);
-            try {
-                ViewUtil.bindNetImage(icon, jsona.getString(i), "head");
-            } catch (JSONException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+            ViewUtil.bindNetImage(icon, urls[i], "head");
         }
     }
 

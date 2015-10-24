@@ -17,14 +17,14 @@
  */
 package com.gongpingjia.carplay.view.gallery;
 
-import java.util.List;
+import android.content.Context;
+import android.view.ViewGroup;
 
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
-import android.content.Context;
-import android.view.ViewGroup;
+import java.util.List;
 
 /**
  * Class wraps URLs to adapter, then it instantiates {@link UrlTouchImageView}
@@ -56,5 +56,10 @@ public class UrlPagerAdapter extends BasePagerAdapter {
 
         collection.addView(iv, 0);
         return iv;
+    }
+
+    @Override
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
     }
 }

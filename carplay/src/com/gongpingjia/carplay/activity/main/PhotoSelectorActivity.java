@@ -1,18 +1,15 @@
 package com.gongpingjia.carplay.activity.main;
 
 /**
- * 
  * @author Aizaz AZ
- *
  */
-import java.util.ArrayList;
-import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -28,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.photo.domain.PhotoSelectorDomain;
 import com.gongpingjia.carplay.photo.model.AlbumModel;
 import com.gongpingjia.carplay.photo.model.PhotoModel;
@@ -38,9 +36,14 @@ import com.gongpingjia.carplay.photo.ui.PhotoSelectorAdapter;
 import com.gongpingjia.carplay.util.AnimationUtil;
 import com.gongpingjia.carplay.util.CommonUtils;
 
+import net.duohuo.dhroid.util.PhotoUtil;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Aizaz AZ
- * 
  */
 public class PhotoSelectorActivity extends Activity implements onItemClickListener, onPhotoItemCheckedListener,
         OnItemClickListener, OnClickListener {
@@ -63,7 +66,7 @@ public class PhotoSelectorActivity extends Activity implements onItemClickListen
 
     private Button btnOk;
 
-    private TextView tvAlbum, tvTitle;
+    private TextView tvAlbum;
 
     private PhotoSelectorDomain photoSelectorDomain;
 
@@ -76,6 +79,12 @@ public class PhotoSelectorActivity extends Activity implements onItemClickListen
     private ArrayList<PhotoModel> selected;
 
     private TextView tvNumber;
+
+    private ImageView imgCamera;
+
+    // 图片缓存根目录
+    private File mCacheDir;
+    private String mPhotoPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,11 +99,13 @@ public class PhotoSelectorActivity extends Activity implements onItemClickListen
 
         initImageLoader();
 
+        mCacheDir = new File(getExternalCacheDir(), "CarPlay");
+        mCacheDir.mkdirs();
+
         photoSelectorDomain = new PhotoSelectorDomain(getApplicationContext());
 
         selected = new ArrayList<PhotoModel>();
 
-        tvTitle = (TextView) findViewById(R.id.tv_title_lh);
         gvPhotos = (GridView) findViewById(R.id.gv_photos_ar);
         lvAblum = (ListView) findViewById(R.id.lv_ablum_ar);
         btnOk = (Button) findViewById(R.id.btn_right_lh);
@@ -104,10 +115,13 @@ public class PhotoSelectorActivity extends Activity implements onItemClickListen
         tvAlbum = (TextView) findViewById(R.id.tv_album_ar);
         layoutAlbum = (RelativeLayout) findViewById(R.id.layout_album_ar);
         tvNumber = (TextView) findViewById(R.id.tv_number);
-        tvNumber.setText("(0/" + MAX_IMAGE + ")");
+//        tvNumber.setText("(0/" + MAX_IMAGE + ")");
+        tvNumber.setText("0");
+        imgCamera = (ImageView) findViewById(R.id.camera);
 
         btnOk.setOnClickListener(this);
         tvAlbum.setOnClickListener(this);
+        imgCamera.setOnClickListener(this);
 
         photoAdapter = new PhotoSelectorAdapter(getApplicationContext(), new ArrayList<PhotoModel>(),
                 CommonUtils.getWidthPixels(this), this, this, this);
@@ -184,39 +198,68 @@ public class PhotoSelectorActivity extends Activity implements onItemClickListen
             catchPicture();
         else if (v.getId() == R.id.bv_back_lh)
             finish();
+        else if (v.getId() == R.id.camera)
+            catchPicture();
     }
 
-    /** 拍照 */
+    /**
+     * 拍照
+     */
     private void catchPicture() {
-        CommonUtils.launchActivityForResult(this, new Intent(MediaStore.ACTION_IMAGE_CAPTURE), REQUEST_CAMERA);
+//        CommonUtils.launchActivityForResult(this, new Intent(MediaStore.ACTION_IMAGE_CAPTURE), REQUEST_CAMERA);
+        mPhotoPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg").getAbsolutePath();
+        final File tempFile = new File(mPhotoPath);
+        Intent getImageByCamera = new Intent(
+                "android.media.action.IMAGE_CAPTURE");
+        getImageByCamera.putExtra(MediaStore.EXTRA_OUTPUT,
+                Uri.fromFile(tempFile));
+        startActivityForResult(getImageByCamera,
+                Constant.TAKE_PHOTO);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CAMERA && resultCode == RESULT_OK) {
-            PhotoModel photoModel = new PhotoModel(CommonUtils.query(getApplicationContext(), data.getData()));
-            // selected.clear();
-            // //--keep all
-            // selected photos
-            // tvNumber.setText("(0)");
-            // //--keep all
-            // selected photos
-            // ///////////////////////////////////////////////////////////////////////////////////////////
-            if (selected.size() >= MAX_IMAGE) {
-                Toast.makeText(this, String.format(getString(R.string.max_img_limit_reached), MAX_IMAGE),
-                        Toast.LENGTH_SHORT).show();
-                photoModel.setChecked(false);
-                photoAdapter.notifyDataSetChanged();
-            } else {
-                if (!selected.contains(photoModel)) {
-                    selected.add(photoModel);
-                }
+//        if (requestCode == REQUEST_CAMERA && resultCode == RESULT_OK) {
+//            PhotoModel photoModel = new PhotoModel(CommonUtils.query(getApplicationContext(), data.getData()));
+//            // selected.clear();
+//            // //--keep all
+//            // selected photos
+//            // tvNumber.setText("(0)");
+//            // //--keep all
+//            // selected photos
+//            // ///////////////////////////////////////////////////////////////////////////////////////////
+//            if (selected.size() >= MAX_IMAGE) {
+//                Toast.makeText(this, String.format(getString(R.string.max_img_limit_reached), MAX_IMAGE),
+//                        Toast.LENGTH_SHORT).show();
+//                photoModel.setChecked(false);
+//                photoAdapter.notifyDataSetChanged();
+//            } else {
+//                if (!selected.contains(photoModel)) {
+//                    selected.add(photoModel);
+//                }
+//            }
+//            ok();
+//        }
+
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case Constant.TAKE_PHOTO:
+                    Bitmap btp1 = PhotoUtil.getLocalImage(new File(mPhotoPath));
+                    int degree = PhotoUtil.getBitmapDegree(mPhotoPath);
+                    String newPath = PhotoUtil.saveLocalImage(btp1, degree, PhotoSelectorActivity.this);
+                    btp1.recycle();
+                    PhotoModel model = new PhotoModel();
+                    model.setChecked(false);
+                    model.setOriginalPath(newPath);
+                    photoAdapter.addData(model);
+                    break;
             }
-            ok();
         }
     }
 
-    /** 完成 */
+    /**
+     * 完成
+     */
     private void ok() {
         if (selected.isEmpty()) {
             setResult(RESULT_CANCELED);
@@ -230,14 +273,18 @@ public class PhotoSelectorActivity extends Activity implements onItemClickListen
         finish();
     }
 
-    /** 预览照片 */
+    /**
+     * 预览照片
+     */
     private void priview() {
         Bundle bundle = new Bundle();
         bundle.putSerializable("photos", selected);
         CommonUtils.launchActivity(this, PhotoPreviewActivity.class, bundle);
     }
 
-    /** 预览照片 */
+    /**
+     * 预览照片
+     */
     private void priview(ArrayList<PhotoModel> photos, int position) {
         Bundle bundle = new Bundle();
         bundle.putSerializable("photos", photos);
@@ -253,24 +300,31 @@ public class PhotoSelectorActivity extends Activity implements onItemClickListen
         }
     }
 
-    /** 弹出相册列表 */
+    /**
+     * 弹出相册列表
+     */
     private void popAlbum() {
         layoutAlbum.setVisibility(View.VISIBLE);
         new AnimationUtil(getApplicationContext(), R.anim.translate_up_current).setLinearInterpolator().startAnimation(
                 layoutAlbum);
     }
 
-    /** 隐藏相册列表 */
+    /**
+     * 隐藏相册列表
+     */
     private void hideAlbum() {
         new AnimationUtil(getApplicationContext(), R.anim.translate_down).setLinearInterpolator().startAnimation(
                 layoutAlbum);
         layoutAlbum.setVisibility(View.GONE);
     }
 
-    /** 清空选中的图片 */
+    /**
+     * 清空选中的图片
+     */
     private void reset() {
         selected.clear();
-        tvNumber.setText("(0/" + MAX_IMAGE + ")");
+//        tvNumber.setText("(0/" + MAX_IMAGE + ")");
+        tvNumber.setText("0");
     }
 
     @Override
@@ -304,7 +358,8 @@ public class PhotoSelectorActivity extends Activity implements onItemClickListen
         } else {
             selected.remove(photoModel);
         }
-        tvNumber.setText("(" + selected.size() + "/" + MAX_IMAGE + ")");
+//        tvNumber.setText("(" + selected.size() + "/" + MAX_IMAGE + ")");
+        tvNumber.setText(selected.size() + "");
 
     }
 
@@ -339,12 +394,16 @@ public class PhotoSelectorActivity extends Activity implements onItemClickListen
             photoSelectorDomain.getAlbum(current.getName(), reccentListener); // 获取选中相册的照片
     }
 
-    /** 获取本地图库照片回调 */
+    /**
+     * 获取本地图库照片回调
+     */
     public interface OnLocalReccentListener {
         public void onPhotoLoaded(List<PhotoModel> photos);
     }
 
-    /** 获取本地相册信息回调 */
+    /**
+     * 获取本地相册信息回调
+     */
     public interface OnLocalAlbumListener {
         public void onAlbumLoaded(List<AlbumModel> albums);
     }

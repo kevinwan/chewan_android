@@ -161,4 +161,5 @@
         android:text="随便看看"
         android:textColor="@color/white"
         android:textSize="@dimen/text_medium" />
+
 </LinearLayout>

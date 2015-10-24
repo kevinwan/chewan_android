@@ -109,7 +109,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
 
 
 
-            holder.activity_distance = (TextView) view.findViewById(R.id.activity_distance);
+            holder.activity_distance = (TextView) view.findViewById(R.id.active_distance);
 
 
 //
@@ -244,6 +244,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
                     @Override
                     public void doInUI(Response response, Integer transfer) {
                         if (response.isSuccess()) {
+                            notifyDataSetChanged();
                             System.out.println("忽略：" + response.isSuccess());
                         }
                     }

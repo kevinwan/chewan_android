@@ -175,6 +175,15 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
 
 //        final String num = "18000000001";
 //        final String password = "123456";
+//        final String num = mEditNum.getText().toString().trim();
+//        final String password = mEditPassword.getText().toString().trim();
+//        if (TextUtils.isEmpty(num) || TextUtils.isEmpty(password)) {
+//            showToast("手机号或密码不能为空");
+//            return;
+//        }
+//        final String num = "18000000001";
+//        final String password = "123456";
+
 
 
         DhNet dhNet = new DhNet(API2.login);

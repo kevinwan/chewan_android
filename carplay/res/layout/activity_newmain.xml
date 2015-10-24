@@ -34,7 +34,9 @@
             android:text="筛选"
             android:textColor="@color/text_black"
             android:textSize="@dimen/text_title"
-            android:visibility="gone" />
+           android:visibility="gone" />
+
+
         <ImageView
             android:id="@+id/right_icon"
             android:layout_width="wrap_content"
@@ -80,63 +82,70 @@
                 android:layout_alignParentBottom="true"
                 android:background="@color/white">
 
-                <LinearLayout
-                    android:id="@+id/layout"
-                    android:layout_width="0dp"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
 
-                    <RelativeLayout
-                        android:id="@+id/img_layout"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp">
 
-                        <ImageView
-                            android:id="@+id/img"
+                    <LinearLayout
+                        android:id="@+id/layout"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="fill_parent"
+                        android:gravity="center"
+
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:id="@+id/img_layout"
                             android:layout_width="33dp"
-                            android:layout_height="33dp"
-                            android:src="@drawable/icon_nav_near" />
-                    </RelativeLayout>
+                            android:layout_height="33dp">
 
-                    <TextView
-                        android:id="@+id/text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="附近"
-                        android:textColor="@color/text_grey"
-                        android:textSize="12sp" />
-                </LinearLayout>
+                            <ImageView
+                                android:id="@+id/img"
+                                android:layout_width="33dp"
+                                android:layout_height="33dp"
+                                android:src="@drawable/icon_nav_near" />
+                        </RelativeLayout>
 
-                <LinearLayout
-                    android:id="@+id/layout"
-                    android:layout_width="0dp"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="附近"
+                            android:textColor="@color/text_grey"
+                            android:textSize="12sp" />
+                    </LinearLayout>
 
-                    <RelativeLayout
-                        android:id="@+id/img_layout"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp">
 
-                        <ImageView
-                            android:id="@+id/img"
+
+
+                    <LinearLayout
+                        android:id="@+id/layout"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="fill_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:id="@+id/img_layout"
                             android:layout_width="33dp"
-                            android:layout_height="33dp"
-                            android:src="@drawable/icon_nav_tuijian" />
-                    </RelativeLayout>
+                            android:layout_height="33dp">
 
-                    <TextView
-                        android:id="@+id/text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="推荐"
-                        android:textColor="@color/text_grey"
-                        android:textSize="12sp" />
-                </LinearLayout>
+                            <ImageView
+                                android:id="@+id/img"
+                                android:layout_width="33dp"
+                                android:layout_height="33dp"
+                                android:src="@drawable/icon_nav_tuijian" />
+                        </RelativeLayout>
+
+                        <TextView
+                            android:id="@+id/text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="推荐"
+                            android:textColor="@color/text_grey"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
 
                 <LinearLayout
                     android:id="@+id/layout"
@@ -177,81 +186,89 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/layout"
-                    android:layout_width="0dp"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
 
-                    <RelativeLayout
-                        android:id="@+id/img_layout"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp">
 
-                        <ImageView
-                            android:id="@+id/img"
+                    <LinearLayout
+                        android:id="@+id/layout"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="fill_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:id="@+id/img_layout"
                             android:layout_width="33dp"
-                            android:layout_height="33dp"
-                            android:layout_centerHorizontal="true"
-                            android:src="@drawable/icon_nav_dongtai" />
+                            android:layout_height="33dp">
 
-                        <ImageView
-                            android:id="@+id/msg_point"
-                            android:layout_width="8dp"
-                            android:layout_height="8dp"
-                            android:layout_alignParentRight="true"
-                            android:src="@drawable/red_point"
-                            android:visibility="gone" />
+                            <ImageView
+                                android:id="@+id/img"
+                                android:layout_width="33dp"
+                                android:layout_height="33dp"
+                                android:layout_centerHorizontal="true"
+                                android:src="@drawable/icon_nav_dongtai" />
 
-                        <ImageView
-                            android:id="@+id/chat_point"
-                            android:layout_width="8dp"
-                            android:layout_height="8dp"
-                            android:layout_alignParentRight="true"
-                            android:src="@drawable/red_point"
-                            android:visibility="gone" />
-                    </RelativeLayout>
+                            <ImageView
+                                android:id="@+id/msg_point"
+                                android:layout_width="8dp"
+                                android:layout_height="8dp"
+                                android:layout_alignParentRight="true"
+                                android:src="@drawable/red_point"
+                                android:visibility="gone" />
 
-                    <TextView
-                        android:id="@+id/text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="动态"
-                        android:textColor="@color/text_grey"
-                        android:textSize="12sp" />
-                </LinearLayout>
+                            <ImageView
+                                android:id="@+id/chat_point"
+                                android:layout_width="8dp"
+                                android:layout_height="8dp"
+                                android:layout_alignParentRight="true"
+                                android:src="@drawable/red_point"
+                                android:visibility="gone" />
+                        </RelativeLayout>
 
-                <LinearLayout
-                    android:id="@+id/layout"
-                    android:layout_width="0dp"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="动态"
+                            android:textColor="@color/text_grey"
+                            android:textSize="12sp" />
+                    </LinearLayout>
 
-                    <RelativeLayout
-                        android:id="@+id/img_layout"
-                        android:layout_width="33dp"
-                        android:layout_height="33dp">
 
-                        <ImageView
-                            android:id="@+id/img"
+
+
+
+                    <LinearLayout
+                        android:id="@+id/layout"
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:id="@+id/img_layout"
                             android:layout_width="33dp"
-                            android:layout_height="33dp"
-                            android:src="@drawable/icon_nav_mine" />
-                    </RelativeLayout>
+                            android:layout_height="33dp">
 
-                    <TextView
-                        android:id="@+id/text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="我的"
-                        android:textColor="@color/text_grey"
-                        android:textSize="12sp" />
-                </LinearLayout>
+                            <ImageView
+                                android:id="@+id/img"
+                                android:layout_width="33dp"
+                                android:layout_height="33dp"
+                                android:src="@drawable/icon_nav_mine" />
+                        </RelativeLayout>
+
+                        <TextView
+                            android:id="@+id/text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="我的"
+                            android:textColor="@color/text_grey"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
             </LinearLayout>
+
 
             <View
                 android:layout_width="fill_parent"
@@ -259,14 +276,17 @@
                 android:layout_above="@id/tab"
                 android:background="@color/text_black" />
 
-            <ImageView
-                android:id="@+id/center"
-                android:layout_width="55dp"
-                android:layout_height="55dp"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="15dp"
-                android:src="@drawable/icon_nav_center" />
+
+
+                <ImageView
+                    android:id="@+id/center"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="15dp"
+                    android:src="@drawable/icon_nav_center" />
+
         </RelativeLayout>
 
     </RelativeLayout>

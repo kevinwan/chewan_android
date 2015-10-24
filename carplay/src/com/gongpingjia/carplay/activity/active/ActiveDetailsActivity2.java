@@ -1,5 +1,6 @@
 package com.gongpingjia.carplay.activity.active;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -15,7 +16,9 @@ import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
+import com.gongpingjia.carplay.activity.chat.ChatActivity;
 import com.gongpingjia.carplay.adapter.BigImageAdapter;
+import com.gongpingjia.carplay.adapter.OfficialMembersAdapter;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.view.CarPlayGallery;
@@ -49,6 +52,11 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
 
     User user;
 
+    String activeid;
+
+    //是否为成员
+    boolean isMember = false;
+
 
     /**
      * headview
@@ -65,7 +73,7 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
     private ImageView processIconI, explainIconI;
     private ListView processlistList;
     private TextView explaintxtT;
-
+    private OfficialMembersAdapter membersAdapter;
 
     private boolean contentFlag = false;
     private boolean processFlag = false;
@@ -78,6 +86,8 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
 
 //        http://cwapi.gongpingjia.com:8080/v2/official/activity/561f5eaa0cf2a1b735efa50a/info?userId=561ba2d60cf2429fb48e86bd&token=9927f747-c615-4362-bd43-a2ec31362205
     }
+
+
 
     @Override
     public void initView() {
@@ -135,8 +145,10 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
         explainL = (LinearLayout) mFootView.findViewById(R.id.explain);
         processIconI = (ImageView) mFootView.findViewById(R.id.process_icon);
         explainIconI = (ImageView) mFootView.findViewById(R.id.explain_icon);
-        processlistList = (ListView) mFootView.findViewById(R.id.processlist);
         explaintxtT = (TextView) mFootView.findViewById(R.id.explaintxt);
+        processlistList = (ListView) mFootView.findViewById(R.id.processlist);
+        membersAdapter = new OfficialMembersAdapter(self);
+        processlistList.setAdapter(membersAdapter);
 
         joinBtn.setOnClickListener(this);
         foldR.setOnClickListener(this);
@@ -146,7 +158,7 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
     }
 
     private void getActiveDetailsData() {
-        String activeid = getIntent().getStringExtra("activityId");
+        activeid = getIntent().getStringExtra("activityId");
 
         DhNet verifyNet = new DhNet(API2.ActiveDetails + activeid + "/info?userId=" + user.getUserId() + "&token=" + user.getToken());
         verifyNet.doGet(new NetTask(self) {
@@ -171,7 +183,7 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
                     Date cdate = new Date(JSONUtil.getLong(jo, "createTime"));
                     ViewUtil.bindView(creattimeT, format.format(cdate));
 
-                    //名字,头像,标题,介绍,价格,补贴,说明
+                    //活动名字,头像,标题,介绍,价格,补贴,说明
                     JSONObject jsname = JSONUtil.getJSONObject(jo, "organizer");
                     ViewUtil.bindView(nicknameT, JSONUtil.getString(jsname, "nickname"));
                     ViewUtil.bindNetImage(avatarT, JSONUtil.getString(jsname, "avatar"), "head");
@@ -202,6 +214,9 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
                         ViewUtil.bindView(unparticipateT, JSONUtil.getInt(jo, "nowJoinNum") + "/" + "人数不限");
                     }
 
+                    //参与成员
+                    JSONArray membersJsa = JSONUtil.getJSONArray(jo,"members");
+                    setMembersData(membersJsa);
 
                     /** GalleryViewPager  */
                     final String[] urls;
@@ -211,6 +226,13 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
                     if (jsc != null) {
                         BigImageAdapter adapter = new BigImageAdapter(self, jsc);
                         mViewPager.setAdapter(adapter);
+                    }
+
+                    isMember = JSONUtil.getBoolean(jo, "isMember");
+                    if (isMember){
+                        joinBtn.setText("进入群聊");
+                    }else {
+                        joinBtn.setText("报名参加");
                     }
 
 
@@ -234,6 +256,11 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
         switch (v.getId()) {
             //报名参加
             case R.id.join:
+                if(isMember){
+                    enterChat();
+                }else {
+                    joinActive();
+                }
 
                 break;
             //活动描述
@@ -296,5 +323,39 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
             explainIconI.setImageResource(R.drawable.down_btn);
             explaintxtT.setVisibility(View.GONE);
         }
+    }
+
+    /**
+     * 加入活动
+     */
+    private void joinActive(){
+        DhNet joinnet = new DhNet(API2.joinActive+activeid+"/join?userId="+user.getUserId()+"&token="+user.getToken());
+        joinnet.doPost(new NetTask(self) {
+            @Override
+            public void doInUI(Response response, Integer transfer) {
+                if (response.isSuccess()) {
+                    joinBtn.setText("进人群聊");
+                    isMember = !isMember;
+                }
+            }
+        });
+    }
+
+    /**
+     * 进入群聊
+     */
+    private void enterChat(){
+        Intent intent = new Intent(self, ChatActivity.class);
+//        intent.putExtra("chatType", ChatActivity.CHATTYPE_SINGLE);
+//        intent.putExtra("activityId", "");
+//        intent.putExtra("userId", "");
+        startActivity(intent);
+    }
+
+    /**
+     * 设置参与成员信息
+     */
+    private void setMembersData(JSONArray jsa){
+        membersAdapter.setData(jsa);
     }
 }

@@ -6,14 +6,18 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMConversation;
+import com.easemob.chat.EMGroup;
+import com.easemob.chat.EMGroupManager;
 import com.easemob.chat.EMMessage;
 import com.gongpingjia.carplay.ILoadSuccess;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseFragment;
+import com.gongpingjia.carplay.activity.chat.ChatActivity;
 import com.gongpingjia.carplay.activity.main.MainActivity2;
 import com.gongpingjia.carplay.activity.my.AttentionMeActivity;
 import com.gongpingjia.carplay.activity.my.DynamicActivity;
@@ -22,7 +26,6 @@ import com.gongpingjia.carplay.activity.my.OfficialMessageActivity;
 import com.gongpingjia.carplay.adapter.FragmentMsgAdapter;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,18 +38,18 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by Administrator on 2015/10/13.
  */
-public class DynamicListFragment extends CarPlayBaseFragment implements PullToRefreshBase.OnRefreshListener<RecyclerViewPager>, ILoadSuccess, View.OnClickListener {
+public class DynamicListFragment extends CarPlayBaseFragment implements PullToRefreshBase.OnRefreshListener<ListView>, ILoadSuccess, View.OnClickListener {
 
     static DynamicListFragment instance;
 
     View mainV;
 
     ListView listV;
+    PullToRefreshListView pullToRefreshListView;
+
     private FragmentMsgAdapter mAdapter;
 
-
-    View headV;
-    List<EMConversation> conversationList = new ArrayList<EMConversation>();
+    List<EMConversation> conversationList = new ArrayList<>();
 
 
     private boolean hidden;
@@ -69,24 +72,50 @@ public class DynamicListFragment extends CarPlayBaseFragment implements PullToRe
     }
 
     private void initView() {
-        PullToRefreshListView pullToRefreshListView = (PullToRefreshListView) mainV.findViewById(R.id.listview);
-//        headV = LayoutInflater.from(getActivity()).inflate(R.layout.head_dynamic, null);
-        listV = pullToRefreshListView.getRefreshableView();
-//        listV.addHeaderView(headV);
-//        people_interested = (LinearLayout) headV.findViewById(R.id.interested_people);
-//        attentionme = (LinearLayout) headV.findViewById(R.id.attentionme);
-//        visit = (LinearLayout) headV.findViewById(R.id.visit);
-//        avtivity_dynamic = (LinearLayout) headV.findViewById(R.id.avtivity_dynamic);
-//        official = (LinearLayout) headV.findViewById(R.id.official);
-//
-//        visit.setOnClickListener(this);
-//        attentionme.setOnClickListener(this);
-//        people_interested.setOnClickListener(this);
-//        avtivity_dynamic.setOnClickListener(this);
-//        official.setOnClickListener(this);
+        pullToRefreshListView = (PullToRefreshListView) mainV.findViewById(R.id.listview);
+        pullToRefreshListView.setOnRefreshListener(this);
 
+        listV = pullToRefreshListView.getRefreshableView();
         mAdapter = new FragmentMsgAdapter(getActivity());
         listV.setAdapter(mAdapter);
+        listV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                int currentPosition = position - 1;
+                int type = mAdapter.getItemViewType(currentPosition);
+                EMConversation conversation = mAdapter.getItem(currentPosition);
+                String username = conversation.getUserName();
+                switch (type) {
+                    case 0:
+
+                        break;
+                    case 1:
+                        if (username.equals("车玩官方")) {
+                            Intent intent = new Intent(getActivity(), ChatActivity.class);
+                            intent.putExtra("chatType", ChatActivity.CHATTYPE_SINGLE);
+                            intent.putExtra("activityId", "");
+                            intent.putExtra("userId", username);
+                            startActivity(intent);
+                        }
+                        break;
+                    case 2:
+                        Intent intent = new Intent(getActivity(), ChatActivity.class);
+                        if (conversation.isGroup()) {
+                            // it is group chat
+                            EMGroup group = EMGroupManager.getInstance().getGroup(username);
+                            intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
+                            intent.putExtra("activityId", "");
+                            intent.putExtra("groupId", group.getGroupId());
+                        } else {
+                            intent.putExtra("chatType", ChatActivity.CHATTYPE_SINGLE);
+                            intent.putExtra("activityId", "");
+                            intent.putExtra("userId", username);
+                        }
+                        break;
+                }
+
+            }
+        });
     }
 
 
@@ -194,11 +223,6 @@ public class DynamicListFragment extends CarPlayBaseFragment implements PullToRe
 
     }
 
-    @Override
-    public void onRefresh(PullToRefreshBase<RecyclerViewPager> refreshView) {
-
-    }
-
 
     @Override
     public void onClick(View v) {
@@ -225,5 +249,13 @@ public class DynamicListFragment extends CarPlayBaseFragment implements PullToRe
                 startActivity(it);
                 break;
         }
+    }
+
+    @Override
+    public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+        conversationList.clear();
+        conversationList = loadConversationsWithRecentChat();
+        mAdapter.setGroupMessageData(conversationList);
+        pullToRefreshListView.onRefreshComplete();
     }
 }

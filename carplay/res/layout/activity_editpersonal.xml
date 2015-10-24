@@ -14,64 +14,67 @@
         android:background="@color/white"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_s"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp">
-
-            <TextView
-                style="@style/text_grey_medium"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text="头像" />
-
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:gravity="center_vertical|right"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_s"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
 
-                <!-- <ImageView -->
+                <TextView
+                    style="@style/text_grey_medium"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="头像" />
 
-                <com.gongpingjia.carplay.view.RoundImageView
-                    android:id="@+id/head"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="3dp"
-                    android:layout_toLeftOf="@+id/img" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:gravity="center_vertical|right"
+                    android:orientation="horizontal">
+
+                    <!-- <ImageView -->
+
+                    <com.gongpingjia.carplay.view.RoundImageView
+                        android:id="@+id/head"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="3dp"
+                        android:layout_toLeftOf="@+id/img" />
 
 
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
+
 
         <View
             android:layout_width="fill_parent"
             android:layout_height="1px"
             android:background="#e6e9ed" />
 
-        <LinearLayout
-            android:id="@+id/name_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp">
 
-            <TextView
-                style="@style/text_grey_medium"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text="昵称" />
 
             <LinearLayout
+                android:id="@+id/name_layout"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:gravity="center_vertical|right"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp">
 
-                <!--<EditText-->
+                <TextView
+                    style="@style/text_grey_medium"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="昵称" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:gravity="center_vertical|right"
+                    android:orientation="horizontal">
+
+                    <!--<EditText-->
                     <!--android:id="@+id/nickname"-->
                     <!--style="@style/text_blacklight_medium"-->
                     <!--android:layout_width="match_parent"-->
@@ -80,237 +83,248 @@
                     <!--android:gravity="center_vertical|right"-->
                     <!--android:hint="请输入昵称"-->
                     <!--android:singleLine="true" />-->
-                <TextView
-                    android:id="@+id/nickname"
-                    style="@style/text_blacklight_medium"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:background="@color/nothing"
-                    android:gravity="center_vertical|right"
-                    android:hint="请输入昵称"
-                    android:singleLine="true" />
+                    <TextView
+                        android:id="@+id/nickname"
+                        style="@style/text_blacklight_medium"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:background="@color/nothing"
+                        android:gravity="center_vertical|right"
+                        android:hint="请输入昵称"
+                        android:singleLine="true" />
 
-                <ImageView
-                    android:layout_width="18dp"
-                    android:layout_height="22dp"
-                    android:src="@drawable/right_btn" />
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="22dp"
+                        android:src="@drawable/right_btn" />
+                </LinearLayout>
+
+
             </LinearLayout>
-
-
-        </LinearLayout>
 
         <View
             android:layout_width="fill_parent"
             android:layout_height="1px"
             android:background="#e6e9ed" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                style="@style/text_grey_medium"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text="性别" />
 
 
-            <!-- <RadioGroup
-                android:id="@+id/tab"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:gravity="center_vertical|right"
-                android:orientation="horizontal" >
-
-                <RadioButton
-                    android:id="@+id/tab_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginRight="20dp"
-                    android:button="@null"
-                    android:checked="true"
-                    android:drawableLeft="@drawable/radio_sex"
-                    android:drawablePadding="5dp"
-                    android:gravity="center_vertical"
-                    android:text="男"
-                    android:textColor="@color/coach_text_s"
-                    android:textSize="@dimen/text_medium" />
-
-                <RadioButton
-                    android:id="@+id/tab_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:button="@null"
-                    android:drawableLeft="@drawable/radio_sex"
-                    android:drawablePadding="5dp"
-                    android:gravity="center_vertical"
-                    android:text="女"
-                    android:textColor="@color/coach_text_s"
-                    android:textSize="@dimen/text_medium" />
-            </RadioGroup> -->
             <LinearLayout
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal|right"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/sex"
                     style="@style/text_grey_medium"
-                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="性别" />
+
+
+                <!-- <RadioGroup
+                    android:id="@+id/tab"
+                    android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:gravity="center_vertical|right"
-                    android:singleLine="true" />
+                    android:orientation="horizontal" >
 
-                <!--<ImageView-->
+                    <RadioButton
+                        android:id="@+id/tab_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="20dp"
+                        android:button="@null"
+                        android:checked="true"
+                        android:drawableLeft="@drawable/radio_sex"
+                        android:drawablePadding="5dp"
+                        android:gravity="center_vertical"
+                        android:text="男"
+                        android:textColor="@color/coach_text_s"
+                        android:textSize="@dimen/text_medium" />
+
+                    <RadioButton
+                        android:id="@+id/tab_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:button="@null"
+                        android:drawableLeft="@drawable/radio_sex"
+                        android:drawablePadding="5dp"
+                        android:gravity="center_vertical"
+                        android:text="女"
+                        android:textColor="@color/coach_text_s"
+                        android:textSize="@dimen/text_medium" />
+                </RadioGroup> -->
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal|right"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/sex"
+                        style="@style/text_grey_medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="60dp"
+                        android:gravity="center_vertical|right"
+                        android:singleLine="true" />
+
+                    <!--<ImageView-->
                     <!--android:layout_width="18dp"-->
                     <!--android:layout_height="22dp"-->
                     <!--android:layout_gravity="center"-->
                     <!--android:src="@drawable/right_btn" />-->
+                </LinearLayout>
+
+
             </LinearLayout>
-
-
-        </LinearLayout>
 
         <View
             android:layout_width="fill_parent"
             android:layout_height="1px"
             android:background="#e6e9ed" />
 
-        <LinearLayout
-            android:id="@+id/personal_age_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
 
-            <TextView
-                style="@style/text_grey_medium"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text="年龄" />
 
             <LinearLayout
+                android:id="@+id/personal_age_layout"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:gravity="center_vertical|right"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/edit_age"
-                    style="@style/text_blacklight_medium"
+                    style="@style/text_grey_medium"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="年龄" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:gravity="center_vertical|right"
-                    android:textColor="@color/text_black" />
+                    android:orientation="horizontal">
 
-                <ImageView
-                    android:id="@+id/icon"
-                    android:layout_width="18dp"
-                    android:layout_height="22dp"
+                    <TextView
+                        android:id="@+id/edit_age"
+                        style="@style/text_blacklight_medium"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:gravity="center_vertical|right"
+                        android:textColor="@color/text_black" />
 
-                    android:src="@drawable/right_btn" />
+                    <ImageView
+                        android:id="@+id/icon"
+                        android:layout_width="18dp"
+                        android:layout_height="22dp"
+
+                        android:src="@drawable/right_btn" />
+                </LinearLayout>
+
+
             </LinearLayout>
 
-
-        </LinearLayout>
 
         <View
             android:layout_width="fill_parent"
             android:layout_height="1px"
             android:background="#e6e9ed" />
 
-        <LinearLayout
-            android:id="@+id/approve_layout_head"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_s"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp">
-
-            <TextView
-                style="@style/text_grey_medium"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text="头像认证" />
 
             <LinearLayout
+                android:id="@+id/approve_layout_head"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:gravity="center_vertical|right"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_s"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
 
                 <TextView
-                    android:id="@+id/head_approve"
-                    style="@style/text_blacklight_medium"
+                    style="@style/text_grey_medium"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="头像认证" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:ellipsize="end"
+                    android:layout_height="60dp"
                     android:gravity="center_vertical|right"
-                    android:singleLine="true"
-                    android:textColor="@color/text_black" />
+                    android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="18dp"
-                    android:layout_height="22dp"
-                    android:src="@drawable/right_btn" />
+                    <TextView
+                        android:id="@+id/head_approve"
+                        style="@style/text_blacklight_medium"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical|right"
+                        android:singleLine="true"
+                        android:textColor="@color/text_black" />
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="22dp"
+                        android:src="@drawable/right_btn" />
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
+
 
         <View
             android:layout_width="fill_parent"
             android:layout_height="1px"
             android:background="#e6e9ed" />
 
-        <LinearLayout
-            android:id="@+id/approve_layout_car"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_s"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp">
 
-            <TextView
-                style="@style/text_grey_medium"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text="车主认证" />
 
             <LinearLayout
+                android:id="@+id/approve_layout_car"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:gravity="center_vertical|right"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/personal_car_logo"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_marginRight="5dp"/>
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_s"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
 
                 <TextView
-                    android:id="@+id/car_approve"
-                    style="@style/text_blacklight_medium"
-                    android:layout_width="wrap_content"
+                    style="@style/text_grey_medium"
                     android:layout_height="match_parent"
-                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:text="车主认证" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
                     android:gravity="center_vertical|right"
-                    android:singleLine="true"
-                    android:textColor="@color/text_black" />
+                    android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="18dp"
-                    android:layout_height="22dp"
-                    android:src="@drawable/right_btn" />
+                    <ImageView
+                        android:id="@+id/personal_car_logo"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginRight="5dp" />
+
+                    <TextView
+                        android:id="@+id/car_approve"
+                        style="@style/text_blacklight_medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical|right"
+                        android:singleLine="true"
+                        android:textColor="@color/text_black" />
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="22dp"
+                        android:src="@drawable/right_btn" />
+                </LinearLayout>
+
             </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
 
+
+    </LinearLayout>
 
 </LinearLayout>

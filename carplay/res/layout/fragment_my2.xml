@@ -1,5 +1,6 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -25,6 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 />
+
 
             <com.gongpingjia.carplay.view.RoundImageView
                 android:id="@+id/head"
@@ -79,21 +81,19 @@
                     android:layout_marginTop="22dp"
                     android:text="资料完成度60%,越高越吸引人"
                     android:textStyle="bold" />
-                <com.andexert.library.RippleView
-                    rv_centered="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+
                 <Button
                     android:id="@+id/perfect"
                     android:layout_width="195dp"
                     android:layout_height="43dp"
                     android:layout_marginBottom="22dp"
                     android:layout_marginTop="12dp"
+                    android:layout_gravity="center"
                     android:background="@drawable/btn_red_fillet"
                     android:text="完善"
                     android:textColor="@color/white"
                     android:textStyle="bold" />
-                </com.andexert.library.RippleView>
+
 
             </LinearLayout>
         </RelativeLayout>
@@ -116,12 +116,14 @@
                 android:layout_height="77dp"
                 android:src="@drawable/my_camera" />
 
+
             <android.support.v7.widget.RecyclerView
             	android:id="@+id/recyclerView"
             	android:layout_width="match_parent"
+                android:scrollbars="horizontal"
             	android:layout_height="match_parent"
-            	android:scrollbars="horizontal"
                 android:layout_marginLeft="10dp"/>
+
         </LinearLayout>
 
         <View
@@ -137,9 +139,9 @@
 
             <LinearLayout
                 android:id="@+id/myactive"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
                 android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
@@ -154,9 +156,10 @@
                     android:text="我的活动" />
             </LinearLayout>
 
+
             <LinearLayout
                 android:id="@+id/myattention"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
@@ -172,15 +175,13 @@
                     android:layout_marginTop="15dp"
                     android:text="我的关注" />
             </LinearLayout>
+
         </LinearLayout>
 
         <View
             style="@style/line"
             android:layout_height="10dp" />
-        <com.andexert.library.RippleView
-            rv_centered="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+
 
         <LinearLayout
             android:id="@+id/headattestation"
@@ -218,12 +219,9 @@
                     android:src="@drawable/right_btn" />
             </LinearLayout>
         </LinearLayout>
-        </com.andexert.library.RippleView>
+
         <View style="@style/line" />
-        <com.andexert.library.RippleView
-            rv_centered="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+
         <LinearLayout
             android:id="@+id/carattestation"
             style="@style/linearlayout"
@@ -262,7 +260,7 @@
                     android:src="@drawable/right_btn" />
             </LinearLayout>
         </LinearLayout>
-        </com.andexert.library.RippleView>
+
         <View
             style="@style/line"
             android:layout_width="match_parent"

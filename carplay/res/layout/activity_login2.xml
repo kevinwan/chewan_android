@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -67,12 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp">
 
-            <com.andexert.library.RippleView
-                rv_centered="true"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
-                android:layout_weight="1">
+
 
                 <Button
                     android:id="@+id/btn_login"
@@ -81,26 +77,23 @@
                     android:layout_weight="1"
                     android:background="@drawable/btn_red_fillet"
                     android:text="登录"
+                    android:layout_marginRight="3dp"
                     android:textColor="@color/white" />
 
-            </com.andexert.library.RippleView>
 
 
-            <com.andexert.library.RippleView
-                rv_centered="true"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
 
                 <Button
                     android:id="@+id/btn_register"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
                     android:background="@drawable/btn_blue_fillet"
+                    android:layout_weight="1"
                     android:text="注册"
                     android:textColor="@color/white" />
 
-            </com.andexert.library.RippleView>
+
         </LinearLayout>
 
         <TextView
@@ -157,26 +150,26 @@
             <ImageView
                 android:id="@+id/iv_weixin"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:scaleType="center"
+                android:layout_height="wrap_content"
                 android:src="@drawable/icon_weixin" />
+
 
             <ImageView
                 android:id="@+id/iv_qq"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:scaleType="center"
+                android:layout_height="wrap_content"
                 android:src="@drawable/icon_qq" />
+
 
             <ImageView
                 android:id="@+id/iv_weibo"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:scaleType="center"
+                android:layout_height="wrap_content"
                 android:src="@drawable/icon_weibo" />
+
         </LinearLayout>
     </LinearLayout>
 

@@ -4,10 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
-    <com.andexert.library.RippleView
-        rv_centered="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -84,6 +81,25 @@
                     android:text="包接送"
                     android:textColor="@color/text_skyblue" />
 
+                <LinearLayout
+                    android:id="@+id/photo_distancelayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    android:gravity="right|center_vertical">
+                    <ImageView
+                        android:layout_width="21dp"
+                        android:layout_height="21dp"
+                        android:layout_marginRight="6dp"
+                        android:src="@drawable/distance_icon" />
+
+                    <TextView
+                        android:id="@+id/photo_distance"
+                        style="@style/text_black_small"
+                        android:text="20m"
+                        android:textColor="@color/text_skyblue" />
+                </LinearLayout>
+
             </LinearLayout>
 
         </LinearLayout>
@@ -104,12 +120,13 @@
         </RelativeLayout>
 
         <LinearLayout
+            android:id="@+id/active_distancelayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp"
-            android:paddingTop="13dp">
+            android:layout_marginTop="13dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp">
 
             <TextView
                 android:id="@+id/activity_place"
@@ -128,7 +145,7 @@
                     android:src="@drawable/distance_icon" />
 
                 <TextView
-                    android:id="@+id/activity_distance"
+                    android:id="@+id/active_distance"
                     style="@style/text_black_small"
                     android:text="20m"
                     android:textColor="@color/text_skyblue" />
@@ -139,6 +156,8 @@
 
     </LinearLayout>
 
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -148,5 +167,4 @@
         android:paddingTop="12dp">
 
     </LinearLayout>
-    </com.andexert.library.RippleView>
 </LinearLayout>
