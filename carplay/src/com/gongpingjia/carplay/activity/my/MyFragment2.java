@@ -398,8 +398,11 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                     uploadHead(newPath);
                     break;
                 case PERSONAL:
-
-
+                    txtphotoAuthStatusT.setText(data.getStringExtra("photoAuthStatus"));
+                    nameT.setText(data.getStringExtra("nickname"));
+                    ageT.setText(data.getStringExtra("age"));
+                    attestation_txtT.setText(data.getStringExtra("licenseAuthStatus"));
+                    ViewUtil.bindNetImage(headI,data.getStringExtra("head"),"head");
                     break;
             }
         }

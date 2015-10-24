@@ -56,10 +56,6 @@
 
     </LinearLayout>
 
-    <com.andexert.library.RippleView
-        rv_centered="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
 
         <LinearLayout
             android:id="@+id/brandchoice"
@@ -95,14 +91,11 @@
                     android:src="@drawable/right_btn" />
             </LinearLayout>
         </LinearLayout>
-    </com.andexert.library.RippleView>
+
 
     <View style="@style/line" />
 
-    <com.andexert.library.RippleView
-        rv_centered="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+
 
         <LinearLayout
             android:id="@+id/drivinglicense_up"
@@ -138,14 +131,11 @@
                     android:src="@drawable/right_btn" />
             </LinearLayout>
         </LinearLayout>
-    </com.andexert.library.RippleView>
+
 
     <View style="@style/line" />
 
-    <com.andexert.library.RippleView
-        rv_centered="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+
 
         <LinearLayout
             android:id="@+id/driverlicense_up"
@@ -182,12 +172,9 @@
             </LinearLayout>
 
         </LinearLayout>
-    </com.andexert.library.RippleView>
 
-    <com.andexert.library.RippleView
-        rv_centered="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+
+
 
         <Button
             android:id="@+id/up_button"
@@ -197,5 +184,5 @@
             android:background="@drawable/button_owners_bg"
             android:text="提交认证"
             android:textColor="@color/white" />
-    </com.andexert.library.RippleView>
+
 </LinearLayout>

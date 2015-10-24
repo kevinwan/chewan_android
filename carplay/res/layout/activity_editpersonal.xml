@@ -14,11 +14,6 @@
         android:background="@color/white"
         android:orientation="vertical">
 
-        <com.andexert.library.RippleView
-            rv_centered="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -51,17 +46,14 @@
 
                 </LinearLayout>
             </LinearLayout>
-        </com.andexert.library.RippleView>
+
 
         <View
             android:layout_width="fill_parent"
             android:layout_height="1px"
             android:background="#e6e9ed" />
 
-        <com.andexert.library.RippleView
-            rv_centered="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+
 
             <LinearLayout
                 android:id="@+id/name_layout"
@@ -109,17 +101,13 @@
 
 
             </LinearLayout>
-        </com.andexert.library.RippleView>
 
         <View
             android:layout_width="fill_parent"
             android:layout_height="1px"
             android:background="#e6e9ed" />
 
-        <com.andexert.library.RippleView
-            rv_centered="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -192,17 +180,13 @@
 
 
             </LinearLayout>
-        </com.andexert.library.RippleView>
 
         <View
             android:layout_width="fill_parent"
             android:layout_height="1px"
             android:background="#e6e9ed" />
 
-        <com.andexert.library.RippleView
-            rv_centered="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+
 
             <LinearLayout
                 android:id="@+id/personal_age_layout"
@@ -243,17 +227,13 @@
 
 
             </LinearLayout>
-        </com.andexert.library.RippleView>
+
 
         <View
             android:layout_width="fill_parent"
             android:layout_height="1px"
             android:background="#e6e9ed" />
 
-        <com.andexert.library.RippleView
-            rv_centered="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:id="@+id/approve_layout_head"
@@ -291,17 +271,14 @@
                         android:src="@drawable/right_btn" />
                 </LinearLayout>
             </LinearLayout>
-        </com.andexert.library.RippleView>
+
 
         <View
             android:layout_width="fill_parent"
             android:layout_height="1px"
             android:background="#e6e9ed" />
 
-        <com.andexert.library.RippleView
-            rv_centered="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+
 
             <LinearLayout
                 android:id="@+id/approve_layout_car"
@@ -346,7 +323,7 @@
                 </LinearLayout>
 
             </LinearLayout>
-        </com.andexert.library.RippleView>
+
 
     </LinearLayout>
 

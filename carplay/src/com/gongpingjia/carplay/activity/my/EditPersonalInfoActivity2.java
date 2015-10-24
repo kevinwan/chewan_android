@@ -131,11 +131,19 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
                 @Override
                 public void onClick(View arg0) {
                     // 如果没有改动 直接关闭本页
-//                    if (isModify()) {
-//                        modification();
-//                    } else {
+                    if (isModify()) {
+                        Intent intent = getIntent();
+                        intent.putExtra("nickname",nicknameT.getText().toString());
+                        intent.putExtra("head",head_url);
+                        intent.putExtra("age",edit_ageT.getText().toString());
+                        intent.putExtra("photoAuthStatus",car_approve.getText().toString());
+                        intent.putExtra("licenseAuthStatus",head_approve.getText().toString());
+                        setResult(self.RESULT_OK, intent);
+                        finish();
+                    } else {
+                    setValue();
                     finish();
-//                    }
+                    }
 
                 }
             });
@@ -196,51 +204,9 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
 
     }
 
-//    /**
-//     * 获取个人资料
-//     */
-//    private void getMyDetails() {
-//        DhNet verifyNet = new DhNet(API2.CWBaseurl +"/user/"+user.getUserId()+"/info?viewUser="+user.getUserId()+"&token="+user.getToken());
-//        verifyNet.doGetInDialog(new NetTask(this) {
-//            @Override
-//            public void doInUI(Response response, Integer transfer) {
-//                System.out.println("编辑资料："+user.getUserId() + "---------" + user.getToken());
-//                JSONObject jo = response.jSONFromData();
 //
-//                nickname = JSONUtil.getString(jo, "nickname");
-////                drivingExperience = JSONUtil.getInt(jo, "drivingExperience")
-////                        + "";
-//                photo = JSONUtil.getString(jo, "avatar");
-//                String gender = JSONUtil.getString(jo, "gender");
-//                String photoAuthStatus = JSONUtil.getString(jo, "photoAuthStatus");
-//                String licenseAuthStatus = JSONUtil.getString(jo, "licenseAuthStatus");
-//                age = JSONUtil.getString(jo, "age");
-//                edit_ageT.setText(age);
-//                head_approve.setText(photoAuthStatus);
-//                car_approve.setText(licenseAuthStatus);
-//                JSONObject ob = JSONUtil.getJSONObject(jo, "car");
-//                String logo = JSONUtil.getString(ob, "logo");
-//                if (licenseAuthStatus.equals("认证通过")) {
-//
-//                    ViewUtil.bindNetImage(carlogo, logo, "default");
-//                    approve_layout_car.setEnabled(false);
-//                }
-////                if (photoAuthStatus.equals("认证通过")){
-////                    approve_layout_head.setEnabled(false);
-////                }
-//
-//                nicknameT.setText(nickname);
-//                sexT.setText(gender);
-////                edit_ageT.setText(drivingExperience);
-//                ViewUtil.bindNetImage(headI, photo, "head");
-//            }
-//        });
-//
-//    }
     public void setValue(){
-        Intent intent = getIntent();
-        intent.putExtra("nickname",nicknameT.getText().toString());
-        setResult(self.RESULT_OK, intent);
+
     }
 
     /**
@@ -500,11 +466,19 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-//            if (isModify()) {
-//                modification();
-//            } else {
+            if (isModify()) {
+                Intent intent = getIntent();
+                intent.putExtra("nickname",nicknameT.getText().toString());
+                intent.putExtra("head",head_url);
+                intent.putExtra("age",edit_ageT.getText().toString());
+                intent.putExtra("photoAuthStatus",car_approve.getText().toString());
+                intent.putExtra("licenseAuthStatus",head_approve.getText().toString());
+                setResult(self.RESULT_OK, intent);
+                finish();
+            } else {
+
             finish();
-//            }
+            }
             return true;
         }
         return super.onKeyDown(keyCode, event);
