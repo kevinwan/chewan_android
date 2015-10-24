@@ -294,6 +294,12 @@ public class MyFragment2 extends Fragment implements OnClickListener {
             //完善信息
             case R.id.perfect:
                 it = new Intent(getActivity(), EditPersonalInfoActivity2.class);
+                it.putExtra("name",name);
+                it.putExtra("gender",gender);
+                it.putExtra("headimg",headimg);
+                it.putExtra("photoAuthStatus",photoAuthStatus);
+                it.putExtra("licenseAuthStatus",licenseAuthStatus);
+                it.putExtra("age",age);
                 startActivity(it);
                 break;
             //我的活动

@@ -25,14 +25,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 />
+            <com.andexert.library.RippleView
+                rv_centered="true"
+                android:layout_width="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_height="wrap_content">
 
             <com.gongpingjia.carplay.view.RoundImageView
                 android:id="@+id/head"
                 android:layout_width="113dp"
                 android:layout_height="113dp"
-                android:layout_centerHorizontal="true"
                 android:layout_marginTop="28dp" />
-
+            </com.andexert.library.RippleView>
             <TextView
                 android:id="@+id/attestation"
                 style="@style/text_white_medium"
@@ -109,19 +113,28 @@
             android:paddingBottom="18dp"
             android:paddingLeft="10dp"
             android:paddingTop="18dp">
-
+            <com.andexert.library.RippleView
+                rv_centered="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
             <ImageView
                 android:id="@+id/addphoto"
                 android:layout_width="77dp"
                 android:layout_height="77dp"
                 android:src="@drawable/my_camera" />
+            </com.andexert.library.RippleView>
+            <com.andexert.library.RippleView
+                rv_centered="true"
+                android:layout_width="fill_parent"
 
+                android:layout_height="fill_parent">
             <android.support.v7.widget.RecyclerView
             	android:id="@+id/recyclerView"
             	android:layout_width="match_parent"
+                android:scrollbars="horizontal"
             	android:layout_height="match_parent"
-            	android:scrollbars="horizontal"
                 android:layout_marginLeft="10dp"/>
+            </com.andexert.library.RippleView>
         </LinearLayout>
 
         <View
@@ -134,12 +147,15 @@
             android:paddingBottom="15dp"
             android:paddingLeft="10dp"
             android:paddingTop="15dp">
-
+            <com.andexert.library.RippleView
+                rv_centered="true"
+                android:layout_width="fill_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
             <LinearLayout
                 android:id="@+id/myactive"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
@@ -153,7 +169,12 @@
                     android:layout_marginTop="15dp"
                     android:text="我的活动" />
             </LinearLayout>
-
+            </com.andexert.library.RippleView>
+            <com.andexert.library.RippleView
+                rv_centered="true"
+                android:layout_width="fill_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
             <LinearLayout
                 android:id="@+id/myattention"
                 android:layout_width="match_parent"
@@ -172,6 +193,7 @@
                     android:layout_marginTop="15dp"
                     android:text="我的关注" />
             </LinearLayout>
+            </com.andexert.library.RippleView>
         </LinearLayout>
 
         <View

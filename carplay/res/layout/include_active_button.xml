@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:my="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
 
     <LinearLayout
@@ -12,61 +12,79 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:gravity="center_horizontal"
-        android:visibility="gone"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
-        <com.gongpingjia.carplay.view.AnimButtonView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginBottom="10dp"
-            my:bg="@drawable/red_circle"
-            my:src="@drawable/red_circle">
+        <com.andexert.library.RippleView
+            rv_centered="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-            <TextView
-                style="@style/text_white_medium"
-                android:layout_centerInParent="true"
-                android:text="邀 TA" />
-        </com.gongpingjia.carplay.view.AnimButtonView>
 
+            <com.gongpingjia.carplay.view.AnimButtonView
+                android:layout_width="85dp"
+                android:layout_height="85dp"
+                android:layout_marginBottom="10dp"
+                my:bg="@drawable/red_circle"
+                my:src="@drawable/red_circle">
+
+                <TextView
+                    style="@style/text_white_medium"
+                    android:layout_centerInParent="true"
+                    android:text="邀 TA" />
+            </com.gongpingjia.carplay.view.AnimButtonView>
+        </com.andexert.library.RippleView>
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/yingyao_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:gravity="center_horizontal"
-        android:visibility="gone"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
-        <com.gongpingjia.carplay.view.AnimButtonView
-            android:id="@+id/yingyao"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginBottom="10dp"
-            my:bg="@drawable/red_circle"
-            my:src="@drawable/red_circle">
+        <com.andexert.library.RippleView
+            rv_centered="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-            <TextView
-                style="@style/text_white_medium"
-                android:layout_centerInParent="true"
-                android:text="应邀" />
-        </com.gongpingjia.carplay.view.AnimButtonView>
+            <com.gongpingjia.carplay.view.AnimButtonView
+                android:id="@+id/yingyao"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginBottom="10dp"
+                my:bg="@drawable/red_circle"
+                my:src="@drawable/red_circle">
 
-        <com.gongpingjia.carplay.view.AnimButtonView
-            android:id="@+id/hulue"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginBottom="10dp"
-            my:bg="@drawable/dynamic_grey"
-            my:src="@drawable/dynamic_grey">
+                <TextView
+                    style="@style/text_white_medium"
+                    android:layout_centerInParent="true"
+                    android:text="应邀" />
+            </com.gongpingjia.carplay.view.AnimButtonView>
+        </com.andexert.library.RippleView>
 
-            <TextView
-                style="@style/text_white_medium"
-                android:layout_centerInParent="true"
-                android:text="忽略" />
-        </com.gongpingjia.carplay.view.AnimButtonView>
+        <com.andexert.library.RippleView
+            rv_centered="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
+            <com.gongpingjia.carplay.view.AnimButtonView
+                android:id="@+id/hulue"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="30dp"
+                my:bg="@drawable/dynamic_grey"
+                my:src="@drawable/dynamic_grey">
+
+                <TextView
+                    style="@style/text_white_medium"
+                    android:layout_centerInParent="true"
+                    android:text="忽略" />
+            </com.gongpingjia.carplay.view.AnimButtonView>
+        </com.andexert.library.RippleView>
     </LinearLayout>
 
     <LinearLayout
@@ -78,37 +96,48 @@
         android:visibility="gone"
         android:orientation="horizontal">
 
-        <com.gongpingjia.carplay.view.AnimButtonView
-            android:id="@+id/dyanmic_one"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginBottom="10dp"
-            my:bg="@drawable/dynamic_blue"
-            my:src="@drawable/dynamic_blue">
+        <com.andexert.library.RippleView
+            rv_centered="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_centerInParent="true"
-                android:src="@drawable/chat_icon"/>
-        </com.gongpingjia.carplay.view.AnimButtonView>
+            <com.gongpingjia.carplay.view.AnimButtonView
+                android:id="@+id/dyanmic_one"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginBottom="10dp"
+                my:bg="@drawable/dynamic_blue"
+                my:src="@drawable/dynamic_blue">
 
-        <com.gongpingjia.carplay.view.AnimButtonView
-            android:id="@+id/dyanmic_two"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginBottom="10dp"
-            my:bg="@drawable/dynamic_green"
-            my:src="@drawable/dynamic_green">
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/chat_icon" />
+            </com.gongpingjia.carplay.view.AnimButtonView>
+        </com.andexert.library.RippleView>
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_centerInParent="true"
-                android:src="@drawable/phon_icon"/>
-        </com.gongpingjia.carplay.view.AnimButtonView>
+        <com.andexert.library.RippleView
+            rv_centered="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
+            <com.gongpingjia.carplay.view.AnimButtonView
+                android:id="@+id/dyanmic_two"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="30dp"
+                my:bg="@drawable/dynamic_green"
+                my:src="@drawable/dynamic_green">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/phon_icon" />
+            </com.gongpingjia.carplay.view.AnimButtonView>
+        </com.andexert.library.RippleView>
     </LinearLayout>
 
 </RelativeLayout>

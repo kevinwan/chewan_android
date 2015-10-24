@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-    <include
-        android:id="@+id/refresh_list_view"
-        layout="@layout/include_refreshlistview2" />
-</LinearLayout>
+<com.handmark.pulltorefresh.library.PullToRefreshListView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/refresh_list_view"
+android:layout_width="match_parent"
+android:layout_height="wrap_content" />

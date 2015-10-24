@@ -3,10 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <com.andexert.library.RippleView
-        rv_centered="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+    <!--<com.andexert.library.RippleView-->
+        <!--rv_centered="true"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content">-->
 
 
     <LinearLayout
@@ -57,6 +57,6 @@
                 android:src="@drawable/head_icon" />
         </LinearLayout>
     </LinearLayout>
-    </com.andexert.library.RippleView>
+    <!--</com.andexert.library.RippleView>-->
     <View style="@style/line_horizontal" />
 </LinearLayout>
