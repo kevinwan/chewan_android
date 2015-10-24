@@ -110,6 +110,11 @@ public class CarPlayBaseFragment extends Fragment {
                 if (onLoadSuccess != null && !response.isCache()) {
                     onLoadSuccess.loadSuccess();
                 }
+
+                if (onLoadSuccess != null && !response.isCache() && ignore == 0) {
+                    onLoadSuccess.loadSuccessOnFirst();
+                }
+
             }
 
             @Override

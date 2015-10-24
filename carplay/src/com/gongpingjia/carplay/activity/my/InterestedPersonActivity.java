@@ -1,7 +1,10 @@
 package com.gongpingjia.carplay.activity.my;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.gongpingjia.carplay.ILoadSuccess;
 import com.gongpingjia.carplay.R;
@@ -13,7 +16,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 /**
- * 感兴趣的人
+ * 感兴趣的
  */
 public class InterestedPersonActivity extends CarPlayListActivity implements PullToRefreshBase.OnRefreshListener<ListView>, ILoadSuccess {
 
@@ -22,9 +25,9 @@ public class InterestedPersonActivity extends CarPlayListActivity implements Pul
     PullToRefreshListView listV;
 
     InterestedPersonAdapter adapter;
-
+    LinearLayout empty;
+    TextView msg;
     User user;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,9 +38,9 @@ public class InterestedPersonActivity extends CarPlayListActivity implements Pul
     public void initView() {
 
         user = User.getInstance();
-
+        empty = (LinearLayout) findViewById(R.id.empty);
+        msg = (TextView) findViewById(R.id.msg);
         setTitle("感兴趣的");
-
         listV = (PullToRefreshListView) findViewById(R.id.listview);
         listV.setMode(PullToRefreshBase.Mode.BOTH);
         listV.setOnRefreshListener(this);
@@ -58,11 +61,14 @@ public class InterestedPersonActivity extends CarPlayListActivity implements Pul
     public void loadSuccess() {
         adapter.setData(mVaules);
         listV.onRefreshComplete();
+
+
     }
 
     @Override
     public void loadSuccessOnFirst() {
-
+        empty.setVisibility(View.VISIBLE);
+        msg.setText("此处暂无活动");
     }
 
     @Override

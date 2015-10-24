@@ -43,7 +43,7 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
     View mainV;
 
     LinearLayout near_layout;
-    View  currentview;
+    View currentview;
 
     public static NearListFragment getInstance() {
         if (instance == null) {
@@ -68,7 +68,7 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
         user = User.getInstance();
         pre = IocContainer.getShare().get(FilterPreference2.class);
         pre.load();
-         near_layout = (LinearLayout)mainV.findViewById(R.id.near_empty);
+        near_layout = (LinearLayout) mainV.findViewById(R.id.near_empty);
         listV = (PullToRefreshRecyclerViewVertical) mainV.findViewById(R.id.list);
         listV.setMode(PullToRefreshBase.Mode.BOTH);
         listV.setOnRefreshListener(this);
@@ -105,16 +105,12 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
     public void loadSuccess() {
         adapter.setData(mVaules);
         listV.onRefreshComplete();
-        if(mVaules.isEmpty()){
-            listV.setVisibility(View.GONE);
-            near_layout.setVisibility(View.VISIBLE);
-        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if(currentview!=null) {
+        if (currentview != null) {
             AnimButtonView animButtonView = (AnimButtonView) currentview.findViewById(R.id.invite);
             animButtonView.clearAnimation();
             animButtonView.startScaleAnimation();
@@ -130,7 +126,8 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
 
     @Override
     public void loadSuccessOnFirst() {
-
+//            listV.setVisibility(View.GONE);
+        near_layout.setVisibility(View.VISIBLE);
 
     }
 

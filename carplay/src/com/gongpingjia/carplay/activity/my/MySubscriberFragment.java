@@ -7,7 +7,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.adapter.MySubscriberAdapter2;
@@ -29,10 +31,11 @@ import org.json.JSONObject;
  * 我关注的人
  */
 public class MySubscriberFragment extends Fragment {
-
+    View mView;
     private PullToRefreshListView mListView;
     private MySubscriberAdapter2 mySubscriberAdapter;
-
+    LinearLayout empty;
+    TextView msg;
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -41,7 +44,10 @@ public class MySubscriberFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mListView = (PullToRefreshListView) inflater.inflate(R.layout.fragment_follow_each_other, container, false);
+         mView = inflater.inflate(R.layout.fragment_follow_each_other, container, false);
+        mListView = (PullToRefreshListView)mView.findViewById(R.id.refresh_list_view);
+        empty = (LinearLayout) mView.findViewById(R.id.empty);
+        msg = (TextView) mView.findViewById(R.id.msg);
         mListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
             public void onRefresh(PullToRefreshBase<ListView> refreshView) {
@@ -53,9 +59,14 @@ public class MySubscriberFragment extends Fragment {
                         if (response.isSuccess()) {
                             try {
                                 JSONObject jsonObject = response.jSONFromData();
+                                if (jsonObject != null){
+                                    empty.setVisibility(View.VISIBLE);
+                                    msg.setText("暂无关注");
+                                }
                                 JSONArray jsonArray = jsonObject.getJSONArray("mySubscribe");
                                 mySubscriberAdapter = new MySubscriberAdapter2(getActivity(), jsonArray);
                                 mListView.setAdapter(mySubscriberAdapter);
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }

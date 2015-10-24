@@ -36,6 +36,12 @@ public class SideBar extends View {
         init();
     }
 
+    public SideBar(Context context, char[] letters) {
+        super(context);
+        this.context = context;
+        l = letters;
+    }
+
     public SideBar(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
@@ -44,8 +50,8 @@ public class SideBar extends View {
 
     private void init() {
 
-        l = new char[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S',
-                'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '#' };
+        l = new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S',
+                'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '#'};
     }
 
     public SideBar(Context context, AttributeSet attrs, int defStyle) {
@@ -55,7 +61,7 @@ public class SideBar extends View {
 
     public void setListView(ListView _list) {
         list = _list;
-        ListAdapter ha = (ListAdapter) _list.getAdapter();
+        ListAdapter ha = _list.getAdapter();
         sectionIndexter = (SectionIndexer) ha;
 
     }

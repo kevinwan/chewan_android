@@ -1,7 +1,10 @@
 package com.gongpingjia.carplay.activity.my;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.gongpingjia.carplay.ILoadSuccess;
 import com.gongpingjia.carplay.R;
@@ -18,13 +21,13 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 public class AttentionMeActivity extends CarPlayListActivity implements PullToRefreshBase.OnRefreshListener<ListView>, ILoadSuccess {
 
     private ListView mRecyclerView;
-
+    LinearLayout empty;
+    TextView msg;
     PullToRefreshListView listV;
 
     AttentionMeAdapter adapter;
 
     User user;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,12 +36,14 @@ public class AttentionMeActivity extends CarPlayListActivity implements PullToRe
 
     @Override
     public void initView() {
-        setTitle("我的活动");
+        setTitle("谁关注我");
         user = User.getInstance();
 
         listV = (PullToRefreshListView) findViewById(R.id.listview);
         listV.setMode(PullToRefreshBase.Mode.BOTH);
         listV.setOnRefreshListener(this);
+        empty = (LinearLayout) findViewById(R.id.empty);
+        msg = (TextView) findViewById(R.id.msg);
 
         mRecyclerView = listV.getRefreshableView();
 //        mRecyclerView.setEmptyView(findViewById(R.id.));
@@ -65,11 +70,13 @@ public class AttentionMeActivity extends CarPlayListActivity implements PullToRe
     public void loadSuccess() {
         adapter.setData(mVaules);
         listV.onRefreshComplete();
+
     }
 
     @Override
     public void loadSuccessOnFirst() {
-
+        empty.setVisibility(View.VISIBLE);
+        msg.setText("暂未被Ta人关注");
     }
 
 

@@ -1,18 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.gongpingjia.carplay.activity.my.OfficialMessageActivity">
 
-    <include layout="@layout/include_title_bar"/>
+    <include
+        android:id="@+id/title" layout="@layout/include_title_bar"/>
 
     <TextView
+        android:id="@+id/txt"
         style="@style/text_black_medium"
         android:layout_width="match_parent"
         android:layout_height="12dp"
+        android:layout_below="@+id/title"
         android:background="@color/line_grey"/>
 
     <include layout="@layout/include_refreshlistview2"/>
+    <LinearLayout
+        android:id="@+id/dyna_empty"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_horizontal"
+        android:layout_below="@+id/txt"
+        android:orientation="vertical"
+        android:visibility="gone">
 
-</LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingBottom="20dp"
+            android:paddingTop="10dp">
+
+            <ImageView
+                android:id="@+id/icon_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/empty_img" />
+
+            <TextView
+                android:id="@+id/msg"
+                style="@style/text_grey_small"
+                android:layout_marginTop="12dp"
+                android:text="此处暂无活动" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

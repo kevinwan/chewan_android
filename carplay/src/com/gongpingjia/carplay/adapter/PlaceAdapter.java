@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
@@ -16,7 +17,7 @@ import org.json.JSONObject;
 /**
  * Created by Administrator on 2015/10/20.
  */
-public class PlaceAdapter extends BaseAdapter {
+public class PlaceAdapter extends BaseAdapter implements SectionIndexer {
 
     private JSONArray mDatum;
     private Context mContext;
@@ -63,6 +64,21 @@ public class PlaceAdapter extends BaseAdapter {
             e.printStackTrace();
         }
         return convertView;
+    }
+
+    @Override
+    public Object[] getSections() {
+        return new Object[0];
+    }
+
+    @Override
+    public int getPositionForSection(int sectionIndex) {
+        return 0;
+    }
+
+    @Override
+    public int getSectionForPosition(int position) {
+        return 0;
     }
 
     static class ViewHolder {

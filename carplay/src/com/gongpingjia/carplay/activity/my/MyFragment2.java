@@ -98,6 +98,8 @@ public class MyFragment2 extends Fragment implements OnClickListener {
     //已上传的图片
     private int uploadedCount = 0;
 
+    int age;
+    String name,gender,headimg,photoAuthStatus,licenseAuthStatus,carbradn,carlogo,carmodel,carslug;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -181,9 +183,14 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                 System.out.println(user.getUserId() + "---------" + user.getToken());
                 if (response.isSuccess()) {
                     JSONObject jo = response.jSONFromData();
-
+                    JSONObject car = JSONUtil.getJSONObject(jo, "car");
+                     carbradn = JSONUtil.getString(car, "brand");
+                     carlogo = JSONUtil.getString(car, "logo");
+                     carmodel = JSONUtil.getString(car, "model");
+                     carslug = JSONUtil.getString(car,"slug");
+                     name = JSONUtil.getString(jo, "nickname");
                     ViewUtil.bindView(nameT, JSONUtil.getString(jo, "nickname"));
-                    String gender = JSONUtil.getString(jo, "gender");
+                     gender = JSONUtil.getString(jo, "gender");
                     if (("男").equals(gender)) {
                         sexbgR.setBackgroundResource(R.drawable.radio_sex_man_normal);
                         sexI.setBackgroundResource(R.drawable.icon_man3x);
@@ -191,10 +198,11 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                         sexbgR.setBackgroundResource(R.drawable.radion_sex_woman_normal);
                         sexI.setBackgroundResource(R.drawable.icon_woman3x);
                     }
-                    String headimg = JSONUtil.getString(jo, "avatar");
+                     headimg = JSONUtil.getString(jo, "avatar");
 
                     ViewUtil.bindNetImage(headI, headimg, "head");
 //                    photo_bgI.setBackgroundResource(R.drawable.vp_third);
+                     age = JSONUtil.getInt(jo, "age");
                     ViewUtil.bindView(ageT, JSONUtil.getInt(jo, "age"));
 //                    //设置高斯模糊
 //                    Fglass.blur(ageT, mainV.findViewById(R.id.photo_bg_txt), 2, 8);
@@ -207,8 +215,8 @@ public class MyFragment2 extends Fragment implements OnClickListener {
 //                            .capture(photo_bgI)
 //                            .into((ImageView) photo_bgI);
 
-                    String photoAuthStatus = JSONUtil.getString(jo, "photoAuthStatus");
-                    String licenseAuthStatus = JSONUtil.getString(jo, "licenseAuthStatus");
+                     photoAuthStatus = JSONUtil.getString(jo, "photoAuthStatus");
+                     licenseAuthStatus = JSONUtil.getString(jo, "licenseAuthStatus");
                     ViewUtil.bindView(txtphotoAuthStatusT, JSONUtil.getString(jo, "photoAuthStatus"));
                     ViewUtil.bindView(attestation_txtT, JSONUtil.getString(jo, "licenseAuthStatus"));
                     //头像认证
@@ -271,6 +279,16 @@ public class MyFragment2 extends Fragment implements OnClickListener {
             //编辑资料
             case R.id.head:
                 it = new Intent(mContext, EditPersonalInfoActivity2.class);
+                it.putExtra("name",name);
+                it.putExtra("gender",gender);
+                it.putExtra("headimg",headimg);
+                it.putExtra("photoAuthStatus",photoAuthStatus);
+                it.putExtra("licenseAuthStatus",licenseAuthStatus);
+//                it.putExtra("carbradn",carbradn);
+//                it.putExtra("carlogo",carlogo);
+//                it.putExtra("carmodel",carmodel);
+//                it.putExtra("carslug",carslug);
+                it.putExtra("age",age);
                 startActivity(it);
                 break;
             //完善信息

@@ -4,6 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
+    <com.andexert.library.RippleView
+        rv_centered="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -164,5 +168,5 @@
         android:paddingTop="12dp">
 
     </LinearLayout>
-
+    </com.andexert.library.RippleView>
 </LinearLayout>

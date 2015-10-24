@@ -1,6 +1,5 @@
 package com.gongpingjia.carplay.activity.active;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -36,7 +35,7 @@ import java.util.Date;
 /**
  * 活动详情
  */
-public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.OnClickListener{
+public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.OnClickListener {
 
     private ListView mListView;
 
@@ -51,15 +50,19 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
     User user;
 
 
-    /** headview */
-    private ImageView imgfoldI,avatarT;
-    private TextView nicknameT,contentT,startTimeT,endTimeT,priceT,placeT,participate_womanT,participate_manT,introduceT,creattimeT,unparticipateT;
+    /**
+     * headview
+     */
+    private ImageView imgfoldI, avatarT;
+    private TextView nicknameT, contentT, startTimeT, endTimeT, priceT, placeT, participate_womanT, participate_manT, introduceT, creattimeT, unparticipateT;
     private RelativeLayout foldR;
     private CarPlayGallery mViewPager;
 
-    /** footview */
-    private LinearLayout moreL,processL,explainL;
-    private ImageView processIconI,explainIconI;
+    /**
+     * footview
+     */
+    private LinearLayout moreL, processL, explainL;
+    private ImageView processIconI, explainIconI;
     private ListView processlistList;
     private TextView explaintxtT;
 
@@ -67,6 +70,7 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
     private boolean contentFlag = false;
     private boolean processFlag = false;
     private boolean explainFlag = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,11 +81,11 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
 
     @Override
     public void initView() {
-        user=User.getInstance();
+        user = User.getInstance();
         setTitle("活动详情");
-        mInflater=LayoutInflater.from(self);
-        mHeadView=mInflater.inflate(R.layout.item_active_details2_headview, null);
-        mFootView=mInflater.inflate(R.layout.item_active_details2_footview, null);
+        mInflater = LayoutInflater.from(self);
+        mHeadView = mInflater.inflate(R.layout.item_active_details2_headview, null);
+        mFootView = mInflater.inflate(R.layout.item_active_details2_footview, null);
         mListView = (ListView) findViewById(R.id.listview);
         mListView.addHeaderView(mHeadView, null, false);
         mListView.addFooterView(mFootView, null, false);
@@ -112,7 +116,7 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
         nicknameT = (TextView) mHeadView.findViewById(R.id.nickname);
         contentT = (TextView) mHeadView.findViewById(R.id.content);
         foldR = (RelativeLayout) mHeadView.findViewById(R.id.fold);
-        imgfoldI = (ImageView) mHeadView . findViewById(R.id.imgfold);
+        imgfoldI = (ImageView) mHeadView.findViewById(R.id.imgfold);
         avatarT = (ImageView) mHeadView.findViewById(R.id.avatar);
         startTimeT = (TextView) mHeadView.findViewById(R.id.starttime);
         endTimeT = (TextView) mHeadView.findViewById(R.id.endtime);
@@ -130,7 +134,7 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
         processL = (LinearLayout) mFootView.findViewById(R.id.process);
         explainL = (LinearLayout) mFootView.findViewById(R.id.explain);
         processIconI = (ImageView) mFootView.findViewById(R.id.process_icon);
-        explainIconI= (ImageView) mFootView.findViewById(R.id.explain_icon);
+        explainIconI = (ImageView) mFootView.findViewById(R.id.explain_icon);
         processlistList = (ListView) mFootView.findViewById(R.id.processlist);
         explaintxtT = (TextView) mFootView.findViewById(R.id.explaintxt);
 
@@ -141,8 +145,8 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
         getActiveDetailsData();
     }
 
-    private void getActiveDetailsData(){
-        String activeid=getIntent().getStringExtra("activityId");
+    private void getActiveDetailsData() {
+        String activeid = getIntent().getStringExtra("activityId");
 
         DhNet verifyNet = new DhNet(API2.ActiveDetails + activeid + "/info?userId=" + user.getUserId() + "&token=" + user.getToken());
         verifyNet.doGet(new NetTask(self) {
@@ -153,46 +157,46 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
                     JSONObject jo = response.jSONFromData();
 
                     //目的地
-                    JSONObject js= JSONUtil.getJSONObject(jo,"destination");
-                    ViewUtil.bindView(placeT,JSONUtil.getString(js,"province")+"省"+JSONUtil.getString(js,"city")+"市"+JSONUtil.getString(js,"detail"));
+                    JSONObject js = JSONUtil.getJSONObject(jo, "destination");
+                    ViewUtil.bindView(placeT, JSONUtil.getString(js, "province") + "省" + JSONUtil.getString(js, "city") + "市" + JSONUtil.getString(js, "detail"));
 
                     //开始-结束时间,创建时间
                     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
-                    Date sdate = new Date(JSONUtil.getLong(jo,"start"));
-                    ViewUtil.bindView(startTimeT,format.format(sdate));
-                    Date edate = new Date(JSONUtil.getLong(jo,"end"));
-                    ViewUtil.bindView(endTimeT,format.format(edate));
+                    Date sdate = new Date(JSONUtil.getLong(jo, "start"));
+                    ViewUtil.bindView(startTimeT, format.format(sdate));
+                    Date edate = new Date(JSONUtil.getLong(jo, "end"));
+                    ViewUtil.bindView(endTimeT, format.format(edate));
 
-                    Date cdate = new Date(JSONUtil.getLong(jo,"createTime"));
-                    ViewUtil.bindView(creattimeT,format.format(cdate));
+                    Date cdate = new Date(JSONUtil.getLong(jo, "createTime"));
+                    ViewUtil.bindView(creattimeT, format.format(cdate));
 
                     //名字,头像,标题,介绍,价格,补贴,说明
-                    JSONObject jsname= JSONUtil.getJSONObject(jo,"organizer");
-                    ViewUtil.bindView(nicknameT,JSONUtil.getString(jsname, "nickname"));
+                    JSONObject jsname = JSONUtil.getJSONObject(jo, "organizer");
+                    ViewUtil.bindView(nicknameT, JSONUtil.getString(jsname, "nickname"));
                     ViewUtil.bindNetImage(avatarT, JSONUtil.getString(jsname, "avatar"), "head");
                     ViewUtil.bindView(introduceT, JSONUtil.getString(jo, "title"));
-                    ViewUtil.bindView(contentT,JSONUtil.getString(jo, "instruction"));
-                    ViewUtil.bindView(priceT,JSONUtil.getDouble(jo, "price")+"元/人(现在报名立减"+JSONUtil.getDouble(jo, "subsidyPrice")+"元)");
-                    ViewUtil.bindView(explaintxtT,JSONUtil.getString(jo, "extraDesc"));
+                    ViewUtil.bindView(contentT, JSONUtil.getString(jo, "instruction"));
+                    ViewUtil.bindView(priceT, JSONUtil.getDouble(jo, "price") + "元/人(现在报名立减" + JSONUtil.getDouble(jo, "subsidyPrice") + "元)");
+                    ViewUtil.bindView(explaintxtT, JSONUtil.getString(jo, "extraDesc"));
 
-                    if (contentT.getLineCount()<4){
+                    if (contentT.getLineCount() < 4) {
                         foldR.setVisibility(View.GONE);
                     }
 
                     //0:无限制 1：限制总人数 2：限制男女人数
-                    int limitType=JSONUtil.getInt(jo, "limitType");
+                    int limitType = JSONUtil.getInt(jo, "limitType");
                     //男生,女生数量,总量
-                    if (limitType==1){
+                    if (limitType == 1) {
                         findViewById(R.id.limitedlayout).setVisibility(View.GONE);
                         findViewById(R.id.unlimitedlayout).setVisibility(View.VISIBLE);
-                        ViewUtil.bindView(unparticipateT,JSONUtil.getInt(jo, "nowJoinNum")+"/"+JSONUtil.getInt(jo, "totalLimit"));
-                    }else if(limitType==2){
+                        ViewUtil.bindView(unparticipateT, JSONUtil.getInt(jo, "nowJoinNum") + "/" + JSONUtil.getInt(jo, "totalLimit"));
+                    } else if (limitType == 2) {
                         findViewById(R.id.limitedlayout).setVisibility(View.VISIBLE);
                         findViewById(R.id.unlimitedlayout).setVisibility(View.GONE);
-                        ViewUtil.bindView(participate_womanT,JSONUtil.getInt(jo, "femaleNum")+"/"+JSONUtil.getInt(jo, "femaleLimit"));
-                        ViewUtil.bindView(participate_manT,JSONUtil.getInt(jo, "maleNum")+"/"+JSONUtil.getInt(jo, "maleLimit"));
-                    }else {
+                        ViewUtil.bindView(participate_womanT, JSONUtil.getInt(jo, "femaleNum") + "/" + JSONUtil.getInt(jo, "femaleLimit"));
+                        ViewUtil.bindView(participate_manT, JSONUtil.getInt(jo, "maleNum") + "/" + JSONUtil.getInt(jo, "maleLimit"));
+                    } else {
                         findViewById(R.id.limitedlayout).setVisibility(View.GONE);
                         findViewById(R.id.unlimitedlayout).setVisibility(View.VISIBLE);
                         ViewUtil.bindView(unparticipateT, JSONUtil.getInt(jo, "nowJoinNum") + "/" + "人数不限");
@@ -200,15 +204,14 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
 
 
                     /** GalleryViewPager  */
-                    final String[] urls ;
+                    final String[] urls;
 
                     //活动大图
-                    JSONArray jsc= JSONUtil.getJSONArray(jo, "covers");
+                    JSONArray jsc = JSONUtil.getJSONArray(jo, "covers");
                     if (jsc != null) {
                         BigImageAdapter adapter = new BigImageAdapter(self, jsc);
                         mViewPager.setAdapter(adapter);
                     }
-
 
 
                 }
@@ -228,11 +231,10 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             //报名参加
             case R.id.join:
-                Intent it = new Intent(self,MateFragment.class);
-                startActivity(it);
+
                 break;
             //活动描述
             case R.id.fold:
@@ -249,42 +251,48 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
         }
     }
 
-    /** 活动内容展开收缩 */
-    private void textFold(){
-        if (contentFlag){
+    /**
+     * 活动内容展开收缩
+     */
+    private void textFold() {
+        if (contentFlag) {
             contentT.setEllipsize(TextUtils.TruncateAt.END);//收缩
             contentT.setMaxLines(3);
             imgfoldI.setImageResource(R.drawable.detail_down);
             contentFlag = false;
-        }else {
+        } else {
             contentT.setEllipsize(null); // 展开
             contentT.setMaxLines(100);
             imgfoldI.setImageResource(R.drawable.detail_up);
-            contentFlag=true;
+            contentFlag = true;
         }
     }
 
-    /** 活动流程展开收缩 */
-    private void processFold(){
-        if (!processFlag){
-            processFlag=!processFlag;
+    /**
+     * 活动流程展开收缩
+     */
+    private void processFold() {
+        if (!processFlag) {
+            processFlag = !processFlag;
             processIconI.setImageResource(R.drawable.up_btn);
             processlistList.setVisibility(View.VISIBLE);
-        }else {
-            processFlag=!processFlag;
+        } else {
+            processFlag = !processFlag;
             processIconI.setImageResource(R.drawable.down_btn);
             processlistList.setVisibility(View.GONE);
         }
     }
 
-    /** 活动说明展开收缩 */
-    private void explainFold(){
-        if (!explainFlag){
-            explainFlag= !explainFlag;
+    /**
+     * 活动说明展开收缩
+     */
+    private void explainFold() {
+        if (!explainFlag) {
+            explainFlag = !explainFlag;
             explainIconI.setImageResource(R.drawable.up_btn);
             explaintxtT.setVisibility(View.VISIBLE);
-        }else {
-            explainFlag= !explainFlag;
+        } else {
+            explainFlag = !explainFlag;
             explainIconI.setImageResource(R.drawable.down_btn);
             explaintxtT.setVisibility(View.GONE);
         }
