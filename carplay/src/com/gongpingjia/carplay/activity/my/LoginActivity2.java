@@ -171,16 +171,11 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
 //            showToast("手机号或密码不能为空");
 //            return;
 //        }
-<<<<<<< HEAD
         final String num = "15205152201";
         final String password = "111111";
 
 //        final String num = "18000000001";
 //        final String password = "123456";
-=======
-        final String num = "18000000001";
-        final String password = "123456";
->>>>>>> ac8e4a9432c740803346fe810fb4e6ac46ab1c21
 
 
         DhNet dhNet = new DhNet(API2.login);
