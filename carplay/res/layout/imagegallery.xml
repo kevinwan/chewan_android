@@ -50,4 +50,16 @@
             android:layout_alignParentBottom="true"></View>
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/remove"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white">
+        <TextView
+            style="@style/text_black_medium"
+            android:text="删除"
+            android:layout_centerInParent="true"/>
+        </RelativeLayout>
+
 </RelativeLayout>

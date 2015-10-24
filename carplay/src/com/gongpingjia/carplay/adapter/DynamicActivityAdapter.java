@@ -1,7 +1,6 @@
 package com.gongpingjia.carplay.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -24,8 +23,6 @@ import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.util.ViewUtil;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DecimalFormat;
@@ -73,7 +70,7 @@ public class DynamicActivityAdapter extends RecyclerView.Adapter<DynamicActivity
             yingyao = (AnimButtonView) view.findViewById(R.id.yingyao);
             hulue = (AnimButtonView) view.findViewById(R.id.hulue);
 
-            activity_distance = (TextView) view.findViewById(R.id.activity_distance);
+            activity_distance = (TextView) view.findViewById(R.id.active_distance);
         }
     }
 

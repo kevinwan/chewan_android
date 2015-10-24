@@ -61,9 +61,11 @@ public class MyFragmentAlbumAdapter extends RecyclerView.Adapter<MyFragmentAlbum
             public void onClick(View v) {
                 Intent it = new Intent(mContext, ImageGallery.class);
                 String[] photos =new String[data.size()];
+                String[] photosid =new String[data.size()];
                 for (int i=0;i<data.size();i++){
                     try {
                         photos[i]= (String) data.get(i).get("url");
+                        photosid[i] = (String) data.get(i).get("id");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -71,6 +73,7 @@ public class MyFragmentAlbumAdapter extends RecyclerView.Adapter<MyFragmentAlbum
 
                 it.putExtra("imgurls", photos);
                 it.putExtra("currentItem", current);
+                it.putExtra("imgids", photosid);
                 mContext.startActivity(it);
             }
         });

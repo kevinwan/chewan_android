@@ -44,6 +44,7 @@ import com.gongpingjia.carplay.activity.active.RecommendListFragment;
 import com.gongpingjia.carplay.activity.dynamic.DynamicListFragment;
 import com.gongpingjia.carplay.activity.my.LoginActivity;
 import com.gongpingjia.carplay.activity.my.MyFragment2;
+import com.gongpingjia.carplay.activity.my.SettingActivity;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.api.Constant;
@@ -129,7 +130,14 @@ public class MainActivity2 extends BaseFragmentActivity implements
     FilterPreference2 pre;
     private ImageView right_icon;
 
+    //上传图片总数
+    private int uploadPhotoCount = 0;
+
+    //已上传的图片
+    private int uploadedCount = 0;
+
     User user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -202,13 +210,15 @@ public class MainActivity2 extends BaseFragmentActivity implements
                 });
             }
         });
-        right_icon = (ImageView)findViewById(R.id.right_icon);
+        right_icon = (ImageView) findViewById(R.id.right_icon);
         right_icon.setImageResource(R.drawable.setting);
         right_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //设置
-                showToast("设置");
+                Intent it = new Intent(self, SettingActivity.class);
+                startActivity(it);
+
             }
         });
         initTab();
@@ -477,6 +487,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
                         if (photos == null || photos.isEmpty()) {
                             showToast("没有选择图片!");
                         } else {
+                            uploadPhotoCount = photos.size();
                             for (int i = 0; i < photos.size(); i++) {
                                 String newPhotoPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg")
                                         .getAbsolutePath();
@@ -495,6 +506,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
                     PhotoUtil.saveLocalImage(btp1, new File(newPath), degree);
                     btp1.recycle();
                     showProgressDialog("上传头像中...");
+                    uploadPhotoCount = 1;
                     uploadHead(newPath);
                     break;
             }
@@ -513,21 +525,23 @@ public class MainActivity2 extends BaseFragmentActivity implements
             public void doInUI(Response response, Integer transfer) {
                 hidenProgressDialog();
                 if (response.isSuccess()) {
-//                    JSONObject jo = response.jSONFromData();
-//                    String photoUrl = JSONUtil.getString(jo, "photoUrl");
+                    uploadedCount = uploadedCount + 1;
+                    JSONObject jo = response.jSONFromData();
                     showToast("上传成功");
-                    String success="上传成功";
-                    EventBus.getDefault().post(success);
-//                    try {
-//                        newAlbm.add(new JSONObject().put("url",photoUrl));
-//                        album.add(0, new JSONObject().put("url", photoUrl));
-//                        mAdapter.setData(album);
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-                } else {
-                    showToast("上传失败,重新上传");
-                    System.out.println("上传失败----------------");
+                    String success = "上传成功";
+                    if (uploadPhotoCount == uploadedCount) {
+                        EventBus.getDefault().post(success);
+                        uploadedCount = 0;
+
+                        DhNet net = new DhNet(API2.CWBaseurl + "user/" + user.getUserId() + "/photoCount?token=" + user.getToken());
+                        net.addParam("count", uploadPhotoCount);
+                        net.doPost(new NetTask(self) {
+                            @Override
+                            public void doInUI(Response response, Integer transfer) {
+
+                            }
+                        });
+                    }
                 }
             }
         });
@@ -556,7 +570,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
     //附近adapter,随便看看dialog
     public void onEventMainThread(Integer photo) {
 //        showToast(photo+"photo");
-        switch (photo){
+        switch (photo) {
             case Constant.TAKE_PHOTO:
                 mPhotoPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg").getAbsolutePath();
                 Intent getImageByCamera = new Intent(
@@ -565,7 +579,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
                         Uri.fromFile(new File(mPhotoPath)));
                 startActivityForResult(getImageByCamera,
                         Constant.TAKE_PHOTO);
-            break;
+                break;
             case Constant.PICK_PHOTO:
                 mPhotoPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg").getAbsolutePath();
                 Intent intent = new Intent(self,
@@ -574,7 +588,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
                         10);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivityForResult(intent, Constant.PICK_PHOTO);
-            break;
+                break;
         }
     }
 

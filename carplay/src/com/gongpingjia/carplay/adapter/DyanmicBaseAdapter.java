@@ -109,7 +109,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
 
 
 
-            holder.activity_distance = (TextView) view.findViewById(R.id.activity_distance);
+            holder.activity_distance = (TextView) view.findViewById(R.id.active_distance);
 
 
 //
