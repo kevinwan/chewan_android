@@ -17,13 +17,13 @@
 
         <RelativeLayout
             android:id="@+id/layout"
-            android:layout_width="60dp"
-            android:layout_height="60dp">
+            android:layout_width="56dp"
+            android:layout_height="56dp">
 
             <com.gongpingjia.carplay.view.RoundImageView
                 android:id="@+id/head_one"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
                 android:layout_centerVertical="true"
                 android:src="@drawable/icon_group_head" />
 
@@ -59,12 +59,15 @@
                 <TextView
                     android:id="@+id/title"
                     style="@style/text_black_medium"
+                    android:ellipsize="end"
+                    android:maxWidth="150dp"
+                    android:singleLine="true"
                     android:text="陈小小" />
 
                 <RelativeLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
+                    android:layout_marginLeft="12dp"
                     android:layout_weight="1">
 
                     <include layout="@layout/include_sex" />

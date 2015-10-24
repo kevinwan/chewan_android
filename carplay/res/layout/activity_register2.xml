@@ -46,14 +46,15 @@
             <com.andexert.library.RippleView
                 rv_centered="true"
                 android:layout_width="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:layout_height="wrap_content">
 
                 <Button
                     android:id="@+id/tv_get_code"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
+
                     android:background="@drawable/btn_blue_fillet"
                     android:gravity="center"
                     android:text="获取验证码"

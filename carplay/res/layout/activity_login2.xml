@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -67,12 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp">
 
-            <com.andexert.library.RippleView
-                rv_centered="true"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
-                android:layout_weight="1">
+
 
                 <Button
                     android:id="@+id/btn_login"
@@ -83,14 +79,25 @@
                     android:text="登录"
                     android:textColor="@color/white" />
 
-            </com.andexert.library.RippleView>
 
 
-            <com.andexert.library.RippleView
-                rv_centered="true"
-                android:layout_width="0dp"
+            <com.balysv.materialripple.MaterialRippleLayout
+                android:id="@+id/ripple"
+
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                app:mrl_rippleOverlay="true"
+                app:mrl_rippleColor="#ff0000"
+                app:mrl_rippleAlpha="0.1"
+            app:mrl_rippleDimension="10dp"
+            app:mrl_rippleHover="true"
+            app:mrl_rippleRoundedCorners="40dp"
+            app:mrl_rippleInAdapter="false"
+            app:mrl_rippleDuration="250"
+            app:mrl_rippleFadeDuration="75"
+            app:mrl_ripplePersistent="false"
+            app:mrl_rippleDelayClick="true">
 
                 <Button
                     android:id="@+id/btn_register"
@@ -100,7 +107,7 @@
                     android:text="注册"
                     android:textColor="@color/white" />
 
-            </com.andexert.library.RippleView>
+            </com.balysv.materialripple.MaterialRippleLayout>
         </LinearLayout>
 
         <TextView
@@ -153,30 +160,42 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp">
-
+            <com.andexert.library.RippleView
+                rv_centered="true"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_height="wrap_content">
             <ImageView
                 android:id="@+id/iv_weixin"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:scaleType="center"
                 android:src="@drawable/icon_weixin" />
-
+            </com.andexert.library.RippleView>
+            <com.andexert.library.RippleView
+                rv_centered="true"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_height="wrap_content">
             <ImageView
                 android:id="@+id/iv_qq"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:scaleType="center"
                 android:src="@drawable/icon_qq" />
-
+            </com.andexert.library.RippleView>
+            <com.andexert.library.RippleView
+                rv_centered="true"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_height="wrap_content">
             <ImageView
                 android:id="@+id/iv_weibo"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:scaleType="center"
                 android:src="@drawable/icon_weibo" />
+            </com.andexert.library.RippleView>
         </LinearLayout>
     </LinearLayout>
 

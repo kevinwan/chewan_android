@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -23,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.balysv.materialripple.MaterialRippleLayout;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.main.MainActivity2;
 import com.gongpingjia.carplay.activity.main.PhotoSelectorActivity;
@@ -67,7 +69,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
     private RelativeLayout sexbgR;
     private LinearLayout myphotoL, myactiveL, myattentionL, headattestationL, carattestationL;
     private RecyclerView recyclerView;
-
+    public static final int PERSONAL = 2;
     public static MyFragment2 getInstance() {
         if (instance == null) {
             instance = new MyFragment2();
@@ -98,13 +100,16 @@ public class MyFragment2 extends Fragment implements OnClickListener {
     //已上传的图片
     private int uploadedCount = 0;
 
-    int age;
+    String age;
     String name,gender,headimg,photoAuthStatus,licenseAuthStatus,carbradn,carlogo,carmodel,carslug;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // TODO Auto-generated method stub
+
+
         mainV = inflater.inflate(R.layout.fragment_my2, null);
+
         mContext = getActivity();
 
         EventBus.getDefault().register(this);
@@ -202,7 +207,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
 
                     ViewUtil.bindNetImage(headI, headimg, "head");
 //                    photo_bgI.setBackgroundResource(R.drawable.vp_third);
-                     age = JSONUtil.getInt(jo, "age");
+                     age = String.valueOf(JSONUtil.getInt(jo, "age"));
                     ViewUtil.bindView(ageT, JSONUtil.getInt(jo, "age"));
 //                    //设置高斯模糊
 //                    Fglass.blur(ageT, mainV.findViewById(R.id.photo_bg_txt), 2, 8);
@@ -294,11 +299,17 @@ public class MyFragment2 extends Fragment implements OnClickListener {
             //完善信息
             case R.id.perfect:
                 it = new Intent(getActivity(), EditPersonalInfoActivity2.class);
+                it.putExtra("name",name);
+                it.putExtra("gender",gender);
+                it.putExtra("headimg",headimg);
+                it.putExtra("photoAuthStatus",photoAuthStatus);
+                it.putExtra("licenseAuthStatus",licenseAuthStatus);
+                it.putExtra("age",age);
                 startActivity(it);
                 break;
             //我的活动
             case R.id.myactive:
-                it = new Intent(mContext, AttentionMeActivity.class);
+                it = new Intent(mContext, MyDynamicActivity.class);
                 startActivity(it);
                 break;
             //我的关注
@@ -385,6 +396,10 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                     ((MainActivity2) getActivity()).showProgressDialog("上传头像中...");
                     uploadPhotoCount = 1;
                     uploadHead(newPath);
+                    break;
+                case PERSONAL:
+
+
                     break;
             }
         }

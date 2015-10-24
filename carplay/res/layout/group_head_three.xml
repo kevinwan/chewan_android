@@ -6,8 +6,8 @@
 
     <RelativeLayout
         android:id="@+id/head_three"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         android:background="@drawable/bg_groupchat_head"
         android:visibility="gone"
         android:padding="7dp" >

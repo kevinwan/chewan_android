@@ -148,17 +148,22 @@
 
 
     </HorizontalScrollView>
-
+    <com.andexert.library.RippleView
+        rv_centered="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center_horizontal"
+        >
 
     <Button
         android:id="@+id/btn_click"
         android:layout_width="174dp"
         android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="center_horizontal"
         android:layout_marginBottom="40dp"
         android:background="@drawable/mate_btn_bg"
         android:text="随便看看"
         android:textColor="@color/white"
         android:textSize="@dimen/text_medium" />
+</com.andexert.library.RippleView>
 </LinearLayout>
