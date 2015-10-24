@@ -46,4 +46,7 @@ public class API2 {
     //报名参加
     public static final String joinActive = CWBaseurl + "official/activity/";
 
+    //约她同去参加官方活动
+    public static final String joinTogether = CWBaseurl + "official/activity/";
+
 }

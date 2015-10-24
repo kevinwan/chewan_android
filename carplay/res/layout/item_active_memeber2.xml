@@ -6,90 +6,107 @@
     android:orientation="vertical"
     android:padding="12dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <com.gongpingjia.carplay.view.RoundImageView
-            android:id="@+id/iv_avatar"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/head_icon" />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.gongpingjia.carplay.view.RoundImageView
+                android:id="@+id/head"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/head_icon" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tv_nickname"
-                    style="@style/text_black_big"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
-                    android:text="陈小小" />
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                <include layout="@layout/include_sex" />
+                    <TextView
+                        android:id="@+id/nickname"
+                        style="@style/text_black_big"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:text="陈小小" />
 
+                    <include layout="@layout/include_sex" />
+
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/invitecount"
+                    style="@style/text_grey_medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="20m" />
 
             </LinearLayout>
 
             <TextView
-                style="@style/text_grey_medium"
+                android:id="@+id/invite"
+                style="@style/text_black_big"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="20m" />
+                android:background="@drawable/btn_blue_fillet"
+                android:paddingBottom="10dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="10dp"
+                android:text="邀请同去"
+                android:textColor="@color/white" />
 
         </LinearLayout>
-
-        <TextView
-            style="@style/text_black_big"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/btn_blue_fillet"
-            android:paddingBottom="10dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:paddingTop="10dp"
-            android:text="邀请同去"
-            android:textColor="@color/white" />
-
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/headstatus"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginLeft="40dp"
+            android:src="@drawable/headaut_dl"/>
+    </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/acceptedlayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="70dp"
+        android:orientation="horizontal"
         android:paddingBottom="10dp"
-        android:paddingTop="10dp"
-        android:orientation="horizontal">
-        <TextView
-            style="@style/text_black_medium"
-            android:text="已接受"/>
+        android:paddingTop="10dp">
 
         <TextView
             style="@style/text_black_medium"
-            android:text="30"
+            android:text="已接受" />
+
+        <TextView
+            android:id="@+id/acceptedcount"
+            style="@style/text_black_medium"
             android:layout_marginLeft="9dp"
-            android:layout_marginRight="15dp"/>
+            android:layout_marginRight="15dp"
+            android:text="30" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:scrollbars="horizontal"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:scrollbars="horizontal" />
 
     </LinearLayout>
 </LinearLayout>

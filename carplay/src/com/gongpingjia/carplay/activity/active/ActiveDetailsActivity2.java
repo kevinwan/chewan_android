@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -99,27 +97,8 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
         mListView = (ListView) findViewById(R.id.listview);
         mListView.addHeaderView(mHeadView, null, false);
         mListView.addFooterView(mFootView, null, false);
-        mListView.setAdapter(new BaseAdapter() {
-            @Override
-            public int getCount() {
-                return 0;
-            }
-
-            @Override
-            public Object getItem(int position) {
-                return null;
-            }
-
-            @Override
-            public long getItemId(int position) {
-                return 0;
-            }
-
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                return null;
-            }
-        });
+        membersAdapter = new OfficialMembersAdapter(self);
+        mListView.setAdapter(membersAdapter);
 
         joinBtn = (Button) findViewById(R.id.join);
 
@@ -147,8 +126,6 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
         explainIconI = (ImageView) mFootView.findViewById(R.id.explain_icon);
         explaintxtT = (TextView) mFootView.findViewById(R.id.explaintxt);
         processlistList = (ListView) mFootView.findViewById(R.id.processlist);
-        membersAdapter = new OfficialMembersAdapter(self);
-        processlistList.setAdapter(membersAdapter);
 
         joinBtn.setOnClickListener(this);
         foldR.setOnClickListener(this);
@@ -190,7 +167,7 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
                     ViewUtil.bindView(introduceT, JSONUtil.getString(jo, "title"));
                     ViewUtil.bindView(contentT, JSONUtil.getString(jo, "instruction"));
                     ViewUtil.bindView(priceT, JSONUtil.getDouble(jo, "price") + "元/人(现在报名立减" + JSONUtil.getDouble(jo, "subsidyPrice") + "元)");
-                    ViewUtil.bindView(explaintxtT, JSONUtil.getString(jo, "extraDesc"));
+                    ViewUtil.bindView(explaintxtT, JSONUtil.getString(jo, "instruction"));
 
                     if (contentT.getLineCount() < 4) {
                         foldR.setVisibility(View.GONE);
@@ -336,6 +313,7 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
                 if (response.isSuccess()) {
                     joinBtn.setText("进人群聊");
                     isMember = !isMember;
+                    membersAdapter.setIsMember(isMember);
                 }
             }
         });
@@ -356,6 +334,6 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
      * 设置参与成员信息
      */
     private void setMembersData(JSONArray jsa){
-        membersAdapter.setData(jsa);
+        membersAdapter.setData(jsa,isMember,activeid);
     }
 }
