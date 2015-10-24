@@ -20,30 +20,45 @@
 
 
         <RelativeLayout
-            android:layout_width="46dp"
-            android:layout_height="46dp">
+            android:layout_width="56dp"
+            android:layout_height="56dp">
 
             <ImageView
                 android:id="@+id/icon"
-                android:layout_width="46dp"
-                android:layout_height="46dp"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
                 android:src="@drawable/trends_like" />
 
             <ImageView
                 android:id="@+id/msg_point"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
+                android:layout_marginLeft="45dp"
                 android:layout_marginTop="5dp"
                 android:src="@drawable/red_point" />
 
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/title"
-            style="@style/text_black_medium"
-            android:layout_marginLeft="14dp"
-            android:text="感兴趣的人" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="26dp"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title"
+                style="@style/text_black_medium"
+                android:text="最近访客" />
+
+            <TextView
+                android:id="@+id/content"
+                style="@style/text_grey_small"
+                android:layout_marginTop="6dp"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="黄老邪看过你的相册" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
