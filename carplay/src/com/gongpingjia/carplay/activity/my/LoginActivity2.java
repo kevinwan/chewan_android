@@ -2,6 +2,7 @@ package com.gongpingjia.carplay.activity.my;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
@@ -165,14 +166,24 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
 
     //手机号码登陆
     private void login() {
+        final String num = mEditNum.getText().toString().trim();
+        final String password = mEditPassword.getText().toString().trim();
+        if (TextUtils.isEmpty(num) || TextUtils.isEmpty(password)) {
+            showToast("手机号或密码不能为空");
+            return;
+        }
+
+//        final String num = "18000000001";
+//        final String password = "123456";
 //        final String num = mEditNum.getText().toString().trim();
 //        final String password = mEditPassword.getText().toString().trim();
 //        if (TextUtils.isEmpty(num) || TextUtils.isEmpty(password)) {
 //            showToast("手机号或密码不能为空");
 //            return;
 //        }
-        final String num = "18000000001";
-        final String password = "123456";
+//        final String num = "18000000001";
+//        final String password = "123456";
+
 
 
         DhNet dhNet = new DhNet(API2.login);

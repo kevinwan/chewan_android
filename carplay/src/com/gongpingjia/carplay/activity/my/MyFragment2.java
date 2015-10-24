@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -24,7 +23,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.balysv.materialripple.MaterialRippleLayout;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.main.MainActivity2;
 import com.gongpingjia.carplay.activity.main.PhotoSelectorActivity;
@@ -398,8 +396,11 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                     uploadHead(newPath);
                     break;
                 case PERSONAL:
-
-
+                    txtphotoAuthStatusT.setText(data.getStringExtra("photoAuthStatus"));
+                    nameT.setText(data.getStringExtra("nickname"));
+                    ageT.setText(data.getStringExtra("age"));
+                    attestation_txtT.setText(data.getStringExtra("licenseAuthStatus"));
+                    ViewUtil.bindNetImage(headI,data.getStringExtra("head"),"head");
                     break;
             }
         }

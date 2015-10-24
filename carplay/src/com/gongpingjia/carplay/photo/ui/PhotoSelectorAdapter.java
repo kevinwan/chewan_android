@@ -1,7 +1,5 @@
 package com.gongpingjia.carplay.photo.ui;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,6 +10,8 @@ import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.photo.model.PhotoModel;
 import com.gongpingjia.carplay.photo.ui.PhotoItem.onItemClickListener;
 import com.gongpingjia.carplay.photo.ui.PhotoItem.onPhotoItemCheckedListener;
+
+import java.util.ArrayList;
 
 public class PhotoSelectorAdapter extends MBaseAdapter<PhotoModel> {
 
@@ -32,7 +32,7 @@ public class PhotoSelectorAdapter extends MBaseAdapter<PhotoModel> {
     }
 
     public PhotoSelectorAdapter(Context context, ArrayList<PhotoModel> models, int screenWidth,
-            onPhotoItemCheckedListener listener, onItemClickListener mCallback, OnClickListener cameraListener) {
+                                onPhotoItemCheckedListener listener, onItemClickListener mCallback, OnClickListener cameraListener) {
         this(context, models);
         setItemWidth(screenWidth);
         this.listener = listener;
@@ -44,6 +44,11 @@ public class PhotoSelectorAdapter extends MBaseAdapter<PhotoModel> {
         int horizentalSpace = context.getResources().getDimensionPixelSize(R.dimen.sticky_item_horizontalSpacing);
         this.itemWidth = (screenWidth - (horizentalSpace * (horizentalNum - 1))) / horizentalNum;
         this.itemLayoutParams = new LayoutParams(itemWidth, itemWidth);
+    }
+
+    public void addData(PhotoModel model) {
+        models.add(0, model);
+        notifyDataSetChanged();
     }
 
     @Override

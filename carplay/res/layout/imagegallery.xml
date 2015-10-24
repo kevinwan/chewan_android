@@ -48,6 +48,7 @@
         <View
             style="@style/line_horizontal"
             android:layout_alignParentBottom="true"></View>
+
     </RelativeLayout>
 
     <RelativeLayout
