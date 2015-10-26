@@ -250,7 +250,7 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
         holder.hulue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                JSONObject jo = (JSONObject) getItem(i);
+//                JSONObject jo = (JSONObject) getItem(i);
                 DhNet net = new DhNet(API2.CWBaseurl + "application/" + appointmentId + "/process?userId=" + user.getUserId() + "&token=" + user.getToken());
 //                DhNet net = new DhNet(API2.CWBaseurl + "application/" + appointmentId + "/process?userId=5609eb6d0cf224e7d878f695&token=a767ead8-7c00-4b90-b6de-9dcdb4d5bc41");
                 net.addParam("accept", false);
@@ -258,7 +258,7 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                     @Override
                     public void doInUI(Response response, Integer transfer) {
                         if (response.isSuccess()) {
-
+                            data.remove(i);
                             notifyDataSetChanged();
                             System.out.println("忽略：" + response.isSuccess());
                         }
