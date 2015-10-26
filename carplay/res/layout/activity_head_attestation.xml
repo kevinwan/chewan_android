@@ -1,5 +1,4 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -80,9 +79,7 @@
                 android:textColor="@color/text_red" />
 
             <com.andexert.library.RippleView
-                rv_centered="true"
                 android:layout_width="wrap_content"
-                app:rv_color= "@color/text_blue"
                 android:layout_height="wrap_content">
 
                 <Button
