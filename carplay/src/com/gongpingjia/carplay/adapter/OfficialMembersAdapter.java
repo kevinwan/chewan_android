@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,6 +19,7 @@ import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.view.RoundImageView;
+import com.gongpingjia.carplay.view.dialog.NojoinOfficialDialog;
 import com.gongpingjia.carplay.view.dialog.OfficialMsgDialog;
 
 import net.duohuo.dhroid.net.DhNet;
@@ -132,30 +134,35 @@ public class OfficialMembersAdapter extends BaseAdapter{
         }
         String photoAuthStatus = JSONUtil.getString(jo, "photoAuthStatus");
         holder.headstatus.setVisibility("已认证".equals(photoAuthStatus) ? View.VISIBLE : View.GONE);
-        holder.headstatus.setOnClickListener(new View.OnClickListener() {
+        holder.invite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (isMember){
                     OfficialMsgDialog dialog = new OfficialMsgDialog(mContext);
                     dialog.show();
+                    //无法弹出输入法的解决
+                    dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+                    dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+
                     dialog.setOnOfficialResultListener(new OfficialMsgDialog.OnOfficialResultListener() {
                         @Override
                         public void onResult(boolean isinarch, String content) {
-                            DhNet net = new DhNet(API2.joinTogether+activeid+"/invite?userId="+user.getUserId()+"&token="+user.getToken());
+                            DhNet net = new DhNet(API2.joinTogether + activeid + "/invite?userId=" + user.getUserId() + "&token=" + user.getToken());
                             net.addParam("invitedUserId", userId);
                             net.addParam("transfer", isinarch);
                             net.doPostInDialog(new NetTask(mContext) {
                                 @Override
                                 public void doInUI(Response response, Integer transfer) {
                                     if (response.isSuccess()) {
-                                        ((ActiveDetailsActivity2)mContext).showToast("邀请成功");
+                                        ((ActiveDetailsActivity2) mContext).showToast("邀请成功");
                                     }
                                 }
                             });
                         }
                     });
                 }else {
-
+                    NojoinOfficialDialog dialog = new NojoinOfficialDialog(mContext);
+                    dialog.show();
                 }
             }
         });
@@ -201,6 +208,8 @@ public class OfficialMembersAdapter extends BaseAdapter{
         mAdapter.setData(headJsa);
     }
 
+
+
     class ViewHolder{
         //头像
         RoundImageView head;
@@ -216,4 +225,5 @@ public class OfficialMembersAdapter extends BaseAdapter{
         LinearLayout acceptedlayout;
 
     }
+
 }
