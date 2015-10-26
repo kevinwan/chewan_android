@@ -67,6 +67,7 @@
                     android:layout_marginTop="24dp"
                     android:src="@drawable/mofangdongzuo" />
 
+
             <TextView
                 style="@style/text_black_small"
                 android:layout_marginTop="12dp"
@@ -83,6 +84,8 @@
                     android:background="@drawable/btn_red_fillet"
                     android:text="马上认证"
                     android:textColor="@color/white" />
+
+
         </LinearLayout>
     </ScrollView>
 

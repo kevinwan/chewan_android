@@ -69,30 +69,26 @@
             android:layout_marginTop="20dp">
 
 
+            <Button
+                android:id="@+id/btn_login"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="3dp"
+                android:layout_weight="1"
+                android:background="@drawable/btn_red_fillet"
+                android:text="登录"
+                android:textColor="@color/white" />
 
 
-                <Button
-                    android:id="@+id/btn_login"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/btn_red_fillet"
-                    android:text="登录"
-                    android:layout_marginRight="3dp"
-                    android:textColor="@color/white" />
-
-
-
-
-                <Button
-                    android:id="@+id/btn_register"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="3dp"
-                    android:background="@drawable/btn_blue_fillet"
-                    android:layout_weight="1"
-                    android:text="注册"
-                    android:textColor="@color/white" />
+            <Button
+                android:id="@+id/btn_register"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_weight="1"
+                android:background="@drawable/btn_blue_fillet"
+                android:text="注册"
+                android:textColor="@color/white" />
 
 
         </LinearLayout>
@@ -148,27 +144,28 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp">
 
+
             <ImageView
                 android:id="@+id/iv_weixin"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:src="@drawable/icon_weixin" />
 
 
             <ImageView
                 android:id="@+id/iv_qq"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:src="@drawable/icon_qq" />
 
 
             <ImageView
                 android:id="@+id/iv_weibo"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:src="@drawable/icon_weibo" />
 
         </LinearLayout>
