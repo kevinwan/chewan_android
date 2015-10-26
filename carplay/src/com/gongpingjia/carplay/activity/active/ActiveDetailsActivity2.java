@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -32,6 +33,8 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * 活动详情
@@ -81,6 +84,7 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_active_details2);
+        EventBus.getDefault().register(this);
 
 //        http://cwapi.gongpingjia.com:8080/v2/official/activity/561f5eaa0cf2a1b735efa50a/info?userId=561ba2d60cf2429fb48e86bd&token=9927f747-c615-4362-bd43-a2ec31362205
     }
@@ -131,6 +135,15 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
         foldR.setOnClickListener(this);
         processL.setOnClickListener(this);
         explainL.setOnClickListener(this);
+        moreL.setOnClickListener(this);
+
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                if (position!=0||position!=mListView.is)
+            }
+        });
+
         getActiveDetailsData();
     }
 
@@ -169,6 +182,13 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
                     ViewUtil.bindView(priceT, JSONUtil.getDouble(jo, "price") + "元/人(现在报名立减" + JSONUtil.getDouble(jo, "subsidyPrice") + "元)");
                     ViewUtil.bindView(explaintxtT, JSONUtil.getString(jo, "instruction"));
 
+                    isMember = JSONUtil.getBoolean(jo, "isMember");
+                    if (isMember){
+                        joinBtn.setText("进入群聊");
+                    }else {
+                        joinBtn.setText("报名参加");
+                    }
+
                     if (contentT.getLineCount() < 4) {
                         foldR.setVisibility(View.GONE);
                     }
@@ -203,13 +223,6 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
                     if (jsc != null) {
                         BigImageAdapter adapter = new BigImageAdapter(self, jsc);
                         mViewPager.setAdapter(adapter);
-                    }
-
-                    isMember = JSONUtil.getBoolean(jo, "isMember");
-                    if (isMember){
-                        joinBtn.setText("进入群聊");
-                    }else {
-                        joinBtn.setText("报名参加");
                     }
 
 
@@ -251,6 +264,10 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
             //活动说明
             case R.id.explain:
                 explainFold();
+                break;
+            //加载更多
+            case R.id.more:
+
                 break;
         }
     }
@@ -334,6 +351,14 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
      * 设置参与成员信息
      */
     private void setMembersData(JSONArray jsa){
-        membersAdapter.setData(jsa,isMember,activeid);
+        membersAdapter.setData(jsa, isMember, activeid);
     }
+
+    public void onEventMainThread(String success) {
+        if ("报名参加".equals(success)) {
+            joinActive();
+        }
+    }
+
+
 }

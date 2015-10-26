@@ -33,7 +33,6 @@ import com.gongpingjia.carplay.bean.PhotoState;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.photo.model.PhotoModel;
 import com.gongpingjia.carplay.view.RoundImageView;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
@@ -263,7 +262,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                     getAlbum(albumJsa);
 
                     try {
-                        if (albumJsa.length() != 0) {
+                        if (albumJsa!= null) {
                             ViewUtil.bindNetImage(photo_bgI, albumJsa.getJSONObject(0).getString("url"), "default");
                         } else {
                             ViewUtil.bindNetImage(photo_bgI, headimg, "head");
