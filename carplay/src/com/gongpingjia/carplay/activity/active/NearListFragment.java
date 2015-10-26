@@ -89,7 +89,6 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
         setOnLoadSuccess(this);
         fromWhat("data");
         setUrl(API2.CWBaseurl + "activity/list?");
-
         UserLocation location = UserLocation.getInstance();
 //        setUrl("http://cwapi.gongpingjia.com:8080/v2/activity/list?latitude=32&longitude=118&maxDistance=5000000&token="+user.getToken()+"&userId="+user.getUserId());
         addParams("latitude", location.getLatitude());
@@ -101,7 +100,6 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
         addParams("transfer", pre.isTransfer());
         addParams("token", user.getToken());
         addParams("userId", user.getUserId());
-//        Toast.makeText(getActivity(), pre.getType() + "--" + pre.getPay() + "---" + pre.getGender() + "---" + pre.isTransfer(), Toast.LENGTH_LONG).show();
         showNext();
     }
 

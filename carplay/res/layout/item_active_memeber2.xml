@@ -89,6 +89,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="70dp"
         android:orientation="horizontal"
+        android:gravity="center_vertical"
         android:paddingBottom="10dp"
         android:paddingTop="10dp">
 
@@ -106,7 +107,8 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="36dp"
+            android:layout_gravity="center_vertical"
             android:scrollbars="horizontal" />
 
     </LinearLayout>

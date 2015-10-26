@@ -1,64 +1,41 @@
 package com.gongpingjia.carplay.util;
 
-import android.annotation.TargetApi;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.drawable.BitmapDrawable;
-import android.os.Build;
-import android.view.View;
 
 /**
- * 设置高斯模糊的工具类
- * Created by zsl on 15/5/9.
+ * Created by Administrator on 2015/10/26.
  */
-public class Fglass {
+public class FastBlur {
 
-    /**
-     * 设置高斯模糊
-     *
-     * ps:
-     * 设置高斯模糊是依靠scaleFactor和radius配合使用的，比如这里默认设置是：scaleFactor = 8;radius = 2; 模糊效果和scaleFactor = 1;radius = 20;是一样的，而且效率高
-     * @param fromView 从某个View获取截图
-     * @param toView 高斯模糊设置到某个View上
-     * @param radius 模糊度
-     * @param scaleFactor 缩放比例
-     */
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    public static void blur(View fromView, View toView,float radius,float scaleFactor) {
-
-        //获取View的截图
-        fromView.buildDrawingCache();
-        Bitmap bkg = fromView.getDrawingCache();
-
-        if (radius<1||radius>26) {
-            scaleFactor = 8;
-            radius = 2;
-        }
-
-
-        Bitmap overlay = Bitmap.createBitmap((int) (toView.getMeasuredWidth()/scaleFactor),
-                (int) (toView.getMeasuredHeight()/scaleFactor), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(overlay);
-        canvas.translate(-toView.getLeft()/scaleFactor, -toView.getTop()/scaleFactor);
-        canvas.scale(1 / scaleFactor, 1 / scaleFactor);
-        Paint paint = new Paint();
-        paint.setFlags(Paint.FILTER_BITMAP_FLAG);
-        canvas.drawBitmap(bkg, 0, 0, paint);
-
-        overlay = Fglass.doBlur(overlay, (int) radius, true);
-        toView.setBackground(new BitmapDrawable(overlay));
-
-    }
-
-    /**
-     * 高斯模糊操作
-     * @param sentBitmap
-     * @param radius
-     * @param canReuseInBitmap
-     * @return
-     */
     public static Bitmap doBlur(Bitmap sentBitmap, int radius, boolean canReuseInBitmap) {
+
+        // Stack Blur v1.0 from
+        // http://www.quasimondo.com/StackBlurForCanvas/StackBlurDemo.html
+        //
+        // Java Author: Mario Klingemann <mario at quasimondo.com>
+        // http://incubator.quasimondo.com
+        // created Feburary 29, 2004
+        // Android port : Yahel Bouaziz <yahel at kayenko.com>
+        // http://www.kayenko.com
+        // ported april 5th, 2012
+
+        // This is a compromise between Gaussian Blur and Box blur
+        // It creates much better looking blurs than Box Blur, but is
+        // 7x faster than my Gaussian Blur implementation.
+        //
+        // I called it Stack Blur because this describes best how this
+        // filter works internally: it creates a kind of moving stack
+        // of colors whilst scanning through the image. Thereby it
+        // just has to add one new block of color to the right side
+        // of the stack and remove the leftmost color. The remaining
+        // colors on the topmost layer of the stack are either added on
+        // or reduced by one, depending on if they are on the right or
+        // on the left side of the stack.
+        //
+        // If you are using this algorithm in your code please add
+        // the following line:
+        //
+        // Stack Blur Algorithm by Mario Klingemann <mario@quasimondo.com>
 
         Bitmap bitmap;
         if (canReuseInBitmap) {
@@ -264,5 +241,5 @@ public class Fglass {
 
         return (bitmap);
     }
-}
 
+}

@@ -13,9 +13,12 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.activity.chat.ChatActivity;
+import com.gongpingjia.carplay.activity.my.MyPerSonDetailActivity2;
+import com.gongpingjia.carplay.activity.my.PersonDetailActivity2;
 import com.gongpingjia.carplay.adapter.BigImageAdapter;
 import com.gongpingjia.carplay.adapter.OfficialMembersAdapter;
 import com.gongpingjia.carplay.api.API2;
@@ -72,8 +75,7 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
      */
     private LinearLayout moreL, processL, explainL;
     private ImageView processIconI, explainIconI;
-    private ListView processlistList;
-    private TextView explaintxtT;
+    private TextView explaintxtT,processT;
     private OfficialMembersAdapter membersAdapter;
 
     private boolean contentFlag = false;
@@ -129,7 +131,7 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
         processIconI = (ImageView) mFootView.findViewById(R.id.process_icon);
         explainIconI = (ImageView) mFootView.findViewById(R.id.explain_icon);
         explaintxtT = (TextView) mFootView.findViewById(R.id.explaintxt);
-        processlistList = (ListView) mFootView.findViewById(R.id.processlist);
+        processT = (TextView) mFootView.findViewById(R.id.processlist);
 
         joinBtn.setOnClickListener(this);
         foldR.setOnClickListener(this);
@@ -140,7 +142,18 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                if (position!=0||position!=mListView.is)
+                if (position!=0||position!=parent.getCount()-1){
+                    Intent it;
+                    String userId=JSONUtil.getString(membersAdapter.getItem(position - 1), "userId");
+                    if (userId.equals(user.getUserId()) ){
+                        it = new Intent(self, MyPerSonDetailActivity2.class);
+                        startActivity(it);
+                    }else {
+                        it = new Intent(self, PersonDetailActivity2.class);
+                        it.putExtra("activeid",userId);
+                        startActivity(it);
+                    }
+                }
             }
         });
 
@@ -169,9 +182,7 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
                     ViewUtil.bindView(startTimeT, format.format(sdate));
                     Date edate = new Date(JSONUtil.getLong(jo, "end"));
                     ViewUtil.bindView(endTimeT, format.format(edate));
-
-                    Date cdate = new Date(JSONUtil.getLong(jo, "createTime"));
-                    ViewUtil.bindView(creattimeT, format.format(cdate));
+                    ViewUtil.bindView(creattimeT,CarPlayValueFix.converTime(JSONUtil.getLong(jo, "createTime")));
 
                     //活动名字,头像,标题,介绍,价格,补贴,说明
                     JSONObject jsname = JSONUtil.getJSONObject(jo, "organizer");
@@ -179,6 +190,7 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
                     ViewUtil.bindNetImage(avatarT, JSONUtil.getString(jsname, "avatar"), "head");
                     ViewUtil.bindView(introduceT, JSONUtil.getString(jo, "title"));
                     ViewUtil.bindView(contentT, JSONUtil.getString(jo, "instruction"));
+                    ViewUtil.bindView(processT, JSONUtil.getString(jo, "description"));
                     ViewUtil.bindView(priceT, JSONUtil.getDouble(jo, "price") + "元/人(现在报名立减" + JSONUtil.getDouble(jo, "subsidyPrice") + "元)");
                     ViewUtil.bindView(explaintxtT, JSONUtil.getString(jo, "instruction"));
 
@@ -296,11 +308,11 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
         if (!processFlag) {
             processFlag = !processFlag;
             processIconI.setImageResource(R.drawable.up_btn);
-            processlistList.setVisibility(View.VISIBLE);
+            processT.setVisibility(View.VISIBLE);
         } else {
             processFlag = !processFlag;
             processIconI.setImageResource(R.drawable.down_btn);
-            processlistList.setVisibility(View.GONE);
+            processT.setVisibility(View.GONE);
         }
     }
 

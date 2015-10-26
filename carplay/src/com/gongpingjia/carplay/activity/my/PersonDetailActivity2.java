@@ -21,6 +21,8 @@ import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.util.ViewUtil;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 
@@ -32,8 +34,8 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
     User user;
 
     private RoundImageView headI;
-    private ImageView sexI, photo_bgI;
-    private TextView  nameT, ageT,attentionT;
+    private ImageView sexI, photo_bgI,carLogo;
+    private TextView  nameT, ageT,attentionT,carName;
     private RelativeLayout sexbgR;
     private LinearLayout myactiveL;
     private Button uploadBtn;
@@ -59,6 +61,8 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
         attentionT = (TextView) findViewById(R.id.attention);
         myactiveL = (LinearLayout) findViewById( R.id.myactive);
         uploadBtn = (Button) findViewById(R.id.upload);
+        carLogo = (ImageView) findViewById(R.id.carlogo);
+        carName = (TextView) findViewById(R.id.carname);
 
         headI.setOnClickListener(this);
         attentionT.setOnClickListener(this);
@@ -72,8 +76,9 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
     }
 
     public void getDetails() {
+        String userId = getIntent().getStringExtra("activeid");
 
-        DhNet verifyNet = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId()
+        DhNet verifyNet = new DhNet(API2.CWBaseurl + "/user/" + userId
                 + "/info?viewUser=" + user.getUserId() + "&token=" + user.getToken());
         verifyNet.doGetInDialog(new NetTask(self) {
 
@@ -83,6 +88,7 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
                 if (response.isSuccess()) {
                     JSONObject jo = response.jSONFromData();
 
+                    JSONObject carjo = JSONUtil.getJSONObject(jo, "car");
                     //昵称,性别,年龄
                     ViewUtil.bindView(nameT, JSONUtil.getString(jo, "nickname"));
                     String gender = JSONUtil.getString(jo, "gender");
@@ -97,9 +103,19 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
 
                     //头像
                     String headimg = JSONUtil.getString(jo, "avatar");
-
                     ViewUtil.bindNetImage(headI, headimg, "head");
-                    ViewUtil.bindNetImage(photo_bgI, headimg, "default");
+                    //相册
+                    JSONArray albumJsa = JSONUtil.getJSONArray(jo, "album");
+                    try {
+                        if (albumJsa!= null) {
+                            ViewUtil.bindNetImage(photo_bgI, albumJsa.getJSONObject(0).getString("url"), "default");
+                        } else {
+                            ViewUtil.bindNetImage(photo_bgI, headimg, "head");
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 //                    photo_bgI.setBackgroundResource(R.drawable.vp_third);
 //                    Blurry.with(getActivity())
 //                            .radius(10)
@@ -110,15 +126,24 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
 
                     //头像认证
                     String photoAuthStatus = JSONUtil.getString(jo, "photoAuthStatus");
-                    String licenseAuthStatus = JSONUtil.getString(jo, "licenseAuthStatus");
-
-                    ViewUtil.bindView(attentionT, photoAuthStatus);
                     if (photoAuthStatus.equals("未认证")) {
                         attentionT.setBackgroundResource(R.drawable.radio_sex_man_focused);
+                        attentionT.setText("未认证");
                     } else if (photoAuthStatus.equals("已认证")) {
                         attentionT.setBackgroundResource(R.drawable.btn_yellow_fillet);
+                        attentionT.setText("已认证");
                     } else if (photoAuthStatus.equals("认证中")) {
                         attentionT.setBackgroundResource(R.drawable.radio_sex_man_focused);
+                        attentionT.setText("未认证");
+                    }
+                    //车主认证
+                    String licenseAuthStatus = JSONUtil.getString(jo, "licenseAuthStatus");
+                    if (licenseAuthStatus.equals("已认证")) {
+                        findViewById(R.id.carlayout).setVisibility(View.VISIBLE);
+                        ViewUtil.bindNetImage(carLogo,JSONUtil.getString(carjo, "logo"),"head");
+                        ViewUtil.bindView(carName,JSONUtil.getString(carjo, "brand"));
+                    } else  {
+                        findViewById(R.id.carlayout).setVisibility(View.GONE);
                     }
 
                 }

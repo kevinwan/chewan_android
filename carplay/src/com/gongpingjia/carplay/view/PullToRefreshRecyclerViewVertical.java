@@ -126,7 +126,6 @@ public class PullToRefreshRecyclerViewVertical extends PullToRefreshBase<Recycle
                 if (recyclerView.getChildCount() < 3) {
                     if (recyclerView.getChildAt(1) != null) {
                         if (recyclerView.getCurrentPosition() == 0) {
-
                             View v1 = recyclerView.getChildAt(1);
                             v1.setScaleY(0.9f);
                             v1.setScaleX(0.9f);

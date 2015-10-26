@@ -17,6 +17,7 @@ import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.view.AnimButtonView;
 import com.gongpingjia.carplay.view.dialog.ActiveDialog;
+import com.umeng.analytics.h;
 
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
@@ -72,7 +73,7 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, ViewGroup viewGroup) {
         final ViewHolder holder;
 
         if (view == null) {
@@ -102,18 +103,16 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
             holder.dyanmic_two = (AnimButtonView) view.findViewById(R.id.dyanmic_two);
             holder.yingyao = (AnimButtonView) view.findViewById(R.id.yingyao);
             holder.hulue = (AnimButtonView) view.findViewById(R.id.hulue);
+            holder.invitationI = (AnimButtonView) view.findViewById(R.id.invitationI);
             holder.dyanmic_one.startScaleAnimation();
             holder.dyanmic_two.startScaleAnimation();
             holder.yingyao.startScaleAnimation();
             holder.hulue.startScaleAnimation();
-
-
+            holder.invitationI.startScaleAnimation();
 
 
             holder.activity_distance = (TextView) view.findViewById(R.id.active_distance);
 
-
-//
             view.setTag(holder);
 
         } else {
@@ -130,36 +129,16 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
         int status = JSONUtil.getInt(jo, "status");
         final String appointmentId = JSONUtil.getString(jo, "appointmentId");
 
-//        View[] views = {holder.dyanmic_one, holder.dyanmic_two, holder.yingyao_layout, holder.yingyaohou};
-//        View[] viewstwo = {holder.hulue, holder.yingyao, holder.yingyao_layout, holder.yingyaohou};
-//
-//        CarPlayUtil.bindActiveButton("邀请中", appointmentId, mContext, views);
-//        CarPlayUtil.bindActiveButton("应邀", appointmentId, mContext, viewstwo);
-//                CarPlayUtil.bindActiveButton("拒绝".views);
+        Boolean isApplicant = JSONUtil.getBoolean(jo, "isApplicant");
+//        System.out.println(isApplicant);
 
-//        CarPlayUtil.bindActiveButton2("邀请中", appointmentId, mContext,  holder.yingyao_layout, holder.yingyaohou);
-        Boolean isApplicant = JSONUtil.getBoolean(jo,"isApplicant");
-
-        if (status == 2) {
-            if (isApplicant == true){
-                holder.invitation.setVisibility(View.VISIBLE);
-                holder.yingyao_layout.setVisibility(View.GONE);
-                holder.yingyaohou.setVisibility(View.GONE);
-            }else{
-                holder.yingyao_layout.setVisibility(View.GONE);
-                holder.yingyaohou.setVisibility(View.VISIBLE);
-            }
-        } else if (status== 1) {
-            holder.yingyao_layout.setVisibility(View.VISIBLE);
-            holder.yingyaohou.setVisibility(View.GONE);
-        }
 
 
         String licenseAuthStatus = JSONUtil.getString(js, "licenseAuthStatus");
         String photoAuthStatus = JSONUtil.getString(js, "photoAuthStatus");
         if (photoAuthStatus.equals("认证通过")) {
             holder.certification_achievement.setImageResource(R.drawable.headaut_dl);
-        }else if(photoAuthStatus.equals("未认证")){
+        } else if (photoAuthStatus.equals("未认证")) {
             holder.certification_achievement.setImageResource(R.drawable.headaut_no);
         }
         String typeT = JSONUtil.getString(jo, "type");
@@ -167,15 +146,15 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
         String gender = JSONUtil.getString(js, "gender");
 
 //        String jied = JSONUtil.getString(json, "street");
-        if(json ==null){
+        if (json == null) {
             holder.activity_place.setVisibility(View.GONE);
-        }else{
+        } else {
             holder.activity_place.setVisibility(View.VISIBLE);
             holder.activity_place.setText(JSONUtil.getString(json, "province") + JSONUtil.getString(json, "city") + JSONUtil.getString(json, "district") + JSONUtil.getString(json, "street"));
         }
 
 
-        int distance = (int)Math.floor(JSONUtil.getDouble(js, "distance"));
+        int distance = (int) Math.floor(JSONUtil.getDouble(js, "distance"));
 //        DecimalFormat df = new DecimalFormat("0.00");
         holder.activity_distance.setText(CarPlayUtil.numberWithDelimiter(distance));
         if (("男").equals(gender)) {
@@ -193,7 +172,7 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
             holder.dynamic_carlogo.setVisibility(View.GONE);
             holder.dynamic_carname.setVisibility(View.GONE);
         }
-        holder.titleT.setText(name + "想邀请你" + typeT);
+
 
         holder.pay_type.setText(JSONUtil.getString(jo, "pay"));
 
@@ -204,13 +183,41 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
             holder.travelmode.setText("");
         }
         ViewUtil.bindNetImage(holder.activity_beijing, JSONUtil.getString(js, "avatar"), "back");
+        if (status == 1) {
+            if (isApplicant == true) {
+//                System.out.println("我应邀别人。。。。。。。。。。。。");
+                holder.invitation.setVisibility(View.VISIBLE);
+                holder.yingyao_layout.setVisibility(View.GONE);
+                holder.yingyaohou.setVisibility(View.GONE);
+                holder.titleT.setText("你邀请" + name + "去" + typeT);
+            }else{
+//                System.out.println("别人应邀我。。。。。。。。。。。。");
+                holder.yingyao_layout.setVisibility(View.VISIBLE);
+                holder.invitation.setVisibility(View.GONE);
+                holder.yingyaohou.setVisibility(View.GONE);
+                holder.titleT.setText(name +"想邀请你" + typeT);
+            }
 
+        } else if (status == 2) {
+            if (isApplicant == true){
+                holder.yingyao_layout.setVisibility(View.GONE);
+                holder.yingyaohou.setVisibility(View.VISIBLE);
+                holder.invitation.setVisibility(View.GONE);
+                holder.titleT.setText("你邀请" + name + "去" + typeT);
+            }else{
+                holder.yingyao_layout.setVisibility(View.GONE);
+                holder.invitation.setVisibility(View.GONE);
+                holder.yingyaohou.setVisibility(View.VISIBLE);
+                holder.titleT.setText(name + "想邀请你" + typeT);
+            }
+
+        }
         holder.yingyao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                    JSONObject jo = getItem(i);
                 if (TextUtils.isEmpty(user.getPhone())) {
-                    System.out.println("获取:" + user.getPhone());
+//                    System.out.println("获取:" + user.getPhone());
                     ActiveDialog dialog = new ActiveDialog(mContext, appointmentId);
                     dialog.setOnPickResultListener(new ActiveDialog.OnPickResultListener() {
 
@@ -224,7 +231,7 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                     });
                     dialog.show();
                 } else {
-                    DhNet net = new DhNet(API2.CWBaseurl+"/application/"+appointmentId+"/process?userId=" + user.getUserId() + "&token=" + user.getToken());
+                    DhNet net = new DhNet(API2.CWBaseurl + "/application/" + appointmentId + "/process?userId=" + user.getUserId() + "&token=" + user.getToken());
 //                    DhNet net = new DhNet(API2.CWBaseurl + "application/" + appointmentId + "/process?userId=5609eb6d0cf224e7d878f695&token=a767ead8-7c00-4b90-b6de-9dcdb4d5bc41");
                     net.addParam("accept", true);
                     net.doPostInDialog(new NetTask(mContext) {
@@ -243,14 +250,15 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
         holder.hulue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                    JSONObject jo = getItem(position);
-                DhNet net = new DhNet(API2.CWBaseurl+"application/"+appointmentId+"/process?userId="+user.getUserId()+"&token="+user.getToken());
+//                JSONObject jo = (JSONObject) getItem(i);
+                DhNet net = new DhNet(API2.CWBaseurl + "application/" + appointmentId + "/process?userId=" + user.getUserId() + "&token=" + user.getToken());
 //                DhNet net = new DhNet(API2.CWBaseurl + "application/" + appointmentId + "/process?userId=5609eb6d0cf224e7d878f695&token=a767ead8-7c00-4b90-b6de-9dcdb4d5bc41");
                 net.addParam("accept", false);
                 net.doPostInDialog(new NetTask(mContext) {
                     @Override
                     public void doInUI(Response response, Integer transfer) {
                         if (response.isSuccess()) {
+                            data.remove(i);
                             notifyDataSetChanged();
                             System.out.println("忽略：" + response.isSuccess());
                         }
@@ -278,8 +286,8 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
     class ViewHolder {
         TextView titleT, dynamic_carname, pay_type, travelmode, activity_place, activity_distance, ageT;
         ImageView dynamic_carlogo, activity_beijing, certification_achievement, sexI;
-        AnimButtonView dyanmic_one, dyanmic_two, yingyao, hulue;
-        LinearLayout yingyao_layout, yingyaohou,invitation;
+        AnimButtonView dyanmic_one, dyanmic_two, yingyao, hulue, invitationI, invitationT;
+        LinearLayout yingyao_layout, yingyaohou, invitation;
         private RelativeLayout sexbgR;
     }
 }

@@ -45,6 +45,7 @@ import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -201,7 +202,6 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
 
 
 
-
         DhNet dhNet = new DhNet(API2.login);
         dhNet.addParam("phone", num);
         dhNet.addParam("password", MD5Util.string2MD5(password));
@@ -215,8 +215,6 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
                     loginHX(MD5Util.string2MD5(JSONUtil.getString(json, "userId")),
                             MD5Util.string2MD5(password),
                             json, num);
-                    User user = User.getInstance();
-                    user.setPhone(mEditNum.getText().toString().trim());
                     //                        user.setUserId(json.getString("userId"));
 //                        user.setToken(json.getString("token"));
 //                        user.setBrand(json.getString("brand"));
@@ -405,6 +403,9 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
                     user.setLicenseAuthStatus("认证通过".equals(jo.getString("licenseAuthStatus")));
                     user.setPhotoAuthStatus("认证通过".equals(jo.getString("photoAuthStatus")));
                     user.setEmName(jo.getString("emchatName"));
+                    user.setPhone(mEditNum.getText().toString().trim());
+                    JSONArray jsa = JSONUtil.getJSONArray(jo, "album");
+                    user.setHasAlbum(jsa.length() == 0 ? false : true);
                     User.getInstance().setLogin(true);
 
                     LoginEB loginEB = new LoginEB();
@@ -436,6 +437,7 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
                         public void run() {
                             DemoHXSDKHelper.getInstance().logout(true, null);
                             showToast(getString(R.string.login_failure_failed));
+
                         }
                     });
                     return;

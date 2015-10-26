@@ -10,6 +10,7 @@ import com.gongpingjia.carplay.ILoadSuccess;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayListActivity;
 import com.gongpingjia.carplay.adapter.DyanmicBaseAdapter;
+import com.gongpingjia.carplay.adapter.MyDyanmicBaseAdapter;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.User;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -27,7 +28,7 @@ public class MyDynamicActivity extends CarPlayListActivity implements PullToRefr
     LinearLayout empty;
     TextView msg;
     User user = User.getInstance();
-    DyanmicBaseAdapter adapter;
+    MyDyanmicBaseAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,12 +47,12 @@ public class MyDynamicActivity extends CarPlayListActivity implements PullToRefr
         listV.setMode(PullToRefreshBase.Mode.BOTH);
         listV.setOnRefreshListener(this);
         recyclerView = listV.getRefreshableView();
-        adapter = new DyanmicBaseAdapter(self);
+        adapter = new MyDyanmicBaseAdapter(self);
         recyclerView.setAdapter(adapter);
         setOnLoadSuccess(this);
         fromWhat("data");
 
-        setUrl(API2.CWBaseurl + "/user/"+user.getUserId()+"/appointment/list?token="+ user.getToken());
+        setUrl(API2.CWBaseurl + "/user/"+user.getUserId()+"/appointment/list?token="+ user.getToken()+"&status="+1+"&status="+2);
 //        setUrl(API2.CWBaseurl + "user/5609eb2c0cf224e7d878f693/appointment/list?token=67666666-f2ff-456d-a9cc-e83761749a6a&status=邀请中&status=应邀");
 
         showNext();
