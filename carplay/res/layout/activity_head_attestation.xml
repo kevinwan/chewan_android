@@ -1,5 +1,4 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -60,18 +59,13 @@
                     android:text="头像认证后将点亮尊贵图标" />
             </LinearLayout>
 
-            <com.andexert.library.RippleView
-                rv_centered="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/up_head"
-                    android:layout_width="match_parent"
-                    android:layout_height="275dp"
-                    android:layout_marginTop="24dp"
-                    android:src="@drawable/mofangdongzuo" />
-            </com.andexert.library.RippleView>
+            <ImageView
+                android:id="@+id/up_head"
+                android:layout_width="match_parent"
+                android:layout_height="275dp"
+                android:layout_marginTop="24dp"
+                android:src="@drawable/mofangdongzuo" />
 
             <TextView
                 style="@style/text_black_small"
@@ -79,21 +73,15 @@
                 android:text="模仿以上动作可提高认证通过率"
                 android:textColor="@color/text_red" />
 
-            <com.andexert.library.RippleView
-                rv_centered="true"
-                android:layout_width="wrap_content"
-                app:rv_color= "@color/text_blue"
-                android:layout_height="wrap_content">
 
-                <Button
-                    android:id="@+id/head_authenticate"
-                    android:layout_width="165dp"
-                    android:layout_height="43dp"
-                    android:layout_marginTop="24dp"
-                    android:background="@drawable/btn_red_fillet"
-                    android:text="马上认证"
-                    android:textColor="@color/white" />
-            </com.andexert.library.RippleView>
+            <Button
+                android:id="@+id/head_authenticate"
+                android:layout_width="165dp"
+                android:layout_height="43dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/btn_red_fillet"
+                android:text="马上认证"
+                android:textColor="@color/white" />
         </LinearLayout>
     </ScrollView>
 
