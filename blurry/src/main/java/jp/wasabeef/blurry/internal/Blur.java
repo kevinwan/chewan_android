@@ -10,6 +10,7 @@ import android.support.v8.renderscript.Allocation;
 import android.support.v8.renderscript.Element;
 import android.support.v8.renderscript.RenderScript;
 import android.support.v8.renderscript.ScriptIntrinsicBlur;
+import android.util.Log;
 import android.view.View;
 
 /**
@@ -48,7 +49,8 @@ public class Blur {
             return null;
         }
 
-        if (!source.isRecycled()) {
+        if (source.isRecycled()) {
+            Log.d("msg","回收");
             return null;
         }
 
@@ -84,4 +86,6 @@ public class Blur {
             return scaled;
         }
     }
+
+
 }
