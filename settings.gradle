@@ -1,2 +1,2 @@
-include ':dhroid', ':carplay', ':library', ':recyclerViewPager'
+include ':dhroid', ':carplay', ':library', ':recyclerViewPager', ':blurry'
 

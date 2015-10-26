@@ -49,4 +49,5 @@ public class API2 {
     //约她同去参加官方活动
     public static final String joinTogether = CWBaseurl + "official/activity/";
 
+
 }

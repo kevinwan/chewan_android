@@ -8,6 +8,7 @@ dependencies {
     compile 'com.android.support:design:22.2.1'
     compile project(':recyclerViewPager')
     compile files('libs/pinyin4j-2.5.0.jar')
+    compile project(':blurry')
 }
 
 android {

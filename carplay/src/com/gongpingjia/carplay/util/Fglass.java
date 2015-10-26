@@ -36,6 +36,7 @@ public class Fglass {
             radius = 2;
         }
 
+
         Bitmap overlay = Bitmap.createBitmap((int) (toView.getMeasuredWidth()/scaleFactor),
                 (int) (toView.getMeasuredHeight()/scaleFactor), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(overlay);

@@ -31,13 +31,14 @@ public class User {
     public boolean isLogin = false;
     public String psaaword;
 
-    public String emName ;
+    public String emName;
 
     private boolean isDisconnect = false;
 
+    private boolean hasAlbum = false;
 
 
-   public static User getInstance() {
+    public static User getInstance() {
         if (user == null) {
             user = new User();
         }
@@ -175,4 +176,12 @@ public class User {
         this.emName = emName;
     }
 
+
+    public boolean isHasAlbum() {
+        return hasAlbum;
+    }
+
+    public void setHasAlbum(boolean hasAlbum) {
+        this.hasAlbum = hasAlbum;
+    }
 }

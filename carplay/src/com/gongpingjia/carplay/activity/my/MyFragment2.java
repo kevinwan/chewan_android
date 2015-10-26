@@ -33,7 +33,6 @@ import com.gongpingjia.carplay.bean.PhotoState;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.photo.model.PhotoModel;
 import com.gongpingjia.carplay.view.RoundImageView;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
@@ -212,7 +211,6 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                     age = String.valueOf(JSONUtil.getInt(jo, "age"));
                     ViewUtil.bindView(ageT, JSONUtil.getInt(jo, "age"));
 //                    //设置高斯模糊
-//                    Fglass.blur(ageT, mainV.findViewById(R.id.photo_bg_txt), 2, 8);
 
 
 //                    Blurry.with(getActivity())

@@ -18,17 +18,20 @@ package com.gongpingjia.carplay.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.api.Constant;
@@ -37,6 +40,9 @@ import com.gongpingjia.carplay.manage.UserInfoManage;
 import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.view.AnimButtonView;
 import com.gongpingjia.carplay.view.AttentionImageView;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
@@ -52,6 +58,7 @@ import java.io.File;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
+import jp.wasabeef.blurry.Blurry;
 
 public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.SimpleViewHolder> {
     private static final int COUNT = 5;
@@ -67,7 +74,7 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
     private String mPhotoPath;
 
     public static class SimpleViewHolder extends RecyclerView.ViewHolder {
-        TextView nickname, car_name, age, pay, transfer, location, distance;
+        TextView nickname, car_name, age, pay, transfer, location, distance, join_desT;
         ImageView headatt, car_logo, sex, active_bg;
         AttentionImageView attention;
         RelativeLayout sexLayout;
@@ -76,7 +83,6 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
 
         public SimpleViewHolder(View view) {
             super(view);
-            Log.d("msg", "SimpleViewHolder");
             nickname = (TextView) view.findViewById(R.id.tv_nickname);
             headatt = (ImageView) view.findViewById(R.id.head_att);
             car_logo = (ImageView) view.findViewById(R.id.iv_car_logo);
@@ -94,7 +100,7 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
             upload = (Button) view.findViewById(R.id.upload);
             takephotos = (Button) view.findViewById(R.id.takephotos);
             album = (Button) view.findViewById(R.id.album);
-
+            join_desT = (TextView) view.findViewById(R.id.join_des);
         }
     }
 
@@ -121,9 +127,8 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
     }
 
     @Override
-    public void onBindViewHolder(SimpleViewHolder holder, int position) {
+    public void onBindViewHolder(final SimpleViewHolder holder, final int position) {
 
-        Log.d("msg", "onBindViewHolder");
 //        holder.title.setText(mItems.get(position).toString());
         final JSONObject jo = getItem(position);
 
@@ -137,6 +142,10 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
         holder.nickname.setText(JSONUtil.getString(userjo, "nickname") + "想约人" + activetype);
         holder.age.setText(JSONUtil.getInt(userjo, "age") + "");
         String sex = JSONUtil.getString(userjo, "gender");
+
+        boolean applyFlag = JSONUtil.getBoolean(jo, "applyFlag");
+        holder.join_desT.setText(applyFlag ? "应邀中" : "邀 TA");
+
         if ("男".equals(sex)) {
             holder.sexLayout.setBackgroundResource(R.drawable.radio_sex_man_normal);
             holder.sex.setImageResource(R.drawable.icon_man3x);
@@ -144,17 +153,62 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
             holder.sexLayout.setBackgroundResource(R.drawable.radion_sex_woman_normal);
             holder.sex.setImageResource(R.drawable.icon_woman3x);
         }
-        ViewUtil.bindNetImage(holder.active_bg, JSONUtil.getString(userjo, "avatar"), "default");
+//        ViewUtil.bindNetImage(holder.active_bg, JSONUtil.getString(userjo, "avatar"), "default");
+
+        final User user = User.getInstance();
+        ImageLoader.getInstance().displayImage(JSONUtil.getString(userjo, "avatar"), holder.active_bg, CarPlayValueFix.optionsDefault, new ImageLoadingListener() {
+            @Override
+            public void onLoadingStarted(String s, View view) {
+
+            }
+
+            @Override
+            public void onLoadingFailed(String s, View view, FailReason failReason) {
+
+            }
+
+            @Override
+            public void onLoadingComplete(String s, View view, final Bitmap bitmap) {
+                Log.d("msg", "bitmap" + bitmap + "//////////position" + position);
+                if (bitmap != null) {
+                    final ImageView img = (ImageView) view;
+                    img.setImageBitmap(bitmap);
+                    if (user.isHasAlbum()) {
+                        ViewTreeObserver observer = img.getViewTreeObserver();
+                        observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                            @Override
+                            public void onGlobalLayout() {
+                                img.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                                if (!bitmap.isRecycled()) {
+                                    Blurry.with(mContext)
+                                            .radius(10)
+                                            .sampling(4)
+                                            .async()
+                                            .capture(img)
+                                            .into(img);
+                                }
+                            }
+                        });
+
+
+                    }
+                }
+            }
+
+            @Override
+            public void onLoadingCancelled(String s, View view) {
+
+            }
+        });
 
         //头像认证,车主认证
         String headatt = JSONUtil.getString(userjo, "photoAuthStatus");
         holder.headatt.setImageResource("未认证".equals(headatt) ? R.drawable.headaut_dl : R.drawable.headaut_no);
 
-        User user = User.getInstance();
         if (user.isLogin()) {
-//            holder.attention.setVisibility(JSONUtil.getString(userjo, "userId").equals(user.getUserId()) ? View.GONE : View.VISIBLE);
+            holder.attention.setVisibility(JSONUtil.getString(userjo, "userId").equals(user.getUserId()) ? View.GONE : View.VISIBLE);
         } else {
-//            holder.attention.setVisibility(View.VISIBLE);
+            holder.attention.setVisibility(View.VISIBLE);
         }
         //关注,是否包接送,付费类型,活动类型
         holder.attention.setImageResource(JSONUtil.getBoolean(userjo, "subscribeFlag") ? R.drawable.icon_hearted : R.drawable.icon_heart);
@@ -186,10 +240,6 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
             ViewUtil.bindView(holder.car_name, JSONUtil.getString(carjo, "model"));
         }
 
-        //相册为空模糊效果
-        if (albumjsa == null) {
-
-        }
 
         final View itemView = holder.itemView;
         itemView.setOnClickListener(new View.OnClickListener() {
@@ -201,6 +251,8 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
 
 
 //        holder.invite.startScaleAnimation();
+
+        holder.invite.setOnClickListener(new MyOnClick(holder, position));
 
         holder.upload.setOnClickListener(new MyOnClick(holder, position));
 
@@ -221,6 +273,7 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
 
         @Override
         public void onClick(View v) {
+            User user = User.getInstance();
             switch (v.getId()) {
                 //上传
                 case R.id.upload:
@@ -247,7 +300,6 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
                     break;
 
                 case R.id.attention:
-                    User user = User.getInstance();
                     UserInfoManage.getInstance().checkLogin((Activity) mContext, new UserInfoManage.LoginCallBack() {
                         @Override
                         public void onisLogin() {
@@ -256,6 +308,20 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
                             boolean type = JSONUtil.getBoolean(userjo, "subscribeFlag");
                             String userId = JSONUtil.getString(userjo, "userId");
                             attentionorCancle(type, userId, holder, jo);
+                        }
+
+                        @Override
+                        public void onLoginFail() {
+
+                        }
+                    });
+                    break;
+                case R.id.invite:
+                    UserInfoManage.getInstance().checkLogin((Activity) mContext, new UserInfoManage.LoginCallBack() {
+                        @Override
+                        public void onisLogin() {
+                            JSONObject jo = getItem(position);
+                            join(JSONUtil.getString(jo, "activityId"), holder, jo);
                         }
 
                         @Override
@@ -320,6 +386,26 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
                     }
                 }
 
+            }
+        });
+    }
+
+
+    private void join(String activeId, final SimpleViewHolder holder, final JSONObject jo) {
+        User user = User.getInstance();
+        String url = API2.CWBaseurl + "activity/" + activeId + "/join?" + "userId=" + user.getUserId() + "&token=" + user.getToken();
+        DhNet net = new DhNet(url);
+        net.doPostInDialog(new NetTask(mContext) {
+            @Override
+            public void doInUI(Response response, Integer transfer) {
+                if (response.isSuccess()) {
+                    holder.join_desT.setText("邀请中");
+                    try {
+                        jo.put("applyFlag", true);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         });
     }
