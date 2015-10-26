@@ -106,21 +106,39 @@
             </LinearLayout>
 
         </LinearLayout>
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="300dp">
-
-            <ImageView
-                android:id="@+id/activity_beijing"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/model_pic" />
+                android:layout_height="300dp">
 
-            <include layout="@layout/include_active_button" />
+                <ImageView
+                    android:id="@+id/activity_beijing"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/model_pic" />
 
-        </RelativeLayout>
+                <include layout="@layout/include_active_button" />
+
+            </RelativeLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#50000000"
+                android:visibility="gone">
+                <TextView
+                    android:id="@+id/inviteT"
+                   style="@style/text_white_medium"
+                    android:layout_width="fill_parent"
+                    />
+            </LinearLayout>
+
+        </FrameLayout>
+
+
 
         <LinearLayout
             android:id="@+id/active_distancelayout"

@@ -16,21 +16,15 @@
 
 package com.gongpingjia.carplay.adapter;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.drawable.BitmapDrawable;
-import android.os.Build;
-import android.renderscript.Allocation;
-import android.renderscript.RenderScript;
-import android.renderscript.ScriptIntrinsicBlur;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -64,6 +58,7 @@ import java.io.File;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
+import jp.wasabeef.blurry.Blurry;
 
 public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.SimpleViewHolder> {
     private static final int COUNT = 5;
@@ -177,31 +172,27 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
                 Log.d("msg", "bitmap" + bitmap + "//////////position" + position);
                 if (bitmap != null) {
                     final ImageView img = (ImageView) view;
-                    img.setImageBitmap(bitmap);
                     if (user.isHasAlbum()) {
-//                        ViewTreeObserver observer = img.getViewTreeObserver();
-//                        observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-//                            @Override
-//                            public void onGlobalLayout() {
-//                                img.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-//                                blur(bitmap, img);
-//                            }
-//                        });
+                        img.setImageBitmap(bitmap);
+                        ViewTreeObserver observer = img.getViewTreeObserver();
+                        observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                            @Override
+                            public void onGlobalLayout() {
+                                img.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                                if (!bitmap.isRecycled()) {
+                                    Blurry.with(mContext)
+                                            .radius(10)
+                                            .sampling(4)
+                                            .async()
+                                            .capture(img)
+                                            .into(img);
+                                }
+                            }
+                        });
 
 
-//                        img.getViewTreeObserver().addOnPreDrawListener(
-//                                new ViewTreeObserver.OnPreDrawListener() {
-//
-//                                    @Override
-//                                    public boolean onPreDraw() {
-//                                        img.getViewTreeObserver()
-//                                                .removeOnPreDrawListener(this);
-//                                        blur(bitmap, img, 8);
-//                                        return true; // 这个是参考文章中要求的，没试过false。
-//                                    }
-//                                });
-
-
+                    } else {
+                        img.setImageBitmap(bitmap);
                     }
                 }
             }
@@ -421,38 +412,5 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
         });
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-    private void blur(Bitmap bkg, ImageView view, float radius) {
-        // 剪裁图片的过程
-        Bitmap overlay = Bitmap.createBitmap(
-                (int) (view.getMeasuredWidth()),
-                (int) (view.getMeasuredHeight()), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(overlay);
-        canvas.translate(-view.getX(), -view.getY()); // 这里是设置坐标系原点
-        canvas.drawBitmap(bkg, 0, 0, null); // // 这里直接在新的坐标系的原点上绘制图像，如果不设置坐标系的话，相当于在(view.getX(),view.getY)上绘制图像，android向右是x轴正方形，向下时y轴正方向。
-        // 模糊图片的过程
-        RenderScript rs = RenderScript.create(mContext); // RenderScript要求apilevel 17，这个比较恶心，v8支持包也不是特别好用，真的要搞模糊的话，还是opencv jni来搞吧。
-        Allocation overlayAlloc = Allocation.createFromBitmap(rs, overlay);
-        ScriptIntrinsicBlur blur = ScriptIntrinsicBlur.create(rs,
-                overlayAlloc.getElement());
-        blur.setInput(overlayAlloc);
-        blur.setRadius(radius);
-        blur.forEach(overlayAlloc);
-        overlayAlloc.copyTo(overlay);
-        // 设置图片
-        view.setImageDrawable(new BitmapDrawable(mContext.getResources(), overlay));
-        rs.destroy();
-    }
 
-    // 首先根据view的大小，从bkg生成一个剪裁后的图像；然后将剪裁后的图像设置到view上。
-    private void clear(Bitmap bkg, ImageView view, int paddingPx) {
-        Bitmap overlay = Bitmap.createBitmap(
-                (int) (view.getMeasuredWidth() - paddingPx * 2),
-                (int) (view.getMeasuredHeight() - paddingPx * 2),
-                Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(overlay);
-        canvas.translate(-view.getX() - paddingPx, -view.getY() - paddingPx);
-        canvas.drawBitmap(bkg, 0, 0, null);
-        view.setImageDrawable(new BitmapDrawable(mContext.getResources(), overlay));
-    }
 }
