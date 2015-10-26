@@ -1,6 +1,7 @@
 package com.gongpingjia.carplay.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -72,7 +73,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, ViewGroup viewGroup) {
         final ViewHolder holder;
 
         if (view == null) {
@@ -86,6 +87,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
             holder.pay_type = (TextView) view.findViewById(R.id.pay_type);
             holder.travelmode = (TextView) view.findViewById(R.id.travelmode);
             holder.activity_place = (TextView) view.findViewById(R.id.activity_place);
+            holder.inviteT = (TextView) view.findViewById(R.id.inviteT);
 
             holder.sexbgR = (RelativeLayout) view.findViewById(R.id.layout_sex_and_age);
             holder.sexI = (ImageView) view.findViewById(R.id.iv_sex);
@@ -197,7 +199,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
             holder.travelmode.setText("");
         }
         ViewUtil.bindNetImage(holder.activity_beijing, JSONUtil.getString(js, "avatar"), "back");
-
+//        holder.inviteT.setText("");
         holder.yingyao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -217,7 +219,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
                     });
                     dialog.show();
                 } else {
-                    DhNet net = new DhNet(API2.CWBaseurl+"/application/"+appointmentId+"/process?userId=" + user.getUserId() + "&token=" + user.getToken());
+                    DhNet net = new DhNet(API2.CWBaseurl + "/application/" + appointmentId + "/process?userId=" + user.getUserId() + "&token=" + user.getToken());
 //                    DhNet net = new DhNet(API2.CWBaseurl + "application/" + appointmentId + "/process?userId=5609eb6d0cf224e7d878f695&token=a767ead8-7c00-4b90-b6de-9dcdb4d5bc41");
                     net.addParam("accept", true);
                     net.doPostInDialog(new NetTask(mContext) {
@@ -244,6 +246,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
                     @Override
                     public void doInUI(Response response, Integer transfer) {
                         if (response.isSuccess()) {
+                            data.remove(i);
                             notifyDataSetChanged();
                             System.out.println("忽略：" + response.isSuccess());
                         }
@@ -269,7 +272,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
     }
 
     class ViewHolder {
-        TextView titleT, dynamic_carname, pay_type, travelmode, activity_place, activity_distance, ageT;
+        TextView titleT, dynamic_carname, pay_type, travelmode, activity_place, activity_distance, ageT,inviteT;
         ImageView dynamic_carlogo, activity_beijing, certification_achievement, sexI;
         AnimButtonView dyanmic_one, dyanmic_two, yingyao, hulue;
         LinearLayout yingyao_layout, yingyaohou;
