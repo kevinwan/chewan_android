@@ -42,23 +42,29 @@
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="55c80d4be0f55af652003627" />
-        <!-- &lt;!&ndash; 正式版 &ndash;&gt;
+        <!--
+         &lt;!&ndash; 正式版 &ndash;&gt;
          <meta-data
              android:name="com.amap.api.v2.apikey"
-             android:value="f5a41f709dd7b958bda5c51d3a0a247e" />-->
+             android:value="f5a41f709dd7b958bda5c51d3a0a247e" />
+        -->
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="427c3acc9b4358fd1fa1823194709ae3" />
 
-
         <!-- 正式版 -->
-        <!--             <meta-data
+        <!--
+                         <meta-data
                     android:name="EASEMOB_APPKEY"
-                    android:value="gongpingjia#chewan" />-->
+                    android:value="gongpingjia#chewan" />
+        -->
 
-        <!--    <meta-data
+
+        <!--
+                <meta-data
                 android:name="EASEMOB_APPKEY"
-                android:value="gongpingjia#chewantest" />-->
+                android:value="gongpingjia#chewantest" />
+        -->
         <meta-data
             android:name="EASEMOB_APPKEY"
             android:value="gongpingjia#carplayapp" />
@@ -211,7 +217,7 @@
             android:name=".activity.my.BasicInformationActivity2"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.my.SubscribeActivity2"></activity>
+        <activity android:name=".activity.my.SubscribeActivity2" />
         <activity
             android:name=".activity.my.RegisterActivity2"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -300,15 +306,12 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".activity.active.ActiveDetailsActivity2"></activity>
+        <activity android:name=".activity.active.ActiveDetailsActivity2" />
         <activity
             android:name=".activity.my.AuthenticateOwnersActivity2"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"></activity>
-
+            android:screenOrientation="portrait" />
         <activity android:name=".activity.active.LookAroundActivity" />
-
-
         <activity
             android:name=".activity.my.HeadAttestationActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -344,24 +347,24 @@
         <activity
             android:name=".activity.my.EditPersonalInfoActivity2"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.my.DynamicActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".activity.my.OfficialMessageActivity"></activity>
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.my.OfficialMessageActivity" />
         <activity
             android:name=".activity.my.ModifyName"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.my.MyDynamicActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.my.MyPerSonDetailActivity2"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
