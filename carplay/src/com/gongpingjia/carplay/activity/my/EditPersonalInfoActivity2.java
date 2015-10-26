@@ -224,7 +224,7 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
 
             @Override
             public void doInUI(Response response, Integer transfer) {
-                System.out.println("更改头像返回："+user.getUserId() + "---------" + user.getToken());
+//                System.out.println("更改头像返回："+user.getUserId() + "---------" + user.getToken());
                 hidenProgressDialog();
                 if (response.isSuccess()) {
                     JSONObject jo = response.jSONFromData();
@@ -234,9 +234,9 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
                             .remove(head_url);
                     Bitmap b = ImageLoader.getInstance().getMemoryCache()
                             .remove(head_url);
-                    System.out.println("第一个：+++++++++++" + a);
-                    System.out.println("第二个：***************" + b);
-                    System.out.println("更改头像返回：" + JSONUtil.getString(jo, "photoUrl"));
+//                    System.out.println("第一个：+++++++++++" + a);
+//                    System.out.println("第二个：***************" + b);
+//                    System.out.println("更改头像返回：" + JSONUtil.getString(jo, "photoUrl"));
                     showToast("上传成功");
 //
                 } else {
