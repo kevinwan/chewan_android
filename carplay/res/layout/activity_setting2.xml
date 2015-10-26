@@ -1,9 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <include layout="@layout/include_title_bar" />
 
@@ -13,9 +12,9 @@
         android:background="#e6e9ed" />
 
     <RelativeLayout
-        android:id="@+id/setting_clear"
+        android:id="@+id/layout_cache_clear"
         android:layout_width="match_parent"
-        android:layout_height="51dp" >
+        android:layout_height="51dp">
 
         <ImageView
             android:id="@+id/clear"
@@ -32,11 +31,10 @@
             style="@style/text_grey_medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/img"
+            android:layout_marginRight="10dp"
             android:text="0M" />
-
-
 
         <TextView
             style="@style/text_black_medium"
@@ -51,9 +49,9 @@
         android:background="#e6e9ed" />
 
     <RelativeLayout
-        android:id="@+id/setting_like"
+        android:id="@+id/layout_rate"
         android:layout_width="match_parent"
-        android:layout_height="51dp" >
+        android:layout_height="51dp">
 
         <ImageView
             android:id="@+id/like"
@@ -64,7 +62,6 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="10dp"
             android:src="@drawable/like" />
-
 
 
         <TextView
@@ -80,9 +77,9 @@
         android:background="#e6e9ed" />
 
     <RelativeLayout
-        android:id="@+id/setting_about_us"
+        android:id="@+id/layout_about"
         android:layout_width="match_parent"
-        android:layout_height="51dp" >
+        android:layout_height="51dp">
 
         <ImageView
             android:id="@+id/about_us"
@@ -93,7 +90,6 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="10dp"
             android:src="@drawable/about_us" />
-
 
 
         <TextView
@@ -109,9 +105,9 @@
         android:background="#e6e9ed" />
 
     <RelativeLayout
-        android:id="@+id/setting_versions"
+        android:id="@+id/layout_version"
         android:layout_width="match_parent"
-        android:layout_height="51dp" >
+        android:layout_height="51dp">
 
         <ImageView
             android:id="@+id/versions"
@@ -122,7 +118,6 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="10dp"
             android:src="@drawable/versions" />
-
 
 
         <TextView
@@ -138,9 +133,9 @@
         android:background="#e6e9ed" />
 
     <RelativeLayout
-        android:id="@+id/setting_at_versions"
+        android:id="@+id/layout_update"
         android:layout_width="match_parent"
-        android:layout_height="51dp" >
+        android:layout_height="51dp">
 
         <ImageView
             android:id="@+id/at_versions"
@@ -151,7 +146,6 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="10dp"
             android:src="@drawable/at_versions" />
-
 
 
         <TextView
@@ -167,7 +161,7 @@
         android:background="#e6e9ed" />
 
     <Button
-        android:id="@+id/setting_quit"
+        android:id="@+id/btn_logout"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginLeft="12dp"
@@ -177,6 +171,6 @@
         android:text="退出登录"
         android:textColor="@color/white"
         android:textSize="@dimen/text_medium"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
 </LinearLayout>

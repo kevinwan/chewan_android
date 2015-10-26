@@ -59,10 +59,6 @@
                     android:text="头像认证后将点亮尊贵图标" />
             </LinearLayout>
 
-            <com.andexert.library.RippleView
-                rv_centered="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
 
                 <ImageView
                     android:id="@+id/up_head"
@@ -70,7 +66,7 @@
                     android:layout_height="275dp"
                     android:layout_marginTop="24dp"
                     android:src="@drawable/mofangdongzuo" />
-            </com.andexert.library.RippleView>
+
 
             <TextView
                 style="@style/text_black_small"
@@ -78,9 +74,7 @@
                 android:text="模仿以上动作可提高认证通过率"
                 android:textColor="@color/text_red" />
 
-            <com.andexert.library.RippleView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+
 
                 <Button
                     android:id="@+id/head_authenticate"
@@ -90,7 +84,8 @@
                     android:background="@drawable/btn_red_fillet"
                     android:text="马上认证"
                     android:textColor="@color/white" />
-            </com.andexert.library.RippleView>
+
+
         </LinearLayout>
     </ScrollView>
 

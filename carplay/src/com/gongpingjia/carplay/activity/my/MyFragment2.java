@@ -205,7 +205,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                     }
                     headimg = JSONUtil.getString(jo, "avatar");
 
-                    ViewUtil.bindNetImage(headI,JSONUtil.getString(jo, "avatar"),"head");
+                    ViewUtil.bindNetImage(headI, JSONUtil.getString(jo, "avatar"), "head");
 //                    ImageLoader.getInstance().displayImage(JSONUtil.getString(jo, "avatar"), headI);
 //                    photo_bgI.setBackgroundResource(R.drawable.vp_third);
                     age = String.valueOf(JSONUtil.getInt(jo, "age"));

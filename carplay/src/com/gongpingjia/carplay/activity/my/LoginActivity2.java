@@ -38,6 +38,7 @@ import com.umeng.socialize.sso.UMQQSsoHandler;
 import com.umeng.socialize.sso.UMSsoHandler;
 import com.umeng.socialize.weixin.controller.UMWXHandler;
 
+import net.duohuo.dhroid.activity.ActivityTack;
 import net.duohuo.dhroid.ioc.IocContainer;
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
@@ -75,10 +76,18 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
 
     private String mUid, mAvatarUrl, mNickName, mChannel = "wechat";
 
+    private boolean isFromLogout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login2);
+        String action = getIntent().getStringExtra("action");
+        if (action != null && action.equals("logout")) {
+            isFromLogout = true;
+            ActivityTack.getInstanse().finishOthers(this);
+        }
+        User.getInstance().setLogin(false);
     }
 
     @Override
@@ -176,6 +185,7 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
 //        final String num = "18000000001";
 //      //final Strin//password = "123456";
 //        final Strin//num = mEditNum.getText().toString().trim();
+//        final String num = mEditNum.getText().toString().trim();
 //        final String password = mEditPassword.getText().toString().trim();
 //        if (TextUtils.isEmpty(num) || TextUtils.isEmpty(password)) {
 //            showToast("手机号或密码不能为空");
@@ -184,6 +194,8 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
 //        final String num = "18000000001";
 //        final String password = "123456";
 //        num = "18362971169";
+
+
 
 
         DhNet dhNet = new DhNet(API2.login);
