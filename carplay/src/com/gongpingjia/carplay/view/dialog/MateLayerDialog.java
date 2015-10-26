@@ -73,11 +73,6 @@ public class MateLayerDialog extends BaseAlertDialog implements View.OnClickList
             @Override
             public void onClick(View v) {
                 boolean pickOrNot = checkBox.isChecked();
-//                if (textDestination.getText().toString().trim().length() == 0 || textDestination.getText().toString().trim().split(" ").length < 3) {
-//                    //请选择地点
-//                    Toast.makeText(mContext, "请选择地点", Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
                 if (selectIndex < 0) {
                     Toast.makeText(mContext, "请选择类型", Toast.LENGTH_SHORT).show();
                     return;
@@ -101,20 +96,24 @@ public class MateLayerDialog extends BaseAlertDialog implements View.OnClickList
                         break;
                 }
 
-                //目的地信息
-                String[] destinations = textDestination.getText().toString().trim().split(" ");
-                Map<String, String> destination = new HashMap<String, String>();
-                destination.put("province", destinations[0]);
-                destination.put("city", destinations[1]);
-                destination.put("district", destinations[2]);
-                if (destinations.length == 3) {
-                    //直辖市的情况
-                    destination.put("street", destinations[2]);
+                if (textDestination.getText().toString().trim().length() == 0 || textDestination.getText().toString().trim().split(" ").length < 3) {
+                    //没有选择地点
                 } else {
-                    //普通地区
-                    destination.put("street", destinations[3]);
+                    //目的地信息
+                    String[] destinations = textDestination.getText().toString().trim().split(" ");
+                    Map<String, String> destination = new HashMap<String, String>();
+                    destination.put("province", destinations[0]);
+                    destination.put("city", destinations[1]);
+                    destination.put("district", destinations[2]);
+                    if (destinations.length == 3) {
+                        //直辖市的情况
+                        destination.put("street", destinations[2]);
+                    } else {
+                        //普通地区
+                        destination.put("street", destinations[3]);
+                    }
+                    dhNet.addParam("destination", destination);
                 }
-                dhNet.addParam("destination", destination);
 
                 //发布地经纬度
                 Map<String, Double> estabPoint = new HashMap<String, Double>();

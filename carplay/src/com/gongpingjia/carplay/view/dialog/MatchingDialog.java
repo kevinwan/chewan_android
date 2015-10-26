@@ -99,19 +99,24 @@ public class MatchingDialog extends BaseAlertDialog {
 
 
                 //目的地信息
-                String[] destinations = textDestination.getText().toString().trim().split(" ");
-                Map<String, String> destination = new HashMap<String, String>();
-                destination.put("province", destinations[0]);
-                destination.put("city", destinations[1]);
-                destination.put("district", destinations[2]);
-                if (destinations.length == 3) {
-                    //直辖市的情况
-                    destination.put("street", destinations[2]);
+                if (textDestination.getText().toString().trim().length() == 0 || textDestination.getText().toString().trim().split(" ").length < 3) {
+                    //没有填写目的地
                 } else {
-                    //普通地区
-                    destination.put("street", destinations[3]);
+                    //填写目的地
+                    String[] destinations = textDestination.getText().toString().trim().split(" ");
+                    Map<String, String> destination = new HashMap<String, String>();
+                    destination.put("province", destinations[0]);
+                    destination.put("city", destinations[1]);
+                    destination.put("district", destinations[2]);
+                    if (destinations.length == 3) {
+                        //直辖市的情况
+                        destination.put("street", destinations[2]);
+                    } else {
+                        //普通地区
+                        destination.put("street", destinations[3]);
+                    }
+                    dhNet.addParam("destination", destination);
                 }
-                dhNet.addParam("destination", destination);
 
                 //发布地经纬度
                 Map<String, Double> estabPoint = new HashMap<String, Double>();
