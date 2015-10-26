@@ -1,6 +1,7 @@
 package com.gongpingjia.carplay.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.activity.chat.VoiceCallActivity;
 import com.gongpingjia.carplay.view.RoundImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -53,7 +55,7 @@ public class EachSubscribeAdapter2 extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         try {
-            JSONObject obj = mDatum.getJSONObject(position);
+            final JSONObject obj = mDatum.getJSONObject(position);
             if (convertView == null) {
                 convertView = LayoutInflater.from(mContext).inflate(R.layout.item_each_subscribe2, parent, false);
                 holder = new ViewHolder();
@@ -71,6 +73,19 @@ public class EachSubscribeAdapter2 extends BaseAdapter {
             holder.textNickname.setText(obj.getString("nickname"));
             holder.textDistance.setText(String.valueOf(obj.getInt("distance")) + "m");
             holder.textAge.setText(String.valueOf(obj.getInt("age")));
+            holder.imgPhone.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        Intent it = new Intent(mContext, VoiceCallActivity.class);
+                        it.putExtra("username", obj.getString("emchatName"));
+                        it.putExtra("isComingCall", false);
+                        mContext.startActivity(it);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
             holder.heartView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

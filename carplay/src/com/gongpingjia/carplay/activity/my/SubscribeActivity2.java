@@ -38,6 +38,7 @@ public class SubscribeActivity2 extends CarPlayListActivity {
         mEachSubscribe = new SubscribeEachOtherFragment();
 
         mAdapter = new MySubscribePagerAdapter2(getSupportFragmentManager(), Arrays.asList(mEachSubscribe, mMySubscriber, mBeSubscribed));
+        mViewPager.setOffscreenPageLimit(2);
         mViewPager.setAdapter(mAdapter);
         mTabLayout.setTabsFromPagerAdapter(mAdapter);
         mTabLayout.setupWithViewPager(mViewPager);

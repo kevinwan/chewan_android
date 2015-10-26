@@ -177,7 +177,7 @@ public class AnimButtonView2 extends RelativeLayout {
 
 
     public ImageView getRealImage() {
-        return image1;
+        return bg;
     }
 
 }

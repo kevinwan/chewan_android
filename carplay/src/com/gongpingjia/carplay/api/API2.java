@@ -54,7 +54,7 @@ public class API2 {
     }
 
     public static String getProfileFromHx(String userId, String token, String chatName) {
-        return String.format(CWBaseurl + "user/emchatInfo?userId=%s&token=%semchatName=%s", userId, token, chatName);
+        return String.format(CWBaseurl + "user/emchatInfo?userId=%s&token=%s&emchatName=%s", userId, token, chatName);
     }
 
 }

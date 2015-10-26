@@ -152,7 +152,8 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
             outgoing = soundPool.load(this, R.raw.outgoing, 1);
 
 //			comingBtnContainer.setVisibility(View.INVISIBLE);
-            answering_layout.setVisibility(View.INVISIBLE);
+            answering_layout.setVisibility(View.GONE);
+            call_layout.setVisibility(View.VISIBLE);
             hangupBtn.setVisibility(View.VISIBLE);
             st1 = getResources()
                     .getString(R.string.Are_connected_to_each_other);
@@ -177,7 +178,9 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
             }
         } else { // 有电话进来
 //			voiceContronlLayout.setVisibility(View.INVISIBLE);
-            answering_layout.setVisibility(View.INVISIBLE);
+//            answering_layout.setVisibility(View.INVISIBLE);
+            answering_layout.setVisibility(View.VISIBLE);
+            call_layout.setVisibility(View.GONE);
             Uri ringUri = RingtoneManager
                     .getDefaultUri(RingtoneManager.TYPE_RINGTONE);
             audioManager.setMode(AudioManager.MODE_RINGTONE);
