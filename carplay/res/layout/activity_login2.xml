@@ -148,48 +148,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp">
 
-            <com.andexert.library.RippleView
-                rv_centered="true"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center">
-
-                <ImageView
-                    android:id="@+id/iv_weixin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/icon_weixin" />
-            </com.andexert.library.RippleView>
-
-            <com.andexert.library.RippleView
-                rv_centered="true"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center">
-
-                <ImageView
-                    android:id="@+id/iv_qq"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/icon_qq" />
-            </com.andexert.library.RippleView>
-
-            <com.andexert.library.RippleView
-                rv_centered="true"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center">
-
-                <ImageView
-                    android:id="@+id/iv_weibo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/icon_weibo" />
-            </com.andexert.library.RippleView>
-=======
             <ImageView
                 android:id="@+id/iv_weixin"
                 android:layout_width="0dp"
@@ -213,7 +171,6 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/icon_weibo" />
 
->>>>>>> origin/develop-2.0
         </LinearLayout>
     </LinearLayout>
 

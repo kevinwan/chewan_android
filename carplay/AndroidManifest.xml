@@ -190,7 +190,7 @@
             android:name=".activity.my.BasicMessageActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.active.Test"
+            android:name=".activity.my.LoginActivity2"
             android:launchMode="standard"
             android:screenOrientation="portrait">
             <intent-filter>
