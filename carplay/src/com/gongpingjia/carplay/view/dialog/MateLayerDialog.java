@@ -130,10 +130,10 @@ public class MateLayerDialog extends BaseAlertDialog implements View.OnClickList
                 dhNet.doPost(new NetTask(mContext) {
                     @Override
                     public void doInUI(Response response, Integer transfer) {
-                        dismiss();
                         if (response.isSuccess()) {
                             Toast.makeText(mContext, "发布成功", Toast.LENGTH_SHORT).show();
                         }
+                        dismiss();
                     }
                 });
             }

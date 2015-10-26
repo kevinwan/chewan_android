@@ -133,10 +133,10 @@ public class MatchingDialog extends BaseAlertDialog {
                 dhNet.doPost(new NetTask(context) {
                     @Override
                     public void doInUI(Response response, Integer transfer) {
-                        dismiss();
                         if (response.isSuccess()) {
                             Toast.makeText(context, "发布成功", Toast.LENGTH_SHORT).show();
                         }
+                        dismiss();
                     }
                 });
             }
