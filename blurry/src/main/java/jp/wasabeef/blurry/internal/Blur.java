@@ -10,7 +10,6 @@ import android.support.v8.renderscript.Allocation;
 import android.support.v8.renderscript.Element;
 import android.support.v8.renderscript.RenderScript;
 import android.support.v8.renderscript.ScriptIntrinsicBlur;
-import android.util.Log;
 import android.view.View;
 
 /**
@@ -49,41 +48,41 @@ public class Blur {
             return null;
         }
 
-        if (source.isRecycled()) {
-            Log.d("msg","回收");
-            return null;
-        }
+        if (!source.isRecycled()) {
 
-        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+            Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
 
-        Canvas canvas = new Canvas(bitmap);
-        canvas.scale(1 / (float) factor.sampling, 1 / (float) factor.sampling);
-        Paint paint = new Paint();
-        paint.setFlags(Paint.FILTER_BITMAP_FLAG | Paint.ANTI_ALIAS_FLAG);
-        PorterDuffColorFilter filter =
-                new PorterDuffColorFilter(factor.color, PorterDuff.Mode.SRC_ATOP);
-        paint.setColorFilter(filter);
-        canvas.drawBitmap(source, 0, 0, paint);
+            Canvas canvas = new Canvas(bitmap);
+            canvas.scale(1 / (float) factor.sampling, 1 / (float) factor.sampling);
+            Paint paint = new Paint();
+            paint.setFlags(Paint.FILTER_BITMAP_FLAG | Paint.ANTI_ALIAS_FLAG);
+            PorterDuffColorFilter filter =
+                    new PorterDuffColorFilter(factor.color, PorterDuff.Mode.SRC_ATOP);
+            paint.setColorFilter(filter);
+            canvas.drawBitmap(source, 0, 0, paint);
 
-        RenderScript rs = RenderScript.create(context);
-        Allocation input = Allocation.createFromBitmap(rs, bitmap, Allocation.MipmapControl.MIPMAP_NONE,
-                Allocation.USAGE_SCRIPT);
-        Allocation output = Allocation.createTyped(rs, input.getType());
-        ScriptIntrinsicBlur blur = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs));
+            RenderScript rs = RenderScript.create(context);
+            Allocation input = Allocation.createFromBitmap(rs, bitmap, Allocation.MipmapControl.MIPMAP_NONE,
+                    Allocation.USAGE_SCRIPT);
+            Allocation output = Allocation.createTyped(rs, input.getType());
+            ScriptIntrinsicBlur blur = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs));
 
-        blur.setInput(input);
-        blur.setRadius(factor.radius);
-        blur.forEach(output);
-        output.copyTo(bitmap);
+            blur.setInput(input);
+            blur.setRadius(factor.radius);
+            blur.forEach(output);
+            output.copyTo(bitmap);
 
-        rs.destroy();
+            rs.destroy();
 
-        if (factor.sampling == BlurFactor.DEFAULT_SAMPLING) {
-            return bitmap;
+            if (factor.sampling == BlurFactor.DEFAULT_SAMPLING) {
+                return bitmap;
+            } else {
+                Bitmap scaled = Bitmap.createScaledBitmap(bitmap, factor.width, factor.height, true);
+                bitmap.recycle();
+                return scaled;
+            }
         } else {
-            Bitmap scaled = Bitmap.createScaledBitmap(bitmap, factor.width, factor.height, true);
-            bitmap.recycle();
-            return scaled;
+            return null;
         }
     }
 
