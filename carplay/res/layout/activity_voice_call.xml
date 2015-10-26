@@ -38,6 +38,7 @@
             android:layout_marginLeft="120dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/point" />
+
         <ImageView
             android:layout_width="2dp"
             android:layout_height="2dp"
@@ -98,34 +99,33 @@
 
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-           >
+            android:layout_height="wrap_content">
 
             <com.gongpingjia.carplay.view.AnimButtonView2
                 android:id="@+id/swing_card"
                 android:layout_width="98dp"
                 android:layout_height="98dp"
-                android:layout_marginTop="10dp"
                 android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
                 android:scaleType="fitXY"
                 my:bg="@drawable/head_icon"
-                my:src="@drawable/circle_kdy">
-            </com.gongpingjia.carplay.view.AnimButtonView2>
+                my:src="@drawable/circle_kdy"></com.gongpingjia.carplay.view.AnimButtonView2>
 
             <ImageView
                 android:layout_width="2dp"
                 android:layout_height="2dp"
                 android:layout_alignParentLeft="true"
-                android:layout_marginTop="10dp"
                 android:layout_marginLeft="50dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/point" />
 
             <ImageView
                 android:layout_width="2dp"
                 android:layout_height="2dp"
-                android:layout_marginTop="40dp"
                 android:layout_marginLeft="110dp"
+                android:layout_marginTop="40dp"
                 android:background="@drawable/point" />
+
             <ImageView
                 android:layout_width="2dp"
                 android:layout_height="2dp"
@@ -133,13 +133,13 @@
                 android:layout_marginRight="80dp"
                 android:layout_marginTop="50dp"
                 android:background="@drawable/point" />
+
             <ImageView
                 android:layout_width="2dp"
                 android:layout_height="2dp"
-                android:background="@drawable/point"
-                android:layout_marginRight="15dp"
                 android:layout_alignParentRight="true"
-                />
+                android:layout_marginRight="15dp"
+                android:background="@drawable/point" />
         </RelativeLayout>
 
 

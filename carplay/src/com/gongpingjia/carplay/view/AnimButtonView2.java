@@ -23,10 +23,10 @@ public class AnimButtonView2 extends RelativeLayout {
 //    private static final int OFFSET = 600; // 每个动画的播放时间间隔
 //    private static final int MSG_WAVE2_ANIMATION = 2;
 
-    ImageView image1, image2;
+    RoundImageView image1, image2;
 
 
-    ImageView bg;
+    RoundImageView bg;
 
     private AnimationSet mAnimationSet_bg, mAnimationSet_bg2, mAnimationSet_img, mAnimationSet_img2;
 
@@ -57,9 +57,9 @@ public class AnimButtonView2 extends RelativeLayout {
         int margin = DhUtil.dip2px(mContext, 15);
 
         pa.setMargins(margin, margin, margin, margin);
-        image1 = new ImageView(mContext);
+        image1 = new RoundImageView(mContext);
 //        image2 = new ImageView(mContext);
-        bg = new ImageView(mContext);
+        bg = new RoundImageView(mContext);
         image1.setImageResource(srcId);
 //        image2.setImageResource(srcId);
         bg.setImageResource(bgId);

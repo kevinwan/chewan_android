@@ -72,11 +72,11 @@ public class MatchingDialog extends BaseAlertDialog {
             public void onClick(View v) {
                 boolean pickOrNot = checkBox.isChecked();
                 String type = null;
-                if (textDestination.getText().toString().trim().length() == 0 || textDestination.getText().toString().trim().split(" ").length < 3) {
-                    //请选择地点
-                    Toast.makeText(context, "请选择地点", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+//                if (textDestination.getText().toString().trim().length() == 0 || textDestination.getText().toString().trim().split(" ").length < 3) {
+//                    //请选择地点
+//                    Toast.makeText(context, "请选择地点", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
                 for (Matching matching : mDatas) {
                     if (matching.isChecked()) {
                         type = matching.getName();
@@ -90,6 +90,7 @@ public class MatchingDialog extends BaseAlertDialog {
 
                 DhNet dhNet = new DhNet(API2.getMatchUrl(User.getInstance().getUserId(), User.getInstance().getToken()));
                 //类型
+                dhNet.addParam("majorType", "运动");
                 dhNet.addParam("type", type);
                 dhNet.addParam("transfer", pickOrNot);
 

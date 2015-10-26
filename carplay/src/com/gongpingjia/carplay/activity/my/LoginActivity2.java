@@ -201,7 +201,6 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
 //        num = "18362971169";
 
 
-
         DhNet dhNet = new DhNet(API2.login);
         dhNet.addParam("phone", num);
         dhNet.addParam("password", MD5Util.string2MD5(password));
@@ -382,6 +381,9 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
     private void loginHX(String currentUsername, String currentPassword, final JSONObject jo, final String phone) {
         EMChatManager.getInstance().login(currentUsername, currentPassword, new EMCallBack() {
 
+            /**
+             *
+             */
             @Override
             public void onSuccess() {
 
@@ -405,7 +407,8 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
                     user.setEmName(jo.getString("emchatName"));
                     user.setPhone(mEditNum.getText().toString().trim());
                     JSONArray jsa = JSONUtil.getJSONArray(jo, "album");
-                    user.setHasAlbum(jsa.length() == 0 ? false : true);
+                    user.setHasAlbum(jsa != null && jsa.length() != 0);
+//                    user.setHasAlbum(jsa.length() == 0 ? false : true);
                     User.getInstance().setLogin(true);
 
                     LoginEB loginEB = new LoginEB();
