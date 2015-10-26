@@ -24,7 +24,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -170,25 +169,17 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
             @Override
             public void onLoadingComplete(String s, View view, final Bitmap bitmap) {
                 Log.d("msg", "bitmap" + bitmap + "//////////position" + position);
-                if (bitmap != null) {
+                Bitmap mbitmap = bitmap;
+                if (mbitmap != null) {
                     final ImageView img = (ImageView) view;
                     if (user.isHasAlbum()) {
-                        img.setImageBitmap(bitmap);
-                        ViewTreeObserver observer = img.getViewTreeObserver();
-                        observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                            @Override
-                            public void onGlobalLayout() {
-                                img.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                                if (!bitmap.isRecycled()) {
+                        img.setImageBitmap(mbitmap);
                                     Blurry.with(mContext)
                                             .radius(10)
                                             .sampling(4)
                                             .async()
                                             .capture(img)
                                             .into(img);
-                                }
-                            }
-                        });
 
 
                     } else {
