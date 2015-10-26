@@ -1,7 +1,7 @@
 apply plugin: 'android'
 
 dependencies {
-    compile fileTree(dir: 'libs', include: '*.jar')
+    compile fileTree(include: '*.jar', dir: 'libs')
     compile project(':dhroid')
     compile 'com.android.support:cardview-v7:22.2.1'
     compile project(':library')
@@ -9,11 +9,12 @@ dependencies {
     compile project(':recyclerViewPager')
     compile files('libs/pinyin4j-2.5.0.jar')
     compile project(':blurry')
+    compile 'com.android.support:multidex:1.0.0'
 }
 
 android {
     compileSdkVersion 22
-    buildToolsVersion "20.0.0"
+    buildToolsVersion '21.1.2'
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
@@ -23,6 +24,7 @@ android {
     defaultConfig {
         renderscriptTargetApi 23
         renderscriptSupportModeEnabled true
+        multiDexEnabled true
     }
 
     sourceSets {

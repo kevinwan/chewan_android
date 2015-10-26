@@ -179,14 +179,12 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
                             @Override
                             public void onGlobalLayout() {
                                 img.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                                if (!bitmap.isRecycled()) {
-                                    Blurry.with(mContext)
-                                            .radius(10)
-                                            .sampling(4)
-                                            .async()
-                                            .capture(img)
-                                            .into(img);
-                                }
+                                Blurry.with(mContext)
+                                        .radius(10)
+                                        .sampling(4)
+                                        .async()
+                                        .capture(img)
+                                        .into(img);
                             }
                         });
 

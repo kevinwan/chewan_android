@@ -49,5 +49,12 @@ public class API2 {
     //约她同去参加官方活动
     public static final String joinTogether = CWBaseurl + "official/activity/";
 
+    public static String getPersonProfile(String userId1, String userId2, String token) {
+        return String.format(CWBaseurl + "user/%s/info?viewUser=%s&token=%s", userId1, userId2, token);
+    }
+
+    public static String getProfileFromHx(String userId, String token, String chatName) {
+        return String.format(CWBaseurl + "user/emchatInfo?userId=%s&token=%semchatName=%s", userId, token, chatName);
+    }
 
 }

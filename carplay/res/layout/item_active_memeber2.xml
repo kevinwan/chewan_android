@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:orientation="vertical"
+    android:descendantFocusability="blocksDescendants"
     android:padding="12dp">
 
     <RelativeLayout
