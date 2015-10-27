@@ -72,6 +72,10 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
     private File mCacheDir;
     private String mPhotoPath;
 
+    int picWidth;
+
+    int picHeight;
+
     public static class SimpleViewHolder extends RecyclerView.ViewHolder {
         TextView nickname, car_name, age, pay, transfer, location, distance, join_desT;
         ImageView headatt, car_logo, sex, active_bg;
@@ -154,7 +158,10 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
         }
 //        ViewUtil.bindNetImage(holder.active_bg, JSONUtil.getString(userjo, "avatar"), "default");
 
+//        Blurry.targetWidth = picWidth;
+//        Blurry.targetHeight = picHeight;
         final User user = User.getInstance();
+        holder.upload.setVisibility(user.isHasAlbum() ? View.GONE : View.VISIBLE);
         ImageLoader.getInstance().displayImage(JSONUtil.getString(userjo, "avatar"), holder.active_bg, CarPlayValueFix.optionsDefault, new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String s, View view) {
@@ -169,17 +176,16 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
             @Override
             public void onLoadingComplete(String s, View view, final Bitmap bitmap) {
                 Log.d("msg", "bitmap" + bitmap + "//////////position" + position);
-                Bitmap mbitmap = bitmap;
-                if (mbitmap != null) {
+                if (bitmap != null) {
                     final ImageView img = (ImageView) view;
-                    if (user.isHasAlbum()) {
-                        img.setImageBitmap(mbitmap);
-                                    Blurry.with(mContext)
-                                            .radius(10)
-                                            .sampling(4)
-                                            .async()
-                                            .capture(img)
-                                            .into(img);
+                    if (!user.isHasAlbum()) {
+                        img.setImageBitmap(bitmap);
+                        Blurry.with(mContext)
+                                .radius(10)
+                                .sampling(4)
+                                .async()
+                                .capture(img)
+                                .into(img);
 
 
                     } else {

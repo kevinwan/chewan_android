@@ -23,6 +23,7 @@ import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.easemob.EMCallBack;
 import com.easemob.EMConnectionListener;
@@ -54,7 +55,6 @@ import com.gongpingjia.carplay.chat.DemoHXSDKHelper;
 import com.gongpingjia.carplay.chat.bean.GroupEB;
 import com.gongpingjia.carplay.chat.controller.HXSDKHelper;
 import com.gongpingjia.carplay.photo.model.PhotoModel;
-import com.gongpingjia.carplay.service.MsgService;
 import com.gongpingjia.carplay.util.CarPlayPerference;
 import com.gongpingjia.carplay.view.dialog.NearbyFilterDialog;
 import com.gongpingjia.carplay.view.pop.MatePop;
@@ -678,6 +678,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        IocContainer.getShare().get(Toast.class).cancel();
         EventBus.getDefault().unregister(this);
         if (connectionListener != null) {
             EMChatManager.getInstance().removeConnectionListener(
@@ -724,8 +725,8 @@ public class MainActivity2 extends BaseFragmentActivity implements
                         .showToastShort(self, "再按一次退出程序");
                 mHandler.postDelayed(new ExitRunnable(), 2000);
             } else {
-                Intent it = new Intent(self, MsgService.class);
-                stopService(it);
+//                Intent it = new Intent(self, MsgService.class);
+//                stopService(it);
                 ActivityTack.getInstanse().exit(self);
             }
             return false;

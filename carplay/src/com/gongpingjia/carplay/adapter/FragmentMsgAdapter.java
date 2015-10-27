@@ -13,6 +13,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,7 @@ import com.easemob.chat.ImageMessageBody;
 import com.easemob.chat.TextMessageBody;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.api.API;
+import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.chat.Constant;
 import com.gongpingjia.carplay.chat.DemoHXSDKHelper;
@@ -40,6 +42,7 @@ import com.gongpingjia.carplay.chat.util.SmileUtils;
 import com.gongpingjia.carplay.view.BadgeView;
 import com.gongpingjia.carplay.view.RoundImageView;
 import com.google.gson.JsonArray;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 /*
  *@author zhanglong
@@ -132,9 +135,12 @@ public class FragmentMsgAdapter extends BaseAdapter {
         }
 
         EMConversation conversation = conversationList.get(position);
+        EMMessage lastMessage = conversation.getLastMessage();
         switch (type) {
             case 0:
-
+                holder.titleT.setText("感兴趣的人");
+                ViewUtil.bindView(holder.right_headI,
+                        lastMessage.getStringAttribute("avatar", ""), "head");
                 break;
 
             case 1:
@@ -161,6 +167,7 @@ public class FragmentMsgAdapter extends BaseAdapter {
                 String username1 = conversation.getUserName();
                 EMGroup group = EMGroupManager.getInstance().getGroup(username1);
                 if (group != null) {
+                    holder.head_one.setVisibility(View.GONE);
                     ViewUtil.bindView(convertView.findViewById(R.id.title),
                             group.getGroupName());
                     String des = group.getDescription();
@@ -183,9 +190,15 @@ public class FragmentMsgAdapter extends BaseAdapter {
 //                    }
 
                 } else {
-                    ViewUtil.bindView(convertView.findViewById(R.id.title),
-                            username1);
                     holder.head_one.setVisibility(View.VISIBLE);
+                    if (TextUtils.isEmpty(lastMessage.getStringAttribute("headUrl", ""))) {
+                        getUserInfo(username1, holder);
+                    } else {
+                        ViewUtil.bindNetImage(holder.head_one,
+                                lastMessage.getStringAttribute("headUrl", ""), "head");
+                        ViewUtil.bindView(holder.titleT,
+                                lastMessage.getStringAttribute("nickName", ""), "head");
+                    }
 //                    ViewUtil.bindNetImage(holder.head_one,
 //                            message.getStringAttribute("headUrl", ""), "head");
                 }
@@ -197,7 +210,6 @@ public class FragmentMsgAdapter extends BaseAdapter {
             if (conversation.getMsgCount() != 0) {
 
                 // 把最后一条消息的内容作为item的message内容
-                EMMessage lastMessage = conversation.getLastMessage();
                 holder.contentT.setText(
 
                         SmileUtils.getSmiledText(mContext,
@@ -369,6 +381,24 @@ public class FragmentMsgAdapter extends BaseAdapter {
         headList = jslist;
         GroupIdlist = jsGroupId;
         notifyDataSetChanged();
+    }
+
+    private void getUserInfo(String username, final ViewHolder holder) {
+        DhNet dhNet = new DhNet(API2.getProfileFromHx(User.getInstance().getUserId(), User.getInstance().getToken(), username));
+        dhNet.doGet(new NetTask(mContext) {
+            @Override
+            public void doInUI(Response response, Integer transfer) {
+                if (response.isSuccess()) {
+                    JSONObject jsonObject = response.jSONFrom("data");
+                    try {
+                        holder.titleT.setText(jsonObject.getString("nickname"));
+                        ImageLoader.getInstance().displayImage(jsonObject.getString("avatar"), holder.head_one);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
     }
 
 }

@@ -5,6 +5,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
 import jp.wasabeef.blurry.internal.Blur;
@@ -142,36 +143,49 @@ public class Blurry {
         }
 
         public void into(final ImageView target) {
-            factor.width = capture.getMeasuredWidth();
-            factor.height = capture.getMeasuredHeight();
+            ViewTreeObserver
+                    vto = target.getViewTreeObserver();
 
-            if (targetHeight == -1) {
-                targetHeight = factor.height;
-            }
+            vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
 
-            if (targetWidth == -1) {
-                targetWidth = factor.width;
-            }
+                @Override
+                public boolean onPreDraw() {
 
-            if (factor.width == 0) {
-                factor.width = targetWidth;
-            }
-            if (factor.height == 0) {
-                factor.height = targetHeight;
-            }
+                    target.getViewTreeObserver().removeOnPreDrawListener(this);
+                    factor.width = capture.getMeasuredWidth();
+                    factor.height = capture.getMeasuredHeight();
 
-            if (async) {
-                BlurTask task = new BlurTask(capture, factor, new BlurTask.Callback() {
-                    @Override
-                    public void done(BitmapDrawable drawable) {
+//            if (targetHeight == -1) {
+//                targetHeight = factor.height;
+//            }
+//
+//            if (targetWidth == -1) {
+//                targetWidth = factor.width;
+//            }
+
+
+                    if (async) {
+
+
+                        BlurTask task = new BlurTask(capture, factor, new BlurTask.Callback() {
+                            @Override
+                            public void done(BitmapDrawable drawable) {
+                                target.setImageDrawable(drawable);
+                            }
+                        });
+                        task.execute();
+                    } else {
+                        Drawable drawable = new BitmapDrawable(context.getResources(), Blur.rs(capture, factor));
                         target.setImageDrawable(drawable);
                     }
-                });
-                task.execute();
-            } else {
-                Drawable drawable = new BitmapDrawable(context.getResources(), Blur.rs(capture, factor));
-                target.setImageDrawable(drawable);
-            }
+
+                    return true;
+                }
+
+
+            });
+
+
         }
     }
 }

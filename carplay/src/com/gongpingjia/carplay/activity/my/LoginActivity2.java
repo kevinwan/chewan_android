@@ -408,7 +408,9 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
                     JSONArray jsa = JSONUtil.getJSONArray(jo, "album");
                     user.setHasAlbum(jsa != null && jsa.length() != 0);
 //                    user.setHasAlbum(jsa.length() == 0 ? false : true);
-                    User.getInstance().setLogin(true);
+                    user.setLogin(true);
+                    user.setGender(JSONUtil.getString(jo, "gender"));
+                    user.setAge(JSONUtil.getInt(jo, "age"));
 
                     LoginEB loginEB = new LoginEB();
                     loginEB.setIslogin(true);
