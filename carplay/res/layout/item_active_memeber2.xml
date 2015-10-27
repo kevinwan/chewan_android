@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:my="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
@@ -71,7 +72,48 @@
                 android:paddingRight="15dp"
                 android:paddingTop="10dp"
                 android:text="邀请同去"
+                android:visibility="gone"
                 android:textColor="@color/white" />
+
+            <LinearLayout
+                android:id="@+id/contact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+
+                <com.gongpingjia.carplay.view.AnimButtonView
+                    android:id="@+id/sms"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    my:bg="@drawable/dynamic_blue"
+                    my:src="@drawable/dynamic_blue">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/chat_icon" />
+                </com.gongpingjia.carplay.view.AnimButtonView>
+
+
+
+                <com.gongpingjia.carplay.view.AnimButtonView
+                    android:id="@+id/call"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:layout_marginLeft="5dp"
+                    my:bg="@drawable/dynamic_green"
+                    my:src="@drawable/dynamic_green">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/phon_icon" />
+                </com.gongpingjia.carplay.view.AnimButtonView>
+            </LinearLayout>
 
         </LinearLayout>
         <ImageView

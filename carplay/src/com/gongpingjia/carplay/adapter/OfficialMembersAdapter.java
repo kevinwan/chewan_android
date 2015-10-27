@@ -134,32 +134,15 @@ public class OfficialMembersAdapter extends BaseAdapter{
         }
         String photoAuthStatus = JSONUtil.getString(jo, "photoAuthStatus");
         holder.headstatus.setVisibility("已认证".equals(photoAuthStatus) ? View.VISIBLE : View.GONE);
+        //邀请的状态
+        int inviteStatus = JSONUtil.getInt(jo,"inviteStatus");
+
         holder.invite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //已参加该活动
                 if (isMember){
-                    OfficialMsgDialog dialog = new OfficialMsgDialog(mContext);
-                    dialog.show();
-                    //无法弹出输入法的解决
-                    dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-                    dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-
-                    dialog.setOnOfficialResultListener(new OfficialMsgDialog.OnOfficialResultListener() {
-                        @Override
-                        public void onResult(boolean isinarch, String content) {
-                            DhNet net = new DhNet(API2.joinTogether + activeid + "/invite?userId=" + user.getUserId() + "&token=" + user.getToken());
-                            net.addParam("invitedUserId", userId);
-                            net.addParam("transfer", isinarch);
-                            net.doPostInDialog(new NetTask(mContext) {
-                                @Override
-                                public void doInUI(Response response, Integer transfer) {
-                                    if (response.isSuccess()) {
-                                        ((ActiveDetailsActivity2) mContext).showToast("邀请成功");
-                                    }
-                                }
-                            });
-                        }
-                    });
+                    inviteTogether(userId);
                 }else {
                     NojoinOfficialDialog dialog = new NojoinOfficialDialog(mContext);
                     dialog.show();
@@ -223,7 +206,39 @@ public class OfficialMembersAdapter extends BaseAdapter{
         ImageView sex,headstatus;
 
         LinearLayout acceptedlayout;
-
     }
 
+    /**
+     * 邀请同去
+     */
+    private void inviteTogether(final String userId){
+        OfficialMsgDialog dialog = new OfficialMsgDialog(mContext);
+        dialog.show();
+        //无法弹出输入法的解决
+        dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+
+        dialog.setOnOfficialResultListener(new OfficialMsgDialog.OnOfficialResultListener() {
+            @Override
+            public void onResult(boolean isinarch, String content) {
+                DhNet net = new DhNet(API2.joinTogether + activeid + "/invite?userId=" + user.getUserId() + "&token=" + user.getToken());
+                net.addParam("invitedUserId", userId);
+                net.addParam("transfer", isinarch);
+                net.addParam("message",content);
+                net.doPostInDialog(new NetTask(mContext) {
+                    @Override
+                    public void doInUI(Response response, Integer transfer) {
+                        if (response.isSuccess()) {
+                            ((ActiveDetailsActivity2) mContext).showToast("邀请成功");
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    /**
+     * 邀请状态 当前登录用户 邀请 该用户的 状态；
+     * 0 没有邀请过           1 邀请中     2 邀请同意             3 邀请被拒绝
+     */
 }
