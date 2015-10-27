@@ -2,6 +2,7 @@ package com.gongpingjia.carplay.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.chat.ChatActivity;
 import com.gongpingjia.carplay.activity.chat.VoiceCallActivity;
@@ -20,6 +22,9 @@ import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.view.AnimButtonView;
 import com.gongpingjia.carplay.view.dialog.ActiveDialog;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
@@ -33,13 +38,15 @@ import org.json.JSONObject;
 
 import java.util.List;
 
+import jp.wasabeef.blurry.Blurry;
+
 
 /**
  * Created by Administrator on 2015/10/20.
  */
 public class MyDyanmicBaseAdapter extends BaseAdapter {
     private final Context mContext;
-     String activityId;
+    String activityId;
     private List<JSONObject> data;
 
     User user = User.getInstance();
@@ -68,7 +75,7 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
     @Override
     public int getItemViewType(int position) {
         String type = JSONUtil.getString((JSONObject) getItem(position), "activityCategory");
-        if ("官方活动".equals(type)){
+        if ("官方活动".equals(type)) {
             return TYPE_1;
         }
         return TYPE_2;
@@ -107,7 +114,7 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
 
         if (view == null) {
 //            if ("官方活动".equals(type)) {
-            if (TYPE_1==type) {
+            if (TYPE_1 == type) {
                 holders = new ViewHolders();
                 view = LayoutInflater.from(mContext).inflate(R.layout.item_mydyanmic_recommend, viewGroup, false);
                 holders.people_num = (TextView) view.findViewById(R.id.people_num);
@@ -162,7 +169,7 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
 
         } else {
 //            if ("官方活动".equals(type)) {
-            if (TYPE_1==type) {
+            if (TYPE_1 == type) {
                 holders = (ViewHolders) view.getTag();
             } else {
                 holder = (ViewHolder) view.getTag();
@@ -171,7 +178,7 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
 
         }
 //        if ("官方活动".equals(type)) {
-            if (TYPE_1==type) {
+        if (TYPE_1 == type) {
             String officialactivityId = JSONUtil.getString(jo, "officialActivityId");
             if (json == null) {
                 holders.location.setVisibility(View.GONE);
@@ -179,26 +186,63 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
             } else {
                 holders.location.setVisibility(View.VISIBLE);
                 holders.city.setVisibility(View.VISIBLE);
-                holders.city.setText(JSONUtil.getString(json,"["+"city"+"]"));
+                holders.city.setText(JSONUtil.getString(json, "[" + "city" + "]"));
                 holders.location.setText(JSONUtil.getString(json, "detail"));
 
             }
-                int people = JSONUtil.getInt(jo,"nowJoinNum");
-            holders.people_num.setText("参与"+people+"人");
+            int people = JSONUtil.getInt(jo, "nowJoinNum");
+            holders.people_num.setText("参与" + people + "人");
             holders.price.setText(JSONUtil.getString(jo, "price"));
-                holders.priceDesc.setText(JSONUtil.getString(jo, "priceDesc"));
+            holders.priceDesc.setText(JSONUtil.getString(jo, "priceDesc"));
             holders.info.setText(JSONUtil.getString(jo, "title"));
             try {
                 JSONArray coversJSa = jo.getJSONArray("covers");
                 String picUrl = coversJSa.getString(0);
-                ViewUtil.bindNetImage(holders.pic, picUrl, "default");
+
+                ImageLoader.getInstance().displayImage(picUrl, holders.pic, CarPlayValueFix.optionsDefault, new ImageLoadingListener() {
+                    @Override
+                    public void onLoadingStarted(String s, View view) {
+
+                    }
+
+                    @Override
+                    public void onLoadingFailed(String s, View view, FailReason failReason) {
+
+                    }
+
+                    @Override
+                    public void onLoadingComplete(String s, View view, final Bitmap bitmap) {
+                        if (bitmap != null) {
+                            final ImageView img = (ImageView) view;
+                            if (!user.isHasAlbum() && !user.getUserId().equals(JSONUtil.getString(js, "userId"))) {
+                                img.setImageBitmap(bitmap);
+                                Blurry.with(mContext)
+                                        .radius(10)
+                                        .sampling(4)
+                                        .async()
+                                        .capture(img)
+                                        .into(img);
+
+
+                            } else {
+                                img.setImageBitmap(bitmap);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onLoadingCancelled(String s, View view) {
+
+                    }
+                });
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
         } else {
             //活动id
-              activityId = JSONUtil.getString(jo, "activityId");
+            activityId = JSONUtil.getString(jo, "activityId");
             int status = JSONUtil.getInt(jo, "status");
             final String appointmentId = JSONUtil.getString(jo, "appointmentId");
 
@@ -254,7 +298,44 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
             } else {
                 holder.travelmode.setText("");
             }
-            ViewUtil.bindNetImage(holder.activity_beijing, JSONUtil.getString(js, "avatar"), "back");
+
+            ImageLoader.getInstance().displayImage(JSONUtil.getString(js, "avatar"), holder.activity_beijing, CarPlayValueFix.optionsDefault, new ImageLoadingListener() {
+                @Override
+                public void onLoadingStarted(String s, View view) {
+
+                }
+
+                @Override
+                public void onLoadingFailed(String s, View view, FailReason failReason) {
+
+                }
+
+                @Override
+                public void onLoadingComplete(String s, View view, final Bitmap bitmap) {
+                    if (bitmap != null) {
+                        final ImageView img = (ImageView) view;
+                        if (!user.isHasAlbum() && !user.getUserId().equals(JSONUtil.getString(js, "userId"))) {
+                            img.setImageBitmap(bitmap);
+                            Blurry.with(mContext)
+                                    .radius(10)
+                                    .sampling(4)
+                                    .async()
+                                    .capture(img)
+                                    .into(img);
+
+
+                        } else {
+                            img.setImageBitmap(bitmap);
+                        }
+                    }
+                }
+
+                @Override
+                public void onLoadingCancelled(String s, View view) {
+
+                }
+            });
+
             if (status == 1) {
                 if (isApplicant == true) {
 //                System.out.println("我应邀别人。。。。。。。。。。。。");
@@ -310,10 +391,10 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
             holder.dyanmic_one.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(mContext,ChatActivity.class);
+                    Intent intent = new Intent(mContext, ChatActivity.class);
                     intent.putExtra("chatType", ChatActivity.CHATTYPE_SINGLE);
                     intent.putExtra("activityId", activityId);
-                    intent.putExtra("userId",  JSONUtil.getString(js, "emchatName"));
+                    intent.putExtra("userId", JSONUtil.getString(js, "emchatName"));
                     mContext.startActivity(intent);
 
                 }
@@ -389,7 +470,7 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
 
 
     class ViewHolder {
-        TextView titleT, dynamic_carname, pay_type, travelmode, activity_place, activity_distance, ageT,invitationT;
+        TextView titleT, dynamic_carname, pay_type, travelmode, activity_place, activity_distance, ageT, invitationT;
         ImageView dynamic_carlogo, activity_beijing, certification_achievement, sexI;
         AnimButtonView dyanmic_one, dyanmic_two, yingyao, hulue, invitationI;
         LinearLayout yingyao_layout, yingyaohou, invitation;

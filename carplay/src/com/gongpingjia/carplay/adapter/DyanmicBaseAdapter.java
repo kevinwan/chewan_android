@@ -37,6 +37,8 @@ import org.json.JSONObject;
 
 import java.util.List;
 
+import jp.wasabeef.blurry.Blurry;
+
 
 /**
  * Created by Administrator on 2015/10/20.
@@ -221,19 +223,19 @@ public class DyanmicBaseAdapter extends BaseAdapter {
             public void onLoadingComplete(String s, View view, final Bitmap bitmap) {
                 if (bitmap != null) {
                     final ImageView img = (ImageView) view;
-//                    if (!user.isHasAlbum()&&!user.getUserId().equals(JSONUtil.getString(userjo,"userId"))) {
-//                        img.setImageBitmap(bitmap);
-//                        Blurry.with(mContext)
-//                                .radius(10)
-//                                .sampling(4)
-//                                .async()
-//                                .capture(img)
-//                                .into(img);
-//
-//
-//                    } else {
-//                        img.setImageBitmap(bitmap);
-//                    }
+                    if (!user.isHasAlbum() && !user.getUserId().equals(JSONUtil.getString(js, "userId"))) {
+                        img.setImageBitmap(bitmap);
+                        Blurry.with(mContext)
+                                .radius(10)
+                                .sampling(4)
+                                .async()
+                                .capture(img)
+                                .into(img);
+
+
+                    } else {
+                        img.setImageBitmap(bitmap);
+                    }
                 }
             }
 
