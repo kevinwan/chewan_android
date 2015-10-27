@@ -31,6 +31,7 @@ import com.easemob.chat.EMGroupManager;
 import com.easemob.chat.EMMessage;
 import com.easemob.chat.ImageMessageBody;
 import com.easemob.chat.TextMessageBody;
+import com.easemob.exceptions.EaseMobException;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.api.API2;
@@ -39,6 +40,7 @@ import com.gongpingjia.carplay.chat.Constant;
 import com.gongpingjia.carplay.chat.DemoHXSDKHelper;
 import com.gongpingjia.carplay.chat.controller.HXSDKHelper;
 import com.gongpingjia.carplay.chat.util.SmileUtils;
+import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.view.BadgeView;
 import com.gongpingjia.carplay.view.RoundImageView;
 import com.google.gson.JsonArray;
@@ -101,14 +103,13 @@ public class FragmentMsgAdapter extends BaseAdapter {
                 case 0:
                     convertView = mInflater.inflate(R.layout.item_dynamic_interested, null);
                     holder.iconI = (ImageView) convertView.findViewById(R.id.icon);
-                    holder.right_headI = (ImageView) convertView.findViewById(R.id.right_head);
+                    holder.right_headI = (RoundImageView) convertView.findViewById(R.id.right_head);
 
                     break;
                 case 1:
                     convertView = mInflater.inflate(R.layout.item_dynamic_admin, null);
                     holder.iconI = (ImageView) convertView.findViewById(R.id.icon);
                     holder.timeT = (TextView) convertView.findViewById(R.id.time);
-                    holder.contentT = (TextView) convertView.findViewById(R.id.content);
                     break;
 
                 case 2:
@@ -123,10 +124,11 @@ public class FragmentMsgAdapter extends BaseAdapter {
                             .findViewById(R.id.head_four);
                     holder.timeT = (TextView) convertView.findViewById(R.id.time);
                     holder.tv_ageT = (TextView) convertView.findViewById(R.id.tv_age);
-                    holder.contentT = (TextView) convertView.findViewById(R.id.content);
+                    holder.layout_sex_and_ageV = convertView.findViewById(R.id.layout_sex_and_age);
                     break;
 
             }
+            holder.contentT = (TextView) convertView.findViewById(R.id.content);
             holder.titleT = (TextView) convertView.findViewById(R.id.title);
             holder.msg_pointI = (ImageView) convertView.findViewById(R.id.msg_point);
             convertView.setTag(holder);
@@ -156,7 +158,7 @@ public class FragmentMsgAdapter extends BaseAdapter {
                     holder.titleT.setText("谁关注我");
                     holder.iconI.setImageResource(R.drawable.trends_attention);
 
-                } else {
+                } else if(username.equals("OfficialAdmin")){
                     holder.titleT.setText("车玩官方");
                     holder.iconI.setImageResource(R.drawable.trends_official);
                 }
@@ -167,6 +169,7 @@ public class FragmentMsgAdapter extends BaseAdapter {
                 String username1 = conversation.getUserName();
                 EMGroup group = EMGroupManager.getInstance().getGroup(username1);
                 if (group != null) {
+                    holder.layout_sex_and_ageV.setVisibility(View.GONE);
                     holder.head_one.setVisibility(View.GONE);
                     ViewUtil.bindView(convertView.findViewById(R.id.title),
                             group.getGroupName());
@@ -191,40 +194,50 @@ public class FragmentMsgAdapter extends BaseAdapter {
 
                 } else {
                     holder.head_one.setVisibility(View.VISIBLE);
+                    holder.layout_sex_and_ageV.setVisibility(View.VISIBLE);
                     if (TextUtils.isEmpty(lastMessage.getStringAttribute("headUrl", ""))) {
                         getUserInfo(username1, holder);
                     } else {
                         ViewUtil.bindNetImage(holder.head_one,
                                 lastMessage.getStringAttribute("headUrl", ""), "head");
                         ViewUtil.bindView(holder.titleT,
-                                lastMessage.getStringAttribute("nickName", ""), "head");
+                                lastMessage.getStringAttribute("nickName", ""));
+                        try {
+                            ViewUtil.bindView(holder.tv_ageT,
+                                    lastMessage.getIntAttribute("age") + "");
+
+
+                        } catch (EaseMobException e) {
+                            e.printStackTrace();
+                        }
+                        CarPlayUtil.bindSexView(lastMessage.getStringAttribute("gender", ""), holder.layout_sex_and_ageV);
                     }
-//                    ViewUtil.bindNetImage(holder.head_one,
-//                            message.getStringAttribute("headUrl", ""), "head");
                 }
                 break;
         }
 
+        if (conversation.getMsgCount() != 0) {
 
-        if (type != 0) {
-            if (conversation.getMsgCount() != 0) {
+            // 把最后一条消息的内容作为item的message内容
+            holder.contentT.setText(
 
-                // 把最后一条消息的内容作为item的message内容
-                holder.contentT.setText(
-
-                        SmileUtils.getSmiledText(mContext,
-                                getMessageDigest(lastMessage, (mContext))),
-                        BufferType.SPANNABLE);
+                    SmileUtils.getSmiledText(mContext,
+                            getMessageDigest(lastMessage, (mContext))),
+                    BufferType.SPANNABLE);
+            if (type != 0) {
                 holder.timeT.setVisibility(View.VISIBLE);
                 ViewUtil.bindView(holder.timeT, lastMessage.getMsgTime(), "neartime");
-                if (lastMessage.direct == EMMessage.Direct.SEND
-                        && lastMessage.status == EMMessage.Status.FAIL) {
+            }
+            if (lastMessage.direct == EMMessage.Direct.SEND
+                    && lastMessage.status == EMMessage.Status.FAIL) {
 //                    msg_stateI.setVisibility(View.VISIBLE);
-                } else {
-//                    msg_stateI.setVisibility(View.GONE);
-                }
             } else {
-                holder.contentT.setText("暂无消息");
+//                    msg_stateI.setVisibility(View.GONE);
+            }
+
+        } else {
+            holder.contentT.setText("暂无消息");
+            if (type != 0) {
                 holder.timeT.setVisibility(View.GONE);
             }
         }
@@ -373,7 +386,9 @@ public class FragmentMsgAdapter extends BaseAdapter {
         RelativeLayout head_two, head_three, head_four;
         TextView titleT, contentT, timeT, tv_ageT;
 
-        ImageView iconI, right_headI, msg_pointI;
+        ImageView iconI, msg_pointI;
+        RoundImageView right_headI;
+        View layout_sex_and_ageV;
 
     }
 
@@ -393,6 +408,8 @@ public class FragmentMsgAdapter extends BaseAdapter {
                     try {
                         holder.titleT.setText(jsonObject.getString("nickname"));
                         ImageLoader.getInstance().displayImage(jsonObject.getString("avatar"), holder.head_one);
+                        CarPlayUtil.bindSexView(jsonObject.getString("gender"), holder.layout_sex_and_ageV);
+                        ViewUtil.bindView(holder.tv_ageT, jsonObject.getString("age"));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

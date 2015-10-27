@@ -12,7 +12,7 @@
         android:background="@drawable/bg_s"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="10dp"
+        android:paddingLeft="14dp"
         android:paddingRight="15dp">
 
         <RelativeLayout

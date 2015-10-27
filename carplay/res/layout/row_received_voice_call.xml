@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_horizontal"
     android:orientation="vertical"
     android:paddingTop="13dp" >
 
@@ -10,62 +9,57 @@
         android:id="@+id/timestamp"
         style="@style/chat_text_date_style"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_chat_activity" >
 
-        <ImageView
+        <com.gongpingjia.carplay.view.RoundImageView
             android:id="@+id/iv_userhead"
             android:layout_width="@dimen/size_avatar"
             android:layout_height="@dimen/size_avatar"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="@dimen/margin_chat_activity"
-            android:background="@drawable/mini_avatar_shadow"
+            android:background="@drawable/head_icon"
             android:scaleType="fitXY" />
 
-        <RelativeLayout
-            android:id="@+id/row_recv_pic"
+        <LinearLayout
+            android:id="@+id/layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/margin_chat_activity"
             android:layout_toRightOf="@id/iv_userhead"
-            android:background="@drawable/chatfrom_bg" >
-
-            <ImageView
-                android:layout_marginLeft="4dp"
-                android:id="@+id/iv_call_icon"
-               android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:src="@drawable/chat_voice_call_receive" 
-                 />
+            android:orientation="vertical" >
 
             <TextView
-                android:layout_toRightOf="@id/iv_call_icon"
+                android:id="@+id/tv_userid"
+                style="@style/text_grey_smaller"
+                android:layout_marginBottom="2dp"
+                android:layout_marginLeft="8dp" />
+
+            <TextView
                 android:id="@+id/tv_chatcontent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="苏定方"
-               android:padding="6dp"
-                android:minHeight="40dp"
-                android:textSize="15sp"
-                android:layout_centerVertical="true"
-                android:gravity="center_vertical"
-                android:textColor="#ff000000" />
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/tv_userid"
-            style="@style/chat_text_name_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/iv_userhead"
-            android:layout_toLeftOf="@id/row_recv_pic" />
+                android:autoLink="web"
+                android:background="@drawable/chatfrom_bg"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="left|center"
+                android:lineSpacingMultiplier="1.1"
+                android:maxWidth="225.0dip"
+                android:minHeight="42dp"
+                android:paddingBottom="8dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="10dp"
+                android:paddingTop="8dp"
+                android:textColor="@color/text_black"
+                android:textSize="16sp" />
+        </LinearLayout>
     </RelativeLayout>
 
 </LinearLayout>
