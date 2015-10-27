@@ -1,6 +1,7 @@
 package com.gongpingjia.carplay.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -13,6 +14,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.activity.chat.ChatActivity;
+import com.gongpingjia.carplay.activity.chat.VoiceCallActivity;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.CarPlayUtil;
@@ -25,6 +28,7 @@ import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.util.ViewUtil;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
@@ -35,7 +39,7 @@ import java.util.List;
  */
 public class DyanmicBaseAdapter extends BaseAdapter {
     private final Context mContext;
-
+     String activityId;
     private List<JSONObject> data;
 
     User user = User.getInstance();
@@ -123,11 +127,11 @@ public class DyanmicBaseAdapter extends BaseAdapter {
         }
 
         JSONObject jo = (JSONObject) getItem(i);
-        JSONObject js = JSONUtil.getJSONObject(jo, "applicant");
+        final JSONObject js = JSONUtil.getJSONObject(jo, "applicant");
         JSONObject json = JSONUtil.getJSONObject(jo, "destination");
         JSONObject ob = JSONUtil.getJSONObject(js, "car");
         //活动id
-        String activityId = JSONUtil.getString(jo, "activityId");
+          activityId = JSONUtil.getString(jo, "activityId");
         int status = JSONUtil.getInt(jo, "status");
         final String appointmentId = JSONUtil.getString(jo, "appointmentId");
 
@@ -257,13 +261,25 @@ public class DyanmicBaseAdapter extends BaseAdapter {
         holder.dyanmic_one.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(mContext,ChatActivity.class);
+                intent.putExtra("chatType", ChatActivity.CHATTYPE_SINGLE);
+                intent.putExtra("activityId", activityId);
+                intent.putExtra("userId",  JSONUtil.getString(js, "emchatName"));
+                mContext.startActivity(intent);
 
             }
         });
         holder.dyanmic_two.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                try {
+                    Intent it = new Intent(mContext, VoiceCallActivity.class);
+                    it.putExtra("username", js.getString("emchatName"));
+                    it.putExtra("isComingCall", false);
+                    mContext.startActivity(it);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
 

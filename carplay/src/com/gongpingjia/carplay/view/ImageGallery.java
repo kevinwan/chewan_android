@@ -128,4 +128,8 @@ public class ImageGallery extends CarPlayBaseActivity {
         return (index + 1) + "/" + total;
     }
 
+    private void deletePhoto(){
+        
+    }
+
 }

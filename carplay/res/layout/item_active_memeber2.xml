@@ -61,25 +61,29 @@
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/invite"
-                style="@style/text_black_big"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/btn_blue_fillet"
-                android:paddingBottom="10dp"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:paddingTop="10dp"
-                android:text="邀请同去"
-                android:visibility="gone"
-                android:textColor="@color/white" />
-
             <LinearLayout
-                android:id="@+id/contact"
+                android:id="@+id/invitelayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
+                android:visibility="gone"
+                android:orientation="horizontal">
+            <TextView
+                android:id="@+id/invite"
+                style="@style/text_black_big"
+                android:layout_width="110dp"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:background="@drawable/btn_blue_fillet"
+                android:text="邀请同去"
+                android:textColor="@color/white" />
+                </LinearLayout>
+            <LinearLayout
+                android:id="@+id/contactlayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:visibility="visible"
                 android:orientation="horizontal">
 
 

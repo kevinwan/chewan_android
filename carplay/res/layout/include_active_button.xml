@@ -15,36 +15,21 @@
         android:orientation="horizontal"
         android:visibility="gone">
 
+            <com.gongpingjia.carplay.view.AnimButtonView
+                android:id="@+id/invitationI"
+                android:layout_width="85dp"
+                android:layout_height="85dp"
+                android:layout_marginBottom="10dp"
+                my:bg="@drawable/red_circle"
+                my:src="@drawable/red_circle">
 
+                <TextView
+                    android:id="@+id/invitationT"
+                    style="@style/text_white_medium"
+                    android:layout_centerInParent="true"
+                    android:text="邀 TA" />
+            </com.gongpingjia.carplay.view.AnimButtonView>
 
-            <!--<com.gongpingjia.carplay.view.AnimButtonView-->
-                <!--android:id="@+id/invitationI"-->
-                <!--android:layout_width="85dp"-->
-                <!--android:layout_height="85dp"-->
-                <!--android:layout_marginBottom="10dp"-->
-                <!--my:bg="@drawable/red_circle"-->
-                <!--my:src="@drawable/red_circle">-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/invitationT"-->
-                    <!--style="@style/text_white_medium"-->
-                    <!--android:layout_centerInParent="true"-->
-                    <!--android:text="邀 TA" />-->
-            <!--</com.gongpingjia.carplay.view.AnimButtonView>-->
-        <com.gongpingjia.carplay.view.AnimButtonView
-            android:id="@+id/invitationI"
-            android:layout_width="85dp"
-            android:layout_height="85dp"
-            android:layout_marginBottom="10dp"
-            my:bg="@drawable/dynamic_grey"
-            my:src="@drawable/dynamic_grey">
-
-            <TextView
-                android:id="@+id/invitationT"
-                style="@style/text_white_medium"
-                android:layout_centerInParent="true"
-                android:text="已邀请" />
-        </com.gongpingjia.carplay.view.AnimButtonView>
     </LinearLayout>
 
     <LinearLayout

@@ -13,6 +13,8 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.easemob.chat.EMGroup;
+import com.easemob.chat.EMGroupManager;
 import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
@@ -52,14 +54,21 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
 
     private View mFootView;
 
-    private Button joinBtn;
+    private Button joinBtn, chatBtn, buyticketsBtn;
+
+    private LinearLayout startchatlayout;
 
     User user;
 
+    //活动id
     String activeid;
+    //群组id
+    String emchatGroupId;
 
     //是否为成员
     boolean isMember = false;
+    //第三方购票连接
+    String linkTicketUrl;
 
 
     /**
@@ -75,7 +84,7 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
      */
     private LinearLayout moreL, processL, explainL;
     private ImageView processIconI, explainIconI;
-    private TextView explaintxtT,processT;
+    private TextView explaintxtT, processT;
     private OfficialMembersAdapter membersAdapter;
 
     private boolean contentFlag = false;
@@ -92,7 +101,6 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
     }
 
 
-
     @Override
     public void initView() {
         user = User.getInstance();
@@ -106,7 +114,10 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
         membersAdapter = new OfficialMembersAdapter(self);
         mListView.setAdapter(membersAdapter);
 
+        startchatlayout = (LinearLayout) findViewById(R.id.startchatlayout);
         joinBtn = (Button) findViewById(R.id.join);
+        chatBtn = (Button) findViewById(R.id.chatbtn);
+        buyticketsBtn = (Button) findViewById(R.id.buytickets);
 
         nicknameT = (TextView) mHeadView.findViewById(R.id.nickname);
         contentT = (TextView) mHeadView.findViewById(R.id.content);
@@ -138,19 +149,21 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
         processL.setOnClickListener(this);
         explainL.setOnClickListener(this);
         moreL.setOnClickListener(this);
+        chatBtn.setOnClickListener(this);
+        buyticketsBtn.setOnClickListener(this);
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position!=0||position!=parent.getCount()-1){
+                if (position != 0 || position != parent.getCount() - 1) {
                     Intent it;
-                    String userId=JSONUtil.getString(membersAdapter.getItem(position - 1), "userId");
-                    if (userId.equals(user.getUserId()) ){
+                    String userId = JSONUtil.getString(membersAdapter.getItem(position - 1), "userId");
+                    if (userId.equals(user.getUserId())) {
                         it = new Intent(self, MyPerSonDetailActivity2.class);
                         startActivity(it);
-                    }else {
+                    } else {
                         it = new Intent(self, PersonDetailActivity2.class);
-                        it.putExtra("activeid",userId);
+                        it.putExtra("activeid", userId);
                         startActivity(it);
                     }
                 }
@@ -171,6 +184,11 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
                 if (response.isSuccess()) {
                     JSONObject jo = response.jSONFromData();
 
+                    //第三方购票连接
+                    linkTicketUrl = JSONUtil.getString(jo,"linkTicketUrl");
+                    //群组id
+                    emchatGroupId = JSONUtil.getString(jo,"emchatGroupId");
+
                     //目的地
                     JSONObject js = JSONUtil.getJSONObject(jo, "destination");
                     ViewUtil.bindView(placeT, JSONUtil.getString(js, "province") + "省" + JSONUtil.getString(js, "city") + "市" + JSONUtil.getString(js, "detail"));
@@ -182,7 +200,7 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
                     ViewUtil.bindView(startTimeT, format.format(sdate));
                     Date edate = new Date(JSONUtil.getLong(jo, "end"));
                     ViewUtil.bindView(endTimeT, format.format(edate));
-                    ViewUtil.bindView(creattimeT,CarPlayValueFix.converTime(JSONUtil.getLong(jo, "createTime")));
+                    ViewUtil.bindView(creattimeT, CarPlayValueFix.converTime(JSONUtil.getLong(jo, "createTime")));
 
                     //活动名字,头像,标题,介绍,价格,补贴,说明
                     JSONObject jsname = JSONUtil.getJSONObject(jo, "organizer");
@@ -195,10 +213,12 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
                     ViewUtil.bindView(explaintxtT, JSONUtil.getString(jo, "instruction"));
 
                     isMember = JSONUtil.getBoolean(jo, "isMember");
-                    if (isMember){
-                        joinBtn.setText("进入群聊");
-                    }else {
-                        joinBtn.setText("报名参加");
+                    if (isMember) {
+                        joinBtn.setVisibility(View.INVISIBLE);
+                        startchatlayout.setVisibility(View.VISIBLE);
+                    } else {
+                        joinBtn.setVisibility(View.VISIBLE);
+                        startchatlayout.setVisibility(View.INVISIBLE);
                     }
 
                     if (contentT.getLineCount() < 4) {
@@ -224,7 +244,7 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
                     }
 
                     //参与成员
-                    JSONArray membersJsa = JSONUtil.getJSONArray(jo,"members");
+                    JSONArray membersJsa = JSONUtil.getJSONArray(jo, "members");
                     setMembersData(membersJsa);
 
                     /** GalleryViewPager  */
@@ -258,12 +278,7 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
         switch (v.getId()) {
             //报名参加
             case R.id.join:
-                if(isMember){
-                    enterChat();
-                }else {
-                    joinActive();
-                }
-
+                joinActive();
                 break;
             //活动描述
             case R.id.fold:
@@ -280,6 +295,19 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
             //加载更多
             case R.id.more:
 
+                break;
+            //前往购票
+            case R.id.buytickets:
+
+                break;
+            //进入群聊
+            case R.id.chatbtn:
+                Intent intent = new Intent(self, ChatActivity.class);
+                EMGroup group = EMGroupManager.getInstance().getGroup(emchatGroupId);
+                intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
+                intent.putExtra("activityId", activeid);
+                intent.putExtra("groupId", group.getGroupId());
+                startActivity(intent);
                 break;
         }
     }
@@ -334,41 +362,32 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
     /**
      * 加入活动
      */
-    private void joinActive(){
-        DhNet joinnet = new DhNet(API2.joinActive+activeid+"/join?userId="+user.getUserId()+"&token="+user.getToken());
+    private void joinActive() {
+        DhNet joinnet = new DhNet(API2.joinActive + activeid + "/join?userId=" + user.getUserId() + "&token=" + user.getToken());
         joinnet.doPost(new NetTask(self) {
             @Override
             public void doInUI(Response response, Integer transfer) {
                 if (response.isSuccess()) {
-                    joinBtn.setText("进人群聊");
                     isMember = !isMember;
                     membersAdapter.setIsMember(isMember);
+                    getActiveDetailsData();
                 }
             }
         });
     }
 
     /**
-     * 进入群聊
-     */
-    private void enterChat(){
-        Intent intent = new Intent(self, ChatActivity.class);
-//        intent.putExtra("chatType", ChatActivity.CHATTYPE_SINGLE);
-//        intent.putExtra("activityId", "");
-//        intent.putExtra("userId", "");
-        startActivity(intent);
-    }
-
-    /**
      * 设置参与成员信息
      */
-    private void setMembersData(JSONArray jsa){
+    private void setMembersData(JSONArray jsa) {
         membersAdapter.setData(jsa, isMember, activeid);
     }
 
     public void onEventMainThread(String success) {
         if ("报名参加".equals(success)) {
             joinActive();
+        } else if ("刷新列表".equals(success)) {
+            getActiveDetailsData();
         }
     }
 

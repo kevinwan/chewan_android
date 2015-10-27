@@ -1,6 +1,7 @@
 package com.gongpingjia.carplay.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,9 +16,12 @@ import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.active.ActiveDetailsActivity2;
+import com.gongpingjia.carplay.activity.chat.ChatActivity;
+import com.gongpingjia.carplay.activity.chat.VoiceCallActivity;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.CarPlayUtil;
+import com.gongpingjia.carplay.view.AnimButtonView;
 import com.gongpingjia.carplay.view.RoundImageView;
 import com.gongpingjia.carplay.view.dialog.NojoinOfficialDialog;
 import com.gongpingjia.carplay.view.dialog.OfficialMsgDialog;
@@ -31,6 +35,8 @@ import net.duohuo.dhroid.util.ViewUtil;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by Administrator on 2015/10/24.
@@ -110,6 +116,10 @@ public class OfficialMembersAdapter extends BaseAdapter{
             holder.sex = (ImageView) convertView.findViewById(R.id.iv_sex);
             holder.acceptedlayout = (LinearLayout) convertView.findViewById(R.id.acceptedlayout);
             holder.headstatus = (ImageView) convertView.findViewById(R.id.headstatus);
+            holder.contactlayout = (LinearLayout) convertView.findViewById(R.id.contactlayout);
+            holder.invitelayout = (LinearLayout) convertView.findViewById(R.id.invitelayout);
+            holder.sms = (AnimButtonView) convertView.findViewById(R.id.sms);
+            holder.call = (AnimButtonView) convertView.findViewById(R.id.call);
 
             convertView.setTag(holder);
         }
@@ -136,6 +146,8 @@ public class OfficialMembersAdapter extends BaseAdapter{
         holder.headstatus.setVisibility("已认证".equals(photoAuthStatus) ? View.VISIBLE : View.GONE);
         //邀请的状态
         int inviteStatus = JSONUtil.getInt(jo,"inviteStatus");
+        setInviteStatus(holder,inviteStatus,jo);
+        System.out.print("------------------------"+JSONUtil.getInt(jo,"beInvitedStatus"));
 
         holder.invite.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -205,7 +217,9 @@ public class OfficialMembersAdapter extends BaseAdapter{
         //性别,头像认证
         ImageView sex,headstatus;
 
-        LinearLayout acceptedlayout;
+        LinearLayout acceptedlayout,contactlayout,invitelayout;
+
+        AnimButtonView sms,call;
     }
 
     /**
@@ -230,6 +244,7 @@ public class OfficialMembersAdapter extends BaseAdapter{
                     public void doInUI(Response response, Integer transfer) {
                         if (response.isSuccess()) {
                             ((ActiveDetailsActivity2) mContext).showToast("邀请成功");
+                            EventBus.getDefault().post("刷新列表");
                         }
                     }
                 });
@@ -241,4 +256,57 @@ public class OfficialMembersAdapter extends BaseAdapter{
      * 邀请状态 当前登录用户 邀请 该用户的 状态；
      * 0 没有邀请过           1 邀请中     2 邀请同意             3 邀请被拒绝
      */
+    private void setInviteStatus(ViewHolder holder,int inviteStatus, final JSONObject jo){
+        switch (inviteStatus){
+            case 0:
+                holder.invitelayout.setVisibility(View.VISIBLE);
+                holder.contactlayout.setVisibility(View.GONE);
+                holder.invite.setText("邀请同去");
+                holder.invite.setBackgroundResource(R.drawable.btn_blue_fillet);
+                holder.invite.setEnabled(true);
+                break;
+            case 1:
+                holder.invitelayout.setVisibility(View.VISIBLE);
+                holder.contactlayout.setVisibility(View.GONE);
+                holder.invite.setText("邀请中");
+                holder.invite.setBackgroundResource(R.drawable.btn_grey_fillet);
+                holder.invite.setEnabled(false);
+                break;
+            case 2:
+                holder.invitelayout.setVisibility(View.GONE);
+                holder.contactlayout.setVisibility(View.VISIBLE);
+                holder.sms.startScaleAnimation();
+                holder.call.startScaleAnimation();
+                holder.sms.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext,ChatActivity.class);
+                        intent.putExtra("chatType", ChatActivity.CHATTYPE_SINGLE);
+                        intent.putExtra("activityId", activeid);
+                        intent.putExtra("userId",  JSONUtil.getString(jo, "emchatName"));
+                        mContext.startActivity(intent);
+                    }
+                });
+                holder.call.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent it = new Intent(mContext, VoiceCallActivity.class);
+                        it.putExtra("username", JSONUtil.getString(jo, "emchatName"));
+                        it.putExtra("isComingCall", false);
+                        mContext.startActivity(it);
+                    }
+                });
+                break;
+            case 3:
+                holder.invitelayout.setVisibility(View.VISIBLE);
+                holder.contactlayout.setVisibility(View.GONE);
+                holder.invite.setText("已拒绝");
+                holder.invite.setBackgroundResource(R.drawable.btn_grey_fillet);
+                holder.invite.setEnabled(false);
+                break;
+        }
+
+    }
+
+
 }

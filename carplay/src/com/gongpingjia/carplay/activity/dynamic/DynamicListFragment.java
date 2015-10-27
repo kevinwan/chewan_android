@@ -23,6 +23,7 @@ import com.gongpingjia.carplay.activity.my.AttentionMeActivity;
 import com.gongpingjia.carplay.activity.my.DynamicActivity;
 import com.gongpingjia.carplay.activity.my.InterestedPersonActivity;
 import com.gongpingjia.carplay.activity.my.OfficialMessageActivity;
+import com.gongpingjia.carplay.activity.my.SubscribeActivity2;
 import com.gongpingjia.carplay.adapter.FragmentMsgAdapter;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -85,21 +86,32 @@ public class DynamicListFragment extends CarPlayBaseFragment implements PullToRe
                 int type = mAdapter.getItemViewType(currentPosition);
                 EMConversation conversation = mAdapter.getItem(currentPosition);
                 String username = conversation.getUserName();
+                Intent intent = null;
                 switch (type) {
+                    //感兴趣的人
                     case 0:
-
+                        intent = new Intent(getActivity(), InterestedPersonActivity.class);
                         break;
                     case 1:
-                        if (username.equals("车玩官方")) {
-                            Intent intent = new Intent(getActivity(), ChatActivity.class);
+                        //车玩官方
+                        if (username.equals("OfficialAdmin")) {
+                            intent = new Intent(getActivity(), ChatActivity.class);
                             intent.putExtra("chatType", ChatActivity.CHATTYPE_SINGLE);
                             intent.putExtra("activityId", "");
                             intent.putExtra("userId", username);
-                            startActivity(intent);
+                            //谁关注我
+                        } else if (username.equals("SubscribeAdmin")) {
+                            intent = new Intent(getActivity(), SubscribeActivity2.class);
+                            //最近访客
+                        } else if (username.equals("UserViewAdmin")) {
+//                            intent = new Intent(getActivity(), InterestedPersonActivity.class);
+                            //活动动态
+                        } else if (username.equals("ActivityStateAdmin")) {
+                            intent = new Intent(getActivity(), DynamicActivity.class);
                         }
                         break;
                     case 2:
-                        Intent intent = new Intent(getActivity(), ChatActivity.class);
+                        intent = new Intent(getActivity(), ChatActivity.class);
                         if (conversation.isGroup()) {
                             // it is group chat
                             EMGroup group = EMGroupManager.getInstance().getGroup(username);
@@ -110,10 +122,19 @@ public class DynamicListFragment extends CarPlayBaseFragment implements PullToRe
                             intent.putExtra("chatType", ChatActivity.CHATTYPE_SINGLE);
                             intent.putExtra("activityId", "");
                             intent.putExtra("userId", username);
+
                         }
                         break;
                 }
-
+                startActivity(intent);
+                conversation.resetUnreadMsgCount();
+                ((MainActivity2) getActivity()).updateUnreadLabel();
+                if (!hidden && !((MainActivity2) getActivity()).isConflict) {
+                    ((MainActivity2) getActivity()).updateUnreadLabel();
+//        if (!hidden && !((MainActivity) getActivity()).isConflict) {
+//            getHeadImg();
+//        }
+                }
             }
         });
     }
@@ -127,13 +148,6 @@ public class DynamicListFragment extends CarPlayBaseFragment implements PullToRe
         conversationList = loadConversationsWithRecentChat();
         mAdapter.setGroupMessageData(conversationList);
         // 更新消息未读数
-        ((MainActivity2) getActivity()).updateUnreadLabel();
-        if (!hidden && !((MainActivity2) getActivity()).isConflict) {
-            ((MainActivity2) getActivity()).updateUnreadLabel();
-//        if (!hidden && !((MainActivity) getActivity()).isConflict) {
-//            getHeadImg();
-//        }
-        }
     }
 
     @Override
