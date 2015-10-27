@@ -65,6 +65,7 @@
                 android:name="EASEMOB_APPKEY"
                 android:value="gongpingjia#chewantest" />
         -->
+
         <meta-data
             android:name="EASEMOB_APPKEY"
             android:value="gongpingjia#carplayapp" />

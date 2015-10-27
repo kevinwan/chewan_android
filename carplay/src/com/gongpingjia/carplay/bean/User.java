@@ -37,6 +37,10 @@ public class User {
 
     private boolean hasAlbum = false;
 
+    private String gender;
+
+    public int age;
+
 
     public static User getInstance() {
         if (user == null) {
@@ -183,5 +187,22 @@ public class User {
 
     public void setHasAlbum(boolean hasAlbum) {
         this.hasAlbum = hasAlbum;
+    }
+
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 }

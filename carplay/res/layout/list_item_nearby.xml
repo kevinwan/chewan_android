@@ -17,7 +17,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="26dp"
             android:layout_marginLeft="12dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
@@ -64,10 +64,11 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="10dp">
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
             <include layout="@layout/include_sex" />
 
@@ -135,7 +136,8 @@
                     android:background="@drawable/white_btn_bg"
                     android:text="上传"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_medium" />
+                    android:textSize="@dimen/text_medium"
+                    android:visibility="gone" />
 
                 <Button
                     android:id="@+id/takephotos"
@@ -163,7 +165,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="25dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp">

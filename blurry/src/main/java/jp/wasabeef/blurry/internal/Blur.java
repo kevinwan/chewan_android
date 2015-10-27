@@ -48,7 +48,7 @@ public class Blur {
             return null;
         }
 
-        if (!source.isRecycled()) {
+        if (source != null && !source.isRecycled()) {
 
             Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
 
