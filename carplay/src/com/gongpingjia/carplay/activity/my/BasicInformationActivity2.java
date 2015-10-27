@@ -175,7 +175,7 @@ public class BasicInformationActivity2 extends CarPlayBaseActivity implements Vi
                 } else {
                     mImgAvatar.setImageResource(R.drawable.head_icon);
                     photoUid = "";
-                    showToast("上传失败,重新上传");
+//                    showToast("上传失败,重新上传");
                 }
             }
         });
@@ -252,7 +252,7 @@ public class BasicInformationActivity2 extends CarPlayBaseActivity implements Vi
                     Intent it = new Intent(self, MainActivity2.class);
                     startActivity(it);
                 } else {
-                    showToast("注册失败");
+//                    showToast("注册失败");
                 }
             }
 

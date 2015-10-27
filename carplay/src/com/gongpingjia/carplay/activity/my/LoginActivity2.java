@@ -284,7 +284,6 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
                     }
                 } else {
                     hidenProgressDialog();
-                    showToast("登录失败");
                 }
             }
         });
