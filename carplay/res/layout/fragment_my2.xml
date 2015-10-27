@@ -89,7 +89,7 @@
                     android:layout_marginBottom="22dp"
                     android:layout_marginTop="12dp"
                     android:layout_gravity="center"
-                    android:background="@drawable/btn_red_fillet"
+                    android:background="@drawable/button_owners_bg"
                     android:text="完善"
                     android:textColor="@color/white"
                     android:textStyle="bold" />

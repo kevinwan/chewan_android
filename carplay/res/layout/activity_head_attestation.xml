@@ -81,7 +81,7 @@
                     android:layout_width="165dp"
                     android:layout_height="43dp"
                     android:layout_marginTop="24dp"
-                    android:background="@drawable/btn_red_fillet"
+                    android:background="@drawable/button_owners_bg"
                     android:text="马上认证"
                     android:textColor="@color/white" />
 

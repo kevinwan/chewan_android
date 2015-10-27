@@ -68,7 +68,8 @@ public class MyFragment2 extends Fragment implements OnClickListener {
     private LinearLayout myphotoL, myactiveL, myattentionL, headattestationL, carattestationL;
     private RecyclerView recyclerView;
     public static final int PERSONAL = 2;
-
+    public static final int APPROVE_HEAD = 3;
+    public static final int APPROVE_CAR = 4;
     public static MyFragment2 getInstance() {
         if (instance == null) {
             instance = new MyFragment2();
@@ -228,13 +229,16 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                     if (photoAuthStatus.equals("未认证")) {
                         attestationT.setBackgroundResource(R.drawable.radio_sex_man_focused);
                         attestationT.setText("未认证");
+                        txtphotoAuthStatusT.setText("未认证");
                         headattestationL.setEnabled(true);
                     } else if (photoAuthStatus.equals("认证通过")) {
                         attestationT.setBackgroundResource(R.drawable.btn_yellow_fillet);
+                        txtphotoAuthStatusT.setText("认证通过");
                         attestationT.setText("已认证");
                         headattestationL.setEnabled(false);
                     } else if (photoAuthStatus.equals("认证中")) {
                         attestationT.setBackgroundResource(R.drawable.radio_sex_man_focused);
+                        txtphotoAuthStatusT.setText("认证中");
                         attestationT.setText("未认证");
                         headattestationL.setEnabled(true);
                     }
@@ -242,10 +246,13 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                     //车主认证
                     if (licenseAuthStatus.equals("未认证")) {
                         carattestationL.setEnabled(true);
+                        attestation_txtT.setText("未认证");
                     } else if (licenseAuthStatus.equals("认证通过")) {
                         carattestationL.setEnabled(false);
+                        attestation_txtT.setText("认证通过");
                     } else if (licenseAuthStatus.equals("认证中")) {
                         carattestationL.setEnabled(true);
+                        attestation_txtT.setText("认证中");
                     }
                     if (licenseAuthStatus.equals("未认证") && photoAuthStatus.equals("未认证")) {
                         completenessT.setText("资料完成度60%,越高越吸引人");
@@ -320,12 +327,12 @@ public class MyFragment2 extends Fragment implements OnClickListener {
             //头像认证
             case R.id.headattestation:
                 it = new Intent(mContext, HeadAttestationActivity.class);
-                startActivity(it);
+                startActivityForResult(it, APPROVE_HEAD);
                 break;
             //车主认证
             case R.id.carattestation:
                 it = new Intent(mContext, AuthenticateOwnersActivity2.class);
-                startActivity(it);
+                startActivityForResult(it, APPROVE_CAR);
                 break;
             //上传相册
             case R.id.addphoto:
@@ -403,8 +410,19 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                     txtphotoAuthStatusT.setText(data.getStringExtra("photoAuthStatus"));
                     nameT.setText(data.getStringExtra("nickname"));
                     ageT.setText(data.getStringExtra("age"));
-                    attestation_txtT.setText(data.getStringExtra("licenseAuthStatus"));
+                    txtphotoAuthStatusT.setText(data.getStringExtra("licenseAuthStatus"));
                     ViewUtil.bindNetImage(headI, data.getStringExtra("head"), "head");
+                    break;
+                case APPROVE_HEAD:
+
+                    txtphotoAuthStatusT.setText(data.getStringExtra("status"));
+
+
+                    break;
+                case APPROVE_CAR:
+
+                    attestation_txtT.setText(data.getStringExtra("statuss"));
+
                     break;
             }
         }
