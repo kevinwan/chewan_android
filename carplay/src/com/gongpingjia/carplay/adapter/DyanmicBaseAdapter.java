@@ -2,7 +2,7 @@ package com.gongpingjia.carplay.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
+import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.chat.ChatActivity;
 import com.gongpingjia.carplay.activity.chat.VoiceCallActivity;
@@ -21,6 +22,9 @@ import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.view.AnimButtonView;
 import com.gongpingjia.carplay.view.dialog.ActiveDialog;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
@@ -39,7 +43,7 @@ import java.util.List;
  */
 public class DyanmicBaseAdapter extends BaseAdapter {
     private final Context mContext;
-     String activityId;
+    String activityId;
     private List<JSONObject> data;
 
     User user = User.getInstance();
@@ -113,8 +117,6 @@ public class DyanmicBaseAdapter extends BaseAdapter {
             holder.hulue.startScaleAnimation();
 
 
-
-
             holder.activity_distance = (TextView) view.findViewById(R.id.active_distance);
 
 
@@ -131,7 +133,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
         JSONObject json = JSONUtil.getJSONObject(jo, "destination");
         JSONObject ob = JSONUtil.getJSONObject(js, "car");
         //活动id
-          activityId = JSONUtil.getString(jo, "activityId");
+        activityId = JSONUtil.getString(jo, "activityId");
         int status = JSONUtil.getInt(jo, "status");
         final String appointmentId = JSONUtil.getString(jo, "appointmentId");
 
@@ -142,13 +144,13 @@ public class DyanmicBaseAdapter extends BaseAdapter {
 //        CarPlayUtil.bindActiveButton("应邀", appointmentId, mContext, viewstwo);
 //                CarPlayUtil.bindActiveButton("拒绝".views);
 
-        CarPlayUtil.bindActiveButton2("邀请中", appointmentId, mContext,  holder.yingyao_layout, holder.yingyaohou);
+        CarPlayUtil.bindActiveButton2("邀请中", appointmentId, mContext, holder.yingyao_layout, holder.yingyaohou);
 
 
         if (status == 2) {
             holder.yingyao_layout.setVisibility(View.GONE);
             holder.yingyaohou.setVisibility(View.VISIBLE);
-        } else if (status== 1) {
+        } else if (status == 1) {
             holder.yingyao_layout.setVisibility(View.VISIBLE);
             holder.yingyaohou.setVisibility(View.GONE);
         }
@@ -158,7 +160,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
         String photoAuthStatus = JSONUtil.getString(js, "photoAuthStatus");
         if (photoAuthStatus.equals("认证通过")) {
             holder.certification_achievement.setImageResource(R.drawable.headaut_dl);
-        }else if(photoAuthStatus.equals("未认证")){
+        } else if (photoAuthStatus.equals("未认证")) {
             holder.certification_achievement.setImageResource(R.drawable.headaut_no);
         }
         String typeT = JSONUtil.getString(jo, "type");
@@ -166,15 +168,15 @@ public class DyanmicBaseAdapter extends BaseAdapter {
         String gender = JSONUtil.getString(js, "gender");
 
 //        String jied = JSONUtil.getString(json, "street");
-        if(json ==null){
+        if (json == null) {
             holder.activity_place.setVisibility(View.GONE);
-        }else{
+        } else {
             holder.activity_place.setVisibility(View.VISIBLE);
             holder.activity_place.setText(JSONUtil.getString(json, "province") + JSONUtil.getString(json, "city") + JSONUtil.getString(json, "district") + JSONUtil.getString(json, "street"));
         }
 
 
-        int distance = (int)Math.floor(JSONUtil.getDouble(js, "distance"));
+        int distance = (int) Math.floor(JSONUtil.getDouble(js, "distance"));
 //        DecimalFormat df = new DecimalFormat("0.00");
         holder.activity_distance.setText(CarPlayUtil.numberWithDelimiter(distance));
         if (("男").equals(gender)) {
@@ -202,6 +204,45 @@ public class DyanmicBaseAdapter extends BaseAdapter {
         } else {
             holder.travelmode.setText("");
         }
+
+
+        ImageLoader.getInstance().displayImage(JSONUtil.getString(js, "avatar"), holder.activity_beijing, CarPlayValueFix.optionsDefault, new ImageLoadingListener() {
+            @Override
+            public void onLoadingStarted(String s, View view) {
+
+            }
+
+            @Override
+            public void onLoadingFailed(String s, View view, FailReason failReason) {
+
+            }
+
+            @Override
+            public void onLoadingComplete(String s, View view, final Bitmap bitmap) {
+                if (bitmap != null) {
+                    final ImageView img = (ImageView) view;
+//                    if (!user.isHasAlbum()&&!user.getUserId().equals(JSONUtil.getString(userjo,"userId"))) {
+//                        img.setImageBitmap(bitmap);
+//                        Blurry.with(mContext)
+//                                .radius(10)
+//                                .sampling(4)
+//                                .async()
+//                                .capture(img)
+//                                .into(img);
+//
+//
+//                    } else {
+//                        img.setImageBitmap(bitmap);
+//                    }
+                }
+            }
+
+            @Override
+            public void onLoadingCancelled(String s, View view) {
+
+            }
+        });
+
         ViewUtil.bindNetImage(holder.activity_beijing, JSONUtil.getString(js, "avatar"), "back");
 //        holder.inviteT.setText("");
         holder.yingyao.setOnClickListener(new View.OnClickListener() {
@@ -243,7 +284,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
 //                    JSONObject jo = getItem(position);
-                DhNet net = new DhNet(API2.CWBaseurl+"application/"+appointmentId+"/process?userId="+user.getUserId()+"&token="+user.getToken());
+                DhNet net = new DhNet(API2.CWBaseurl + "application/" + appointmentId + "/process?userId=" + user.getUserId() + "&token=" + user.getToken());
 //                DhNet net = new DhNet(API2.CWBaseurl + "application/" + appointmentId + "/process?userId=5609eb6d0cf224e7d878f695&token=a767ead8-7c00-4b90-b6de-9dcdb4d5bc41");
                 net.addParam("accept", false);
                 net.doPostInDialog(new NetTask(mContext) {
@@ -261,10 +302,10 @@ public class DyanmicBaseAdapter extends BaseAdapter {
         holder.dyanmic_one.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext,ChatActivity.class);
+                Intent intent = new Intent(mContext, ChatActivity.class);
                 intent.putExtra("chatType", ChatActivity.CHATTYPE_SINGLE);
                 intent.putExtra("activityId", activityId);
-                intent.putExtra("userId",  JSONUtil.getString(js, "emchatName"));
+                intent.putExtra("userId", JSONUtil.getString(js, "emchatName"));
                 mContext.startActivity(intent);
 
             }
@@ -288,7 +329,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
     }
 
     class ViewHolder {
-        TextView titleT, dynamic_carname, pay_type, travelmode, activity_place, activity_distance, ageT,inviteT;
+        TextView titleT, dynamic_carname, pay_type, travelmode, activity_place, activity_distance, ageT, inviteT;
         ImageView dynamic_carlogo, activity_beijing, certification_achievement, sexI;
         AnimButtonView dyanmic_one, dyanmic_two, yingyao, hulue;
         LinearLayout yingyao_layout, yingyaohou;
