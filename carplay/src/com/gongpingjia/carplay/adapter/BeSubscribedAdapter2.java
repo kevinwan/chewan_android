@@ -24,6 +24,12 @@ public class BeSubscribedAdapter2 extends BaseAdapter {
     private JSONArray mDatum;
     private Context mContext;
 
+    private SubscribeListener mSubscribeListener;
+
+    public void setSubscribeListener(SubscribeListener listener) {
+        mSubscribeListener = listener;
+    }
+
     public BeSubscribedAdapter2(Context context, JSONArray data) {
         this.mDatum = data;
         mContext = context;
@@ -53,7 +59,7 @@ public class BeSubscribedAdapter2 extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         try {
-            JSONObject obj = mDatum.getJSONObject(position);
+            final JSONObject obj = mDatum.getJSONObject(position);
             if (convertView == null) {
                 convertView = LayoutInflater.from(mContext).inflate(R.layout.item_be_subscribed2, parent, false);
                 holder = new ViewHolder();
@@ -72,7 +78,13 @@ public class BeSubscribedAdapter2 extends BaseAdapter {
             holder.heartView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    if (mSubscribeListener != null) {
+                        try {
+                            mSubscribeListener.onSubscribe(obj.getString("userId"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
             });
             ImageLoader.getInstance().displayImage(obj.getString("avatar"), holder.roundImageView);

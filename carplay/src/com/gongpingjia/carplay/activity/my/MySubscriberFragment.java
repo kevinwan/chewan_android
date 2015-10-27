@@ -1,18 +1,16 @@
 package com.gongpingjia.carplay.activity.my;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.adapter.MySubscriberAdapter2;
+import com.gongpingjia.carplay.adapter.SubscribeListener;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.User;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -31,49 +29,80 @@ import org.json.JSONObject;
  * 我关注的人
  */
 public class MySubscriberFragment extends Fragment {
-//    View mView;
     private PullToRefreshListView mListView;
     private MySubscriberAdapter2 mySubscriberAdapter;
-//    LinearLayout empty;
-//    TextView msg;
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-    }
 
     @Nullable
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
-//         mView = inflater.inflate(R.layout.fragment_follow_each_other, container, false);
         mListView = (PullToRefreshListView) inflater.inflate(R.layout.fragment_follow_each_other, container, false);
-//        mListView = (PullToRefreshListView)mView.findViewById(R.id.refresh_list_view);
-//        empty = (LinearLayout) mView.findViewById(R.id.empty);
-//        msg = (TextView) mView.findViewById(R.id.msg);
         mListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
             public void onRefresh(PullToRefreshBase<ListView> refreshView) {
-                DhNet dhNet = new DhNet(API2.getSubscribe(User.getInstance().getUserId(), User.getInstance().getToken()));
-                dhNet.doGetInDialog(new NetTask(getActivity()) {
-                    @Override
-                    public void doInUI(Response response, Integer transfer) {
-                        mListView.onRefreshComplete();
-                        if (response.isSuccess()) {
-                            try {
-                                JSONObject jsonObject = response.jSONFromData();
-
-                                JSONArray jsonArray = jsonObject.getJSONArray("mySubscribe");
-                                mySubscriberAdapter = new MySubscriberAdapter2(getActivity(), jsonArray);
-                                mListView.setAdapter(mySubscriberAdapter);
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                });
+//                DhNet dhNet = new DhNet(API2.getSubscribe(User.getInstance().getUserId(), User.getInstance().getToken()));
+//                dhNet.doGetInDialog(new NetTask(getActivity()) {
+//                    @Override
+//                    public void doInUI(Response response, Integer transfer) {
+//                        mListView.onRefreshComplete();
+//                        if (response.isSuccess()) {
+//                            try {
+//                                JSONObject jsonObject = response.jSONFromData();
+//                                JSONArray jsonArray = jsonObject.getJSONArray("mySubscribe");
+//                                mySubscriberAdapter = new MySubscriberAdapter2(getActivity(), jsonArray);
+//                                mListView.setAdapter(mySubscriberAdapter);
+//                            } catch (JSONException e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+//                    }
+//                });
+                refreshList();
             }
         });
 
         return mListView;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        refreshList();
+    }
+
+
+    private void refreshList() {
+        DhNet dhNet = new DhNet(API2.getSubscribe(User.getInstance().getUserId(), User.getInstance().getToken()));
+        dhNet.doGetInDialog(new NetTask(getActivity()) {
+            @Override
+            public void doInUI(Response response, Integer transfer) {
+                mListView.onRefreshComplete();
+                if (response.isSuccess()) {
+                    try {
+                        JSONObject jsonObject = response.jSONFromData();
+                        JSONArray jsonArray = jsonObject.getJSONArray("mySubscribe");
+                        mySubscriberAdapter = new MySubscriberAdapter2(getActivity(), jsonArray);
+                        mySubscriberAdapter.setSubscribeListener(new SubscribeListener() {
+                            @Override
+                            public void onSubscribe(String targetId) {
+                                DhNet dhNet = new DhNet(API2.getUnfollowPerson(User.getInstance().getUserId(), User.getInstance().getToken()));
+                                dhNet.addParam("targetUserId", targetId);
+                                dhNet.doPostInDialog(new NetTask(getActivity()) {
+                                    @Override
+                                    public void doInUI(Response response, Integer transfer) {
+                                        if (response.isSuccess()) {
+                                            //取消关注成功
+                                            refreshList();
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                        mListView.setAdapter(mySubscriberAdapter);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
     }
 }

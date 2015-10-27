@@ -50,5 +50,5 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:src="@drawable/icon_heart" />
+        android:src="@drawable/icon_hearted" />
 </RelativeLayout>

@@ -26,6 +26,12 @@ public class EachSubscribeAdapter2 extends BaseAdapter {
     private JSONArray mDatum;
     private Context mContext;
 
+    private SubscribeListener mSubscribeListener;
+
+    public void setSubscribeListener(SubscribeListener listener) {
+        mSubscribeListener = listener;
+    }
+
     public EachSubscribeAdapter2(Context context, JSONArray data) {
         this.mDatum = data;
         mContext = context;
@@ -89,7 +95,13 @@ public class EachSubscribeAdapter2 extends BaseAdapter {
             holder.heartView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    if (mSubscribeListener != null) {
+                        try {
+                            mSubscribeListener.onSubscribe(obj.getString("userId"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
             });
             ImageLoader.getInstance().displayImage(obj.getString("avatar"), holder.roundImageView);

@@ -57,4 +57,14 @@ public class API2 {
         return String.format(CWBaseurl + "user/emchatInfo?userId=%s&token=%s&emchatName=%s", userId, token, chatName);
     }
 
+    //取消关注某人
+    public static String getUnfollowPerson(String userId, String token) {
+        return String.format(CWBaseurl + "user/%s/unlisten?token=%s", userId, token);
+    }
+
+    //关注某人
+    public static String getFollowPerson(String userId, String token) {
+        return String.format(CWBaseurl + "user/%s/listen?token=%s", userId, token);
+    }
+
 }
