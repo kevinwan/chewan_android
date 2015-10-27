@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.activity.chat.ChatActivity;
 import com.gongpingjia.carplay.activity.chat.VoiceCallActivity;
 import com.gongpingjia.carplay.view.RoundImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -79,6 +80,20 @@ public class EachSubscribeAdapter2 extends BaseAdapter {
             holder.textNickname.setText(obj.getString("nickname"));
             holder.textDistance.setText(String.valueOf(obj.getInt("distance")) + "m");
             holder.textAge.setText(String.valueOf(obj.getInt("age")));
+            holder.imgMessage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        Intent intent = new Intent(mContext, ChatActivity.class);
+                        intent.putExtra("chatType", ChatActivity.CHATTYPE_SINGLE);
+                        intent.putExtra("activityId", "");
+                        intent.putExtra("userId", obj.getString("emchatName"));
+                        mContext.startActivity(intent);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
             holder.imgPhone.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

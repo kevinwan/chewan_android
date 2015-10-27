@@ -45,23 +45,6 @@ public class SubscribeEachOtherFragment extends Fragment {
         mListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
             public void onRefresh(PullToRefreshBase<ListView> refreshView) {
-//                DhNet dhNet = new DhNet(API2.getSubscribe(User.getInstance().getUserId(), User.getInstance().getToken()));
-//                dhNet.doGetInDialog(new NetTask(getActivity()) {
-//                    @Override
-//                    public void doInUI(Response response, Integer transfer) {
-//                        mListView.onRefreshComplete();
-//                        if (response.isSuccess()) {
-//                            try {
-//                                JSONObject jsonObject = response.jSONFromData();
-//                                JSONArray jsonArray = jsonObject.getJSONArray("eachSubscribe");
-//                                eachSubscribeAdapter2 = new EachSubscribeAdapter2(getActivity(), jsonArray);
-//                                mListView.setAdapter(eachSubscribeAdapter2);
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                    }
-//                });
                 refreshList();
             }
         });
@@ -72,27 +55,6 @@ public class SubscribeEachOtherFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        DhNet dhNet = new DhNet(API2.getSubscribe(User.getInstance().getUserId(), User.getInstance().getToken()));
-//        dhNet.doGetInDialog(new NetTask(getActivity()) {
-//            @Override
-//            public void doInUI(Response response, Integer transfer) {
-//                mListView.onRefreshComplete();
-//                if (response.isSuccess()) {
-//                    try {
-//                        JSONObject jsonObject = response.jSONFromData();
-////                                if (jsonObject != null){
-////                                    empty.setVisibility(View.VISIBLE);
-////                                    msg.setText("暂无关注");
-////                                }
-//                        JSONArray jsonArray = jsonObject.getJSONArray("eachSubscribe");
-//                        eachSubscribeAdapter2 = new EachSubscribeAdapter2(getActivity(), jsonArray);
-//                        mListView.setAdapter(eachSubscribeAdapter2);
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-//        });
         refreshList();
     }
 
