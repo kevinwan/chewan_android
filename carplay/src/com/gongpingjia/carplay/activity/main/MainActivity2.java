@@ -43,7 +43,7 @@ import com.gongpingjia.carplay.activity.active.RecommendListFragment;
 import com.gongpingjia.carplay.activity.dynamic.DynamicListFragment;
 import com.gongpingjia.carplay.activity.my.LoginActivity2;
 import com.gongpingjia.carplay.activity.my.MyFragment2;
-import com.gongpingjia.carplay.activity.my.SettingActivity;
+import com.gongpingjia.carplay.activity.my.SettingActivity2;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.api.Constant;
@@ -220,7 +220,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
             @Override
             public void onClick(View view) {
                 //设置
-                Intent it = new Intent(self, SettingActivity.class);
+                Intent it = new Intent(self, SettingActivity2.class);
                 startActivity(it);
 
             }

@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
@@ -29,6 +28,7 @@ import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.net.upload.FileInfo;
 import net.duohuo.dhroid.util.ImageUtil;
 import net.duohuo.dhroid.util.PhotoUtil;
+import net.duohuo.dhroid.util.UserLocation;
 
 import org.json.JSONObject;
 
@@ -203,8 +203,8 @@ public class BasicInformationActivity2 extends CarPlayBaseActivity implements Vi
         net.addParam("avatar", photoUid);
 
         Map<String, Object> landmark = new HashMap<>();
-        landmark.put("longitude", 180.5);
-        landmark.put("latitude", 36.5);
+        landmark.put("longitude", UserLocation.getInstance().getLongitude());
+        landmark.put("latitude", UserLocation.getInstance().getLatitude());
         net.addParam("landmark", landmark);
         net.doPostInDialog(new NetTask(self) {
 

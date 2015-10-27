@@ -38,6 +38,7 @@ public class SettingActivity2 extends CarPlayBaseActivity implements View.OnClic
         Button btnLogout = (Button) findViewById(R.id.btn_logout);
         View layoutClearCache = findViewById(R.id.layout_cache_clear);
         mCacheDir = new File(getExternalCacheDir(), "CarPlay");
+        mTextCacheSize = (TextView) findViewById(R.id.tv_cache_size);
         mTextCacheSize.setText(String.valueOf(FileUtil.getFileOrDirSize(mCacheDir,
                 FileUtil.UNIT_SACLE.M)) + " M");
 
