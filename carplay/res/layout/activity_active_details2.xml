@@ -20,10 +20,43 @@
         android:layout_height="55dp"
         android:background="@color/btn_pinkred_bg"
         android:text="报名参加"
+        android:visibility="gone"
         android:layout_alignParentBottom="true"
         android:textColor="@color/white"
         android:textSize="@dimen/text_medium"
         />
+
+    <LinearLayout
+        android:id="@+id/startchatlayout"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/buytickets"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:background="#1cc1a0"
+            android:text="前往购票"
+            android:layout_weight="1"
+            android:layout_alignParentBottom="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_medium"
+            />
+        <Button
+            android:id="@+id/chatbtn"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:background="@color/text_orange"
+            android:text="开始群聊"
+            android:layout_weight="1"
+            android:layout_alignParentBottom="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_medium"
+            />
+
+    </LinearLayout>
 
     <ListView
         android:id="@+id/listview"
