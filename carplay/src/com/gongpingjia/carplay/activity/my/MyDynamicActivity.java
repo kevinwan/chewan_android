@@ -39,7 +39,7 @@ public class MyDynamicActivity extends CarPlayListActivity implements PullToRefr
 
     @Override
     public void initView() {
-//        setTitle("我的活动");
+        setTitle("我的活动");
          empty = (LinearLayout) findViewById(R.id.empty);
          msg = (TextView) findViewById(R.id.msg);
 

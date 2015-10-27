@@ -90,7 +90,7 @@ public class ImageGallery extends CarPlayBaseActivity {
         remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (items.size() != 0) {
+//                if (items.size() != 0) {
                     DhNet net = new DhNet(API2.CWBaseurl + "user/" + user.getUserId() + "/album/photos?token=" + user.getToken());
                     JSONArray jsa = new JSONArray();
                     jsa.put(itemid.get(photoCurrent));
@@ -108,6 +108,7 @@ public class ImageGallery extends CarPlayBaseActivity {
                                     mIndicatorText.setText(getIndicatorString(0,
                                             items.size()));
                                 } else {
+                                    user.setHasAlbum(false);         //设置相册状态
                                     finish();
                                 }
                                 EventBus.getDefault().post(new String("上传成功"));
@@ -115,10 +116,10 @@ public class ImageGallery extends CarPlayBaseActivity {
                             }
                         }
                     });
-                } else {
-                    EventBus.getDefault().post(new String("上传成功"));
-                    finish();
-                }
+//                } else {
+//                    EventBus.getDefault().post(new String("上传成功"));
+//                    finish();
+//                }
             }
         });
     }

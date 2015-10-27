@@ -196,7 +196,7 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
 
         //头像认证,车主认证
         String headatt = JSONUtil.getString(userjo, "photoAuthStatus");
-        holder.headatt.setImageResource("未认证".equals(headatt) ? R.drawable.headaut_dl : R.drawable.headaut_no);
+        holder.headatt.setImageResource("认证通过".equals(headatt) ?  R.drawable.headaut_no:R.drawable.headaut_dl );
 
         if (user.isLogin()) {
             holder.attention.setVisibility(JSONUtil.getString(userjo, "userId").equals(user.getUserId()) ? View.GONE : View.VISIBLE);

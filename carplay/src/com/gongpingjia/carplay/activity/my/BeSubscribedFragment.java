@@ -43,7 +43,7 @@ public class BeSubscribedFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
 //        mView = inflater.inflate(R.layout.fragment_follow_each_other, container, false);
         mListView = (PullToRefreshListView) inflater.inflate(R.layout.fragment_follow_each_other, container, false);
 //        empty = (LinearLayout) mView.findViewById(R.id.empty);
@@ -60,8 +60,9 @@ public class BeSubscribedFragment extends Fragment {
                             try {
                                 JSONObject jsonObject = response.jSONFromData();
 //                                if (jsonObject != null){
-//                                    empty.setVisibility(View.VISIBLE);
-//                                    msg.setText("暂无关注");
+//                                    View view = inflater.inflate(R.layout.empty_layout,container);
+//                                    TextView t = (TextView) view.findViewById(R.id.msg);
+//                                    t.setText("暂无关注");
 //                                }
                                 JSONArray jsonArray = jsonObject.getJSONArray("beSubscribed");
                                 beSubscribeAdapter = new BeSubscribedAdapter2(getActivity(), jsonArray);

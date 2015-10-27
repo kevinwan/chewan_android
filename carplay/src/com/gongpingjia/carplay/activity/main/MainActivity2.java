@@ -529,6 +529,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
             public void doInUI(Response response, Integer transfer) {
                 hidenProgressDialog();
                 if (response.isSuccess()) {
+                    user.setHasAlbum(true);         //设置相册状态
                     uploadedCount = uploadedCount + 1;
                     JSONObject jo = response.jSONFromData();
                     showToast("上传成功");

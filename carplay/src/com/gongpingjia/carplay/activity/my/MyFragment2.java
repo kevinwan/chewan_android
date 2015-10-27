@@ -229,7 +229,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                         attestationT.setBackgroundResource(R.drawable.radio_sex_man_focused);
                         attestationT.setText("未认证");
                         headattestationL.setEnabled(true);
-                    } else if (photoAuthStatus.equals("已认证")) {
+                    } else if (photoAuthStatus.equals("认证通过")) {
                         attestationT.setBackgroundResource(R.drawable.btn_yellow_fillet);
                         attestationT.setText("已认证");
                         headattestationL.setEnabled(false);
@@ -242,7 +242,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                     //车主认证
                     if (licenseAuthStatus.equals("未认证")) {
                         carattestationL.setEnabled(true);
-                    } else if (licenseAuthStatus.equals("已认证")) {
+                    } else if (licenseAuthStatus.equals("认证通过")) {
                         carattestationL.setEnabled(false);
                     } else if (licenseAuthStatus.equals("认证中")) {
                         carattestationL.setEnabled(true);
@@ -422,6 +422,8 @@ public class MyFragment2 extends Fragment implements OnClickListener {
             public void doInUI(Response response, Integer transfer) {
                 ((MainActivity2) getActivity()).hidenProgressDialog();
                 if (response.isSuccess()) {
+                    user.setHasAlbum(true);         //设置相册状态
+
                     uploadedCount = uploadedCount + 1;
                     JSONObject jo = response.jSONFromData();
                     String photoUrl = JSONUtil.getString(jo, "photoUrl");

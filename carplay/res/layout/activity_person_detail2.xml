@@ -131,13 +131,15 @@
             <RelativeLayout
                 android:id="@+id/uploadlayout"
                 android:layout_width="match_parent"
-                android:layout_height="120dp">
+                android:layout_height="120dp"
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/bg3x" />
+                    android:src="@drawable/bg3x"
+                    />
 
                 <TextView
                     style="@style/text_white_small"
@@ -170,7 +172,7 @@
                     android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
                     android:scrollbars="horizontal"
-                    android:layout_height="match_parent"
+                    android:layout_height="77dp"
                     android:layout_marginLeft="10dp"/>
 
             </LinearLayout>
