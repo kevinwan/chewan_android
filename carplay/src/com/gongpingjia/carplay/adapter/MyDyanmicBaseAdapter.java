@@ -17,7 +17,6 @@ import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.view.AnimButtonView;
 import com.gongpingjia.carplay.view.dialog.ActiveDialog;
-import com.umeng.analytics.h;
 
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
@@ -136,9 +135,9 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
 
         String licenseAuthStatus = JSONUtil.getString(js, "licenseAuthStatus");
         String photoAuthStatus = JSONUtil.getString(js, "photoAuthStatus");
-        if (photoAuthStatus.equals("认证通过")) {
+        if ("认证通过".equals(photoAuthStatus)) {
             holder.certification_achievement.setImageResource(R.drawable.headaut_dl);
-        } else if (photoAuthStatus.equals("未认证")) {
+        } else if ("未认证".equals(photoAuthStatus)) {
             holder.certification_achievement.setImageResource(R.drawable.headaut_no);
         }
         String typeT = JSONUtil.getString(jo, "type");
@@ -165,7 +164,7 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
             holder.sexI.setBackgroundResource(R.drawable.icon_woman3x);
         }
 
-        if (licenseAuthStatus.equals("认证通过")) {
+        if ("认证通过".equals(licenseAuthStatus)) {
             ViewUtil.bindNetImage(holder.dynamic_carlogo, JSONUtil.getString(ob, "logo"), "default");
             holder.dynamic_carname.setText(JSONUtil.getString(ob, "model"));
         } else {
