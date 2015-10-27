@@ -43,7 +43,7 @@ public class MySubscriberFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
 //         mView = inflater.inflate(R.layout.fragment_follow_each_other, container, false);
         mListView = (PullToRefreshListView) inflater.inflate(R.layout.fragment_follow_each_other, container, false);
 //        mListView = (PullToRefreshListView)mView.findViewById(R.id.refresh_list_view);
@@ -60,10 +60,7 @@ public class MySubscriberFragment extends Fragment {
                         if (response.isSuccess()) {
                             try {
                                 JSONObject jsonObject = response.jSONFromData();
-//                                if (jsonObject != null){
-//                                    empty.setVisibility(View.VISIBLE);
-//                                    msg.setText("暂无关注");
-//                                }
+
                                 JSONArray jsonArray = jsonObject.getJSONArray("mySubscribe");
                                 mySubscriberAdapter = new MySubscriberAdapter2(getActivity(), jsonArray);
                                 mListView.setAdapter(mySubscriberAdapter);
