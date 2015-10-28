@@ -69,6 +69,11 @@ public class HisDynamicActivity extends CarPlayListActivity implements PullToRef
         listV.setMode(PullToRefreshBase.Mode.BOTH);
         listV.setOnRefreshListener(this);
         recyclerView = listV.getRefreshableView();
+        setOnLoadSuccess(this);
+        fromWhat("data.activities");
+
+        setUrl(API2.CWBaseurl + "user/" + viewUserId + "/activity/list?token=" + user.getToken() + "&userId=" + user.getUserId() + "&limit=" + 10 + "&ignore=" + 0);
+
         DhNet net = new DhNet(API2.CWBaseurl + "user/" + viewUserId + "/activity/list?token=" + user.getToken() + "&userId=" + user.getUserId() + "&limit=" + 10 + "&ignore=" + 0);
         net.doGet(new NetTask(self) {
             @Override
@@ -78,18 +83,15 @@ public class HisDynamicActivity extends CarPlayListActivity implements PullToRef
                     cover = JSONUtil.getString(jo, "cover");
                     distance = JSONUtil.getDouble(jo, "distance");
                     adapter = new HisDyanmicBaseAdapter(self, bundle, cover, distance);
-
+                    recyclerView.setAdapter(adapter);
+                    showNext();
                 }
             }
         });
-        recyclerView.setAdapter(adapter);
-        setOnLoadSuccess(this);
-        fromWhat("data.activities");
-
-        setUrl(API2.CWBaseurl + "user/" + viewUserId + "/activity/list?token=" + user.getToken() + "&userId=" + user.getUserId() + "&limit=" + 10 + "&ignore=" + 0);
 
 
-        showNext();
+
+
     }
 
 
