@@ -12,6 +12,8 @@ import com.gongpingjia.carplay.view.HeartView;
 import com.gongpingjia.carplay.view.RoundImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import net.duohuo.dhroid.net.JSONUtil;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -72,6 +74,8 @@ public class BeSubscribedAdapter2 extends BaseAdapter {
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
+            String id = JSONUtil.getString(obj,"userId");
+            holder.roundImageView.setTag(id);
             holder.textNickname.setText(obj.getString("nickname"));
             holder.textDistance.setText(String.valueOf(obj.getInt("distance")) + "m");
             holder.textAge.setText(String.valueOf(obj.getInt("age")));
