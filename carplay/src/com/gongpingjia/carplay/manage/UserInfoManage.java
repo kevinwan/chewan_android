@@ -1,12 +1,13 @@
 package com.gongpingjia.carplay.manage;
 
-import net.duohuo.dhroid.dialog.IDialog;
-import net.duohuo.dhroid.ioc.IocContainer;
 import android.app.Activity;
 import android.content.Intent;
 
-import com.gongpingjia.carplay.activity.my.LoginActivity;
+import com.gongpingjia.carplay.activity.my.LoginActivity2;
 import com.gongpingjia.carplay.bean.User;
+
+import net.duohuo.dhroid.dialog.IDialog;
+import net.duohuo.dhroid.ioc.IocContainer;
 
 public class UserInfoManage {
 
@@ -23,11 +24,11 @@ public class UserInfoManage {
 		boolean islogin = User.getInstance().isLogin();
 		if (!islogin) {
 			if (context != null) {
-				IocContainer.getShare().get(IDialog.class)
-						.showToastShort(context, "请先登录!");
-				// LoginActivity.loginCall = loginCallBack;
-				// Intent it = new Intent(context, LoginActivity.class);
-				// context.startActivity(it);
+//				IocContainer.getShare().get(IDialog.class)
+//						.showToastShort(context, "请先登录!");
+				 LoginActivity2.loginCall = loginCallBack;
+				 Intent it = new Intent(context, LoginActivity2.class);
+				 context.startActivity(it);
 				return false;
 			}
 		} else {

@@ -286,7 +286,6 @@ public class LoginActivity extends CarPlayBaseActivity implements OnClickListene
                     per.password = currentPassword;
                     per.commit();
 
-                    hidenProgressDialog();
                     String action = getIntent().getStringExtra("action");
                     if (action != null && action.equals("logout")) {
                         Intent it = new Intent(self, MainActivity.class);

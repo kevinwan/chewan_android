@@ -18,17 +18,16 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.gongpingjia.carplay.activity.my.MyPerSonDetailActivity;
-import com.gongpingjia.carplay.activity.my.PersonDetailActivity;
+import com.gongpingjia.carplay.activity.my.MyPerSonDetailActivity2;
+import com.gongpingjia.carplay.activity.my.PersonDetailActivity2;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.manage.UserInfoManage;
 import com.gongpingjia.carplay.manage.UserInfoManage.LoginCallBack;
 
 /**
  * 圆形的imageView
- * 
+ *
  * @author Zr
- * 
  */
 public class RoundImageView extends ImageView {
     private Context mContext;
@@ -91,10 +90,10 @@ public class RoundImageView extends ImageView {
                     public void onisLogin() {
                         User user = User.getInstance();
                         if (user.getUserId().equals(v.getTag().toString())) {
-                            Intent it = new Intent(mContext, MyPerSonDetailActivity.class);
+                            Intent it = new Intent(mContext, MyPerSonDetailActivity2.class);
                             mContext.startActivity(it);
                         } else {
-                            Intent it = new Intent(mContext, PersonDetailActivity.class);
+                            Intent it = new Intent(mContext, PersonDetailActivity2.class);
                             it.putExtra("userId", v.getTag().toString());
                             mContext.startActivity(it);
                         }

@@ -165,7 +165,11 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
 //        Blurry.targetWidth = picWidth;
 //        Blurry.targetHeight = picHeight;
         final User user = User.getInstance();
-        holder.upload.setVisibility(user.isHasAlbum() ? View.GONE : View.VISIBLE);
+        if (user.isLogin()) {
+            holder.upload.setVisibility(user.isHasAlbum() ? View.GONE : View.VISIBLE);
+        } else {
+            holder.upload.setVisibility(View.GONE);
+        }
         ImageLoader.getInstance().displayImage(JSONUtil.getString(userjo, "avatar"), holder.active_bg, CarPlayValueFix.optionsDefault, new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String s, View view) {
