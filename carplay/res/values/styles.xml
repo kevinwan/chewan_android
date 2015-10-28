@@ -236,7 +236,7 @@
     <style name="CustomDialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowNoTitle">true</item>
         <!-- 设置title -->
-        <item name="android:windowBackground">@color/black40</item>
+        <item name="android:windowBackground">@color/text_red</item>
         <item name="android:windowFrame">@null</item>
         <!-- 设置边框 -->
         <item name="android:windowIsTranslucent">true</item>
@@ -244,6 +244,11 @@
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowAnimationStyle">@style/FeelyouWindowAnimTheme</item>
         <!-- 设置全屏 -->
+    </style>
+
+    <style name="Dialog_Fullscreen">
+        <item name="android:windowNoTitle">true</item>
+        <!--<item name="android:windowBackground">@color/text_red</item>-->
     </style>
 
     <style name="CustomDia" parent="@android:style/Theme.Dialog">

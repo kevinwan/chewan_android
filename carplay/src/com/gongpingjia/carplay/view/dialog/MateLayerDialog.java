@@ -44,7 +44,7 @@ public class MateLayerDialog extends BaseAlertDialog implements View.OnClickList
     private String type;
 
     public MateLayerDialog(Context context, String type) {
-        super(context);
+        super(context, R.style.Dialog_Fullscreen);
         this.mContext = context;
         this.type = type;
     }

@@ -47,7 +47,7 @@ public class MatchingDialog extends BaseAlertDialog {
     }
 
     public MatchingDialog(Context context, List<Matching> data) {
-        super(context);
+        super(context, R.style.Dialog_Fullscreen);
         mDatas = data;
         this.context = context;
     }

@@ -210,10 +210,16 @@ public class MatePop implements Runnable, View.OnClickListener {
             matching.setName(type);
             data.add(matching);
         }
+        MatchingDialog dlg = new MatchingDialog(context, data);
         if (data.size() == 1) {
             data.get(0).setIsChecked(true);
+            if (names[0].equals("遛狗"))
+                dlg.getWindow().setBackgroundDrawableResource(R.color.circle_lg_bg);
+            else dlg.getWindow().setBackgroundDrawableResource(R.color.circle_gw_bg);
+        } else {
+            dlg.getWindow().setBackgroundDrawableResource(R.color.circle_yd_bg);
         }
-        MatchingDialog dlg = new MatchingDialog(context, data);
+
         dlg.setMatchingResult(new MatchingDialog.OnMatchingDialogResult() {
             @Override
             public void onResult(Map<String, Object> params) {
@@ -227,6 +233,22 @@ public class MatePop implements Runnable, View.OnClickListener {
 
     private void showMatchingDialog(Context context, String type) {
         MateLayerDialog dlg = new MateLayerDialog(context, type);
+//        dlg.getWindow().setBackgroundDrawableResource(R.color.text_red);
+        if ("看电影".equals(type)) {
+            dlg.getWindow().setBackgroundDrawableResource(R.color.circle_kdy_bg);
+        } else if ("唱歌".equals(type)) {
+            dlg.getWindow().setBackgroundDrawableResource(R.color.circle_cg_bg);
+        } else if ("吃饭".equals(type)) {
+            dlg.getWindow().setBackgroundDrawableResource(R.color.circle_cf_bg);
+        } else if ("咖啡".equals(type)) {
+            dlg.getWindow().setBackgroundDrawableResource(R.color.circle_hkf_bg);
+        } else if ("夜宵".equals(type)) {
+            dlg.getWindow().setBackgroundDrawableResource(R.color.circle_yx_bg);
+        } else if ("夜店".equals(type)) {
+            dlg.getWindow().setBackgroundDrawableResource(R.color.circle_yd_bg);
+        } else if ("喝酒".equals(type)) {
+            dlg.getWindow().setBackgroundDrawableResource(R.color.circle_hj_bg);
+        }
         dlg.setMatchingResult(new MateLayerDialog.OnMatchingDialogResult() {
             @Override
             public void onResult(Map<String, Object> params) {
