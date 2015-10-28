@@ -135,7 +135,7 @@ public class DynamicListFragment extends CarPlayBaseFragment implements PullToRe
                 ((MainActivity2) getActivity()).updateUnreadLabel();
                 if (!hidden && !((MainActivity2) getActivity()).isConflict) {
                     ((MainActivity2) getActivity()).updateUnreadLabel();
-//        if (!hidden && !((MainActivity) getActivity()).isConflict) {
+//        if (!hidden && !((MainActivity2) getActivity()).isConflict) {
 //            getHeadImg();
 //        }
                 }

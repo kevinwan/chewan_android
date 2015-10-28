@@ -23,7 +23,6 @@ import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.easemob.EMCallBack;
 import com.easemob.EMConnectionListener;
@@ -55,6 +54,7 @@ import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.chat.DemoHXSDKHelper;
 import com.gongpingjia.carplay.chat.bean.GroupEB;
 import com.gongpingjia.carplay.chat.controller.HXSDKHelper;
+import com.gongpingjia.carplay.manage.UserInfoManage;
 import com.gongpingjia.carplay.photo.model.PhotoModel;
 import com.gongpingjia.carplay.util.CarPlayPerference;
 import com.gongpingjia.carplay.view.dialog.NearbyFilterDialog;
@@ -272,26 +272,26 @@ public class MainActivity2 extends BaseFragmentActivity implements
 
     private void setTab(int index) {
 
-//        if (index == 1) {
-//            if (!User.getInstance().isLogin()) {
-//                UserInfoManage.getInstance().checkLogin(self,
-//                        new LoginCallBack() {
-//
-//                            @Override
-//                            public void onisLogin() {
-//                                setTab(1);
-//                            }
-//
-//                            @Override
-//                            public void onLoginFail() {
-//                            }
-//                        });
-//            }
-//        }
-//
-//        if (index == 1 && !User.getInstance().isLogin()) {
-//            return;
-//        }
+        if (index == 4) {
+            if (!User.getInstance().isLogin()) {
+                UserInfoManage.getInstance().checkLogin(self,
+                        new UserInfoManage.LoginCallBack() {
+
+                            @Override
+                            public void onisLogin() {
+                                setTab(4);
+                            }
+
+                            @Override
+                            public void onLoginFail() {
+                            }
+                        });
+            }
+        }
+
+        if (index == 4 && !User.getInstance().isLogin()) {
+            return;
+        }
 
 
         rightT.setVisibility(index == 0 ? View.VISIBLE : View.GONE);
@@ -686,7 +686,6 @@ public class MainActivity2 extends BaseFragmentActivity implements
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        IocContainer.getShare().get(Toast.class).cancel();
         EventBus.getDefault().unregister(this);
         if (connectionListener != null) {
             EMChatManager.getInstance().removeConnectionListener(
@@ -730,7 +729,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
             if (!isExit) {
                 isExit = true;
                 IocContainer.getShare().get(IDialog.class)
-                        .showToastShort(self, "再按一次退出程序");
+                        .showToastShort(getApplicationContext(), "再按一次退出程序");
                 mHandler.postDelayed(new ExitRunnable(), 2000);
             } else {
 //                Intent it = new Intent(self, MsgService.class);
