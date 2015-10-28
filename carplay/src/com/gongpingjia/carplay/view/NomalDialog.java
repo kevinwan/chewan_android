@@ -61,6 +61,7 @@ public class NomalDialog extends DialogImpl {
             ViewUtil.bindView(toastV.findViewById(R.id.text), msg);
             toast.setView(toastV);
             toast.show();
+            Log.d("msg", toast + "");
         }
     }
 

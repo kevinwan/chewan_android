@@ -48,7 +48,7 @@ public class ActivityTack {
 		ActivityManager activityManager = (ActivityManager) context
 				.getSystemService(Context.ACTIVITY_SERVICE);
 		activityManager.restartPackage(context.getPackageName());
-		System.exit(0);
+//		System.exit(0);
 	}
 
 	/**

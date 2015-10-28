@@ -14,6 +14,7 @@ import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,6 +24,7 @@ import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.easemob.EMCallBack;
 import com.easemob.EMConnectionListener;
@@ -734,6 +736,8 @@ public class MainActivity2 extends BaseFragmentActivity implements
             } else {
 //                Intent it = new Intent(self, MsgService.class);
 //                stopService(it);
+                Log.d("msg", IocContainer.getShare().get(Toast.class) + "");
+                IocContainer.getShare().get(Toast.class).cancel();
                 ActivityTack.getInstanse().exit(self);
             }
             return false;
