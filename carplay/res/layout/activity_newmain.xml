@@ -274,7 +274,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="1.5px"
                 android:layout_above="@id/tab"
-                android:background="@color/text_black" />
+                android:background="@color/line_grey" />
 
 
 
