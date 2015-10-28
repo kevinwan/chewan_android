@@ -45,6 +45,8 @@ public class CarPlayListActivity extends CarPlayBaseActivity {
 
     int limit = 10;
 
+    onLoadDataSuccess onLoadDataSuccess;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +60,10 @@ public class CarPlayListActivity extends CarPlayBaseActivity {
                 // 后台处理主要是数据封装
                 JSONArray array = null;
                 JSONObject responseJo = response.jSON();
+
+                if (onLoadDataSuccess != null) {
+                    onLoadDataSuccess.load(responseJo);
+                }
                 if (fromWhat == null) {
                     array = response.jSONArrayFromData();
                 } else {
@@ -232,6 +238,19 @@ public class CarPlayListActivity extends CarPlayBaseActivity {
         }
     }
 
+
+    public CarPlayListActivity.onLoadDataSuccess getOnLoadDataSuccess() {
+        return onLoadDataSuccess;
+    }
+
+    public void setOnLoadDataSuccess(CarPlayListActivity.onLoadDataSuccess onLoadDataSuccess) {
+        this.onLoadDataSuccess = onLoadDataSuccess;
+    }
+
+    //活动详情和群组成员列表中使用
+    public interface onLoadDataSuccess {
+        void load(JSONObject jo);
+    }
 
     public void addAll(List<JSONObject> ones) {
         synchronized (mLock) {

@@ -49,7 +49,7 @@ import de.greenrobot.event.EventBus;
 /**
  * 活动详情
  */
-public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.OnClickListener,  PullToRefreshBase.OnRefreshListener<ListView>, ILoadSuccess {
+public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.OnClickListener, PullToRefreshBase.OnRefreshListener<ListView>, ILoadSuccess, CarPlayListActivity.onLoadDataSuccess {
 
 //    private ListView mListView;
 
@@ -64,7 +64,7 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
     private LinearLayout startchatlayout;
 
     private ListView mRecyclerView;
-//    LinearLayout empty;
+    //    LinearLayout empty;
 //    TextView msg;
     PullToRefreshListView listV;
     private OfficialMembersAdapter membersAdapter;
@@ -124,7 +124,7 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
 
 
         listV = (PullToRefreshListView) findViewById(R.id.listview);
-        listV.setMode(PullToRefreshBase.Mode.BOTH);
+        listV.setMode(PullToRefreshBase.Mode.MANUAL_REFRESH_ONLY);
         listV.setOnRefreshListener(this);
 //        empty = (LinearLayout) findViewById(R.id.empty);
 //        msg = (TextView) findViewById(R.id.msg);
@@ -133,7 +133,8 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
         membersAdapter = new OfficialMembersAdapter(self);
         mRecyclerView.setAdapter(membersAdapter);
         setOnLoadSuccess(this);
-        fromWhat("data");
+        setOnLoadDataSuccess(this);
+        fromWhat("data.members");
         setUrl(API2.CWBaseurl + "/official/activity/" + activeid + "/members?userId=" + user.getUserId() + "&token=" + user.getToken());
 
 //        listV = (PullToRefreshListView) findViewById(R.id.listview);
@@ -430,8 +431,8 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
                         startchatlayout.setVisibility(View.INVISIBLE);
                     }
                     refresh();
-//                    getActiveDetailsData();
-                    showNext();
+//showNext();                    getActiveDetailsData();
+
                 }
             }
         });
@@ -459,12 +460,13 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
 //        hidenProgressDialog();
 //        memberList.addAll(mVaules);
 //        setMembersData(memberList);
-//        if (hasMore) {
-//            moreL.setVisibility(View.VISIBLE);
-//        } else {
-//            moreL.setVisibility(View.GONE);
-//        }
-        membersAdapter.setData(mVaules,isMember,activeid);
+        if (hasMore) {
+            moreL.setVisibility(View.VISIBLE);
+        } else {
+            moreL.setVisibility(View.GONE);
+        }
+
+        membersAdapter.setData(mVaules, isMember, activeid);
         listV.onRefreshComplete();
     }
 
@@ -476,5 +478,10 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
     @Override
     public void onRefresh(PullToRefreshBase<ListView> refreshView) {
         refresh();
+    }
+
+    @Override
+    public void load(JSONObject jo) {
+        isMember = JSONUtil.getBoolean(jo, "isMember");
     }
 }

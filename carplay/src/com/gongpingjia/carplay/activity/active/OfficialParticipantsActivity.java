@@ -21,7 +21,9 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import net.duohuo.dhroid.net.JSONUtil;
 
-public class OfficialParticipantsActivity extends CarPlayListActivity implements PullToRefreshBase.OnRefreshListener<ListView>, ILoadSuccess {
+import org.json.JSONObject;
+
+public class OfficialParticipantsActivity extends CarPlayListActivity implements PullToRefreshBase.OnRefreshListener<ListView>, ILoadSuccess, CarPlayListActivity.onLoadDataSuccess {
 
     private ListView mRecyclerView;
     LinearLayout empty;
@@ -59,7 +61,8 @@ public class OfficialParticipantsActivity extends CarPlayListActivity implements
         adapter = new OfficialParticipantsAdapter(self);
         mRecyclerView.setAdapter(adapter);
         setOnLoadSuccess(this);
-        fromWhat("data");
+        setOnLoadDataSuccess(this);
+        fromWhat("data.members");
         setUrl(API2.CWBaseurl + "/official/activity/" + activeid + "/members?userId=" + user.getUserId() + "&token=" + user.getToken());
         showNext();
 
@@ -98,5 +101,10 @@ public class OfficialParticipantsActivity extends CarPlayListActivity implements
     @Override
     public void onRefresh(PullToRefreshBase<ListView> refreshView) {
         refresh();
+    }
+
+    @Override
+    public void load(JSONObject jo) {
+        isMember = JSONUtil.getBoolean(jo, "isMember");
     }
 }
