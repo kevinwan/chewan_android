@@ -22,6 +22,7 @@ import com.gongpingjia.carplay.activity.main.MainActivity2;
 import com.gongpingjia.carplay.activity.my.AttentionMeActivity;
 import com.gongpingjia.carplay.activity.my.DynamicActivity;
 import com.gongpingjia.carplay.activity.my.InterestedPersonActivity;
+import com.gongpingjia.carplay.activity.my.MySubscriberActivity2;
 import com.gongpingjia.carplay.activity.my.OfficialMessageActivity;
 import com.gongpingjia.carplay.activity.my.SubscribeActivity2;
 import com.gongpingjia.carplay.adapter.FragmentMsgAdapter;
@@ -101,10 +102,10 @@ public class DynamicListFragment extends CarPlayBaseFragment implements PullToRe
                             intent.putExtra("userId", username);
                             //谁关注我
                         } else if (username.equals("SubscribeAdmin")) {
-                            intent = new Intent(getActivity(), SubscribeActivity2.class);
+                            intent = new Intent(getActivity(), MySubscriberActivity2.class);
                             //最近访客
                         } else if (username.equals("UserViewAdmin")) {
-//                            intent = new Intent(getActivity(), InterestedPersonActivity.class);
+                            intent = new Intent(getActivity(), VisitorsActivity.class);
                             //活动动态
                         } else if (username.equals("ActivityStateAdmin")) {
                             intent = new Intent(getActivity(), DynamicActivity.class);
