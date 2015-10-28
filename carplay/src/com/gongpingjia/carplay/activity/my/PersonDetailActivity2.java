@@ -74,11 +74,15 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
 
     //已上传的图片
     private int uploadedCount = 0;
-
+    String  name,logo,brand;
     JSONObject jo;
     String userId;
     boolean issubscribe;        //是否关注
-
+    String licenseAuthStatus;
+    String photoAuthStatus;
+    String gender;
+    String age;
+    String emchatName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -137,9 +141,15 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
                     jo = response.jSONFromData();
 
                     JSONObject carjo = JSONUtil.getJSONObject(jo, "car");
+                      name = JSONUtil.getString(jo, "nickname");
+                    logo = JSONUtil.getString(carjo, "logo");
+                    brand = JSONUtil.getString(carjo, "brand");
+
+                     emchatName = JSONUtil.getString(jo,"emchatName");
                     //昵称,性别,年龄
                     ViewUtil.bindView(nameT, JSONUtil.getString(jo, "nickname"));
-                    String gender = JSONUtil.getString(jo, "gender");
+                     gender = JSONUtil.getString(jo, "gender");
+                     age = JSONUtil.getString(jo, "age");
                     if (gender.equals("男")) {
                         sexbgR.setBackgroundResource(R.drawable.radio_sex_man_normal);
                         sexI.setBackgroundResource(R.drawable.icon_man3x);
@@ -177,7 +187,7 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
                     issubscribe = JSONUtil.getBoolean(jo, "subscribeFlag");
                     perfectBtn.setBackgroundResource(issubscribe ? R.drawable.radio_sex_man_focused : R.drawable.btn_red_fillet);
                     //头像认证
-                    String photoAuthStatus = JSONUtil.getString(jo, "photoAuthStatus");
+                     photoAuthStatus = JSONUtil.getString(jo, "photoAuthStatus");
                     if (photoAuthStatus.equals("认证通过")) {
                         attentionT.setBackgroundResource(R.drawable.btn_yellow_fillet);
                         attentionT.setText("已认证");
@@ -186,10 +196,11 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
                         attentionT.setText("未认证");
                     }
                     //车主认证
-                    String licenseAuthStatus = JSONUtil.getString(jo, "licenseAuthStatus");
+                     licenseAuthStatus = JSONUtil.getString(jo, "licenseAuthStatus");
                     if (licenseAuthStatus.equals("认证通过")) {
                         findViewById(R.id.carlayout).setVisibility(View.VISIBLE);
                         ViewUtil.bindNetImage(carLogo, JSONUtil.getString(carjo, "logo"), "head");
+
                         ViewUtil.bindView(carName, JSONUtil.getString(carjo, "brand"));
                     } else {
                         findViewById(R.id.carlayout).setVisibility(View.GONE);
@@ -214,11 +225,20 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
                 break;
             //TA的活动
             case R.id.myactive:
-
+                it = new Intent(self,HisDynamicActivity.class);
+                it.putExtra("userId",userId);
+                it.putExtra("name",name);
+                it.putExtra("photoAuthStatus",photoAuthStatus);
+                it.putExtra("licenseAuthStatus",licenseAuthStatus);
+                it.putExtra("gender",gender);
+                it.putExtra("age",age);
+                it.putExtra("brand",brand);
+                it.putExtra("logo",logo);
+                it.putExtra("emchatName",emchatName);
+                startActivity(it);
                 break;
             //上传照片
             case R.id.upload:
-
                 mPhotoPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg").getAbsolutePath();
                 final File tempFile = new File(mPhotoPath);
                 final CharSequence[] items = {"相册", "拍照"};

@@ -33,7 +33,7 @@ public class CarPlayListActivity extends CarPlayBaseActivity {
 
     DhNet net;
 
-    boolean hasMore = true;
+    public boolean hasMore = true;
 
 
     Boolean isLoading = false;
@@ -197,6 +197,12 @@ public class CarPlayListActivity extends CarPlayBaseActivity {
                 return;
             isLoading = true;
         }
+        net.addParam("ignore", ignore);
+        net.addParam("limit", limit);
+        net.execuseInDialog("", nettask);
+    }
+
+    public void showNext(int ignore) {
         net.addParam("ignore", ignore);
         net.addParam("limit", limit);
         net.execuseInDialog("", nettask);

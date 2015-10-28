@@ -36,6 +36,7 @@ public class ForgetPasswordActivity2 extends CarPlayBaseActivity implements View
 
     @Override
     public void initView() {
+        setTitle("忘记密码");
         mEditPassword = (EditText) findViewById(R.id.et_password);
         mEditPhone = (EditText) findViewById(R.id.et_phone);
         mEditVerification = (EditText) findViewById(R.id.et_verification);

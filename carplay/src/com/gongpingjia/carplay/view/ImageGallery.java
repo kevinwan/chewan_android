@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -31,15 +32,21 @@ import de.greenrobot.event.EventBus;
  *@author zhanglong
  *Email:1269521147@qq.com
  */
-public class ImageGallery extends CarPlayBaseActivity {
+public class ImageGallery extends CarPlayBaseActivity implements View.OnClickListener{
 
     private GalleryViewPager mViewPager;
 
     private TextView mIndicatorText;
 
-    private RelativeLayout remove;
+    private TextView remove,save,cancel;
+
+    private ImageView back,more;
+
+    private RelativeLayout operationLayout;
 
     User user;
+
+    String type;
 
     int photoCurrent;
 
@@ -47,6 +54,8 @@ public class ImageGallery extends CarPlayBaseActivity {
     List<String> itemid;
 
     UrlPagerAdapter pagerAdapter;
+
+    boolean showFlag = true;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,10 +68,16 @@ public class ImageGallery extends CarPlayBaseActivity {
     @Override
     public void initView() {
         mIndicatorText = (TextView) findViewById(R.id.tv_large_pic_title);
-        remove = (RelativeLayout) findViewById(R.id.remove);
+        remove = (TextView) findViewById(R.id.remove);
+        save = (TextView) findViewById(R.id.save);
+        cancel = (TextView) findViewById(R.id.cancel);
+        back = (ImageView) findViewById(R.id.back);
+        more = (ImageView) findViewById(R.id.more);
+        operationLayout = (RelativeLayout) findViewById(R.id.operationLayout);
 
         Bundle bundle = getIntent().getExtras();
 
+        type = bundle.getString("type");
         final String[] urls = bundle.getStringArray("imgurls");
         final String[] ids = bundle.getStringArray("imgids");
         items = new ArrayList<String>();
@@ -87,49 +102,87 @@ public class ImageGallery extends CarPlayBaseActivity {
         mIndicatorText.setText(getIndicatorString(
                 it.getIntExtra("currentItem", 0) + 1, urls.length));
 
-        remove.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                if (items.size() != 0) {
-                    DhNet net = new DhNet(API2.CWBaseurl + "user/" + user.getUserId() + "/album/photos?token=" + user.getToken());
-                    JSONArray jsa = new JSONArray();
-                    jsa.put(itemid.get(photoCurrent));
-                    net.addParam("photos", jsa);
-                    net.doPost(new NetTask(self) {
-                        @Override
-                        public void doInUI(Response response, Integer transfer) {
-                            if (response.isSuccess()) {
+        if ("myalbum".equals(type)){
+            remove.setVisibility(View.VISIBLE);
+            save.setVisibility(View.GONE);
+        }else {
+            remove.setVisibility(View.GONE);
+            save.setVisibility(View.VISIBLE);
+        }
 
-                                items.remove(photoCurrent);
-                                itemid.remove(photoCurrent);
-                                if (items.size() != 0) {
-                                    pagerAdapter.notifyDataSetChanged();
-                                    mViewPager.setCurrentItem(0);
-                                    mIndicatorText.setText(getIndicatorString(0,
-                                            items.size()));
-                                } else {
-                                    user.setHasAlbum(false);         //设置相册状态
-                                    finish();
-                                }
-                                EventBus.getDefault().post(new String("上传成功"));
-
-                            }
-                        }
-                    });
-//                } else {
-//                    EventBus.getDefault().post(new String("上传成功"));
-//                    finish();
-//                }
-            }
-        });
+        remove.setOnClickListener(this);
+        save.setOnClickListener(this);
+        cancel.setOnClickListener(this);
+        back.setOnClickListener(this);
+        more.setOnClickListener(this);
     }
 
     private String getIndicatorString(int index, int total) {
         return (index + 1) + "/" + total;
     }
 
+    /**
+     * 删除图片
+     */
     private void deletePhoto(){
-        
+        DhNet net = new DhNet(API2.CWBaseurl + "user/" + user.getUserId() + "/album/photos?token=" + user.getToken());
+        JSONArray jsa = new JSONArray();
+        jsa.put(itemid.get(photoCurrent));
+        net.addParam("photos", jsa);
+        net.doPost(new NetTask(self) {
+            @Override
+            public void doInUI(Response response, Integer transfer) {
+                if (response.isSuccess()) {
+                    showOperation();
+                    items.remove(photoCurrent);
+                    itemid.remove(photoCurrent);
+                    if (items.size() != 0) {
+                        pagerAdapter.notifyDataSetChanged();
+                        mViewPager.setCurrentItem(0);
+                        mIndicatorText.setText(getIndicatorString(0,
+                                items.size()));
+                    } else {
+                        user.setHasAlbum(false);         //设置相册状态
+                        finish();
+                    }
+                    EventBus.getDefault().post(new String("上传成功"));
+
+                }
+            }
+        });
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            //删除图片
+            case R.id.remove:
+                deletePhoto();
+                showOperation();
+            break;
+            //保存图片
+            case R.id.save:
+                break;
+            //取消
+            case R.id.cancle:
+                showOperation();
+                break;
+            case R.id.back:
+                finish();
+                break;
+            case R.id.more:
+                showOperation();
+                break;
+        }
+    }
+
+    private void showOperation(){
+        if (showFlag){
+            operationLayout.setVisibility(View.VISIBLE);
+            showFlag = !showFlag;
+        }else {
+            operationLayout.setVisibility(View.GONE);
+            showFlag = !showFlag;
+        }
+    }
 }

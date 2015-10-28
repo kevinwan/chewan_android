@@ -162,15 +162,15 @@
 
     <Button
         android:id="@+id/btn_logout"
-        android:layout_width="match_parent"
+        style="@style/text_white_medium"
+        android:layout_width="wrap_content"
         android:layout_height="45dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
-        android:layout_marginTop="25dp"
-        android:background="@drawable/button_radian"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_forgetpwd_xml"
+        android:layout_gravity="center"
+        android:paddingLeft="70dp"
+        android:paddingRight="70dp"
         android:text="退出登录"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_medium"
         android:visibility="visible" />
 
 </LinearLayout>

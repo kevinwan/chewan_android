@@ -40,10 +40,11 @@ import java.util.List;
 import de.greenrobot.event.EventBus;
 
 /**
- * Created by Administrator on 2015/10/24.
- * 官方活动参与成员adapter
+ * Created by Administrator on 2015/10/28.
+ * 参与成员adapter
  */
-public class OfficialMembersAdapter extends BaseAdapter {
+public class OfficialParticipantsAdapter extends BaseAdapter {
+
     private final Context mContext;
 
     private List<JSONObject> data;
@@ -54,7 +55,7 @@ public class OfficialMembersAdapter extends BaseAdapter {
 
     private User user;
 
-    public OfficialMembersAdapter(Context context) {
+    public OfficialParticipantsAdapter(Context context) {
         mContext = context;
         user = User.getInstance();
     }
@@ -99,7 +100,7 @@ public class OfficialMembersAdapter extends BaseAdapter {
         ViewHolder holder = null;
         if (null == convertView) {
             holder = new ViewHolder();
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_active_memeber2, null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_official_participants, null);
             holder.head = (RoundImageView) convertView.findViewById(R.id.head);
             holder.name = (TextView) convertView.findViewById(R.id.nickname);
             holder.age = (TextView) convertView.findViewById(R.id.tv_age);
@@ -161,15 +162,9 @@ public class OfficialMembersAdapter extends BaseAdapter {
         });
 
         holder.invite.setVisibility(userId.equals(user.getUserId()) ? View.GONE : View.VISIBLE);
-        //受邀 人数 为0 不显示
-        int invitedCount = JSONUtil.getInt(jo, "invitedCount");
-        if (invitedCount == 0) {
-            holder.invitecount.setVisibility(View.INVISIBLE);
-        } else {
-            holder.invitecount.setVisibility(View.VISIBLE);
-            int distance = (int) Math.floor(JSONUtil.getDouble(jo, "distance"));
-            holder.invitecount.setText(CarPlayUtil.numberWithDelimiter(distance) + "!已被" + invitedCount + "人邀请同去");
-        }
+
+        int distance = (int) Math.floor(JSONUtil.getDouble(jo, "distance"));
+        holder.invitecount.setText(CarPlayUtil.numberWithDelimiter(distance));
 
         //接受 人数 为0 不显示
         int acceptCount = JSONUtil.getInt(jo, "acceptCount");
@@ -352,5 +347,4 @@ public class OfficialMembersAdapter extends BaseAdapter {
                 break;
         }
     }
-
 }
