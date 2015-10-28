@@ -75,8 +75,14 @@ public class AttentionMeActivity extends CarPlayListActivity implements PullToRe
 
     @Override
     public void loadSuccessOnFirst() {
-        empty.setVisibility(View.VISIBLE);
-        msg.setText("暂未被Ta人关注");
+        if (mVaules.size() == 0) {
+            empty.setVisibility(View.VISIBLE);
+            msg.setText("暂未被Ta人关注");
+        } else {
+            empty.setVisibility(View.GONE);
+        }
+
+
     }
 
 

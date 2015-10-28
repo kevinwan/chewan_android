@@ -61,8 +61,13 @@ public class OfficialMessageActivity extends CarPlayListActivity implements Pull
 
     @Override
     public void loadSuccessOnFirst() {
-        empty.setVisibility(View.VISIBLE);
-        msg.setText("此处暂无活动");
+        if (mVaules.size() == 0) {
+            empty.setVisibility(View.VISIBLE);
+            msg.setText("此处暂无消息");
+        } else {
+            empty.setVisibility(View.GONE);
+        }
+
 
     }
 

@@ -173,7 +173,10 @@ public class InterestedPersonAdapter extends BaseAdapter{
         if ("未认证".equals(licenseAuthStatus)) {
             holder.carNameT.setVisibility(View.GONE);
             holder.carStateI.setVisibility(View.GONE);
-        } else {
+        } else if("认证中".equals(licenseAuthStatus)){
+            holder.carNameT.setVisibility(View.GONE);
+            holder.carStateI.setVisibility(View.GONE);
+        }else if("认证通过".equals(licenseAuthStatus)){
             holder.carNameT.setVisibility(View.VISIBLE);
             holder.carStateI.setVisibility(View.VISIBLE);
         }

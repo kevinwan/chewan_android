@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.gongpingjia.carplay.ILoadSuccess;
 import com.gongpingjia.carplay.R;
@@ -24,7 +25,7 @@ public class RecommendListFragment extends CarPlayBaseFragment implements PullTo
 
     static RecommendListFragment instance;
     private RecyclerViewPager recyclerView;
-
+    TextView msg;
     PullToRefreshRecyclerViewHorizontal listV;
 
     LinearLayoutManager layout;
@@ -54,6 +55,7 @@ public class RecommendListFragment extends CarPlayBaseFragment implements PullTo
         listV.setMode(PullToRefreshBase.Mode.BOTH);
         listV.setOnRefreshListener(this);
          empty = (LinearLayout) mainV.findViewById(R.id.empty);
+        msg = (TextView) mainV. findViewById(R.id.msg);
         recyclerView = listV.getRefreshableView();
         adapter = new RecommendListAdapter(getActivity());
         recyclerView.setAdapter(adapter);
@@ -86,6 +88,11 @@ public class RecommendListFragment extends CarPlayBaseFragment implements PullTo
 
     @Override
     public void loadSuccessOnFirst() {
-        empty.setVisibility(View.VISIBLE);
+        if (mVaules.size() == 0) {
+            empty.setVisibility(View.VISIBLE);
+            msg.setText("此处暂无消息");
+        } else {
+            empty.setVisibility(View.GONE);
+        }
     }
 }

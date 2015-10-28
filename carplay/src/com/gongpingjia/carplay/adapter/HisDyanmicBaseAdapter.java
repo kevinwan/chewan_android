@@ -141,7 +141,7 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
         int status = JSONUtil.getInt(jo, "status");
         holder.titleT.setText(bundle.getString("name") + "想约人" + type);
         holder.pay_type.setText(pay);
-        ViewUtil.bindNetImage(holder.activity_beijing,cover,"head");
+        ViewUtil.bindNetImage(holder.activity_beijing,cover,"default");
         if (status == 0) {
             holder.invitation.setVisibility(View.VISIBLE);
             holder.yingyaohou.setVisibility(View.GONE);
