@@ -75,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="3dp"
                 android:layout_weight="1"
-                android:background="@drawable/button_owners_bg"
+                android:background="@drawable/btn_red_fillet"
                 android:text="登录"
                 android:textColor="@color/white" />
 
@@ -86,7 +86,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
                 android:layout_weight="1"
-                android:background="@drawable/button_yanzheng_bg"
+                android:background="@drawable/btn_blue_fillet"
                 android:text="注册"
                 android:textColor="@color/white" />
 

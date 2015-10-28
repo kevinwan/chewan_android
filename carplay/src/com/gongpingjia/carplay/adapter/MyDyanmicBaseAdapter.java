@@ -156,11 +156,7 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                 holder.yingyao = (AnimButtonView) view.findViewById(R.id.yingyao);
                 holder.hulue = (AnimButtonView) view.findViewById(R.id.hulue);
                 holder.invitationI = (AnimButtonView) view.findViewById(R.id.invitationI);
-                holder.dyanmic_one.startScaleAnimation();
-                holder.dyanmic_two.startScaleAnimation();
-                holder.yingyao.startScaleAnimation();
-                holder.hulue.startScaleAnimation();
-                holder.invitationI.startScaleAnimation();
+
 
 
                 holder.activity_distance = (TextView) view.findViewById(R.id.active_distance);
@@ -270,6 +266,15 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
             int status = JSONUtil.getInt(jo, "status");
             final String appointmentId = JSONUtil.getString(jo, "appointmentId");
 
+            holder.dyanmic_one.startScaleAnimation();
+            holder.dyanmic_two.startScaleAnimation();
+            holder.yingyao.startScaleAnimation();
+            holder.hulue.startScaleAnimation();
+            holder.invitationI.startScaleAnimation();
+
+
+
+
             Boolean isApplicant = JSONUtil.getBoolean(jo, "isApplicant");
 
             String licenseAuthStatus = JSONUtil.getString(js, "licenseAuthStatus");
@@ -292,11 +297,11 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                 holder.activity_place.setVisibility(View.VISIBLE);
                 holder.activity_place.setText(JSONUtil.getString(json, "province") + JSONUtil.getString(json, "city") + JSONUtil.getString(json, "district") + JSONUtil.getString(json, "street"));
             }
-            String message = JSONUtil.getString(jo,"message");
-            if (!message.isEmpty()){
+            String message = JSONUtil.getString(jo, "message");
+            if (!message.isEmpty()) {
                 holder.inviteT.setVisibility(View.VISIBLE);
                 holder.inviteT.setText(message);
-            }else{
+            } else {
                 holder.inviteT.setVisibility(View.GONE);
             }
 
@@ -374,7 +379,8 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                     holder.yingyaohou.setVisibility(View.GONE);
                     holder.titleT.setText("你邀请" + name + "去" + typeT);
                     holder.invitationT.setText("邀请中");
-
+                    holder.invitationI.setResourseAndBg(R.drawable.dynamic_grey
+                            , R.drawable.dynamic_grey);
 
                 } else {
 //                System.out.println("别人应邀我。。。。。。。。。。。。");
@@ -391,6 +397,8 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                     holder.invitation.setVisibility(View.GONE);
                     holder.titleT.setText("你邀请" + name + "去" + typeT);
                     holder.invitationT.setText("邀请中");
+                    holder.invitationI.setResourseAndBg(R.drawable.dynamic_grey
+                            , R.drawable.dynamic_grey);
                 } else {
                     holder.yingyao_layout.setVisibility(View.GONE);
                     holder.invitation.setVisibility(View.GONE);
@@ -519,7 +527,7 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
 
 
     class ViewHolder {
-        TextView titleT, dynamic_carname, pay_type, travelmode, activity_place, activity_distance, ageT, invitationT,inviteT;
+        TextView titleT, dynamic_carname, pay_type, travelmode, activity_place, activity_distance, ageT, invitationT, inviteT;
         ImageView dynamic_carlogo, activity_beijing, certification_achievement, sexI;
         AnimButtonView dyanmic_one, dyanmic_two, yingyao, hulue, invitationI;
         LinearLayout yingyao_layout, yingyaohou, invitation;
