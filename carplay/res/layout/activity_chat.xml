@@ -10,6 +10,7 @@
         android:id="@+id/top_bar"
         layout="@layout/include_title_bar" />
 
+
     <LinearLayout
         android:id="@+id/bar_bottom"
         android:layout_width="match_parent"
