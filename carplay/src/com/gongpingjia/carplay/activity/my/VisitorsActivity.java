@@ -77,7 +77,7 @@ public class VisitorsActivity extends CarPlayListActivity implements PullToRefre
             empty.setVisibility(View.GONE);
         }
 
-       
+
     }
 
     @Override

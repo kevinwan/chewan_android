@@ -225,7 +225,9 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".activity.active.ActiveDetailsActivity2" />
+        <activity android:name=".activity.active.ActiveDetailsActivity2"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.my.AuthenticateOwnersActivity2"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -284,9 +286,13 @@
             android:name=".activity.my.MyPerSonDetailActivity2"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.main.GuidanceActivity2" >
+        <activity android:name=".activity.main.GuidanceActivity2"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".activity.active.OfficialParticipantsActivity" >
+        <activity android:name=".activity.active.OfficialParticipantsActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".activity.my.VisitorsActivity"
@@ -303,7 +309,9 @@
         <activity
             android:name=".activity.active.NearListActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+
+        </activity>
     </application>
 
 </manifest>
