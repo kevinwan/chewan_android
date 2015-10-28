@@ -121,6 +121,12 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
 
     @Override
     public void loadSuccess() {
+        if (mVaules.size() != 0) {
+            listV.isScrollOnFooter = false;
+
+        } else {
+            listV.isScrollOnFooter = true;
+        }
         adapter.setData(mVaules);
         listV.onRefreshComplete();
     }

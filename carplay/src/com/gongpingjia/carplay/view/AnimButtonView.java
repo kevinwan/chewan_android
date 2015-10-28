@@ -123,7 +123,7 @@ public class AnimButtonView extends RelativeLayout {
 
 
     public void clearAnimation() {
-
+        mHandler.removeMessages(MSG_WAVE2_ANIMATION);
         if (mAnimationSet1 != null) {
             mAnimationSet1.cancel();
         }
