@@ -147,7 +147,13 @@ public class MatchingListFragment extends CarPlayBaseFragment implements PullToR
     @Override
     public void loadSuccessOnFirst() {
 //            listV.setVisibility(View.GONE);
-        near_layout.setVisibility(View.VISIBLE);
+//        near_layout.setVisibility(View.VISIBLE);
+
+        if (mVaules.size() == 0) {
+            near_layout.setVisibility(View.VISIBLE);
+        } else {
+            near_layout.setVisibility(View.GONE);
+        }
 
     }
 

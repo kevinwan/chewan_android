@@ -150,13 +150,9 @@ public class CarPlayBaseFragment extends Fragment {
                     }
                 }
 
+
+
                 if (list != null) {
-                    if (Const.postType == 2) {
-                        if (!response.isCache()) {
-                            currentPageListSize = list.size();
-                            ignore = ignore + list.size();
-                        }
-                    }
                     addAll(list);
                 }
 
@@ -170,9 +166,17 @@ public class CarPlayBaseFragment extends Fragment {
                     onLoadSuccess.loadSuccess();
                 }
 
-                if (onLoadSuccess != null && !response.isCache() && ignore == 0) {
+                if (onLoadSuccess != null && !response.isCache() && ignore ==0) {
                     onLoadSuccess.loadSuccessOnFirst();
                 }
+
+                if (Const.postType == 2) {
+                    if (!response.isCache()) {
+                        currentPageListSize = list.size();
+                        ignore = ignore + list.size();
+                    }
+                }
+
             }
         };
 

@@ -138,14 +138,7 @@ public class CarPlayListActivity extends CarPlayBaseActivity {
                         clear();
                     }
                 }
-
                 if (list != null) {
-                    if (Const.postType == 2) {
-                        if (!response.isCache()) {
-                            currentPageListSize = list.size();
-                            ignore = ignore + list.size();
-                        }
-                    }
                     addAll(list);
                 }
 
@@ -161,6 +154,13 @@ public class CarPlayListActivity extends CarPlayBaseActivity {
 
                 if (onLoadSuccess != null && !response.isCache() && ignore == 0) {
                     onLoadSuccess.loadSuccessOnFirst();
+                }
+
+                if (Const.postType == 2) {
+                    if (!response.isCache()) {
+                        currentPageListSize = list.size();
+                        ignore = ignore + list.size();
+                    }
                 }
 
             }
