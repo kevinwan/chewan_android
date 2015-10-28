@@ -39,6 +39,7 @@ import com.easemob.chat.EMGroupManager;
 import com.easemob.chat.EMMessage;
 import com.easemob.exceptions.EaseMobException;
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.activity.active.MatchingListFragment;
 import com.gongpingjia.carplay.activity.active.NearListFragment;
 import com.gongpingjia.carplay.activity.active.RecommendListFragment;
 import com.gongpingjia.carplay.activity.dynamic.DynamicListFragment;
@@ -569,6 +570,13 @@ public class MainActivity2 extends BaseFragmentActivity implements
     }
 
     public void onEventMainThread(TabEB tab) {
+        if (tab.getIndex() == 2) {
+            //切换到匹配意向
+            MatchingListFragment.getInstance().setParams(tab.getParams());
+            switchContent(MatchingListFragment.getInstance());
+            setTitle("匹配意向结果");
+            return;
+        }
         setTab(0);
     }
 

@@ -104,7 +104,7 @@ public class InterestedPersonAdapter extends BaseAdapter{
             holder.photoDistancelayoutL = (LinearLayout) convertView.findViewById(R.id.photo_distancelayout);
             holder.activeDistancelayoutl = (LinearLayout) convertView.findViewById(R.id.active_distancelayout);
             holder.invitationI = (AnimButtonView) convertView.findViewById(R.id.invitationI);
-
+            holder.invitationI.startScaleAnimation();
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -114,7 +114,7 @@ public class InterestedPersonAdapter extends BaseAdapter{
 
         //用户信息,所在地,car信息,头像信息
         final JSONObject userjo = JSONUtil.getJSONObject(jo, "user");
-        JSONObject distancejo = JSONUtil.getJSONObject(jo, "destination");
+        JSONObject distancejo = JSONUtil.getJSONObject(jo, "activityDestination");
         JSONObject carjo = JSONUtil.getJSONObject(userjo, "car");
 //        JSONArray albumjsa = JSONUtil.getJSONArray(userjo, "album");
 
@@ -187,12 +187,19 @@ public class InterestedPersonAdapter extends BaseAdapter{
             holder.photoDistancelayoutL.setVisibility(View.GONE);
             holder.invitationL.setVisibility(View.VISIBLE);
               activityId = JSONUtil.getString(jo,"relatedId");
+            int activityStatus = JSONUtil.getInt(jo,"activityStatus");
             //题头
-            ViewUtil.bindView(holder.titleT, JSONUtil.getString(userjo, "nickname") + "想邀请你" + JSONUtil.getString(jo, "activityType"));
+            ViewUtil.bindView(holder.titleT, JSONUtil.getString(userjo, "nickname") + "想找人一起" + JSONUtil.getString(jo, "activityType"));
             //所在地,距离
             int distance = (int) Math.floor(JSONUtil.getDouble(jo, "distance"));
             holder.activeDistanceT.setText(CarPlayUtil.numberWithDelimiter(distance));
-            holder.locationT.setText(JSONUtil.getString(distancejo, "province") + JSONUtil.getString(distancejo, "city") + JSONUtil.getString(distancejo, "district") + JSONUtil.getString(distancejo, "street"));
+            if (distancejo == null){
+                holder.locationT.setVisibility(View.GONE);
+            }else{
+                holder.locationT.setVisibility(View.VISIBLE);
+                holder.locationT.setText(JSONUtil.getString(distancejo, "province") + JSONUtil.getString(distancejo, "city") + JSONUtil.getString(distancejo, "district") + JSONUtil.getString(distancejo, "street"));
+            }
+
             //付费类型,是否包接送
             ViewUtil.bindView(holder.payT, JSONUtil.getString(jo, "pay"));
             boolean transfer = JSONUtil.getBoolean(jo, "transfer");
@@ -204,7 +211,14 @@ public class InterestedPersonAdapter extends BaseAdapter{
                 holder.transferT.setText("不包接送");
             }
             holder.invitationL.setVisibility(View.VISIBLE);
-            holder.invitationI.setOnClickListener(new MyOnClick(holder,position));
+            holder.invitationI.setOnClickListener(new MyOnClick(holder, position));
+            if (activityStatus == 1){
+                holder.invitationT.setText("邀 TA");
+                holder.invitationI.setEnabled(true);
+            }else{
+                holder.invitationT.setText("邀请中");
+                holder.invitationI.setEnabled(false);
+            }
 
 
         }else {
@@ -253,6 +267,7 @@ public class InterestedPersonAdapter extends BaseAdapter{
             public void doInUI(Response response, Integer transfer) {
                 if (response.isSuccess()) {
                     holder.invitationT.setText("邀请中");
+                    System.out.println("邀Ta"+response.isSuccess());
 //                    try {
 //                        jo.put("applyFlag", true);
 //                    } catch (JSONException e) {
