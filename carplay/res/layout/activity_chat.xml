@@ -21,6 +21,7 @@
         android:paddingBottom="2dip"
         android:paddingTop="2dip" >
 
+
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
