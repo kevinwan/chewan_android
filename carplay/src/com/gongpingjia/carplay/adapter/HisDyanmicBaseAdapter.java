@@ -51,7 +51,7 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
     private final Context mContext;
     String activityId;
     private List<JSONObject> data;
-//    User user = User.getInstance();
+    //    User user = User.getInstance();
     Bundle bundle;
     String cover;
     Double distance;
@@ -141,16 +141,21 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
         int status = JSONUtil.getInt(jo, "status");
         holder.titleT.setText(bundle.getString("name") + "想约人" + type);
         holder.pay_type.setText(pay);
-        ViewUtil.bindNetImage(holder.activity_beijing,cover,"default");
+        ViewUtil.bindNetImage(holder.activity_beijing, cover, "default");
         if (status == 0) {
             holder.invitation.setVisibility(View.VISIBLE);
             holder.yingyaohou.setVisibility(View.GONE);
             holder.invitationT.setText("邀 TA");
+            holder.invitationI.setResourseAndBg(R.drawable.red_circle
+                    , R.drawable.red_circle);
 
         } else if (status == 1) {
             holder.invitation.setVisibility(View.VISIBLE);
             holder.yingyaohou.setVisibility(View.GONE);
             holder.invitationT.setText("邀请中");
+            holder.invitationI.setResourseAndBg(R.drawable.dynamic_grey
+                    , R.drawable.dynamic_grey
+            );
 
         } else if (status == 2) {
             holder.invitation.setVisibility(View.GONE);
@@ -255,7 +260,7 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
                     holder.invitationT.setText("邀请中");
                     System.out.println("邀Ta" + response.isSuccess());
                     try {
-                        jo.put("applyFlag", true);
+                        jo.put("status", 2);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

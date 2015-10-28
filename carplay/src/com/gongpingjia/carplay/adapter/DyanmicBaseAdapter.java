@@ -141,11 +141,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
                 holder.hulue = (AnimButtonView) view.findViewById(R.id.hulue);
                 holder.hulue = (AnimButtonView) view.findViewById(R.id.hulue);
                 holder.invitationI = (AnimButtonView) view.findViewById(R.id.invitationI);
-                holder.dyanmic_one.startScaleAnimation();
-                holder.dyanmic_two.startScaleAnimation();
-                holder.yingyao.startScaleAnimation();
-                holder.hulue.startScaleAnimation();
-                holder.invitationI.startScaleAnimation();
+
 
                 holder.activity_distance = (TextView) view.findViewById(R.id.active_distance);
                 view.setTag(holder);
@@ -196,6 +192,14 @@ public class DyanmicBaseAdapter extends BaseAdapter {
 //        CarPlayUtil.bindActiveButton("应邀", appointmentId, mContext, viewstwo);
 //                CarPlayUtil.bindActiveButton("拒绝".views);
 
+            holder.dyanmic_one.startScaleAnimation();
+            holder.dyanmic_two.startScaleAnimation();
+            holder.yingyao.startScaleAnimation();
+            holder.hulue.startScaleAnimation();
+            holder.invitationI.startScaleAnimation();
+
+
+
             CarPlayUtil.bindActiveButton2("邀请中", appointmentId, mContext, holder.yingyao_layout, holder.yingyaohou);
             String typeT = JSONUtil.getString(jo, "type");
             String name = JSONUtil.getString(js, "nickname");
@@ -208,7 +212,8 @@ public class DyanmicBaseAdapter extends BaseAdapter {
                     holder.yingyaohou.setVisibility(View.GONE);
                     holder.titleT.setText("你邀请" + name + "去" + typeT);
                     holder.invitationT.setText("邀请中");
-
+                    holder.invitationI.setResourseAndBg(R.drawable.dynamic_grey
+                            , R.drawable.dynamic_grey);
 
                 } else {
 //                System.out.println("别人应邀我。。。。。。。。。。。。");
@@ -225,6 +230,8 @@ public class DyanmicBaseAdapter extends BaseAdapter {
                     holder.invitation.setVisibility(View.GONE);
                     holder.titleT.setText("你邀请" + name + "去" + typeT);
                     holder.invitationT.setText("邀请中");
+                    holder.invitationI.setResourseAndBg(R.drawable.dynamic_grey
+                            , R.drawable.dynamic_grey);
                 } else {
                     holder.yingyao_layout.setVisibility(View.GONE);
                     holder.invitation.setVisibility(View.GONE);

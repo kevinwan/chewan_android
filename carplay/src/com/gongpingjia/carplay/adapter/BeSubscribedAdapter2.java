@@ -95,6 +95,7 @@ public class BeSubscribedAdapter2 extends BaseAdapter {
                         mSubscribeListener.onSubscribe(obj.getString("userId"));
                     } catch (JSONException e) {
                         e.printStackTrace();
+
                     }
                 }
             }

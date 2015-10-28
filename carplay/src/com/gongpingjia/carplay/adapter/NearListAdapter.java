@@ -210,7 +210,7 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
 
         //头像认证,车主认证
         String headatt = JSONUtil.getString(userjo, "photoAuthStatus");
-        holder.headatt.setImageResource("认证通过".equals(headatt) ? R.drawable.headaut_no : R.drawable.headaut_dl);
+        holder.headatt.setImageResource("认证通过".equals(headatt)? R.drawable.headaut_dl   :R.drawable.headaut_no );
 
         if (user.isLogin()) {
             holder.attention.setVisibility(JSONUtil.getString(userjo, "userId").equals(user.getUserId()) ? View.GONE : View.VISIBLE);
@@ -234,17 +234,27 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
         //所在地,距离
         int distance = (int) Math.floor(JSONUtil.getDouble(jo, "distance"));
         holder.distance.setText(CarPlayUtil.numberWithDelimiter(distance));
-        holder.location.setText(JSONUtil.getString(distancejo, "province") + JSONUtil.getString(distancejo, "city") + JSONUtil.getString(distancejo, "district") + JSONUtil.getString(distancejo, "street"));
+
+
+        if (distancejo == null){
+            holder.location.setVisibility(View.GONE);
+        }else{
+            holder.location.setVisibility(View.VISIBLE);
+            holder.location.setText(JSONUtil.getString(distancejo, "province") + JSONUtil.getString(distancejo, "city") + JSONUtil.getString(distancejo, "district") + JSONUtil.getString(distancejo, "street"));
+        }
+
+        String licenseAuthStatus = JSONUtil.getString(userjo,"licenseAuthStatus");
 
         //car logo ,car name
-        if (carjo == null) {
-            holder.car_logo.setVisibility(View.GONE);
-            holder.car_name.setVisibility(View.GONE);
-        } else {
+        if ("认证通过".equals(licenseAuthStatus)) {
             holder.car_logo.setVisibility(View.VISIBLE);
             holder.car_name.setVisibility(View.VISIBLE);
             ViewUtil.bindNetImage(holder.car_logo, JSONUtil.getString(carjo, "logo"), "head");
             ViewUtil.bindView(holder.car_name, JSONUtil.getString(carjo, "model"));
+        } else {
+            holder.car_logo.setVisibility(View.GONE);
+            holder.car_name.setVisibility(View.GONE);
+
         }
 
 
