@@ -17,6 +17,7 @@ import com.easemob.chat.EMMessage;
 import com.gongpingjia.carplay.ILoadSuccess;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseFragment;
+import com.gongpingjia.carplay.activity.active.NearListActivity;
 import com.gongpingjia.carplay.activity.chat.ChatActivity;
 import com.gongpingjia.carplay.activity.main.MainActivity2;
 import com.gongpingjia.carplay.activity.my.AttentionMeActivity;
@@ -24,7 +25,6 @@ import com.gongpingjia.carplay.activity.my.DynamicActivity;
 import com.gongpingjia.carplay.activity.my.InterestedPersonActivity;
 import com.gongpingjia.carplay.activity.my.MySubscriberActivity2;
 import com.gongpingjia.carplay.activity.my.OfficialMessageActivity;
-import com.gongpingjia.carplay.activity.my.SubscribeActivity2;
 import com.gongpingjia.carplay.activity.my.VisitorsActivity;
 import com.gongpingjia.carplay.adapter.FragmentMsgAdapter;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -110,6 +110,8 @@ public class DynamicListFragment extends CarPlayBaseFragment implements PullToRe
                             //活动动态
                         } else if (username.equals("ActivityStateAdmin")) {
                             intent = new Intent(getActivity(), DynamicActivity.class);
+                        } else if (username.equals("NearbyAdmin")) {
+                            intent = new Intent(getActivity(), NearListActivity.class);
                         }
                         break;
                     case 2:
@@ -133,7 +135,7 @@ public class DynamicListFragment extends CarPlayBaseFragment implements PullToRe
                 ((MainActivity2) getActivity()).updateUnreadLabel();
                 if (!hidden && !((MainActivity2) getActivity()).isConflict) {
                     ((MainActivity2) getActivity()).updateUnreadLabel();
-//        if (!hidden && !((MainActivity) getActivity()).isConflict) {
+//        if (!hidden && !((MainActivity2) getActivity()).isConflict) {
 //            getHeadImg();
 //        }
                 }

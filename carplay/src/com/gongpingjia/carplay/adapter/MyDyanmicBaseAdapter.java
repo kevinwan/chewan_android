@@ -252,6 +252,18 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                 }
             });
 
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    JSONObject jo = (JSONObject) getItem(i);
+                    Intent it = new Intent(mContext, ActiveDetailsActivity2.class);
+                    it.putExtra("activityId", JSONUtil.getString(jo, "officialActivityId"));
+                    mContext.startActivity(it);
+                }
+            });
+
+
         } else {
             //活动id
             activityId = JSONUtil.getString(jo, "activityId");
@@ -440,6 +452,16 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                 }
             });
 
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent it = new Intent(mContext, PersonDetailActivity2.class);
+                    String userId = JSONUtil.getString(js, "userId");
+                    it.putExtra("userId", userId);
+                    mContext.startActivity(it);
+                }
+            });
         }
 
 

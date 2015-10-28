@@ -33,7 +33,7 @@
 
 
         <ImageView
-            android:id="@+id/right_icon"
+            android:id="@+id/more"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_alignParentRight="true"
@@ -52,15 +52,58 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/remove"
+        android:id="@+id/operationLayout"
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/white">
-        <TextView
-            style="@style/text_black_medium"
-            android:text="删除"
-            android:layout_centerInParent="true"/>
-        </RelativeLayout>
+        android:layout_height="match_parent"
+        android:background="@color/black40">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="20dp"
+            android:background="@color/nothing"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/remove"
+                style="@style/text_black_medium"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:background="@color/white"
+                android:gravity="center"
+                android:text="删除"
+                android:textColor="@color/text_blue"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/save"
+                style="@style/text_black_medium"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:background="@color/white"
+                android:gravity="center"
+                android:text="保存图片"
+                android:textColor="@color/text_blue" />
+
+            <TextView
+                android:id="@+id/cancel"
+                style="@style/text_black_medium"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="12dp"
+                android:background="@color/white"
+                android:gravity="center"
+                android:text="取消"
+                android:textColor="@color/text_blue" />
+        </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>

@@ -14,6 +14,7 @@ import com.gongpingjia.carplay.activity.my.PersonDetailActivity2;
 import com.gongpingjia.carplay.adapter.NearListAdapter;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.FilterPreference2;
+import com.gongpingjia.carplay.bean.LoginEB;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.view.AnimButtonView;
 import com.gongpingjia.carplay.view.PullToRefreshRecyclerViewVertical;
@@ -138,7 +139,12 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
     @Override
     public void loadSuccessOnFirst() {
 //            listV.setVisibility(View.GONE);
-        near_layout.setVisibility(View.VISIBLE);
+        if (mVaules.size() == 0) {
+            near_layout.setVisibility(View.VISIBLE);
+        } else {
+            near_layout.setVisibility(View.GONE);
+        }
+
 
     }
 
@@ -149,6 +155,13 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
         addParams("pay", pre.getPay());
         addParams("gender", pre.getGender());
         addParams("transfer", pre.isTransfer());
+        refresh();
+    }
+
+
+    public void onEventMainThread(LoginEB login) {
+        addParams("token", user.getToken());
+        addParams("userId", user.getUserId());
         refresh();
     }
 

@@ -16,8 +16,9 @@ import android.widget.TextView;
 import com.easemob.chat.EMGroup;
 import com.easemob.chat.EMGroupManager;
 import com.gongpingjia.carplay.CarPlayValueFix;
+import com.gongpingjia.carplay.ILoadSuccess;
 import com.gongpingjia.carplay.R;
-import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
+import com.gongpingjia.carplay.activity.CarPlayListActivity;
 import com.gongpingjia.carplay.activity.chat.ChatActivity;
 import com.gongpingjia.carplay.activity.my.MyPerSonDetailActivity2;
 import com.gongpingjia.carplay.activity.my.PersonDetailActivity2;
@@ -26,6 +27,8 @@ import com.gongpingjia.carplay.adapter.OfficialMembersAdapter;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.view.CarPlayGallery;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
@@ -37,16 +40,18 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import de.greenrobot.event.EventBus;
 
 /**
  * 活动详情
  */
-public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.OnClickListener {
+public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.OnClickListener,  PullToRefreshBase.OnRefreshListener<ListView>, ILoadSuccess {
 
-    private ListView mListView;
+//    private ListView mListView;
 
     private LayoutInflater mInflater;
 
@@ -57,6 +62,12 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
     private Button joinBtn, chatBtn, buyticketsBtn;
 
     private LinearLayout startchatlayout;
+
+    private ListView mRecyclerView;
+//    LinearLayout empty;
+//    TextView msg;
+    PullToRefreshListView listV;
+    private OfficialMembersAdapter membersAdapter;
 
     User user;
 
@@ -85,18 +96,19 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
     private LinearLayout moreL, processL, explainL;
     private ImageView processIconI, explainIconI;
     private TextView explaintxtT, processT;
-    private OfficialMembersAdapter membersAdapter;
 
     private boolean contentFlag = false;
     private boolean processFlag = false;
     private boolean explainFlag = false;
+
+    List<JSONObject> memberList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_active_details2);
         EventBus.getDefault().register(this);
-
+        memberList = new ArrayList<>();
 //        http://cwapi.gongpingjia.com:8080/v2/official/activity/561f5eaa0cf2a1b735efa50a/info?userId=561ba2d60cf2429fb48e86bd&token=9927f747-c615-4362-bd43-a2ec31362205
     }
 
@@ -105,14 +117,32 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
     public void initView() {
         user = User.getInstance();
         setTitle("活动详情");
+        activeid = getIntent().getStringExtra("activityId");
         mInflater = LayoutInflater.from(self);
         mHeadView = mInflater.inflate(R.layout.item_active_details2_headview, null);
         mFootView = mInflater.inflate(R.layout.item_active_details2_footview, null);
-        mListView = (ListView) findViewById(R.id.listview);
-        mListView.addHeaderView(mHeadView, null, false);
-        mListView.addFooterView(mFootView, null, false);
+
+
+        listV = (PullToRefreshListView) findViewById(R.id.listview);
+        listV.setMode(PullToRefreshBase.Mode.BOTH);
+        listV.setOnRefreshListener(this);
+//        empty = (LinearLayout) findViewById(R.id.empty);
+//        msg = (TextView) findViewById(R.id.msg);
+
+        mRecyclerView = listV.getRefreshableView();
         membersAdapter = new OfficialMembersAdapter(self);
-        mListView.setAdapter(membersAdapter);
+        mRecyclerView.setAdapter(membersAdapter);
+        setOnLoadSuccess(this);
+        fromWhat("data");
+        setUrl(API2.CWBaseurl + "/official/activity/" + activeid + "/members?userId=" + user.getUserId() + "&token=" + user.getToken());
+
+//        listV = (PullToRefreshListView) findViewById(R.id.listview);
+//        mRecyclerView = (ListView) findViewById(R.id.listview);
+//        mListView = (ListView) findViewById(R.id.listview);
+        mRecyclerView.addHeaderView(mHeadView, null, false);
+        mRecyclerView.addFooterView(mFootView, null, false);
+//        membersAdapter = new OfficialMembersAdapter(self);
+//        mListView.setAdapter(membersAdapter);
 
         startchatlayout = (LinearLayout) findViewById(R.id.startchatlayout);
         joinBtn = (Button) findViewById(R.id.join);
@@ -152,12 +182,12 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
         chatBtn.setOnClickListener(this);
         buyticketsBtn.setOnClickListener(this);
 
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mRecyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position != 0 || position != parent.getCount() - 1) {
                     Intent it;
-                    String userId = JSONUtil.getString(membersAdapter.getItem(position - 1), "userId");
+                    String userId = JSONUtil.getString(membersAdapter.getItem(position), "userId");
                     if (userId.equals(user.getUserId())) {
                         it = new Intent(self, MyPerSonDetailActivity2.class);
                         startActivity(it);
@@ -171,11 +201,17 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
         });
 
         getActiveDetailsData();
+        showNext();
     }
 
     private void getActiveDetailsData() {
-        activeid = getIntent().getStringExtra("activityId");
-
+//        if (memberList != null) {
+//            memberList.clear();
+//        }
+//        mVaules.clear();
+//        setUrl(API2.ActiveDetails + activeid + "/info?userId=" + user.getUserId() + "&token=" + user.getToken());
+//        fromWhat("data.members");
+//        setOnLoadSuccess(this);
         DhNet verifyNet = new DhNet(API2.ActiveDetails + activeid + "/info?userId=" + user.getUserId() + "&token=" + user.getToken());
         verifyNet.doGet(new NetTask(self) {
 
@@ -185,9 +221,9 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
                     JSONObject jo = response.jSONFromData();
 
                     //第三方购票连接
-                    linkTicketUrl = JSONUtil.getString(jo,"linkTicketUrl");
+                    linkTicketUrl = JSONUtil.getString(jo, "linkTicketUrl");
                     //群组id
-                    emchatGroupId = JSONUtil.getString(jo,"emchatGroupId");
+                    emchatGroupId = JSONUtil.getString(jo, "emchatGroupId");
 
                     //目的地
                     JSONObject js = JSONUtil.getJSONObject(jo, "destination");
@@ -220,6 +256,7 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
                         joinBtn.setVisibility(View.VISIBLE);
                         startchatlayout.setVisibility(View.INVISIBLE);
                     }
+                    membersAdapter.setIsMember(isMember);
 
                     if (contentT.getLineCount() < 4) {
                         foldR.setVisibility(View.GONE);
@@ -243,9 +280,22 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
                         ViewUtil.bindView(unparticipateT, JSONUtil.getInt(jo, "nowJoinNum") + "/" + "人数不限");
                     }
 
-                    //参与成员
-                    JSONArray membersJsa = JSONUtil.getJSONArray(jo, "members");
-                    setMembersData(membersJsa);
+//                    //参与成员
+//                    JSONArray membersJsa = JSONUtil.getJSONArray(jo, "members");
+//                    if (membersJsa != null) {
+//                        for (int i = 0; i < membersJsa.length(); i++) {
+//                            try {
+//                                JSONObject jo1 = membersJsa.getJSONObject(i);
+//                                memberList.add(jo1);
+//                            } catch (JSONException e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+////                        if (membersJsa.length() < 10) {
+////                            moreL.setVisibility(View.GONE);
+////                        }
+//                    }
+//                    setMembersData(memberList);
 
                     /** GalleryViewPager  */
                     final String[] urls;
@@ -294,7 +344,9 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
                 break;
             //加载更多
             case R.id.more:
-
+//                showProgressDialog("加载中...");
+//                showNext(memberList.size());
+                showNext();
                 break;
             //前往购票
             case R.id.buytickets:
@@ -370,7 +422,16 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
                 if (response.isSuccess()) {
                     isMember = !isMember;
                     membersAdapter.setIsMember(isMember);
-                    getActiveDetailsData();
+                    if (isMember) {
+                        joinBtn.setVisibility(View.INVISIBLE);
+                        startchatlayout.setVisibility(View.VISIBLE);
+                    } else {
+                        joinBtn.setVisibility(View.VISIBLE);
+                        startchatlayout.setVisibility(View.INVISIBLE);
+                    }
+                    refresh();
+//                    getActiveDetailsData();
+                    showNext();
                 }
             }
         });
@@ -379,7 +440,7 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
     /**
      * 设置参与成员信息
      */
-    private void setMembersData(JSONArray jsa) {
+    private void setMembersData(List<JSONObject> jsa) {
         membersAdapter.setData(jsa, isMember, activeid);
     }
 
@@ -387,9 +448,33 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
         if ("报名参加".equals(success)) {
             joinActive();
         } else if ("刷新列表".equals(success)) {
-            getActiveDetailsData();
+//            getActiveDetailsData();
+            refresh();
+            showNext();
         }
     }
 
+    @Override
+    public void loadSuccess() {
+//        hidenProgressDialog();
+//        memberList.addAll(mVaules);
+//        setMembersData(memberList);
+//        if (hasMore) {
+//            moreL.setVisibility(View.VISIBLE);
+//        } else {
+//            moreL.setVisibility(View.GONE);
+//        }
+        membersAdapter.setData(mVaules,isMember,activeid);
+        listV.onRefreshComplete();
+    }
 
+    @Override
+    public void loadSuccessOnFirst() {
+
+    }
+
+    @Override
+    public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+        refresh();
+    }
 }

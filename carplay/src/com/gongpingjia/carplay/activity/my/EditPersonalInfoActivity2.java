@@ -7,7 +7,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -66,7 +65,6 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
     private File mCacheDir;
     private String mPhotoPath;
     String photoUid;
-    ImageView carlogo;
     public static final int APPROVE_HEAD = 2;
     public static final int APPROVE_CAR = 3;
     public static final int NICKNAME = 4;
@@ -141,7 +139,6 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
 
             photoUid = getIntent().getStringExtra("photoId");
         }
-        carlogo = (ImageView) findViewById(R.id.person_carlogo);
         headI = (RoundImageView) findViewById(R.id.head);
         sexT = (TextView) findViewById(R.id.sex);
         head_approve = (TextView) findViewById(R.id.head_approve);

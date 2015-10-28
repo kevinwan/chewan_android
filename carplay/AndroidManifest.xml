@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.gongpingjia.carplay"
     android:versionCode="1"
-    android:versionName="1.0.1">
+    android:versionName="1.0.1" >
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -38,7 +38,7 @@
         android:label="@string/app_name"
         android:largeHeap="true"
         android:persistent="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="55c80d4be0f55af652003627" />
@@ -88,74 +88,10 @@
             android:name=".activity.chat.ShowBigImage"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.active.CreateActiveActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.my.SettingActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.my.LoginActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.my.ForgetPwdActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.my.PwdNextActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.my.AttentionPersonActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".activity.msg.PlayCarChatActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.my.AuthenticateOwnersActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".activity.chat.VoiceCallActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.active.ActiveInformationActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.my.RegisterActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.msg.ChatActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.msg.NewMessageActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.my.ParticipateApplicationActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.my.MyAttentionActiveActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.my.MyParticipationActiveActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.my.MyReleaseActiveActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.my.EditPersonalInfoActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.main.GuidanceActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.active.ActiveMembersActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.active.MyActiveMembersManageActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.active.ActiveIntroduceActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.active.ActiveDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.active.MapActivity"
@@ -167,19 +103,7 @@
             android:name=".activity.my.CarTypeSelectActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.active.ActiveDescriptionActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".activity.active.SearchPlaceActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.my.PersonDetailActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.my.MyPerSonDetailActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.active.EditActiveActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.my.FeedBackActivity"
@@ -194,25 +118,20 @@
         <service android:name=".service.MsgService" />
 
         <activity
-            android:name=".activity.my.BasicMessageActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.my.LoginActivity2"
+            android:name=".activity.main.SplashActivity"
             android:launchMode="standard"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--
-          <activity
-              android:name=".activity.main.MainActivity2"
-              android:screenOrientation="portrait">
+        <activity
+            android:name=".activity.my.LoginActivity2"
+            android:screenOrientation="portrait">
 
-          </activity>
-        -->
+        </activity>
 
         <activity
             android:name=".activity.my.BasicInformationActivity2"
@@ -236,7 +155,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".activity.my.MySubscriberActivity2"/>
+        <activity android:name=".activity.my.MySubscriberActivity2" />
 
         <!-- 分享编辑页 -->
         <activity
@@ -253,7 +172,7 @@
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"
             android:noHistory="true"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -285,9 +204,6 @@
             android:name=".activity.main.LargePICActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.my.AttestationNotifyActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".activity.main.PhotoSelectorActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -297,7 +213,7 @@
 
         <service android:name="com.easemob.chat.EMChatService" />
 
-        <receiver android:name="com.easemob.chat.EMMonitorReceiver">
+        <receiver android:name="com.easemob.chat.EMMonitorReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />
 
@@ -359,22 +275,21 @@
         <activity
             android:name=".activity.my.ModifyName"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.my.MyDynamicActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.my.MyPerSonDetailActivity2"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait">
-
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.main.GuidanceActivity2" >
         </activity>
-        <activity android:name=".activity.my.VisitorsActivity"
+        <activity android:name=".activity.active.OfficialParticipantsActivity" >
+        </activity>
+        <activity
+            android:name=".activity.my.VisitorsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait">
 
@@ -384,6 +299,11 @@
             android:screenOrientation="portrait">
 
         </activity>
+
+        <activity
+            android:name=".activity.active.NearListActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

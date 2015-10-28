@@ -158,9 +158,12 @@ public class FragmentMsgAdapter extends BaseAdapter {
                     holder.titleT.setText("谁关注我");
                     holder.iconI.setImageResource(R.drawable.trends_attention);
 
-                } else if(username.equals("OfficialAdmin")){
+                } else if (username.equals("OfficialAdmin")) {
                     holder.titleT.setText("车玩官方");
                     holder.iconI.setImageResource(R.drawable.trends_official);
+                } else if (username.equals("NearbyAdmin")) {
+                    holder.titleT.setText("附近");
+                    holder.iconI.setImageResource(R.drawable.icon_near);
                 }
 
                 break;

@@ -98,7 +98,6 @@ import com.easemob.util.PathUtil;
 import com.easemob.util.VoiceRecorder;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
-import com.gongpingjia.carplay.activity.active.ActiveInformationActivity;
 import com.gongpingjia.carplay.activity.main.PhotoSelectorActivity;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.JoinEB;
@@ -260,11 +259,11 @@ public class ChatActivity extends CarPlayBaseActivity implements
 
                     @Override
                     public void onClick(View v) {
-                        Intent it = new Intent(self,
-                                ActiveInformationActivity.class);
-                        it.putExtra("activityId", activiyId);
-                        it.putExtra("groupId", toChatUsername);
-                        startActivity(it);
+//                        Intent it = new Intent(self,
+//                                ActiveInformationActivity.class);
+//                        it.putExtra("activityId", activiyId);
+//                        it.putExtra("groupId", toChatUsername);
+//                        startActivity(it);
                     }
                 });
         recordingContainer = findViewById(R.id.recording_container);
@@ -787,7 +786,7 @@ public class ChatActivity extends CarPlayBaseActivity implements
                 } else {
                     String st = getResources().getString(
                             R.string.unable_to_get_loaction);
-                    Toast.makeText(this, st, 0).show();
+                    Toast.makeText(this, st, Toast.LENGTH_SHORT).show();
                 }
                 // 重发消息
             } else if (requestCode == REQUEST_CODE_TEXT
@@ -882,7 +881,7 @@ public class ChatActivity extends CarPlayBaseActivity implements
             }
         } else if (id == R.id.btn_video_call) { // 视频通话
             if (!EMChatManager.getInstance().isConnected())
-                Toast.makeText(this, st1, 0).show();
+                Toast.makeText(this, st1, Toast.LENGTH_SHORT).show();
             else {
                 // startActivity(new Intent(this, VideoCallActivity.class)
                 // .putExtra("username", toChatUsername).putExtra(
@@ -984,7 +983,7 @@ public class ChatActivity extends CarPlayBaseActivity implements
         if (!CommonUtils.isExitsSdcard()) {
             String st = getResources().getString(
                     R.string.sd_card_does_not_exist);
-            Toast.makeText(getApplicationContext(), st, 0).show();
+            Toast.makeText(getApplicationContext(), st, Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -1038,7 +1037,6 @@ public class ChatActivity extends CarPlayBaseActivity implements
      * 发送文本消息
      *
      * @param content  message content
-     * @param isResend boolean resend
      */
     public void sendText(String content) {
 
@@ -1310,13 +1308,13 @@ public class ChatActivity extends CarPlayBaseActivity implements
         File file = new File(filePath);
         if (file == null || !file.exists()) {
             String st7 = getResources().getString(R.string.File_does_not_exist);
-            Toast.makeText(getApplicationContext(), st7, 0).show();
+            Toast.makeText(getApplicationContext(), st7, Toast.LENGTH_SHORT).show();
             return;
         }
         if (file.length() > 10 * 1024 * 1024) {
             String st6 = getResources().getString(
                     R.string.The_file_is_not_greater_than_10_m);
-            Toast.makeText(getApplicationContext(), st6, 0).show();
+            Toast.makeText(getApplicationContext(), st6, Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -1791,7 +1789,7 @@ public class ChatActivity extends CarPlayBaseActivity implements
                         public void run() {
                             pd.dismiss();
                             Toast.makeText(getApplicationContext(),
-                                    R.string.Move_into_blacklist_success, 0)
+                                    R.string.Move_into_blacklist_success, Toast.LENGTH_SHORT)
                                     .show();
                         }
                     });
@@ -1801,7 +1799,7 @@ public class ChatActivity extends CarPlayBaseActivity implements
                         public void run() {
                             pd.dismiss();
                             Toast.makeText(getApplicationContext(),
-                                    R.string.Move_into_blacklist_failure, 0)
+                                    R.string.Move_into_blacklist_failure, Toast.LENGTH_SHORT)
                                     .show();
                         }
                     });

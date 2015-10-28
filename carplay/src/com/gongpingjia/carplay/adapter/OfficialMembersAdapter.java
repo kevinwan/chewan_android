@@ -33,8 +33,9 @@ import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.util.ViewUtil;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 import de.greenrobot.event.EventBus;
 
@@ -42,10 +43,10 @@ import de.greenrobot.event.EventBus;
  * Created by Administrator on 2015/10/24.
  * 官方活动参与成员adapter
  */
-public class OfficialMembersAdapter extends BaseAdapter{
+public class OfficialMembersAdapter extends BaseAdapter {
     private final Context mContext;
 
-    private JSONArray data;
+    private List<JSONObject> data;
 
     private boolean isMember;
 
@@ -63,7 +64,7 @@ public class OfficialMembersAdapter extends BaseAdapter{
         notifyDataSetChanged();
     }
 
-    public void setData(JSONArray data,boolean isMember,String activeid) {
+    public void setData(List<JSONObject> data, boolean isMember, String activeid) {
         this.data = data;
         this.isMember = isMember;
         this.activeid = activeid;
@@ -75,19 +76,14 @@ public class OfficialMembersAdapter extends BaseAdapter{
         if (data == null) {
             return 0;
         }
-        return data.length();
+        return data.size();
     }
 
     @Override
     public JSONObject getItem(int position) {
         JSONObject item = null;
-        if (null != data)
-        {
-            try {
-                item = (JSONObject) data.get(position);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+        if (null != data) {
+            item = (JSONObject) data.get(position);
         }
         return item;
     }
@@ -100,9 +96,8 @@ public class OfficialMembersAdapter extends BaseAdapter{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder=null;
-        if (null == convertView)
-        {
+        ViewHolder holder = null;
+        if (null == convertView) {
             holder = new ViewHolder();
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_active_memeber2, null);
             holder.head = (RoundImageView) convertView.findViewById(R.id.head);
@@ -122,14 +117,12 @@ public class OfficialMembersAdapter extends BaseAdapter{
             holder.call = (AnimButtonView) convertView.findViewById(R.id.call);
 
             convertView.setTag(holder);
-        }
-        else
-        {
+        } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
         final JSONObject jo = getItem(position);
-        final String userId=JSONUtil.getString(jo, "userId");
+        final String userId = JSONUtil.getString(jo, "userId");
 
         ViewUtil.bindNetImage(holder.head, JSONUtil.getString(jo, "avatar"), "head");
         ViewUtil.bindView(holder.name, JSONUtil.getString(jo, "nickname"));
@@ -145,19 +138,24 @@ public class OfficialMembersAdapter extends BaseAdapter{
         String photoAuthStatus = JSONUtil.getString(jo, "photoAuthStatus");
         holder.headstatus.setVisibility("已认证".equals(photoAuthStatus) ? View.VISIBLE : View.GONE);
         //邀请的状态
-        int inviteStatus = JSONUtil.getInt(jo,"inviteStatus");
-        setInviteStatus(holder,inviteStatus,jo);
-        System.out.print("------------------------"+JSONUtil.getInt(jo,"beInvitedStatus"));
+        final int inviteStatus = JSONUtil.getInt(jo, "inviteStatus");
+        final int beInvitedStatus = JSONUtil.getInt(jo, "beInvitedStatus");
+        setInviteStatus(holder, inviteStatus, beInvitedStatus, jo);
+        System.out.print("------------------------" + JSONUtil.getInt(jo, "beInvitedStatus"));
 
         holder.invite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //已参加该活动
-                if (isMember){
+                if (isMember) {
                     inviteTogether(userId);
-                }else {
-                    NojoinOfficialDialog dialog = new NojoinOfficialDialog(mContext);
-                    dialog.show();
+                } else {
+                    if (inviteStatus == 0 && beInvitedStatus == 1) {
+                        ((ActiveDetailsActivity2) mContext).showToast("已邀请您,请您去活动动态里处理邀请");
+                    } else {
+                        NojoinOfficialDialog dialog = new NojoinOfficialDialog(mContext);
+                        dialog.show();
+                    }
                 }
             }
         });
@@ -165,25 +163,25 @@ public class OfficialMembersAdapter extends BaseAdapter{
         holder.invite.setVisibility(userId.equals(user.getUserId()) ? View.GONE : View.VISIBLE);
         //受邀 人数 为0 不显示
         int invitedCount = JSONUtil.getInt(jo, "invitedCount");
-        if (invitedCount==0){
+        if (invitedCount == 0) {
             holder.invitecount.setVisibility(View.INVISIBLE);
-        }else {
+        } else {
             holder.invitecount.setVisibility(View.VISIBLE);
             int distance = (int) Math.floor(JSONUtil.getDouble(jo, "distance"));
-            holder.invitecount.setText(CarPlayUtil.numberWithDelimiter(distance)+"!已被"+invitedCount+"人邀请同去");
+            holder.invitecount.setText(CarPlayUtil.numberWithDelimiter(distance) + "!已被" + invitedCount + "人邀请同去");
         }
 
         //接受 人数 为0 不显示
         int acceptCount = JSONUtil.getInt(jo, "acceptCount");
-        if (acceptCount==0){
+        if (acceptCount == 0) {
             holder.acceptedlayout.setVisibility(View.GONE);
-        }else{
+        } else {
             holder.acceptedlayout.setVisibility(View.VISIBLE);
-            holder.acceptedcount.setText(acceptCount+"");
+            holder.acceptedcount.setText(acceptCount + "");
         }
 
-        JSONArray headJsa = JSONUtil.getJSONArray(jo,"acceptMembers");
-        setHeadLayout(holder,headJsa);
+        JSONArray headJsa = JSONUtil.getJSONArray(jo, "acceptMembers");
+        setHeadLayout(holder, headJsa);
 
 
         return convertView;
@@ -191,10 +189,11 @@ public class OfficialMembersAdapter extends BaseAdapter{
 
     /**
      * 设置 已受邀 成员头像
+     *
      * @param holder
      * @param headJsa
      */
-    private void setHeadLayout(ViewHolder holder,JSONArray headJsa ){
+    private void setHeadLayout(ViewHolder holder, JSONArray headJsa) {
         LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         AcceptHeadAdapter mAdapter = new AcceptHeadAdapter(mContext);
@@ -204,28 +203,27 @@ public class OfficialMembersAdapter extends BaseAdapter{
     }
 
 
-
-    class ViewHolder{
+    class ViewHolder {
         //头像
         RoundImageView head;
         //昵称,年龄,被邀请人数,邀请同去按钮,接受邀请人数
-        TextView name,age,invitecount,invite,acceptedcount;
+        TextView name, age, invitecount, invite, acceptedcount;
         //接受邀请头像列表
         RecyclerView recyclerView;
 
         RelativeLayout sexLayout;
         //性别,头像认证
-        ImageView sex,headstatus;
+        ImageView sex, headstatus;
 
-        LinearLayout acceptedlayout,contactlayout,invitelayout;
+        LinearLayout acceptedlayout, contactlayout, invitelayout;
 
-        AnimButtonView sms,call;
+        AnimButtonView sms, call;
     }
 
     /**
-     * 邀请同去
+     * 邀请同去按钮
      */
-    private void inviteTogether(final String userId){
+    private void inviteTogether(final String userId) {
         OfficialMsgDialog dialog = new OfficialMsgDialog(mContext);
         dialog.show();
         //无法弹出输入法的解决
@@ -238,7 +236,7 @@ public class OfficialMembersAdapter extends BaseAdapter{
                 DhNet net = new DhNet(API2.joinTogether + activeid + "/invite?userId=" + user.getUserId() + "&token=" + user.getToken());
                 net.addParam("invitedUserId", userId);
                 net.addParam("transfer", isinarch);
-                net.addParam("message",content);
+                net.addParam("message", content);
                 net.doPostInDialog(new NetTask(mContext) {
                     @Override
                     public void doInUI(Response response, Integer transfer) {
@@ -253,17 +251,65 @@ public class OfficialMembersAdapter extends BaseAdapter{
     }
 
     /**
-     * 邀请状态 当前登录用户 邀请 该用户的 状态；
+     * inviteStatus 邀请状态 当前登录用户 邀请 该用户的 状态；
      * 0 没有邀请过           1 邀请中     2 邀请同意             3 邀请被拒绝
+     * <p/>
+     * beInvitedStatus 该用户是否邀请过 登录用户
+     * 0 没有邀请过           1 邀请中      2 邀请同意             3 邀请被拒绝
      */
-    private void setInviteStatus(ViewHolder holder,int inviteStatus, final JSONObject jo){
-        switch (inviteStatus){
+    private void setInviteStatus(ViewHolder holder, int inviteStatus, int beInvitedStatus, final JSONObject jo) {
+        switch (inviteStatus) {
             case 0:
-                holder.invitelayout.setVisibility(View.VISIBLE);
-                holder.contactlayout.setVisibility(View.GONE);
-                holder.invite.setText("邀请同去");
-                holder.invite.setBackgroundResource(R.drawable.btn_blue_fillet);
-                holder.invite.setEnabled(true);
+                switch (beInvitedStatus) {
+                    case 0:
+                        holder.invitelayout.setVisibility(View.VISIBLE);
+                        holder.contactlayout.setVisibility(View.GONE);
+                        holder.invite.setText("邀请同去");
+                        holder.invite.setBackgroundResource(R.drawable.btn_blue_fillet);
+                        holder.invite.setEnabled(true);
+                        break;
+                    case 1:
+                        holder.invitelayout.setVisibility(View.VISIBLE);
+                        holder.contactlayout.setVisibility(View.GONE);
+                        holder.invite.setText("邀请同去");
+                        holder.invite.setBackgroundResource(R.drawable.btn_blue_fillet);
+                        holder.invite.setEnabled(true);
+
+                        break;
+                    case 2:
+                        holder.invitelayout.setVisibility(View.GONE);
+                        holder.contactlayout.setVisibility(View.VISIBLE);
+                        holder.sms.startScaleAnimation();
+                        holder.call.startScaleAnimation();
+                        holder.sms.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(mContext, ChatActivity.class);
+                                intent.putExtra("chatType", ChatActivity.CHATTYPE_SINGLE);
+                                intent.putExtra("activityId", activeid);
+                                intent.putExtra("userId", JSONUtil.getString(jo, "emchatName"));
+                                mContext.startActivity(intent);
+                            }
+                        });
+                        holder.call.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent it = new Intent(mContext, VoiceCallActivity.class);
+                                it.putExtra("username", JSONUtil.getString(jo, "emchatName"));
+                                it.putExtra("isComingCall", false);
+                                mContext.startActivity(it);
+                            }
+                        });
+                        break;
+                    case 3:
+                        holder.invitelayout.setVisibility(View.VISIBLE);
+                        holder.contactlayout.setVisibility(View.GONE);
+                        holder.invite.setText("邀请同去");
+                        holder.invite.setBackgroundResource(R.drawable.btn_blue_fillet);
+                        holder.invite.setEnabled(true);
+                        break;
+                }
+
                 break;
             case 1:
                 holder.invitelayout.setVisibility(View.VISIBLE);
@@ -280,10 +326,10 @@ public class OfficialMembersAdapter extends BaseAdapter{
                 holder.sms.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(mContext,ChatActivity.class);
+                        Intent intent = new Intent(mContext, ChatActivity.class);
                         intent.putExtra("chatType", ChatActivity.CHATTYPE_SINGLE);
                         intent.putExtra("activityId", activeid);
-                        intent.putExtra("userId",  JSONUtil.getString(jo, "emchatName"));
+                        intent.putExtra("userId", JSONUtil.getString(jo, "emchatName"));
                         mContext.startActivity(intent);
                     }
                 });
@@ -300,13 +346,11 @@ public class OfficialMembersAdapter extends BaseAdapter{
             case 3:
                 holder.invitelayout.setVisibility(View.VISIBLE);
                 holder.contactlayout.setVisibility(View.GONE);
-                holder.invite.setText("已拒绝");
+                holder.invite.setText("邀请中");
                 holder.invite.setBackgroundResource(R.drawable.btn_grey_fillet);
                 holder.invite.setEnabled(false);
                 break;
         }
-
     }
-
 
 }
