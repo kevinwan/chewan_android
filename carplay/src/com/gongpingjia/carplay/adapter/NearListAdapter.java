@@ -234,7 +234,14 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
         //所在地,距离
         int distance = (int) Math.floor(JSONUtil.getDouble(jo, "distance"));
         holder.distance.setText(CarPlayUtil.numberWithDelimiter(distance));
-        holder.location.setText(JSONUtil.getString(distancejo, "province") + JSONUtil.getString(distancejo, "city") + JSONUtil.getString(distancejo, "district") + JSONUtil.getString(distancejo, "street"));
+
+
+        if (distancejo == null){
+            holder.location.setVisibility(View.GONE);
+        }else{
+            holder.location.setVisibility(View.VISIBLE);
+            holder.location.setText(JSONUtil.getString(distancejo, "province") + JSONUtil.getString(distancejo, "city") + JSONUtil.getString(distancejo, "district") + JSONUtil.getString(distancejo, "street"));
+        }
 
         String licenseAuthStatus = JSONUtil.getString(userjo,"licenseAuthStatus");
 
