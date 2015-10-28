@@ -63,7 +63,8 @@ public class BeSubscribedFragment extends CarPlayBaseFragment implements ILoadSu
             }
         });
         mListView.setAdapter(beSubscribeAdapter);
-        setUrl(API2.getSubscribeMy(User.getInstance().getUserId(), User.getInstance().getToken()));
+        setOnLoadSuccess(this);
+        setUrl(API2.getSubscribe(User.getInstance().getUserId(), User.getInstance().getToken()));
         fromWhat("data.beSubscribed");
         refresh();
     }
@@ -71,6 +72,7 @@ public class BeSubscribedFragment extends CarPlayBaseFragment implements ILoadSu
 
     @Override
     public void loadSuccess() {
+
         beSubscribeAdapter.setData(mVaules);
     }
 

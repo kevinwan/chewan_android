@@ -211,7 +211,7 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
 
         //头像认证,车主认证
         String headatt = JSONUtil.getString(userjo, "photoAuthStatus");
-        holder.headatt.setImageResource("认证通过".equals(headatt)? R.drawable.headaut_dl   :R.drawable.headaut_no );
+        holder.headatt.setImageResource("认证通过".equals(headatt) ? R.drawable.headaut_dl : R.drawable.headaut_no);
 
         if (user.isLogin()) {
             holder.attention.setVisibility(JSONUtil.getString(userjo, "userId").equals(user.getUserId()) ? View.GONE : View.VISIBLE);
@@ -237,14 +237,14 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
         holder.distance.setText(CarPlayUtil.numberWithDelimiter(distance));
 
 
-        if (distancejo == null){
+        if (distancejo == null) {
             holder.location.setVisibility(View.GONE);
-        }else{
+        } else {
             holder.location.setVisibility(View.VISIBLE);
             holder.location.setText(JSONUtil.getString(distancejo, "province") + JSONUtil.getString(distancejo, "city") + JSONUtil.getString(distancejo, "district") + JSONUtil.getString(distancejo, "street"));
         }
 
-        String licenseAuthStatus = JSONUtil.getString(userjo,"licenseAuthStatus");
+        String licenseAuthStatus = JSONUtil.getString(userjo, "licenseAuthStatus");
 
         //car logo ,car name
         if ("认证通过".equals(licenseAuthStatus)) {
@@ -400,6 +400,7 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
             @Override
             public void doInUI(Response response, Integer transfer) {
                 if (response.isSuccess()) {
+                    EventBus.getDefault().post("刷新附近列表");
                     holder.attention.setImage(attention ? R.drawable.icon_heart : R.drawable.icon_hearted);
                     JSONObject userjo = JSONUtil.getJSONObject(jo, "organizer");
                     try {

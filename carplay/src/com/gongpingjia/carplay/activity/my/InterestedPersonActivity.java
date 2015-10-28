@@ -56,17 +56,12 @@ public class InterestedPersonActivity extends CarPlayListActivity implements Pul
         mRecyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                view.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        JSONObject jo = adapter.getItem(position - 1);
-                        JSONObject userjo = JSONUtil.getJSONObject(jo, "user");
-                        Intent it = new Intent(self, PersonDetailActivity2.class);
-                        String userId = JSONUtil.getString(userjo, "userId");
-                        it.putExtra("userId", userId);
-                        startActivity(it);
-                    }
-                });
+                JSONObject jo = adapter.getItem(position - 1);
+                JSONObject userjo = JSONUtil.getJSONObject(jo, "user");
+                Intent it = new Intent(self, PersonDetailActivity2.class);
+                String userId = JSONUtil.getString(userjo, "userId");
+                it.putExtra("userId", userId);
+                startActivity(it);
             }
         });
 //        mRecyclerView.setEmptyView(findViewById(R.id.));
