@@ -70,7 +70,7 @@ public class MyFragmentAlbumAdapter extends RecyclerView.Adapter<MyFragmentAlbum
                         e.printStackTrace();
                     }
                 }
-
+                it.putExtra("type","myalbum");
                 it.putExtra("imgurls", photos);
                 it.putExtra("currentItem", current);
                 it.putExtra("imgids", photosid);

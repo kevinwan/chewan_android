@@ -21,4 +21,6 @@
     <dimen name="lookaround_marginleft">40dp</dimen>
     <dimen name="lookaround_marginright">36dp</dimen>
 
+    <dimen name="viewpager_circleindicator_radius">4.5dp</dimen>
+
 </resources>

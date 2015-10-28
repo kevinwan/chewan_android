@@ -58,13 +58,17 @@
 
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/listview"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/join"
-        android:layout_below="@id/titlelayout" >
-    </ListView>
+        android:layout_below="@id/titlelayout">
+        <include
+            layout="@layout/include_refreshlistview2"
+            />
+    </RelativeLayout>
+
+
 
 
 </RelativeLayout>
