@@ -10,32 +10,16 @@ import com.gongpingjia.carplay.ILoadSuccess;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayListActivity;
 import com.gongpingjia.carplay.adapter.DyanmicBaseAdapter;
-import com.gongpingjia.carplay.adapter.MySubscriberAdapter2;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.User;
-import com.gongpingjia.carplay.view.PullToRefreshRecyclerViewVertical;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
-
-
-import net.duohuo.dhroid.net.DhNet;
-import net.duohuo.dhroid.net.NetTask;
-import net.duohuo.dhroid.net.Response;
-import net.duohuo.dhroid.view.NetRefreshAndMoreListView;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Administrator on 2015/10/19.
  * 活动动态
  */
-public class DynamicActivity extends CarPlayListActivity implements PullToRefreshBase.OnRefreshListener<ListView>, ILoadSuccess{
+public class DynamicActivity extends CarPlayListActivity implements PullToRefreshBase.OnRefreshListener2<ListView>, ILoadSuccess {
 
     private ListView recyclerView;
 
@@ -45,6 +29,7 @@ public class DynamicActivity extends CarPlayListActivity implements PullToRefres
     User user = User.getInstance();
     //    DynamicActivityAdapter adapter;
     DyanmicBaseAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,8 +45,8 @@ public class DynamicActivity extends CarPlayListActivity implements PullToRefres
 //        JSONArray jsonarray = new JSONArray();
 //        jsonarray.put("邀请中");
 //        jsonarray.put("应邀");
-         empty = (LinearLayout) findViewById(R.id.empty);
-         msg = (TextView) findViewById(R.id.msg);
+        empty = (LinearLayout) findViewById(R.id.empty);
+        msg = (TextView) findViewById(R.id.msg);
 
         listV = (PullToRefreshListView) findViewById(R.id.listview);
         listV.setMode(PullToRefreshBase.Mode.BOTH);
@@ -72,7 +57,7 @@ public class DynamicActivity extends CarPlayListActivity implements PullToRefres
         setOnLoadSuccess(this);
         fromWhat("data");
 
-        setUrl(API2.CWBaseurl + "/user/"+user.getUserId()+"/appointment/list?token="+ user.getToken()+"&status="+1+"&status="+2);
+        setUrl(API2.CWBaseurl + "/user/" + user.getUserId() + "/appointment/list?token=" + user.getToken() + "&status=" + 1 + "&status=" + 2);
 //        setUrl(API2.CWBaseurl + "user/5609eb2c0cf224e7d878f693/appointment/list?token=67666666-f2ff-456d-a9cc-e83761749a6a&status=邀请中&status=应邀");
 
         showNext();
@@ -82,7 +67,12 @@ public class DynamicActivity extends CarPlayListActivity implements PullToRefres
     @Override
     public void loadSuccess() {
         adapter.setData(mVaules);
-        listV.onRefreshComplete();
+        listV.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                listV.onRefreshComplete();
+            }
+        }, 500);
 
     }
 
@@ -93,8 +83,14 @@ public class DynamicActivity extends CarPlayListActivity implements PullToRefres
 
     }
 
-    @Override
-    public void onRefresh(PullToRefreshBase<ListView> refreshView) {
 
+    @Override
+    public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+        refresh();
+    }
+
+    @Override
+    public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+        showNext();
     }
 }

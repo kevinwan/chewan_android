@@ -18,7 +18,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 /**
  * 感兴趣的
  */
-public class InterestedPersonActivity extends CarPlayListActivity implements PullToRefreshBase.OnRefreshListener<ListView>, ILoadSuccess {
+public class InterestedPersonActivity extends CarPlayListActivity implements PullToRefreshBase.OnRefreshListener2<ListView>, ILoadSuccess {
 
     private ListView mRecyclerView;
 
@@ -28,6 +28,7 @@ public class InterestedPersonActivity extends CarPlayListActivity implements Pul
     LinearLayout empty;
     TextView msg;
     User user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,10 +61,16 @@ public class InterestedPersonActivity extends CarPlayListActivity implements Pul
     @Override
     public void loadSuccess() {
         adapter.setData(mVaules);
-        listV.onRefreshComplete();
+        listV.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                listV.onRefreshComplete();
+            }
+        }, 500);
 
 
     }
+
 
     @Override
     public void loadSuccessOnFirst() {
@@ -71,8 +78,14 @@ public class InterestedPersonActivity extends CarPlayListActivity implements Pul
         msg.setText("此处暂无活动");
     }
 
+
     @Override
-    public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+    public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
         refresh();
+    }
+
+    @Override
+    public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+        showNext();
     }
 }
