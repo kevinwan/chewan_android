@@ -100,6 +100,8 @@ public class VisitorsAdapter extends BaseAdapter {
         holder.tv_ageT.setText(JSONUtil.getString(jo, "age"));
 
         ViewUtil.bindNetImage(holder.icon, JSONUtil.getString(jo, "avatar"), "head");
+        String id = JSONUtil.getString(jo,"userId");
+        holder.icon.setTag(id);
         int distance = JSONUtil.getInt(jo, "distance");
         holder.distanceT.setText(distance + "米");
 
