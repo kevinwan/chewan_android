@@ -56,6 +56,7 @@ public class CarPlayBaseFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ignore = 0;
         net = new DhNet();
         net.setMethod(DhNet.METHOD_GET);
         useCache(CachePolicy.POLICY_BEFORE_AND_AFTER_NET);
@@ -151,7 +152,6 @@ public class CarPlayBaseFragment extends Fragment {
                 }
 
 
-
                 if (list != null) {
                     addAll(list);
                 }
@@ -166,7 +166,7 @@ public class CarPlayBaseFragment extends Fragment {
                     onLoadSuccess.loadSuccess();
                 }
 
-                if (onLoadSuccess != null && !response.isCache() && ignore ==0) {
+                if (onLoadSuccess != null && !response.isCache() && ignore == 0) {
                     onLoadSuccess.loadSuccessOnFirst();
                 }
 

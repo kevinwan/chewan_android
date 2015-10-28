@@ -1,5 +1,6 @@
 package com.gongpingjia.carplay.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,6 +21,7 @@ import com.gongpingjia.carplay.activity.chat.ChatActivity;
 import com.gongpingjia.carplay.activity.chat.VoiceCallActivity;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.User;
+import com.gongpingjia.carplay.manage.UserInfoManage;
 import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.view.AnimButtonView;
 import com.gongpingjia.carplay.view.RoundImageView;
@@ -147,17 +149,30 @@ public class OfficialParticipantsAdapter extends BaseAdapter {
         holder.invite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //已参加该活动
-                if (isMember) {
-                    inviteTogether(userId);
-                } else {
-                    if (inviteStatus == 0 && beInvitedStatus == 1) {
-                        ((ActiveDetailsActivity2) mContext).showToast("已邀请您,请您去活动动态里处理邀请");
-                    } else {
-                        NojoinOfficialDialog dialog = new NojoinOfficialDialog(mContext);
-                        dialog.show();
+                UserInfoManage.getInstance().checkLogin((Activity) mContext, new UserInfoManage.LoginCallBack() {
+                    @Override
+                    public void onisLogin() {
+
+                        //已参加该活动
+                        if (isMember) {
+                            if (inviteStatus == 0 && beInvitedStatus == 1) {
+                                ((ActiveDetailsActivity2) mContext).showToast("已邀请您,请您去活动动态里处理邀请");
+                            } else {
+                                inviteTogether(userId);
+                            }
+                        } else {
+
+                            NojoinOfficialDialog dialog = new NojoinOfficialDialog(mContext);
+                            dialog.show();
+
+                        }
                     }
-                }
+
+                    @Override
+                    public void onLoginFail() {
+
+                    }
+                });
             }
         });
 
