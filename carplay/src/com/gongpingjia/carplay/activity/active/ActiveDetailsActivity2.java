@@ -163,7 +163,7 @@ public class ActiveDetailsActivity2 extends CarPlayBaseActivity implements View.
                         startActivity(it);
                     } else {
                         it = new Intent(self, PersonDetailActivity2.class);
-                        it.putExtra("activeid", userId);
+                        it.putExtra("userId", userId);
                         startActivity(it);
                     }
                 }
