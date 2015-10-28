@@ -51,7 +51,7 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
     private final Context mContext;
     String activityId;
     private List<JSONObject> data;
-    User user = User.getInstance();
+//    User user = User.getInstance();
     Bundle bundle;
     String cover;
     Double distance;
@@ -141,6 +141,7 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
         int status = JSONUtil.getInt(jo, "status");
         holder.titleT.setText(bundle.getString("name") + "想约人" + type);
         holder.pay_type.setText(pay);
+        ViewUtil.bindNetImage(holder.activity_beijing,cover,"head");
         if (status == 0) {
             holder.invitation.setVisibility(View.VISIBLE);
             holder.yingyaohou.setVisibility(View.GONE);
@@ -187,10 +188,8 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
             holder.dynamic_carlogo.setVisibility(View.GONE);
             holder.dynamic_carname.setVisibility(View.GONE);
         }
-//        String str = String.valueOf(distance);
-//        int dis = Integer.parseInt(str);
-//        int distance = (int) Math.floor(dis);
-        holder.activity_distance.setText(distance + "");
+        int distances = (int) Math.floor(distance);
+        holder.activity_distance.setText(distances + "");
         System.out.println(distance);
         JSONObject json = JSONUtil.getJSONObject(jo, "destination");
         if (json == null) {
