@@ -9,17 +9,17 @@ import android.widget.TextView;
 import com.gongpingjia.carplay.ILoadSuccess;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayListActivity;
-import com.gongpingjia.carplay.adapter.DyanmicBaseAdapter;
+import com.gongpingjia.carplay.adapter.VisitorsAdapter;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.User;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 /**
- * Created by Administrator on 2015/10/19.
- * 活动动态
+ * 最近访客
+ * Created by Administrator on 2015/10/27.
  */
-public class DynamicActivity extends CarPlayListActivity implements PullToRefreshBase.OnRefreshListener2<ListView>, ILoadSuccess {
+public class VisitorsActivity extends CarPlayListActivity implements PullToRefreshBase.OnRefreshListener<ListView>, ILoadSuccess {
 
     private ListView recyclerView;
 
@@ -27,24 +27,19 @@ public class DynamicActivity extends CarPlayListActivity implements PullToRefres
     LinearLayout empty;
     TextView msg;
     User user = User.getInstance();
-    //    DynamicActivityAdapter adapter;
-    DyanmicBaseAdapter adapter;
+
+    VisitorsAdapter adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dynamicactivity);
-
+        setContentView(R.layout.activity_my_dynamic);
     }
-
 
     @Override
     public void initView() {
-        setTitle("活动动态");
-//        String [] str = {"邀请中","应邀"};
-//        JSONArray jsonarray = new JSONArray();
-//        jsonarray.put("邀请中");
-//        jsonarray.put("应邀");
+        setTitle("最近访客");
         empty = (LinearLayout) findViewById(R.id.empty);
         msg = (TextView) findViewById(R.id.msg);
 
@@ -52,45 +47,35 @@ public class DynamicActivity extends CarPlayListActivity implements PullToRefres
         listV.setMode(PullToRefreshBase.Mode.BOTH);
         listV.setOnRefreshListener(this);
         recyclerView = listV.getRefreshableView();
-        adapter = new DyanmicBaseAdapter(self);
+        adapter = new VisitorsAdapter(self);
         recyclerView.setAdapter(adapter);
         setOnLoadSuccess(this);
         fromWhat("data");
 
-        setUrl(API2.CWBaseurl + "/user/" + user.getUserId() + "/appointment/list?token=" + user.getToken() + "&status=" + 1 + "&status=" + 2);
-//        setUrl(API2.CWBaseurl + "user/5609eb2c0cf224e7d878f693/appointment/list?token=67666666-f2ff-456d-a9cc-e83761749a6a&status=邀请中&status=应邀");
+        setUrl(API2.CWBaseurl + "/user/"+user.getUserId()+"/view/history?token="+ user.getToken());
 
         showNext();
-    }
 
+
+
+
+
+    }
 
     @Override
     public void loadSuccess() {
         adapter.setData(mVaules);
-        listV.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                listV.onRefreshComplete();
-            }
-        }, 500);
-
+        listV.onRefreshComplete();
     }
 
     @Override
     public void loadSuccessOnFirst() {
         empty.setVisibility(View.VISIBLE);
         msg.setText("此处暂无活动");
-
-    }
-
-
-    @Override
-    public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-        refresh();
     }
 
     @Override
-    public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-        showNext();
+    public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+
     }
 }

@@ -1,7 +1,9 @@
 package com.gongpingjia.carplay.activity.my;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -15,10 +17,14 @@ import com.gongpingjia.carplay.bean.User;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
+import net.duohuo.dhroid.net.JSONUtil;
+
+import org.json.JSONObject;
+
 /**
  * 感兴趣的
  */
-public class InterestedPersonActivity extends CarPlayListActivity implements PullToRefreshBase.OnRefreshListener<ListView>, ILoadSuccess {
+public class InterestedPersonActivity extends CarPlayListActivity implements PullToRefreshBase.OnRefreshListener2<ListView>, ILoadSuccess {
 
     private ListView mRecyclerView;
 
@@ -28,6 +34,7 @@ public class InterestedPersonActivity extends CarPlayListActivity implements Pul
     LinearLayout empty;
     TextView msg;
     User user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +53,22 @@ public class InterestedPersonActivity extends CarPlayListActivity implements Pul
         listV.setOnRefreshListener(this);
 
         mRecyclerView = listV.getRefreshableView();
+        mRecyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        JSONObject jo = adapter.getItem(position - 1);
+                        JSONObject userjo = JSONUtil.getJSONObject(jo, "user");
+                        Intent it = new Intent(self, PersonDetailActivity2.class);
+                        String userId = JSONUtil.getString(userjo, "userId");
+                        it.putExtra("userId", userId);
+                        startActivity(it);
+                    }
+                });
+            }
+        });
 //        mRecyclerView.setEmptyView(findViewById(R.id.));
         adapter = new InterestedPersonAdapter(self);
         mRecyclerView.setAdapter(adapter);
@@ -60,10 +83,16 @@ public class InterestedPersonActivity extends CarPlayListActivity implements Pul
     @Override
     public void loadSuccess() {
         adapter.setData(mVaules);
-        listV.onRefreshComplete();
+        listV.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                listV.onRefreshComplete();
+            }
+        }, 500);
 
 
     }
+
 
     @Override
     public void loadSuccessOnFirst() {
@@ -71,8 +100,14 @@ public class InterestedPersonActivity extends CarPlayListActivity implements Pul
         msg.setText("此处暂无活动");
     }
 
+
     @Override
-    public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+    public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
         refresh();
+    }
+
+    @Override
+    public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+        showNext();
     }
 }

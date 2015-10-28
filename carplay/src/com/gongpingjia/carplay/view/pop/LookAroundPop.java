@@ -26,7 +26,7 @@ import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
-import net.duohuo.dhroid.net.cache.CachePolicy;
+import net.duohuo.dhroid.util.UserLocation;
 import net.duohuo.dhroid.util.ViewUtil;
 
 import org.json.JSONArray;
@@ -77,16 +77,22 @@ public class LookAroundPop {
     private void initView() {
         user = User.getInstance();
         layoutR = (RelativeLayout) contentV.findViewById(R.id.lookRelativelayout);
+        contentV.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pop.dismiss();
+            }
+        });
         getData();
     }
 
 
     private void getData() {
-        dhNet = new DhNet(API2.CWBaseurl + "activity/list?");
-        dhNet.useCache(CachePolicy.POLICY_CACHE_ONLY);
-        dhNet.addParam("latitude", "32");
-        dhNet.addParam("longitude", "118");
-        dhNet.addParam("maxDistance", "5000000");
+        UserLocation location = UserLocation.getInstance();
+        dhNet = new DhNet(API2.CWBaseurl + "activity/randomLook?");
+        dhNet.addParam("latitude", location.getLatitude());
+        dhNet.addParam("longitude", location.getLongitude());
+        dhNet.addParam("limit", 10);
         dhNet.addParam("token", user.getToken());
         dhNet.addParam("userId", user.getUserId());
         dhNet.doGetInDialog(new NetTask(context) {
@@ -111,12 +117,8 @@ public class LookAroundPop {
                     RoundImageView img;
                     TextView txt;
                     if (!(i == 1 && j == 0)) {
-
-
                         img = (RoundImageView) ((LinearLayout) linear.getChildAt(j)).getChildAt(0);
                         txt = (TextView) ((LinearLayout) linear.getChildAt(j)).getChildAt(1);
-
-
                         try {
                             final JSONObject json = JSONUtil.getJSONObjectAt(jsa, position);
                             JSONObject jo = json.getJSONObject("organizer");

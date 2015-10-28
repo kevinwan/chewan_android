@@ -65,7 +65,7 @@
             android:layout_height="match_parent"
             android:gravity="right|center_vertical">
 
-            <ImageView
+            <com.gongpingjia.carplay.view.RoundImageView
                 android:id="@+id/right_head"
                 android:layout_width="46dp"
                 android:layout_height="46dp"

@@ -16,12 +16,16 @@ import android.widget.RelativeLayout;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.bean.Matching;
+import com.gongpingjia.carplay.bean.TabEB;
 import com.gongpingjia.carplay.view.AnimButtonView2;
 import com.gongpingjia.carplay.view.dialog.MatchingDialog;
 import com.gongpingjia.carplay.view.dialog.MateLayerDialog;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by Administrator on 2015/10/21.
@@ -206,15 +210,53 @@ public class MatePop implements Runnable, View.OnClickListener {
             matching.setName(type);
             data.add(matching);
         }
+        MatchingDialog dlg = new MatchingDialog(context, data);
         if (data.size() == 1) {
             data.get(0).setIsChecked(true);
+            if (names[0].equals("遛狗"))
+                dlg.getWindow().setBackgroundDrawableResource(R.color.circle_lg_bg);
+            else dlg.getWindow().setBackgroundDrawableResource(R.color.circle_gw_bg);
+        } else {
+            dlg.getWindow().setBackgroundDrawableResource(R.color.circle_yd_bg);
         }
-        MatchingDialog dlg = new MatchingDialog(context, data);
+
+        dlg.setMatchingResult(new MatchingDialog.OnMatchingDialogResult() {
+            @Override
+            public void onResult(Map<String, Object> params) {
+                //匹配意向的参数
+                EventBus.getDefault().post(new TabEB(2, params));
+                pop.dismiss();
+            }
+        });
         dlg.show();
     }
 
     private void showMatchingDialog(Context context, String type) {
         MateLayerDialog dlg = new MateLayerDialog(context, type);
+//        dlg.getWindow().setBackgroundDrawableResource(R.color.text_red);
+        if ("看电影".equals(type)) {
+            dlg.getWindow().setBackgroundDrawableResource(R.color.circle_kdy_bg);
+        } else if ("唱歌".equals(type)) {
+            dlg.getWindow().setBackgroundDrawableResource(R.color.circle_cg_bg);
+        } else if ("吃饭".equals(type)) {
+            dlg.getWindow().setBackgroundDrawableResource(R.color.circle_cf_bg);
+        } else if ("咖啡".equals(type)) {
+            dlg.getWindow().setBackgroundDrawableResource(R.color.circle_hkf_bg);
+        } else if ("夜宵".equals(type)) {
+            dlg.getWindow().setBackgroundDrawableResource(R.color.circle_yx_bg);
+        } else if ("夜店".equals(type)) {
+            dlg.getWindow().setBackgroundDrawableResource(R.color.circle_yd_bg);
+        } else if ("喝酒".equals(type)) {
+            dlg.getWindow().setBackgroundDrawableResource(R.color.circle_hj_bg);
+        }
+        dlg.setMatchingResult(new MateLayerDialog.OnMatchingDialogResult() {
+            @Override
+            public void onResult(Map<String, Object> params) {
+                //匹配意向的参数
+                EventBus.getDefault().post(new TabEB(2, params));
+                pop.dismiss();
+            }
+        });
         dlg.show();
     }
 

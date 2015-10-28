@@ -35,6 +35,7 @@ public class SettingActivity2 extends CarPlayBaseActivity implements View.OnClic
      */
     @Override
     public void initView() {
+        setTitle("设置");
         Button btnLogout = (Button) findViewById(R.id.btn_logout);
         View layoutClearCache = findViewById(R.id.layout_cache_clear);
         mCacheDir = new File(getExternalCacheDir(), "CarPlay");

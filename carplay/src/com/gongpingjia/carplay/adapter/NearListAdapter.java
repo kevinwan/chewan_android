@@ -28,7 +28,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
@@ -70,11 +69,9 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
 
     // 图片缓存根目录
     private File mCacheDir;
-    private String mPhotoPath;
 
-    int picWidth;
+    OnItemClick onItemClick;
 
-    int picHeight;
 
     public static class SimpleViewHolder extends RecyclerView.ViewHolder {
         TextView nickname, car_name, age, pay, transfer, location, distance, join_desT;
@@ -147,7 +144,14 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
         String sex = JSONUtil.getString(userjo, "gender");
 
         boolean applyFlag = JSONUtil.getBoolean(jo, "applyFlag");
-        holder.join_desT.setText(applyFlag ? "应邀中" : "邀 TA");
+        holder.join_desT.setText(applyFlag ? "邀请中" : "邀 TA");
+        if (applyFlag) {
+            holder.invite.setResourseAndBg(R.drawable.dynamic_grey
+                    , R.drawable.dynamic_grey
+            );
+        } else {
+            holder.invite.setResourseAndBg(R.drawable.red_circle, R.drawable.red_circle);
+        }
 
         if ("男".equals(sex)) {
             holder.sexLayout.setBackgroundResource(R.drawable.radio_sex_man_normal);
@@ -161,7 +165,11 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
 //        Blurry.targetWidth = picWidth;
 //        Blurry.targetHeight = picHeight;
         final User user = User.getInstance();
-        holder.upload.setVisibility(user.isHasAlbum() ? View.GONE : View.VISIBLE);
+        if (user.isLogin()) {
+            holder.upload.setVisibility(user.isHasAlbum() ? View.GONE : View.VISIBLE);
+        } else {
+            holder.upload.setVisibility(View.GONE);
+        }
         ImageLoader.getInstance().displayImage(JSONUtil.getString(userjo, "avatar"), holder.active_bg, CarPlayValueFix.optionsDefault, new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String s, View view) {
@@ -202,7 +210,7 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
 
         //头像认证,车主认证
         String headatt = JSONUtil.getString(userjo, "photoAuthStatus");
-        holder.headatt.setImageResource("认证通过".equals(headatt) ?  R.drawable.headaut_no:R.drawable.headaut_dl );
+        holder.headatt.setImageResource("认证通过".equals(headatt) ? R.drawable.headaut_no : R.drawable.headaut_dl);
 
         if (user.isLogin()) {
             holder.attention.setVisibility(JSONUtil.getString(userjo, "userId").equals(user.getUserId()) ? View.GONE : View.VISIBLE);
@@ -244,7 +252,11 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, "", Toast.LENGTH_SHORT).show();
+
+                if (onItemClick != null) {
+                    onItemClick.onItemClick(position, jo);
+                }
+
             }
         });
 
@@ -410,4 +422,16 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
     }
 
 
+    public interface OnItemClick {
+        void onItemClick(int position, JSONObject jo);
+    }
+
+
+    public OnItemClick getOnItemClick() {
+        return onItemClick;
+    }
+
+    public void setOnItemClick(OnItemClick onItemClick) {
+        this.onItemClick = onItemClick;
+    }
 }

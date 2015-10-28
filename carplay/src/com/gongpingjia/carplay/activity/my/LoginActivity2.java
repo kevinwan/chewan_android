@@ -27,6 +27,7 @@ import com.gongpingjia.carplay.chat.DemoHXSDKHelper;
 import com.gongpingjia.carplay.chat.bean.ChatUser;
 import com.gongpingjia.carplay.chat.controller.HXSDKHelper;
 import com.gongpingjia.carplay.chat.db.UserDao;
+import com.gongpingjia.carplay.manage.UserInfoManage;
 import com.gongpingjia.carplay.util.CarPlayPerference;
 import com.gongpingjia.carplay.util.MD5Util;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -75,9 +76,11 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
     // 微信平台
     private UMWXHandler wxHandler;
 
-    private String mUid, mAvatarUrl, mNickName, mChannel = "wechat";
+    private String mUid, mAvatarUrl, mNickName, mChannel;
 
     private boolean isFromLogout;
+    public static UserInfoManage.LoginCallBack loginCall;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,6 +171,20 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
 
     }
 
+    @Override
+    public void finish() {
+        super.finish();
+        if (loginCall != null) {
+            if (User.getInstance().isLogin()) {
+                loginCall.onisLogin();
+            } else {
+                loginCall.onLoginFail();
+            }
+        }
+        loginCall = null;
+    }
+
+
     //直接注册
     private void register() {
         Intent it = new Intent(this, RegisterActivity2.class);
@@ -184,23 +201,6 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
         }
 
 
-//        final String num = "18000000001";
-//        final String password = "123456";
-
-//        final String num = "18000000001";
-//      //final Strin//password = "123456";
-//        final Strin//num = mEditNum.getText().toString().trim();
-//        final String num = mEditNum.getText().toString().trim();
-//        final String password = mEditPassword.getText().toString().trim();
-//        if (TextUtils.isEmpty(num) || TextUtils.isEmpty(password)) {
-//            showToast("手机号或密码不能为空");
-//            return;
-//        }
-//        final String num = "18000000001";
-//        final String password = "123456";
-//        num = "18362971169";
-
-
         DhNet dhNet = new DhNet(API2.login);
         dhNet.addParam("phone", num);
         dhNet.addParam("password", MD5Util.string2MD5(password));
@@ -214,22 +214,6 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
                     loginHX(MD5Util.string2MD5(JSONUtil.getString(json, "userId")),
                             MD5Util.string2MD5(password),
                             json, num);
-                    //                        user.setUserId(json.getString("userId"));
-//                        user.setToken(json.getString("token"));
-//                        user.setBrand(json.getString("brand"));
-//                        user.setBrandLogo(json.getString("brandLogo"));
-//                        user.setHeadUrl(json.getString("avatar"));
-//                        user.setNickName(json.getString("nickname"));
-//                        user.setModel(json.getString("model"));
-//                        User.getInstance().setLogin(true);
-
-//                            LoginEB loginEB = new LoginEB();
-//                            loginEB.setIslogin(true);
-//                            EventBus.getDefault().post(loginEB);
-
-//                            loginHX(MD5Util.string2MD5(JSONUtil.getString(json, "userId")),
-//                                    MD5Util.string2MD5(per.thirdId + per.channel + "com.gongpingjia.carplay"),
-//                                    json);
                 } else {
                     hidenProgressDialog();
                 }
@@ -377,7 +361,7 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
     }
 
 
-    private void loginHX(String currentUsername, String currentPassword, final JSONObject jo, final String phone) {
+    private void loginHX(String currentUsername, final String currentPassword, final JSONObject jo, final String phone) {
         EMChatManager.getInstance().login(currentUsername, currentPassword, new EMCallBack() {
 
             /**
@@ -415,24 +399,28 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
                     LoginEB loginEB = new LoginEB();
                     loginEB.setIslogin(true);
                     EventBus.getDefault().post(loginEB);
-                    LoginActivity.asyncFetchGroupsFromServer();
                     CarPlayPerference per = IocContainer.getShare().get(CarPlayPerference.class);
                     per.load();
                     per.thirdId = mUid;
                     per.channel = mChannel;
+                    per.password = currentPassword;
                     if (phone != null) {
                         per.phone = phone;
                     }
                     per.commit();
-                    hidenProgressDialog();
                     runOnUiThread(new Runnable() {
                         public void run() {
+                            hidenProgressDialog();
                             showToast("登录成功!");
+                            if (isFromLogout) {
+                                Intent it = new Intent(self, MainActivity2.class);
+                                startActivity(it);
+                            }
+                            self.finish();
                         }
                     });
-                    Intent it = new Intent(self, MainActivity2.class);
-                    startActivity(it);
-                    self.finish();
+                    asyncFetchGroupsFromServer();
+
                 } catch (Exception e) {
                     e.printStackTrace();
                     // 取好友或者群聊失败，不让进入主页面
@@ -505,5 +493,31 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
         UserDao dao = new UserDao(LoginActivity2.this);
         List<ChatUser> users = new ArrayList<ChatUser>(userlist.values());
         dao.saveContactList(users);
+    }
+
+
+    public static void asyncFetchGroupsFromServer() {
+        HXSDKHelper.getInstance().asyncFetchGroupsFromServer(new EMCallBack() {
+
+            @Override
+            public void onSuccess() {
+                HXSDKHelper.getInstance().noitifyGroupSyncListeners(true);
+
+                if (HXSDKHelper.getInstance().isContactsSyncedWithServer()) {
+                    HXSDKHelper.getInstance().notifyForRecevingEvents();
+                }
+            }
+
+            @Override
+            public void onError(int code, String message) {
+                HXSDKHelper.getInstance().noitifyGroupSyncListeners(false);
+            }
+
+            @Override
+            public void onProgress(int progress, String status) {
+
+            }
+
+        });
     }
 }

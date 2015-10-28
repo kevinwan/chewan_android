@@ -33,12 +33,18 @@ public class MateLayerDialog extends BaseAlertDialog implements View.OnClickList
     private TextView textDestination;
     private ImageView imgMyTreat, imgAa, imgYourTurn;
 
+    private OnMatchingDialogResult mResult;
+
+    public void setMatchingResult(OnMatchingDialogResult result) {
+        mResult = result;
+    }
+
     private int selectIndex = -1;
 
     private String type;
 
     public MateLayerDialog(Context context, String type) {
-        super(context);
+        super(context, R.style.Dialog_Fullscreen);
         this.mContext = context;
         this.type = type;
     }
@@ -72,13 +78,13 @@ public class MateLayerDialog extends BaseAlertDialog implements View.OnClickList
         btnMatch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean pickOrNot = checkBox.isChecked();
+                final boolean pickOrNot = checkBox.isChecked();
                 if (selectIndex < 0) {
                     Toast.makeText(mContext, "请选择类型", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                DhNet dhNet = new DhNet(API2.getMatchUrl(User.getInstance().getUserId(), User.getInstance().getToken()));
+                final DhNet dhNet = new DhNet(API2.getMatchUrl(User.getInstance().getUserId(), User.getInstance().getToken()));
                 //类型
                 dhNet.addParam("majorType", type);
                 dhNet.addParam("type", type);
@@ -132,6 +138,9 @@ public class MateLayerDialog extends BaseAlertDialog implements View.OnClickList
                     public void doInUI(Response response, Integer transfer) {
                         if (response.isSuccess()) {
                             Toast.makeText(mContext, "发布成功", Toast.LENGTH_SHORT).show();
+                            if (mResult != null) {
+                                mResult.onResult(dhNet.getParams());
+                            }
                         }
                         dismiss();
                     }
@@ -177,5 +186,9 @@ public class MateLayerDialog extends BaseAlertDialog implements View.OnClickList
                 imgYourTurn.setBackgroundResource(R.drawable.mate_manner_y);
                 break;
         }
+    }
+
+    public interface OnMatchingDialogResult {
+        void onResult(Map<String, Object> params);
     }
 }
