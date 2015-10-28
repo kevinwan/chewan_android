@@ -399,7 +399,6 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
                     LoginEB loginEB = new LoginEB();
                     loginEB.setIslogin(true);
                     EventBus.getDefault().post(loginEB);
-                    LoginActivity.asyncFetchGroupsFromServer();
                     CarPlayPerference per = IocContainer.getShare().get(CarPlayPerference.class);
                     per.load();
                     per.thirdId = mUid;

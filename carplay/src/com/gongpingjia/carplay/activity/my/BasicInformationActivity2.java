@@ -298,7 +298,7 @@ public class BasicInformationActivity2 extends CarPlayBaseActivity implements Vi
                             LoginEB loginEB = new LoginEB();
                             loginEB.setIslogin(true);
                             EventBus.getDefault().post(loginEB);
-                            LoginActivity.asyncFetchGroupsFromServer();
+                            LoginActivity2.asyncFetchGroupsFromServer();
                         } catch (Exception e) {
                             e.printStackTrace();
                             // 取好友或者群聊失败，不让进入主页面
@@ -307,7 +307,7 @@ public class BasicInformationActivity2 extends CarPlayBaseActivity implements Vi
                                     DemoHXSDKHelper.getInstance().logout(true,
                                             null);
                                     Toast.makeText(getApplicationContext(),
-                                            R.string.login_failure_failed, 1)
+                                            R.string.login_failure_failed, Toast.LENGTH_SHORT)
                                             .show();
                                 }
                             });

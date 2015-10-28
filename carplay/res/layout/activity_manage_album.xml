@@ -98,11 +98,6 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" >
 
-            <ImageView
-                android:layout_width="fill_parent"
-                android:layout_height="630dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/first_photo" />
 
             <Button
                 android:id="@+id/know"

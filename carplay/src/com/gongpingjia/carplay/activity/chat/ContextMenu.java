@@ -13,10 +13,6 @@
  */
 package com.gongpingjia.carplay.activity.chat;
 
-import net.duohuo.dhroid.activity.ActivityTack;
-import net.duohuo.dhroid.dialog.IDialog;
-import net.duohuo.dhroid.ioc.IocContainer;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -28,8 +24,6 @@ import android.widget.Button;
 import com.easemob.chat.EMMessage;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
-import com.gongpingjia.carplay.activity.main.MainActivity.ExitRunnable;
-import com.gongpingjia.carplay.service.MsgService;
 
 public class ContextMenu extends CarPlayBaseActivity {
 

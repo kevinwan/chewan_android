@@ -87,7 +87,7 @@ public class SplashActivity extends CarPlayBaseActivity {
                     JSONObject json = response.jSONFrom("data");
                     if (json.has("snsUid")) {
                         // 登陆失败
-                        Intent it = new Intent(self, MainActivity.class);
+                        Intent it = new Intent(self, MainActivity2.class);
                         startActivity(it);
                     } else if (json.has("userId")) {
 
