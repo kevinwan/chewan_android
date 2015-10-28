@@ -3,8 +3,6 @@ package com.gongpingjia.carplay.activity.main;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.ConnectivityManager;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.view.View;
@@ -35,6 +33,7 @@ public class BaseFragmentActivity extends FragmentActivity {
     private long exitTimefist = 0;
     private long exitTimesec = 0;
     private long exitTimethr = 0;
+    public static final String CONNECTIVITY_CHANGE_ACTION = "android.net.conn.CONNECTIVITY_CHANGE";
 
     @Override
     public void setContentView(int layoutResID) {
@@ -43,10 +42,10 @@ public class BaseFragmentActivity extends FragmentActivity {
         self = this;
         ActivityTack.getInstanse().addActivity(this);
 
-        netReceiver = new NetReceiver();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-        registerReceiver(netReceiver, filter);
+//        netReceiver = new NetReceiver();
+//        IntentFilter filter = new IntentFilter();
+//        filter.addAction(CONNECTIVITY_CHANGE_ACTION);
+//        registerReceiver(netReceiver, filter);
     }
 
 

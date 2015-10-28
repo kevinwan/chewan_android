@@ -304,6 +304,8 @@
             android:name=".activity.active.NearListActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"></activity>
+
+
     </application>
 
 </manifest>

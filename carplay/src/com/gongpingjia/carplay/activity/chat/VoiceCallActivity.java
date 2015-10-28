@@ -179,7 +179,7 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
         } else { // 有电话进来
 //			voiceContronlLayout.setVisibility(View.INVISIBLE);
 //            answering_layout.setVisibility(View.INVISIBLE);
-            answering_layout.setVisibility(View.GONE);
+            answering_layout.setVisibility(View.VISIBLE);
             call_layout.setVisibility(View.GONE);
             Uri ringUri = RingtoneManager
                     .getDefaultUri(RingtoneManager.TYPE_RINGTONE);

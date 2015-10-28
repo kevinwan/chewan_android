@@ -107,7 +107,7 @@ public class CarPlayBaseFragment extends Fragment {
                     }
                 }
 
-                if (onLoadSuccess != null && !response.isCache()) {
+                if (onLoadSuccess != null) {
                     onLoadSuccess.loadSuccess();
                 }
 
@@ -151,7 +151,6 @@ public class CarPlayBaseFragment extends Fragment {
                 }
 
 
-
                 if (list != null) {
                     addAll(list);
                 }
@@ -166,7 +165,7 @@ public class CarPlayBaseFragment extends Fragment {
                     onLoadSuccess.loadSuccess();
                 }
 
-                if (onLoadSuccess != null && !response.isCache() && ignore ==0) {
+                if (onLoadSuccess != null && !response.isCache() && ignore == 0) {
                     onLoadSuccess.loadSuccessOnFirst();
                 }
 

@@ -67,4 +67,9 @@ public class API2 {
         return String.format(CWBaseurl + "user/%s/listen?token=%s", userId, token);
     }
 
+    //获取谁关注的信息
+    public static String getSubscribeMy(String userId, String token) {
+        return String.format(CWBaseurl + "user/%s/subscribe/history?token=%s", userId, token);
+    }
+
 }
