@@ -203,7 +203,12 @@ public class DyanmicBaseAdapter extends BaseAdapter {
             holder.travelmode.setText("");
         }
         ViewUtil.bindNetImage(holder.activity_beijing, JSONUtil.getString(js, "avatar"), "back");
-//        holder.inviteT.setText("");
+        String message = JSONUtil.getString(jo,"message");
+        if (!message.isEmpty()){
+            holder.inviteT.setVisibility(View.VISIBLE);
+            holder.inviteT.setText(JSONUtil.getString(jo,"message"));
+        }
+
         holder.yingyao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -124,17 +124,18 @@
                 <include layout="@layout/include_active_button" />
 
             </RelativeLayout>
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="#50000000"
-                android:visibility="gone">
+            <!--<LinearLayout-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:background="#50000000"-->
+                <!--android:visibility="gone">-->
                 <TextView
                     android:id="@+id/inviteT"
                    style="@style/text_white_medium"
+                    android:background="#50000000"
                     android:layout_width="fill_parent"
-                    />
-            </LinearLayout>
+                    android:visibility="gone"/>
+            <!--</LinearLayout>-->
 
         </FrameLayout>
 

@@ -316,7 +316,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                 break;
             //我的活动
             case R.id.myactive:
-                it = new Intent(mContext, MyDynamicActivity.class);
+                it = new Intent(mContext, VisitorsActivity.class);
                 startActivity(it);
                 break;
             //我的关注
