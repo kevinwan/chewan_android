@@ -26,7 +26,7 @@ public class AnimButtonView extends RelativeLayout {
     private static final int OFFSET = 600; // 每个动画的播放时间间隔
     private static final int MSG_WAVE2_ANIMATION = 2;
 
-    ImageView image1, image2;
+    ImageView image1, image2, bgI;
 
     private AnimationSet mAnimationSet1, mAnimationSet2, mTranslateAnimationSet;
 
@@ -58,17 +58,17 @@ public class AnimButtonView extends RelativeLayout {
         pa.setMargins(margin, margin, margin, margin);
         image1 = new ImageView(mContext);
         image2 = new ImageView(mContext);
-        ImageView bg = new ImageView(mContext);
+        bgI = new ImageView(mContext);
         image1.setImageResource(srcId);
         image2.setImageResource(srcId);
-        bg.setImageResource(bgId);
+        bgI.setImageResource(bgId);
         image1.setLayoutParams(pa);
         image2.setLayoutParams(pa);
-        bg.setLayoutParams(pa);
+        bgI.setLayoutParams(pa);
 
         addView(image1);
         addView(image2);
-        addView(bg);
+        addView(bgI);
         mAnimationSet1 = initAnimationSet();
         mAnimationSet2 = initAnimationSet();
         a.recycle();
@@ -99,6 +99,12 @@ public class AnimButtonView extends RelativeLayout {
         ta.setRepeatCount(Animation.INFINITE);// 设置循环
         mTranslateAnimationSet.addAnimation(ta);
         this.startAnimation(mTranslateAnimationSet);
+    }
+
+    public void setResourseAndBg(int srcId, int bgId) {
+        image1.setImageResource(srcId);
+        image2.setImageResource(srcId);
+        bgI.setImageResource(bgId);
     }
 
 

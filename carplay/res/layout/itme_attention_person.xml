@@ -54,7 +54,8 @@
                         android:layout_centerVertical="true"
                         android:layout_marginRight="2dp"
                         android:textColor="@color/white"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        />
                 </RelativeLayout>
             </LinearLayout>
 

@@ -1,7 +1,9 @@
 package com.gongpingjia.carplay.activity.my;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -14,6 +16,10 @@ import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.User;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+
+import net.duohuo.dhroid.net.JSONUtil;
+
+import org.json.JSONObject;
 
 /**
  * 感兴趣的
@@ -47,6 +53,22 @@ public class InterestedPersonActivity extends CarPlayListActivity implements Pul
         listV.setOnRefreshListener(this);
 
         mRecyclerView = listV.getRefreshableView();
+        mRecyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        JSONObject jo = adapter.getItem(position - 1);
+                        JSONObject userjo = JSONUtil.getJSONObject(jo, "user");
+                        Intent it = new Intent(self, PersonDetailActivity2.class);
+                        String userId = JSONUtil.getString(userjo, "userId");
+                        it.putExtra("userId", userId);
+                        startActivity(it);
+                    }
+                });
+            }
+        });
 //        mRecyclerView.setEmptyView(findViewById(R.id.));
         adapter = new InterestedPersonAdapter(self);
         mRecyclerView.setAdapter(adapter);

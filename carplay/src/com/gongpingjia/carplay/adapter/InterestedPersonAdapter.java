@@ -13,15 +13,23 @@ import android.widget.TextView;
 
 import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.api.API2;
+import com.gongpingjia.carplay.bean.User;
+import com.gongpingjia.carplay.util.CarPlayUtil;
+import com.gongpingjia.carplay.view.AnimButtonView;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
+import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
+import net.duohuo.dhroid.net.NetTask;
+import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.util.ViewUtil;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
@@ -31,11 +39,10 @@ import jp.wasabeef.blurry.Blurry;
 /**
  * Created by Administrator on 2015/10/20.
  */
-public class InterestedPersonAdapter extends BaseAdapter {
+public class InterestedPersonAdapter extends BaseAdapter{
     private static final int COUNT = 5;
-
     private final Context mContext;
-
+    String activityId;
     private List<JSONObject> data;
 
     User user = User.getInstance();
@@ -80,6 +87,7 @@ public class InterestedPersonAdapter extends BaseAdapter {
             holder = new ViewHolder();
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_activelist, null);
             holder.titleT = (TextView) convertView.findViewById(R.id.dynamic_title);
+            holder.invitationT = (TextView) convertView.findViewById(R.id.invitationT);
             holder.carNameT = (TextView) convertView.findViewById(R.id.dynamic_carname);
             holder.ageT = (TextView) convertView.findViewById(R.id.tv_age);
             holder.payT = (TextView) convertView.findViewById(R.id.pay_type);
@@ -95,8 +103,8 @@ public class InterestedPersonAdapter extends BaseAdapter {
             holder.photoDistanceT = (TextView) convertView.findViewById(R.id.photo_distance);
             holder.photoDistancelayoutL = (LinearLayout) convertView.findViewById(R.id.photo_distancelayout);
             holder.activeDistancelayoutl = (LinearLayout) convertView.findViewById(R.id.active_distancelayout);
-
-
+            holder.invitationI = (AnimButtonView) convertView.findViewById(R.id.invitationI);
+            holder.invitationI.startScaleAnimation();
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -106,7 +114,7 @@ public class InterestedPersonAdapter extends BaseAdapter {
 
         //用户信息,所在地,car信息,头像信息
         final JSONObject userjo = JSONUtil.getJSONObject(jo, "user");
-        JSONObject distancejo = JSONUtil.getJSONObject(jo, "destination");
+        JSONObject distancejo = JSONUtil.getJSONObject(jo, "activityDestination");
         JSONObject carjo = JSONUtil.getJSONObject(userjo, "car");
 //        JSONArray albumjsa = JSONUtil.getJSONArray(userjo, "album");
 
@@ -178,13 +186,20 @@ public class InterestedPersonAdapter extends BaseAdapter {
             holder.activeDistancelayoutl.setVisibility(View.VISIBLE);
             holder.photoDistancelayoutL.setVisibility(View.GONE);
             holder.invitationL.setVisibility(View.VISIBLE);
-
+              activityId = JSONUtil.getString(jo,"relatedId");
+            int activityStatus = JSONUtil.getInt(jo,"activityStatus");
             //题头
-            ViewUtil.bindView(holder.titleT, JSONUtil.getString(userjo, "nickname") + "想邀请你" + JSONUtil.getString(jo, "activityType"));
+            ViewUtil.bindView(holder.titleT, JSONUtil.getString(userjo, "nickname") + "想找人一起" + JSONUtil.getString(jo, "activityType"));
             //所在地,距离
             int distance = (int) Math.floor(JSONUtil.getDouble(jo, "distance"));
             holder.activeDistanceT.setText(CarPlayUtil.numberWithDelimiter(distance));
-            holder.locationT.setText(JSONUtil.getString(distancejo, "province") + JSONUtil.getString(distancejo, "city") + JSONUtil.getString(distancejo, "district") + JSONUtil.getString(distancejo, "street"));
+            if (distancejo == null){
+                holder.locationT.setVisibility(View.GONE);
+            }else{
+                holder.locationT.setVisibility(View.VISIBLE);
+                holder.locationT.setText(JSONUtil.getString(distancejo, "province") + JSONUtil.getString(distancejo, "city") + JSONUtil.getString(distancejo, "district") + JSONUtil.getString(distancejo, "street"));
+            }
+
             //付费类型,是否包接送
             ViewUtil.bindView(holder.payT, JSONUtil.getString(jo, "pay"));
             boolean transfer = JSONUtil.getBoolean(jo, "transfer");
@@ -195,7 +210,18 @@ public class InterestedPersonAdapter extends BaseAdapter {
                 holder.transferT.setVisibility(View.GONE);
                 holder.transferT.setText("不包接送");
             }
-        } else {
+            holder.invitationL.setVisibility(View.VISIBLE);
+            holder.invitationI.setOnClickListener(new MyOnClick(holder, position));
+            if (activityStatus == 1){
+                holder.invitationT.setText("邀 TA");
+                holder.invitationI.setEnabled(true);
+            }else{
+                holder.invitationT.setText("邀请中");
+                holder.invitationI.setEnabled(false);
+            }
+
+
+        }else {
             holder.payT.setVisibility(View.GONE);
             holder.transferT.setVisibility(View.GONE);
             holder.activeDistancelayoutl.setVisibility(View.GONE);
@@ -212,14 +238,55 @@ public class InterestedPersonAdapter extends BaseAdapter {
         return convertView;
     }
 
-    class ViewHolder {
-        TextView titleT, carNameT, ageT, payT, transferT, locationT, activeDistanceT, photoDistanceT;
+    class MyOnClick implements View.OnClickListener {
+        ViewHolder holder;
+
+        int position;
+
+        public MyOnClick(ViewHolder holder, int position) {
+            this.holder = holder;
+            this.position = position;
+        }
+
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.invitationI:
+                JSONObject jo = getItem(position);
+                join(activityId, holder, jo);
+                    break;
+            }
+        }
+    }
+    private void join(String activeId, final ViewHolder holder, final JSONObject jo) {
+        User user = User.getInstance();
+        String url = API2.CWBaseurl + "activity/" + activeId + "/join?" + "userId=" + user.getUserId() + "&token=" + user.getToken();
+        DhNet net = new DhNet(url);
+        net.doPostInDialog(new NetTask(mContext) {
+            @Override
+            public void doInUI(Response response, Integer transfer) {
+                if (response.isSuccess()) {
+                    holder.invitationT.setText("邀请中");
+                    System.out.println("邀Ta"+response.isSuccess());
+//                    try {
+//                        jo.put("applyFlag", true);
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+                }
+            }
+        });
+    }
+    class ViewHolder{
+        TextView titleT,carNameT,ageT,payT,transferT,locationT,activeDistanceT,photoDistanceT,invitationT;
 
         ImageView headStateI, carStateI, sexI, headbgI;
 
         RelativeLayout sexLayoutR;
 
+        AnimButtonView invitationI;
         LinearLayout invitationL, activeDistancelayoutl, photoDistancelayoutL;
     }
+
 
 }

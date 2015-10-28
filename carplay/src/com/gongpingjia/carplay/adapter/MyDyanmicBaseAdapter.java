@@ -15,8 +15,10 @@ import android.widget.TextView;
 
 import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.activity.active.ActiveDetailsActivity2;
 import com.gongpingjia.carplay.activity.chat.ChatActivity;
 import com.gongpingjia.carplay.activity.chat.VoiceCallActivity;
+import com.gongpingjia.carplay.activity.my.PersonDetailActivity2;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.CarPlayUtil;
@@ -137,6 +139,7 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                 holder.pay_type = (TextView) view.findViewById(R.id.pay_type);
                 holder.travelmode = (TextView) view.findViewById(R.id.travelmode);
                 holder.activity_place = (TextView) view.findViewById(R.id.activity_place);
+                holder.inviteT = (TextView) view.findViewById(R.id.inviteT);
 
                 holder.sexbgR = (RelativeLayout) view.findViewById(R.id.layout_sex_and_age);
                 holder.sexI = (ImageView) view.findViewById(R.id.iv_sex);
@@ -239,6 +242,15 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    JSONObject jo = (JSONObject) getItem(i);
+                    Intent it = new Intent(mContext, ActiveDetailsActivity2.class);
+                    it.putExtra("activityId", JSONUtil.getString(jo, "officialActivityId"));
+                    mContext.startActivity(it);
+                }
+            });
 
         } else {
             //活动id
@@ -268,7 +280,13 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                 holder.activity_place.setVisibility(View.VISIBLE);
                 holder.activity_place.setText(JSONUtil.getString(json, "province") + JSONUtil.getString(json, "city") + JSONUtil.getString(json, "district") + JSONUtil.getString(json, "street"));
             }
-
+            String message = JSONUtil.getString(jo,"message");
+            if (!message.isEmpty()){
+                holder.inviteT.setVisibility(View.VISIBLE);
+                holder.inviteT.setText(message);
+            }else{
+                holder.inviteT.setVisibility(View.GONE);
+            }
 
             int distance = (int) Math.floor(JSONUtil.getDouble(js, "distance"));
 //        DecimalFormat df = new DecimalFormat("0.00");
@@ -412,6 +430,15 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                     }
                 }
             });
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent it = new Intent(mContext, PersonDetailActivity2.class);
+                    String userId = JSONUtil.getString(js, "userId");
+                    it.putExtra("userId", userId);
+                    mContext.startActivity(it);
+                }
+            });
 
         }
 
@@ -470,7 +497,7 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
 
 
     class ViewHolder {
-        TextView titleT, dynamic_carname, pay_type, travelmode, activity_place, activity_distance, ageT, invitationT;
+        TextView titleT, dynamic_carname, pay_type, travelmode, activity_place, activity_distance, ageT, invitationT,inviteT;
         ImageView dynamic_carlogo, activity_beijing, certification_achievement, sexI;
         AnimButtonView dyanmic_one, dyanmic_two, yingyao, hulue, invitationI;
         LinearLayout yingyao_layout, yingyaohou, invitation;
