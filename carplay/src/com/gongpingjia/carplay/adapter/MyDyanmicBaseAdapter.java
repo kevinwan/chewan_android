@@ -15,8 +15,10 @@ import android.widget.TextView;
 
 import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.activity.active.ActiveDetailsActivity2;
 import com.gongpingjia.carplay.activity.chat.ChatActivity;
 import com.gongpingjia.carplay.activity.chat.VoiceCallActivity;
+import com.gongpingjia.carplay.activity.my.PersonDetailActivity2;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.CarPlayUtil;
@@ -240,6 +242,18 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                 e.printStackTrace();
             }
 
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    JSONObject jo = (JSONObject) getItem(i);
+                    Intent it = new Intent(mContext, ActiveDetailsActivity2.class);
+                    it.putExtra("activityId", JSONUtil.getString(jo, "officialActivityId"));
+                    mContext.startActivity(it);
+                }
+            });
+
+
         } else {
             //活动id
             activityId = JSONUtil.getString(jo, "activityId");
@@ -413,6 +427,16 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                 }
             });
 
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent it = new Intent(mContext, PersonDetailActivity2.class);
+                    String userId = JSONUtil.getString(js, "userId");
+                    it.putExtra("userId", userId);
+                    mContext.startActivity(it);
+                }
+            });
         }
 
 

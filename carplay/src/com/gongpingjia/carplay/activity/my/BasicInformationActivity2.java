@@ -252,8 +252,7 @@ public class BasicInformationActivity2 extends CarPlayBaseActivity implements Vi
                     per.commit();
                     Intent it = new Intent(self, MainActivity2.class);
                     startActivity(it);
-                } else {
-//                    showToast("注册失败");
+                    LoginActivity2.asyncFetchGroupsFromServer();
                 }
             }
 
