@@ -25,6 +25,7 @@ import com.gongpingjia.carplay.activity.my.InterestedPersonActivity;
 import com.gongpingjia.carplay.activity.my.MySubscriberActivity2;
 import com.gongpingjia.carplay.activity.my.OfficialMessageActivity;
 import com.gongpingjia.carplay.activity.my.SubscribeActivity2;
+import com.gongpingjia.carplay.activity.my.VisitorsActivity;
 import com.gongpingjia.carplay.adapter.FragmentMsgAdapter;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;

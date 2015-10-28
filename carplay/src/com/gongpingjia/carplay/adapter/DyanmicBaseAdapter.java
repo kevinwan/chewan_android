@@ -293,7 +293,14 @@ public class DyanmicBaseAdapter extends BaseAdapter {
             });
 
             ViewUtil.bindNetImage(holder.activity_beijing, JSONUtil.getString(js, "avatar"), "back");
-//        holder.inviteT.setText("");
+            String message = JSONUtil.getString(jo,"message");
+            if (!message.isEmpty()){
+                holder.inviteT.setVisibility(View.VISIBLE);
+                holder.inviteT.setText(message);
+            }else{
+                holder.inviteT.setVisibility(View.GONE);
+            }
+
             final ViewHolder finalHolder = holder;
             final ViewHolder finalHolder1 = holder;
             holder.yingyao.setOnClickListener(new View.OnClickListener() {
