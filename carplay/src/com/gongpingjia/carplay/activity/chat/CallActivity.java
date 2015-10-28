@@ -5,7 +5,6 @@ import android.media.AudioManager;
 import android.media.Ringtone;
 import android.media.SoundPool;
 import android.os.Bundle;
-import android.text.TextUtils;
 
 import com.easemob.chat.EMCallStateChangeListener;
 import com.easemob.chat.EMChatManager;
@@ -54,8 +53,6 @@ public class CallActivity extends CarPlayBaseActivity {
     /**
      * 播放拨号响铃
      *
-     * @param sound
-     * @param number
      */
     protected int playMakeCallSounds() {
         try {

@@ -254,8 +254,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingBottom="30dp"
-        android:visibility="gone">
+        android:paddingBottom="30dp">
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -264,18 +263,12 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <RadioGroup
-
+            <ImageView
+                android:id="@+id/iv_handsfree"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <RadioButton
-                    android:id="@+id/iv_handsfree"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/radio_call_btnhand"
-                    android:button="@null" />
-            </RadioGroup>
+                android:layout_height="wrap_content"
+                android:background="@drawable/handsfree_up"
+                android:button="@null" />
 
             <!--<ImageView-->
             <!-- -->
@@ -318,18 +311,12 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <RadioGroup
-
+            <ImageView
+                android:id="@+id/iv_mute"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <RadioButton
-                    android:id="@+id/iv_mute"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/radio_call_btnhand"
-                    android:button="@null" />
-            </RadioGroup>
+                android:layout_height="wrap_content"
+                android:background="@drawable/mute_up"
+                android:button="@null" />
 
             <!--<ImageView-->
             <!--android:id="@+id/iv_mute"-->

@@ -29,7 +29,6 @@ import android.view.animation.Animation;
 import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,8 +59,8 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
     private ImageView hangupBtn;
     private ImageView refuseBtn;
     private ImageView answerBtn;
-    private RadioButton muteImage;
-    private RadioButton handsFreeImage;
+    private ImageView muteImage;
+    private ImageView handsFreeImage;
 
     private boolean isMuteState;
     private boolean isHandsfreeState;
@@ -96,8 +95,8 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
         refuseBtn = (ImageView) findViewById(R.id.btn_refuse_call);
         answerBtn = (ImageView) findViewById(R.id.btn_answer_call);
         hangupBtn = (ImageView) findViewById(R.id.btn_hangup_call);
-        muteImage = (RadioButton) findViewById(R.id.iv_mute);
-        handsFreeImage = (RadioButton) findViewById(R.id.iv_handsfree);
+        muteImage = (ImageView) findViewById(R.id.iv_mute);
+        handsFreeImage = (ImageView) findViewById(R.id.iv_handsfree);
         callStateTextView = (TextView) findViewById(R.id.tv_call_state);
         nickTextView = (TextView) findViewById(R.id.tv_nick);
         txt_handsfree = (TextView) findViewById(R.id.txt_handsfree);
@@ -397,11 +396,10 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
                 answering_layout.setVisibility(View.INVISIBLE);
                 hangupBtn.setVisibility(View.VISIBLE);
 
-                answering_layout.setVisibility(View.GONE);
                 call_layout.setVisibility(View.VISIBLE);
 //
 // 			voiceContronlLayout.setVisibility(View.VISIBLE);
-                answering_layout.setVisibility(View.VISIBLE);
+                answering_layout.setVisibility(View.GONE);
                 closeSpeakerOn();
                 break;
 
@@ -426,27 +424,29 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
                     // 关闭静音
 //				muteImage.setImageResource(R.drawable.icon_mute_normal);
                     audioManager.setMicrophoneMute(false);
-                    txt_mute.setTextColor(this.getResources().getColor(R.color.text_call_bule));
+                    txt_mute.setTextColor(this.getResources().getColor(R.color.white));
                     isMuteState = false;
+                    muteImage.setBackgroundResource(R.drawable.mute_up);
                 } else {
                     // 打开静音
 //				muteImage.setImageResource(R.drawable.icon_mute_on);
                     audioManager.setMicrophoneMute(true);
-                    txt_mute.setTextColor(this.getResources().getColor(R.color.white));
+                    txt_mute.setTextColor(this.getResources().getColor(R.color.text_call_bule));
                     isMuteState = true;
+                    muteImage.setBackgroundResource(R.drawable.mute_down);
                 }
                 break;
             case R.id.iv_handsfree: // 免提开关
                 if (isHandsfreeState) {
                     // 关闭免提
-//				handsFreeImage.setImageResource(R.drawable.icon_speaker_normal);
+                    handsFreeImage.setBackgroundResource(R.drawable.handsfree_up);
                     closeSpeakerOn();
-                    txt_handsfree.setTextColor(this.getResources().getColor(R.color.text_call_bule));
+                    txt_handsfree.setTextColor(this.getResources().getColor(R.color.white));
                     isHandsfreeState = false;
                 } else {
-//				handsFreeImage.setImageResource(R.drawable.icon_speaker_on);
+                    handsFreeImage.setBackgroundResource(R.drawable.handsfree_down);
                     openSpeakerOn();
-                    txt_handsfree.setTextColor(this.getResources().getColor(R.color.white));
+                    txt_handsfree.setTextColor(this.getResources().getColor(R.color.text_call_bule));
                     isHandsfreeState = true;
                 }
                 break;

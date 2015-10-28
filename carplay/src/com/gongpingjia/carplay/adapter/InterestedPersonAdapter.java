@@ -17,8 +17,6 @@ import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.view.AnimButtonView;
-import com.gongpingjia.carplay.bean.User;
-import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
@@ -39,7 +37,7 @@ import jp.wasabeef.blurry.Blurry;
 /**
  * Created by Administrator on 2015/10/20.
  */
-public class InterestedPersonAdapter extends BaseAdapter{
+public class InterestedPersonAdapter extends BaseAdapter {
     private static final int COUNT = 5;
     private final Context mContext;
     String activityId;
@@ -104,7 +102,6 @@ public class InterestedPersonAdapter extends BaseAdapter{
             holder.photoDistancelayoutL = (LinearLayout) convertView.findViewById(R.id.photo_distancelayout);
             holder.activeDistancelayoutl = (LinearLayout) convertView.findViewById(R.id.active_distancelayout);
             holder.invitationI = (AnimButtonView) convertView.findViewById(R.id.invitationI);
-            holder.invitationI.startScaleAnimation();
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -128,8 +125,8 @@ public class InterestedPersonAdapter extends BaseAdapter{
             holder.sexLayoutR.setBackgroundResource(R.drawable.radion_sex_woman_normal);
             holder.sexI.setImageResource(R.drawable.icon_woman3x);
         }
-
-
+        holder.invitationI.clearAnimation();
+        holder.invitationI.startScaleAnimation();
         ImageLoader.getInstance().displayImage(JSONUtil.getString(userjo, "cover"), holder.headbgI, CarPlayValueFix.optionsDefault, new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String s, View view) {
@@ -173,10 +170,10 @@ public class InterestedPersonAdapter extends BaseAdapter{
         if ("未认证".equals(licenseAuthStatus)) {
             holder.carNameT.setVisibility(View.GONE);
             holder.carStateI.setVisibility(View.GONE);
-        } else if("认证中".equals(licenseAuthStatus)){
+        } else if ("认证中".equals(licenseAuthStatus)) {
             holder.carNameT.setVisibility(View.GONE);
             holder.carStateI.setVisibility(View.GONE);
-        }else if("认证通过".equals(licenseAuthStatus)){
+        } else if ("认证通过".equals(licenseAuthStatus)) {
             holder.carNameT.setVisibility(View.VISIBLE);
             holder.carStateI.setVisibility(View.VISIBLE);
         }
@@ -189,16 +186,16 @@ public class InterestedPersonAdapter extends BaseAdapter{
             holder.activeDistancelayoutl.setVisibility(View.VISIBLE);
             holder.photoDistancelayoutL.setVisibility(View.GONE);
             holder.invitationL.setVisibility(View.VISIBLE);
-              activityId = JSONUtil.getString(jo,"relatedId");
-            int activityStatus = JSONUtil.getInt(jo,"activityStatus");
+            activityId = JSONUtil.getString(jo, "relatedId");
+            int activityStatus = JSONUtil.getInt(jo, "activityStatus");
             //题头
             ViewUtil.bindView(holder.titleT, JSONUtil.getString(userjo, "nickname") + "想找人一起" + JSONUtil.getString(jo, "activityType"));
             //所在地,距离
             int distance = (int) Math.floor(JSONUtil.getDouble(jo, "distance"));
             holder.activeDistanceT.setText(CarPlayUtil.numberWithDelimiter(distance));
-            if (distancejo == null){
+            if (distancejo == null) {
                 holder.locationT.setVisibility(View.GONE);
-            }else{
+            } else {
                 holder.locationT.setVisibility(View.VISIBLE);
                 holder.locationT.setText(JSONUtil.getString(distancejo, "province") + JSONUtil.getString(distancejo, "city") + JSONUtil.getString(distancejo, "district") + JSONUtil.getString(distancejo, "street"));
             }
@@ -215,16 +212,18 @@ public class InterestedPersonAdapter extends BaseAdapter{
             }
             holder.invitationL.setVisibility(View.VISIBLE);
             holder.invitationI.setOnClickListener(new MyOnClick(holder, position));
-            if (activityStatus == 1){
+            if (activityStatus == 1) {
                 holder.invitationT.setText("邀 TA");
                 holder.invitationI.setEnabled(true);
-            }else{
+                holder.invitationI.setResourseAndBg(R.drawable.red_circle, R.drawable.red_circle);
+            } else {
                 holder.invitationT.setText("邀请中");
+                holder.invitationI.setResourseAndBg(R.drawable.dynamic_grey
+                        , R.drawable.dynamic_grey);
                 holder.invitationI.setEnabled(false);
             }
 
-
-        }else {
+        } else {
             holder.payT.setVisibility(View.GONE);
             holder.transferT.setVisibility(View.GONE);
             holder.activeDistancelayoutl.setVisibility(View.GONE);
@@ -255,12 +254,13 @@ public class InterestedPersonAdapter extends BaseAdapter{
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.invitationI:
-                JSONObject jo = getItem(position);
-                join(activityId, holder, jo);
+                    JSONObject jo = getItem(position);
+                    join(activityId, holder, jo);
                     break;
             }
         }
     }
+
     private void join(String activeId, final ViewHolder holder, final JSONObject jo) {
         User user = User.getInstance();
         String url = API2.CWBaseurl + "activity/" + activeId + "/join?" + "userId=" + user.getUserId() + "&token=" + user.getToken();
@@ -270,18 +270,20 @@ public class InterestedPersonAdapter extends BaseAdapter{
             public void doInUI(Response response, Integer transfer) {
                 if (response.isSuccess()) {
                     holder.invitationT.setText("邀请中");
-                    System.out.println("邀Ta"+response.isSuccess());
-//                    try {
-//                        jo.put("applyFlag", true);
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
+                    System.out.println("邀Ta" + response.isSuccess());
+                    holder.invitationI.setResourseAndBg(R.drawable.dynamic_grey, R.drawable.dynamic_grey);
+                    try {
+                        jo.put("activityStatus", 2);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
     }
-    class ViewHolder{
-        TextView titleT,carNameT,ageT,payT,transferT,locationT,activeDistanceT,photoDistanceT,invitationT;
+
+    class ViewHolder {
+        TextView titleT, carNameT, ageT, payT, transferT, locationT, activeDistanceT, photoDistanceT, invitationT;
 
         ImageView headStateI, carStateI, sexI, headbgI;
 
