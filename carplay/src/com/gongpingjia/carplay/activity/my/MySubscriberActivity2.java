@@ -60,7 +60,7 @@ public class MySubscriberActivity2 extends CarPlayListActivity implements ILoadS
             }
         });
         ListView listV = mListView.getRefreshableView();
-        mListView.setAdapter(beSubscribeAdapter);
+        listV.setAdapter(beSubscribeAdapter);
         setUrl(API2.getSubscribeMy(User.getInstance().getUserId(), User.getInstance().getToken()));
         setOnLoadSuccess(this);
         fromWhat("data");
@@ -72,6 +72,12 @@ public class MySubscriberActivity2 extends CarPlayListActivity implements ILoadS
     public void loadSuccess() {
         Log.d("msg", mVaules.toString());
         beSubscribeAdapter.setData(mVaules);
+        mListView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mListView.onRefreshComplete();
+            }
+        }, 500);
     }
 
     @Override

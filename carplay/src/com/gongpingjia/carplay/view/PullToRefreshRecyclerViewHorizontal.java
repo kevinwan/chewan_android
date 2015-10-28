@@ -32,7 +32,7 @@ public class PullToRefreshRecyclerViewHorizontal extends PullToRefreshBase<Recyc
 
     private RecyclerViewPager recyclerView;
     private boolean isScrollOnHeader = true;
-    private boolean isScrollOnFooter = false;
+    public boolean isScrollOnFooter = false;
 
     @Override
     protected RecyclerViewPager createRefreshableView(Context context, AttributeSet attrs) {
