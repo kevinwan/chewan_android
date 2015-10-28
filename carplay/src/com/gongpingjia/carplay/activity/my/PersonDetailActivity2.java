@@ -49,16 +49,16 @@ import de.greenrobot.event.EventBus;
 /**
  * TA 的详情
  */
-public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.OnClickListener{
+public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.OnClickListener {
 
     User user;
 
     private RoundImageView headI;
-    private ImageView sexI, photo_bgI,carLogo;
-    private TextView  nameT, ageT,attentionT,carName;
+    private ImageView sexI, photo_bgI, carLogo;
+    private TextView nameT, ageT, attentionT, carName;
     private RelativeLayout sexbgR;
     private LinearLayout myactiveL;
-    private Button uploadBtn,perfectBtn;
+    private Button uploadBtn, perfectBtn;
 
     private RecyclerView recyclerView;
     PersonDetailAdapter mAdapter;
@@ -98,10 +98,10 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
         nameT = (TextView) findViewById(R.id.name);
         sexbgR = (RelativeLayout) findViewById(R.id.layout_sex_and_age);
         sexI = (ImageView) findViewById(R.id.iv_sex);
-        ageT = (TextView)findViewById(R.id.tv_age);
+        ageT = (TextView) findViewById(R.id.tv_age);
         photo_bgI = (ImageView) findViewById(R.id.photo_bg);
         attentionT = (TextView) findViewById(R.id.attention);
-        myactiveL = (LinearLayout) findViewById( R.id.myactive);
+        myactiveL = (LinearLayout) findViewById(R.id.myactive);
         uploadBtn = (Button) findViewById(R.id.upload);
         carLogo = (ImageView) findViewById(R.id.carlogo);
         carName = (TextView) findViewById(R.id.carname);
@@ -125,7 +125,7 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
     }
 
     public void getDetails() {
-        userId = getIntent().getStringExtra("activeid");
+        userId = getIntent().getStringExtra("userId");
         DhNet verifyNet = new DhNet(API2.CWBaseurl + "/user/" + userId
                 + "/info?viewUser=" + user.getUserId() + "&token=" + user.getToken());
         verifyNet.doGetInDialog(new NetTask(self) {
@@ -174,7 +174,7 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
                         ((RelativeLayout) findViewById(R.id.uploadlayout)).setVisibility(View.VISIBLE);
                         ((LinearLayout) findViewById(R.id.photolayout)).setVisibility(View.GONE);
                     }
-                    issubscribe=JSONUtil.getBoolean(jo, "subscribeFlag");
+                    issubscribe = JSONUtil.getBoolean(jo, "subscribeFlag");
                     perfectBtn.setBackgroundResource(issubscribe ? R.drawable.radio_sex_man_focused : R.drawable.btn_red_fillet);
                     //头像认证
                     String photoAuthStatus = JSONUtil.getString(jo, "photoAuthStatus");
@@ -205,10 +205,10 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
     @Override
     public void onClick(View v) {
         Intent it;
-        switch (v.getId()){
+        switch (v.getId()) {
             //关注
             case R.id.perfect:
-                if (!issubscribe){
+                if (!issubscribe) {
                     attentionorCancle();
                 }
                 break;
@@ -270,7 +270,7 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
 
     //关注
     private void attentionorCancle() {
-        DhNet net = new DhNet( API2.CWBaseurl + "/user/" + user.getUserId() + "/listen?token=" + user.getToken());
+        DhNet net = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId() + "/listen?token=" + user.getToken());
         net.addParam("targetUserId", userId);
         net.doPostInDialog(new NetTask(self) {
             @Override

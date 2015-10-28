@@ -41,6 +41,7 @@ import net.duohuo.dhroid.util.ImageUtil;
 import net.duohuo.dhroid.util.PhotoUtil;
 import net.duohuo.dhroid.util.UserLocation;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -275,10 +276,24 @@ public class BasicInformationActivity2 extends CarPlayBaseActivity implements Vi
                             // 处理好友和群组
                             initializeContacts();
                             User user = User.getInstance();
+
+                            user.setUserId(jo.getString("userId"));
+                            user.setToken(jo.getString("token"));
+                            user.setHeadUrl(jo.getString("avatar"));
+                            user.setLicenseAuthStatus("认证通过".equals(jo.getString("licenseAuthStatus")));
+                            user.setPhotoAuthStatus("认证通过".equals(jo.getString("photoAuthStatus")));
+                            user.setEmName(jo.getString("emchatName"));
+                            JSONArray jsa = JSONUtil.getJSONArray(jo, "album");
+                            user.setHasAlbum(jsa != null && jsa.length() != 0);
+//                    user.setHasAlbum(jsa.length() == 0 ? false : true);
+                            user.setGender(JSONUtil.getString(jo, "gender"));
+                            user.setAge(JSONUtil.getInt(jo, "age"));
+
+
                             user.setToken(JSONUtil.getString(jo, "token"));
                             user.setUserId(JSONUtil.getString(jo, "userId"));
                             user.setNickName(mEditNickname.getText().toString());
-                            user.setHeadUrl(JSONUtil.getString(jo, "photo"));
+                            user.setHeadUrl(JSONUtil.getString(jo, "avatar"));
                             user.setLogin(true);
 
                             LoginEB loginEB = new LoginEB();

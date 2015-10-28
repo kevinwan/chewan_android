@@ -6,24 +6,19 @@
     android:orientation="vertical"
     tools:context="com.gongpingjia.carplay.activity.active.MyActiveActivity">
 
-    <include
-        android:id="@+id/title"
-        layout="@layout/include_title_bar" />
+    <include layout="@layout/include_title_bar" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/line_grey"
         android:gravity="center_horizontal"
-        android:layout_below="@+id/title"
         android:paddingBottom="12dp"
         android:paddingTop="12dp">
 
     </LinearLayout>
 
     <include layout="@layout/include_refreshlistview2" />
-
-
 
 
 </LinearLayout>

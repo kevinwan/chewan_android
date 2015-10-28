@@ -1,15 +1,11 @@
 package com.gongpingjia.carplay.activity.my;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.gongpingjia.carplay.R;
-import com.gongpingjia.carplay.adapter.MySubscriberAdapter2;
+import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
+import com.gongpingjia.carplay.adapter.BeSubscribedAdapter2;
 import com.gongpingjia.carplay.adapter.SubscribeListener;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.User;
@@ -25,51 +21,50 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Created by Administrator on 2015/10/16.
- * 我关注的人
+ * Created by Administrator on 2015/10/27.
+ * 谁关注我
  */
-public class MySubscriberFragment extends Fragment {
-    private PullToRefreshListView mListView;
-    private MySubscriberAdapter2 mySubscriberAdapter;
+public class MySubscriberActivity2 extends CarPlayBaseActivity {
 
-    @Nullable
+    private PullToRefreshListView mListView;
+    private BeSubscribedAdapter2 beSubscribeAdapter;
+
     @Override
-    public View onCreateView(final LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
-        mListView = (PullToRefreshListView) inflater.inflate(R.layout.fragment_follow_each_other, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_my_subscriber);
+        refreshList();
+    }
+
+    @Override
+    public void initView() {
+        setTitle("谁关注我");
+        mListView = (PullToRefreshListView) findViewById(R.id.refresh_list_view);
         mListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
             public void onRefresh(PullToRefreshBase<ListView> refreshView) {
                 refreshList();
             }
         });
-
-        return mListView;
     }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        refreshList();
-    }
-
 
     private void refreshList() {
         DhNet dhNet = new DhNet(API2.getSubscribe(User.getInstance().getUserId(), User.getInstance().getToken()));
-        dhNet.doGetInDialog(new NetTask(getActivity()) {
+        dhNet.doGetInDialog(new NetTask(self) {
             @Override
             public void doInUI(Response response, Integer transfer) {
                 mListView.onRefreshComplete();
                 if (response.isSuccess()) {
                     try {
                         JSONObject jsonObject = response.jSONFromData();
-                        JSONArray jsonArray = jsonObject.getJSONArray("mySubscribe");
-                        mySubscriberAdapter = new MySubscriberAdapter2(getActivity(), jsonArray);
-                        mySubscriberAdapter.setSubscribeListener(new SubscribeListener() {
+                        JSONArray jsonArray = jsonObject.getJSONArray("beSubscribed");
+                        beSubscribeAdapter = new BeSubscribedAdapter2(self, jsonArray);
+                        beSubscribeAdapter.setSubscribeListener(new SubscribeListener() {
                             @Override
                             public void onSubscribe(String targetId) {
-                                DhNet dhNet = new DhNet(API2.getUnfollowPerson(User.getInstance().getUserId(), User.getInstance().getToken()));
+                                DhNet dhNet = new DhNet(API2.getFollowPerson(User.getInstance().getUserId(), User.getInstance().getToken()));
                                 dhNet.addParam("targetUserId", targetId);
-                                dhNet.doPostInDialog(new NetTask(getActivity()) {
+                                dhNet.doPostInDialog(new NetTask(self) {
                                     @Override
                                     public void doInUI(Response response, Integer transfer) {
                                         if (response.isSuccess()) {
@@ -80,7 +75,7 @@ public class MySubscriberFragment extends Fragment {
                                 });
                             }
                         });
-                        mListView.setAdapter(mySubscriberAdapter);
+                        mListView.setAdapter(beSubscribeAdapter);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

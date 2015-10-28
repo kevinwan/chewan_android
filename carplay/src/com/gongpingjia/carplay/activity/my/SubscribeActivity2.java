@@ -42,6 +42,7 @@ public class SubscribeActivity2 extends CarPlayListActivity {
         mViewPager.setAdapter(mAdapter);
         mTabLayout.setTabsFromPagerAdapter(mAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
+        mViewPager.setCurrentItem(getIntent().getIntExtra("index", 0));
     }
 
     public <T extends View> T find(View view, int id) {

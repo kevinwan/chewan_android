@@ -1,5 +1,6 @@
 package com.gongpingjia.carplay.activity.active;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.LinearLayout;
 import com.gongpingjia.carplay.ILoadSuccess;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseFragment;
+import com.gongpingjia.carplay.activity.my.PersonDetailActivity2;
 import com.gongpingjia.carplay.adapter.NearListAdapter;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.FilterPreference2;
@@ -19,7 +21,10 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
 
 import net.duohuo.dhroid.ioc.IocContainer;
+import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.util.UserLocation;
+
+import org.json.JSONObject;
 
 import de.greenrobot.event.EventBus;
 
@@ -85,6 +90,16 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
         });
         mRecyclerView = listV.getRefreshableView();
         adapter = new NearListAdapter(getActivity());
+        adapter.setOnItemClick(new NearListAdapter.OnItemClick() {
+            @Override
+            public void onItemClick(int position, JSONObject jo) {
+                Intent it = new Intent(getActivity(), PersonDetailActivity2.class);
+                JSONObject userjo = JSONUtil.getJSONObject(jo, "organizer");
+                String userId = JSONUtil.getString(userjo, "userId");
+                it.putExtra("userId", userId);
+                startActivity(it);
+            }
+        });
         mRecyclerView.setAdapter(adapter);
         setOnLoadSuccess(this);
         fromWhat("data");

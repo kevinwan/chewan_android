@@ -236,6 +236,8 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
 
+        <activity android:name=".activity.my.MySubscriberActivity2"/>
+
         <!-- 分享编辑页 -->
         <activity
             android:name="com.umeng.socialize.view.ShareActivity"

@@ -1,6 +1,7 @@
 package com.gongpingjia.carplay.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +11,17 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.view.AnimButtonView;
+import com.gongpingjia.carplay.bean.User;
+import com.gongpingjia.carplay.util.CarPlayUtil;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
@@ -27,15 +34,19 @@ import org.json.JSONObject;
 
 import java.util.List;
 
+import jp.wasabeef.blurry.Blurry;
+
 /**
  * Created by Administrator on 2015/10/20.
  */
 public class InterestedPersonAdapter extends BaseAdapter{
     private static final int COUNT = 5;
-    User user = User.getInstance();
     private final Context mContext;
     String activityId;
     private List<JSONObject> data;
+
+    User user = User.getInstance();
+
 
     public InterestedPersonAdapter(Context context) {
         mContext = context;
@@ -57,8 +68,7 @@ public class InterestedPersonAdapter extends BaseAdapter{
     @Override
     public JSONObject getItem(int position) {
         JSONObject item = null;
-        if (null != data)
-        {
+        if (null != data) {
             item = data.get(position);
         }
         return item;
@@ -72,9 +82,8 @@ public class InterestedPersonAdapter extends BaseAdapter{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder=null;
-        if (null == convertView)
-        {
+        ViewHolder holder = null;
+        if (null == convertView) {
             holder = new ViewHolder();
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_activelist, null);
             holder.titleT = (TextView) convertView.findViewById(R.id.dynamic_title);
@@ -97,23 +106,21 @@ public class InterestedPersonAdapter extends BaseAdapter{
             holder.invitationI = (AnimButtonView) convertView.findViewById(R.id.invitationI);
 
             convertView.setTag(holder);
-        }
-        else
-        {
+        } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
         final JSONObject jo = getItem(position);
 
         //用户信息,所在地,car信息,头像信息
-        JSONObject userjo = JSONUtil.getJSONObject(jo, "user");
+        final JSONObject userjo = JSONUtil.getJSONObject(jo, "user");
         JSONObject distancejo = JSONUtil.getJSONObject(jo, "destination");
         JSONObject carjo = JSONUtil.getJSONObject(userjo, "car");
 //        JSONArray albumjsa = JSONUtil.getJSONArray(userjo, "album");
 
         //,性别,年龄,头像
         holder.ageT.setText(JSONUtil.getInt(userjo, "age") + "");
-        String sex = JSONUtil.getString(userjo, "gender");
+        final String sex = JSONUtil.getString(userjo, "gender");
         if ("男".equals(sex)) {
             holder.sexLayoutR.setBackgroundResource(R.drawable.radio_sex_man_normal);
             holder.sexI.setImageResource(R.drawable.icon_man3x);
@@ -121,22 +128,59 @@ public class InterestedPersonAdapter extends BaseAdapter{
             holder.sexLayoutR.setBackgroundResource(R.drawable.radion_sex_woman_normal);
             holder.sexI.setImageResource(R.drawable.icon_woman3x);
         }
-        ViewUtil.bindNetImage(holder.headbgI, JSONUtil.getString(userjo, "cover"), "default");
+
+
+        ImageLoader.getInstance().displayImage(JSONUtil.getString(userjo, "cover"), holder.headbgI, CarPlayValueFix.optionsDefault, new ImageLoadingListener() {
+            @Override
+            public void onLoadingStarted(String s, View view) {
+
+            }
+
+            @Override
+            public void onLoadingFailed(String s, View view, FailReason failReason) {
+
+            }
+
+            @Override
+            public void onLoadingComplete(String s, View view, final Bitmap bitmap) {
+                if (bitmap != null) {
+                    final ImageView img = (ImageView) view;
+                    if (!user.isHasAlbum() && !user.getUserId().equals(JSONUtil.getString(userjo, "userId"))) {
+                        img.setImageBitmap(bitmap);
+                        Blurry.with(mContext)
+                                .radius(10)
+                                .sampling(4)
+                                .async()
+                                .capture(img)
+                                .into(img);
+
+
+                    } else {
+                        img.setImageBitmap(bitmap);
+                    }
+                }
+            }
+
+            @Override
+            public void onLoadingCancelled(String s, View view) {
+
+            }
+        });
         //头像认证状态,车主认证状态
-        String photoAuthStatus=JSONUtil.getString(userjo, "photoAuthStatus");
+        String photoAuthStatus = JSONUtil.getString(userjo, "photoAuthStatus");
         holder.headStateI.setImageResource("未认证".equals(photoAuthStatus) ? R.drawable.headaut_no : R.drawable.headaut_dl);
-        String licenseAuthStatus=JSONUtil.getString(userjo, "licenseAuthStatus");
-        if ("未认证".equals(licenseAuthStatus)){
+        String licenseAuthStatus = JSONUtil.getString(userjo, "licenseAuthStatus");
+        if ("未认证".equals(licenseAuthStatus)) {
             holder.carNameT.setVisibility(View.GONE);
             holder.carStateI.setVisibility(View.GONE);
-        }else {
+        } else {
             holder.carNameT.setVisibility(View.VISIBLE);
             holder.carStateI.setVisibility(View.VISIBLE);
         }
 
         // 0为活动信息   1位上传相册信息
         int type = JSONUtil.getInt(jo, "type");
-        if (type==0){
+        if (type == 0) {
             holder.payT.setVisibility(View.VISIBLE);
             holder.transferT.setVisibility(View.VISIBLE);
             holder.activeDistancelayoutl.setVisibility(View.VISIBLE);
@@ -146,12 +190,12 @@ public class InterestedPersonAdapter extends BaseAdapter{
             //题头
             ViewUtil.bindView(holder.titleT, JSONUtil.getString(userjo, "nickname") + "想邀请你" + JSONUtil.getString(jo, "activityType"));
             //所在地,距离
-            int distance = (int)Math.floor(JSONUtil.getDouble(jo, "distance"));
+            int distance = (int) Math.floor(JSONUtil.getDouble(jo, "distance"));
             holder.activeDistanceT.setText(CarPlayUtil.numberWithDelimiter(distance));
             holder.locationT.setText(JSONUtil.getString(distancejo, "province") + JSONUtil.getString(distancejo, "city") + JSONUtil.getString(distancejo, "district") + JSONUtil.getString(distancejo, "street"));
             //付费类型,是否包接送
             ViewUtil.bindView(holder.payT, JSONUtil.getString(jo, "pay"));
-            boolean transfer =  JSONUtil.getBoolean(jo, "transfer");
+            boolean transfer = JSONUtil.getBoolean(jo, "transfer");
             if (transfer) {
                 holder.transferT.setVisibility(View.VISIBLE);
                 holder.transferT.setText("包接送");
@@ -171,9 +215,9 @@ public class InterestedPersonAdapter extends BaseAdapter{
             holder.invitationL.setVisibility(View.GONE);
 
             //题头
-            ViewUtil.bindView(holder.titleT, JSONUtil.getString(userjo, "nickname") + "上传了" + JSONUtil.getInt(jo, "photoCount")+"张照片");
+            ViewUtil.bindView(holder.titleT, JSONUtil.getString(userjo, "nickname") + "上传了" + JSONUtil.getInt(jo, "photoCount") + "张照片");
             //距离
-            int distance = (int)Math.floor(JSONUtil.getDouble(jo, "distance"));
+            int distance = (int) Math.floor(JSONUtil.getDouble(jo, "distance"));
             holder.photoDistanceT.setText(CarPlayUtil.numberWithDelimiter(distance));
         }
 
@@ -221,13 +265,12 @@ public class InterestedPersonAdapter extends BaseAdapter{
     class ViewHolder{
         TextView titleT,carNameT,ageT,payT,transferT,locationT,activeDistanceT,photoDistanceT,invitationT;
 
-        ImageView headStateI,carStateI,sexI,headbgI;
+        ImageView headStateI, carStateI, sexI, headbgI;
 
         RelativeLayout sexLayoutR;
 
-        LinearLayout invitationL,activeDistancelayoutl,photoDistancelayoutL;
-
         AnimButtonView invitationI;
+        LinearLayout invitationL, activeDistancelayoutl, photoDistancelayoutL;
     }
 
 

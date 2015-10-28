@@ -736,12 +736,6 @@ public class MainActivity2 extends BaseFragmentActivity implements
 
     @Override
     public void onEvent(EMNotifierEvent event) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                showToast("接受消息");
-            }
-        });
 
         switch (event.getEvent()) {
             case EventNewMessage: // 普通消息

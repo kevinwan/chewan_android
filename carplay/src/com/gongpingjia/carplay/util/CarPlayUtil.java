@@ -224,10 +224,13 @@ public class CarPlayUtil {
 
     public static void bindSexView(String gender, View sexBg) {
         if (!TextUtils.isEmpty(gender)) {
+            ImageView sexI = (ImageView) sexBg.findViewById(R.id.iv_sex);
             if (gender.equals("男")) {
-                sexBg.setBackgroundResource(R.drawable.man);
+                sexI.setImageResource(R.drawable.icon_man3x);
+                sexBg.setBackgroundResource(R.drawable.radio_sex_man_normal);
             } else {
-                sexBg.setBackgroundResource(R.drawable.woman);
+                sexI.setImageResource(R.drawable.icon_woman3x);
+                sexBg.setBackgroundResource(R.drawable.radion_sex_woman_normal);
             }
         }
     }
