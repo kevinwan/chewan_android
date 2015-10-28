@@ -3,8 +3,8 @@
     xmlns:my="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="60dp"
     android:layout_marginTop="60dp"
+    android:layout_marginBottom="60dp"
     android:paddingLeft="10dp"
     android:paddingRight="10dp">
 
@@ -19,7 +19,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="26dp"
             android:layout_marginLeft="12dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
@@ -47,6 +47,9 @@
                 android:id="@+id/tv_car_name"
                 style="@style/text_grey_small"
                 android:layout_marginLeft="7dp"
+                android:maxWidth="100dp"
+                android:singleLine="true"
+                android:ellipsize="end"
                 android:text="宝马" />
 
             <LinearLayout
@@ -66,10 +69,11 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="10dp">
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
             <include layout="@layout/include_sex" />
 
@@ -114,6 +118,7 @@
                 my:src="@drawable/red_circle">
 
                 <TextView
+                    android:id="@+id/join_des"
                     style="@style/text_white_medium"
                     android:layout_centerInParent="true"
                     android:text="邀 Ta" />
@@ -136,7 +141,8 @@
                     android:background="@drawable/white_btn_bg"
                     android:text="上传"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_medium" />
+                    android:textSize="@dimen/text_medium"
+                    android:visibility="gone" />
 
                 <Button
                     android:id="@+id/takephotos"
@@ -164,7 +170,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="25dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp">

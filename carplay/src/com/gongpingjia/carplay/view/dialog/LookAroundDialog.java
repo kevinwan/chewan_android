@@ -2,6 +2,8 @@ package com.gongpingjia.carplay.view.dialog;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,7 +11,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.activity.my.PersonDetailActivity2;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.User;
@@ -18,6 +22,9 @@ import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.view.AnimButtonView;
 import com.gongpingjia.carplay.view.AttentionImageView;
 import com.gongpingjia.carplay.view.BaseAlertDialog;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
@@ -32,6 +39,7 @@ import org.json.JSONObject;
 import java.io.File;
 
 import de.greenrobot.event.EventBus;
+import jp.wasabeef.blurry.Blurry;
 
 /**
  * Created by Administrator on 2015/10/22.
@@ -41,7 +49,7 @@ public class LookAroundDialog extends BaseAlertDialog {
 
     Context mContext;
 
-    TextView nickname, car_name, age, pay, transfer, location, distance;
+    TextView nickname, car_name, age, pay, transfer, location, distance, join_desT;
     ImageView headatt, car_logo, sex, active_bg;
     AttentionImageView attention;
     RelativeLayout sexLayout;
@@ -92,6 +100,7 @@ public class LookAroundDialog extends BaseAlertDialog {
         upload = (Button) findViewById(R.id.upload);
         takephotos = (Button) findViewById(R.id.takephotos);
         album = (Button) findViewById(R.id.album);
+        join_desT = (TextView) findViewById(R.id.join_des);
 
         if (jo != null) {
             bindData();
@@ -100,7 +109,8 @@ public class LookAroundDialog extends BaseAlertDialog {
     }
 
     private void bindData() {
-//用户信息,所在地,car信息,头像信息
+
+        //用户信息,所在地,car信息,头像信息
         JSONObject userjo = JSONUtil.getJSONObject(jo, "organizer");
         JSONObject distancejo = JSONUtil.getJSONObject(jo, "destination");
         JSONObject carjo = JSONUtil.getJSONObject(userjo, "car");
@@ -110,6 +120,17 @@ public class LookAroundDialog extends BaseAlertDialog {
         nickname.setText(JSONUtil.getString(userjo, "nickname") + "想约人" + activetype);
         age.setText(JSONUtil.getInt(userjo, "age") + "");
         String sexstr = JSONUtil.getString(userjo, "gender");
+
+        boolean applyFlag = JSONUtil.getBoolean(jo, "applyFlag");
+        join_desT.setText(applyFlag ? "邀请中" : "邀 TA");
+        if (applyFlag) {
+            invite.setResourseAndBg(R.drawable.dynamic_grey
+                    , R.drawable.dynamic_grey
+            );
+        } else {
+            invite.setResourseAndBg(R.drawable.red_circle, R.drawable.red_circle);
+        }
+
         if ("男".equals(sexstr)) {
             sexLayout.setBackgroundResource(R.drawable.radio_sex_man_normal);
             sex.setImageResource(R.drawable.icon_man3x);
@@ -117,13 +138,55 @@ public class LookAroundDialog extends BaseAlertDialog {
             sexLayout.setBackgroundResource(R.drawable.radion_sex_woman_normal);
             sex.setImageResource(R.drawable.icon_woman3x);
         }
-        ViewUtil.bindNetImage(active_bg, JSONUtil.getString(userjo, "avatar"), "default");
+//        ViewUtil.bindNetImage(active_bg, JSONUtil.getString(userjo, "avatar"), "default");
+
+//        Blurry.targetWidth = picWidth;
+//        Blurry.targetHeight = picHeight;
+        final User user = User.getInstance();
+        if (user.isLogin()) {
+            upload.setVisibility(user.isHasAlbum() ? View.GONE : View.VISIBLE);
+        } else {
+            upload.setVisibility(View.GONE);
+        }
+        ImageLoader.getInstance().displayImage(JSONUtil.getString(userjo, "avatar"), active_bg, CarPlayValueFix.optionsDefault, new ImageLoadingListener() {
+            @Override
+            public void onLoadingStarted(String s, View view) {
+
+            }
+
+            @Override
+            public void onLoadingFailed(String s, View view, FailReason failReason) {
+
+            }
+
+            @Override
+            public void onLoadingComplete(String s, View view, final Bitmap bitmap) {
+                if (bitmap != null) {
+                    final ImageView img = (ImageView) view;
+                    if (!user.isHasAlbum()) {
+                        img.setImageBitmap(bitmap);
+                        Blurry.with(mContext)
+                                .radius(10)
+                                .sampling(4)
+                                .async()
+                                .capture(img)
+                                .into(img);
+                    } else {
+                        img.setImageBitmap(bitmap);
+                    }
+                }
+            }
+
+            @Override
+            public void onLoadingCancelled(String s, View view) {
+
+            }
+        });
 
         //头像认证,车主认证
         String headattstr = JSONUtil.getString(userjo, "photoAuthStatus");
-        headatt.setImageResource("未认证".equals(headattstr) ? R.drawable.headaut_dl : R.drawable.headaut_no);
+        headatt.setImageResource("认证通过".equals(headattstr) ? R.drawable.headaut_no : R.drawable.headaut_dl);
 
-        User user = User.getInstance();
         if (user.isLogin()) {
             attention.setVisibility(JSONUtil.getString(userjo, "userId").equals(user.getUserId()) ? View.GONE : View.VISIBLE);
         } else {
@@ -159,21 +222,25 @@ public class LookAroundDialog extends BaseAlertDialog {
             ViewUtil.bindView(car_name, JSONUtil.getString(carjo, "model"));
         }
 
-        //相册为空模糊效果
-        if (albumjsa == null) {
-
-        }
 
 //        final View itemView = itemView;
 //        itemView.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                Toast.makeText(mContext, "", Toast.LENGTH_SHORT).show();
+//
+//                if (onItemClick != null) {
+//                    onItemClick.onItemClick(position, jo);
+//                }
+//
 //            }
 //        });
 
+        active_bg.setOnClickListener(new MyOnClick());
 
-//        holder.invite.startScaleAnimation();
+
+        invite.startScaleAnimation();
+
+        invite.setOnClickListener(new MyOnClick());
 
         upload.setOnClickListener(new MyOnClick());
 
@@ -190,6 +257,7 @@ public class LookAroundDialog extends BaseAlertDialog {
 
         @Override
         public void onClick(View v) {
+            User user = User.getInstance();
             switch (v.getId()) {
                 //上传
                 case R.id.upload:
@@ -216,7 +284,6 @@ public class LookAroundDialog extends BaseAlertDialog {
                     break;
 
                 case R.id.attention:
-                    User user = User.getInstance();
                     UserInfoManage.getInstance().checkLogin((Activity) mContext, new UserInfoManage.LoginCallBack() {
                         @Override
                         public void onisLogin() {
@@ -232,9 +299,42 @@ public class LookAroundDialog extends BaseAlertDialog {
                         }
                     });
                     break;
+                case R.id.invite:
+                    UserInfoManage.getInstance().checkLogin((Activity) mContext, new UserInfoManage.LoginCallBack() {
+                        @Override
+                        public void onisLogin() {
+                            join(JSONUtil.getString(jo, "activityId"));
+                        }
+
+                        @Override
+                        public void onLoginFail() {
+
+                        }
+                    });
+                    break;
+                case R.id.active_bg:
+                    UserInfoManage.getInstance().checkLogin((Activity) mContext, new UserInfoManage.LoginCallBack() {
+                        @Override
+                        public void onisLogin() {
+                            Intent it = new Intent(mContext, PersonDetailActivity2.class);
+                            JSONObject userjo = JSONUtil.getJSONObject(jo, "organizer");
+                            String userId = JSONUtil.getString(userjo, "userId");
+                            it.putExtra("userId", userId);
+                            mContext.startActivity(it);
+                        }
+
+                        @Override
+                        public void onLoginFail() {
+
+                        }
+                    });
+                    break;
             }
         }
     }
+
+
+
 
     private void attentionorCancle(final boolean attentionB, String userId) {
 
@@ -269,4 +369,28 @@ public class LookAroundDialog extends BaseAlertDialog {
             }
         });
     }
+
+
+    private void join(String activeId) {
+        User user = User.getInstance();
+        String url = API2.CWBaseurl + "activity/" + activeId + "/join?" + "userId=" + user.getUserId() + "&token=" + user.getToken();
+        DhNet net = new DhNet(url);
+        net.doPostInDialog(new NetTask(mContext) {
+            @Override
+            public void doInUI(Response response, Integer transfer) {
+                if (response.isSuccess()) {
+                    join_desT.setText("邀请中");
+                    invite.setResourseAndBg(R.drawable.dynamic_grey
+                            , R.drawable.dynamic_grey
+                    );
+                    try {
+                        jo.put("applyFlag", true);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.gongpingjia.carplay.activity.active;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -26,6 +27,7 @@ import com.gongpingjia.carplay.adapter.BigImageAdapter;
 import com.gongpingjia.carplay.adapter.OfficialMembersAdapter;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.User;
+import com.gongpingjia.carplay.manage.UserInfoManage;
 import com.gongpingjia.carplay.view.CarPlayGallery;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -186,18 +188,18 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
         mRecyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position != 0 || position != parent.getCount() - 1) {
-                    Intent it;
-                    String userId = JSONUtil.getString(membersAdapter.getItem(position), "userId");
-                    if (userId.equals(user.getUserId())) {
-                        it = new Intent(self, MyPerSonDetailActivity2.class);
-                        startActivity(it);
-                    } else {
-                        it = new Intent(self, PersonDetailActivity2.class);
-                        it.putExtra("userId", userId);
-                        startActivity(it);
-                    }
+//                if (position != 0 || position != parent.getCount() - 1) {
+                Intent it;
+                String userId = JSONUtil.getString(membersAdapter.getItem(position - 2), "userId");
+                if (userId.equals(user.getUserId())) {
+                    it = new Intent(self, MyPerSonDetailActivity2.class);
+                    startActivity(it);
+                } else {
+                    it = new Intent(self, PersonDetailActivity2.class);
+                    it.putExtra("userId", userId);
+                    startActivity(it);
                 }
+//                }
             }
         });
 
@@ -329,7 +331,17 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
         switch (v.getId()) {
             //报名参加
             case R.id.join:
-                joinActive();
+                UserInfoManage.getInstance().checkLogin((Activity) self, new UserInfoManage.LoginCallBack() {
+                    @Override
+                    public void onisLogin() {
+                        joinActive();
+                    }
+
+                    @Override
+                    public void onLoginFail() {
+
+                    }
+                });
                 break;
             //活动描述
             case R.id.fold:
@@ -417,7 +429,7 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
      */
     private void joinActive() {
         DhNet joinnet = new DhNet(API2.joinActive + activeid + "/join?userId=" + user.getUserId() + "&token=" + user.getToken());
-        joinnet.doPost(new NetTask(self) {
+        joinnet.doPostInDialog(new NetTask(self) {
             @Override
             public void doInUI(Response response, Integer transfer) {
                 if (response.isSuccess()) {

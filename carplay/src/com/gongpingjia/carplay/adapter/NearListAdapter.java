@@ -81,6 +81,8 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
         AnimButtonView invite;
         Button upload, takephotos, album;
 
+        View phtotoV;
+
         public SimpleViewHolder(View view) {
             super(view);
             nickname = (TextView) view.findViewById(R.id.tv_nickname);
@@ -101,6 +103,7 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
             takephotos = (Button) view.findViewById(R.id.takephotos);
             album = (Button) view.findViewById(R.id.album);
             join_desT = (TextView) view.findViewById(R.id.join_des);
+            phtotoV = view.findViewById(R.id.phtoto);
         }
     }
 
@@ -166,9 +169,9 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
 //        Blurry.targetHeight = picHeight;
         final User user = User.getInstance();
         if (user.isLogin()) {
-            holder.upload.setVisibility(user.isHasAlbum() ? View.GONE : View.VISIBLE);
+            holder.phtotoV.setVisibility(user.isHasAlbum() ? View.GONE : View.VISIBLE);
         } else {
-            holder.upload.setVisibility(View.GONE);
+            holder.phtotoV.setVisibility(View.GONE);
         }
         ImageLoader.getInstance().displayImage(JSONUtil.getString(userjo, "avatar"), holder.active_bg, CarPlayValueFix.optionsDefault, new ImageLoadingListener() {
             @Override
@@ -194,8 +197,6 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
                                 .async()
                                 .capture(img)
                                 .into(img);
-
-
                     } else {
                         img.setImageBitmap(bitmap);
                     }
@@ -311,11 +312,13 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
                 //拍照
                 case R.id.takephotos:
                     Integer takephotos = Constant.TAKE_PHOTO;
+                    //传给Main2
                     EventBus.getDefault().post(takephotos);
                     break;
                 //相册
                 case R.id.album:
                     Integer album = Constant.PICK_PHOTO;
+                    //传给Main2
                     EventBus.getDefault().post(album);
 
                     break;
@@ -421,6 +424,9 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
             public void doInUI(Response response, Integer transfer) {
                 if (response.isSuccess()) {
                     holder.join_desT.setText("邀请中");
+                    holder.invite.setResourseAndBg(R.drawable.dynamic_grey
+                            , R.drawable.dynamic_grey
+                    );
                     try {
                         jo.put("applyFlag", true);
                     } catch (JSONException e) {

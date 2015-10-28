@@ -1,5 +1,6 @@
 package com.gongpingjia.carplay.activity.active;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.FilterPreference2;
 import com.gongpingjia.carplay.bean.LoginEB;
 import com.gongpingjia.carplay.bean.User;
+import com.gongpingjia.carplay.manage.UserInfoManage;
 import com.gongpingjia.carplay.view.AnimButtonView;
 import com.gongpingjia.carplay.view.PullToRefreshRecyclerViewVertical;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -93,12 +95,23 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
         adapter = new NearListAdapter(getActivity());
         adapter.setOnItemClick(new NearListAdapter.OnItemClick() {
             @Override
-            public void onItemClick(int position, JSONObject jo) {
-                Intent it = new Intent(getActivity(), PersonDetailActivity2.class);
-                JSONObject userjo = JSONUtil.getJSONObject(jo, "organizer");
-                String userId = JSONUtil.getString(userjo, "userId");
-                it.putExtra("userId", userId);
-                startActivity(it);
+            public void onItemClick(int position, final JSONObject jo) {
+                UserInfoManage.getInstance().checkLogin((Activity) getActivity(), new UserInfoManage.LoginCallBack() {
+                    @Override
+                    public void onisLogin() {
+                        Intent it = new Intent(getActivity(), PersonDetailActivity2.class);
+                        JSONObject userjo = JSONUtil.getJSONObject(jo, "organizer");
+                        String userId = JSONUtil.getString(userjo, "userId");
+                        it.putExtra("userId", userId);
+                        startActivity(it);
+                    }
+
+                    @Override
+                    public void onLoginFail() {
+
+                    }
+                });
+
             }
         });
         mRecyclerView.setAdapter(adapter);
@@ -169,6 +182,12 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
         addParams("token", user.getToken());
         addParams("userId", user.getUserId());
         refresh();
+    }
+
+    public void onEventMainThread(String result) {
+        if ("刷新附近列表".equals(result)) {
+            refresh();
+        }
     }
 
     @Override

@@ -34,6 +34,7 @@ public class RecommendListFragment extends CarPlayBaseFragment implements PullTo
     RecommendListAdapter adapter;
 
     LinearLayout empty;
+
     public static RecommendListFragment getInstance() {
         if (instance == null) {
             instance = new RecommendListFragment();
@@ -54,8 +55,8 @@ public class RecommendListFragment extends CarPlayBaseFragment implements PullTo
         listV = (PullToRefreshRecyclerViewHorizontal) mainV.findViewById(R.id.list);
         listV.setMode(PullToRefreshBase.Mode.BOTH);
         listV.setOnRefreshListener(this);
-         empty = (LinearLayout) mainV.findViewById(R.id.empty);
-        msg = (TextView) mainV. findViewById(R.id.msg);
+        empty = (LinearLayout) mainV.findViewById(R.id.empty);
+        msg = (TextView) mainV.findViewById(R.id.msg);
         recyclerView = listV.getRefreshableView();
         adapter = new RecommendListAdapter(getActivity());
         recyclerView.setAdapter(adapter);
@@ -69,7 +70,7 @@ public class RecommendListFragment extends CarPlayBaseFragment implements PullTo
     }
 
     private void getData() {
-        showNext();
+        refresh();
     }
 
     @Override

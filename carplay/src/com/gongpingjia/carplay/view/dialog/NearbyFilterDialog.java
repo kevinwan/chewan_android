@@ -24,7 +24,6 @@ public class NearbyFilterDialog extends BaseAlertDialog implements
 
     private Button submit ;
 
-    private View closs;
 
     private CheckBox active_transfer;
 
@@ -60,7 +59,6 @@ public class NearbyFilterDialog extends BaseAlertDialog implements
         active_transfer = (CheckBox) this.findViewById(R.id.active_transfer);
 
         submit = (Button) this.findViewById(R.id.submit);
-        closs = this.findViewById(R.id.close);
 
         //响应单选框组内的选中项发生变化时的事件
         active_typeG1.setOnCheckedChangeListener(this);
@@ -82,12 +80,6 @@ public class NearbyFilterDialog extends BaseAlertDialog implements
             }
         });
 
-        closs.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
 
     }
 

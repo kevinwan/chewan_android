@@ -228,6 +228,7 @@ public class MatePop implements Runnable, View.OnClickListener {
                 pop.dismiss();
             }
         });
+
         dlg.show();
     }
 

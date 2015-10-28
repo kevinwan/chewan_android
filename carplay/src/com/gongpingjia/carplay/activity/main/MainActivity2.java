@@ -538,6 +538,8 @@ public class MainActivity2 extends BaseFragmentActivity implements
                     showToast("上传成功");
                     String success = "上传成功";
                     if (uploadPhotoCount == uploadedCount) {
+                        //控制附近列表刷新
+                        EventBus.getDefault().post(new String("刷新附近列表"));
                         EventBus.getDefault().post(success);
                         uploadedCount = 0;
 

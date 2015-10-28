@@ -143,6 +143,7 @@ public class ImageGallery extends CarPlayBaseActivity implements View.OnClickLis
                                 items.size()));
                     } else {
                         user.setHasAlbum(false);         //设置相册状态
+                        EventBus.getDefault().post(new String("刷新附近列表"));
                         finish();
                     }
                     EventBus.getDefault().post(new String("上传成功"));

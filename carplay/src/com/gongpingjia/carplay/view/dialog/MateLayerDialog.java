@@ -1,5 +1,6 @@
 package com.gongpingjia.carplay.view.dialog;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.User;
+import com.gongpingjia.carplay.manage.UserInfoManage;
 import com.gongpingjia.carplay.view.BaseAlertDialog;
 
 import net.duohuo.dhroid.net.DhNet;
@@ -78,71 +80,82 @@ public class MateLayerDialog extends BaseAlertDialog implements View.OnClickList
         btnMatch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final boolean pickOrNot = checkBox.isChecked();
-                if (selectIndex < 0) {
-                    Toast.makeText(mContext, "请选择类型", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                final DhNet dhNet = new DhNet(API2.getMatchUrl(User.getInstance().getUserId(), User.getInstance().getToken()));
-                //类型
-                dhNet.addParam("majorType", type);
-                dhNet.addParam("type", type);
-                dhNet.addParam("transfer", pickOrNot);
-
-                switch (selectIndex) {
-                    case 1:
-                        dhNet.addParam("pay", "我请客");
-                        break;
-                    case 2:
-                        dhNet.addParam("pay", "AA制");
-                        break;
-                    case 3:
-                        dhNet.addParam("pay", "请我吧");
-                        break;
-                }
-
-                if (textDestination.getText().toString().trim().length() == 0 || textDestination.getText().toString().trim().split(" ").length < 3) {
-                    //没有选择地点
-                } else {
-                    //目的地信息
-                    String[] destinations = textDestination.getText().toString().trim().split(" ");
-                    Map<String, String> destination = new HashMap<String, String>();
-                    destination.put("province", destinations[0]);
-                    destination.put("city", destinations[1]);
-                    destination.put("district", destinations[2]);
-                    if (destinations.length == 3) {
-                        //直辖市的情况
-                        destination.put("street", destinations[2]);
-                    } else {
-                        //普通地区
-                        destination.put("street", destinations[3]);
-                    }
-                    dhNet.addParam("destination", destination);
-                }
-
-                //发布地经纬度
-                Map<String, Double> estabPoint = new HashMap<String, Double>();
-                estabPoint.put("longitude", UserLocation.getInstance().getLongitude());
-                estabPoint.put("latitude", UserLocation.getInstance().getLatitude());
-                dhNet.addParam("estabPoint", estabPoint);
-
-                //发布地地理位置信息
-                Map<String, String> establish = new HashMap<String, String>();
-                establish.put("province", UserLocation.getInstance().getProvice());
-                establish.put("city", UserLocation.getInstance().getCity());
-                establish.put("district", UserLocation.getInstance().getDistrict());
-                dhNet.addParam("establish", establish);
-                dhNet.doPost(new NetTask(mContext) {
+                UserInfoManage.getInstance().checkLogin((Activity) mContext, new UserInfoManage.LoginCallBack() {
                     @Override
-                    public void doInUI(Response response, Integer transfer) {
-                        if (response.isSuccess()) {
-                            Toast.makeText(mContext, "发布成功", Toast.LENGTH_SHORT).show();
-                            if (mResult != null) {
-                                mResult.onResult(dhNet.getParams());
-                            }
+                    public void onisLogin() {
+
+                        final boolean pickOrNot = checkBox.isChecked();
+                        if (selectIndex < 0) {
+                            Toast.makeText(mContext, "请选择类型", Toast.LENGTH_SHORT).show();
+                            return;
                         }
-                        dismiss();
+
+                        final DhNet dhNet = new DhNet(API2.getMatchUrl(User.getInstance().getUserId(), User.getInstance().getToken()));
+                        //类型
+                        dhNet.addParam("majorType", type);
+                        dhNet.addParam("type", type);
+                        dhNet.addParam("transfer", pickOrNot);
+
+                        switch (selectIndex) {
+                            case 1:
+                                dhNet.addParam("pay", "我请客");
+                                break;
+                            case 2:
+                                dhNet.addParam("pay", "AA制");
+                                break;
+                            case 3:
+                                dhNet.addParam("pay", "请我吧");
+                                break;
+                        }
+
+                        if (textDestination.getText().toString().trim().length() == 0 || textDestination.getText().toString().trim().split(" ").length < 3) {
+                            //没有选择地点
+                        } else {
+                            //目的地信息
+                            String[] destinations = textDestination.getText().toString().trim().split(" ");
+                            Map<String, String> destination = new HashMap<String, String>();
+                            destination.put("province", destinations[0]);
+                            destination.put("city", destinations[1]);
+                            destination.put("district", destinations[2]);
+                            if (destinations.length == 3) {
+                                //直辖市的情况
+                                destination.put("street", destinations[2]);
+                            } else {
+                                //普通地区
+                                destination.put("street", destinations[3]);
+                            }
+                            dhNet.addParam("destination", destination);
+                        }
+
+                        //发布地经纬度
+                        Map<String, Double> estabPoint = new HashMap<String, Double>();
+                        estabPoint.put("longitude", UserLocation.getInstance().getLongitude());
+                        estabPoint.put("latitude", UserLocation.getInstance().getLatitude());
+                        dhNet.addParam("estabPoint", estabPoint);
+
+                        //发布地地理位置信息
+                        Map<String, String> establish = new HashMap<String, String>();
+                        establish.put("province", UserLocation.getInstance().getProvice());
+                        establish.put("city", UserLocation.getInstance().getCity());
+                        establish.put("district", UserLocation.getInstance().getDistrict());
+                        dhNet.addParam("establish", establish);
+                        dhNet.doPost(new NetTask(mContext) {
+                            @Override
+                            public void doInUI(Response response, Integer transfer) {
+                                if (response.isSuccess()) {
+                                    Toast.makeText(mContext, "发布成功", Toast.LENGTH_SHORT).show();
+                                    if (mResult != null) {
+                                        mResult.onResult(dhNet.getParams());
+                                    }
+                                }
+                                dismiss();
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onLoginFail() {
+
                     }
                 });
             }
