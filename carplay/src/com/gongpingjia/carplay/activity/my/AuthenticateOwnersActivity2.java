@@ -312,7 +312,7 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
                     modelName = data.getStringExtra("modelName");
                     modelSlug = data.getStringExtra("modelSlug");
                     carName.setText(modelName);
-//                    showToast(brandLogo);
+                    showToast(brandLogo);
 
 
                     break;

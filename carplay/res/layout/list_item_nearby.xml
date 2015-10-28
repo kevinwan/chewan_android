@@ -45,9 +45,9 @@
                 android:id="@+id/tv_car_name"
                 style="@style/text_grey_small"
                 android:layout_marginLeft="7dp"
+                android:ellipsize="end"
                 android:maxWidth="100dp"
                 android:singleLine="true"
-                android:ellipsize="end"
                 android:text="宝马" />
 
             <LinearLayout
