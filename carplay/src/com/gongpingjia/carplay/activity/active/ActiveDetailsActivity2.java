@@ -495,5 +495,6 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
     @Override
     public void load(JSONObject jo) {
         isMember = JSONUtil.getBoolean(jo, "isMember");
+        System.out.println("官方活动详情"+isMember);
     }
 }

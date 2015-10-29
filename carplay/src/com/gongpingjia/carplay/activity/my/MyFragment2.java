@@ -256,12 +256,16 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                     }
                     if (licenseAuthStatus.equals("未认证") && photoAuthStatus.equals("未认证")) {
                         completenessT.setText("资料完成度60%,越高越吸引人");
+                        perfectBtn.setVisibility(View.VISIBLE);
                     } else if (licenseAuthStatus.equals("认证中") && photoAuthStatus.equals("认证中")) {
                         completenessT.setText("资料完成度60%,越高越吸引人");
-                    } else if (licenseAuthStatus.equals("认证通过") || photoAuthStatus.equals("认证通过")) {
-                        completenessT.setText("资料完成度80%,越高越吸引人");
-                    } else if (licenseAuthStatus.equals("认证通过") && photoAuthStatus.equals("认证通过")) {
+                        perfectBtn.setVisibility(View.VISIBLE);
+                    }  else if (licenseAuthStatus.equals("认证通过") && photoAuthStatus.equals("认证通过")) {
                         completenessT.setText("资料完成度100%,越高越吸引人");
+                        perfectBtn.setVisibility(View.GONE);
+                    }else if (licenseAuthStatus.equals("认证通过") || photoAuthStatus.equals("认证通过")) {
+                        completenessT.setText("资料完成度80%,越高越吸引人");
+                        perfectBtn.setVisibility(View.VISIBLE);
                     }
 
                     JSONArray albumJsa = JSONUtil.getJSONArray(jo, "album");

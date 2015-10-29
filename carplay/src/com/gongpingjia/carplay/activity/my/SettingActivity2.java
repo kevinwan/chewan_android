@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.easemob.EMCallBack;
@@ -23,6 +24,7 @@ public class SettingActivity2 extends CarPlayBaseActivity implements View.OnClic
 
     File mCacheDir;
     TextView mTextCacheSize;
+    RelativeLayout setting_about_us, setting_versions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +40,15 @@ public class SettingActivity2 extends CarPlayBaseActivity implements View.OnClic
         setTitle("设置");
         Button btnLogout = (Button) findViewById(R.id.btn_logout);
         View layoutClearCache = findViewById(R.id.layout_cache_clear);
+        setting_about_us = (RelativeLayout) findViewById(R.id.setting_about_us);
+        setting_versions = (RelativeLayout) findViewById(R.id.setting_versions);
         mCacheDir = new File(getExternalCacheDir(), "CarPlay");
         mTextCacheSize = (TextView) findViewById(R.id.tv_cache_size);
         mTextCacheSize.setText(String.valueOf(FileUtil.getFileOrDirSize(mCacheDir,
                 FileUtil.UNIT_SACLE.M)) + " M");
-
+        setting_about_us.setOnClickListener(this);
         layoutClearCache.setOnClickListener(this);
+        setting_versions.setOnClickListener(this);
         btnLogout.setOnClickListener(this);
 
         if (!User.getInstance().isLogin()) {
@@ -53,9 +58,18 @@ public class SettingActivity2 extends CarPlayBaseActivity implements View.OnClic
 
     @Override
     public void onClick(View v) {
+        Intent it;
         switch (v.getId()) {
             case R.id.btn_logout:
                 logout();
+                break;
+            case R.id.setting_about_us:
+                it = new Intent(this, AboutUsActivity.class);
+                startActivity(it);
+                break;
+            case R.id.setting_versions:
+//                it = new Intent(this, VersionIntroActivity.class);
+//                startActivity(it);
                 break;
             case R.id.layout_cache_clear:
                 ImageLoader.getInstance().getMemoryCache().clear();
