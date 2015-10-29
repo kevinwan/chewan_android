@@ -117,7 +117,7 @@ public class ForgetPasswordActivity2 extends CarPlayBaseActivity implements View
                     showToast("验证码发送成功");
                 } else {
                     mCountTimer.cancel();
-                    showToast("验证码获取失败，请重试");
+                    showToast(response.msg);
                 }
             }
         });

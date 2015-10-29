@@ -48,6 +48,7 @@ public class NearListActivity extends CarPlayListActivity implements PullToRefre
 
     public void initView() {
 
+        setTitle("附近");
         user = User.getInstance();
         near_layout = (LinearLayout) findViewById(R.id.near_empty);
         listV = (PullToRefreshRecyclerViewVertical) findViewById(R.id.list);
@@ -115,7 +116,7 @@ public class NearListActivity extends CarPlayListActivity implements PullToRefre
         pre = IocContainer.getShare().get(FilterPreference2.class);
         pre.load();
         addParams("type", pre.getType());
-        showToast("---"+ pre.getType());
+        showToast("---" + pre.getType());
         addParams("pay", pre.getPay());
         addParams("gender", pre.getGender());
         addParams("transfer", pre.isTransfer());

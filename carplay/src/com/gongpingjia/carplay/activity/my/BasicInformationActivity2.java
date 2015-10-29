@@ -45,8 +45,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,7 +68,7 @@ public class BasicInformationActivity2 extends CarPlayBaseActivity implements Vi
     private String mPhotoPath;
     private File mCacheDir;
     private String photoUid;
-    private long mBirthday;
+    private long mBirthday = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,8 +129,15 @@ public class BasicInformationActivity2 extends CarPlayBaseActivity implements Vi
                 dateTimerDialog2.setOnDateTimerResultListener(new DateTimerDialog2.OnDateTimerResultListener() {
                     @Override
                     public void onResult(String year, String month, String day) {
-                        GregorianCalendar calendar = new GregorianCalendar(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
-                        mBirthday = calendar.getTimeInMillis();
+                        String result = year + "/" + month + "/" + day;
+                        SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+                        Date date = null;
+                        try {
+                            date = df.parse(result);
+                            mBirthday = date.getTime();
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
                         mTextBirthday.setText(year + "年" + month + "月" + day + "日");
                     }
                 });
@@ -190,7 +199,7 @@ public class BasicInformationActivity2 extends CarPlayBaseActivity implements Vi
             return;
         }
 
-        if (mBirthday <= 0) {
+        if (mBirthday != 0) {
             showToast("请选择生日");
             return;
         }

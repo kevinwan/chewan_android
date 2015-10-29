@@ -59,7 +59,9 @@ public class Blur {
             PorterDuffColorFilter filter =
                     new PorterDuffColorFilter(factor.color, PorterDuff.Mode.SRC_ATOP);
             paint.setColorFilter(filter);
-            canvas.drawBitmap(source, 0, 0, paint);
+            if (!source.isRecycled()) {
+                canvas.drawBitmap(source, 0, 0, paint);
+            }
 
             RenderScript rs = RenderScript.create(context);
             Allocation input = Allocation.createFromBitmap(rs, bitmap, Allocation.MipmapControl.MIPMAP_NONE,

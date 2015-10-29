@@ -261,7 +261,8 @@ public class FragmentMsgAdapter extends BaseAdapter {
         } else if (conversion.getUserName().equals("UserViewAdmin")
                 || conversion.getUserName().equals("ActivityStateAdmin")
                 || conversion.getUserName().equals("SubscribeAdmin")
-                || conversion.getUserName().equals("OfficialAdmin")) {
+                || conversion.getUserName().equals("OfficialAdmin")
+                || conversion.getUserName().equals("NearbyAdmin")) {
             return 1;
         } else {
             return 2;
