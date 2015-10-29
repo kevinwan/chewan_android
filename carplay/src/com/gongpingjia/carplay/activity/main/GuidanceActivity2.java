@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.adapter.SimplePageAdapter;
+import com.gongpingjia.carplay.view.CirclePageIndicator;
 
 public class GuidanceActivity2 extends CarPlayBaseActivity {
 
@@ -38,24 +39,20 @@ public class GuidanceActivity2 extends CarPlayBaseActivity {
         pagerAdapter = new SimplePageAdapter(firstView, secondView,thirdView,fouthView,fifthView);
 
         pager.setAdapter(pagerAdapter);
-        pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        CirclePageIndicator mIndicator  = (CirclePageIndicator) findViewById(R.id.indicator);
+        mIndicator.setViewPager(pager);
 
+        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageSelected(int arg0) {
-                // TODO Auto-generated method stub
+            public void onPageScrolled(final int position, float positionOffset, int positionOffsetPixels) {
 
             }
 
-            @Override
-            public void onPageScrolled(int arg0, float arg1, int arg2) {
-                // TODO Auto-generated method stub
+            public void onPageSelected(int position) {
 
             }
 
-            @Override
-            public void onPageScrollStateChanged(int arg0) {
-                // TODO Auto-generated method stub
-
+            public void onPageScrollStateChanged(int state) {
             }
         });
 

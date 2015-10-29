@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.chat.controller.HXSDKHelper;
-import com.gongpingjia.carplay.receiver.NetReceiver;
 import com.umeng.analytics.MobclickAgent;
 
 import net.duohuo.dhroid.activity.BaseActivity;
@@ -28,10 +27,15 @@ public abstract class CarPlayBaseActivity extends BaseActivity {
 
     Dialog progressdialog;
 
-    NetReceiver netReceiver;
     public static final String CONNECTIVITY_CHANGE_ACTION = "android.net.conn.CONNECTIVITY_CHANGE";
 
-
+    @Override
+    protected void onStart() {
+        super.onStart();
+//        IntentFilter filter = new IntentFilter();
+//        filter.addAction(CONNECTIVITY_CHANGE_ACTION);
+//        registerReceiver(netReceiver, filter);
+    }
 
     @Override
     public void setContentView(int layoutResID) {
@@ -40,10 +44,8 @@ public abstract class CarPlayBaseActivity extends BaseActivity {
         self = this;
         initTitleBar();
         initView();
-//        netReceiver = new NetReceiver();
-//        IntentFilter filter = new IntentFilter();
-//        filter.addAction(CONNECTIVITY_CHANGE_ACTION);
-//        registerReceiver(netReceiver, filter);
+
+
     }
 
     private void initTitleBar() {
@@ -277,8 +279,5 @@ public abstract class CarPlayBaseActivity extends BaseActivity {
     protected void onDestroy() {
         // TODO Auto-generated method stub
         super.onDestroy();
-        if (netReceiver != null) {
-            unregisterReceiver(netReceiver);
-        }
     }
 }

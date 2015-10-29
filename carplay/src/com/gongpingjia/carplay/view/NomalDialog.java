@@ -3,7 +3,6 @@ package com.gongpingjia.carplay.view;
 import android.app.Dialog;
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView.OnItemClickListener;
@@ -54,14 +53,12 @@ public class NomalDialog extends DialogImpl {
     @Override
     public void showToastShort(Context context, String msg) {
         if (!TextUtils.isEmpty(msg)) {
-            Log.d("msg", "弹框");
             Toast toast = IocContainer.getShare().get(Toast.class);
             toast.setDuration(Toast.LENGTH_SHORT);
             View toastV = LayoutInflater.from(context).inflate(R.layout.toast_view, null);
             ViewUtil.bindView(toastV.findViewById(R.id.text), msg);
             toast.setView(toastV);
             toast.show();
-            Log.d("msg", toast + "");
         }
     }
 

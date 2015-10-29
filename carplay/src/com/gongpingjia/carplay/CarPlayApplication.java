@@ -3,8 +3,11 @@ package com.gongpingjia.carplay;
 import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
+import android.util.Log;
 
 import com.easemob.EMCallBack;
+import com.gongpingjia.carplay.api.API2;
+import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.chat.DemoHXSDKHelper;
 import com.gongpingjia.carplay.db.DaoHelper;
 import com.gongpingjia.carplay.view.NomalDialog;
@@ -25,7 +28,10 @@ import net.duohuo.dhroid.adapter.ValueFix;
 import net.duohuo.dhroid.dialog.IDialog;
 import net.duohuo.dhroid.ioc.Instance.InstanceScope;
 import net.duohuo.dhroid.ioc.IocContainer;
+import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.GlobalCodeHandler;
+import net.duohuo.dhroid.net.NetTask;
+import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.util.UserLocation;
 
 public class CarPlayApplication extends Application implements
@@ -110,7 +116,19 @@ public class CarPlayApplication extends Application implements
                 .build();
         ImageLoader.getInstance().init(imageconfig);
 
-        UserLocation.getInstance().init(getApplicationContext());
+        UserLocation location = UserLocation.getInstance();
+        location.init(getApplicationContext(), 5 * 1000);
+        location.setOnLocationChanged(new UserLocation.OnLocationChanged() {
+            @Override
+            public void change(double latitude, double longitude) {
+
+                if (User.getInstance().isLogin()) {
+
+                }
+            }
+        });
+
+
     }
 
     public String getUserName() {
@@ -128,8 +146,6 @@ public class CarPlayApplication extends Application implements
 
     /**
      * 设置用户名
-     *
-     * @param user
      */
     public void setUserName(String username) {
         hxSDKHelper.setHXId(username);
@@ -160,6 +176,20 @@ public class CarPlayApplication extends Application implements
         // intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         // startActivity(intent);
         android.os.Process.killProcess(android.os.Process.myPid());
+    }
+
+
+    private void sendLoaction(double latitude, double longitude) {
+        User user = User.getInstance();
+        DhNet net = new DhNet(API2.sendLocation(user.getUserId(), user.getToken()));
+        net.doPost(new NetTask(getApplicationContext()) {
+            @Override
+            public void doInUI(Response response, Integer transfer) {
+                if (response.isSuccess()) {
+                    Log.d("msg", "成功");
+                }
+            }
+        });
     }
 
 }

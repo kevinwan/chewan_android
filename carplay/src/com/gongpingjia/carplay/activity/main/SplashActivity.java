@@ -165,7 +165,7 @@ public class SplashActivity extends CarPlayBaseActivity {
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(self, MainActivity2.class);
+                Intent intent = new Intent(self, GuidanceActivity2.class);
                 startActivity(intent);
                 per.isFirst = 1;
                 per.commit();
