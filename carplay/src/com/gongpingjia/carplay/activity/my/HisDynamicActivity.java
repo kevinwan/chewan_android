@@ -10,16 +10,12 @@ import com.gongpingjia.carplay.ILoadSuccess;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayListActivity;
 import com.gongpingjia.carplay.adapter.HisDyanmicBaseAdapter;
-import com.gongpingjia.carplay.adapter.MyDyanmicBaseAdapter;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.User;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
-import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
-import net.duohuo.dhroid.net.NetTask;
-import net.duohuo.dhroid.net.Response;
 
 import org.json.JSONObject;
 
@@ -27,7 +23,7 @@ import org.json.JSONObject;
  * Created by Administrator on 2015/10/19.
  * TA的活动
  */
-public class HisDynamicActivity extends CarPlayListActivity implements PullToRefreshBase.OnRefreshListener2<ListView>, ILoadSuccess {
+public class HisDynamicActivity extends CarPlayListActivity implements PullToRefreshBase.OnRefreshListener2<ListView>, ILoadSuccess, CarPlayListActivity.onLoadDataSuccess {
 
     private ListView recyclerView;
 
@@ -72,24 +68,9 @@ public class HisDynamicActivity extends CarPlayListActivity implements PullToRef
         setOnLoadSuccess(this);
         fromWhat("data.activities");
 
-        setUrl(API2.CWBaseurl + "user/" + viewUserId + "/activity/list?token=" + user.getToken() + "&userId=" + user.getUserId() + "&limit=" + 10 + "&ignore=" + 0);
+        setUrl(API2.CWBaseurl + "user/" + viewUserId + "/activity/list?token=" + user.getToken() + "&userId=" + user.getUserId());
 
-        DhNet net = new DhNet(API2.CWBaseurl + "user/" + viewUserId + "/activity/list?token=" + user.getToken() + "&userId=" + user.getUserId() + "&limit=" + 10 + "&ignore=" + 0);
-        net.doGet(new NetTask(self) {
-            @Override
-            public void doInUI(Response response, Integer transfer) {
-                if (response.isSuccess()) {
-                    JSONObject jo = response.jSONFromData();
-                    cover = JSONUtil.getString(jo, "cover");
-                    distance = JSONUtil.getDouble(jo, "distance");
-                    adapter = new HisDyanmicBaseAdapter(self, bundle, cover, distance);
-                    recyclerView.setAdapter(adapter);
-                    showNext();
-                }
-            }
-        });
-
-
+        showNext();
 
 
     }
@@ -128,5 +109,13 @@ public class HisDynamicActivity extends CarPlayListActivity implements PullToRef
     @Override
     public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
         showNext();
+    }
+
+    @Override
+    public void load(JSONObject jo) {
+        cover = JSONUtil.getString(jo, "cover");
+        distance = JSONUtil.getDouble(jo, "distance");
+        adapter = new HisDyanmicBaseAdapter(self, bundle, cover, distance);
+        recyclerView.setAdapter(adapter);
     }
 }
