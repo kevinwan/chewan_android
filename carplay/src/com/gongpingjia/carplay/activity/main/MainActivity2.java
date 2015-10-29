@@ -155,7 +155,6 @@ public class MainActivity2 extends BaseFragmentActivity implements
         registerReceiver(cmdMessageReceiver, cmdIntentFilter);
 
 
-
         updateUnreadLabel();
 
     }
@@ -257,6 +256,8 @@ public class MainActivity2 extends BaseFragmentActivity implements
         rotateAnimation.setInterpolator(new LinearInterpolator());
         appointmentI.setAnimation(rotateAnimation);
         rotateAnimation.start();
+        sendLoaction(118,60.11);
+
 
         //图片模糊处理
 //        Blurry.with(context).capture(view).into(imageView);
@@ -742,7 +743,6 @@ public class MainActivity2 extends BaseFragmentActivity implements
             } else {
 //                Intent it = new Intent(self, MsgService.class);
 //                stopService(it);
-                Log.d("msg", IocContainer.getShare().get(Toast.class) + "");
                 IocContainer.getShare().get(Toast.class).cancel();
                 ActivityTack.getInstanse().exit(self);
             }
@@ -901,6 +901,19 @@ public class MainActivity2 extends BaseFragmentActivity implements
         }
     };
 
-
+    private void sendLoaction(double latitude, double longitude) {
+        User user = User.getInstance();
+        DhNet net = new DhNet(API2.sendLocation(user.getUserId(), user.getToken()));
+        net.addParam("latitude", latitude);
+        net.addParam("longitude", longitude);
+        net.doPost(new NetTask(getApplicationContext()) {
+            @Override
+            public void doInUI(Response response, Integer transfer) {
+                if (response.isSuccess()) {
+                    Log.d("msg", "成功");
+                }
+            }
+        });
+    }
 
 }

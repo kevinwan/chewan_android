@@ -20,7 +20,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -188,7 +187,6 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
 
             @Override
             public void onLoadingComplete(String s, View view, final Bitmap bitmap) {
-                Log.d("msg", "bitmap" + bitmap + "//////////position" + position);
                 if (bitmap != null) {
                     final ImageView img = (ImageView) view;
                     if (!user.isHasAlbum()) {

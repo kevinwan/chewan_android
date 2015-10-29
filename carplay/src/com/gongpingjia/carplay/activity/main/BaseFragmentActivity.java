@@ -97,9 +97,9 @@ public class BaseFragmentActivity extends FragmentActivity {
     protected void onDestroy() {
         // TODO Auto-generated method stub
         super.onDestroy();
-        if (netReceiver != null) {
-            unregisterReceiver(netReceiver);
-        }
+//        if (netReceiver != null) {
+//            unregisterReceiver(netReceiver);
+//        }
     }
 
     public Dialog showProgressDialog(String msg) {

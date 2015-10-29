@@ -72,4 +72,10 @@ public class API2 {
         return String.format(CWBaseurl + "user/%s/subscribe/history?token=%s", userId, token);
     }
 
+
+    //上传经纬度
+    public static String sendLocation(String userId, String token) {
+        return String.format(CWBaseurl + "user/%s/location?token=%s", userId, token);
+    }
+
 }
