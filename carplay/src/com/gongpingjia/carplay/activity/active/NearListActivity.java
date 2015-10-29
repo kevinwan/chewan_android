@@ -43,7 +43,7 @@ public class NearListActivity extends CarPlayListActivity implements PullToRefre
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_near_list);
+        setContentView(R.layout.dynamic_nearlist);
     }
 
     public void initView() {
@@ -86,6 +86,12 @@ public class NearListActivity extends CarPlayListActivity implements PullToRefre
 
     @Override
     public void loadSuccess() {
+        if (mVaules.size() != 0) {
+            listV.isScrollOnFooter = false;
+
+        } else {
+            listV.isScrollOnFooter = true;
+        }
         adapter.setData(mVaules);
         listV.onRefreshComplete();
     }
