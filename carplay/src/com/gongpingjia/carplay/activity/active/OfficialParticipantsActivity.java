@@ -23,6 +23,9 @@ import net.duohuo.dhroid.net.JSONUtil;
 
 import org.json.JSONObject;
 
+/**
+ * 参与成员
+ */
 public class OfficialParticipantsActivity extends CarPlayListActivity implements PullToRefreshBase.OnRefreshListener<ListView>, ILoadSuccess, CarPlayListActivity.onLoadDataSuccess {
 
     private ListView mRecyclerView;
@@ -105,6 +108,8 @@ public class OfficialParticipantsActivity extends CarPlayListActivity implements
 
     @Override
     public void load(JSONObject jo) {
-        isMember = JSONUtil.getBoolean(jo, "isMember");
+        JSONObject json = JSONUtil.getJSONObject(jo,"data");
+        isMember = JSONUtil.getBoolean(json, "isMember");
+        System.out.println("参与成员"+JSONUtil.getBoolean(json, "isMember"));
     }
 }

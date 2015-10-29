@@ -57,25 +57,14 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
     String cover;
     Double distance;
     Boolean transfer;
-    public HisDyanmicBaseAdapter(Context context) {
+    public HisDyanmicBaseAdapter(Context context,Bundle bundle, String cover, Double distance) {
         mContext = context;
-//        this.bundle = bundle;
-//        this.cover = cover;
-//        this.distance = distance;
-    }
-    public void setDistance(Double distance) {
-        this.distance = distance;
-        notifyDataSetChanged();
-    }
-    public void setCover(String cover) {
-        this.cover = cover;
-        notifyDataSetChanged();
-    }
-    public void setData(List<JSONObject> data,Bundle bundle, String cover, Double distance) {
-        this.data = data;
         this.bundle = bundle;
         this.cover = cover;
         this.distance = distance;
+    }
+    public void setData(List<JSONObject> data) {
+        this.data = data;
         notifyDataSetChanged();
     }
 
@@ -154,7 +143,8 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
         int status = JSONUtil.getInt(jo, "status");
         holder.titleT.setText(bundle.getString("name") + "想约人" + type);
         holder.pay_type.setText(pay);
-        ViewUtil.bindNetImage(holder.activity_beijing, cover, "default");
+//        ViewUtil.bindNetImage(holder.activity_beijing, cover, "default");
+        System.out.println("adapter;;;;;;;;;;;;"+cover);
         ImageLoader.getInstance().displayImage(cover, holder.activity_beijing, CarPlayValueFix.optionsDefault, new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String s, View view) {
@@ -244,8 +234,8 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
             holder.dynamic_carname.setVisibility(View.GONE);
         }
         int distances = (int) Math.floor(distance);
-//        System.out.println(distance);
-        holder.activity_distance.setText(distances + "");
+
+        holder.activity_distance.setText(CarPlayUtil.numberWithDelimiter(distances));
         JSONObject json = JSONUtil.getJSONObject(jo, "destination");
         if (json == null) {
             holder.activity_place.setVisibility(View.GONE);

@@ -71,7 +71,7 @@ public class HisDynamicActivity extends CarPlayListActivity implements PullToRef
         setOnLoadDataSuccess(this);
         fromWhat("data.activities");
 
-        setUrl(API2.CWBaseurl + "user/" + viewUserId + "/activity/list?token=" + user.getToken() + "&userId=" + user.getUserId());
+        setUrl(API2.CWBaseurl + "user/" + viewUserId + "/activity/list?token=" + user.getToken() + "&userId=" + user.getUserId() + "&limit=" + 10 + "&ignore=" + 0);
 
         showNext();
 
@@ -81,7 +81,7 @@ public class HisDynamicActivity extends CarPlayListActivity implements PullToRef
 
     @Override
     public void loadSuccess() {
-        adapter.setData(mVaules, bundle, cover, distance);
+        adapter.setData(mVaules);
         listV.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -117,15 +117,16 @@ public class HisDynamicActivity extends CarPlayListActivity implements PullToRef
 
     @Override
     public void load(JSONObject jo) {
-        cover = JSONUtil.getString(jo, "cover");
-        distance = JSONUtil.getDouble(jo, "distance");
+        JSONObject json = JSONUtil.getJSONObject(jo,"data");
+        cover = JSONUtil.getString(json, "cover");
+        distance = JSONUtil.getDouble(json, "distance");
 
         System.out.println("Ta的活动背景++++++" + cover);
-
+        System.out.println("Ta的活动距离++++++" + distance);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                adapter = new HisDyanmicBaseAdapter(self);
+                adapter = new HisDyanmicBaseAdapter(self, bundle, cover, distance);
                 recyclerView.setAdapter(adapter);
             }
         });
