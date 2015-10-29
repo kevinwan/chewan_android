@@ -8,6 +8,7 @@ import com.gongpingjia.carplay.ILoadSuccess;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayListActivity;
 import com.gongpingjia.carplay.adapter.BeSubscribedAdapter2;
+import com.gongpingjia.carplay.adapter.BeSubscribedAdaptertwo;
 import com.gongpingjia.carplay.adapter.SubscribeListener;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.User;
@@ -25,7 +26,7 @@ import net.duohuo.dhroid.net.Response;
 public class MySubscriberActivity2 extends CarPlayListActivity implements ILoadSuccess {
 
     private PullToRefreshListView mListView;
-    private BeSubscribedAdapter2 beSubscribeAdapter;
+    private BeSubscribedAdaptertwo beSubscribeAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +44,7 @@ public class MySubscriberActivity2 extends CarPlayListActivity implements ILoadS
                 refresh();
             }
         });
-        beSubscribeAdapter = new BeSubscribedAdapter2(self, 1);
+        beSubscribeAdapter = new BeSubscribedAdaptertwo(self, 1);
         beSubscribeAdapter.setSubscribeListener(new SubscribeListener() {
             @Override
             public void onSubscribe(String targetId) {

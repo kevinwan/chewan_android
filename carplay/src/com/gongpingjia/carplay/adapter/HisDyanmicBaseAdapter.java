@@ -234,7 +234,6 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
             holder.dynamic_carname.setVisibility(View.GONE);
         }
         int distances = (int) Math.floor(distance);
-
         holder.activity_distance.setText(CarPlayUtil.numberWithDelimiter(distances));
         JSONObject json = JSONUtil.getJSONObject(jo, "destination");
         if (json == null) {
