@@ -183,6 +183,7 @@ public class SplashActivity extends CarPlayBaseActivity {
                 finishWithoutAnim();
             }
         }, 2000);
+
     }
 
     private void loginHX(String currentUsername, String currentPassword,
