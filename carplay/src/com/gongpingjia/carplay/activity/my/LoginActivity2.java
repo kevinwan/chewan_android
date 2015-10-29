@@ -199,6 +199,10 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
             showToast("手机号或密码不能为空");
             return;
         }
+        if (num.length()!=11) {
+            showToast("手机号不合法");
+            return;
+        }
 
 
         DhNet dhNet = new DhNet(API2.login);

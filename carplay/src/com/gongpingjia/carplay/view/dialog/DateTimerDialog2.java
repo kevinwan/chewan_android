@@ -83,13 +83,15 @@ public class DateTimerDialog2 extends BaseAlertDialog implements
         mViewYear.setVisibleItems(3);
         mViewMonth.setVisibleItems(3);
         mViewDay.setVisibleItems(3);
+
+        mViewYear.setCurrentItem(30);
         updateDay();
     }
 
     private String[] getYear() {
-        String[] years = new String[200];
-        for (int i = 0; i < 200; i++) {
-            years[i] = String.valueOf((1900 + i));
+        String[] years = new String[56];
+        for (int i = 0; i < 56; i++) {
+            years[i] = String.valueOf((1960 + i));
         }
         return years;
     }
@@ -131,8 +133,18 @@ public class DateTimerDialog2 extends BaseAlertDialog implements
         int mCurrent = mViewMonth.getCurrentItem();
         mCurrentMonthName = getMonth()[mCurrent];
 
-
-        String[] Days = getDay(getMaxDate(mCurrentYearName,mCurrentMonthName));
+        String[] Days ;
+        if(mCurrentMonthName.equals("2")){
+            int year = Integer.parseInt(mCurrentYearName);
+            if(year%4==0&&year%100!=0||year%400==0){
+                Days = getDay(29);
+            }
+            else {
+                Days = getDay(28);
+            }
+        }else {
+            Days = getDay(getMaxDate(mCurrentYearName, mCurrentMonthName));
+        }
         mViewDay.setViewAdapter(new ArrayWheelAdapter<String>(mContext, Days));
         mViewDay.setCurrentItem(0);
         mCurrentDayName = getDay(getMaxDate(mCurrentYearName,mCurrentMonthName))[mViewDay.getCurrentItem()];

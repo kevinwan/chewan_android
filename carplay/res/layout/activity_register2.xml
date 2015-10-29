@@ -68,6 +68,7 @@
             android:background="@color/nothing"
             android:drawableLeft="@drawable/ic_lock"
             android:drawablePadding="5dp"
+            android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz"
             android:inputType="textPassword" />
 
         <LinearLayout style="@style/line_horizontal"></LinearLayout>
