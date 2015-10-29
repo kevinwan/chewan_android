@@ -84,6 +84,7 @@ public class BeSubscribedAdapter2 extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
+        holder.roundImageView.setTag(JSONUtil.getString(obj, "userId"));
         holder.textNickname.setText(JSONUtil.getString(obj, "nickname"));
         holder.textDistance.setText(JSONUtil.getString(obj, "distance") + "m");
         holder.textAge.setText(JSONUtil.getString(obj, "age"));

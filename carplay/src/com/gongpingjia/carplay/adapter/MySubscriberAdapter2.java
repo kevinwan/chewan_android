@@ -73,6 +73,7 @@ public class MySubscriberAdapter2 extends BaseAdapter {
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
+            holder.roundImageView.setTag(obj.getString("userId"));
             holder.textNickname.setText(obj.getString("nickname"));
             holder.textDistance.setText(String.valueOf(obj.getInt("distance")) + "m");
             holder.textAge.setText(String.valueOf(obj.getInt("age")));

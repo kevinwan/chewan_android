@@ -33,6 +33,7 @@ public class BeSubscribedFragment extends CarPlayBaseFragment implements ILoadSu
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         mListView = (PullToRefreshListView) inflater.inflate(R.layout.fragment_follow_each_other, container, false);
+        setOnLoadSuccess(this);
         mListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
             public void onRefresh(PullToRefreshBase<ListView> refreshView) {
@@ -57,6 +58,7 @@ public class BeSubscribedFragment extends CarPlayBaseFragment implements ILoadSu
                     public void doInUI(Response response, Integer transfer) {
                         if (response.isSuccess()) {
                             //取消关注成功
+                            refresh();
                         }
                     }
                 });
@@ -72,6 +74,7 @@ public class BeSubscribedFragment extends CarPlayBaseFragment implements ILoadSu
     @Override
     public void loadSuccess() {
         beSubscribeAdapter.setData(mVaules);
+        mListView.onRefreshComplete();
     }
 
     @Override

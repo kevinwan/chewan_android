@@ -575,7 +575,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
 
     public void onEventMainThread(TabEB tab) {
         if (tab.getIndex() == 2) {
-            //切换到匹配意向
+            //切换到匹配意向,从匹配意向发过来的消息,tab.getParams()代表匹配的条件
             MatchingListFragment.getInstance().setParams(tab.getParams());
             switchContent(MatchingListFragment.getInstance());
             setTitle("匹配意向结果");
