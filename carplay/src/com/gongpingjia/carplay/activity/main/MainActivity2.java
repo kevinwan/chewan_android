@@ -256,7 +256,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
         rotateAnimation.setInterpolator(new LinearInterpolator());
         appointmentI.setAnimation(rotateAnimation);
         rotateAnimation.start();
-        sendLoaction(118,60.11);
+        sendLoaction(20.12, 120.12);
 
 
         //图片模糊处理
