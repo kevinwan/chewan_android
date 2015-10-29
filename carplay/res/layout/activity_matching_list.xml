@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/new_bg_grey"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/layout_countdown"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/iv_lun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/lun" />
+
+        <TextView
+            android:id="@+id/tv_countdown_time"
+            style="@style/text_grey_new_small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_lun"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:text="10s" />
+
+        <TextView
+            style="@style/text_grey_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/iv_lun"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="40dp"
+            android:text="正在匹配活动" />
+
+        <TextView
+            android:id="@+id/tv_matching_amount"
+            style="@style/text_grey_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_lun"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:text="已匹配到附近 3 个活动" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/layout_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <com.gongpingjia.carplay.view.PullToRefreshRecyclerViewVertical
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="60dp"
+            android:paddingTop="10dp"
+            app:ptrDrawable="@drawable/lun"
+            app:triggerOffset="0.1" />
+
+        <LinearLayout
+            android:id="@+id/near_empty"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@+id/tab_layout"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingBottom="20dp"
+                android:paddingTop="10dp">
+
+                <ImageView
+                    android:id="@+id/icon_msg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/empty_img" />
+
+                <TextView
+                    android:id="@+id/msg"
+                    style="@style/text_grey_small"
+                    android:layout_marginTop="12dp"
+                    android:text="已经没有活动啦"
+                    android:textColor="@color/text_grey_new" />
+
+                <TextView
+                    android:id="@+id/msgs"
+                    style="@style/text_grey_small"
+                    android:layout_marginTop="12dp"
+                    android:text="请放宽条件再试试"
+                    android:textColor="@color/text_grey_new" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>
