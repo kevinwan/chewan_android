@@ -52,12 +52,9 @@ public class VisitorsActivity extends CarPlayListActivity implements PullToRefre
         setOnLoadSuccess(this);
         fromWhat("data");
 
-        setUrl(API2.CWBaseurl + "/user/"+user.getUserId()+"/view/history?token="+ user.getToken());
+        setUrl(API2.CWBaseurl + "/user/" + user.getUserId() + "/view/history?token=" + user.getToken());
 
         showNext();
-
-
-
 
 
     }
@@ -76,12 +73,10 @@ public class VisitorsActivity extends CarPlayListActivity implements PullToRefre
         } else {
             empty.setVisibility(View.GONE);
         }
-
-
     }
 
     @Override
     public void onRefresh(PullToRefreshBase<ListView> refreshView) {
-
+        refresh();
     }
 }

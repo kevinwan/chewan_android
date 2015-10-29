@@ -66,6 +66,7 @@ public class HisDynamicActivity extends CarPlayListActivity implements PullToRef
         listV.setOnRefreshListener(this);
         recyclerView = listV.getRefreshableView();
         setOnLoadSuccess(this);
+        setOnLoadDataSuccess(this);
         fromWhat("data.activities");
 
         setUrl(API2.CWBaseurl + "user/" + viewUserId + "/activity/list?token=" + user.getToken() + "&userId=" + user.getUserId());
@@ -116,7 +117,12 @@ public class HisDynamicActivity extends CarPlayListActivity implements PullToRef
     public void load(JSONObject jo) {
         cover = JSONUtil.getString(jo, "cover");
         distance = JSONUtil.getDouble(jo, "distance");
-        adapter = new HisDyanmicBaseAdapter(self, bundle, cover, distance);
-        recyclerView.setAdapter(adapter);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                adapter = new HisDyanmicBaseAdapter(self, bundle, cover, distance);
+                recyclerView.setAdapter(adapter);
+            }
+        });
     }
 }
