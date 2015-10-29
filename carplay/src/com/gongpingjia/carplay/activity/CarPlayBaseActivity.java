@@ -28,10 +28,16 @@ public abstract class CarPlayBaseActivity extends BaseActivity {
 
     Dialog progressdialog;
 
-    NetReceiver netReceiver;
     public static final String CONNECTIVITY_CHANGE_ACTION = "android.net.conn.CONNECTIVITY_CHANGE";
+    NetReceiver netReceiver = new NetReceiver();
 
-
+    @Override
+    protected void onStart() {
+        super.onStart();
+//        IntentFilter filter = new IntentFilter();
+//        filter.addAction(CONNECTIVITY_CHANGE_ACTION);
+//        registerReceiver(netReceiver, filter);
+    }
 
     @Override
     public void setContentView(int layoutResID) {
@@ -40,10 +46,8 @@ public abstract class CarPlayBaseActivity extends BaseActivity {
         self = this;
         initTitleBar();
         initView();
-//        netReceiver = new NetReceiver();
-//        IntentFilter filter = new IntentFilter();
-//        filter.addAction(CONNECTIVITY_CHANGE_ACTION);
-//        registerReceiver(netReceiver, filter);
+
+
     }
 
     private void initTitleBar() {

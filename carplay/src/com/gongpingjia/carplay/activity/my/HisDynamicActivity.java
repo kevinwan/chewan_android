@@ -65,8 +65,8 @@ public class HisDynamicActivity extends CarPlayListActivity implements PullToRef
         listV.setMode(PullToRefreshBase.Mode.BOTH);
         listV.setOnRefreshListener(this);
         recyclerView = listV.getRefreshableView();
-        adapter = new HisDyanmicBaseAdapter(self);
-        recyclerView.setAdapter(adapter);
+//        adapter = new HisDyanmicBaseAdapter(self);
+//        recyclerView.setAdapter(adapter);
         setOnLoadSuccess(this);
         setOnLoadDataSuccess(this);
         fromWhat("data.activities");
@@ -122,5 +122,12 @@ public class HisDynamicActivity extends CarPlayListActivity implements PullToRef
 
         System.out.println("Ta的活动背景++++++" + cover);
 
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                adapter = new HisDyanmicBaseAdapter(self);
+                recyclerView.setAdapter(adapter);
+            }
+        });
     }
 }

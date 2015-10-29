@@ -153,7 +153,11 @@ public class MainActivity2 extends BaseFragmentActivity implements
         IntentFilter cmdIntentFilter = new IntentFilter(EMChatManager
                 .getInstance().getCmdMessageBroadcastAction());
         registerReceiver(cmdMessageReceiver, cmdIntentFilter);
+
+
+
         updateUnreadLabel();
+
     }
 
     @Override
@@ -660,12 +664,6 @@ public class MainActivity2 extends BaseFragmentActivity implements
                         } else if (error == EMError.CONNECTION_CONFLICT) {
                             // 显示帐号在其他设备登陆dialog
                             showToast("账号在另一地点登录!");
-                            isConflict = true;
-                            Intent it = new Intent(self, LoginActivity2.class);
-                            it.putExtra("action", "logout");
-                            startActivity(it);
-                            finish();
-                            User.getInstance().setDisconnect(false);
                             // showConflictDialog();
                         } else {
                             showToast("网络异常,请重新连接!");
@@ -677,9 +675,15 @@ public class MainActivity2 extends BaseFragmentActivity implements
                             // chatHistoryFragment.errorText.setText(st2);
 
                         }
+                        isConflict = true;
+                        User.getInstance().setDisconnect(false);
                         User.getInstance().setLogin(false);
                         User.getInstance().setDisconnect(true);
                         DemoHXSDKHelper.getInstance().logout(true, null);
+                        Intent it = new Intent(self, LoginActivity2.class);
+                        it.putExtra("action", "logout");
+                        startActivity(it);
+                        finish();
                     }
                 }
 
@@ -875,6 +879,8 @@ public class MainActivity2 extends BaseFragmentActivity implements
 
         @Override
         public void onReceive(Context context, Intent intent) {
+
+            Log.d("msg", "cmdMessageReceiver");
             // 获取cmd message对象
             String msgId = intent.getStringExtra("msgid");
             EMMessage message = intent.getParcelableExtra("message");
@@ -894,4 +900,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
             }
         }
     };
+
+
+
 }

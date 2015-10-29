@@ -4,13 +4,17 @@ import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.easemob.EMCallBack;
 import com.easemob.chat.EMChatManager;
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.User;
@@ -49,37 +53,39 @@ public class NetReceiver extends BroadcastReceiver {
         // TODO Auto-generated method stub
         // Toast.makeText(context, intent.getAction(), 1).show();
         this.context = context;
-//        ConnectivityManager manager = (ConnectivityManager) context
-//                .getSystemService(Context.CONNECTIVITY_SERVICE);
-//        NetworkInfo mobileInfo = manager
-//                .getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-//        NetworkInfo wifiInfo = manager
-//                .getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-//        String action = intent.getAction();
-//        if (TextUtils.equals(action, CarPlayBaseActivity.CONNECTIVITY_CHANGE_ACTION)) {//网络变化的时候会发送通知
-//            //   Log.d("msg", "操作");
-//            if (mobileInfo.isConnected() || wifiInfo.isConnected()) {
-//                per = IocContainer.getShare().get(CarPlayPerference.class);
-//                per.load();
-//                User user = User.getInstance();
-//                if (!TextUtils.isEmpty(per.channel)
-//                        && !TextUtils.isEmpty(user.getUserId())
-//                        && user.isDisconnect()) {
-//                    // 三方登陆
-//                    loginHX(MD5Util.string2MD5(user.getUserId()),
-//                            MD5Util.string2MD5(per.thirdId + per.channel
-//                                    + "com.gongpingjia.carplay"), null);
-//                } else if (!TextUtils.isEmpty(per.phone)
-//                        && !TextUtils.isEmpty(per.password)
-//                        && !TextUtils.isEmpty(user.getUserId())
-//                        && user.isDisconnect()) {
-//                    // 正常登陆
-//                    loginHX(MD5Util.string2MD5(user.getUserId()), per.password,
-//                            null);
-//                } else {
-//                }
-//            }
-//        }
+        ConnectivityManager manager = (ConnectivityManager) context
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo mobileInfo = manager
+                .getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        NetworkInfo wifiInfo = manager
+                .getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        String action = intent.getAction();
+        Log.d("msg", "网络");
+        if (TextUtils.equals(action, CarPlayBaseActivity.CONNECTIVITY_CHANGE_ACTION)) {//网络变化的时候会发送通知
+            Log.d("msg", "网络变换2222");
+            //   Log.d("msg", "操作");
+            if (mobileInfo.isConnected() || wifiInfo.isConnected()) {
+                per = IocContainer.getShare().get(CarPlayPerference.class);
+                per.load();
+                User user = User.getInstance();
+                if (!TextUtils.isEmpty(per.channel)
+                        && !TextUtils.isEmpty(user.getUserId())
+                        && user.isDisconnect()) {
+                    // 三方登陆
+                    loginHX(MD5Util.string2MD5(user.getUserId()),
+                            MD5Util.string2MD5(per.thirdId + per.channel
+                                    + "com.gongpingjia.carplay"), null);
+                } else if (!TextUtils.isEmpty(per.phone)
+                        && !TextUtils.isEmpty(per.password)
+                        && !TextUtils.isEmpty(user.getUserId())
+                        && user.isDisconnect()) {
+                    // 正常登陆
+                    loginHX(MD5Util.string2MD5(user.getUserId()), per.password,
+                            null);
+                } else {
+                }
+            }
+        }
     }
 
     private final Handler mHandler = new Handler() {

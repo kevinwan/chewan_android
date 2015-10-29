@@ -71,9 +71,9 @@ android {
     buildTypes {
         debug {
         }
-        release {
-            signingConfig signingConfigs.config
-        }
+//        release {
+////            signingConfig signingConfigs.config
+//        }
     }
 
     lintOptions {
