@@ -69,10 +69,12 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
 
     // 图片缓存根目录
     private File mCacheDir;
-
+    String pay;
     OnItemClick onItemClick;
-
-
+    JSONObject distancejo;
+    boolean transfer;
+    String name;
+    String activetype;
     public static class SimpleViewHolder extends RecyclerView.ViewHolder {
         TextView nickname, car_name, age, pay, transfer, location, distance, join_desT;
         ImageView headatt, car_logo, sex, active_bg;
@@ -137,15 +139,15 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
 
         //用户信息,所在地,car信息,头像信息
         JSONObject userjo = JSONUtil.getJSONObject(jo, "organizer");
-        JSONObject distancejo = JSONUtil.getJSONObject(jo, "destination");
+         distancejo = JSONUtil.getJSONObject(jo, "destination");
         JSONObject carjo = JSONUtil.getJSONObject(userjo, "car");
         JSONArray albumjsa = JSONUtil.getJSONArray(userjo, "album");
         //昵称,活动类型,年龄,性别,头像
-        String activetype = JSONUtil.getString(jo, "type");
+         activetype = JSONUtil.getString(jo, "type");
         holder.nickname.setText(JSONUtil.getString(userjo, "nickname") + "想约人" + activetype);
         holder.age.setText(JSONUtil.getInt(userjo, "age") + "");
         String sex = JSONUtil.getString(userjo, "gender");
-
+         name = JSONUtil.getString(userjo, "nickname");
         boolean applyFlag = JSONUtil.getBoolean(jo, "applyFlag");
         holder.join_desT.setText(applyFlag ? "邀请中" : "邀 TA");
         if (applyFlag) {
@@ -221,8 +223,8 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
         //关注,是否包接送,付费类型,活动类型
         holder.attention.setImageResource(JSONUtil.getBoolean(userjo, "subscribeFlag") ? R.drawable.icon_hearted : R.drawable.icon_heart);
         holder.attention.setOnClickListener(new MyOnClick(holder, position));
-        boolean transfer = JSONUtil.getBoolean(jo, "transfer");
-        String pay = JSONUtil.getString(jo, "pay");
+         transfer = JSONUtil.getBoolean(jo, "transfer");
+         pay = JSONUtil.getString(jo, "pay");
         holder.pay.setText(pay);
         if (transfer) {
             holder.transfer.setVisibility(View.VISIBLE);
@@ -420,6 +422,11 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
         User user = User.getInstance();
         String url = API2.CWBaseurl + "activity/" + activeId + "/join?" + "userId=" + user.getUserId() + "&token=" + user.getToken();
         DhNet net = new DhNet(url);
+        net.addParam("type",activetype);
+        net.addParam("pay",pay);
+        net.addParam("transfer",transfer);
+//        net.addParam("destPoint",destPoint);
+        net.addParam("destination",distancejo);
         net.doPostInDialog(new NetTask(mContext) {
             @Override
             public void doInUI(Response response, Integer transfer) {

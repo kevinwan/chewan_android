@@ -49,13 +49,14 @@ import jp.wasabeef.blurry.Blurry;
  */
 public class HisDyanmicBaseAdapter extends BaseAdapter {
     private final Context mContext;
-    String activityId;
+    String activityId,pay,type;
     private List<JSONObject> data;
     //    User user = User.getInstance();
+    JSONObject destPoint,destination;
     Bundle bundle;
     String cover;
     Double distance;
-
+    Boolean transfer;
     public HisDyanmicBaseAdapter(Context context, Bundle bundle, String cover, Double distance) {
         mContext = context;
         this.bundle = bundle;
@@ -120,9 +121,6 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
             holder.invitationI = (AnimButtonView) view.findViewById(R.id.invitationI);
             holder.dyanmic_one = (AnimButtonView) view.findViewById(R.id.dyanmic_one);
             holder.dyanmic_two = (AnimButtonView) view.findViewById(R.id.dyanmic_two);
-            holder.invitationI.startScaleAnimation();
-            holder.dyanmic_one.startScaleAnimation();
-            holder.dyanmic_two.startScaleAnimation();
 
             holder.activity_distance = (TextView) view.findViewById(R.id.active_distance);
             holder.invitationT = (TextView) view.findViewById(R.id.invitationT);
@@ -133,15 +131,21 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) view.getTag();
         }
+        holder.invitationI.startScaleAnimation();
+        holder.dyanmic_one.startScaleAnimation();
+        holder.dyanmic_two.startScaleAnimation();
 
-        String pay = JSONUtil.getString(jo, "pay");
+        destPoint = JSONUtil.getJSONObject(jo,"destPoint");
+         destination = JSONUtil.getJSONObject(jo, "destination");
+         pay = JSONUtil.getString(jo, "pay");
         activityId = JSONUtil.getString(jo, "activityId");
-        String type = JSONUtil.getString(jo, "type");
-        Boolean transfer = JSONUtil.getBoolean(jo, "transfer");
+         type = JSONUtil.getString(jo, "type");
+        transfer = JSONUtil.getBoolean(jo, "transfer");
         int status = JSONUtil.getInt(jo, "status");
         holder.titleT.setText(bundle.getString("name") + "想约人" + type);
         holder.pay_type.setText(pay);
         ViewUtil.bindNetImage(holder.activity_beijing, cover, "default");
+
         if (status == 0) {
             holder.invitation.setVisibility(View.VISIBLE);
             holder.yingyaohou.setVisibility(View.GONE);
@@ -251,13 +255,21 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
 
     private void join(String activeId, final ViewHolder holder, final JSONObject jo) {
         User user = User.getInstance();
-        String url = API2.CWBaseurl + "activity/" + activeId + "/join?" + "userId=" + user.getUserId() + "&token=" + user.getToken();
+        String url = API2.CWBaseurl + "activity/" + activeId + "/join?userId=" + user.getUserId() + "&token=" + user.getToken();
         DhNet net = new DhNet(url);
+        net.addParam("type",type);
+        net.addParam("pay",pay);
+        net.addParam("transfer",transfer);
+        net.addParam("destPoint",destPoint);
+        net.addParam("destination",destination);
         net.doPostInDialog(new NetTask(mContext) {
             @Override
             public void doInUI(Response response, Integer transfer) {
                 if (response.isSuccess()) {
                     holder.invitationT.setText("邀请中");
+                    holder.invitationI.setResourseAndBg(R.drawable.dynamic_grey
+                            , R.drawable.dynamic_grey
+                    );
                     System.out.println("邀Ta" + response.isSuccess());
                     try {
                         jo.put("status", 2);

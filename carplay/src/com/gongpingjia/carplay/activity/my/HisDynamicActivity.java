@@ -78,6 +78,7 @@ public class HisDynamicActivity extends CarPlayListActivity implements PullToRef
 
     @Override
     public void loadSuccess() {
+
         adapter.setData(mVaules);
         listV.postDelayed(new Runnable() {
             @Override
