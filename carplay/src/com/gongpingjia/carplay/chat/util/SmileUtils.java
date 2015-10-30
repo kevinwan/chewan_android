@@ -13,18 +13,18 @@
  */
 package com.gongpingjia.carplay.chat.util;
 
+import android.content.Context;
+import android.text.Spannable;
+import android.text.Spannable.Factory;
+import android.text.style.ImageSpan;
+
+import com.gongpingjia.carplay.R;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import com.gongpingjia.carplay.R;
-
-import android.content.Context;
-import android.text.Spannable;
-import android.text.Spannable.Factory;
-import android.text.style.ImageSpan;
 
 public class SmileUtils {
 	public static final String ee_1 = "[):]";
@@ -146,6 +146,7 @@ public class SmileUtils {
 
 	public static Spannable getSmiledText(Context context, CharSequence text) {
 	    Spannable spannable = spannableFactory.newSpannable(text);
+
 	    addSmiles(context, spannable);
 	    return spannable;
 	}

@@ -107,6 +107,7 @@ import com.gongpingjia.carplay.chat.adapter.ExpressionAdapter;
 import com.gongpingjia.carplay.chat.adapter.ExpressionPagerAdapter;
 import com.gongpingjia.carplay.chat.adapter.MessageAdapter;
 import com.gongpingjia.carplay.chat.adapter.VoicePlayClickListener;
+import com.gongpingjia.carplay.chat.bean.ChatUser;
 import com.gongpingjia.carplay.chat.bean.RobotUser;
 import com.gongpingjia.carplay.chat.controller.HXSDKHelper;
 import com.gongpingjia.carplay.chat.model.GroupRemoveListener;
@@ -463,7 +464,12 @@ public class ChatActivity extends CarPlayBaseActivity implements
                     setTitle(toChatUsername);
                 }
             } else {
-                getUserInfo(toChatUsername);
+                ChatUser user = UserUtils.getUserInfo(toChatUsername);
+                if (user.getNick().contains("Admin")) {
+                    setTitle("车玩官方");
+                } else {
+                    getUserInfo(toChatUsername);
+                }
 //                UserUtils.setUserNick(toChatUsername,
 //                        (TextView) findViewById(R.id.title));
             }
@@ -2006,8 +2012,6 @@ public class ChatActivity extends CarPlayBaseActivity implements
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                } else {
-                    setTitle("车玩官方");
                 }
             }
         });

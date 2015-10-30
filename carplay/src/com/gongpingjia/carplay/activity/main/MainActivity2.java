@@ -585,6 +585,9 @@ public class MainActivity2 extends BaseFragmentActivity implements
             switchContent(MatchingListFragment.getInstance());
             setTitle("匹配意向结果");
             return;
+        } else if (tab.getIndex() == 4) {
+            setTab(4);
+            return;
         }
         setTab(0);
     }
@@ -812,6 +815,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
         }
         return chatGroupCount;
     }
+
 
     public class MyGroupChangeListener implements EMGroupChangeListener {
 

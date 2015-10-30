@@ -13,24 +13,6 @@
  */
 package com.gongpingjia.carplay.chat.adapter;
 
-import java.io.File;
-import java.util.Date;
-import java.util.Hashtable;
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import net.duohuo.dhroid.net.DhNet;
-import net.duohuo.dhroid.net.NetTask;
-import net.duohuo.dhroid.net.Response;
-import net.duohuo.dhroid.util.ViewUtil;
-
-import org.jivesoftware.smack.Chat;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.xmlpull.v1.XmlPullParser;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -42,6 +24,7 @@ import android.net.Uri;
 import android.os.Handler;
 import android.text.Spannable;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -87,7 +70,10 @@ import com.gongpingjia.carplay.activity.chat.ChatActivity;
 import com.gongpingjia.carplay.activity.chat.ChatMapActivity;
 import com.gongpingjia.carplay.activity.chat.ContextMenu;
 import com.gongpingjia.carplay.activity.chat.ShowBigImage;
+import com.gongpingjia.carplay.activity.my.AuthenticateOwnersActivity2;
+import com.gongpingjia.carplay.activity.my.HeadAttestationActivity;
 import com.gongpingjia.carplay.api.API2;
+import com.gongpingjia.carplay.bean.TabEB;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.chat.Constant;
 import com.gongpingjia.carplay.chat.DemoHXSDKHelper;
@@ -97,8 +83,26 @@ import com.gongpingjia.carplay.chat.util.ImageCache;
 import com.gongpingjia.carplay.chat.util.ImageUtils;
 import com.gongpingjia.carplay.chat.util.SmileUtils;
 import com.gongpingjia.carplay.chat.utils.UserUtils;
-import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import net.duohuo.dhroid.net.DhNet;
+import net.duohuo.dhroid.net.NetTask;
+import net.duohuo.dhroid.net.Response;
+import net.duohuo.dhroid.util.ViewUtil;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.xmlpull.v1.XmlPullParser;
+
+import java.io.File;
+import java.util.Date;
+import java.util.Hashtable;
+import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import de.greenrobot.event.EventBus;
 
 public class MessageAdapter extends BaseAdapter {
 
@@ -500,7 +504,7 @@ public class MessageAdapter extends BaseAdapter {
         }
 
         // 群聊时，显示接收的消息的发送人的名称
-        if ( message.direct == EMMessage.Direct.RECEIVE) {
+        if (message.direct == EMMessage.Direct.RECEIVE) {
             // demo里使用username代码nick
             // UserUtils.setUserNick(message.getFrom(), holder.tv_usernick);
             holder.tv_usernick.setText(message.getStringAttribute("nickName",
@@ -509,6 +513,7 @@ public class MessageAdapter extends BaseAdapter {
         if (message.direct == EMMessage.Direct.SEND) {
             holder.tv_usernick.setText(message.getStringAttribute("nickName",
                     ""));
+
             // UserUtils.setUserNick(message.getStringAttribute("nickName", ""),
             // holder.tv_usernick);
             // UserUtils.setCurrentUserNick(message.);
@@ -724,9 +729,66 @@ public class MessageAdapter extends BaseAdapter {
      */
     private void handleTextMessage(EMMessage message, ViewHolder holder,
                                    final int position) {
+
+        final int type = message.getIntAttribute("type", -1);
+        final int result = message.getIntAttribute("result", -1);
+
+
+        switch (type) {
+            case 1:
+                holder.tv.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (result == 1) {
+                            ((Activity) context).finish();
+                            EventBus.getDefault().post(new TabEB(4, null));
+                            EventBus.getDefault().post("上传成功");
+                        } else {
+                            Intent it = new Intent(context, HeadAttestationActivity.class);
+                            context.startActivity(it);
+                        }
+                    }
+                });
+
+                break;
+
+            case 2:
+                holder.tv.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (result == 1) {
+                            ((Activity) context).finish();
+                            EventBus.getDefault().post(new TabEB(4, null));
+                            EventBus.getDefault().post("上传成功");
+                        } else {
+                            Intent it = new Intent(context, AuthenticateOwnersActivity2
+                                    .class);
+                            context.startActivity(it);
+                        }
+                    }
+                });
+                break;
+
+
+            case 3:
+                break;
+
+            case 4:
+                break;
+        }
         TextMessageBody txtBody = (TextMessageBody) message.getBody();
+        String content = "重新认证";
+        int start = txtBody.getMessage().indexOf(content);
         Spannable span = SmileUtils
                 .getSmiledText(context, txtBody.getMessage());
+
+        if (start != -1) {
+            span.setSpan(new ForegroundColorSpan(context.getResources()
+                            .getColor(R.color.text_blue_light)), start,
+                    start + content.length(),
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        }
         // 设置内容
         holder.tv.setText(span, BufferType.SPANNABLE);
         // 设置长按事件监听
