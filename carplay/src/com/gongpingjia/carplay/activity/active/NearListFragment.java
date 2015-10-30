@@ -123,7 +123,7 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
         addParams("latitude", location.getLatitude());
         addParams("longitude", location.getLongitude());
         addParams("maxDistance", "5000000");
-        addParams("type", pre.getType());
+        addParams("majorType", pre.getType());
         addParams("pay", pre.getPay());
         addParams("gender", pre.getGender());
         addParams("transfer", pre.isTransfer());
@@ -170,7 +170,7 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
     public void onEventMainThread(FilterPreference2 pre) {
         pre = IocContainer.getShare().get(FilterPreference2.class);
         pre.load();
-        addParams("type", pre.getType());
+        addParams("majorType", pre.getType());
         addParams("pay", pre.getPay());
         addParams("gender", pre.getGender());
         addParams("transfer", pre.isTransfer());
