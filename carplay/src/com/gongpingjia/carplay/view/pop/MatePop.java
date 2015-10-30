@@ -201,7 +201,7 @@ public class MatePop implements Runnable, View.OnClickListener {
         }
     }
 
-    //发布匹配意向一个参数直接代表活动类型，多个参数代表可以选择的运动类型
+    //发布匹配意向一个参数直接代表活动类型，多个参数代表可以选择的运动类型,一个参数代表小类型
     private void showMatchingDialog(String... names) {
         Matching matching;
         List<Matching> data = new ArrayList<>();
