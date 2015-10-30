@@ -22,7 +22,7 @@ import net.duohuo.dhroid.util.UserLocation;
 /**
  * Created by Administrator on 2015/10/12.
  */
-public class RecommendListFragment extends CarPlayBaseFragment implements PullToRefreshBase.OnRefreshListener<RecyclerViewPager>, ILoadSuccess {
+public class RecommendListFragment extends CarPlayBaseFragment implements PullToRefreshBase.OnRefreshListener2<RecyclerViewPager>, ILoadSuccess {
 
 
     static RecommendListFragment instance;
@@ -76,11 +76,6 @@ public class RecommendListFragment extends CarPlayBaseFragment implements PullTo
         refresh();
     }
 
-    @Override
-    public void onRefresh(PullToRefreshBase<RecyclerViewPager> refreshView) {
-        refresh();
-    }
-
 
     @Override
     public void loadSuccess() {
@@ -98,5 +93,15 @@ public class RecommendListFragment extends CarPlayBaseFragment implements PullTo
         } else {
             empty.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void onPullDownToRefresh(PullToRefreshBase<RecyclerViewPager> refreshView) {
+        refresh();
+    }
+
+    @Override
+    public void onPullUpToRefresh(PullToRefreshBase<RecyclerViewPager> refreshView) {
+        showNext();
     }
 }

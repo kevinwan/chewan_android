@@ -459,8 +459,8 @@ public class ChatActivity extends CarPlayBaseActivity implements
                 if (!TextUtils.isEmpty(nick)) {
                     setTitle(nick);
                 } else {
-                    getUserInfo(toChatUsername);
-//                    setTitle(toChatUsername);
+//                    getUserInfo(toChatUsername);
+                    setTitle(toChatUsername);
                 }
             } else {
                 getUserInfo(toChatUsername);
@@ -1036,7 +1036,7 @@ public class ChatActivity extends CarPlayBaseActivity implements
     /**
      * 发送文本消息
      *
-     * @param content  message content
+     * @param content message content
      */
     public void sendText(String content) {
 
@@ -2006,6 +2006,8 @@ public class ChatActivity extends CarPlayBaseActivity implements
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                } else {
+                    setTitle("车玩官方");
                 }
             }
         });
