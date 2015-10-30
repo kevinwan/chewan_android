@@ -84,6 +84,8 @@ public class DynamicListFragment extends CarPlayBaseFragment implements PullToRe
         listV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
                 int currentPosition = position - 1;
                 int type = mAdapter.getItemViewType(currentPosition);
                 EMConversation conversation = mAdapter.getItem(currentPosition);

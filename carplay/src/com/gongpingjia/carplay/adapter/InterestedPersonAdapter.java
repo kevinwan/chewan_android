@@ -45,8 +45,9 @@ public class InterestedPersonAdapter extends BaseAdapter {
 
     User user = User.getInstance();
     JSONObject distancejo;
-    String name,pay,activityType;
+    String name, pay, activityType;
     boolean activityTransfer;
+
     public InterestedPersonAdapter(Context context) {
         mContext = context;
     }
@@ -112,13 +113,13 @@ public class InterestedPersonAdapter extends BaseAdapter {
 
         //用户信息,所在地,car信息,头像信息
         final JSONObject userjo = JSONUtil.getJSONObject(jo, "user");
-         distancejo = JSONUtil.getJSONObject(jo, "activityDestination");
+        distancejo = JSONUtil.getJSONObject(jo, "activityDestination");
         JSONObject carjo = JSONUtil.getJSONObject(userjo, "car");
 //        JSONArray albumjsa = JSONUtil.getJSONArray(userjo, "album");
-         name = JSONUtil.getString(userjo,"nickname");
-         pay = JSONUtil.getString(jo,"activityPay");
-         activityType = JSONUtil.getString(jo,"activityType");
-         activityTransfer = JSONUtil.getBoolean(jo, "activityTransfer");
+        name = JSONUtil.getString(userjo, "nickname");
+        pay = JSONUtil.getString(jo, "activityPay");
+        activityType = JSONUtil.getString(jo, "activityType");
+        activityTransfer = JSONUtil.getBoolean(jo, "activityTransfer");
 
         //,性别,年龄,头像
         holder.ageT.setText(JSONUtil.getInt(userjo, "age") + "");
@@ -271,11 +272,11 @@ public class InterestedPersonAdapter extends BaseAdapter {
         User user = User.getInstance();
         String url = API2.CWBaseurl + "activity/" + activeId + "/join?" + "userId=" + user.getUserId() + "&token=" + user.getToken();
         DhNet net = new DhNet(url);
-        net.addParam("type",activityType);
-        net.addParam("pay",pay);
-        net.addParam("transfer",activityTransfer);
+        net.addParam("type", activityType);
+        net.addParam("pay", pay);
+        net.addParam("transfer", activityTransfer);
 //        net.addParam("destPoint",destPoint);
-        net.addParam("destination",distancejo);
+        net.addParam("destination", distancejo);
         net.doPostInDialog(new NetTask(mContext) {
             @Override
             public void doInUI(Response response, Integer transfer) {
