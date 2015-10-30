@@ -69,6 +69,13 @@
             android:layout_alignBottom="@+id/like"
             android:layout_toRightOf="@+id/like"
             android:text="喜欢我们打分鼓励" />
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="22dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/right_btn" />
     </RelativeLayout>
 
     <View
@@ -97,6 +104,13 @@
             android:layout_alignBottom="@+id/about_us"
             android:layout_toRightOf="@+id/about_us"
             android:text="关于我们" />
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="22dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/right_btn" />
     </RelativeLayout>
 
     <View
@@ -125,6 +139,13 @@
             android:layout_alignBottom="@+id/versions"
             android:layout_toRightOf="@+id/versions"
             android:text="版本介绍" />
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="22dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/right_btn" />
     </RelativeLayout>
 
     <View
@@ -153,6 +174,47 @@
             android:layout_alignBottom="@+id/at_versions"
             android:layout_toRightOf="@+id/at_versions"
             android:text="版本更新" />
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="22dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/right_btn" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="#e6e9ed" />
+    <RelativeLayout
+        android:id="@+id/layout_modifypwd"
+        android:layout_width="match_parent"
+        android:layout_height="51dp">
+
+        <ImageView
+            android:id="@+id/at_mima"
+            style="@style/icon_style"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/mima" />
+
+
+        <TextView
+            style="@style/text_black_medium"
+            android:layout_alignBottom="@+id/at_mima"
+            android:layout_toRightOf="@+id/at_mima"
+            android:text="修改密码" />
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="22dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/right_btn" />
     </RelativeLayout>
 
     <View

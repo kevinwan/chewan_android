@@ -24,7 +24,7 @@ public class SettingActivity2 extends CarPlayBaseActivity implements View.OnClic
 
     File mCacheDir;
     TextView mTextCacheSize;
-    RelativeLayout setting_about_us, setting_versions;
+    RelativeLayout setting_about_us, setting_versions,layout_modifypwd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +42,7 @@ public class SettingActivity2 extends CarPlayBaseActivity implements View.OnClic
         View layoutClearCache = findViewById(R.id.layout_cache_clear);
         setting_about_us = (RelativeLayout) findViewById(R.id.setting_about_us);
         setting_versions = (RelativeLayout) findViewById(R.id.setting_versions);
+        layout_modifypwd = (RelativeLayout) findViewById(R.id.layout_modifypwd);
         mCacheDir = new File(getExternalCacheDir(), "CarPlay");
         mTextCacheSize = (TextView) findViewById(R.id.tv_cache_size);
         mTextCacheSize.setText(String.valueOf(FileUtil.getFileOrDirSize(mCacheDir,
@@ -49,6 +50,7 @@ public class SettingActivity2 extends CarPlayBaseActivity implements View.OnClic
         setting_about_us.setOnClickListener(this);
         layoutClearCache.setOnClickListener(this);
         setting_versions.setOnClickListener(this);
+        layout_modifypwd.setOnClickListener(this);
         btnLogout.setOnClickListener(this);
 
         if (!User.getInstance().isLogin()) {
@@ -68,6 +70,10 @@ public class SettingActivity2 extends CarPlayBaseActivity implements View.OnClic
                 startActivity(it);
                 break;
             case R.id.setting_versions:
+//                it = new Intent(this, VersionIntroActivity.class);
+//                startActivity(it);
+                break;
+            case R.id.layout_modifypwd:
 //                it = new Intent(this, VersionIntroActivity.class);
 //                startActivity(it);
                 break;
