@@ -243,13 +243,14 @@ public class BasicInformationActivity2 extends CarPlayBaseActivity implements Vi
 
                     JSONObject jo = response.jSONFromData();
                     if (getIntent().getStringExtra("phone") != null) {
+                        //手机号完善信息
                         loginHX(MD5Util.string2MD5(JSONUtil.getString(jo,
                                         "userId")), getIntent().getStringExtra("password"),
                                 jo);
                         per.phone = getIntent().getStringExtra("phone");
                         per.password = getIntent().getStringExtra("password");
-
                     } else {
+                        //三方登录完善信息
                         loginHX(MD5Util.string2MD5(JSONUtil.getString(jo,
                                 "userId")), MD5Util.string2MD5(getIntent()
                                 .getStringExtra("uid")
@@ -257,6 +258,8 @@ public class BasicInformationActivity2 extends CarPlayBaseActivity implements Vi
                                 + "com.gongpingjia.carplay"), jo);
                         per.thirdId = getIntent().getStringExtra("uid");
                         per.channel = getIntent().getStringExtra("channel");
+                        per.headUrl = getIntent().getStringExtra("avatarUrl");
+                        per.nickname = getIntent().getStringExtra("nickname");
                     }
                     per.commit();
                     Intent it = new Intent(self, MainActivity2.class);

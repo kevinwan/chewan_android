@@ -73,12 +73,12 @@ public class SplashActivity extends CarPlayBaseActivity {
     private void loginThirdParty() {
         String api = API2.snsLogin;
         DhNet net = new DhNet(api);
-        net.addParam("uid", per.thirdId);
+        String password = MD5Util.string2MD5(per.thirdId + per.channel + "com.gongpingjia.carplay");
         net.addParam("channel", per.channel);
-        net.addParam(
-                "sign",
-                MD5Util.string2MD5(per.thirdId + per.channel
-                        + "com.gongpingjia.carplay"));
+        net.addParam("nickname", per.nickname);
+        net.addParam("avatar", per.headUrl);
+        net.addParam("uid", per.thirdId);
+        net.addParam("password", password);
         net.doPost(new NetTask(self) {
 
             @Override

@@ -74,7 +74,8 @@ public class SettingActivity2 extends CarPlayBaseActivity implements View.OnClic
 //                startActivity(it);
                 break;
             case R.id.layout_modifypwd:
-
+                it = new Intent(this, RevisePassword.class);
+                startActivity(it);
                 break;
             case R.id.layout_cache_clear:
                 ImageLoader.getInstance().getMemoryCache().clear();

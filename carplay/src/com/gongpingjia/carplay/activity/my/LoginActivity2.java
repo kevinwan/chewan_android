@@ -199,7 +199,7 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
             showToast("手机号或密码不能为空");
             return;
         }
-        if (num.length()!=11) {
+        if (num.length() != 11) {
             showToast("手机号不合法");
             return;
         }
@@ -250,6 +250,11 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
                         bundle.putString("nickname", mNickName);
                         bundle.putString("uid", mUid);
                         bundle.putString("channel", mChannel);
+                        try {
+                            bundle.putSerializable("avatar", json.getString("avatar"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                         try {
                             bundle.putString("avatar", json.getString("avatar"));
                         } catch (JSONException e) {
