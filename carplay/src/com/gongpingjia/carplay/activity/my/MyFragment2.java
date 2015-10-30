@@ -272,7 +272,12 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                     getAlbum(albumJsa);
 
                     try {
-                        if (albumJsa!= null) {
+//                        if (albumJsa!= null) {
+//                            ViewUtil.bindNetImage(photo_bgI, albumJsa.getJSONObject(0).getString("url"), "default");
+//                        } else {
+//                            ViewUtil.bindNetImage(photo_bgI, headimg, "head");
+//                        }
+                        if (user.isHasAlbum()) {
                             ViewUtil.bindNetImage(photo_bgI, albumJsa.getJSONObject(0).getString("url"), "default");
                         } else {
                             ViewUtil.bindNetImage(photo_bgI, headimg, "head");

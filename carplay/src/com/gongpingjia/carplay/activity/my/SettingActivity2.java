@@ -106,6 +106,7 @@ public class SettingActivity2 extends CarPlayBaseActivity implements View.OnClic
                         user.setLogin(false);
                         user.setUserId("");
                         user.setToken("");
+                        user.setHasAlbum(false);
                     }
                 });
             }

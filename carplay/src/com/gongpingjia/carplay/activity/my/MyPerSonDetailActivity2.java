@@ -238,7 +238,12 @@ public class MyPerSonDetailActivity2 extends CarPlayBaseActivity implements View
                     getAlbum(albumJsa);
 
                     try {
-                        if (albumJsa != null) {
+//                        if (albumJsa != null) {
+//                            ViewUtil.bindNetImage(photo_bgI, albumJsa.getJSONObject(0).getString("url"), "default");
+//                        } else {
+//                            ViewUtil.bindNetImage(photo_bgI, headimg, "head");
+//                        }
+                        if (user.isHasAlbum()) {
                             ViewUtil.bindNetImage(photo_bgI, albumJsa.getJSONObject(0).getString("url"), "default");
                         } else {
                             ViewUtil.bindNetImage(photo_bgI, headimg, "head");

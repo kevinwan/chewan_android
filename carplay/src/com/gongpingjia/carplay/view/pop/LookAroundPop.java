@@ -33,6 +33,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
 /**
  * Created by Administrator on 2015/10/20.
  */
@@ -51,6 +56,8 @@ public class LookAroundPop {
     User user;
 
     RelativeLayout layoutR;
+
+    List<LinearLayout> controlList;
 
     public LookAroundPop(Activity context) {
         this.context = context;
@@ -83,6 +90,7 @@ public class LookAroundPop {
                 pop.dismiss();
             }
         });
+        controlList =new ArrayList<LinearLayout>();
         getData();
     }
 
@@ -130,19 +138,27 @@ public class LookAroundPop {
                                 public void onClick(View v) {
                                     LookAroundDialog dialog = new LookAroundDialog(context, json);
                                     dialog.show();
-                                    ;
                                 }
                             });
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        new mHandler((LinearLayout) linear.getChildAt(j)).sendEmptyMessageDelayed(0, position * 1000);
 
+                        controlList.add((LinearLayout) linear.getChildAt(j));
+//                        // 启动线程 顺序执行
+//                        new mHandler((LinearLayout) linear.getChildAt(j)).sendEmptyMessageDelayed(0, position * 500);
                         position = position + 1;
                     }
 
                 }
             }
+        }
+
+        //随机播放动画
+        Collections.shuffle(controlList);
+        for (int i = 0; i < controlList.size();i++){
+//            new mHandler(controlList.get(i)).sendEmptyMessageDelayed(0, i * new Random().nextInt(600)+100);
+            new mHandler(controlList.get(i)).sendEmptyMessageDelayed(0, i * new Random().nextInt(400)+400);
         }
 
     }
@@ -159,7 +175,10 @@ public class LookAroundPop {
         ScaleAnimation sa = new ScaleAnimation(0f, 1f, 0f, 1f,
                 ScaleAnimation.RELATIVE_TO_SELF, 0.5f,
                 ScaleAnimation.RELATIVE_TO_SELF, 0.5f);
-        sa.setDuration(800);
+        //随机时间
+        sa.setDuration(new Random().nextInt(200)+400);
+
+//        sa.setDuration(400);
         as.addAnimation(sa);
         return as;
     }

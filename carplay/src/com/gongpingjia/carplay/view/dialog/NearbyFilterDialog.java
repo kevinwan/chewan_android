@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -24,6 +25,7 @@ public class NearbyFilterDialog extends BaseAlertDialog implements
 
     private Button submit ;
 
+    private ImageView closeI;
 
     private CheckBox active_transfer;
 
@@ -72,11 +74,19 @@ public class NearbyFilterDialog extends BaseAlertDialog implements
             @Override
             public void onClick(View v) {
                 dismiss();
-                transfer=active_transfer.isChecked();
+                transfer = active_transfer.isChecked();
                 if (nearbyFilterResultListener != null) {
-                    nearbyFilterResultListener.onResult(type,pay,gender,transfer);
+                    nearbyFilterResultListener.onResult(type, pay, gender, transfer);
                 }
 
+            }
+        });
+
+        closeI = (ImageView) findViewById(R.id.close);
+        closeI.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
             }
         });
 
