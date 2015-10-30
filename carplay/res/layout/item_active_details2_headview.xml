@@ -56,7 +56,7 @@
             android:layout_marginBottom="18dp"
             android:layout_marginTop="18dp"
             android:lineSpacingMultiplier="1.3"
-            android:text="五月天演唱会,将在鸟巢举行,官方补贴,车玩补贴,每张门票20元,名额有限." />
+            android:text="" />
 
         <TextView
             android:id="@+id/content"
@@ -66,7 +66,7 @@
             android:ellipsize="end"
             android:lineSpacingMultiplier="1.3"
             android:maxLines="3"
-            android:text="五月天演唱会,将在鸟巢举行,官方补贴,车玩补贴,每张门票20元,名额有限,五月天演唱会,将在鸟巢举行,官方补贴,车玩补贴,每张门票20元,名额有限,五月天演唱会,将在鸟巢举行,官方补贴,车玩补贴,每张门票20元,名额有限,五月天演唱会,将在鸟巢举行,官方补贴,车玩补贴,每张门票20元,名额有限,五月天演唱会,将在鸟巢举行,官方补贴,车玩补贴,每张门票20元,名额有限." />
+            android:text=""/>
 
         <RelativeLayout
             android:id="@+id/fold"
@@ -109,7 +109,7 @@
                 android:id="@+id/starttime"
                 style="@style/text_black_small"
                 android:layout_marginLeft="12dp"
-                android:text="2015-8-16 9:12" />
+                android:text="" />
 
         </LinearLayout>
 
@@ -135,7 +135,7 @@
                 android:id="@+id/endtime"
                 style="@style/text_black_small"
                 android:layout_marginLeft="12dp"
-                android:text="2015-8-16 9:12" />
+                android:text="" />
 
         </LinearLayout>
 
@@ -159,7 +159,7 @@
             android:id="@+id/price"
             style="@style/text_black_small"
             android:layout_marginLeft="12dp"
-            android:text="300元/人 ( 现在报名立减60元 ) " />
+            android:text=" " />
 
     </LinearLayout>
 
@@ -181,7 +181,7 @@
             android:id="@+id/place"
             style="@style/text_black_small"
             android:layout_marginLeft="12dp"
-            android:text="国家体育场 " />
+            android:text="" />
 
     </LinearLayout>
 

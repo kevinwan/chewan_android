@@ -138,7 +138,7 @@ public class OfficialMembersAdapter extends BaseAdapter {
             holder.sex.setBackgroundResource(R.drawable.icon_woman3x);
         }
         String photoAuthStatus = JSONUtil.getString(jo, "photoAuthStatus");
-        holder.headstatus.setVisibility("已认证".equals(photoAuthStatus) ? View.VISIBLE : View.GONE);
+        holder.headstatus.setVisibility("认证通过".equals(photoAuthStatus) ? View.VISIBLE : View.GONE);
         //邀请的状态
         final int inviteStatus = JSONUtil.getInt(jo, "inviteStatus");
         final int beInvitedStatus = JSONUtil.getInt(jo, "beInvitedStatus");
@@ -177,13 +177,13 @@ public class OfficialMembersAdapter extends BaseAdapter {
 
         holder.invite.setVisibility(userId.equals(user.getUserId()) ? View.GONE : View.VISIBLE);
         //受邀 人数 为0 不显示
-        int invitedCount = JSONUtil.getInt(jo, "invitedCount");
-        if (invitedCount == 0) {
+        int beInvitedCount = JSONUtil.getInt(jo, "beInvitedCount");
+        if (beInvitedCount == 0) {
             holder.invitecount.setVisibility(View.INVISIBLE);
         } else {
             holder.invitecount.setVisibility(View.VISIBLE);
             int distance = (int) Math.floor(JSONUtil.getDouble(jo, "distance"));
-            holder.invitecount.setText(CarPlayUtil.numberWithDelimiter(distance) + "!已被" + invitedCount + "人邀请同去");
+            holder.invitecount.setText(CarPlayUtil.numberWithDelimiter(distance) + "!已被" + beInvitedCount + "人邀请同去");
         }
 
         //接受 人数 为0 不显示
@@ -388,8 +388,9 @@ public class OfficialMembersAdapter extends BaseAdapter {
                     default:
                         holder.invitelayout.setVisibility(View.VISIBLE);
                         holder.contactlayout.setVisibility(View.GONE);
-                        holder.invite.setText("邀请中");
-                        holder.invite.setBackgroundResource(R.drawable.btn_grey_fillet);
+                        holder.invite.setText("已拒绝");
+                        holder.invite.setBackgroundResource(R.color.nothing);
+                        holder.invite.setTextColor(mContext.getResources().getColor(R.color.text_black));
                         holder.invite.setEnabled(false);
                         break;
                 }

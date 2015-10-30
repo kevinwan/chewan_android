@@ -13,8 +13,7 @@
         android:id="@+id/iv_sex"
         android:layout_width="14dp"
         android:layout_height="16dp"
-        android:layout_centerVertical="true"
-        android:src="@drawable/icon_man3x"/>
+        android:layout_centerVertical="true"/>
 
     <TextView
         android:id="@+id/tv_age"

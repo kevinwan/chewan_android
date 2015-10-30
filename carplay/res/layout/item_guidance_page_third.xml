@@ -3,12 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/guidance_page3_bg" />
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="290dp"

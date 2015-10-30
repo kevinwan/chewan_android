@@ -3,10 +3,12 @@ package com.gongpingjia.carplay.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
@@ -29,8 +31,9 @@ public class RecommendListAdapter extends RecyclerView.Adapter<RecommendListAdap
     private List<JSONObject> data;
 
     public static class SimpleViewHolder extends RecyclerView.ViewHolder {
-        TextView titleT, locationT, priceT, infoT, priceDescT, cityT;
-        TextView maleLimitT, maleNumT, femaleLimitT, femaleNumT;
+        TextView titleT, locationT, priceT, infoT, priceDescT, cityT,participate_womanT, participate_manT,unparticipateT;
+        LinearLayout limitedlayoutL,unlimitedlayoutL;
+
         ImageView picI, headI;
 
         public SimpleViewHolder(View view) {
@@ -43,10 +46,12 @@ public class RecommendListAdapter extends RecyclerView.Adapter<RecommendListAdap
             picI = (ImageView) view.findViewById(R.id.pic);
             headI = (ImageView) view.findViewById(R.id.head);
 
-            maleLimitT = (TextView) view.findViewById(R.id.maleLimit);
-            maleNumT = (TextView) view.findViewById(R.id.maleNum);
-            femaleLimitT = (TextView) view.findViewById(R.id.femaleLimit);
-            femaleNumT = (TextView) view.findViewById(R.id.femaleNum);
+            limitedlayoutL = (LinearLayout) view.findViewById(R.id.limitedlayout);
+            unlimitedlayoutL = (LinearLayout) view.findViewById(R.id.unlimitedlayout);
+            participate_womanT = (TextView) view.findViewById(R.id.participate_woman);
+            participate_manT = (TextView) view.findViewById(R.id.participate_man);
+            unparticipateT = (TextView) view.findViewById(R.id.unparticipate);
+
             cityT = (TextView) view.findViewById(R.id.city);
         }
     }
@@ -71,20 +76,38 @@ public class RecommendListAdapter extends RecyclerView.Adapter<RecommendListAdap
 
         final JSONObject jo = getItem(position);
         holder.priceT.setText(JSONUtil.getString(jo, "price"));
+        holder.priceDescT.setVisibility(TextUtils.isEmpty(JSONUtil.getString(jo, "priceDesc")) ? View.GONE : View.VISIBLE);
         holder.priceDescT.setText(JSONUtil.getString(jo, "priceDesc"));
+
         holder.infoT.setText(JSONUtil.getString(jo, "title"));
-        holder.maleLimitT.setText(JSONUtil.getString(jo, "maleLimit"));
-        holder.maleNumT.setText(JSONUtil.getString(jo, "maleNum")+"/");
-        holder.femaleLimitT.setText(JSONUtil.getString(jo, "femaleLimit"));
-        holder.femaleNumT.setText(JSONUtil.getString(jo, "femaleNum")+"/");
+
+        //0:无限制 1：限制总人数 2：限制男女人数
+        int limitType = JSONUtil.getInt(jo, "limitType");
+        //男生,女生数量,总量
+        if (limitType == 1) {
+            holder.limitedlayoutL.setVisibility(View.GONE);
+            holder.unlimitedlayoutL.setVisibility(View.VISIBLE);
+            ViewUtil.bindView(holder.unparticipateT, JSONUtil.getInt(jo, "nowJoinNum") + "/" + JSONUtil.getInt(jo, "totalLimit"));
+        } else if (limitType == 2) {
+            holder.limitedlayoutL.setVisibility(View.VISIBLE);
+            holder.unlimitedlayoutL.setVisibility(View.GONE);
+            ViewUtil.bindView(holder.participate_womanT, JSONUtil.getInt(jo, "femaleNum") + "/" + JSONUtil.getInt(jo, "femaleLimit"));
+            ViewUtil.bindView(holder.participate_manT, JSONUtil.getInt(jo, "maleNum") + "/" + JSONUtil.getInt(jo, "maleLimit"));
+        } else {
+            holder.limitedlayoutL.setVisibility(View.GONE);
+            holder.unlimitedlayoutL.setVisibility(View.VISIBLE);
+            ViewUtil.bindView(holder.unparticipateT, JSONUtil.getInt(jo, "nowJoinNum") + "/" + "人数不限");
+        }
+
 
         JSONObject locationJo = JSONUtil.getJSONObject(jo, "destination");
-        holder.locationT.setText(JSONUtil.getString(locationJo, "detail"));
+        String detail = JSONUtil.getString(locationJo, "detail");
+        holder.locationT.setText(TextUtils.isEmpty(detail) ? "地点待定" : detail);
         holder.cityT.setText("[" + JSONUtil.getString(locationJo, "city") + "]");
 
         JSONObject organizerJo = JSONUtil.getJSONObject(jo, "organizer");
         holder.titleT.setText(JSONUtil.getString(organizerJo, "nickname"));
-        ViewUtil.bindNetImage(holder.picI, JSONUtil.getString(organizerJo, "avatar"), "head");
+        ViewUtil.bindNetImage(holder.headI, JSONUtil.getString(organizerJo, "avatar"), "head");
         try {
             JSONArray coversJSa = jo.getJSONArray("covers");
             String picUrl = coversJSa.getString(0);

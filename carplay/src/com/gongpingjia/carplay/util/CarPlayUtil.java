@@ -352,13 +352,17 @@ public class CarPlayUtil {
 
 
     public static String numberWithDelimiter(int num) {
-        StringBuilder accum = new StringBuilder();
-        int len = accum.append(num).length();
-        if (len <= 3) return accum.append("m").toString();   //如果长度小于等于3不做处理
-        while ((len -= 3) > 0) { //从个位开始倒序插入
-            accum.insert(len, ",");
+//        StringBuilder accum = new StringBuilder();
+//        int len = accum.append(num).length();
+//        if (len <= 3) return accum.append("m").toString();   //如果长度小于等于3不做处理
+//        while ((len -= 3) > 0) { //从个位开始倒序插入
+//            accum.insert(len, ",");
+//        }
+//        return accum.append("km").toString();
+        if (num < 1000) {
+            return num + "m";
         }
-        return accum.append("km").toString();
+        int i=num/1000;
+        return i+"km";
     }
-
 }

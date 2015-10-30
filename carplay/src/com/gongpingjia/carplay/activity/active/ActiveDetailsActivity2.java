@@ -2,6 +2,7 @@ package com.gongpingjia.carplay.activity.active;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -120,18 +121,13 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
         user = User.getInstance();
         setTitle("活动详情");
         activeid = getIntent().getStringExtra("activityId");
-        mInflater = LayoutInflater.from(self);
-        mHeadView = mInflater.inflate(R.layout.item_active_details2_headview, null);
-        mFootView = mInflater.inflate(R.layout.item_active_details2_footview, null);
 
 
+        //参与成员信息
         listV = (PullToRefreshListView) findViewById(R.id.listview);
+        mRecyclerView = listV.getRefreshableView();
         listV.setMode(PullToRefreshBase.Mode.MANUAL_REFRESH_ONLY);
         listV.setOnRefreshListener(this);
-//        empty = (LinearLayout) findViewById(R.id.empty);
-//        msg = (TextView) findViewById(R.id.msg);
-
-        mRecyclerView = listV.getRefreshableView();
         membersAdapter = new OfficialMembersAdapter(self);
         mRecyclerView.setAdapter(membersAdapter);
         setOnLoadSuccess(this);
@@ -139,13 +135,11 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
         fromWhat("data.members");
         setUrl(API2.CWBaseurl + "/official/activity/" + activeid + "/members?userId=" + user.getUserId() + "&token=" + user.getToken());
 
-//        listV = (PullToRefreshListView) findViewById(R.id.listview);
-//        mRecyclerView = (ListView) findViewById(R.id.listview);
-//        mListView = (ListView) findViewById(R.id.listview);
+        mInflater = LayoutInflater.from(self);
+        mHeadView = mInflater.inflate(R.layout.item_active_details2_headview, null);
+        mFootView = mInflater.inflate(R.layout.item_active_details2_footview, null);
         mRecyclerView.addHeaderView(mHeadView, null, false);
         mRecyclerView.addFooterView(mFootView, null, false);
-//        membersAdapter = new OfficialMembersAdapter(self);
-//        mListView.setAdapter(membersAdapter);
 
         startchatlayout = (LinearLayout) findViewById(R.id.startchatlayout);
         joinBtn = (Button) findViewById(R.id.join);
@@ -163,9 +157,9 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
         placeT = (TextView) mHeadView.findViewById(R.id.place);
         participate_womanT = (TextView) mHeadView.findViewById(R.id.participate_woman);
         participate_manT = (TextView) mHeadView.findViewById(R.id.participate_man);
+        unparticipateT = (TextView) mHeadView.findViewById(R.id.unparticipate);
         creattimeT = (TextView) mHeadView.findViewById(R.id.creattime);
         introduceT = (TextView) mHeadView.findViewById(R.id.introduce);
-        unparticipateT = (TextView) mHeadView.findViewById(R.id.unparticipate);
         mViewPager = (CarPlayGallery) mHeadView.findViewById(R.id.viewer);
 
 
@@ -246,7 +240,7 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
                     ViewUtil.bindView(nicknameT, JSONUtil.getString(jsname, "nickname"));
                     ViewUtil.bindNetImage(avatarT, JSONUtil.getString(jsname, "avatar"), "head");
                     ViewUtil.bindView(introduceT, JSONUtil.getString(jo, "title"));
-                    ViewUtil.bindView(contentT, JSONUtil.getString(jo, "instruction"));
+                    ViewUtil.bindView(contentT, JSONUtil.getString(jo, "extraDesc"));
                     ViewUtil.bindView(processT, JSONUtil.getString(jo, "description"));
                     ViewUtil.bindView(priceT, JSONUtil.getDouble(jo, "price") + "元/人(现在报名立减" + JSONUtil.getDouble(jo, "subsidyPrice") + "元)");
                     ViewUtil.bindView(explaintxtT, JSONUtil.getString(jo, "instruction"));
@@ -259,7 +253,7 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
                         joinBtn.setVisibility(View.VISIBLE);
                         startchatlayout.setVisibility(View.INVISIBLE);
                     }
-                    membersAdapter.setIsMember(isMember);
+//                    membersAdapter.setIsMember(isMember);
 
                     if (contentT.getLineCount() < 4) {
                         foldR.setVisibility(View.GONE);
@@ -363,7 +357,16 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
                 break;
             //前往购票
             case R.id.buytickets:
-
+                if(!TextUtils.isEmpty(linkTicketUrl)){
+                    Uri uri;
+                    if (linkTicketUrl.contains("http://")){
+                        uri = Uri.parse(linkTicketUrl);
+                    }else {
+                        uri = Uri.parse("http://"+linkTicketUrl);
+                    }
+                    Intent it = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(it);
+                }
                 break;
             //进入群聊
             case R.id.chatbtn:
@@ -494,7 +497,7 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
 
     @Override
     public void load(JSONObject jo) {
-        JSONObject json = JSONUtil.getJSONObject(jo,"data");
+        JSONObject json = JSONUtil.getJSONObject(jo, "data");
         isMember = JSONUtil.getBoolean(json, "isMember");
 //        System.out.println("官方活动详情"+JSONUtil.getBoolean(json, "isMember"));
     }
