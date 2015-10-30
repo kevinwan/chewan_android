@@ -12,9 +12,13 @@ import com.gongpingjia.carplay.view.HeartView;
 import com.gongpingjia.carplay.view.RoundImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import net.duohuo.dhroid.net.JSONUtil;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2015/10/16.
@@ -22,33 +26,34 @@ import org.json.JSONObject;
  */
 public class MySubscriberAdapter2 extends BaseAdapter {
 
-    private JSONArray mDatum;
+//    private JSONArray mDatum;
     private Context mContext;
-
-    public MySubscriberAdapter2(Context context, JSONArray data) {
-        this.mDatum = data;
-        mContext = context;
-    }
-
+    List<JSONObject> mDatum;
+//    public MySubscriberAdapter2(Context context, JSONArray data) {
+//        this.mDatum = data;
+//        mContext = context;
+//    }
+public MySubscriberAdapter2(Context context) {
+    mContext = context;
+}
     private SubscribeListener mSubscribeListener;
 
     public void setSubscribeListener(SubscribeListener listener) {
         mSubscribeListener = listener;
     }
+    public void setData(List<JSONObject> mDatum) {
+        this.mDatum = mDatum;
+        notifyDataSetChanged();
 
+    }
     @Override
     public int getCount() {
-        return mDatum == null ? 0 : mDatum.length();
+        return mDatum == null ? 0 : mDatum.size();
     }
 
     @Override
     public Object getItem(int position) {
-        try {
-            return mDatum.get(position);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return mDatum.get(position);
     }
 
     @Override
@@ -59,8 +64,7 @@ public class MySubscriberAdapter2 extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
-        try {
-            final JSONObject obj = mDatum.getJSONObject(position);
+        final JSONObject obj = (JSONObject) getItem(position);
             if (convertView == null) {
                 convertView = LayoutInflater.from(mContext).inflate(R.layout.item_my_subscriber, parent, false);
                 holder = new ViewHolder();
@@ -73,10 +77,10 @@ public class MySubscriberAdapter2 extends BaseAdapter {
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
-            holder.roundImageView.setTag(obj.getString("userId"));
-            holder.textNickname.setText(obj.getString("nickname"));
-            holder.textDistance.setText(String.valueOf(obj.getInt("distance")) + "m");
-            holder.textAge.setText(String.valueOf(obj.getInt("age")));
+            holder.roundImageView.setTag(JSONUtil.getString(obj, "userId"));
+            holder.textNickname.setText(JSONUtil.getString(obj,"nickname"));
+            holder.textDistance.setText(JSONUtil.getString(obj, "distance") + "m");
+            holder.textAge.setText(JSONUtil.getString(obj, "age"));
             holder.heartView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -89,10 +93,7 @@ public class MySubscriberAdapter2 extends BaseAdapter {
                     }
                 }
             });
-            ImageLoader.getInstance().displayImage(obj.getString("avatar"), holder.roundImageView);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+            ImageLoader.getInstance().displayImage(JSONUtil.getString(obj,"avatar"), holder.roundImageView);
         return convertView;
     }
 

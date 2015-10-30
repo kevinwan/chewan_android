@@ -5,7 +5,9 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.gongpingjia.carplay.ILoadSuccess;
 import com.gongpingjia.carplay.R;
@@ -28,11 +30,18 @@ import net.duohuo.dhroid.net.Response;
 public class BeSubscribedFragment extends CarPlayBaseFragment implements ILoadSuccess {
     private PullToRefreshListView mListView;
     private BeSubscribedAdapter2 beSubscribeAdapter;
+    View view;
+    LinearLayout empty;
+    TextView msg;
 
     @Nullable
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
-        mListView = (PullToRefreshListView) inflater.inflate(R.layout.fragment_follow_each_other, container, false);
+        view = inflater.inflate(R.layout.fragment_follow_each_other, container, false);
+        mListView = (PullToRefreshListView) view.findViewById(R.id.refresh_list_view);
+
+        empty = (LinearLayout) view.findViewById(R.id.empty);
+        msg = (TextView) view.findViewById(R.id.msg);
         setOnLoadSuccess(this);
         mListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
@@ -41,7 +50,7 @@ public class BeSubscribedFragment extends CarPlayBaseFragment implements ILoadSu
             }
         });
         initView();
-        return mListView;
+        return view;
 
     }
 
@@ -81,6 +90,11 @@ public class BeSubscribedFragment extends CarPlayBaseFragment implements ILoadSu
 
     @Override
     public void loadSuccessOnFirst() {
-
+        if (mVaules.size() == 0) {
+            empty.setVisibility(View.VISIBLE);
+            msg.setText("此处暂无活动");
+        } else {
+            empty.setVisibility(View.GONE);
+        }
     }
 }

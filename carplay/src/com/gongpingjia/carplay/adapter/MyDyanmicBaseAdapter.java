@@ -192,7 +192,14 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
             int people = JSONUtil.getInt(jo, "nowJoinNum");
             holders.people_num.setText("参与" + people + "人");
             holders.price.setText(JSONUtil.getString(jo, "price"));
-            holders.priceDesc.setText(JSONUtil.getString(jo, "priceDesc"));
+            String priceDesc = JSONUtil.getString(jo, "priceDesc");
+            if (priceDesc.isEmpty()){
+                holders.priceDesc.setVisibility(View.GONE);
+            }else{
+                holders.priceDesc.setVisibility(View.VISIBLE);
+                holders.priceDesc.setText(JSONUtil.getString(jo, "priceDesc"));
+            }
+
             holders.info.setText(JSONUtil.getString(jo, "title"));
             try {
                 JSONArray coversJSa = jo.getJSONArray("covers");
