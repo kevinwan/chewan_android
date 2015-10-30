@@ -291,11 +291,15 @@
         <activity
             android:name=".activity.main.GuidanceActivity2"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+
+        </activity>
         <activity
             android:name=".activity.active.OfficialParticipantsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+
+        </activity>
         <activity
             android:name=".activity.my.VisitorsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -312,8 +316,14 @@
         <activity
             android:name=".activity.active.NearListActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
 
+        </activity>
+        <activity android:name=".activity.my.RevisePassword"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait">
+
+        </activity>
 
     </application>
 

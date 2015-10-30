@@ -14,6 +14,7 @@
     <RelativeLayout
         android:id="@+id/layout_cache_clear"
         android:layout_width="match_parent"
+        android:background="@drawable/btn_layout_effect"
         android:layout_height="51dp">
 
         <ImageView
@@ -51,6 +52,7 @@
     <RelativeLayout
         android:id="@+id/layout_rate"
         android:layout_width="match_parent"
+        android:background="@drawable/btn_layout_effect"
         android:layout_height="51dp">
 
         <ImageView
@@ -86,6 +88,7 @@
     <RelativeLayout
         android:id="@+id/setting_about_us"
         android:layout_width="match_parent"
+        android:background="@drawable/btn_layout_effect"
         android:layout_height="51dp">
 
         <ImageView
@@ -120,6 +123,7 @@
 
     <RelativeLayout
         android:id="@+id/setting_versions"
+        android:background="@drawable/btn_layout_effect"
         android:layout_width="match_parent"
         android:layout_height="51dp">
 
@@ -156,6 +160,7 @@
     <RelativeLayout
         android:id="@+id/layout_update"
         android:layout_width="match_parent"
+        android:background="@drawable/btn_layout_effect"
         android:layout_height="51dp">
 
         <ImageView
@@ -190,6 +195,7 @@
     <RelativeLayout
         android:id="@+id/layout_modifypwd"
         android:layout_width="match_parent"
+        android:background="@drawable/btn_layout_effect"
         android:layout_height="51dp">
 
         <ImageView
