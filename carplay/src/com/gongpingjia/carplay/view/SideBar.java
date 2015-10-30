@@ -80,7 +80,8 @@ public class SideBar extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        setMeasuredDimension(widthMeasureSpec, 30 * l.length);
+        if (l.length != 27)
+            setMeasuredDimension(widthMeasureSpec, 40 * l.length);
     }
 
     protected void onDraw(Canvas canvas) {
