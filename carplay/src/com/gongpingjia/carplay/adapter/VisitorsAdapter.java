@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.bean.User;
+import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.view.RoundImageView;
 
 import net.duohuo.dhroid.net.JSONUtil;
@@ -88,15 +89,15 @@ public class VisitorsAdapter extends BaseAdapter {
 //        Log.d("msg", "nameT" + holder.nameT);
 //        Log.d("msg", "姓名：" + JSONUtil.getString(jo, "nickname"));
 
-//        CarPlayUtil.bindSexView(JSONUtil.getString(jo, "gender"), holder.sexLayout);
-        String gender = JSONUtil.getString(jo,"gender");
-        if ("男".equals(gender)) {
-            holder.sexLayout.setBackgroundResource(R.drawable.radio_sex_man_normal);
-            holder.iv_sexl.setImageResource(R.drawable.icon_man3x);
-        } else {
-            holder.sexLayout.setBackgroundResource(R.drawable.radion_sex_woman_normal);
-            holder.iv_sexl.setImageResource(R.drawable.icon_woman3x);
-        }
+        CarPlayUtil.bindSexView(JSONUtil.getString(jo, "gender"), holder.sexLayout);
+//        String gender = JSONUtil.getString(jo,"gender");
+//        if ("男".equals(gender)) {
+//            holder.sexLayout.setBackgroundResource(R.drawable.radio_sex_man_normal);
+//            holder.iv_sexl.setImageResource(R.drawable.icon_man3x);
+//        } else {
+//            holder.sexLayout.setBackgroundResource(R.drawable.radion_sex_woman_normal);
+//            holder.iv_sexl.setImageResource(R.drawable.icon_woman3x);
+//        }
         holder.tv_ageT.setText(JSONUtil.getString(jo, "age"));
 
         ViewUtil.bindNetImage(holder.icon, JSONUtil.getString(jo, "avatar"), "head");

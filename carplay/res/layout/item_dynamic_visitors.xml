@@ -54,38 +54,45 @@
                 <TextView
                     android:id="@+id/visitors_name"
                     style="@style/text_black_medium"
+                    android:layout_marginRight="5dp"
                     android:text="哈哈" />
-
                 <RelativeLayout
-                    android:id="@+id/layout_sex_and_age"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp"
-                    android:background="@drawable/radio_sex_man_normal"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="5dp"
-                    android:paddingBottom="1dp"
-                    android:paddingLeft="6dp"
-                    android:paddingRight="6dp"
-                    android:paddingTop="1dp">
-
-                    <ImageView
-                        android:id="@+id/iv_sex"
-                        android:layout_width="14dp"
-                        android:layout_height="16dp"
-                        android:layout_centerVertical="true"
-                        android:background="@drawable/icon_man3x" />
-
-                    <TextView
-                        android:id="@+id/tv_age"
-                        style="@style/text_white_smaller"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="6dp"
-                        android:layout_toRightOf="@id/iv_sex"
-                        android:gravity="center"
-                        android:text="20" />
-
+                    android:layout_gravity="center">
+                    <include layout="@layout/include_sex" />
                 </RelativeLayout>
+
+                <!--<RelativeLayout-->
+                    <!--android:id="@+id/layout_sex_and_age"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginTop="1dp"-->
+                    <!--android:background="@drawable/radio_sex_man_normal"-->
+                    <!--android:layout_gravity="center_vertical"-->
+                    <!--android:layout_marginLeft="5dp"-->
+                    <!--android:paddingBottom="1dp"-->
+                    <!--android:paddingLeft="6dp"-->
+                    <!--android:paddingRight="6dp"-->
+                    <!--android:paddingTop="1dp">-->
+
+                    <!--<ImageView-->
+                        <!--android:id="@+id/iv_sex"-->
+                        <!--android:layout_width="14dp"-->
+                        <!--android:layout_height="16dp"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:background="@drawable/icon_man3x" />-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/tv_age"-->
+                        <!--style="@style/text_white_smaller"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:layout_marginLeft="6dp"-->
+                        <!--android:layout_toRightOf="@id/iv_sex"-->
+                        <!--android:gravity="center"-->
+                        <!--android:text="20" />-->
+
+                <!--</RelativeLayout>-->
             </LinearLayout>
 
             <TextView
