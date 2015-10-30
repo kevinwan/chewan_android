@@ -199,7 +199,7 @@ public class BasicInformationActivity2 extends CarPlayBaseActivity implements Vi
             return;
         }
 
-        if (mBirthday != 0) {
+        if (mBirthday == 0) {
             showToast("请选择生日");
             return;
         }

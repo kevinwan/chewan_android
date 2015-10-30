@@ -25,7 +25,7 @@ public class Constant {
 	// public static final String QQ_APP_KEY = "61BpHk8GQwH6FuCs";
 
 	// umeng
-	public static final String QQ_APP_ID = "100424468";
+	public static final String QQ_APP_ID = "1104728007";
 
-	public static final String QQ_APP_KEY = "c7394704798a158208a74ab60104f0ba";
+	public static final String QQ_APP_KEY = "61BpHk8GQwH6FuCs";
 }
