@@ -170,7 +170,8 @@ public class InterestedPersonAdapter extends BaseAdapter {
         });
         //头像认证状态,车主认证状态
         String photoAuthStatus = JSONUtil.getString(userjo, "photoAuthStatus");
-        holder.headStateI.setImageResource("未认证".equals(photoAuthStatus) ? R.drawable.headaut_no : R.drawable.headaut_dl);
+//        holder.headStateI.setImageResource("未认证".equals(photoAuthStatus) ? R.drawable.headaut_no : R.drawable.headaut_dl);
+        holder.headStateI.setImageResource("认证通过".equals(photoAuthStatus) ? R.drawable.headaut_dl : R.drawable.headaut_no);
         String licenseAuthStatus = JSONUtil.getString(userjo, "licenseAuthStatus");
         if ("未认证".equals(licenseAuthStatus)) {
             holder.carNameT.setVisibility(View.GONE);

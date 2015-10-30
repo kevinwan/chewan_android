@@ -44,6 +44,7 @@ import jp.wasabeef.blurry.Blurry;
 
 
 /**
+ * 活动动态
  * Created by Administrator on 2015/10/20.
  */
 public class DyanmicBaseAdapter extends BaseAdapter {
@@ -244,11 +245,12 @@ public class DyanmicBaseAdapter extends BaseAdapter {
 
             String licenseAuthStatus = JSONUtil.getString(js, "licenseAuthStatus");
             String photoAuthStatus = JSONUtil.getString(js, "photoAuthStatus");
-            if (photoAuthStatus.equals("认证通过")) {
-                holder.certification_achievement.setImageResource(R.drawable.headaut_dl);
-            } else if (photoAuthStatus.equals("未认证")) {
-                holder.certification_achievement.setImageResource(R.drawable.headaut_no);
-            }
+//            if (photoAuthStatus.equals("认证通过")) {
+//                holder.certification_achievement.setImageResource(R.drawable.headaut_dl);
+//            } else if (photoAuthStatus.equals("未认证")) {
+//                holder.certification_achievement.setImageResource(R.drawable.headaut_no);
+//            }
+            holder.certification_achievement.setImageResource("认证通过".equals(photoAuthStatus) ? R.drawable.headaut_dl : R.drawable.headaut_no);
             String gender = JSONUtil.getString(js, "gender");
 
 //        String jied = JSONUtil.getString(json, "street");

@@ -53,8 +53,8 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
 
     User user;
 
-    private RoundImageView headI;
-    private ImageView sexI, photo_bgI, carLogo;
+    private RoundImageView headI,carLogo;
+    private ImageView sexI, photo_bgI;
     private TextView nameT, ageT, attentionT, carName;
     private RelativeLayout sexbgR;
     private LinearLayout myactiveL;
@@ -107,7 +107,7 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
         attentionT = (TextView) findViewById(R.id.attention);
         myactiveL = (LinearLayout) findViewById(R.id.myactive);
         uploadBtn = (Button) findViewById(R.id.upload);
-        carLogo = (ImageView) findViewById(R.id.carlogo);
+        carLogo = (RoundImageView) findViewById(R.id.carlogo);
         carName = (TextView) findViewById(R.id.carname);
         perfectBtn = (Button) findViewById(R.id.perfect);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
@@ -165,9 +165,14 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
                     //相册
                     JSONArray albumJsa = JSONUtil.getJSONArray(jo, "album");
                     try {
-                        if (albumJsa != null) {
+//                        if (albumJsa != null) {
+//                            ViewUtil.bindNetImage(photo_bgI, albumJsa.getJSONObject(0).getString("url"), "default");
+//                            getAlbum(albumJsa);
+//                        } else {
+//                            ViewUtil.bindNetImage(photo_bgI, headimg, "head");
+//                        }
+                        if (user.isHasAlbum()) {
                             ViewUtil.bindNetImage(photo_bgI, albumJsa.getJSONObject(0).getString("url"), "default");
-                            getAlbum(albumJsa);
                         } else {
                             ViewUtil.bindNetImage(photo_bgI, headimg, "head");
                         }
