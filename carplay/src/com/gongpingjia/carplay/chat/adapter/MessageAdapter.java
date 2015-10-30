@@ -742,7 +742,6 @@ public class MessageAdapter extends BaseAdapter {
                         if (result == 1) {
                             ((Activity) context).finish();
                             EventBus.getDefault().post(new TabEB(4, null));
-                            EventBus.getDefault().post("上传成功");
                         } else {
                             Intent it = new Intent(context, HeadAttestationActivity.class);
                             context.startActivity(it);
@@ -759,7 +758,6 @@ public class MessageAdapter extends BaseAdapter {
                         if (result == 1) {
                             ((Activity) context).finish();
                             EventBus.getDefault().post(new TabEB(4, null));
-                            EventBus.getDefault().post("上传成功");
                         } else {
                             Intent it = new Intent(context, AuthenticateOwnersActivity2
                                     .class);

@@ -259,7 +259,6 @@ public class MainActivity2 extends BaseFragmentActivity implements
 //        sendLoaction(20.12, 120.12);
 
 
-
         //图片模糊处理
 //        Blurry.with(context).capture(view).into(imageView);
     }
@@ -705,6 +704,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
                     connectionListener);
         }
 
+
         if (groupChangeListener != null) {
             EMGroupManager.getInstance().removeGroupChangeListener(
                     groupChangeListener);
@@ -763,6 +763,14 @@ public class MainActivity2 extends BaseFragmentActivity implements
             {
 
                 EMMessage message = (EMMessage) event.getData();
+
+
+                final int type = message.getIntAttribute("type", -1);
+
+                if (type != -1) {
+                    EventBus.getDefault().post("上传成功");
+                }
+
 
                 runOnUiThread(new Runnable() {
                     public void run() {
