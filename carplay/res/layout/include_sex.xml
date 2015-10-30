@@ -6,7 +6,7 @@
     android:background="@drawable/radio_sex_man_normal"
     android:paddingBottom="1dp"
     android:paddingLeft="6dp"
-    android:paddingRight="6dp"
+    android:paddingRight="8dp"
     android:paddingTop="1dp">
 
     <ImageView
@@ -14,13 +14,13 @@
         android:layout_width="14dp"
         android:layout_height="16dp"
         android:layout_centerVertical="true"
-        android:background="@drawable/icon_man3x" />
+        android:src="@drawable/icon_man3x"/>
 
     <TextView
         android:id="@+id/tv_age"
         style="@style/text_white_smaller"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="6dp"
+        android:layout_marginLeft="5dp"
         android:layout_toRightOf="@id/iv_sex"
         android:gravity="center"
         android:text="20" />

@@ -75,7 +75,7 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
     String name;
     String activetype;
     public static class SimpleViewHolder extends RecyclerView.ViewHolder {
-        TextView nickname, car_name, age, pay, transfer, location, distance, join_desT;
+        TextView nickname, car_name, age, pay, transfer, location, distance, join_desT,promtpT;
         ImageView headatt, car_logo, sex, active_bg;
         AttentionImageView attention;
         RelativeLayout sexLayout;
@@ -105,6 +105,8 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
             album = (Button) view.findViewById(R.id.album);
             join_desT = (TextView) view.findViewById(R.id.join_des);
             phtotoV = view.findViewById(R.id.phtoto);
+            promtpT = (TextView) view.findViewById(R.id.promtp);
+
         }
     }
 
@@ -143,12 +145,12 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
         JSONArray albumjsa = JSONUtil.getJSONArray(userjo, "album");
         //昵称,活动类型,年龄,性别,头像
          activetype = JSONUtil.getString(jo, "type");
-        holder.nickname.setText(JSONUtil.getString(userjo, "nickname") + "想约人" + activetype);
+        holder.nickname.setText(JSONUtil.getString(userjo, "nickname") + "想找人一起" + activetype);
         holder.age.setText(JSONUtil.getInt(userjo, "age") + "");
         String sex = JSONUtil.getString(userjo, "gender");
          name = JSONUtil.getString(userjo, "nickname");
         boolean applyFlag = JSONUtil.getBoolean(jo, "applyFlag");
-        holder.join_desT.setText(applyFlag ? "邀请中" : "邀 TA");
+        holder.join_desT.setText(applyFlag ? "邀请中" : "邀 Ta");
         if (applyFlag) {
             holder.invite.setResourseAndBg(R.drawable.dynamic_grey
                     , R.drawable.dynamic_grey
@@ -171,8 +173,10 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
         final User user = User.getInstance();
         if (user.isLogin()) {
             holder.phtotoV.setVisibility(user.isHasAlbum() ? View.GONE : View.VISIBLE);
+            holder.promtpT.setVisibility(user.isHasAlbum() ? View.GONE : View.VISIBLE);
         } else {
             holder.phtotoV.setVisibility(View.GONE);
+            holder.promtpT.setVisibility(View.GONE);
         }
         ImageLoader.getInstance().displayImage(JSONUtil.getString(userjo, "avatar"), holder.active_bg, CarPlayValueFix.optionsDefault, new ImageLoadingListener() {
             @Override

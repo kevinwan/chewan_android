@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/active_bg"
         android:orientation="vertical"
-        android:paddingBottom="12dp"
+        android:paddingBottom="15dp"
         android:paddingTop="12dp">
 
         <LinearLayout
@@ -71,6 +71,7 @@
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingLeft="10dp"
+            android:layout_marginBottom="10dp"
             android:paddingRight="10dp">
 
             <include layout="@layout/include_sex" />
@@ -97,12 +98,22 @@
             android:layout_height="0dp"
             android:layout_weight="1">
 
+
+
             <ImageView
                 android:id="@+id/active_bg"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 android:src="@drawable/model_pic" />
+
+            <TextView
+                android:id="@+id/promtp"
+                style="@style/text_white_small"
+                android:layout_marginTop="25dp"
+                android:layout_toLeftOf="@+id/phtoto"
+                android:layout_marginRight="20dp"
+                android:text="上传照片即可查看他的照片哟~"/>
 
 
             <com.gongpingjia.carplay.view.AnimButtonView
@@ -140,7 +151,7 @@
                     android:background="@drawable/white_btn_bg"
                     android:text="上传"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_medium"
+                    android:textSize="@dimen/text_small"
                     android:visibility="visible" />
 
                 <Button
@@ -152,7 +163,7 @@
                     android:background="@drawable/white_btn_bg"
                     android:text="拍照"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_medium"
+                    android:textSize="@dimen/text_small"
                     android:visibility="gone" />
 
                 <Button
@@ -162,7 +173,7 @@
                     android:background="@drawable/white_btn_bg"
                     android:text="相册"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_medium"
+                    android:textSize="@dimen/text_small"
                     android:visibility="gone" />
             </LinearLayout>
         </RelativeLayout>
@@ -192,7 +203,7 @@
 
             <ImageView
                 android:layout_width="20dp"
-                android:layout_height="25dp"
+                android:layout_height="20dp"
                 android:layout_marginRight="3dp"
                 android:layout_toLeftOf="@id/tv_distance"
                 android:src="@drawable/distance_icon" />
