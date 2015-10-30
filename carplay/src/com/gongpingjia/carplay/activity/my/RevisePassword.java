@@ -50,8 +50,8 @@ public class RevisePassword extends CarPlayBaseActivity implements View.OnClickL
         old_layout = (LinearLayout) findViewById(R.id.old_layout);
         new_layout = (LinearLayout) findViewById(R.id.new_layout);
         onceagain_layout = (LinearLayout) findViewById(R.id.onceagain_layout);
-        et_password = (EditText) findViewById(R.id.et_newpassword);
-        et_newpassword = (EditText) findViewById(R.id.et_password);
+        et_password = (EditText) findViewById(R.id.et_password);
+        et_newpassword = (EditText) findViewById(R.id.et_newpassword);
         et_againpassword = (EditText) findViewById(R.id.et_againpassword);
         btn_yes = (Button) findViewById(R.id.btn_yes);
         btn_yes.setOnClickListener(this);
@@ -81,7 +81,7 @@ public class RevisePassword extends CarPlayBaseActivity implements View.OnClickL
                     showToast("新密码两次输入不一致，请重新输入");
                     return;
                 }
-                if (oldPassword.length() < 6 || oldPassword.length() > 20 || newPassword.length() < 6 || newPassword.length() > 20 || againPassword.length() < 6 || againPassword.length() > 20) {
+                if ( newPassword.length() < 6 || newPassword.length() > 20 || againPassword.length() < 6 || againPassword.length() > 20) {
                     showToast("密码长度应在6-20之间，请重新输入");
                     return;
                 }
