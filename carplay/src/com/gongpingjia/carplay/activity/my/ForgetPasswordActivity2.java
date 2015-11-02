@@ -11,6 +11,7 @@ import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.util.CarPlayPerference;
+import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.util.MD5Util;
 
 import net.duohuo.dhroid.ioc.IocContainer;
@@ -70,6 +71,12 @@ public class ForgetPasswordActivity2 extends CarPlayBaseActivity implements View
             showToast("手机号不能为空");
             return;
         }
+
+        if (phone.length() != 11) {
+            showToast("手机号不合法");
+            return;
+        }
+
         if (TextUtils.isEmpty(verification)) {
             showToast("验证码不能为空");
             return;
@@ -77,6 +84,15 @@ public class ForgetPasswordActivity2 extends CarPlayBaseActivity implements View
 
         if (TextUtils.isEmpty(password)) {
             showToast("密码不能为空");
+            return;
+        }
+
+        if (password.length()<6||password.length()>15) {
+            showToast("密码为6-15位字母和数字的组合");
+            return;
+        }
+        if (!CarPlayUtil.isValidPassword(password)) {
+            showToast("密码为6-15位字母和数字的组合");
             return;
         }
 

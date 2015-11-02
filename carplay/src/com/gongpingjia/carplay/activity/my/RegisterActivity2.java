@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.api.API2;
+import com.gongpingjia.carplay.util.CarPlayUtil;
 
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.NetTask;
@@ -102,7 +103,7 @@ public class RegisterActivity2 extends CarPlayBaseActivity implements View.OnCli
             showToast("密码为6-15位字母和数字的组合");
             return;
         }
-        if (!isValidPassword(password)) {
+        if (!CarPlayUtil.isValidPassword(password)) {
             showToast("密码为6-15位字母和数字的组合");
             return;
         }
@@ -160,19 +161,5 @@ public class RegisterActivity2 extends CarPlayBaseActivity implements View.OnCli
         }
     }
 
-    public boolean isValidPassword(String str){
-        boolean isDigit = false;//定义一个boolean值，用来表示是否包含数字
-        boolean isLetter = false;//定义一个boolean值，用来表示是否包含字母
-        for(int i=0 ; i<str.length() ; i++) { //循环遍历字符串
-            if (Character.isDigit(str.charAt(i))) {     //用char包装类中的判断数字的方法判断每一个字符
-                isDigit = true;
-            }
-            if (Character.isLetter(str.charAt(i))) {   //用char包装类中的判断字母的方法判断每一个字符
-                isLetter = true;
-            }
-        }
-        if (isDigit&&isLetter)
-        return true;
-        return false;
-    }
+
 }

@@ -351,6 +351,11 @@ public class CarPlayUtil {
     }
 
 
+    /**
+     * 距离后缀显示
+     * @param num
+     * @return
+     */
     public static String numberWithDelimiter(int num) {
 //        StringBuilder accum = new StringBuilder();
 //        int len = accum.append(num).length();
@@ -365,4 +370,26 @@ public class CarPlayUtil {
         int i=num/1000;
         return i+"km";
     }
+
+    /**
+     * 是否包含字母 和 数字
+     * @param str
+     * @return
+     */
+    public static boolean isValidPassword(String str){
+        boolean isDigit = false;//定义一个boolean值，用来表示是否包含数字
+        boolean isLetter = false;//定义一个boolean值，用来表示是否包含字母
+        for(int i=0 ; i<str.length() ; i++) { //循环遍历字符串
+            if (Character.isDigit(str.charAt(i))) {     //用char包装类中的判断数字的方法判断每一个字符
+                isDigit = true;
+            }
+            if (Character.isLetter(str.charAt(i))) {   //用char包装类中的判断字母的方法判断每一个字符
+                isLetter = true;
+            }
+        }
+        if (isDigit&&isLetter)
+            return true;
+        return false;
+    }
+
 }

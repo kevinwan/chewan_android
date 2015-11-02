@@ -161,8 +161,10 @@ public class MainActivity2 extends BaseFragmentActivity implements
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+        outState.putString("WORKAROUND_FOR_BUG_19917_KEY", "WORKAROUND_FOR_BUG_19917_VALUE");
         // TODO Auto-generated method stub
         super.onSaveInstanceState(outState);
+
     }
 
     @Override
