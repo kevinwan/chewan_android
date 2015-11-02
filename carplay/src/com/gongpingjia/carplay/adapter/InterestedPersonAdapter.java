@@ -200,10 +200,9 @@ public class InterestedPersonAdapter extends BaseAdapter {
             //所在地,距离
             int distance = (int) Math.floor(JSONUtil.getDouble(jo, "distance"));
             holder.activeDistanceT.setText(CarPlayUtil.numberWithDelimiter(distance));
-            if (distancejo == null) {
-                holder.locationT.setVisibility(View.GONE);
+            if (distancejo == null||JSONUtil.getString(distancejo,"province").equals("")||JSONUtil.getString(distancejo,"city").equals("")||JSONUtil.getString(distancejo,"district").equals("")||JSONUtil.getString(distancejo,"street").equals("")||JSONUtil.getString(distancejo,"detail").equals("")) {
+                holder.locationT.setText("地点待定");
             } else {
-                holder.locationT.setVisibility(View.VISIBLE);
                 holder.locationT.setText(JSONUtil.getString(distancejo, "province") + JSONUtil.getString(distancejo, "city") + JSONUtil.getString(distancejo, "district") + JSONUtil.getString(distancejo, "street"));
             }
 

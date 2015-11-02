@@ -241,11 +241,10 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
         holder.distance.setText(CarPlayUtil.numberWithDelimiter(distance));
 
 
-        if (distancejo == null) {
-            holder.location.setVisibility(View.GONE);
+        if (distancejo == null||JSONUtil.getString(distancejo,"province").equals("")||JSONUtil.getString(distancejo,"city").equals("")||JSONUtil.getString(distancejo,"district").equals("")||JSONUtil.getString(distancejo,"street").equals("")||JSONUtil.getString(distancejo,"detail").equals("")) {
+            holder.location.setText("地点待定");
         } else {
-            holder.location.setVisibility(View.VISIBLE);
-            holder.location.setText(JSONUtil.getString(distancejo, "province") + JSONUtil.getString(distancejo, "city") + JSONUtil.getString(distancejo, "district") + JSONUtil.getString(distancejo, "street"));
+            holder.location.setText(JSONUtil.getString(distancejo, "province") + JSONUtil.getString(distancejo, "city") + JSONUtil.getString(distancejo, "district") + JSONUtil.getString(distancejo, "street")+JSONUtil.getString(distancejo,"detail"));
         }
 
         String licenseAuthStatus = JSONUtil.getString(userjo, "licenseAuthStatus");
