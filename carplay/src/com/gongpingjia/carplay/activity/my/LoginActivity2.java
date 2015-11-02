@@ -464,6 +464,12 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
 
             @Override
             public void onError(final int code, final String message) {
+//                runOnUiThread(new Runnable() {
+//                    public void run() {
+//                        DemoHXSDKHelper.getInstance().logout(true, null);
+//                        showToast(message);
+//                    }
+//                });
                 hidenProgressDialog();
             }
         });
