@@ -10,6 +10,7 @@ import java.util.List;
 public class PointRecord {
 
     static PointRecord instance;
+    private int activityDynamicCall;
 
     public static PointRecord getInstance() {
         if (instance == null) {
@@ -107,6 +108,7 @@ public class PointRecord {
     }
 
     public int getActivityDynamicCall() {
+
         return activityDynamicCall;
     }
 
