@@ -64,6 +64,7 @@
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 android:src="@drawable/my_bg" />
+            <include layout="@layout/include_active_button" />
 
             <TextView
                 android:id="@+id/location"

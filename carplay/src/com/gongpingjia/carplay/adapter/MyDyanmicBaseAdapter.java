@@ -126,6 +126,9 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                 holders.location = (TextView) view.findViewById(R.id.location);
                 holders.city = (TextView) view.findViewById(R.id.city);
                 holders.pic = (ImageView) view.findViewById(R.id.pic);
+                holders.invitation = (LinearLayout) view.findViewById(R.id.invitation);
+                holders.invitationI = (AnimButtonView) view.findViewById(R.id.invitationI);
+                holders.invitationT = (TextView) view.findViewById(R.id.invitationT);
                 view.setTag(holders);
             } else {
                 holder = new ViewHolder();
@@ -179,6 +182,7 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
 //        if ("官方活动".equals(type)) {
         if (TYPE_1 == type) {
             String officialactivityId = JSONUtil.getString(jo, "officialActivityId");
+            holders.invitationI.startScaleAnimation();
             if (json == null) {
                 holders.location.setVisibility(View.GONE);
                 holders.city.setVisibility(View.GONE);
@@ -193,6 +197,15 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
             holders.people_num.setText("参与" + people + "人");
             holders.price.setText(JSONUtil.getString(jo, "price"));
             String priceDesc = JSONUtil.getString(jo, "priceDesc");
+            int officstatus = JSONUtil.getInt(jo,"status");
+            if (officstatus == 4){
+                holders.invitation.setVisibility(View.VISIBLE);
+                holders.invitationT.setText("已失效");
+                holders.invitationI.setResourseAndBg(R.drawable.dynamic_grey
+                        , R.drawable.dynamic_grey);
+            }else{
+                holders.invitation.setVisibility(View.GONE);
+            }
             if (priceDesc.isEmpty()){
                 holders.priceDesc.setVisibility(View.GONE);
             }else{
@@ -415,16 +428,16 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
             }else if(status == 4){
                 if (isApplicant == true) {
                     holder.yingyao_layout.setVisibility(View.GONE);
-                    holder.yingyaohou.setVisibility(View.VISIBLE);
-                    holder.invitation.setVisibility(View.GONE);
+                    holder.yingyaohou.setVisibility(View.GONE);
+                    holder.invitation.setVisibility(View.VISIBLE);
                     holder.titleT.setText("你邀请" + name + "去" + typeT);
                     holder.invitationT.setText("已失效");
                     holder.invitationI.setResourseAndBg(R.drawable.dynamic_grey
                             , R.drawable.dynamic_grey);
                 } else {
                     holder.yingyao_layout.setVisibility(View.GONE);
-                    holder.yingyaohou.setVisibility(View.VISIBLE);
-                    holder.invitation.setVisibility(View.GONE);
+                    holder.yingyaohou.setVisibility(View.GONE);
+                    holder.invitation.setVisibility(View.VISIBLE);
                     holder.invitationT.setText("已失效");
                     holder.invitationI.setResourseAndBg(R.drawable.dynamic_grey
                             , R.drawable.dynamic_grey);
@@ -561,5 +574,8 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
     class ViewHolders {
         TextView people_num, info, price, priceDesc, location, city;
         ImageView pic;
-    }
+        LinearLayout invitation;
+        AnimButtonView  invitationI;
+        TextView invitationT;
+     }
 }
