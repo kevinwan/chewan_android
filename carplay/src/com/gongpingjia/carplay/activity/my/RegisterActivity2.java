@@ -136,9 +136,6 @@ public class RegisterActivity2 extends CarPlayBaseActivity implements View.OnCli
                 if (response.isSuccess()) {
                     mCountTimer.start();
                     mBtnGetVerification.setEnabled(false);
-                } else {
-                    showToast("获取验证码失败");
-                    mBtnGetVerification.setEnabled(true);
                 }
             }
         });
