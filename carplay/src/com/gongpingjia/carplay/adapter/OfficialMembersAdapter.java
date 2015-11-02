@@ -127,6 +127,9 @@ public class OfficialMembersAdapter extends BaseAdapter {
         final String userId = JSONUtil.getString(jo, "userId");
 
         ViewUtil.bindNetImage(holder.head, JSONUtil.getString(jo, "avatar"), "head");
+        holder.head.setTag(userId);
+
+
         ViewUtil.bindView(holder.name, JSONUtil.getString(jo, "nickname"));
         ViewUtil.bindView(holder.age, JSONUtil.getInt(jo, "age"));
         String gender = JSONUtil.getString(jo, "gender");

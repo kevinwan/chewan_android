@@ -143,6 +143,7 @@ public class FragmentMsgAdapter extends BaseAdapter {
                 holder.titleT.setText("感兴趣的人");
                 ViewUtil.bindView(holder.right_headI,
                         lastMessage.getStringAttribute("avatar", ""), "head");
+//                holder.right_headI.setTag(lastMessage.getStringAttribute(""));
                 break;
 
             case 1:
@@ -344,7 +345,7 @@ public class FragmentMsgAdapter extends BaseAdapter {
      * 设置群组头像状态
      *
      * @param holder
-     * @param count
+     *
      */
     private void setPicState(ViewHolder holder, String[] urls, int poi) {
         holder.head_one.setVisibility(View.GONE);

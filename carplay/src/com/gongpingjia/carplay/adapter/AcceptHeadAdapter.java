@@ -52,6 +52,7 @@ public class AcceptHeadAdapter extends RecyclerView.Adapter<AcceptHeadAdapter.Si
     public void onBindViewHolder(SimpleViewHolder holder, int position) {
         final JSONObject jo = getItem(position);
         ViewUtil.bindNetImage(holder.head, JSONUtil.getString(jo, "avatar"), "head");
+                holder.head.setTag(JSONUtil.getString(jo,"userId"));
     }
 
 

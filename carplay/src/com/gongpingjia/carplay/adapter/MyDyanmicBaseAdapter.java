@@ -256,15 +256,15 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
             });
 
 
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    JSONObject jo = (JSONObject) getItem(i);
-                    Intent it = new Intent(mContext, ActiveDetailsActivity2.class);
-                    it.putExtra("activityId", JSONUtil.getString(jo, "officialActivityId"));
-                    mContext.startActivity(it);
-                }
-            });
+//            view.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    JSONObject jo = (JSONObject) getItem(i);
+//                    Intent it = new Intent(mContext, ActiveDetailsActivity2.class);
+//                    it.putExtra("activityId", JSONUtil.getString(jo, "officialActivityId"));
+//                    mContext.startActivity(it);
+//                }
+//            });
 
 
         } else {
@@ -413,6 +413,24 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                     holder.titleT.setText(name + "想邀请你" + typeT);
                 }
 
+            }else if(status == 4){
+                if (isApplicant == true) {
+                    holder.yingyao_layout.setVisibility(View.GONE);
+                    holder.yingyaohou.setVisibility(View.VISIBLE);
+                    holder.invitation.setVisibility(View.GONE);
+                    holder.titleT.setText("你邀请" + name + "去" + typeT);
+                    holder.invitationT.setText("已失效");
+                    holder.invitationI.setResourseAndBg(R.drawable.dynamic_grey
+                            , R.drawable.dynamic_grey);
+                } else {
+                    holder.yingyao_layout.setVisibility(View.GONE);
+                    holder.yingyaohou.setVisibility(View.VISIBLE);
+                    holder.invitation.setVisibility(View.GONE);
+                    holder.invitationT.setText("已失效");
+                    holder.invitationI.setResourseAndBg(R.drawable.dynamic_grey
+                            , R.drawable.dynamic_grey);
+                    holder.titleT.setText(name + "想邀请你" + typeT);
+                }
             }
             holder.yingyao.setOnClickListener(new MyOnClick(holder, jo));
             holder.hulue.setOnClickListener(new View.OnClickListener() {

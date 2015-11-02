@@ -38,7 +38,7 @@
                 android:src="@drawable/empty_img" />
 
             <TextView
-                android:id="@+id/msg"
+                android:id="@+id/msgT"
                 style="@style/text_grey_small"
                 android:layout_marginTop="12dp"
                 android:text="暂无数据" />

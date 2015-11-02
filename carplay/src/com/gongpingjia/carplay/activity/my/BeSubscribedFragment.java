@@ -41,7 +41,7 @@ public class BeSubscribedFragment extends CarPlayBaseFragment implements ILoadSu
         mListView = (PullToRefreshListView) view.findViewById(R.id.refresh_list_view);
 
         empty = (LinearLayout) view.findViewById(R.id.empty);
-        msg = (TextView) view.findViewById(R.id.msg);
+        msg = (TextView) view.findViewById(R.id.msgT);
         setOnLoadSuccess(this);
         mListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
@@ -92,7 +92,7 @@ public class BeSubscribedFragment extends CarPlayBaseFragment implements ILoadSu
     public void loadSuccessOnFirst() {
         if (mVaules.size() == 0) {
             empty.setVisibility(View.VISIBLE);
-            msg.setText("此处暂无活动");
+            msg.setText("暂未被Ta人关注");
         } else {
             empty.setVisibility(View.GONE);
         }
