@@ -208,6 +208,14 @@ public class CarPlayBaseFragment extends Fragment {
         }
     }
 
+    public void refreshNoDialog() {
+        if (!isLoading) {
+            hasMore = true;
+            ignore = 0;
+            showNextNoDialog();
+        }
+    }
+
 
     public void showNext() {
         synchronized (isLoading) {
@@ -218,6 +226,18 @@ public class CarPlayBaseFragment extends Fragment {
         net.addParam("ignore", ignore);
         net.addParam("limit", limit);
         net.execuseInDialog("", nettask);
+    }
+
+
+    public void showNextNoDialog() {
+        synchronized (isLoading) {
+            if (isLoading)
+                return;
+            isLoading = true;
+        }
+        net.addParam("ignore", ignore);
+        net.addParam("limit", limit);
+        net.execuse(nettask);
     }
 
 

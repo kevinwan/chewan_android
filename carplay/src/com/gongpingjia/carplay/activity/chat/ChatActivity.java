@@ -119,6 +119,9 @@ import com.gongpingjia.carplay.chat.view.ExpandGridView;
 import com.gongpingjia.carplay.chat.view.PasteEditText;
 import com.gongpingjia.carplay.photo.model.PhotoModel;
 import com.gongpingjia.carplay.util.CarPlayUtil;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.json.JSONException;
@@ -130,7 +133,7 @@ import de.greenrobot.event.EventBus;
  * 聊天页面
  */
 public class ChatActivity extends CarPlayBaseActivity implements
-        OnClickListener, EMEventListener {
+        OnClickListener, EMEventListener, PullToRefreshBase.OnRefreshListener<ListView> {
     private static final String TAG = "ChatActivity";
     private static final int REQUEST_CODE_EMPTY_HISTORY = 2;
     public static final int REQUEST_CODE_CONTEXT_MENU = 3;
@@ -172,7 +175,6 @@ public class ChatActivity extends CarPlayBaseActivity implements
     private View recordingContainer;
     private ImageView micImage;
     private TextView recordingHint;
-    private ListView listView;
     private PasteEditText mEditTextContent;
     private View buttonSetModeKeyboard;
     private View buttonSetModeVoice;
@@ -213,8 +215,11 @@ public class ChatActivity extends CarPlayBaseActivity implements
 
     User user;
 
-    private SwipeRefreshLayout swipeRefreshLayout;
 
+    PullToRefreshListView listV;
+
+
+    ListView listView;
 
     boolean needSend = true;
 
@@ -255,22 +260,12 @@ public class ChatActivity extends CarPlayBaseActivity implements
      * initView
      */
     public void initView() {
-        setRightAction(null, R.drawable.icon_group_member,
-                new OnClickListener() {
-
-                    @Override
-                    public void onClick(View v) {
-//                        Intent it = new Intent(self,
-//                                ActiveInformationActivity.class);
-//                        it.putExtra("activityId", activiyId);
-//                        it.putExtra("groupId", toChatUsername);
-//                        startActivity(it);
-                    }
-                });
         recordingContainer = findViewById(R.id.recording_container);
         micImage = (ImageView) findViewById(R.id.mic_image);
         recordingHint = (TextView) findViewById(R.id.recording_hint);
-        listView = (ListView) findViewById(R.id.list);
+        listV = (PullToRefreshListView) findViewById(R.id.list);
+        listV.setOnRefreshListener(this);
+        listView = listV.getRefreshableView();
         mEditTextContent = (PasteEditText) findViewById(R.id.et_sendmessage);
         buttonSetModeKeyboard = findViewById(R.id.btn_set_mode_keyboard);
         edittext_layout = (LinearLayout) findViewById(R.id.edittext_layout);
@@ -375,66 +370,6 @@ public class ChatActivity extends CarPlayBaseActivity implements
 
             }
         });
-
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.chat_swipe_layout);
-
-        swipeRefreshLayout.setColorSchemeResources(
-                android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
-
-        swipeRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
-
-            @Override
-            public void onRefresh() {
-                new Handler().postDelayed(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        if (listView.getFirstVisiblePosition() == 0
-                                && !isloading && haveMoreData) {
-                            List<EMMessage> messages;
-                            try {
-                                if (chatType == CHATTYPE_SINGLE) {
-                                    messages = conversation.loadMoreMsgFromDB(
-                                            adapter.getItem(0).getMsgId(),
-                                            pagesize);
-                                } else {
-                                    messages = conversation
-                                            .loadMoreGroupMsgFromDB(adapter
-                                                            .getItem(0).getMsgId(),
-                                                    pagesize);
-                                }
-                            } catch (Exception e1) {
-                                swipeRefreshLayout.setRefreshing(false);
-                                return;
-                            }
-
-                            if (messages.size() > 0) {
-                                adapter.notifyDataSetChanged();
-                                adapter.refreshSeekTo(messages.size() - 1);
-                                if (messages.size() != pagesize) {
-                                    haveMoreData = false;
-                                }
-                            } else {
-                                haveMoreData = false;
-                            }
-
-                            isloading = false;
-
-                        } else {
-                            Toast.makeText(
-                                    ChatActivity.this,
-                                    getResources().getString(
-                                            R.string.no_more_messages),
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                        swipeRefreshLayout.setRefreshing(false);
-                    }
-                }, 1000);
-            }
-        });
     }
 
     private void setUpView() {
@@ -451,6 +386,7 @@ public class ChatActivity extends CarPlayBaseActivity implements
         chatType = getIntent().getIntExtra("chatType", CHATTYPE_SINGLE);
 
         if (chatType == CHATTYPE_SINGLE) { // 单聊
+
             toChatUsername = getIntent().getStringExtra("userId");
             Map<String, RobotUser> robotMap = ((DemoHXSDKHelper) HXSDKHelper
                     .getInstance()).getRobotList();
@@ -474,6 +410,13 @@ public class ChatActivity extends CarPlayBaseActivity implements
 //                        (TextView) findViewById(R.id.title));
             }
         } else {
+
+            setRightAction(null, R.drawable.icon_group_member, new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                    Intent it = new  Intent (self,);
+                }
+            });
             // 群聊
             // findViewById(R.id.container_to_group).setVisibility(View.VISIBLE);
             // findViewById(R.id.container_remove).setVisibility(View.GONE);
@@ -1497,6 +1440,55 @@ public class ChatActivity extends CarPlayBaseActivity implements
     private PowerManager.WakeLock wakeLock;
     private ImageView voiceCallBtn;
     private ImageView videoCallBtn;
+
+    @Override
+    public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                if (listView.getFirstVisiblePosition() == 0
+                        && !isloading && haveMoreData) {
+                    List<EMMessage> messages;
+                    try {
+                        if (chatType == CHATTYPE_SINGLE) {
+                            messages = conversation.loadMoreMsgFromDB(
+                                    adapter.getItem(0).getMsgId(),
+                                    pagesize);
+                        } else {
+                            messages = conversation
+                                    .loadMoreGroupMsgFromDB(adapter
+                                                    .getItem(0).getMsgId(),
+                                            pagesize);
+                        }
+                    } catch (Exception e1) {
+                        listV.onRefreshComplete();
+                        return;
+                    }
+
+                    if (messages.size() > 0) {
+                        adapter.notifyDataSetChanged();
+                        adapter.refreshSeekTo(messages.size() - 1);
+                        if (messages.size() != pagesize) {
+                            haveMoreData = false;
+                        }
+                    } else {
+                        haveMoreData = false;
+                    }
+
+                    isloading = false;
+
+                } else {
+                    Toast.makeText(
+                            ChatActivity.this,
+                            getResources().getString(
+                                    R.string.no_more_messages),
+                            Toast.LENGTH_SHORT).show();
+                }
+                listV.onRefreshComplete();
+            }
+        }, 1000);
+    }
 
     /**
      * 按住说话listener

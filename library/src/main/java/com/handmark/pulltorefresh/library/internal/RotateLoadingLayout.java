@@ -60,7 +60,7 @@ public class RotateLoadingLayout extends LoadingLayout {
         mRotateAnimation.setRepeatCount(Animation.INFINITE);
         mRotateAnimation.setRepeatMode(Animation.RESTART);
 
-        mTranslateAnimation = new TranslateAnimation(-170, 0, 0, 0);
+        mTranslateAnimation = new TranslateAnimation(170, 0, 0, 0);
         mTranslateAnimation.setDuration(ROTATION_ANIMATION_DURATION);
         mTranslateAnimation.setRepeatCount(Animation.INFINITE);
         mTranslateAnimation.setRepeatMode(Animation.RESTART);

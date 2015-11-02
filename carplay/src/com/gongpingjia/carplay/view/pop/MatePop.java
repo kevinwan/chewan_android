@@ -213,9 +213,11 @@ public class MatePop implements Runnable, View.OnClickListener {
         MatchingDialog dlg = new MatchingDialog(context, data);
         if (data.size() == 1) {
             data.get(0).setIsChecked(true);
-            if (names[0].equals("遛狗"))
+            if (names[0].equals("遛狗")) {
                 dlg.getWindow().setBackgroundDrawableResource(R.color.circle_lg_bg);
-            else dlg.getWindow().setBackgroundDrawableResource(R.color.circle_gw_bg);
+            } else {
+                dlg.getWindow().setBackgroundDrawableResource(R.color.circle_gw_bg);
+            }
         } else {
             dlg.getWindow().setBackgroundDrawableResource(R.color.circle_yd_bg);
         }
