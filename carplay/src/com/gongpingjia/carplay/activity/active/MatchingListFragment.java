@@ -65,7 +65,8 @@ public class MatchingListFragment extends CarPlayBaseFragment implements PullToR
         } else {
             mParams = params;
             //显示倒计时,隐藏内容
-            countdownView.setVisibility(View.VISIBLE);
+            countdownView.setVisibility(View.VISIBLE)
+            ;
             contentView.setVisibility(View.GONE);
             addParams("type", mParams.get("type"));
             addParams("pay", mParams.get("pay"));

@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2011, 2012 Chris Banes.
- *
+ * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * <p/>
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p/>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,7 +20,6 @@ import android.content.res.TypedArray;
 import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
 import android.view.View;
-import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
@@ -32,102 +31,101 @@ import com.handmark.pulltorefresh.library.R;
 
 public class RotateLoadingLayout extends LoadingLayout {
 
-	static final int ROTATION_ANIMATION_DURATION = 1200;
+    static final int ROTATION_ANIMATION_DURATION = 1200;
 
-	private final Animation mRotateAnimation;
-	private  Animation mTranslateAnimation;
-	private final Matrix mHeaderImageMatrix;
+    private final Animation mRotateAnimation;
+    private Animation mTranslateAnimation;
+    private final Matrix mHeaderImageMatrix;
 
-	private float mRotationPivotX, mRotationPivotY;
+    private float mRotationPivotX, mRotationPivotY;
 
-	private final boolean mRotateDrawableWhilePulling;
+    private final boolean mRotateDrawableWhilePulling;
 
-	public RotateLoadingLayout(Context context, Mode mode, Orientation scrollDirection, TypedArray attrs) {
-		super(context, mode, scrollDirection, attrs);
+    public RotateLoadingLayout(Context context, Mode mode, Orientation scrollDirection, TypedArray attrs) {
+        super(context, mode, scrollDirection, attrs);
 
-		mRotateDrawableWhilePulling = attrs.getBoolean(R.styleable.PullToRefresh_ptrRotateDrawableWhilePulling, true);
+        mRotateDrawableWhilePulling = attrs.getBoolean(R.styleable.PullToRefresh_ptrRotateDrawableWhilePulling, true);
 
-		mHeaderImage.setScaleType(ScaleType.MATRIX);
-		mHeaderImageMatrix = new Matrix();
-		mHeaderImage.setImageMatrix(mHeaderImageMatrix);
-		
-		mHeaderImageLine.setScaleType(ScaleType.MATRIX);
-		mHeaderImageLine.setImageMatrix(mHeaderImageMatrix);
+        mHeaderImage.setScaleType(ScaleType.MATRIX);
+        mHeaderImageMatrix = new Matrix();
+        mHeaderImage.setImageMatrix(mHeaderImageMatrix);
 
-		mRotateAnimation = new RotateAnimation(0, 720, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
-				0.5f);
-		mRotateAnimation.setInterpolator(ANIMATION_INTERPOLATOR);
-		mRotateAnimation.setDuration(ROTATION_ANIMATION_DURATION);
-		mRotateAnimation.setRepeatCount(Animation.INFINITE);
-		mRotateAnimation.setRepeatMode(Animation.RESTART);
-		
-				mTranslateAnimation = new TranslateAnimation(0, 170, 0, 0);
-				mTranslateAnimation.setDuration(ROTATION_ANIMATION_DURATION);
-				mTranslateAnimation.setRepeatCount(Animation.INFINITE);
-				mTranslateAnimation.setRepeatMode(Animation.RESTART);
-				
-		
-		
-	}
+        mHeaderImageLine.setScaleType(ScaleType.MATRIX);
+        mHeaderImageLine.setImageMatrix(mHeaderImageMatrix);
 
-	public void onLoadingDrawableSet(Drawable imageDrawable) {
-		if (null != imageDrawable) {
-			mRotationPivotX = imageDrawable.getIntrinsicWidth() / 2f;
-			mRotationPivotY = imageDrawable.getIntrinsicHeight() / 2f;
-		}
-	}
+        mRotateAnimation = new RotateAnimation(0, 720, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
+                0.5f);
+        mRotateAnimation.setInterpolator(ANIMATION_INTERPOLATOR);
+        mRotateAnimation.setDuration(ROTATION_ANIMATION_DURATION);
+        mRotateAnimation.setRepeatCount(Animation.INFINITE);
+        mRotateAnimation.setRepeatMode(Animation.RESTART);
 
-	protected void onPullImpl(float scaleOfLayout) {
-		float angle;
-		if (mRotateDrawableWhilePulling) {
-			angle = scaleOfLayout * 90f;
-		} else {
-			angle = Math.max(0f, Math.min(180f, scaleOfLayout * 360f - 180f));
-		}
+        mTranslateAnimation = new TranslateAnimation(-170, 0, 0, 0);
+        mTranslateAnimation.setDuration(ROTATION_ANIMATION_DURATION);
+        mTranslateAnimation.setRepeatCount(Animation.INFINITE);
+        mTranslateAnimation.setRepeatMode(Animation.RESTART);
 
-		mHeaderImageMatrix.setRotate(angle, mRotationPivotX, mRotationPivotY);
-		mHeaderImage.setImageMatrix(mHeaderImageMatrix);
-	}
 
-	@Override
-	protected void refreshingImpl() {
-		mHeaderImage.startAnimation(mRotateAnimation);
-		if(mTranslateAnimation!=null){
-			mHeaderImageLine.setVisibility(View.VISIBLE);
-			mHeaderImageLu.setVisibility(View.VISIBLE);
-		    mHeaderImageLine.startAnimation(mTranslateAnimation);
-		}
-	}
+    }
 
-	@Override
-	protected void resetImpl() {
-		mHeaderImage.clearAnimation();
-		mHeaderImageLine.clearAnimation();
-		mHeaderImageLine.setVisibility(View.INVISIBLE);
-		mHeaderImageLu.setVisibility(View.INVISIBLE);
-		resetImageRotation();
-	}
+    public void onLoadingDrawableSet(Drawable imageDrawable) {
+        if (null != imageDrawable) {
+            mRotationPivotX = imageDrawable.getIntrinsicWidth() / 2f;
+            mRotationPivotY = imageDrawable.getIntrinsicHeight() / 2f;
+        }
+    }
 
-	private void resetImageRotation() {
-		if (null != mHeaderImageMatrix) {
-			mHeaderImageMatrix.reset();
-			mHeaderImage.setImageMatrix(mHeaderImageMatrix);
-		}
-	}
+    protected void onPullImpl(float scaleOfLayout) {
+        float angle;
+        if (mRotateDrawableWhilePulling) {
+            angle = scaleOfLayout * 90f;
+        } else {
+            angle = Math.max(0f, Math.min(180f, scaleOfLayout * 360f - 180f));
+        }
 
-	@Override
-	protected void pullToRefreshImpl() {
-		// NO-OP
-	}
+        mHeaderImageMatrix.setRotate(angle, mRotationPivotX, mRotationPivotY);
+        mHeaderImage.setImageMatrix(mHeaderImageMatrix);
+    }
 
-	@Override
-	protected void releaseToRefreshImpl() {
-		// NO-OP
-	}
+    @Override
+    protected void refreshingImpl() {
+        mHeaderImage.startAnimation(mRotateAnimation);
+        if (mTranslateAnimation != null) {
+            mHeaderImageLine.setVisibility(View.VISIBLE);
+            mHeaderImageLu.setVisibility(View.VISIBLE);
+            mHeaderImageLine.startAnimation(mTranslateAnimation);
+        }
+    }
 
-	@Override
-	protected int getDefaultDrawableResId() {
-		return R.drawable.default_ptr_rotate;
-	}
+    @Override
+    protected void resetImpl() {
+        mHeaderImage.clearAnimation();
+        mHeaderImageLine.clearAnimation();
+        mHeaderImageLine.setVisibility(View.INVISIBLE);
+        mHeaderImageLu.setVisibility(View.INVISIBLE);
+        resetImageRotation();
+    }
+
+    private void resetImageRotation() {
+        if (null != mHeaderImageMatrix) {
+            mHeaderImageMatrix.reset();
+            mHeaderImage.setImageMatrix(mHeaderImageMatrix);
+        }
+    }
+
+    @Override
+    protected void pullToRefreshImpl() {
+        // NO-OP
+    }
+
+    @Override
+    protected void releaseToRefreshImpl() {
+        // NO-OP
+    }
+
+    @Override
+    protected int getDefaultDrawableResId() {
+        return R.drawable.default_ptr_rotate;
+    }
 
 }

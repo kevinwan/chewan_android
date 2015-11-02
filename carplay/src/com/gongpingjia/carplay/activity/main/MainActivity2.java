@@ -253,7 +253,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
                 .addGroupChangeListener(groupChangeListener);
 
         RotateAnimation rotateAnimation = new RotateAnimation(0f, 360f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        rotateAnimation.setDuration(1000);
+        rotateAnimation.setDuration(1500);
         rotateAnimation.setRepeatCount(-1);
         rotateAnimation.setInterpolator(new LinearInterpolator());
         appointmentI.setAnimation(rotateAnimation);
