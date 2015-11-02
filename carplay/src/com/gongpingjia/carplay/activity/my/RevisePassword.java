@@ -12,6 +12,7 @@ import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.CarPlayPerference;
+import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.util.MD5Util;
 
 import net.duohuo.dhroid.ioc.IocContainer;
@@ -65,7 +66,7 @@ public class RevisePassword extends CarPlayBaseActivity implements View.OnClickL
         switch (view.getId()) {
             case R.id.btn_yes:
                 if (TextUtils.isEmpty(oldPassword) || TextUtils.isEmpty(newPassword) || TextUtils.isEmpty(againPassword)) {
-                    showToast("请输入就密码");
+                    showToast("请输入旧密码");
                     return;
                 }
                 if (!oldPassword.equals(pwd)) {
@@ -81,10 +82,17 @@ public class RevisePassword extends CarPlayBaseActivity implements View.OnClickL
                     showToast("新密码两次输入不一致，请重新输入");
                     return;
                 }
+
+                if (!CarPlayUtil.isValidPassword(newPassword)&&!CarPlayUtil.isValidPassword(againPassword)) {
+                    showToast("密码为6-15位字母和数字的组合");
+                    return;
+                }
+
                 if ( newPassword.length() < 6 || newPassword.length() > 20 || againPassword.length() < 6 || againPassword.length() > 20) {
                     showToast("密码长度应在6-20之间，请重新输入");
                     return;
                 }
+
                 DhNet net = new DhNet(API2.CWBaseurl+"user/"+user.getUserId()+"/password?token="+user.getToken());
                 net.addParam("old",MD5Util.string2MD5(oldPassword));
                 net.addParam("new",MD5Util.string2MD5(newPassword));
