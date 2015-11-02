@@ -17,7 +17,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="310dp">
+            android:layout_height="330dp">
 
             <ImageView
                 android:id="@+id/photo_bg"
@@ -35,15 +35,15 @@
                 android:layout_width="113dp"
                 android:layout_height="113dp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="28dp" />
+                android:layout_marginTop="33dp" />
 
             <TextView
                 android:id="@+id/attestation"
-                style="@style/text_white_medium"
+                style="@style/text_white_small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="122dp"
+                android:layout_marginTop="125dp"
                 android:background="@drawable/radio_sex_man_focused"
                 android:gravity="center"
                 android:paddingBottom="4dp"
@@ -51,7 +51,7 @@
                 android:paddingRight="15dp"
                 android:paddingTop="4dp"
                 android:text="未认证"
-                android:textStyle="bold" />
+                 />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -72,7 +72,7 @@
                         style="@style/text_white_medium"
                         android:layout_marginRight="12dp"
                         android:text="陈小小"
-                        android:textStyle="bold" />
+                         />
 
                     <include layout="@layout/include_sex" />
                 </LinearLayout>
@@ -82,7 +82,7 @@
                     style="@style/text_white_small"
                     android:layout_marginTop="22dp"
                     android:text="资料完成度60%,越高越吸引人"
-                    android:textStyle="bold" />
+                     />
 
                 <Button
                     android:id="@+id/perfect"
@@ -93,8 +93,9 @@
                     android:layout_gravity="center"
                     android:background="@drawable/btn_red_fillet"
                     android:text="完善"
+                    android:textSize="@dimen/text_medium"
                     android:textColor="@color/white"
-                    android:textStyle="bold" />
+                     />
 
 
             </LinearLayout>

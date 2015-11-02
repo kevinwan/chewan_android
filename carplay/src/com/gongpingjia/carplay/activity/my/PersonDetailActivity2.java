@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.activity.main.PhotoSelectorActivity;
@@ -26,6 +27,9 @@ import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.photo.model.PhotoModel;
 import com.gongpingjia.carplay.view.RoundImageView;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
@@ -44,6 +48,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
+import jp.wasabeef.blurry.Blurry;
 
 
 /**
@@ -162,24 +167,48 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
                     //头像
                     String headimg = JSONUtil.getString(jo, "avatar");
                     ViewUtil.bindNetImage(headI, headimg, "head");
-                    //相册
-                    JSONArray albumJsa = JSONUtil.getJSONArray(jo, "album");
-                    try {
+//                    //相册
+//                    JSONArray albumJsa = JSONUtil.getJSONArray(jo, "album");
+//                    try {
 //                        if (albumJsa != null) {
 //                            ViewUtil.bindNetImage(photo_bgI, albumJsa.getJSONObject(0).getString("url"), "default");
 //                            getAlbum(albumJsa);
 //                        } else {
 //                            ViewUtil.bindNetImage(photo_bgI, headimg, "head");
 //                        }
-                        if (user.isHasAlbum()) {
-                            ViewUtil.bindNetImage(photo_bgI, albumJsa.getJSONObject(0).getString("url"), "default");
-                        } else {
-                            ViewUtil.bindNetImage(photo_bgI, headimg, "head");
+//
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+                    //模糊效果
+                    ImageLoader.getInstance().displayImage(headimg, photo_bgI, CarPlayValueFix.optionsDefault, new ImageLoadingListener() {
+                        @Override
+                        public void onLoadingStarted(String s, View view) {
+
                         }
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                        @Override
+                        public void onLoadingFailed(String s, View view, FailReason failReason) {
+
+                        }
+
+                        @Override
+                        public void onLoadingComplete(String s, View view, final Bitmap bitmap) {
+                            final ImageView img = (ImageView) view;
+                            img.setImageBitmap(bitmap);
+                            Blurry.with(self)
+                                    .radius(10)
+                                    .sampling(4)
+                                    .async()
+                                    .capture(img)
+                                    .into(img);
+                        }
+
+                        @Override
+                        public void onLoadingCancelled(String s, View view) {
+
+                        }
+                    });
                     //是否可查看Ta的照片
                     if (user.isHasAlbum()) {
                         ((RelativeLayout) findViewById(R.id.uploadlayout)).setVisibility(View.GONE);
@@ -190,7 +219,7 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
                         ((LinearLayout) findViewById(R.id.photolayout)).setVisibility(View.GONE);
                     }
                     issubscribe = JSONUtil.getBoolean(jo, "subscribeFlag");
-                    perfectBtn.setBackgroundResource(issubscribe ? R.drawable.radio_sex_man_focused : R.drawable.btn_red_fillet);
+                    perfectBtn.setBackgroundResource(issubscribe ? R.drawable.btn_grey_fillet : R.drawable.btn_red_fillet);
                     //头像认证
                      photoAuthStatus = JSONUtil.getString(jo, "photoAuthStatus");
                     if (photoAuthStatus.equals("认证通过")) {

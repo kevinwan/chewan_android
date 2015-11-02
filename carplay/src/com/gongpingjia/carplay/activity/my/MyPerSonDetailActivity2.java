@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.activity.main.PhotoSelectorActivity;
@@ -28,6 +29,9 @@ import com.gongpingjia.carplay.bean.PhotoState;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.photo.model.PhotoModel;
 import com.gongpingjia.carplay.view.RoundImageView;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
@@ -46,6 +50,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
+import jp.wasabeef.blurry.Blurry;
 
 /**
  * 我的详情
@@ -226,32 +231,61 @@ public class MyPerSonDetailActivity2 extends CarPlayBaseActivity implements View
                     }
                     if (licenseAuthStatus.equals("未认证") && photoAuthStatus.equals("未认证")) {
                         completenessT.setText("资料完成度60%,越高越吸引人");
+                        perfectBtn.setVisibility(View.VISIBLE);
                     } else if (licenseAuthStatus.equals("认证中") && photoAuthStatus.equals("认证中")) {
                         completenessT.setText("资料完成度60%,越高越吸引人");
-                    } else if (licenseAuthStatus.equals("认证通过") || photoAuthStatus.equals("认证通过")) {
-                        completenessT.setText("资料完成度80%,越高越吸引人");
-                    } else if (licenseAuthStatus.equals("认证通过") && photoAuthStatus.equals("认证通过")) {
+                        perfectBtn.setVisibility(View.VISIBLE);
+                    }  else if (licenseAuthStatus.equals("认证通过") && photoAuthStatus.equals("认证通过")) {
                         completenessT.setText("资料完成度100%,越高越吸引人");
+                        perfectBtn.setVisibility(View.GONE);
+                    }else if (licenseAuthStatus.equals("认证通过") || photoAuthStatus.equals("认证通过")) {
+                        completenessT.setText("资料完成度80%,越高越吸引人");
+                        perfectBtn.setVisibility(View.VISIBLE);
                     }
 
                     JSONArray albumJsa = JSONUtil.getJSONArray(jo, "album");
                     getAlbum(albumJsa);
 
-                    try {
-//                        if (albumJsa != null) {
-//                            ViewUtil.bindNetImage(photo_bgI, albumJsa.getJSONObject(0).getString("url"), "default");
-//                        } else {
-//                            ViewUtil.bindNetImage(photo_bgI, headimg, "head");
+//                    try {
+//                        String imgurl="";
+//                        if (user.isHasAlbum()) {
+//                            imgurl = albumJsa.getJSONObject(0).getString("url");
+//                        }else {
+//                            imgurl = headimg;
 //                        }
-                        if (user.isHasAlbum()) {
-                            ViewUtil.bindNetImage(photo_bgI, albumJsa.getJSONObject(0).getString("url"), "default");
-                        } else {
-                            ViewUtil.bindNetImage(photo_bgI, headimg, "head");
+//
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+                    //模糊效果
+                    ImageLoader.getInstance().displayImage(headimg, photo_bgI, CarPlayValueFix.optionsDefault, new ImageLoadingListener() {
+                        @Override
+                        public void onLoadingStarted(String s, View view) {
+
                         }
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                        @Override
+                        public void onLoadingFailed(String s, View view, FailReason failReason) {
+
+                        }
+
+                        @Override
+                        public void onLoadingComplete(String s, View view, final Bitmap bitmap) {
+                            final ImageView img = (ImageView) view;
+                            img.setImageBitmap(bitmap);
+                            Blurry.with(self)
+                                    .radius(10)
+                                    .sampling(4)
+                                    .async()
+                                    .capture(img)
+                                    .into(img);
+                        }
+
+                        @Override
+                        public void onLoadingCancelled(String s, View view) {
+
+                        }
+                    });
 
                 }
             }
@@ -422,7 +456,7 @@ public class MyPerSonDetailActivity2 extends CarPlayBaseActivity implements View
                             album.addAll(0, newAlbm);
                             mAdapter.setData(album);
                             uploadedCount = 0;
-                            ViewUtil.bindNetImage(photo_bgI, (String) album.get(0).get("url"), "head");
+//                            ViewUtil.bindNetImage(photo_bgI, (String) album.get(0).get("url"), "head");
                             DhNet net = new DhNet(API2.CWBaseurl + "user/" + user.getUserId() + "/photoCount?token=" + user.getToken());
                             net.addParam("count", uploadPhotoCount);
                             net.doPost(new NetTask(self) {
