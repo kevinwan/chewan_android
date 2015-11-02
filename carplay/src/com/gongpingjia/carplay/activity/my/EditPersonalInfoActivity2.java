@@ -248,7 +248,7 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
 //    private void uploadHead(String path) {
 //        Bitmap bmp = PhotoUtil.getLocalImage(new File(path));
 //        headI.setImageBitmap(bmp);
-//        DhNet net = new DhNet(API2.CWBaseurl +"/user/"+user.getUserId()+ "avatar?token=" + user.getToken());
+//        DhNet net = new DhNet(API2.CWBaseurl+"/user/"+user.getUserId()+"/avatar?token="+user.getToken());
 //        net.upload(new FileInfo("attach", new File(path)), new NetTask(self) {
 //
 //            @Override
