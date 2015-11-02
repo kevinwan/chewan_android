@@ -117,13 +117,13 @@ public class CarPlayApplication extends Application implements
         ImageLoader.getInstance().init(imageconfig);
 
         UserLocation location = UserLocation.getInstance();
-        location.init(getApplicationContext(), 5 * 1000);
+        location.init(getApplicationContext(), 120 * 1000);
         location.setOnLocationChanged(new UserLocation.OnLocationChanged() {
             @Override
             public void change(double latitude, double longitude) {
 
                 if (User.getInstance().isLogin()) {
-
+                    sendLoaction(latitude, longitude);
                 }
             }
         });
@@ -182,6 +182,8 @@ public class CarPlayApplication extends Application implements
     private void sendLoaction(double latitude, double longitude) {
         User user = User.getInstance();
         DhNet net = new DhNet(API2.sendLocation(user.getUserId(), user.getToken()));
+        net.addParam("latitude", latitude);
+        net.addParam("longitude", longitude);
         net.doPost(new NetTask(getApplicationContext()) {
             @Override
             public void doInUI(Response response, Integer transfer) {
