@@ -33,20 +33,21 @@ import org.json.JSONObject;
  * Created by Administrator on 2015/10/16.
  * 我关注的人
  */
-public class MySubscriberFragment  extends CarPlayBaseFragment implements ILoadSuccess {
+public class MySubscriberFragment extends CarPlayBaseFragment implements ILoadSuccess {
     private PullToRefreshListView mListView;
     private MySubscriberAdapter2 mySubscriberAdapter;
     View view;
     LinearLayout empty;
     TextView msg;
+
     @Nullable
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
-     view = inflater.inflate(R.layout.fragment_follow_each_other, container, false);
+        view = inflater.inflate(R.layout.fragment_follow_each_other, container, false);
         mListView = (PullToRefreshListView) view.findViewById(R.id.refresh_list_view);
 
         empty = (LinearLayout) view.findViewById(R.id.empty);
-        msg = (TextView) view.findViewById(R.id.msg);
+        msg = (TextView) view.findViewById(R.id.msgT);
         setOnLoadSuccess(this);
         mListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
@@ -57,6 +58,7 @@ public class MySubscriberFragment  extends CarPlayBaseFragment implements ILoadS
         initView();
         return view;
     }
+
     private void initView() {
         mySubscriberAdapter = new MySubscriberAdapter2(getActivity());
         mySubscriberAdapter.setSubscribeListener(new SubscribeListener() {
@@ -82,41 +84,6 @@ public class MySubscriberFragment  extends CarPlayBaseFragment implements ILoadS
         refresh();
     }
 
-//    private void refreshList() {
-//        DhNet dhNet = new DhNet(API2.getSubscribe(User.getInstance().getUserId(), User.getInstance().getToken()));
-//        dhNet.doGetInDialog(new NetTask(getActivity()) {
-//            @Override
-//            public void doInUI(Response response, Integer transfer) {
-//                mListView.onRefreshComplete();
-//                if (response.isSuccess()) {
-//                    try {
-//                        JSONObject jsonObject = response.jSONFromData();
-//                        JSONArray jsonArray = jsonObject.getJSONArray("mySubscribe");
-//                        mySubscriberAdapter = new MySubscriberAdapter2(getActivity(), jsonArray);
-//                        mySubscriberAdapter.setSubscribeListener(new SubscribeListener() {
-//                            @Override
-//                            public void onSubscribe(String targetId) {
-//                                DhNet dhNet = new DhNet(API2.getUnfollowPerson(User.getInstance().getUserId(), User.getInstance().getToken()));
-//                                dhNet.addParam("targetUserId", targetId);
-//                                dhNet.doPostInDialog(new NetTask(getActivity()) {
-//                                    @Override
-//                                    public void doInUI(Response response, Integer transfer) {
-//                                        if (response.isSuccess()) {
-//                                            //取消关注成功
-//                                            refreshList();
-//                                        }
-//                                    }
-//                                });
-//                            }
-//                        });
-//                        mListView.setAdapter(mySubscriberAdapter);
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-//        });
-//    }
 
     @Override
     public void loadSuccess() {
@@ -128,7 +95,7 @@ public class MySubscriberFragment  extends CarPlayBaseFragment implements ILoadS
     public void loadSuccessOnFirst() {
         if (mVaules.size() == 0) {
             empty.setVisibility(View.VISIBLE);
-            msg.setText("此处暂无活动");
+            msg.setText("暂未关注Ta人");
         } else {
             empty.setVisibility(View.GONE);
         }

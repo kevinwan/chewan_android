@@ -14,7 +14,7 @@
         <ImageView
             android:id="@+id/iv_background"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="230dp"
             android:background="@drawable/bg3x" />
 
 
@@ -47,7 +47,7 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginTop="10dp"
         android:background="@color/white"
         android:orientation="horizontal">
@@ -67,7 +67,6 @@
             android:background="@color/nothing"
             android:gravity="center_vertical|right"
             android:hint="请输入昵称"
-
             android:paddingRight="8dp"
             android:singleLine="true"
             android:textColorHint="@color/text_grey">
@@ -112,6 +111,8 @@
                 android:gravity="center"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
                 android:text="男"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_medium" />
@@ -126,10 +127,10 @@
                 android:drawableLeft="@drawable/icon_woman3x"
                 android:drawablePadding="8dp"
                 android:gravity="center"
-                android:paddingBottom="2dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:paddingTop="2dp"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
                 android:text="女"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_medium" />

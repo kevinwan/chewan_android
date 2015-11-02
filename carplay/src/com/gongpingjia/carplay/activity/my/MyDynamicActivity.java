@@ -51,7 +51,7 @@ public class MyDynamicActivity extends CarPlayListActivity implements PullToRefr
         setOnLoadSuccess(this);
         fromWhat("data");
 
-        setUrl(API2.CWBaseurl + "/user/" + user.getUserId() + "/appointment/list?token=" + user.getToken() + "&status=" + 1 + "&status=" + 2);
+        setUrl(API2.CWBaseurl + "/user/" + user.getUserId() + "/appointment/list?token=" + user.getToken() + "&status=" + 1 + "&status=" + 2+ "&status=" + 4);
 //        setUrl(API2.CWBaseurl + "user/5609eb2c0cf224e7d878f693/appointment/list?token=67666666-f2ff-456d-a9cc-e83761749a6a&status=邀请中&status=应邀");
 
         showNext();

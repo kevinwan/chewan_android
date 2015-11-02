@@ -126,6 +126,9 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                 holders.location = (TextView) view.findViewById(R.id.location);
                 holders.city = (TextView) view.findViewById(R.id.city);
                 holders.pic = (ImageView) view.findViewById(R.id.pic);
+                holders.invitation = (LinearLayout) view.findViewById(R.id.invitation);
+                holders.invitationI = (AnimButtonView) view.findViewById(R.id.invitationI);
+                holders.invitationT = (TextView) view.findViewById(R.id.invitationT);
                 view.setTag(holders);
             } else {
                 holder = new ViewHolder();
@@ -179,6 +182,7 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
 //        if ("官方活动".equals(type)) {
         if (TYPE_1 == type) {
             String officialactivityId = JSONUtil.getString(jo, "officialActivityId");
+            holders.invitationI.startScaleAnimation();
             if (json == null) {
                 holders.location.setVisibility(View.GONE);
                 holders.city.setVisibility(View.GONE);
@@ -193,6 +197,15 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
             holders.people_num.setText("参与" + people + "人");
             holders.price.setText(JSONUtil.getString(jo, "price"));
             String priceDesc = JSONUtil.getString(jo, "priceDesc");
+            int officstatus = JSONUtil.getInt(jo,"status");
+            if (officstatus == 4){
+                holders.invitation.setVisibility(View.VISIBLE);
+                holders.invitationT.setText("已失效");
+                holders.invitationI.setResourseAndBg(R.drawable.dynamic_grey
+                        , R.drawable.dynamic_grey);
+            }else{
+                holders.invitation.setVisibility(View.GONE);
+            }
             if (priceDesc.isEmpty()){
                 holders.priceDesc.setVisibility(View.GONE);
             }else{
@@ -256,15 +269,15 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
             });
 
 
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    JSONObject jo = (JSONObject) getItem(i);
-                    Intent it = new Intent(mContext, ActiveDetailsActivity2.class);
-                    it.putExtra("activityId", JSONUtil.getString(jo, "officialActivityId"));
-                    mContext.startActivity(it);
-                }
-            });
+//            view.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    JSONObject jo = (JSONObject) getItem(i);
+//                    Intent it = new Intent(mContext, ActiveDetailsActivity2.class);
+//                    it.putExtra("activityId", JSONUtil.getString(jo, "officialActivityId"));
+//                    mContext.startActivity(it);
+//                }
+//            });
 
 
         } else {
@@ -298,11 +311,10 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
             String gender = JSONUtil.getString(js, "gender");
 
 //        String jied = JSONUtil.getString(json, "street");
-            if (json == null) {
-                holder.activity_place.setVisibility(View.GONE);
+            if (json == null||JSONUtil.getString(json,"province").equals("")||JSONUtil.getString(json,"city").equals("")||JSONUtil.getString(json,"district").equals("")||JSONUtil.getString(json,"street").equals("")||JSONUtil.getString(json,"detail").equals("")) {
+                holder.activity_place.setText("地点待定");
             } else {
-                holder.activity_place.setVisibility(View.VISIBLE);
-                holder.activity_place.setText(JSONUtil.getString(json, "province") + JSONUtil.getString(json, "city") + JSONUtil.getString(json, "district") + JSONUtil.getString(json, "street"));
+                holder.activity_place.setText(JSONUtil.getString(json, "province") + JSONUtil.getString(json, "city") + JSONUtil.getString(json, "district") + JSONUtil.getString(json, "street")+JSONUtil.getString(json,"detail"));
             }
             String message = JSONUtil.getString(jo, "message");
             if (!message.isEmpty()) {
@@ -413,6 +425,24 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                     holder.titleT.setText(name + "想邀请你" + typeT);
                 }
 
+            }else if(status == 4){
+                if (isApplicant == true) {
+                    holder.yingyao_layout.setVisibility(View.GONE);
+                    holder.yingyaohou.setVisibility(View.GONE);
+                    holder.invitation.setVisibility(View.VISIBLE);
+                    holder.titleT.setText("你邀请" + name + "去" + typeT);
+                    holder.invitationT.setText("已失效");
+                    holder.invitationI.setResourseAndBg(R.drawable.dynamic_grey
+                            , R.drawable.dynamic_grey);
+                } else {
+                    holder.yingyao_layout.setVisibility(View.GONE);
+                    holder.yingyaohou.setVisibility(View.GONE);
+                    holder.invitation.setVisibility(View.VISIBLE);
+                    holder.invitationT.setText("已失效");
+                    holder.invitationI.setResourseAndBg(R.drawable.dynamic_grey
+                            , R.drawable.dynamic_grey);
+                    holder.titleT.setText(name + "想邀请你" + typeT);
+                }
             }
             holder.yingyao.setOnClickListener(new MyOnClick(holder, jo));
             holder.hulue.setOnClickListener(new View.OnClickListener() {
@@ -544,5 +574,8 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
     class ViewHolders {
         TextView people_num, info, price, priceDesc, location, city;
         ImageView pic;
-    }
+        LinearLayout invitation;
+        AnimButtonView  invitationI;
+        TextView invitationT;
+     }
 }

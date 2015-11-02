@@ -6,6 +6,11 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
+import android.view.animation.TranslateAnimation;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -58,6 +63,13 @@ public class MatchingListFragment extends CarPlayBaseFragment implements PullToR
 
     private Map<String, Object> mParams;
 
+    TimeCount timeCount;
+    RotateAnimation mRotateAnimation;
+
+    TranslateAnimation mTranslateAnimation;
+
+    ImageView iv_lunI, lineI;
+
     public void setParams(Map<String, Object> params) {
 
         if (mParams == null) {
@@ -65,15 +77,16 @@ public class MatchingListFragment extends CarPlayBaseFragment implements PullToR
         } else {
             mParams = params;
             //显示倒计时,隐藏内容
-            countdownView.setVisibility(View.VISIBLE)
-            ;
+            countdownView.setVisibility(View.VISIBLE);
             contentView.setVisibility(View.GONE);
             addParams("type", mParams.get("type"));
             addParams("pay", mParams.get("pay"));
             addParams("majorType", mParams.get("majorType"));
             addParams("transfer", mParams.get("transfer"));
             //倒计时60s,等待
-            new TimeCount(10 * 1000, 1000).start();
+            startAnim();
+            timeCount = new TimeCount(10 * 1000, 1000);
+            timeCount.start();
             refresh();
         }
     }
@@ -99,10 +112,12 @@ public class MatchingListFragment extends CarPlayBaseFragment implements PullToR
 
         contentView = mainV.findViewById(R.id.layout_content);
         countdownView = mainV.findViewById(R.id.layout_countdown);
-
+        iv_lunI = (ImageView) mainV.findViewById(R.id.iv_lun);
+        lineI = (ImageView) mainV.findViewById(R.id.line);
         textCountdownTime = (TextView) mainV.findViewById(R.id.tv_countdown_time);
         textAmount = (TextView) mainV.findViewById(R.id.tv_matching_amount);
-
+        countdownView.setVisibility(View.VISIBLE);
+        contentView.setVisibility(View.GONE);
         user = User.getInstance();
         pre = IocContainer.getShare().get(FilterPreference2.class);
         pre.load();
@@ -139,12 +154,64 @@ public class MatchingListFragment extends CarPlayBaseFragment implements PullToR
         addParams("token", user.getToken());
         addParams("userId", user.getUserId());
         showNext();
+        initAnim();
+        startAnim();
+        timeCount = new TimeCount(10 * 1000, 1000);
+        timeCount.start();
     }
 
     @Override
     public void loadSuccess() {
         adapter.setData(mVaules);
         listV.onRefreshComplete();
+    }
+
+    private void initAnim() {
+
+
+        mRotateAnimation = new RotateAnimation(0, 720, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
+                0.5f);
+        mRotateAnimation.setInterpolator(new LinearInterpolator());
+        mRotateAnimation.setDuration(1200);
+        mRotateAnimation.setRepeatCount(Animation.INFINITE);
+        mRotateAnimation.setRepeatMode(Animation.RESTART);
+        mTranslateAnimation = new TranslateAnimation(170, 0, 0, 0);
+        mTranslateAnimation.setInterpolator(new LinearInterpolator());
+        mTranslateAnimation.setDuration(1000);
+        mTranslateAnimation.setRepeatCount(Animation.INFINITE);
+        mTranslateAnimation.setRepeatMode(Animation.RESTART);
+    }
+
+
+    private void startAnim() {
+
+        iv_lunI.startAnimation(mRotateAnimation);
+        lineI.startAnimation(mTranslateAnimation);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (timeCount != null) {
+            timeCount.cancel();
+        }
+
+//        if (mRotateAnimation != null) {
+//            mRotateAnimation.cancel();
+//        }
+//
+//        if (mTranslateAnimation != null) {
+//            mTranslateAnimation.cancel();
+//        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (timeCount != null) {
+            timeCount.cancel();
+        }
+
     }
 
     @Override

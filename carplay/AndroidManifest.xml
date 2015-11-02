@@ -150,6 +150,7 @@
         <activity
             android:name=".activity.main.MainActivity2"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.my.AboutUsActivity"
@@ -319,7 +320,8 @@
             android:screenOrientation="portrait">
 
         </activity>
-        <activity android:name=".activity.my.RevisePassword"
+        <activity
+            android:name=".activity.my.RevisePassword"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait">
 

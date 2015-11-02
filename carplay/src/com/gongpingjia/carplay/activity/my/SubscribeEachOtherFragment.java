@@ -52,7 +52,7 @@ public class SubscribeEachOtherFragment extends CarPlayBaseFragment implements I
         mListView = (PullToRefreshListView) view.findViewById(R.id.refresh_list_view);
 
         empty = (LinearLayout) view.findViewById(R.id.empty);
-        msg = (TextView) view.findViewById(R.id.msg);
+        msg = (TextView) view.findViewById(R.id.msgT);
         setOnLoadSuccess(this);
         mListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
@@ -135,7 +135,7 @@ public class SubscribeEachOtherFragment extends CarPlayBaseFragment implements I
     public void loadSuccessOnFirst() {
         if (mVaules.size() == 0) {
             empty.setVisibility(View.VISIBLE);
-            msg.setText("此处暂无活动");
+            msg.setText("您为和Ta人相互关注");
         } else {
             empty.setVisibility(View.GONE);
         }

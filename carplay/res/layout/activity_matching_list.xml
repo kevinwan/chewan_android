@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     android:background="@color/new_bg_grey"
     android:orientation="vertical">
 
@@ -18,12 +19,37 @@
             android:layout_centerInParent="true"
             android:background="@drawable/lun" />
 
+
+        <RelativeLayout
+            android:id="@+id/lu_layout"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_lun"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp">
+
+            <ImageView
+                android:id="@+id/lu"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/lu" />
+
+            <ImageView
+                android:id="@+id/line"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:src="@drawable/line" />
+
+        </RelativeLayout>
+
+
         <TextView
             android:id="@+id/tv_countdown_time"
             style="@style/text_grey_new_small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/iv_lun"
+            android:layout_below="@id/lu_layout"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
             android:text="10s" />

@@ -122,7 +122,7 @@ public class HisDynamicActivity extends CarPlayListActivity implements PullToRef
         distance = JSONUtil.getDouble(json, "distance");
 
 //        System.out.println("Ta的活动背景++++++" + cover);
-//        System.out.println("Ta的活动距离++++++" + distance);
+        System.out.println("Ta的活动距离++++++" + distance);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
