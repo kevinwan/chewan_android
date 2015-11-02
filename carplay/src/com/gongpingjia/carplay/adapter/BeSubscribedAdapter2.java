@@ -5,9 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.view.HeartView;
 import com.gongpingjia.carplay.view.RoundImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -80,14 +83,26 @@ public class BeSubscribedAdapter2 extends BaseAdapter {
             holder.roundImageView = (RoundImageView) convertView.findViewById(R.id.iv_avatar);
             holder.textNickname = (TextView) convertView.findViewById(R.id.tv_nickname);
             holder.textAge = (TextView) convertView.findViewById(R.id.tv_age);
+            holder.sexbgR = (RelativeLayout) convertView.findViewById(R.id.layout_sex_and_age);
+            holder.sexI = (ImageView) convertView.findViewById(R.id.iv_sex);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
         holder.roundImageView.setTag(JSONUtil.getString(obj, "userId"));
         holder.textNickname.setText(JSONUtil.getString(obj, "nickname"));
-        holder.textDistance.setText(JSONUtil.getString(obj, "distance") + "m");
+//        holder.textDistance.setText(JSONUtil.getString(obj, "distance") + "m");
+        int distance = (int) Math.floor(JSONUtil.getDouble(obj, "distance"));
+        holder.textDistance.setText(CarPlayUtil.numberWithDelimiter(distance));
         holder.textAge.setText(JSONUtil.getString(obj, "age"));
+        String sex = JSONUtil.getString(obj, "gender");
+        if (("男").equals(sex)) {
+            holder.sexbgR.setBackgroundResource(R.drawable.radio_sex_man_normal);
+            holder.sexI.setBackgroundResource(R.drawable.icon_man3x);
+        } else {
+            holder.sexbgR.setBackgroundResource(R.drawable.radion_sex_woman_normal);
+            holder.sexI.setBackgroundResource(R.drawable.icon_woman3x);
+        }
         holder.heartView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,6 +128,8 @@ public class BeSubscribedAdapter2 extends BaseAdapter {
         TextView textDistance;
         HeartView heartView;
         TextView textAge;
+        private RelativeLayout sexbgR;
+        ImageView sexI;
     }
 
     private void attention() {
