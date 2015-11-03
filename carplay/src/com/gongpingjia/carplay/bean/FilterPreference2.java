@@ -15,6 +15,15 @@ public class FilterPreference2 extends Perference {
     //是否包接送
     private boolean transfer=false;
 
+    //记录上一次选择的位置id
+    //活动类型id
+    private int type_id=-1;
+    //付费类型id
+    private int pay_id=-1;
+    //性别类型id
+    private int gender_id=-1;
+
+
     public String getType() {
         return type;
     }
@@ -45,5 +54,29 @@ public class FilterPreference2 extends Perference {
 
     public void setTransfer(boolean transfer) {
         this.transfer = transfer;
+    }
+
+    public int getType_id() {
+        return type_id;
+    }
+
+    public void setType_id(int type_id) {
+        this.type_id = type_id;
+    }
+
+    public int getPay_id() {
+        return pay_id;
+    }
+
+    public void setPay_id(int pay_id) {
+        this.pay_id = pay_id;
+    }
+
+    public int getGender_id() {
+        return gender_id;
+    }
+
+    public void setGender_id(int gender_id) {
+        this.gender_id = gender_id;
     }
 }

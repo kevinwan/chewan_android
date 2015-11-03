@@ -338,6 +338,10 @@ public class PhotoSelectorActivity extends Activity implements onItemClickListen
             bundle.putInt("position", position);
         bundle.putString("album", tvAlbum.getText().toString());
         CommonUtils.launchActivity(this, PhotoPreviewActivity.class, bundle);
+
+//        PhotoModel model = (PhotoModel) photoAdapter.getItem(position);
+//        model.setChecked(!model.isChecked());
+//        photoAdapter.notifyDataSetChanged();
     }
 
     @Override

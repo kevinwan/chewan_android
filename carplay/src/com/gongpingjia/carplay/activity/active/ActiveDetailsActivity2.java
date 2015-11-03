@@ -319,15 +319,6 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
     }
 
 
-//    private SpannableStringBuilder setTextColor(String newcontent){
-//        /** 文字变色 */
-//                    SpannableStringBuilder style = new SpannableStringBuilder(newcontent);
-//        style.setSpan(new ForegroundColorSpan(self.getResources()
-//                        .getColor(R.color.text_orange)), day_start,
-//                day_start + day.length(),
-//                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-//    }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

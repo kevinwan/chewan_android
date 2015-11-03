@@ -240,7 +240,6 @@
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
                         android:layout_weight="1"
-                        android:checked="true"
                         android:background="@drawable/nearby_radio_btn"
                         android:button="@null"
                         android:gravity="center"
