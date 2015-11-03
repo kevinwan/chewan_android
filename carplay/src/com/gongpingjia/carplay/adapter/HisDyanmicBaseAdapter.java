@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -45,20 +46,22 @@ import jp.wasabeef.blurry.Blurry;
  */
 public class HisDyanmicBaseAdapter extends BaseAdapter {
     private final Context mContext;
-    String activityId,pay,type;
+    String activityId, pay, type;
     private List<JSONObject> data;
-        User user = User.getInstance();
-    JSONObject destPoint,destination;
+    User user = User.getInstance();
+    JSONObject destPoint, destination;
     Bundle bundle;
     String cover;
     Double distance;
     Boolean transfer;
-    public HisDyanmicBaseAdapter(Context context,Bundle bundle, String cover, Double distance) {
+
+    public HisDyanmicBaseAdapter(Context context, Bundle bundle, String cover, Double distance) {
         mContext = context;
         this.bundle = bundle;
         this.cover = cover;
         this.distance = distance;
     }
+
     public void setData(List<JSONObject> data) {
         this.data = data;
         notifyDataSetChanged();
@@ -120,6 +123,10 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
             holder.activity_distance = (TextView) view.findViewById(R.id.active_distance);
             holder.invitationT = (TextView) view.findViewById(R.id.invitationT);
 
+            holder.layoutV = (RelativeLayout) view.findViewById(R.id.layout);
+            FrameLayout.LayoutParams pams = (FrameLayout.LayoutParams) holder.layoutV.getLayoutParams();
+            pams.height = API2.ImageHeight;
+            holder.layoutV.setLayoutParams(pams);
             view.setTag(holder);
 
 
@@ -131,17 +138,17 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
         holder.dyanmic_two.startScaleAnimation();
 
 
-        destPoint = JSONUtil.getJSONObject(jo,"destPoint");
-         destination = JSONUtil.getJSONObject(jo, "destination");
-         pay = JSONUtil.getString(jo, "pay");
+        destPoint = JSONUtil.getJSONObject(jo, "destPoint");
+        destination = JSONUtil.getJSONObject(jo, "destination");
+        pay = JSONUtil.getString(jo, "pay");
         activityId = JSONUtil.getString(jo, "activityId");
-         type = JSONUtil.getString(jo, "type");
+        type = JSONUtil.getString(jo, "type");
         transfer = JSONUtil.getBoolean(jo, "transfer");
         int status = JSONUtil.getInt(jo, "status");
         holder.titleT.setText(bundle.getString("name") + "想约人" + type);
         holder.pay_type.setText(pay);
 //        ViewUtil.bindNetImage(holder.activity_beijing, cover, "default");
-        System.out.println("adapter;;;;;;;;;;;;"+cover);
+        System.out.println("adapter;;;;;;;;;;;;" + cover);
         ImageLoader.getInstance().displayImage(cover, holder.activity_beijing, CarPlayValueFix.optionsDefault, new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String s, View view) {
@@ -157,7 +164,7 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
             public void onLoadingComplete(String s, View view, final Bitmap bitmap) {
                 if (bitmap != null) {
                     final ImageView img = (ImageView) view;
-                    if (!user.isHasAlbum() && !user.getUserId().equals(bundle.getString("userId"))){
+                    if (!user.isHasAlbum() && !user.getUserId().equals(bundle.getString("userId"))) {
                         img.setImageBitmap(bitmap);
                         Blurry.with(mContext)
                                 .radius(10)
@@ -231,13 +238,13 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
             holder.dynamic_carname.setVisibility(View.GONE);
         }
         int distances = (int) Math.floor(distance);
-        System.out.println("传值+++++++"+distance+"/////转换："+distances);
+        System.out.println("传值+++++++" + distance + "/////转换：" + distances);
         holder.activity_distance.setText(CarPlayUtil.numberWithDelimiter(distances));
         JSONObject json = JSONUtil.getJSONObject(jo, "destination");
-        if (json == null||JSONUtil.getString(json,"province").equals("")||JSONUtil.getString(json,"city").equals("")||JSONUtil.getString(json,"district").equals("")||JSONUtil.getString(json,"street").equals("")||JSONUtil.getString(json,"detail").equals("")) {
+        if (json == null || JSONUtil.getString(json, "province").equals("") || JSONUtil.getString(json, "city").equals("") || JSONUtil.getString(json, "district").equals("") || JSONUtil.getString(json, "street").equals("") || JSONUtil.getString(json, "detail").equals("")) {
             holder.activity_place.setText("地点待定");
         } else {
-            holder.activity_place.setText(JSONUtil.getString(json, "province") + JSONUtil.getString(json, "city") + JSONUtil.getString(json, "district") + JSONUtil.getString(json, "street")+JSONUtil.getString(json,"detail"));
+            holder.activity_place.setText(JSONUtil.getString(json, "province") + JSONUtil.getString(json, "city") + JSONUtil.getString(json, "district") + JSONUtil.getString(json, "street") + JSONUtil.getString(json, "detail"));
         }
         holder.invitationI.setOnClickListener(new MyOnClick(holder, i));
         holder.dyanmic_one.setOnClickListener(new View.OnClickListener() {
@@ -278,10 +285,10 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.invitationI:
-                    if (bundle.getString("idel").equals("false")){
+                    if (bundle.getString("idel").equals("false")) {
 //                        System.out.println("没空----------" +bundle.getBoolean("idle"));
-                        Toast.makeText(mContext,"抱歉，"+bundle.getString("name") + "暂时没空接受你的邀请", Toast.LENGTH_LONG).show();
-                    }else{
+                        Toast.makeText(mContext, "抱歉，" + bundle.getString("name") + "暂时没空接受你的邀请", Toast.LENGTH_LONG).show();
+                    } else {
                         JSONObject jo = (JSONObject) getItem(i);
                         join(activityId, holder, jo);
 //                        System.out.println("有空----------" + bundle.getBoolean("idle"));
@@ -296,11 +303,11 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
         User user = User.getInstance();
         String url = API2.CWBaseurl + "activity/" + activeId + "/join?userId=" + user.getUserId() + "&token=" + user.getToken();
         DhNet net = new DhNet(url);
-        net.addParam("type",type);
-        net.addParam("pay",pay);
-        net.addParam("transfer",transfer);
-        net.addParam("destPoint",destPoint);
-        net.addParam("destination",destination);
+        net.addParam("type", type);
+        net.addParam("pay", pay);
+        net.addParam("transfer", transfer);
+        net.addParam("destPoint", destPoint);
+        net.addParam("destination", destination);
         net.doPostInDialog(new NetTask(mContext) {
             @Override
             public void doInUI(Response response, Integer transfer) {
@@ -327,6 +334,7 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
         AnimButtonView dyanmic_one, dyanmic_two, invitationI;
         LinearLayout yingyaohou, invitation;
         RelativeLayout sexbgR;
+        RelativeLayout layoutV;
     }
 
 }

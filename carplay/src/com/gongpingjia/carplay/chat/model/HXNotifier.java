@@ -11,10 +11,6 @@
  */
 package com.gongpingjia.carplay.chat.model;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -36,7 +32,9 @@ import com.easemob.util.EasyUtils;
 import com.gongpingjia.carplay.activity.main.SplashActivity;
 import com.gongpingjia.carplay.chat.controller.HXSDKHelper;
 
-import de.greenrobot.event.EventBus;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * 新消息提醒class 2.1.8把新消息提示相关的api移除出sdk，方便开发者自由修改 开发者也可以继承此类实现相关的接口
@@ -301,7 +299,6 @@ public class HXNotifier {
 			Notification notification = mBuilder.build();
 
 			if (isForeground) {
-				System.out.println("11111111");
 				// notificationManager.notify(foregroundNotifyID, notification);
 				// notificationManager.cancel(foregroundNotifyID);
 			} else {

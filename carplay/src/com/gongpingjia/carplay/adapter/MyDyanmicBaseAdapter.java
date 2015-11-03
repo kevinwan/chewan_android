@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -129,6 +130,10 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                 holders.invitation = (LinearLayout) view.findViewById(R.id.invitation);
                 holders.invitationI = (AnimButtonView) view.findViewById(R.id.invitationI);
                 holders.invitationT = (TextView) view.findViewById(R.id.invitationT);
+                holders.layoutV = (RelativeLayout) view.findViewById(R.id.layout);
+                LinearLayout.LayoutParams pams = (LinearLayout.LayoutParams) holders.layoutV.getLayoutParams();
+                pams.height = API2.ImageHeight;
+                holders.layoutV.setLayoutParams(pams);
                 view.setTag(holders);
             } else {
                 holder = new ViewHolder();
@@ -161,10 +166,12 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                 holder.invitationI = (AnimButtonView) view.findViewById(R.id.invitationI);
 
 
-
                 holder.activity_distance = (TextView) view.findViewById(R.id.active_distance);
                 holder.invitationT = (TextView) view.findViewById(R.id.invitationT);
-
+                holder.layoutV = (RelativeLayout) view.findViewById(R.id.layout);
+                FrameLayout.LayoutParams pams = (FrameLayout.LayoutParams) holder.layoutV.getLayoutParams();
+                pams.height = API2.ImageHeight;
+                holder.layoutV.setLayoutParams(pams);
                 view.setTag(holder);
             }
 
@@ -197,18 +204,18 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
             holders.people_num.setText("参与" + people + "人");
             holders.price.setText(JSONUtil.getString(jo, "price"));
             String priceDesc = JSONUtil.getString(jo, "priceDesc");
-            int officstatus = JSONUtil.getInt(jo,"status");
-            if (officstatus == 4){
+            int officstatus = JSONUtil.getInt(jo, "status");
+            if (officstatus == 4) {
                 holders.invitation.setVisibility(View.VISIBLE);
                 holders.invitationT.setText("已失效");
                 holders.invitationI.setResourseAndBg(R.drawable.dynamic_grey
                         , R.drawable.dynamic_grey);
-            }else{
+            } else {
                 holders.invitation.setVisibility(View.GONE);
             }
-            if (priceDesc.isEmpty()){
+            if (priceDesc.isEmpty()) {
                 holders.priceDesc.setVisibility(View.GONE);
-            }else{
+            } else {
                 holders.priceDesc.setVisibility(View.VISIBLE);
                 holders.priceDesc.setText(JSONUtil.getString(jo, "priceDesc"));
             }
@@ -293,8 +300,6 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
             holder.invitationI.startScaleAnimation();
 
 
-
-
             Boolean isApplicant = JSONUtil.getBoolean(jo, "isApplicant");
 
             String licenseAuthStatus = JSONUtil.getString(js, "licenseAuthStatus");
@@ -311,10 +316,10 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
             String gender = JSONUtil.getString(js, "gender");
 
 //        String jied = JSONUtil.getString(json, "street");
-            if (json == null||JSONUtil.getString(json,"province").equals("")||JSONUtil.getString(json,"city").equals("")||JSONUtil.getString(json,"district").equals("")||JSONUtil.getString(json,"street").equals("")||JSONUtil.getString(json,"detail").equals("")) {
+            if (json == null || JSONUtil.getString(json, "province").equals("") || JSONUtil.getString(json, "city").equals("") || JSONUtil.getString(json, "district").equals("") || JSONUtil.getString(json, "street").equals("") || JSONUtil.getString(json, "detail").equals("")) {
                 holder.activity_place.setText("地点待定");
             } else {
-                holder.activity_place.setText(JSONUtil.getString(json, "province") + JSONUtil.getString(json, "city") + JSONUtil.getString(json, "district") + JSONUtil.getString(json, "street")+JSONUtil.getString(json,"detail"));
+                holder.activity_place.setText(JSONUtil.getString(json, "province") + JSONUtil.getString(json, "city") + JSONUtil.getString(json, "district") + JSONUtil.getString(json, "street") + JSONUtil.getString(json, "detail"));
             }
             String message = JSONUtil.getString(jo, "message");
             if (!message.isEmpty()) {
@@ -325,7 +330,7 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
             }
 
             int distance = (int) Math.floor(JSONUtil.getDouble(js, "distance"));
-            System.out.println("我的活动距离"+JSONUtil.getDouble(js, "distance"));
+            System.out.println("我的活动距离" + JSONUtil.getDouble(js, "distance"));
 //        DecimalFormat df = new DecimalFormat("0.00");
             holder.activity_distance.setText(CarPlayUtil.numberWithDelimiter(distance));
             if (("男").equals(gender)) {
@@ -426,7 +431,7 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                     holder.titleT.setText(name + "想邀请你" + typeT);
                 }
 
-            }else if(status == 4){
+            } else if (status == 4) {
                 if (isApplicant == true) {
                     holder.yingyao_layout.setVisibility(View.GONE);
                     holder.yingyaohou.setVisibility(View.GONE);
@@ -570,13 +575,15 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
         AnimButtonView dyanmic_one, dyanmic_two, yingyao, hulue, invitationI;
         LinearLayout yingyao_layout, yingyaohou, invitation;
         private RelativeLayout sexbgR;
+        RelativeLayout layoutV;
     }
 
     class ViewHolders {
         TextView people_num, info, price, priceDesc, location, city;
         ImageView pic;
         LinearLayout invitation;
-        AnimButtonView  invitationI;
+        AnimButtonView invitationI;
         TextView invitationT;
-     }
+        RelativeLayout layoutV;
+    }
 }
