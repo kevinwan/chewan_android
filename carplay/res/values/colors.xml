@@ -5,7 +5,7 @@
     <color name="white">#FFFFFF</color>
     <color name="nothing">#00000000</color>
     <color name="black">#000000</color>
-    <color name="text_black">#434a54</color>
+    <color name="text_black">#323232</color>
     <color name="text_black_light">#656d78</color>
     <color name="text_blue">#5D9CEC</color>
     <color name="text_blue_light">#48d1d5</color>
@@ -16,6 +16,8 @@
     <color name="text_pink">#ff7880</color>
     <color name="text_skyblue">#74ced6</color>
     <color name="text_call_bule">#77c0f7</color>
+    <color name="text_hint_grey">#989898</color>
+
     <!-- 分割线 -->
     <color name="cutline">#e6e9ed</color>
     <!-- 主题背景颜色浅蓝色 -->

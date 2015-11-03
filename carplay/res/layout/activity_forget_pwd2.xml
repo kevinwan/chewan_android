@@ -108,6 +108,7 @@
                 android:background="@color/nothing"
                 android:gravity="center_vertical"
                 android:hint="密码"
+                android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz"
                 android:inputType="textPassword"
                 android:singleLine="true"
                 android:textColorHint="@color/text_grey"></EditText>

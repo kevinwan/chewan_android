@@ -234,6 +234,7 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
             holder.dynamic_carname.setVisibility(View.GONE);
         }
         int distances = (int) Math.floor(distance);
+        System.out.println("传值+++++++"+distance+"/////转换："+distances);
         holder.activity_distance.setText(CarPlayUtil.numberWithDelimiter(distances));
         JSONObject json = JSONUtil.getJSONObject(jo, "destination");
         if (json == null||JSONUtil.getString(json,"province").equals("")||JSONUtil.getString(json,"city").equals("")||JSONUtil.getString(json,"district").equals("")||JSONUtil.getString(json,"street").equals("")||JSONUtil.getString(json,"detail").equals("")) {

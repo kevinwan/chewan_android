@@ -24,7 +24,9 @@
             android:layout_marginTop="10dp"
             android:background="@color/nothing"
             android:drawableLeft="@drawable/ic_phone"
+            android:textColorHint="@color/text_hint_grey"
             android:drawablePadding="5dp"
+            android:hint="手机号"
             android:inputType="phone" />
 
         <LinearLayout style="@style/line_horizontal"></LinearLayout>

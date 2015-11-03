@@ -29,9 +29,9 @@ public class NearbyFilterDialog extends BaseAlertDialog implements
 
     private CheckBox active_transfer;
 
-    String type="";
-    String pay="";
-    String gender="";
+    String type="不限";
+    String pay="不限";
+    String gender="不限";
     boolean transfer=true;
 
     OnNearbyFilterResultListener nearbyFilterResultListener;
@@ -62,6 +62,9 @@ public class NearbyFilterDialog extends BaseAlertDialog implements
 
         submit = (Button) this.findViewById(R.id.submit);
 
+        active_pay.check(R.id.pay_3);
+        active_gender.check(R.id.gender_3);
+
         //响应单选框组内的选中项发生变化时的事件
         active_typeG1.setOnCheckedChangeListener(this);
         active_typeG2.setOnCheckedChangeListener(this);
@@ -76,7 +79,9 @@ public class NearbyFilterDialog extends BaseAlertDialog implements
                 dismiss();
                 transfer = active_transfer.isChecked();
                 if (nearbyFilterResultListener != null) {
-                    nearbyFilterResultListener.onResult(type, pay, gender, transfer);
+//                    System.out.println("type:" + type + "pay:" + pay + "gender:" + gender + "transfer" + transfer);
+
+                    nearbyFilterResultListener.onResult(type.replace("不限",""), pay.replace("不限",""), gender.replace("不限",""), transfer);
                 }
 
             }
@@ -112,6 +117,16 @@ public class NearbyFilterDialog extends BaseAlertDialog implements
         active_typeG4.setOnCheckedChangeListener(null);
         active_typeG4.clearCheck();
         active_typeG4.setOnCheckedChangeListener(this);
+    }
+    private void setCheackedPay(){
+        active_pay.setOnCheckedChangeListener(null);
+        active_pay.clearCheck();
+        active_pay.setOnCheckedChangeListener(this);
+    }
+    private void setCheackedGender(){
+        active_gender.setOnCheckedChangeListener(null);
+        active_gender.clearCheck();
+        active_gender.setOnCheckedChangeListener(this);
     }
 
 

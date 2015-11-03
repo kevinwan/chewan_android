@@ -5,16 +5,30 @@
     tools:context="com.gongpingjia.carplay.activity.main.SplashActivity" >
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/splash_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:scaleType="centerCrop"
-        android:src="@drawable/start_up" />
-     <ImageView
-        android:layout_width="178dp"
-        android:layout_height="178dp"
-        android:layout_marginTop="86dp"
+        android:layout_marginTop="60dp"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/sp_icon"
-         android:visibility="gone"/>
+        android:src="@drawable/splash_img" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:layout_marginTop="35dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/splash_img"
+        android:src="@drawable/splash_txt" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="35dp"
+        android:src="@drawable/splash_icon" />
 
 </RelativeLayout>

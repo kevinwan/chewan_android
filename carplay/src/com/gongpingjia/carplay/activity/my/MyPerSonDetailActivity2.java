@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.activity.main.PhotoSelectorActivity;
@@ -28,6 +29,9 @@ import com.gongpingjia.carplay.bean.PhotoState;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.photo.model.PhotoModel;
 import com.gongpingjia.carplay.view.RoundImageView;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
@@ -46,6 +50,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
+import jp.wasabeef.blurry.Blurry;
 
 /**
  * 我的详情
@@ -226,172 +231,203 @@ public class MyPerSonDetailActivity2 extends CarPlayBaseActivity implements View
                     }
                     if (licenseAuthStatus.equals("未认证") && photoAuthStatus.equals("未认证")) {
                         completenessT.setText("资料完成度60%,越高越吸引人");
+                        perfectBtn.setVisibility(View.VISIBLE);
                     } else if (licenseAuthStatus.equals("认证中") && photoAuthStatus.equals("认证中")) {
                         completenessT.setText("资料完成度60%,越高越吸引人");
-                    } else if (licenseAuthStatus.equals("认证通过") || photoAuthStatus.equals("认证通过")) {
-                        completenessT.setText("资料完成度80%,越高越吸引人");
-                    } else if (licenseAuthStatus.equals("认证通过") && photoAuthStatus.equals("认证通过")) {
+                        perfectBtn.setVisibility(View.VISIBLE);
+                    }  else if (licenseAuthStatus.equals("认证通过") && photoAuthStatus.equals("认证通过")) {
                         completenessT.setText("资料完成度100%,越高越吸引人");
+                        perfectBtn.setVisibility(View.GONE);
+                    }else if (licenseAuthStatus.equals("认证通过") || photoAuthStatus.equals("认证通过")) {
+                        completenessT.setText("资料完成度80%,越高越吸引人");
+                        perfectBtn.setVisibility(View.VISIBLE);
                     }
+                        JSONArray albumJsa = JSONUtil.getJSONArray(jo, "album");
+                        getAlbum(albumJsa);
 
-                    JSONArray albumJsa = JSONUtil.getJSONArray(jo, "album");
-                    getAlbum(albumJsa);
-
-                    try {
-//                        if (albumJsa != null) {
-//                            ViewUtil.bindNetImage(photo_bgI, albumJsa.getJSONObject(0).getString("url"), "default");
-//                        } else {
-//                            ViewUtil.bindNetImage(photo_bgI, headimg, "head");
+//                    try {
+//                        String imgurl="";
+//                        if (user.isHasAlbum()) {
+//                            imgurl = albumJsa.getJSONObject(0).getString("url");
+//                        }else {
+//                            imgurl = headimg;
 //                        }
-                        if (user.isHasAlbum()) {
-                            ViewUtil.bindNetImage(photo_bgI, albumJsa.getJSONObject(0).getString("url"), "default");
-                        } else {
-                            ViewUtil.bindNetImage(photo_bgI, headimg, "head");
+//
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+                    //模糊效果
+                    ImageLoader.getInstance().displayImage(headimg, photo_bgI, CarPlayValueFix.optionsDefault, new ImageLoadingListener() {
+                        @Override
+                        public void onLoadingStarted(String s, View view) {
+
                         }
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                        @Override
+                        public void onLoadingFailed(String s, View view, FailReason failReason) {
 
+                        }
+
+                        @Override
+                        public void onLoadingComplete(String s, View view, final Bitmap bitmap) {
+                            final ImageView img = (ImageView) view;
+                            img.setImageBitmap(bitmap);
+                            Blurry.with(self)
+                                    .radius(10)
+                                    .sampling(4)
+                                    .async()
+                                    .capture(img)
+                                    .into(img);
+                        }
+
+                        @Override
+                        public void onLoadingCancelled(String s, View view) {
+
+                        }
+                    });
+
+
+                    }
                 }
             }
-        });
 
-    }
+            );
 
-    @Override
-    public void onClick(View v) {
-        Intent it;
-        switch (v.getId()) {
-            //编辑资料
-            case R.id.head:
-                it = new Intent(self, EditPersonalInfoActivity2.class);
-                it.putExtra("name", name);
-                it.putExtra("gender", gender);
-                it.putExtra("headimg", headimg);
-                it.putExtra("photoAuthStatus", photoAuthStatus);
-                it.putExtra("licenseAuthStatus", licenseAuthStatus);
+        }
+
+        @Override
+        public void onClick (View v){
+            Intent it;
+            switch (v.getId()) {
+                //编辑资料
+                case R.id.head:
+                    it = new Intent(self, EditPersonalInfoActivity2.class);
+                    it.putExtra("name", name);
+                    it.putExtra("gender", gender);
+                    it.putExtra("headimg", headimg);
+                    it.putExtra("photoAuthStatus", photoAuthStatus);
+                    it.putExtra("licenseAuthStatus", licenseAuthStatus);
 //                it.putExtra("carbradn",carbradn);
 //                it.putExtra("carlogo",carlogo);
 //                it.putExtra("carmodel",carmodel);
 //                it.putExtra("carslug",carslug);
-                it.putExtra("age", age);
-                startActivity(it);
-                break;
-            //完善信息
-            case R.id.perfect:
-                it = new Intent(self, EditPersonalInfoActivity2.class);
-                it.putExtra("name", name);
-                it.putExtra("gender", gender);
-                it.putExtra("headimg", headimg);
-                it.putExtra("photoAuthStatus", photoAuthStatus);
-                it.putExtra("licenseAuthStatus", licenseAuthStatus);
-                it.putExtra("age", age);
-                startActivity(it);
-                break;
-            //我的活动
-            case R.id.myactive:
-                it = new Intent(self, MyDynamicActivity.class);
-                startActivity(it);
-                break;
-            //我的关注
-            case R.id.myattention:
-                it = new Intent(self, SubscribeActivity2.class);
-                startActivity(it);
-                break;
-            //头像认证
-            case R.id.headattestation:
-                it = new Intent(self, HeadAttestationActivity.class);
-                startActivity(it);
-                break;
-            //车主认证
-            case R.id.carattestation:
-                it = new Intent(self, AuthenticateOwnersActivity2.class);
-                startActivity(it);
-                break;
-            //上传相册
-            case R.id.addphoto:
-                newAlbm.clear();
-                mPhotoPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg").getAbsolutePath();
-                final File tempFile = new File(mPhotoPath);
-                final CharSequence[] items = {"相册", "拍照"};
-                AlertDialog dlg = new AlertDialog.Builder(self).setTitle("选择图片")
-                        .setItems(items, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int item) {
-                                if (item == 1) {
-                                    Intent getImageByCamera = new Intent(
-                                            "android.media.action.IMAGE_CAPTURE");
-                                    getImageByCamera.putExtra(MediaStore.EXTRA_OUTPUT,
-                                            Uri.fromFile(tempFile));
-                                    startActivityForResult(getImageByCamera,
-                                            Constant.TAKE_PHOTO);
-                                } else {
-                                    Intent intent = new Intent(self,
-                                            PhotoSelectorActivity.class);
-                                    intent.putExtra(PhotoSelectorActivity.KEY_MAX,
-                                            9);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                                    startActivityForResult(intent, Constant.PICK_PHOTO);
+                    it.putExtra("age", age);
+                    startActivity(it);
+                    break;
+                //完善信息
+                case R.id.perfect:
+                    it = new Intent(self, EditPersonalInfoActivity2.class);
+                    it.putExtra("name", name);
+                    it.putExtra("gender", gender);
+                    it.putExtra("headimg", headimg);
+                    it.putExtra("photoAuthStatus", photoAuthStatus);
+                    it.putExtra("licenseAuthStatus", licenseAuthStatus);
+                    it.putExtra("age", age);
+                    startActivity(it);
+                    break;
+                //我的活动
+                case R.id.myactive:
+                    it = new Intent(self, MyDynamicActivity.class);
+                    startActivity(it);
+                    break;
+                //我的关注
+                case R.id.myattention:
+                    it = new Intent(self, SubscribeActivity2.class);
+                    startActivity(it);
+                    break;
+                //头像认证
+                case R.id.headattestation:
+                    it = new Intent(self, HeadAttestationActivity.class);
+                    startActivity(it);
+                    break;
+                //车主认证
+                case R.id.carattestation:
+                    it = new Intent(self, AuthenticateOwnersActivity2.class);
+                    startActivity(it);
+                    break;
+                //上传相册
+                case R.id.addphoto:
+                    newAlbm.clear();
+                    mPhotoPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg").getAbsolutePath();
+                    final File tempFile = new File(mPhotoPath);
+                    final CharSequence[] items = {"相册", "拍照"};
+                    AlertDialog dlg = new AlertDialog.Builder(self).setTitle("选择图片")
+                            .setItems(items, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int item) {
+                                    if (item == 1) {
+                                        Intent getImageByCamera = new Intent(
+                                                "android.media.action.IMAGE_CAPTURE");
+                                        getImageByCamera.putExtra(MediaStore.EXTRA_OUTPUT,
+                                                Uri.fromFile(tempFile));
+                                        startActivityForResult(getImageByCamera,
+                                                Constant.TAKE_PHOTO);
+                                    } else {
+                                        Intent intent = new Intent(self,
+                                                PhotoSelectorActivity.class);
+                                        intent.putExtra(PhotoSelectorActivity.KEY_MAX,
+                                                9);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                        startActivityForResult(intent, Constant.PICK_PHOTO);
+                                    }
                                 }
-                            }
-                        }).create();
-                Window window = dlg.getWindow();
-                window.setWindowAnimations(R.style.mystyle);
-                dlg.show();
-                break;
-
-
-            default:
-                break;
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            switch (requestCode) {
-                case Constant.PICK_PHOTO:
-                    showProgressDialog("图片上传中...");
-                    if (data != null && data.getExtras() != null) {
-                        List<PhotoModel> photos = (List<PhotoModel>) data.getExtras().getSerializable("photos");
-                        if (photos == null || photos.isEmpty()) {
-                            showToast("没有选择图片!");
-                        } else {
-                            uploadPhotoCount = photos.size();
-                            for (int i = 0; i < photos.size(); i++) {
-                                String newPhotoPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg")
-                                        .getAbsolutePath();
-                                Bitmap btp = PhotoUtil.getLocalImage(new File(photos.get(i).getOriginalPath()));
-                                PhotoUtil.saveLocalImage(btp, new File(newPhotoPath));
-                                uploadHead(newPhotoPath);
-                            }
-                        }
-                    }
+                            }).create();
+                    Window window = dlg.getWindow();
+                    window.setWindowAnimations(R.style.mystyle);
+                    dlg.show();
                     break;
-                case Constant.TAKE_PHOTO:
 
 
-                    Bitmap btp1 = PhotoUtil.getLocalImage(new File(mPhotoPath));
-                    int degree = PhotoUtil.getBitmapDegree(mPhotoPath);
-                    String newPath = PhotoUtil.saveLocalImage(btp1, degree, self);
-                    btp1.recycle();
-
-
-                    showProgressDialog("上传头像中...");
-                    uploadPhotoCount = 1;
-                    uploadHead(newPath);
-                    break;
-                case PERSONAL:
-                    txtphotoAuthStatusT.setText(data.getStringExtra("photoAuthStatus"));
-                    nameT.setText(data.getStringExtra("nickname"));
-                    ageT.setText(data.getStringExtra("age"));
-                    attestation_txtT.setText(data.getStringExtra("licenseAuthStatus"));
-                    ViewUtil.bindNetImage(headI, data.getStringExtra("head"), "head");
+                default:
                     break;
             }
         }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
+
+        @Override
+        public void onActivityResult ( int requestCode, int resultCode, Intent data){
+            if (resultCode == RESULT_OK) {
+                switch (requestCode) {
+                    case Constant.PICK_PHOTO:
+                        showProgressDialog("图片上传中...");
+                        if (data != null && data.getExtras() != null) {
+                            List<PhotoModel> photos = (List<PhotoModel>) data.getExtras().getSerializable("photos");
+                            if (photos == null || photos.isEmpty()) {
+                                showToast("没有选择图片!");
+                            } else {
+                                uploadPhotoCount = photos.size();
+                                for (int i = 0; i < photos.size(); i++) {
+                                    String newPhotoPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg")
+                                            .getAbsolutePath();
+                                    Bitmap btp = PhotoUtil.getLocalImage(new File(photos.get(i).getOriginalPath()));
+                                    PhotoUtil.saveLocalImage(btp, new File(newPhotoPath));
+                                    uploadHead(newPhotoPath);
+                                }
+                            }
+                        }
+                        break;
+                    case Constant.TAKE_PHOTO:
+
+
+                        Bitmap btp1 = PhotoUtil.getLocalImage(new File(mPhotoPath));
+                        int degree = PhotoUtil.getBitmapDegree(mPhotoPath);
+                        String newPath = PhotoUtil.saveLocalImage(btp1, degree, self);
+                        btp1.recycle();
+
+
+                        showProgressDialog("上传头像中...");
+                        uploadPhotoCount = 1;
+                        uploadHead(newPath);
+                        break;
+                    case PERSONAL:
+                        txtphotoAuthStatusT.setText(data.getStringExtra("photoAuthStatus"));
+                        nameT.setText(data.getStringExtra("nickname"));
+                        ageT.setText(data.getStringExtra("age"));
+                        attestation_txtT.setText(data.getStringExtra("licenseAuthStatus"));
+                        ViewUtil.bindNetImage(headI, data.getStringExtra("head"), "head");
+                        break;
+                }
+            }
+            super.onActivityResult(requestCode, resultCode, data);
+        }
 
     private void uploadHead(String path) {
 
@@ -422,7 +458,7 @@ public class MyPerSonDetailActivity2 extends CarPlayBaseActivity implements View
                             album.addAll(0, newAlbm);
                             mAdapter.setData(album);
                             uploadedCount = 0;
-                            ViewUtil.bindNetImage(photo_bgI, (String) album.get(0).get("url"), "head");
+//                            ViewUtil.bindNetImage(photo_bgI, (String) album.get(0).get("url"), "head");
                             DhNet net = new DhNet(API2.CWBaseurl + "user/" + user.getUserId() + "/photoCount?token=" + user.getToken());
                             net.addParam("count", uploadPhotoCount);
                             net.doPost(new NetTask(self) {

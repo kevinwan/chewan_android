@@ -13,12 +13,13 @@
         android:background="@drawable/active_bg"
         android:orientation="vertical"
         android:paddingBottom="15dp"
-        android:paddingTop="12dp">
+        android:paddingTop="15dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="26dp"
             android:layout_marginLeft="12dp"
+            android:layout_marginBottom="1dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -74,7 +75,13 @@
             android:layout_marginBottom="9dp"
             android:paddingRight="10dp">
 
-            <include layout="@layout/include_sex" />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="1dp">
+                <include layout="@layout/include_sex" />
+            </RelativeLayout>
+
 
             <TextView
                 android:id="@+id/pay"
@@ -83,6 +90,7 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
                 android:text="请我吧 "
+                android:textSize="@dimen/text_small"
                 android:textColor="@color/text_red" />
 
             <TextView
@@ -90,6 +98,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="包接送 "
+                android:textSize="@dimen/text_small"
                 android:textColor="@color/text_skyblue" />
         </LinearLayout>
 
@@ -110,7 +119,7 @@
             <TextView
                 android:id="@+id/promtp"
                 style="@style/text_white_small"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="20dp"
                 android:layout_toLeftOf="@+id/phtoto"
                 android:layout_marginRight="25dp"
                 android:text="上传照片即可查看他的照片哟~"/>
@@ -147,7 +156,7 @@
                 <Button
                     android:id="@+id/upload"
                     android:layout_width="70dp"
-                    android:layout_height="35dp"
+                    android:layout_height="38dp"
                     android:background="@drawable/white_btn_bg"
                     android:text="上传"
                     android:textColor="@color/white"
@@ -157,7 +166,7 @@
                 <Button
                     android:id="@+id/takephotos"
                     android:layout_width="70dp"
-                    android:layout_height="35dp"
+                    android:layout_height="38dp"
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/white_btn_bg"
@@ -169,7 +178,7 @@
                 <Button
                     android:id="@+id/album"
                     android:layout_width="70dp"
-                    android:layout_height="35dp"
+                    android:layout_height="38dp"
                     android:background="@drawable/white_btn_bg"
                     android:text="相册"
                     android:textColor="@color/white"
@@ -180,7 +189,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="25dp"
+            android:layout_height="30dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp">
@@ -195,16 +204,19 @@
             <TextView
                 android:id="@+id/tv_distance"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
+                android:gravity="center"
                 android:text="20m"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
                 android:textColor="@color/text_green" />
 
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginRight="3dp"
+                android:layout_centerVertical="true"
                 android:layout_toLeftOf="@id/tv_distance"
                 android:src="@drawable/distance_icon" />
         </RelativeLayout>

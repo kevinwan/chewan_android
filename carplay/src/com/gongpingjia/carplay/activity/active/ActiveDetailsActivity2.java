@@ -228,7 +228,7 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
                     ViewUtil.bindView(placeT, JSONUtil.getString(js, "province") + "省" + JSONUtil.getString(js, "city") + "市" + JSONUtil.getString(js, "detail"));
 
                     //开始-结束时间,创建时间
-                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd ");
 
                     Date sdate = new Date(JSONUtil.getLong(jo, "start"));
                     ViewUtil.bindView(startTimeT, format.format(sdate));
@@ -241,10 +241,10 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
                     ViewUtil.bindView(nicknameT, JSONUtil.getString(jsname, "nickname"));
                     ViewUtil.bindNetImage(avatarT, JSONUtil.getString(jsname, "avatar"), "head");
                     ViewUtil.bindView(introduceT, JSONUtil.getString(jo, "title"));
-                    ViewUtil.bindView(contentT, JSONUtil.getString(jo, "extraDesc"));
+                    ViewUtil.bindView(contentT, JSONUtil.getString(jo, "instruction"));
                     ViewUtil.bindView(processT, JSONUtil.getString(jo, "description"));
                     ViewUtil.bindView(priceT, JSONUtil.getDouble(jo, "price") + "元/人(现在报名立减" + JSONUtil.getDouble(jo, "subsidyPrice") + "元)");
-                    ViewUtil.bindView(explaintxtT, JSONUtil.getString(jo, "instruction"));
+                    ViewUtil.bindView(explaintxtT, JSONUtil.getString(jo, "extraDesc"));
 
                     isMember = JSONUtil.getBoolean(jo, "isMember");
                     if (isMember) {

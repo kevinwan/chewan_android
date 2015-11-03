@@ -103,9 +103,9 @@ public class VisitorsAdapter extends BaseAdapter {
         ViewUtil.bindNetImage(holder.icon, JSONUtil.getString(jo, "avatar"), "head");
         String id = JSONUtil.getString(jo,"userId");
         holder.icon.setTag(id);
-        int distance = JSONUtil.getInt(jo, "distance");
-        holder.distanceT.setText(distance + "米");
 
+        int distance = (int) Math.floor(JSONUtil.getDouble(jo, "distance"));
+        holder.distanceT.setText(CarPlayUtil.numberWithDelimiter(distance));
         long time = JSONUtil.getLong(jo, "viewTime");
         holder.timeT.setText(CarPlayValueFix.converTime(time));
         return view;

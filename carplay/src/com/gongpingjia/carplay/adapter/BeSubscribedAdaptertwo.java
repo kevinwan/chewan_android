@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gongpingjia.carplay.CarPlayValueFix;
@@ -81,6 +83,8 @@ public class BeSubscribedAdaptertwo extends BaseAdapter {
             holder.roundImageView = (RoundImageView) convertView.findViewById(R.id.iv_avatar);
             holder.textNickname = (TextView) convertView.findViewById(R.id.tv_nickname);
             holder.textAge = (TextView) convertView.findViewById(R.id.tv_age);
+            holder.sexbgR = (RelativeLayout) convertView.findViewById(R.id.layout_sex_and_age);
+            holder.sexI = (ImageView) convertView.findViewById(R.id.iv_sex);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -90,6 +94,14 @@ public class BeSubscribedAdaptertwo extends BaseAdapter {
         int distances = (int) Math.floor(JSONUtil.getDouble(obj, "distance"));
         holder.textDistance.setText(CarPlayUtil.numberWithDelimiter(distances));
         holder.textAge.setText(JSONUtil.getString(obj, "age"));
+        String sex = JSONUtil.getString(obj, "gender");
+        if (("男").equals(sex)) {
+            holder.sexbgR.setBackgroundResource(R.drawable.radio_sex_man_normal);
+            holder.sexI.setBackgroundResource(R.drawable.icon_man3x);
+        } else {
+            holder.sexbgR.setBackgroundResource(R.drawable.radion_sex_woman_normal);
+            holder.sexI.setBackgroundResource(R.drawable.icon_woman3x);
+        }
 //        holder.heartView.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -118,6 +130,8 @@ public class BeSubscribedAdaptertwo extends BaseAdapter {
 //        HeartView heartView;
         TextView textAge;
         TextView visitors_time;
+        private RelativeLayout sexbgR;
+        ImageView sexI;
     }
 
     private void attention() {

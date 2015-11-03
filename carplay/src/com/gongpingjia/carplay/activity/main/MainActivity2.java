@@ -21,8 +21,11 @@ import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -139,7 +142,8 @@ public class MainActivity2 extends BaseFragmentActivity implements
     private int uploadedCount = 0;
 
     User user;
-
+    RelativeLayout free_layout;
+    CheckBox free_ck;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -201,6 +205,14 @@ public class MainActivity2 extends BaseFragmentActivity implements
         tabV = (LinearLayout) findViewById(R.id.tab);
         titleBar = findViewById(R.id.titlebar);
         rightT = (TextView) findViewById(R.id.right_text);
+         free_layout = (RelativeLayout) findViewById(R.id.free);
+         free_ck = (CheckBox) findViewById(R.id.free_check);
+        free_ck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+            }
+        });
 
         //筛选
         rightT.setOnClickListener(new OnClickListener() {
@@ -304,6 +316,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
 
 
         rightT.setVisibility(index == 0 ? View.VISIBLE : View.GONE);
+        free_layout.setVisibility(index == 0 ? View.VISIBLE : View.GONE);
         right_icon.setVisibility(index == 4 ? View.VISIBLE : View.GONE);
 
         for (int i = 0; i < tabV.getChildCount(); i++) {

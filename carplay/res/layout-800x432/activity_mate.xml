@@ -124,8 +124,8 @@
 
             <com.gongpingjia.carplay.view.AnimButtonView2
                 android:id="@+id/coffee"
-                android:layout_width="84dp"
-                android:layout_height="84dp"
+                android:layout_width="87dp"
+                android:layout_height="87dp"
                 android:layout_marginLeft="395dp"
                 android:layout_marginTop="195dp"
                 my:bg="@drawable/mate_hkf"
