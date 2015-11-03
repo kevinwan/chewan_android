@@ -14,7 +14,8 @@
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:paddingBottom="60dp"
-        android:paddingTop="15dp"
+        android:paddingTop="10dp"
+        android:layout_marginTop="30dp"
         app:ptrDrawable="@drawable/lun"
         app:triggerOffset="0.1" />
     <RelativeLayout
