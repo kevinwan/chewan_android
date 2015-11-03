@@ -244,10 +244,10 @@ public class BasicInformationActivity2 extends CarPlayBaseActivity implements Vi
                     JSONObject jo = response.jSONFromData();
                     if (getIntent().getStringExtra("phone") != null) {
                         //手机号完善信息
-//                        loginHX(MD5Util.string2MD5(JSONUtil.getString(jo,
-//                                        "userId")), getIntent().getStringExtra("password"), jo);
-                        loginHX(JSONUtil.getString(jo,
-                                "userId"), MD5Util.string2MD5(getIntent().getStringExtra("password")), jo);
+                        loginHX(MD5Util.string2MD5(JSONUtil.getString(jo,
+                                        "userId")), getIntent().getStringExtra("password"), jo);
+//                        loginHX(JSONUtil.getString(jo,
+//                                "userId"), MD5Util.string2MD5(getIntent().getStringExtra("password")), jo);
                         per.phone = getIntent().getStringExtra("phone");
                         per.password = getIntent().getStringExtra("password");
                     } else {

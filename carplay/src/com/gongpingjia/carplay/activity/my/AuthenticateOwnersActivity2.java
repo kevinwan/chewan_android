@@ -1,28 +1,19 @@
 package com.gongpingjia.carplay.activity.my;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
-import com.gongpingjia.carplay.adapter.GalleryAdapter;
-import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.api.API2;
-import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.User;
-import com.gongpingjia.carplay.view.ImageGallery;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
@@ -30,10 +21,7 @@ import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.net.upload.FileInfo;
 import net.duohuo.dhroid.util.PhotoUtil;
-import net.duohuo.dhroid.util.ViewUtil;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -260,41 +248,41 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
                 break;
             case R.id.driving_img:
 
-                if (TextUtils.isEmpty(picUid)){
+//                if (TextUtils.isEmpty(picUid)){
                     mPhotoPath = new File(mCacheDir, System.currentTimeMillis()
                             + ".jpg").getAbsolutePath();
                     PhotoUtil.getPhoto(self, DRIVING_PHOTOGRAPH, DRIVING_GALLERY,
                             new File(mPhotoPath));
-                }else{
-                    Intent it = new Intent(self, ImageGallery.class);
-                    str = new String[1];
-                    str[0] = imgs;
-                    strid = new String[1];
-                    strid [0] = picUid;
-//                    System.out.println("++++++++++"+str[0]);
-                    it.putExtra("imgurls", str);
-                    it.putExtra("imgids", strid);
-                    startActivity(it);
-                }
+//                }else{
+//                    Intent it = new Intent(self, ImageGallery.class);
+//                    str = new String[1];
+//                    str[0] = imgs;
+//                    strid = new String[1];
+//                    strid [0] = picUid;
+////                    System.out.println("++++++++++"+str[0]);
+//                    it.putExtra("imgurls", str);
+//                    it.putExtra("imgids", strid);
+//                    startActivity(it);
+//                }
 
                 break;
             case R.id.driver_img:
-                if (TextUtils.isEmpty(picUids)){
+//                if (TextUtils.isEmpty(picUids)){
                     mPhotoPath = new File(mCacheDir, System.currentTimeMillis()
                             + ".jpg").getAbsolutePath();
                     PhotoUtil.getPhoto(self, DRIVER_PHOTOGRAPH, DRIVER_GALLERY,
                             new File(mPhotoPath));
-                }else{
-                    Intent ten = new Intent(self, ImageGallery.class);
-                    strs = new String[1];
-                    strs[0] = img;
-                    strsid = new String[1];
-                    strsid [0] = picUids;
-
-                    ten.putExtra("imgurls", strs);
-                    ten.putExtra("imgids", strsid);
-                    startActivity(ten);
-                }
+//                }else{
+//                    Intent ten = new Intent(self, ImageGallery.class);
+//                    strs = new String[1];
+//                    strs[0] = img;
+//                    strsid = new String[1];
+//                    strsid [0] = picUids;
+//
+//                    ten.putExtra("imgurls", strs);
+//                    ten.putExtra("imgids", strsid);
+//                    startActivity(ten);
+//                }
 
 
                 break;
