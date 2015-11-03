@@ -49,6 +49,7 @@ public class HisDynamicActivity extends CarPlayListActivity implements PullToRef
     public void initView() {
         setTitle("TA的活动");
         bundle = getIntent().getExtras();
+//        System.out.println("他的活动"+bundle.getString("idel"));
         viewUserId = bundle.getString("userId");
         name = getIntent().getStringExtra("name");
         photoAuthStatus = getIntent().getStringExtra("photoAuthStatus");
@@ -65,13 +66,12 @@ public class HisDynamicActivity extends CarPlayListActivity implements PullToRef
         listV.setMode(PullToRefreshBase.Mode.BOTH);
         listV.setOnRefreshListener(this);
         recyclerView = listV.getRefreshableView();
-//        adapter = new HisDyanmicBaseAdapter(self);
-//        recyclerView.setAdapter(adapter);
         setOnLoadSuccess(this);
         setOnLoadDataSuccess(this);
         fromWhat("data.activities");
 
-        setUrl(API2.CWBaseurl + "user/" + viewUserId + "/activity/list?token=" + user.getToken() + "&userId=" + user.getUserId() + "&limit=" + 10 + "&ignore=" + 0);
+        setUrl(API2.CWBaseurl + "user/" + viewUserId + "/activity/list?token=" + user.getToken() + "&userId=" + user.getUserId());
+//        setUrl(API2.CWBaseurl + "user/" + viewUserId + "/activity/list?token=" + user.getToken() + "&userId=" + user.getUserId() + "&limit=" + 10 + "&ignore=" + 0);
 
         showNext();
 
@@ -122,7 +122,7 @@ public class HisDynamicActivity extends CarPlayListActivity implements PullToRef
         distance = JSONUtil.getDouble(json, "distance");
 
 //        System.out.println("Ta的活动背景++++++" + cover);
-        System.out.println("Ta的活动距离++++++" + distance);
+//        System.out.println("Ta的活动距离++++++" + distance);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {

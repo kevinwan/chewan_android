@@ -88,6 +88,7 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
     String gender;
     String age;
     String emchatName;
+    String idel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -144,7 +145,8 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
 //                System.out.println(user.getUserId()+"---------"+user.getToken());
                 if (response.isSuccess()) {
                     jo = response.jSONFromData();
-
+                     idel = JSONUtil.getString(jo, "idle");
+//                    System.out.println("他的详情"+JSONUtil.getString(jo, "idle"));
                     JSONObject carjo = JSONUtil.getJSONObject(jo, "car");
                       name = JSONUtil.getString(jo, "nickname");
                     logo = JSONUtil.getString(carjo, "logo");
@@ -269,6 +271,7 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
                 it.putExtra("brand",brand);
                 it.putExtra("logo",logo);
                 it.putExtra("emchatName",emchatName);
+                it.putExtra("idel",idel);
                 startActivity(it);
                 break;
             //上传照片

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,18 +12,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
-import com.gongpingjia.carplay.activity.active.ActiveDetailsActivity2;
 import com.gongpingjia.carplay.activity.chat.ChatActivity;
 import com.gongpingjia.carplay.activity.chat.VoiceCallActivity;
-import com.gongpingjia.carplay.activity.my.PersonDetailActivity2;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.view.AnimButtonView;
-import com.gongpingjia.carplay.view.dialog.ActiveDialog;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
@@ -35,7 +32,6 @@ import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.util.ViewUtil;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -133,6 +129,7 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
         holder.invitationI.startScaleAnimation();
         holder.dyanmic_one.startScaleAnimation();
         holder.dyanmic_two.startScaleAnimation();
+
 
         destPoint = JSONUtil.getJSONObject(jo,"destPoint");
          destination = JSONUtil.getJSONObject(jo, "destination");
@@ -281,8 +278,15 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.invitationI:
-                    JSONObject jo = (JSONObject) getItem(i);
-                    join(activityId, holder, jo);
+                    if (bundle.getString("idel").equals("false")){
+//                        System.out.println("没空----------" +bundle.getBoolean("idle"));
+                        Toast.makeText(mContext,"抱歉，"+bundle.getString("name") + "暂时没空接受你的邀请", Toast.LENGTH_LONG).show();
+                    }else{
+                        JSONObject jo = (JSONObject) getItem(i);
+                        join(activityId, holder, jo);
+//                        System.out.println("有空----------" + bundle.getBoolean("idle"));
+                    }
+
                     break;
             }
         }
