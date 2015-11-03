@@ -54,6 +54,7 @@ import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.FilterPreference2;
+import com.gongpingjia.carplay.bean.PointRecord;
 import com.gongpingjia.carplay.bean.TabEB;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.chat.DemoHXSDKHelper;
@@ -144,6 +145,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
     User user;
     RelativeLayout free_layout;
     CheckBox free_ck;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -212,10 +214,10 @@ public class MainActivity2 extends BaseFragmentActivity implements
         free_ck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b == true){
+                if (b == true) {
 //                    System.out.println("有空");
                     DhNet net = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId() + "/info?token=" + user.getToken());
-                    net.addParam("idle",true);
+                    net.addParam("idle", true);
                     net.doPostInDialog(new NetTask(self) {
                         @Override
                         public void doInUI(Response response, Integer transfer) {
@@ -224,14 +226,14 @@ public class MainActivity2 extends BaseFragmentActivity implements
                             }
                         }
                     });
-                }else{
+                } else {
 //                    System.out.println("没空");
                     DhNet net = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId() + "/info?token=" + user.getToken());
-                    net.addParam("idle",false);
+                    net.addParam("idle", false);
                     net.doPostInDialog(new NetTask(self) {
                         @Override
                         public void doInUI(Response response, Integer transfer) {
-                            if (response.isSuccess()){
+                            if (response.isSuccess()) {
                                 System.out.println(response.isSuccess());
                             }
                         }
@@ -753,6 +755,28 @@ public class MainActivity2 extends BaseFragmentActivity implements
         }
 
         unregisterReceiver(cmdMessageReceiver);
+
+        PointRecord record = PointRecord.getInstance();
+
+        Log.d("msg", record.getActivityDynamicCallList().toString());
+        Log.d("msg", record.getActivityDynamicChatList().toString());
+        Log.d("msg", record.getTypeClick().toString());
+
+        Log.d("msg", record.getActivityMatchCount() + "");
+        Log.d("msg", record.getActivityMatchInvitedCountList().toString());
+        Log.d("msg", record.getDynamicNearbyInvitedList().toString());
+
+        Log.d("msg", record.getOfficialActivityChatJoinList().toString());
+
+        Log.d("msg", record.getOfficialActivityBuyTicketList().toString());
+
+        Log.d("msg", record.getUserRegister() + "");
+        Log.d("msg", record.getUnRegisterNearbyInvited() + "");
+
+
+        Log.d("msg", record.getUnRegisterMatchInvited() + "");
+
+
     }
 
     @Override

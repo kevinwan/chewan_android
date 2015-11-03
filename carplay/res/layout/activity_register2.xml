@@ -25,7 +25,7 @@
             android:background="@color/nothing"
             android:drawableLeft="@drawable/ic_phone"
             android:textColorHint="@color/text_hint_grey"
-            android:drawablePadding="5dp"
+            android:drawablePadding="10dp"
             android:hint="手机号"
             android:inputType="phone" />
 
@@ -42,7 +42,7 @@
                 android:background="@color/nothing"
                 android:drawableLeft="@drawable/icon_phone3"
                 android:textColorHint="@color/text_hint_grey"
-                android:drawablePadding="5dp"
+                android:drawablePadding="10dp"
                 android:hint="请输入验证码"
                 android:inputType="number" />
 
@@ -74,7 +74,7 @@
             android:drawableLeft="@drawable/ic_lock"
             android:textColorHint="@color/text_hint_grey"
             android:hint="密码"
-            android:drawablePadding="5dp"
+            android:drawablePadding="10dp"
             android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz"
             android:inputType="textPassword" />
 
@@ -84,6 +84,7 @@
             style="@style/text_grey_new_small"
             android:layout_marginLeft="25dp"
             android:layout_marginTop="10dp"
+            android:textColor="@color/text_grey_ccc"
             android:text="6-15字母和数字的组合" />
 
 

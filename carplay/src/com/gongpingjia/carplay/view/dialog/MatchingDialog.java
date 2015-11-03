@@ -137,20 +137,28 @@ public class MatchingDialog extends BaseAlertDialog {
                 establish.put("city", UserLocation.getInstance().getCity());
                 establish.put("district", UserLocation.getInstance().getDistrict());
                 dhNet.addParam("establish", establish);
-                dhNet.doPost(new NetTask(context) {
-                    @Override
-                    public void doInUI(Response response, Integer transfer) {
-                        if (response.isSuccess()) {
-                            PointRecord record = PointRecord.getInstance();
-                            record.setActivityMatchCount(record.getActivityMatchCount() + 1);
-                            Toast.makeText(context, "发布成功", Toast.LENGTH_SHORT).show();
-                            if (mResult != null) {
-                                mResult.onResult(dhNet.getParams());
+                User user = User.getInstance();
+                if (user.isLogin()) {
+                    dhNet.doPost(new NetTask(context) {
+                        @Override
+                        public void doInUI(Response response, Integer transfer) {
+                            if (response.isSuccess()) {
+                                Toast.makeText(context, "发布成功", Toast.LENGTH_SHORT).show();
+                                if (mResult != null) {
+                                    mResult.onResult(dhNet.getParams());
+                                }
                             }
                         }
-                        dismiss();
+                    });
+                } else {
+                    if (mResult != null) {
+                        mResult.onResult(dhNet.getParams());
                     }
-                });
+                }
+                dismiss();
+                PointRecord record = PointRecord.getInstance();
+                record.setActivityMatchCount(record.getActivityMatchCount() + 1);
+
             }
         });
 

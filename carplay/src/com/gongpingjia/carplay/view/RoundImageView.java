@@ -84,7 +84,7 @@ public class RoundImageView extends ImageView {
                 }
 
                 UserInfoManage manager = UserInfoManage.getInstance();
-                manager.checkLogin((Activity) mContext, "true", new LoginCallBack() {
+                manager.checkLogin((Activity) mContext, new LoginCallBack() {
 
                     @Override
                     public void onisLogin() {
