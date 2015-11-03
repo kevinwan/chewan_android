@@ -79,6 +79,12 @@ public class MateLayerDialog extends BaseAlertDialog implements View.OnClickList
         btnMatch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                User user = User.getInstance();
+                if (user.isLogin()) {
+
+                }
+
                 final boolean pickOrNot = checkBox.isChecked();
                 if (selectIndex < 0) {
                     Toast.makeText(mContext, "请选择类型", Toast.LENGTH_SHORT).show();
@@ -134,20 +140,26 @@ public class MateLayerDialog extends BaseAlertDialog implements View.OnClickList
                 establish.put("city", UserLocation.getInstance().getCity());
                 establish.put("district", UserLocation.getInstance().getDistrict());
                 dhNet.addParam("establish", establish);
-                dhNet.doPost(new NetTask(mContext) {
-                    @Override
-                    public void doInUI(Response response, Integer transfer) {
-                        if (response.isSuccess()) {
-                            PointRecord record = PointRecord.getInstance();
-                            record.setActivityMatchCount(record.getActivityMatchCount() + 1);
-                            Toast.makeText(mContext, "发布成功", Toast.LENGTH_SHORT).show();
-                            if (mResult != null) {
-                                mResult.onResult(dhNet.getParams());
+                if (user.isLogin()) {
+                    dhNet.doPost(new NetTask(mContext) {
+                        @Override
+                        public void doInUI(Response response, Integer transfer) {
+                            if (response.isSuccess()) {
+                                Toast.makeText(mContext, "发布成功", Toast.LENGTH_SHORT).show();
+                                if (mResult != null) {
+                                    mResult.onResult(dhNet.getParams());
+                                }
                             }
                         }
-                        dismiss();
+                    });
+                } else {
+                    if (mResult != null) {
+                        mResult.onResult(dhNet.getParams());
                     }
-                });
+                }
+                dismiss();
+                PointRecord record = PointRecord.getInstance();
+                record.setActivityMatchCount(record.getActivityMatchCount() + 1);
             }
         });
 

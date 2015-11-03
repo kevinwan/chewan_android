@@ -54,6 +54,7 @@ import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.FilterPreference2;
+import com.gongpingjia.carplay.bean.PointRecord;
 import com.gongpingjia.carplay.bean.TabEB;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.chat.DemoHXSDKHelper;
@@ -144,6 +145,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
     User user;
     RelativeLayout free_layout;
     CheckBox free_ck;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -205,8 +207,8 @@ public class MainActivity2 extends BaseFragmentActivity implements
         tabV = (LinearLayout) findViewById(R.id.tab);
         titleBar = findViewById(R.id.titlebar);
         rightT = (TextView) findViewById(R.id.right_text);
-         free_layout = (RelativeLayout) findViewById(R.id.free);
-         free_ck = (CheckBox) findViewById(R.id.free_check);
+        free_layout = (RelativeLayout) findViewById(R.id.free);
+        free_ck = (CheckBox) findViewById(R.id.free_check);
         free_ck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -726,6 +728,28 @@ public class MainActivity2 extends BaseFragmentActivity implements
         }
 
         unregisterReceiver(cmdMessageReceiver);
+
+        PointRecord record = PointRecord.getInstance();
+
+        Log.d("msg", record.getActivityDynamicCallList().toString());
+        Log.d("msg", record.getActivityDynamicChatList().toString());
+        Log.d("msg", record.getTypeClick().toString());
+
+        Log.d("msg", record.getActivityMatchCount() + "");
+        Log.d("msg", record.getActivityMatchInvitedCountList().toString());
+        Log.d("msg", record.getDynamicNearbyInvitedList().toString());
+
+        Log.d("msg", record.getOfficialActivityChatJoinList().toString());
+
+        Log.d("msg", record.getOfficialActivityBuyTicketList().toString());
+
+        Log.d("msg", record.getUserRegister() + "");
+        Log.d("msg", record.getUnRegisterNearbyInvited() + "");
+
+
+        Log.d("msg", record.getUnRegisterMatchInvited() + "");
+
+
     }
 
     @Override

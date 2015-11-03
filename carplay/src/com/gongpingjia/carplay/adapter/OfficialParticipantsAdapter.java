@@ -102,7 +102,7 @@ public class OfficialParticipantsAdapter extends BaseAdapter {
         ViewHolder holder = null;
         if (null == convertView) {
             holder = new ViewHolder();
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_official_participants, null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_group, null);
             holder.head = (RoundImageView) convertView.findViewById(R.id.head);
             holder.name = (TextView) convertView.findViewById(R.id.nickname);
             holder.age = (TextView) convertView.findViewById(R.id.tv_age);

@@ -64,7 +64,7 @@ public class NearListActivity extends CarPlayListActivity implements PullToRefre
             }
         });
         mRecyclerView = listV.getRefreshableView();
-        adapter = new NearListAdapter(self);
+        adapter = new NearListAdapter(self, 2);
         adapter.setOnItemClick(new NearListAdapter.OnItemClick() {
             @Override
             public void onItemClick(int position, JSONObject jo) {

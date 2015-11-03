@@ -98,7 +98,9 @@ import com.easemob.util.PathUtil;
 import com.easemob.util.VoiceRecorder;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
+import com.gongpingjia.carplay.activity.active.OfficialParticipantsActivity;
 import com.gongpingjia.carplay.activity.main.PhotoSelectorActivity;
+import com.gongpingjia.carplay.adapter.OfficialMembersAdapter;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.JoinEB;
 import com.gongpingjia.carplay.bean.User;
@@ -414,7 +416,10 @@ public class ChatActivity extends CarPlayBaseActivity implements
             setRightAction(null, R.drawable.icon_group_member, new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    Intent it = new  Intent (self,);
+                    Intent it = new Intent(self, OfficialParticipantsActivity.class);
+                    it.putExtra("activityId", activiyId);
+                    it.putExtra("groupId", getIntent().getStringExtra("groupId"));
+                    startActivity(it);
                 }
             });
             // 群聊
@@ -543,7 +548,6 @@ public class ChatActivity extends CarPlayBaseActivity implements
 
     protected void onGroupViewCreation() {
         group = EMGroupManager.getInstance().getGroup(toChatUsername);
-
         if (group != null) {
             setTitle(group.getGroupName());
         } else {

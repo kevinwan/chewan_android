@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:my="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:descendantFocusability="blocksDescendants"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp"
+    android:paddingTop="12dp">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.gongpingjia.carplay.view.RoundImageView
+                android:id="@+id/head"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/head_icon" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/nickname"
+                    style="@style/text_black_big"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:text="陈小小" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <include layout="@layout/include_sex" />
+
+                    <TextView
+                        android:id="@+id/invitecount"
+                        style="@style/text_grey_medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="20m" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/invitelayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/invite"
+                    style="@style/text_black_big"
+                    android:layout_width="110dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/btn_blue_fillet"
+                    android:gravity="center"
+                    android:text="邀请同去"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/contactlayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
+
+                <com.gongpingjia.carplay.view.AnimButtonView
+                    android:id="@+id/sms"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    my:bg="@drawable/dynamic_blue"
+                    my:src="@drawable/dynamic_blue">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/chat_icon" />
+                </com.gongpingjia.carplay.view.AnimButtonView>
+
+
+                <com.gongpingjia.carplay.view.AnimButtonView
+                    android:id="@+id/call"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:layout_marginLeft="5dp"
+                    my:bg="@drawable/dynamic_green"
+                    my:src="@drawable/dynamic_green">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/phon_icon" />
+                </com.gongpingjia.carplay.view.AnimButtonView>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/headstatus"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="35dp"
+            android:src="@drawable/headaut_dl" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/acceptedlayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="70dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp">
+
+        <TextView
+            style="@style/text_black_medium"
+            android:text="已接受" />
+
+        <TextView
+            android:id="@+id/acceptedcount"
+            style="@style/text_black_medium"
+            android:layout_marginLeft="9dp"
+            android:layout_marginRight="15dp"
+            android:text="30" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_gravity="center_vertical"
+            android:scrollbars="horizontal" />
+
+    </LinearLayout>
+
+    <View
+        style="@style/line_horizontal"
+        android:layout_marginTop="12dp"></View>
+</LinearLayout>
