@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.bean.Matching;
+import com.gongpingjia.carplay.bean.PointRecord;
 import com.gongpingjia.carplay.bean.TabEB;
 import com.gongpingjia.carplay.view.AnimButtonView2;
 import com.gongpingjia.carplay.view.dialog.MatchingDialog;
@@ -163,40 +164,51 @@ public class MatePop implements Runnable, View.OnClickListener {
      */
     @Override
     public void onClick(View v) {
+        PointRecord record = PointRecord.getInstance();
         switch (v.getId()) {
             case R.id.exercise:
                 showMatchingDialog("足球", "篮球", "羽毛球", "桌球", "健身");
+                record.getTypeClick().add("运动");
                 break;
 
             //不需要付费类型
             case R.id.dog:
                 showMatchingDialog("遛狗");
+                record.getTypeClick().add("遛狗");
                 break;
             case R.id.shop:
                 showMatchingDialog("购物");
+                record.getTypeClick().add("购物");
                 break;
 
             //需要付费类型
             case R.id.film:
                 showMatchingDialog(context, "看电影");
+                record.getTypeClick().add("看电影");
                 break;
             case R.id.sing:
                 showMatchingDialog(context, "唱歌");
+                record.getTypeClick().add("唱歌");
                 break;
             case R.id.eat:
                 showMatchingDialog(context, "吃饭");
+                record.getTypeClick().add("吃饭");
                 break;
             case R.id.coffee:
                 showMatchingDialog(context, "咖啡");
+                record.getTypeClick().add("咖啡");
                 break;
             case R.id.night_eat:
                 showMatchingDialog(context, "夜宵");
+                record.getTypeClick().add("夜宵");
                 break;
             case R.id.night_shop:
                 showMatchingDialog(context, "夜店");
+                record.getTypeClick().add("夜店");
                 break;
             case R.id.beer:
                 showMatchingDialog(context, "喝酒");
+                record.getTypeClick().add("喝酒");
                 break;
         }
     }

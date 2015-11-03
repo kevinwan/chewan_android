@@ -27,6 +27,7 @@ import com.gongpingjia.carplay.activity.my.PersonDetailActivity2;
 import com.gongpingjia.carplay.adapter.BigImageAdapter;
 import com.gongpingjia.carplay.adapter.OfficialMembersAdapter;
 import com.gongpingjia.carplay.api.API2;
+import com.gongpingjia.carplay.bean.PointRecord;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.manage.UserInfoManage;
 import com.gongpingjia.carplay.view.CarPlayGallery;
@@ -357,12 +358,15 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
                 break;
             //前往购票
             case R.id.buytickets:
-                if(!TextUtils.isEmpty(linkTicketUrl)){
+                if (!TextUtils.isEmpty(linkTicketUrl)) {
+                    PointRecord record = PointRecord.getInstance();
+                    record.getOfficialActivityBuyTicketList().add(activeid);
+
                     Uri uri;
-                    if (linkTicketUrl.contains("http://")){
+                    if (linkTicketUrl.contains("http://")) {
                         uri = Uri.parse(linkTicketUrl);
-                    }else {
-                        uri = Uri.parse("http://"+linkTicketUrl);
+                    } else {
+                        uri = Uri.parse("http://" + linkTicketUrl);
                     }
                     Intent it = new Intent(Intent.ACTION_VIEW, uri);
                     startActivity(it);
@@ -376,6 +380,8 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
                 intent.putExtra("activityId", activeid);
                 intent.putExtra("groupId", group.getGroupId());
                 startActivity(intent);
+                PointRecord record = PointRecord.getInstance();
+                record.getOfficialActivityChatJoinList().add(activeid);
                 break;
         }
     }

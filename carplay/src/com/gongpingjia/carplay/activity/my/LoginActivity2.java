@@ -21,6 +21,7 @@ import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.activity.main.MainActivity2;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.LoginEB;
+import com.gongpingjia.carplay.bean.PointRecord;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.chat.Constant;
 import com.gongpingjia.carplay.chat.DemoHXSDKHelper;
@@ -81,6 +82,8 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
     private boolean isFromLogout;
     public static UserInfoManage.LoginCallBack loginCall;
 
+    String from;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +95,15 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
             ActivityTack.getInstanse().finishOthers(this);
         }
         User.getInstance().setLogin(false);
+        from = getIntent().getStringExtra("from");
+        if (!TextUtils.isEmpty(from)) {
+            PointRecord record = PointRecord.getInstance();
+            if (from.equals("附近")) {
+                record.setUnRegisterNearbyInvited(record.getUnRegisterNearbyInvited() + 1);
+            } else if (from.equals("匹配")) {
+                record.setUnRegisterMatchInvited(record.getUnRegisterMatchInvited() + 1);
+            }
+        }
     }
 
     @Override
@@ -189,6 +201,10 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
     private void register() {
         Intent it = new Intent(this, RegisterActivity2.class);
         startActivity(it);
+        if (!TextUtils.isEmpty(from)) {
+            PointRecord record = PointRecord.getInstance();
+            record.setUserRegister(record.getUserRegister() + 1);
+        }
     }
 
     //手机号码登陆

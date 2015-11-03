@@ -135,7 +135,7 @@ public class MatchingListFragment extends CarPlayBaseFragment implements PullToR
             }
         });
         mRecyclerView = listV.getRefreshableView();
-        adapter = new NearListAdapter(getActivity());
+        adapter = new NearListAdapter(getActivity(), 1);
         mRecyclerView.setAdapter(adapter);
         setOnLoadSuccess(this);
         fromWhat("data");

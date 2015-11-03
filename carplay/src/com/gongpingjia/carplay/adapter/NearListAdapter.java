@@ -32,6 +32,7 @@ import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.api.Constant;
+import com.gongpingjia.carplay.bean.PointRecord;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.manage.UserInfoManage;
 import com.gongpingjia.carplay.util.CarPlayUtil;
@@ -74,8 +75,11 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
     boolean transfer;
     String name;
     String activetype;
+
+    int type = 0;
+
     public static class SimpleViewHolder extends RecyclerView.ViewHolder {
-        TextView nickname, car_name, age, pay, transfer, location, distance, join_desT,promtpT;
+        TextView nickname, car_name, age, pay, transfer, location, distance, join_desT, promtpT;
         ImageView headatt, car_logo, sex, active_bg;
         AttentionImageView attention;
         RelativeLayout sexLayout;
@@ -118,6 +122,14 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
 
     }
 
+    public NearListAdapter(Context context, int type) {
+        mContext = context;
+        mCacheDir = new File(mContext.getExternalCacheDir(), "CarPlay");
+        mCacheDir.mkdirs();
+        this.type = type;
+
+    }
+
 
     public void removeItem(int position) {
         data.remove(position);
@@ -140,15 +152,15 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
 
         //用户信息,所在地,car信息,头像信息
         JSONObject userjo = JSONUtil.getJSONObject(jo, "organizer");
-         distancejo = JSONUtil.getJSONObject(jo, "destination");
+        distancejo = JSONUtil.getJSONObject(jo, "destination");
         JSONObject carjo = JSONUtil.getJSONObject(userjo, "car");
         JSONArray albumjsa = JSONUtil.getJSONArray(userjo, "album");
         //昵称,活动类型,年龄,性别,头像
-         activetype = JSONUtil.getString(jo, "type");
+        activetype = JSONUtil.getString(jo, "type");
         holder.nickname.setText(JSONUtil.getString(userjo, "nickname") + "想找人一起" + activetype);
         holder.age.setText(JSONUtil.getInt(userjo, "age") + "");
         String sex = JSONUtil.getString(userjo, "gender");
-         name = JSONUtil.getString(userjo, "nickname");
+        name = JSONUtil.getString(userjo, "nickname");
         boolean applyFlag = JSONUtil.getBoolean(jo, "applyFlag");
         holder.join_desT.setText(applyFlag ? "邀请中" : "邀 Ta");
         if (applyFlag) {
@@ -225,8 +237,8 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
         //关注,是否包接送,付费类型,活动类型
         holder.attention.setImageResource(JSONUtil.getBoolean(userjo, "subscribeFlag") ? R.drawable.icon_hearted : R.drawable.icon_heart);
         holder.attention.setOnClickListener(new MyOnClick(holder, position));
-         transfer = JSONUtil.getBoolean(jo, "transfer");
-         pay = JSONUtil.getString(jo, "pay");
+        transfer = JSONUtil.getBoolean(jo, "transfer");
+        pay = JSONUtil.getString(jo, "pay");
         holder.pay.setText(pay);
         if (transfer) {
             holder.transfer.setVisibility(View.VISIBLE);
@@ -241,10 +253,10 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
         holder.distance.setText(CarPlayUtil.numberWithDelimiter(distance));
 
 
-        if (distancejo == null||JSONUtil.getString(distancejo,"province").equals("")||JSONUtil.getString(distancejo,"city").equals("")||JSONUtil.getString(distancejo,"district").equals("")||JSONUtil.getString(distancejo,"street").equals("")||JSONUtil.getString(distancejo,"detail").equals("")) {
+        if (distancejo == null || JSONUtil.getString(distancejo, "province").equals("") || JSONUtil.getString(distancejo, "city").equals("") || JSONUtil.getString(distancejo, "district").equals("") || JSONUtil.getString(distancejo, "street").equals("") || JSONUtil.getString(distancejo, "detail").equals("")) {
             holder.location.setText("地点待定");
         } else {
-            holder.location.setText(JSONUtil.getString(distancejo, "province") + JSONUtil.getString(distancejo, "city") + JSONUtil.getString(distancejo, "district") + JSONUtil.getString(distancejo, "street")+JSONUtil.getString(distancejo,"detail"));
+            holder.location.setText(JSONUtil.getString(distancejo, "province") + JSONUtil.getString(distancejo, "city") + JSONUtil.getString(distancejo, "district") + JSONUtil.getString(distancejo, "street") + JSONUtil.getString(distancejo, "detail"));
         }
 
         String licenseAuthStatus = JSONUtil.getString(userjo, "licenseAuthStatus");
@@ -344,11 +356,26 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
                     });
                     break;
                 case R.id.invite:
-                    UserInfoManage.getInstance().checkLogin((Activity) mContext, new UserInfoManage.LoginCallBack() {
+                    String from = null;
+                    if (type == 0) {
+                        from = "附近";
+                    } else if (type == 1) {
+                        from = "匹配";
+                    } else if (type == 2) {
+                        from = "动态附近";
+                    }
+
+                    UserInfoManage.getInstance().checkLogin((Activity) mContext, from, new UserInfoManage.LoginCallBack() {
                         @Override
                         public void onisLogin() {
                             JSONObject jo = getItem(position);
                             join(JSONUtil.getString(jo, "activityId"), holder, jo);
+                            PointRecord record = PointRecord.getInstance();
+                            if (type == 1) {
+                                record.getActivityMatchInvitedCountList().add(JSONUtil.getString(jo, "activityId"));
+                            } else if (type == 2) {
+                                record.getDynamicNearbyInvitedList().add(JSONUtil.getString(jo, "activityId"));
+                            }
                         }
 
                         @Override
@@ -423,11 +450,11 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
         User user = User.getInstance();
         String url = API2.CWBaseurl + "activity/" + activeId + "/join?" + "userId=" + user.getUserId() + "&token=" + user.getToken();
         DhNet net = new DhNet(url);
-        net.addParam("type",activetype);
-        net.addParam("pay",pay);
-        net.addParam("transfer",transfer);
+        net.addParam("type", activetype);
+        net.addParam("pay", pay);
+        net.addParam("transfer", transfer);
 //        net.addParam("destPoint",destPoint);
-        net.addParam("destination",distancejo);
+        net.addParam("destination", distancejo);
         net.doPostInDialog(new NetTask(mContext) {
             @Override
             public void doInUI(Response response, Integer transfer) {

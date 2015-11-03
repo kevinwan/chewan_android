@@ -20,6 +20,7 @@ import com.gongpingjia.carplay.activity.chat.ChatActivity;
 import com.gongpingjia.carplay.activity.chat.VoiceCallActivity;
 import com.gongpingjia.carplay.activity.my.PersonDetailActivity2;
 import com.gongpingjia.carplay.api.API2;
+import com.gongpingjia.carplay.bean.PointRecord;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.view.AnimButtonView;
@@ -200,7 +201,6 @@ public class DyanmicBaseAdapter extends BaseAdapter {
             holder.invitationI.startScaleAnimation();
 
 
-
             CarPlayUtil.bindActiveButton2("邀请中", appointmentId, mContext, holder.yingyao_layout, holder.yingyaohou);
             String typeT = JSONUtil.getString(jo, "type");
             String name = JSONUtil.getString(js, "nickname");
@@ -254,10 +254,10 @@ public class DyanmicBaseAdapter extends BaseAdapter {
             String gender = JSONUtil.getString(js, "gender");
 
 //        String jied = JSONUtil.getString(json, "street");
-            if (json == null||JSONUtil.getString(json,"province").equals("")||JSONUtil.getString(json,"city").equals("")||JSONUtil.getString(json,"district").equals("")||JSONUtil.getString(json,"street").equals("")||JSONUtil.getString(json,"detail").equals("")) {
+            if (json == null || JSONUtil.getString(json, "province").equals("") || JSONUtil.getString(json, "city").equals("") || JSONUtil.getString(json, "district").equals("") || JSONUtil.getString(json, "street").equals("") || JSONUtil.getString(json, "detail").equals("")) {
                 holder.activity_place.setText("地点待定");
             } else {
-                holder.activity_place.setText(JSONUtil.getString(json, "province") + JSONUtil.getString(json, "city") + JSONUtil.getString(json, "district") + JSONUtil.getString(json, "street")+ JSONUtil.getString(json, "detail"));
+                holder.activity_place.setText(JSONUtil.getString(json, "province") + JSONUtil.getString(json, "city") + JSONUtil.getString(json, "district") + JSONUtil.getString(json, "street") + JSONUtil.getString(json, "detail"));
             }
 
 
@@ -329,11 +329,11 @@ public class DyanmicBaseAdapter extends BaseAdapter {
             });
 
             ViewUtil.bindNetImage(holder.activity_beijing, JSONUtil.getString(js, "avatar"), "back");
-            String message = JSONUtil.getString(jo,"message");
-            if (!message.isEmpty()){
+            String message = JSONUtil.getString(jo, "message");
+            if (!message.isEmpty()) {
                 holder.inviteT.setVisibility(View.VISIBLE);
                 holder.inviteT.setText(message);
-            }else{
+            } else {
                 holder.inviteT.setVisibility(View.GONE);
             }
 
@@ -396,6 +396,8 @@ public class DyanmicBaseAdapter extends BaseAdapter {
             holder.dyanmic_one.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    PointRecord record = PointRecord.getInstance();
+                    record.getActivityDynamicChatList().add(activityId);
                     Intent intent = new Intent(mContext, ChatActivity.class);
                     intent.putExtra("chatType", ChatActivity.CHATTYPE_SINGLE);
                     intent.putExtra("activityId", activityId);
@@ -412,6 +414,8 @@ public class DyanmicBaseAdapter extends BaseAdapter {
                         it.putExtra("username", js.getString("emchatName"));
                         it.putExtra("isComingCall", false);
                         mContext.startActivity(it);
+                        PointRecord record = PointRecord.getInstance();
+                        record.getActivityDynamicCallList().add(activityId);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -465,10 +469,10 @@ public class DyanmicBaseAdapter extends BaseAdapter {
     }
 
     class ViewHolder {
-        TextView titleT, dynamic_carname, pay_type, travelmode, activity_place, activity_distance, ageT, inviteT,invitationT;
+        TextView titleT, dynamic_carname, pay_type, travelmode, activity_place, activity_distance, ageT, inviteT, invitationT;
         ImageView dynamic_carlogo, activity_beijing, certification_achievement, sexI;
-        AnimButtonView dyanmic_one, dyanmic_two, yingyao, hulue,invitationI;
-        LinearLayout yingyao_layout, yingyaohou,invitation;
+        AnimButtonView dyanmic_one, dyanmic_two, yingyao, hulue, invitationI;
+        LinearLayout yingyao_layout, yingyaohou, invitation;
         private RelativeLayout sexbgR;
     }
 

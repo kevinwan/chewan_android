@@ -40,18 +40,23 @@ public class PointRecord {
      */
     public List<String> activityDynamicCallList = new ArrayList<>();
 
-    
+
     /**
      * 活动动态聊天事件
      */
 
-    public int activityDynamicChat = 0;
+    public List<String> activityDynamicChatList = new ArrayList<>();
+
+    /**
+     * 类型点击事件
+     */
+    public List<String> typeClick = new ArrayList<>();
 
     /**
      * 活动匹配邀他事件
      */
 
-    public int activityMatchInvitedCount = 0;
+    public List<String> activityMatchInvitedCountList = new ArrayList<>();
 
 
     /**
@@ -63,13 +68,13 @@ public class PointRecord {
     /**
      * 官方活动购票事件
      */
-    public int officialActivityBuyTicket = 0;
+    public List<String> officialActivityBuyTicketList = new ArrayList<>();
 
     /**
      * 官方活动加入群聊事件
      */
 
-    public int officialActivityChatJoin = 0;
+    public List<String> officialActivityChatJoinList = new ArrayList<>();
 
     /**
      * 打开APP事件
@@ -80,7 +85,8 @@ public class PointRecord {
     /**
      * 进入动态邀他事件
      */
-    public int dynamicNearbyInvited = 0;
+    public List<String> dynamicNearbyInvitedList = new ArrayList<>();
+
 
     public int getUnRegisterNearbyInvited() {
         return unRegisterNearbyInvited;
@@ -106,44 +112,52 @@ public class PointRecord {
         this.userRegister = userRegister;
     }
 
-    public int getActivityDynamicCall() {
-        return activityDynamicCall;
+    public List<String> getActivityDynamicCallList() {
+        return activityDynamicCallList;
     }
 
-    public void setActivityDynamicCall(int activityDynamicCall) {
-        this.activityDynamicCall = activityDynamicCall;
+    public void setActivityDynamicCallList(List<String> activityDynamicCallList) {
+        this.activityDynamicCallList = activityDynamicCallList;
     }
 
-    public int getActivityDynamicChat() {
-        return activityDynamicChat;
+    public List<String> getActivityDynamicChatList() {
+        return activityDynamicChatList;
     }
 
-    public void setActivityDynamicChat(int activityDynamicChat) {
-        this.activityDynamicChat = activityDynamicChat;
+    public void setActivityDynamicChatList(List<String> activityDynamicChatList) {
+        this.activityDynamicChatList = activityDynamicChatList;
     }
 
-    public int getActivityMatchInvitedCount() {
-        return activityMatchInvitedCount;
+    public List<String> getActivityMatchInvitedCountList() {
+        return activityMatchInvitedCountList;
     }
 
-    public void setActivityMatchInvitedCount(int activityMatchInvitedCount) {
-        this.activityMatchInvitedCount = activityMatchInvitedCount;
+    public void setActivityMatchInvitedCountList(List<String> activityMatchInvitedCountList) {
+        this.activityMatchInvitedCountList = activityMatchInvitedCountList;
     }
 
-    public int getOfficialActivityBuyTicket() {
-        return officialActivityBuyTicket;
+    public int getActivityMatchCount() {
+        return activityMatchCount;
     }
 
-    public void setOfficialActivityBuyTicket(int officialActivityBuyTicket) {
-        this.officialActivityBuyTicket = officialActivityBuyTicket;
+    public void setActivityMatchCount(int activityMatchCount) {
+        this.activityMatchCount = activityMatchCount;
     }
 
-    public int getOfficialActivityChatJoin() {
-        return officialActivityChatJoin;
+    public List<String> getOfficialActivityBuyTicketList() {
+        return officialActivityBuyTicketList;
     }
 
-    public void setOfficialActivityChatJoin(int officialActivityChatJoin) {
-        this.officialActivityChatJoin = officialActivityChatJoin;
+    public void setOfficialActivityBuyTicketList(List<String> officialActivityBuyTicketList) {
+        this.officialActivityBuyTicketList = officialActivityBuyTicketList;
+    }
+
+    public List<String> getOfficialActivityChatJoinList() {
+        return officialActivityChatJoinList;
+    }
+
+    public void setOfficialActivityChatJoinList(List<String> officialActivityChatJoinList) {
+        this.officialActivityChatJoinList = officialActivityChatJoinList;
     }
 
     public int getAppOpenCount() {
@@ -154,19 +168,19 @@ public class PointRecord {
         this.appOpenCount = appOpenCount;
     }
 
-    public int getDynamicNearbyInvited() {
-        return dynamicNearbyInvited;
+    public List<String> getDynamicNearbyInvitedList() {
+        return dynamicNearbyInvitedList;
     }
 
-    public void setDynamicNearbyInvited(int dynamicNearbyInvited) {
-        this.dynamicNearbyInvited = dynamicNearbyInvited;
+    public void setDynamicNearbyInvitedList(List<String> dynamicNearbyInvitedList) {
+        this.dynamicNearbyInvitedList = dynamicNearbyInvitedList;
     }
 
-    public int getActivityMatchCount() {
-        return activityMatchCount;
+    public List<String> getTypeClick() {
+        return typeClick;
     }
 
-    public void setActivityMatchCount(int activityMatchCount) {
-        this.activityMatchCount = activityMatchCount;
+    public void setTypeClick(List<String> typeClick) {
+        this.typeClick = typeClick;
     }
 }
