@@ -33,7 +33,7 @@
                 style="@style/text_black_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="55dp"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:background="@color/nothing"
                 android:gravity="center_vertical"
@@ -62,7 +62,7 @@
                 style="@style/text_black_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="55dp"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:background="@color/nothing"
                 android:gravity="center_vertical"
@@ -103,7 +103,7 @@
                 style="@style/text_black_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="55dp"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:background="@color/nothing"
                 android:gravity="center_vertical"
@@ -122,7 +122,7 @@
             android:layout_marginLeft="33dp"
             android:layout_marginTop="10dp"
             android:text="6-15位字母和数字组合"
-            android:textColor="@color/text_grey"
+            android:textColor="@color/text_grey_ccc"
             android:textSize="@dimen/text_small" />
 
         <RelativeLayout

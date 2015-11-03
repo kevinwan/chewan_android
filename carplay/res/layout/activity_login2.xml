@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingTop="40dp">
+        android:paddingTop="30dp">
 
         <ImageView
             android:id="@+id/iv_logo"
@@ -29,7 +29,9 @@
             android:layout_marginTop="10dp"
             android:background="@color/nothing"
             android:drawableLeft="@drawable/ic_phone"
-            android:drawablePadding="5dp"
+            android:hint="手机号"
+            android:textColorHint="@color/text_hint_grey"
+            android:drawablePadding="10dp"
             android:inputType="phone"
             android:textColor="@color/text_red" />
 
@@ -48,7 +50,9 @@
                 android:layout_weight="1"
                 android:background="@color/nothing"
                 android:drawableLeft="@drawable/ic_lock"
-                android:drawablePadding="5dp"
+                android:hint="密码"
+                android:textColorHint="@color/text_hint_grey"
+                android:drawablePadding="10dp"
                 android:inputType="textPassword"
                 android:textColor="@color/text_red" />
 
@@ -66,7 +70,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="30dp">
 
 
             <Button
@@ -109,7 +113,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="20dp"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -122,7 +126,7 @@
                 android:id="@+id/tv_tip"
                 style="@style/text_grey_medium"
                 android:layout_centerInParent="true"
-                android:textColor="@color/text_hint_grey"
+                android:textColor="@color/text_grey_ccc"
                 android:text="第三方账号直接登录" />
 
             <View

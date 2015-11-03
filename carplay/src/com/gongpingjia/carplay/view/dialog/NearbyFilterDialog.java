@@ -10,6 +10,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.bean.FilterPreference2;
 import com.gongpingjia.carplay.view.BaseAlertDialog;
 
 /**
@@ -33,6 +34,8 @@ public class NearbyFilterDialog extends BaseAlertDialog implements
     String pay="不限";
     String gender="不限";
     boolean transfer=true;
+
+    FilterPreference2 pre;
 
     OnNearbyFilterResultListener nearbyFilterResultListener;
 
@@ -80,10 +83,10 @@ public class NearbyFilterDialog extends BaseAlertDialog implements
                 transfer = active_transfer.isChecked();
                 if (nearbyFilterResultListener != null) {
 //                    System.out.println("type:" + type + "pay:" + pay + "gender:" + gender + "transfer" + transfer);
-
                     nearbyFilterResultListener.onResult(type.replace("不限",""), pay.replace("不限",""), gender.replace("不限",""), transfer);
-                }
 
+
+                }
             }
         });
 
