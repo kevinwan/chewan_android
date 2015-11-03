@@ -450,11 +450,11 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
         User user = User.getInstance();
         String url = API2.CWBaseurl + "activity/" + activeId + "/join?" + "userId=" + user.getUserId() + "&token=" + user.getToken();
         DhNet net = new DhNet(url);
-        net.addParam("type", activetype);
-        net.addParam("pay", pay);
-        net.addParam("transfer", transfer);
+        net.addParam("type", JSONUtil.getString(jo, "type"));
+        net.addParam("pay", JSONUtil.getString(jo, "pay"));
+        net.addParam("transfer",JSONUtil.getBoolean(jo, "transfer"));
 //        net.addParam("destPoint",destPoint);
-        net.addParam("destination", distancejo);
+        net.addParam("destination",JSONUtil.getJSONObject(jo, "destination"));
         net.doPostInDialog(new NetTask(mContext) {
             @Override
             public void doInUI(Response response, Integer transfer) {

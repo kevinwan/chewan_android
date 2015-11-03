@@ -222,6 +222,11 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
 
                     //第三方购票连接
                     linkTicketUrl = JSONUtil.getString(jo, "linkTicketUrl");
+                    if(linkTicketUrl.isEmpty()){
+                        buyticketsBtn.setVisibility(View.GONE);
+                    }else{
+                        buyticketsBtn.setVisibility(View.VISIBLE);
+                    }
                     //群组id
                     emchatGroupId = JSONUtil.getString(jo, "emchatGroupId");
 

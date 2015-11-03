@@ -261,7 +261,7 @@ public class InterestedPersonAdapter extends BaseAdapter {
             switch (view.getId()) {
                 case R.id.invitationI:
                     JSONObject jo = getItem(position);
-                    join(activityId, holder, jo);
+                    join(JSONUtil.getString(jo, "relatedId"), holder, jo);
                     break;
             }
         }
@@ -271,11 +271,11 @@ public class InterestedPersonAdapter extends BaseAdapter {
         User user = User.getInstance();
         String url = API2.CWBaseurl + "activity/" + activeId + "/join?" + "userId=" + user.getUserId() + "&token=" + user.getToken();
         DhNet net = new DhNet(url);
-        net.addParam("type", activityType);
-        net.addParam("pay", pay);
-        net.addParam("transfer", activityTransfer);
+        net.addParam("type", JSONUtil.getString(jo,"activityType"));
+        net.addParam("pay", JSONUtil.getString(jo,"activityPay"));
+        net.addParam("transfer", JSONUtil.getString(jo,"activityTransfer"));
 //        net.addParam("destPoint",destPoint);
-        net.addParam("destination", distancejo);
+        net.addParam("destination", JSONUtil.getJSONObject(jo, "activityDestination"));
         net.doPostInDialog(new NetTask(mContext) {
             @Override
             public void doInUI(Response response, Integer transfer) {
