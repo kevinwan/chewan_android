@@ -40,7 +40,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/nothing"
-                android:drawableLeft="@drawable/ic_lock"
+                android:drawableLeft="@drawable/icon_phone3"
+                android:textColorHint="@color/text_hint_grey"
                 android:drawablePadding="5dp"
                 android:hint="请输入验证码"
                 android:inputType="number" />
@@ -50,6 +51,8 @@
                 <Button
                     android:id="@+id/tv_get_code"
                     android:layout_width="wrap_content"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
                     android:layout_height="40dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
@@ -57,7 +60,7 @@
                     android:gravity="center"
                     android:text="获取验证码"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_medium" />
+                    android:textSize="@dimen/text_small" />
 
         </RelativeLayout>
 
@@ -69,6 +72,8 @@
             android:layout_height="50dp"
             android:background="@color/nothing"
             android:drawableLeft="@drawable/ic_lock"
+            android:textColorHint="@color/text_hint_grey"
+            android:hint="密码"
             android:drawablePadding="5dp"
             android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz"
             android:inputType="textPassword" />
@@ -86,7 +91,7 @@
             android:id="@+id/btn_register"
             style="@style/text_white_medium"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="25dp"
             android:background="@drawable/btn_red_fillet"
             android:minWidth="100dp"
             android:paddingLeft="70dp"
