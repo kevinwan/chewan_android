@@ -27,7 +27,7 @@ public class VersionIntroActivity extends CarPlayBaseActivity {
 
         setTitle("版本介绍");
         mIntroText = (TextView) findViewById(R.id.tv_version_intro);
-        String text = "<font color='#aab2bd'>同城活动: </font>最火爆的同城交友活动,自驾游吃饭...约上附近的车友一起各种happy<br><font color='#aab2bd'>发布活动: </font>不管你是有车还是没车都可以参加<br><font color='#aab2bd'>抢车座: </font>加入活动可以抢座在男神女神旁边活动成员聊天;活动的成员可以聚在一起各种聊天,成为朋友<br><font color='#aab2bd'>车主认证: </font>如果你有车你就可以认证车主通过以后你将更有吸引力";
+        String text = "<font color='#aab2bd'>推荐活动: </font>官方精选的靠谱的活动，活跃度高，安全有保障<br><font color='#aab2bd'>附近活动: </font>附近的Ta发布活动了，唱歌、吃饭、购物，还包接送<br><font color='#aab2bd'>匹配活动: </font>想去嗨皮？不用发完活动干等着，分分钟找到附近和你一起想去嗨皮的小伙伴<br><font color='#aab2bd'>车主认证: </font>百分百车主官方认证，交友出行100%有保障";
         mIntroText.setText(Html.fromHtml(text));
     }
 

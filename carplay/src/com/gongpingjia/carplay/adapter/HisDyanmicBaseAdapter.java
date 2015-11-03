@@ -136,12 +136,13 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
          pay = JSONUtil.getString(jo, "pay");
         activityId = JSONUtil.getString(jo, "activityId");
          type = JSONUtil.getString(jo, "type");
+        System.out.println("他的活动type:"+JSONUtil.getString(jo, "type"));
         transfer = JSONUtil.getBoolean(jo, "transfer");
         int status = JSONUtil.getInt(jo, "status");
         holder.titleT.setText(bundle.getString("name") + "想约人" + type);
         holder.pay_type.setText(pay);
 //        ViewUtil.bindNetImage(holder.activity_beijing, cover, "default");
-        System.out.println("adapter;;;;;;;;;;;;"+cover);
+        System.out.println("adapter;;;;;;;;;;;;" + cover);
         ImageLoader.getInstance().displayImage(cover, holder.activity_beijing, CarPlayValueFix.optionsDefault, new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String s, View view) {
@@ -198,6 +199,12 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
             holder.invitation.setVisibility(View.GONE);
             holder.yingyaohou.setVisibility(View.VISIBLE);
 
+        }else if (status == 3) {
+            holder.invitation.setVisibility(View.VISIBLE);
+            holder.yingyaohou.setVisibility(View.GONE);
+            holder.invitationT.setText("邀 TA");
+            holder.invitationI.setResourseAndBg(R.drawable.red_circle
+                    , R.drawable.red_circle);
         }
 
         if (transfer == true) {
@@ -231,7 +238,7 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
             holder.dynamic_carname.setVisibility(View.GONE);
         }
         int distances = (int) Math.floor(distance);
-        System.out.println("传值+++++++"+distance+"/////转换："+distances);
+//        System.out.println("传值+++++++"+distance+"/////转换："+distances);
         holder.activity_distance.setText(CarPlayUtil.numberWithDelimiter(distances));
         JSONObject json = JSONUtil.getJSONObject(jo, "destination");
         if (json == null||JSONUtil.getString(json,"province").equals("")||JSONUtil.getString(json,"city").equals("")||JSONUtil.getString(json,"district").equals("")||JSONUtil.getString(json,"street").equals("")||JSONUtil.getString(json,"detail").equals("")) {

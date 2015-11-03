@@ -70,8 +70,8 @@ public class SettingActivity2 extends CarPlayBaseActivity implements View.OnClic
                 startActivity(it);
                 break;
             case R.id.setting_versions:
-//                it = new Intent(this, VersionIntroActivity.class);
-//                startActivity(it);
+                it = new Intent(this, VersionIntroActivity.class);
+                startActivity(it);
                 break;
             case R.id.layout_modifypwd:
                 it = new Intent(this, RevisePassword.class);
