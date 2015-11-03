@@ -55,30 +55,7 @@
 
         </View>
     </RelativeLayout>
-    <RelativeLayout
-        android:id="@+id/free"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="#000000">
-        <TextView
-            style="@style/text_white_medium"
-            android:layout_marginLeft="10dp"
-            android:layout_centerVertical="true"
-            android:text="有空， 其他人可以邀请你参加活动"/>
-        <CheckBox
-            android:id="@+id/free_check"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:button="@null"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginRight="10dp"
-            android:layout_alignParentRight="true"
-            android:padding="2dp"
-            android:background="@drawable/btn_checkbox_free"/>
 
-    </RelativeLayout>
 
 
 

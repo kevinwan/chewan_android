@@ -6,7 +6,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.gongpingjia.carplay.ILoadSuccess;
 import com.gongpingjia.carplay.R;
@@ -24,7 +27,10 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
 
 import net.duohuo.dhroid.ioc.IocContainer;
+import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
+import net.duohuo.dhroid.net.NetTask;
+import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.util.UserLocation;
 
 import org.json.JSONObject;
@@ -44,7 +50,8 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
     PullToRefreshRecyclerViewVertical listV;
 
     boolean isfirst;
-
+    RelativeLayout free_layout;
+    CheckBox free_ck;
     User user;
 
     FilterPreference2 pre;
@@ -79,6 +86,41 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
         pre = IocContainer.getShare().get(FilterPreference2.class);
         pre.load();
         near_layout = (LinearLayout) mainV.findViewById(R.id.near_empty);
+        free_layout = (RelativeLayout)  mainV.findViewById(R.id.free);
+        free_layout.getBackground().setAlpha(179);
+        free_ck = (CheckBox)  mainV.findViewById(R.id.free_check);
+        free_ck.setChecked(true);
+        free_ck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b == true) {
+//                    System.out.println("有空");
+                    DhNet net = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId() + "/info?token=" + user.getToken());
+                    net.addParam("idle", true);
+                    net.doPostInDialog(new NetTask(getActivity()) {
+                        @Override
+                        public void doInUI(Response response, Integer transfer) {
+                            if (response.isSuccess()) {
+                                System.out.println(response.isSuccess());
+                            }
+                        }
+                    });
+                } else {
+//                    System.out.println("没空");
+                    DhNet net = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId() + "/info?token=" + user.getToken());
+                    net.addParam("idle", false);
+                    net.doPostInDialog(new NetTask(getActivity()) {
+                        @Override
+                        public void doInUI(Response response, Integer transfer) {
+                            if (response.isSuccess()) {
+                                System.out.println(response.isSuccess());
+                            }
+                        }
+                    });
+                }
+
+            }
+        });
         listV = (PullToRefreshRecyclerViewVertical) mainV.findViewById(R.id.list);
         listV.setMode(PullToRefreshBase.Mode.BOTH);
         listV.setOnRefreshListener(this);
