@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingTop="20dp">
+        android:paddingTop="40dp">
 
         <ImageView
             android:id="@+id/iv_logo"
@@ -73,7 +73,7 @@
                 android:id="@+id/btn_login"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="3dp"
+                android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/btn_red_fillet"
                 android:text="登录"
@@ -84,7 +84,7 @@
                 android:id="@+id/btn_register"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="3dp"
+                android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/btn_blue_fillet"
                 android:text="注册"
@@ -99,15 +99,17 @@
             android:layout_marginTop="20dp"
             android:gravity="center"
             android:minHeight="20dp"
-            android:text="忘记密码?"
-            android:textColor="@color/text_grey" />
+            android:drawableLeft="@drawable/forget_icon"
+            android:textColor="#75ced6"
+            android:drawablePadding="10dp"
+            android:text="忘记密码?" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="30dp"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -120,6 +122,7 @@
                 android:id="@+id/tv_tip"
                 style="@style/text_grey_medium"
                 android:layout_centerInParent="true"
+                android:textColor="@color/text_hint_grey"
                 android:text="第三方账号直接登录" />
 
             <View
@@ -147,24 +150,24 @@
 
             <ImageView
                 android:id="@+id/iv_weixin"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_weight="1"
                 android:src="@drawable/icon_weixin" />
 
 
             <ImageView
                 android:id="@+id/iv_qq"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_weight="1"
                 android:src="@drawable/icon_qq" />
 
 
             <ImageView
                 android:id="@+id/iv_weibo"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_weight="1"
                 android:src="@drawable/icon_weibo" />
 

@@ -27,13 +27,25 @@
                 android:layout_height="match_parent"
                 />
 
-
-            <com.gongpingjia.carplay.view.RoundImageView
-                android:id="@+id/head"
-                android:layout_width="113dp"
-                android:layout_height="113dp"
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="33dp" />
+                android:background="@drawable/circle_ring_bg">
+                <ImageView
+                    android:layout_width="170dp"
+                    android:layout_height="170dp"
+                    android:layout_centerInParent="true"/>
+                <com.gongpingjia.carplay.view.RoundImageView
+                    android:id="@+id/head"
+                    android:layout_width="113dp"
+                    android:layout_height="113dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="33dp"
+                    />
+
+            </RelativeLayout>
+
 
             <TextView
                 android:id="@+id/attestation"

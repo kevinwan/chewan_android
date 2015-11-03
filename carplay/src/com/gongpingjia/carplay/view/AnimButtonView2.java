@@ -5,7 +5,6 @@ import android.content.res.TypedArray;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.AnimationSet;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
@@ -23,12 +22,14 @@ public class AnimButtonView2 extends RelativeLayout {
 //    private static final int OFFSET = 600; // 每个动画的播放时间间隔
 //    private static final int MSG_WAVE2_ANIMATION = 2;
 
-    RoundImageView image1, image2;
-
+//    RoundImageView image1, image2;
+RoundImageView image1;
 
     RoundImageView bg;
 
-    private AnimationSet mAnimationSet_bg, mAnimationSet_bg2, mAnimationSet_img, mAnimationSet_img2;
+    private AnimationSet mAnimationSet_bg, mAnimationSet_img;
+//    AnimationSet mAnimationSet_bg2,
+//            mAnimationSet_img2;
 
 
 //    private Handler mHandler = new Handler() {
@@ -71,9 +72,9 @@ public class AnimButtonView2 extends RelativeLayout {
 //        addView(image2);
         addView(bg);
         mAnimationSet_bg = initAnimationSet_bg();
-        mAnimationSet_bg2 = initAnimationSet_bg2();
+//        mAnimationSet_bg2 = initAnimationSet_bg2();
         mAnimationSet_img = initAnimationSet_img();
-        mAnimationSet_img2 = initAnimationSet_img2();
+//        mAnimationSet_img2 = initAnimationSet_img2();
         a.recycle();
 
 //        startAnimation();
@@ -84,59 +85,50 @@ public class AnimButtonView2 extends RelativeLayout {
         ScaleAnimation sa = new ScaleAnimation(1f, 1.4f, 1f, 1.4f,
                 ScaleAnimation.RELATIVE_TO_SELF, 0.5f,
                 ScaleAnimation.RELATIVE_TO_SELF, 0.5f);
+        sa.setRepeatMode(ScaleAnimation.REVERSE);
+
         sa.setDuration(350);
-//        sa.setRepeatCount(Animation.INFINITE);// 设置循环
+        sa.setRepeatCount(1);// 设置循环
 //        AlphaAnimation aa = new AlphaAnimation(1, 0.1f);
-        AlphaAnimation aa = new AlphaAnimation(1, 1f);
-        aa.setDuration(350);
-//        aa.setRepeatCount(Animation.INFINITE);// 设置循环
         as.addAnimation(sa);
-        as.addAnimation(aa);
         return as;
     }
 
-    private AnimationSet initAnimationSet_bg2() {
-        AnimationSet as = new AnimationSet(true);
-        ScaleAnimation sa = new ScaleAnimation(1.4f, 1f, 1.4f, 1f,
-                ScaleAnimation.RELATIVE_TO_SELF, 0.5f,
-                ScaleAnimation.RELATIVE_TO_SELF, 0.5f);
-        sa.setDuration(350);
-//        sa.setRepeatCount(Animation.INFINITE);// 设置循环
-//        AlphaAnimation aa = new AlphaAnimation(1, 0.1f);
-        AlphaAnimation aa = new AlphaAnimation(1, 1f);
-        aa.setDuration(350);
-//        aa.setRepeatCount(Animation.INFINITE);// 设置循环
-        as.addAnimation(sa);
-        as.addAnimation(aa);
-        return as;
-    }
+//    private AnimationSet initAnimationSet_bg2() {
+//        AnimationSet as = new AnimationSet(true);
+//        ScaleAnimation sa = new ScaleAnimation(1.4f, 1f, 1.4f, 1f,
+//                ScaleAnimation.RELATIVE_TO_SELF, 0.5f,
+//                ScaleAnimation.RELATIVE_TO_SELF, 0.5f);
+//        sa.setDuration(350);
+////        sa.setRepeatCount(Animation.INFINITE);// 设置循环
+////        AlphaAnimation aa = new AlphaAnimation(1, 0.1f);
+//        AlphaAnimation aa = new AlphaAnimation(1, 1f);
+//        aa.setDuration(350);
+////        aa.setRepeatCount(Animation.INFINITE);// 设置循环
+//        as.addAnimation(sa);
+//        as.addAnimation(aa);
+//        return as;
+//    }
 
     private AnimationSet initAnimationSet_img() {
         AnimationSet as = new AnimationSet(true);
         ScaleAnimation sa = new ScaleAnimation(1f, 1.1f, 1f, 1.1f,
                 ScaleAnimation.RELATIVE_TO_SELF, 0.5f,
                 ScaleAnimation.RELATIVE_TO_SELF, 0.5f);
-        sa.setDuration(300);
+        sa.setRepeatMode(ScaleAnimation.REVERSE);
+
+        sa.setDuration(350);
+        sa.setRepeatCount(1);// 设置循环
+
 //        sa.setRepeatCount(Animation.INFINITE);// 设置循环
         as.addAnimation(sa);
         return as;
     }
 
-    private AnimationSet initAnimationSet_img2() {
-        AnimationSet as = new AnimationSet(true);
-        ScaleAnimation sa = new ScaleAnimation(1.1f, 1f, 1.1f, 1f,
-                ScaleAnimation.RELATIVE_TO_SELF, 0.5f,
-                ScaleAnimation.RELATIVE_TO_SELF, 0.5f);
-        sa.setDuration(300);
-        as.addAnimation(sa);
-        return as;
-    }
 
     public void startAnimation() {
         bg.startAnimation(mAnimationSet_img);
-        mHandler2.sendEmptyMessageDelayed(1, 300);
-        mHandler2.sendEmptyMessageDelayed(2, 600);
-        mHandler2.sendEmptyMessageDelayed(3, 950);
+        mHandler2.sendEmptyMessageDelayed(1, 700);
 //        image1.startAnimation(mAnimationSet1);
 //        mHandler.sendEmptyMessageDelayed(MSG_WAVE2_ANIMATION, OFFSET);
     }
@@ -146,14 +138,14 @@ public class AnimButtonView2 extends RelativeLayout {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
-                    bg.startAnimation(mAnimationSet_img2);
-                    break;
-                case 2:
                     image1.startAnimation(mAnimationSet_bg);
                     break;
-                case 3:
-                    image1.startAnimation(mAnimationSet_bg2);
-                    break;
+//                case 2:
+//                    image1.startAnimation(mAnimationSet_bg);
+//                    break;
+//                case 3:
+//                    image1.startAnimation(mAnimationSet_bg2);
+//                break;
             }
         }
     };
@@ -164,15 +156,15 @@ public class AnimButtonView2 extends RelativeLayout {
             mAnimationSet_bg.cancel();
         }
 
-        if (mAnimationSet_bg2 != null) {
-            mAnimationSet_bg2.cancel();
-        }
+//        if (mAnimationSet_bg2 != null) {
+//            mAnimationSet_bg2.cancel();
+//        }
         if (mAnimationSet_img != null) {
             mAnimationSet_img.cancel();
         }
-        if (mAnimationSet_img2 != null) {
-            mAnimationSet_img2.cancel();
-        }
+//        if (mAnimationSet_img2 != null) {
+//            mAnimationSet_img2.cancel();
+//        }
     }
 
 
