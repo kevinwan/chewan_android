@@ -56,7 +56,6 @@ import java.util.Map;
  * Demo UI HX SDK helper class which subclass HXSDKHelper
  *
  * @author easemob
- *
  */
 public class DemoHXSDKHelper extends HXSDKHelper {
 
@@ -337,8 +336,9 @@ public class DemoHXSDKHelper extends HXSDKHelper {
 
                 String nickName = message.getStringAttribute("nickName", "");
 
-                return nickName + ": " + ticker;
-                // if (robotMap != null &&
+//                return nickName + ": " + ticker;
+                return ticker;
+//                 if (robotMap != null &&
                 // robotMap.containsKey(message.getFrom())) {
                 // String nick = robotMap.get(message.getFrom()).getNick();
                 // if (!TextUtils.isEmpty(nick)) {

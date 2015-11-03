@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -116,7 +117,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
             if (type == 0) {
                 holder = new ViewHolder();
                 view = LayoutInflater.from(mContext).inflate(R.layout.item_activelist, viewGroup, false);
-
+                holder.layoutV = (RelativeLayout) view.findViewById(R.id.layout);
                 holder.yingyaohou = (LinearLayout) view.findViewById(R.id.yingyaohou);
                 holder.yingyao_layout = (LinearLayout) view.findViewById(R.id.yingyao_layout);
                 holder.invitation = (LinearLayout) view.findViewById(R.id.invitation);
@@ -147,7 +148,9 @@ public class DyanmicBaseAdapter extends BaseAdapter {
 
                 holder.activity_distance = (TextView) view.findViewById(R.id.active_distance);
                 view.setTag(holder);
-
+                FrameLayout.LayoutParams pams = (FrameLayout.LayoutParams) holder.layoutV.getLayoutParams();
+                pams.height = API2.ImageHeight;
+                holder.layoutV.setLayoutParams(pams);
             } else {
                 view = LayoutInflater.from(mContext).inflate(R.layout.item_offical, viewGroup, false);
                 officialHolder = new OfficialHolder();
@@ -164,7 +167,12 @@ public class DyanmicBaseAdapter extends BaseAdapter {
                 officialHolder.femaleLimitT = (TextView) view.findViewById(R.id.femaleLimit);
                 officialHolder.femaleNumT = (TextView) view.findViewById(R.id.femaleNum);
                 officialHolder.cityT = (TextView) view.findViewById(R.id.city);
+                officialHolder.layoutV = (RelativeLayout) view.findViewById(R.id.layout);
                 view.setTag(officialHolder);
+                LinearLayout.LayoutParams pams = (LinearLayout.LayoutParams) officialHolder.layoutV.getLayoutParams();
+                pams.height = API2.ImageHeight;
+                officialHolder.layoutV.setLayoutParams(pams);
+
             }
 //
 
@@ -473,6 +481,8 @@ public class DyanmicBaseAdapter extends BaseAdapter {
         ImageView dynamic_carlogo, activity_beijing, certification_achievement, sexI;
         AnimButtonView dyanmic_one, dyanmic_two, yingyao, hulue, invitationI;
         LinearLayout yingyao_layout, yingyaohou, invitation;
+
+        RelativeLayout layoutV;
         private RelativeLayout sexbgR;
     }
 
@@ -481,6 +491,8 @@ public class DyanmicBaseAdapter extends BaseAdapter {
         TextView titleT, locationT, priceT, infoT, priceDescT, cityT;
         TextView maleLimitT, maleNumT, femaleLimitT, femaleNumT;
         ImageView picI, headI;
+
+        RelativeLayout layoutV;
 
     }
 }

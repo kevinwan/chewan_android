@@ -76,9 +76,9 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
     String name;
     String activetype;
 
-    int type = 0;
+    public int type = 0;
 
-    public static class SimpleViewHolder extends RecyclerView.ViewHolder {
+    public class SimpleViewHolder extends RecyclerView.ViewHolder {
         TextView nickname, car_name, age, pay, transfer, location, distance, join_desT, promtpT;
         ImageView headatt, car_logo, sex, active_bg;
         AttentionImageView attention;
@@ -87,6 +87,8 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
         Button upload, takephotos, album;
 
         View phtotoV;
+
+        RelativeLayout layout;
 
         public SimpleViewHolder(View view) {
             super(view);
@@ -110,6 +112,13 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
             join_desT = (TextView) view.findViewById(R.id.join_des);
             phtotoV = view.findViewById(R.id.phtoto);
             promtpT = (TextView) view.findViewById(R.id.promtp);
+            layout = (RelativeLayout) view.findViewById(R.id.layout);
+
+//            if (type != 0) {
+//                LinearLayout.LayoutParams pams = (LinearLayout.LayoutParams) layout.getLayoutParams();
+//                pams.height = API2.ImageHeight;
+//                layout.setLayoutParams(pams);
+//            }
 
         }
     }
@@ -216,7 +225,11 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
                     } else {
                         img.setImageBitmap(bitmap);
                     }
+                    if (API2.ImageHeight == 0) {
+                        API2.ImageHeight = holder.active_bg.getHeight();
+                    }
                 }
+
             }
 
             @Override

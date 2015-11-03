@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -122,6 +123,10 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
             holder.activity_distance = (TextView) view.findViewById(R.id.active_distance);
             holder.invitationT = (TextView) view.findViewById(R.id.invitationT);
 
+            holder.layoutV = (RelativeLayout) view.findViewById(R.id.layout);
+            FrameLayout.LayoutParams pams = (FrameLayout.LayoutParams) holder.layoutV.getLayoutParams();
+            pams.height = API2.ImageHeight;
+            holder.layoutV.setLayoutParams(pams);
             view.setTag(holder);
 
 
@@ -138,7 +143,6 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
         pay = JSONUtil.getString(jo, "pay");
         activityId = JSONUtil.getString(jo, "activityId");
         type = JSONUtil.getString(jo, "type");
-        System.out.println("他的活动type:" + JSONUtil.getString(jo, "type"));
         transfer = JSONUtil.getBoolean(jo, "transfer");
         int status = JSONUtil.getInt(jo, "status");
         holder.titleT.setText(bundle.getString("name") + "想约人" + type);
@@ -240,7 +244,7 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
             holder.dynamic_carname.setVisibility(View.GONE);
         }
         int distances = (int) Math.floor(distance);
-//        System.out.println("传值+++++++"+distance+"/////转换："+distances);
+        System.out.println("传值+++++++" + distance + "/////转换：" + distances);
         holder.activity_distance.setText(CarPlayUtil.numberWithDelimiter(distances));
         JSONObject json = JSONUtil.getJSONObject(jo, "destination");
         if (json == null || JSONUtil.getString(json, "province").equals("") || JSONUtil.getString(json, "city").equals("") || JSONUtil.getString(json, "district").equals("") || JSONUtil.getString(json, "street").equals("") || JSONUtil.getString(json, "detail").equals("")) {
@@ -336,6 +340,7 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
         AnimButtonView dyanmic_one, dyanmic_two, invitationI;
         LinearLayout yingyaohou, invitation;
         RelativeLayout sexbgR;
+        RelativeLayout layoutV;
     }
 
 }

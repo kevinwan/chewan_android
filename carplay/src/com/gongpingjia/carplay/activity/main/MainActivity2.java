@@ -77,6 +77,7 @@ import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.net.upload.FileInfo;
 import net.duohuo.dhroid.util.PhotoUtil;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -756,25 +757,26 @@ public class MainActivity2 extends BaseFragmentActivity implements
 
         unregisterReceiver(cmdMessageReceiver);
 
-        PointRecord record = PointRecord.getInstance();
-
-        Log.d("msg", record.getActivityDynamicCallList().toString());
-        Log.d("msg", record.getActivityDynamicChatList().toString());
-        Log.d("msg", record.getTypeClick().toString());
-
-        Log.d("msg", record.getActivityMatchCount() + "");
-        Log.d("msg", record.getActivityMatchInvitedCountList().toString());
-        Log.d("msg", record.getDynamicNearbyInvitedList().toString());
-
-        Log.d("msg", record.getOfficialActivityChatJoinList().toString());
-
-        Log.d("msg", record.getOfficialActivityBuyTicketList().toString());
-
-        Log.d("msg", record.getUserRegister() + "");
-        Log.d("msg", record.getUnRegisterNearbyInvited() + "");
-
-
-        Log.d("msg", record.getUnRegisterMatchInvited() + "");
+//        PointRecord record = PointRecord.getInstance();
+//
+//        Log.d("msg", record.getActivityDynamicCallList().toString());
+//        Log.d("msg", record.getActivityDynamicChatList().toString());
+//        Log.d("msg", record.getTypeClick().toString());
+//
+//        Log.d("msg", record.getActivityMatchCount() + "");
+//        Log.d("msg", record.getActivityMatchInvitedCountList().toString());
+//        Log.d("msg", record.getDynamicNearbyInvitedList().toString());
+//
+//        Log.d("msg", record.getOfficialActivityChatJoinList().toString());
+//
+//        Log.d("msg", record.getOfficialActivityBuyTicketList().toString());
+//
+//        Log.d("msg", record.getUserRegister() + "");
+//        Log.d("msg", record.getUnRegisterNearbyInvited() + "");
+//
+//
+//        Log.d("msg", record.getUnRegisterMatchInvited() + "");
+        uploadPointRecord();
 
 
     }
@@ -990,6 +992,52 @@ public class MainActivity2 extends BaseFragmentActivity implements
             public void doInUI(Response response, Integer transfer) {
                 if (response.isSuccess()) {
                     Log.d("msg", "成功");
+                }
+            }
+        });
+    }
+
+
+    private void uploadPointRecord() {
+        PointRecord record = PointRecord.getInstance();
+        String url = API2.CWBaseurl + "record/upload?" + "userId=" + User.getInstance().getUserId();
+        DhNet net = new DhNet(url);
+        net.addParam("unRegisterNearbyInvited", record.getUnRegisterNearbyInvited());
+        net.addParam("unRegisterMatchInvited", record.getUnRegisterMatchInvited());
+        net.addParam("userRegister", record.getUserRegister());
+
+        JSONArray activityDynamicCallList = new JSONArray(record.getActivityDynamicCallList());
+        net.addParam("activityDynamicCall", activityDynamicCallList);
+
+        JSONArray activityDynamicChatList = new JSONArray(record.getActivityDynamicChatList());
+        net.addParam("activityDynamicChat", activityDynamicChatList);
+
+        JSONArray activityMatchInvitedCountList = new JSONArray(record.getActivityMatchInvitedCountList());
+        net.addParam("activityMatchInvitedCount", activityMatchInvitedCountList);
+
+        net.addParam("activityMatchCount", record.getActivityMatchCount());
+
+        JSONArray officialActivityBuyTicketList = new JSONArray(record.getOfficialActivityBuyTicketList());
+        net.addParam("officialActivityBuyTicket", officialActivityBuyTicketList);
+
+        JSONArray officialActivityChatJoinList = new JSONArray(record.getOfficialActivityChatJoinList());
+        net.addParam("officialActivityChatJoin", officialActivityChatJoinList);
+
+        net.addParam("appOpenCount", 1);
+
+        JSONArray dynamicNearbyInvitedList = new JSONArray(record.getDynamicNearbyInvitedList());
+        net.addParam("dynamicNearbyInvited", dynamicNearbyInvitedList);
+
+        JSONArray activityTypeClickList = new JSONArray(record.getTypeClick());
+        net.addParam("activityTypeClick", activityTypeClickList);
+
+
+        net.doPost(new NetTask(self) {
+            @Override
+            public void doInUI(Response response, Integer transfer) {
+
+                if (response.isSuccess()) {
+                    showToast("埋点");
                 }
             }
         });

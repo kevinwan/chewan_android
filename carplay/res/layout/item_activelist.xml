@@ -8,10 +8,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/btn_white_fillet"
         android:layout_marginLeft="14dp"
         android:layout_marginRight="14dp"
         android:layout_marginTop="20dp"
+        android:background="@drawable/btn_white_fillet"
         android:orientation="vertical">
 
         <LinearLayout
@@ -88,8 +88,9 @@
                     android:id="@+id/photo_distancelayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="gone"
-                    android:gravity="right|center_vertical">
+                    android:gravity="right|center_vertical"
+                    android:visibility="gone">
+
                     <ImageView
                         android:layout_width="21dp"
                         android:layout_height="21dp"
@@ -106,11 +107,13 @@
             </LinearLayout>
 
         </LinearLayout>
+
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <RelativeLayout
+                android:id="@+id/layout"
                 android:layout_width="match_parent"
                 android:layout_height="300dp">
 
@@ -125,30 +128,29 @@
 
             </RelativeLayout>
             <!--<LinearLayout-->
-                <!--android:layout_width="fill_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:background="#50000000"-->
-                <!--android:visibility="gone">-->
-                <TextView
-                    android:id="@+id/inviteT"
-                   style="@style/text_white_medium"
-                    android:background="#50000000"
-                    android:layout_width="fill_parent"
-                    android:visibility="gone"/>
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="#50000000"-->
+            <!--android:visibility="gone">-->
+            <TextView
+                android:id="@+id/inviteT"
+                style="@style/text_white_medium"
+                android:layout_width="fill_parent"
+                android:background="#50000000"
+                android:visibility="gone" />
             <!--</LinearLayout>-->
 
         </FrameLayout>
-
 
 
         <LinearLayout
             android:id="@+id/active_distancelayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="13dp"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp">
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="13dp">
 
             <TextView
                 android:id="@+id/activity_place"
@@ -179,14 +181,13 @@
     </LinearLayout>
 
 
-
     <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:background="@color/new_bg_grey"-->
-        <!--android:gravity="center_horizontal"-->
-        <!--android:paddingBottom="12dp"-->
-        <!--android:paddingTop="12dp">-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="@color/new_bg_grey"-->
+    <!--android:gravity="center_horizontal"-->
+    <!--android:paddingBottom="12dp"-->
+    <!--android:paddingTop="12dp">-->
 
     <!--</LinearLayout>-->
 </LinearLayout>

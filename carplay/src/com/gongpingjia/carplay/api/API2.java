@@ -5,6 +5,8 @@ package com.gongpingjia.carplay.api;
  */
 public class API2 {
 
+    public static int ImageHeight = 0;
+
     //测试版API前缀
     public static final String CWBaseurl = "http://cwapi.gongpingjia.com:8080/v2/";
 
