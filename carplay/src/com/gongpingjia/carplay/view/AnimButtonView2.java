@@ -23,7 +23,7 @@ public class AnimButtonView2 extends RelativeLayout {
 //    private static final int MSG_WAVE2_ANIMATION = 2;
 
 //    RoundImageView image1, image2;
-RoundImageView image1;
+ImageView image1;
 
     RoundImageView bg;
 
@@ -58,7 +58,7 @@ RoundImageView image1;
         int margin = DhUtil.dip2px(mContext, 15);
 
         pa.setMargins(margin, margin, margin, margin);
-        image1 = new RoundImageView(mContext);
+        image1 = new ImageView(mContext);
 //        image2 = new ImageView(mContext);
         bg = new RoundImageView(mContext);
         image1.setImageResource(srcId);

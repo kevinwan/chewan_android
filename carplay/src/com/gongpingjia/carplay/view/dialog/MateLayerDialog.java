@@ -44,6 +44,8 @@ public class MateLayerDialog extends BaseAlertDialog implements View.OnClickList
 
     private String type;
 
+    User user;
+
     public MateLayerDialog(Context context, String type) {
         super(context, R.style.Dialog_Fullscreen);
         this.mContext = context;
@@ -59,6 +61,7 @@ public class MateLayerDialog extends BaseAlertDialog implements View.OnClickList
     }
 
     private void initView() {
+        user = User.getInstance();
 
         View viewMyTreat = findViewById(R.id.layout_my_treat);
         View viewAa = findViewById(R.id.layout_aa);
@@ -75,6 +78,9 @@ public class MateLayerDialog extends BaseAlertDialog implements View.OnClickList
         checkBox = (CheckBox) findViewById(R.id.chk_pick);
         textDestination = (TextView) findViewById(R.id.tv_destination);
         Button btnMatch = (Button) findViewById(R.id.btn_match);
+
+        //设置默认选中值
+        setDefault();
 
         btnMatch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -201,6 +207,26 @@ public class MateLayerDialog extends BaseAlertDialog implements View.OnClickList
                 imgYourTurn.setBackgroundResource(R.drawable.mate_manner_y);
                 break;
         }
+    }
+
+    private void setDefault(){
+        if (!user.isLogin()){
+            selectIndex = 2;
+            imgMyTreat.setBackgroundResource(R.drawable.mate_manner_n);
+            imgAa.setBackgroundResource(R.drawable.mate_manner_y);
+            imgYourTurn.setBackgroundResource(R.drawable.mate_manner_n);
+        }else if ("男".equals(user.getGender())){
+            selectIndex = 1;
+            imgMyTreat.setBackgroundResource(R.drawable.mate_manner_y);
+            imgAa.setBackgroundResource(R.drawable.mate_manner_n);
+            imgYourTurn.setBackgroundResource(R.drawable.mate_manner_n);
+        }if ("女".equals(user.getGender())){
+            selectIndex = 3;
+            imgMyTreat.setBackgroundResource(R.drawable.mate_manner_n);
+            imgAa.setBackgroundResource(R.drawable.mate_manner_n);
+            imgYourTurn.setBackgroundResource(R.drawable.mate_manner_y);
+        }
+
     }
 
     public interface OnMatchingDialogResult {

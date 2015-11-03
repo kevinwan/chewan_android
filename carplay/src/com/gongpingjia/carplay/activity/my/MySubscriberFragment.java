@@ -2,7 +2,6 @@ package com.gongpingjia.carplay.activity.my;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 import com.gongpingjia.carplay.ILoadSuccess;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseFragment;
-import com.gongpingjia.carplay.adapter.EachSubscribeAdapter2;
 import com.gongpingjia.carplay.adapter.MySubscriberAdapter2;
 import com.gongpingjia.carplay.adapter.SubscribeListener;
 import com.gongpingjia.carplay.api.API2;
@@ -24,10 +22,6 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * Created by Administrator on 2015/10/16.
@@ -64,7 +58,7 @@ public class MySubscriberFragment extends CarPlayBaseFragment implements ILoadSu
         mySubscriberAdapter.setSubscribeListener(new SubscribeListener() {
             @Override
             public void onSubscribe(String targetId) {
-                DhNet dhNet = new DhNet(API2.getFollowPerson(User.getInstance().getUserId(), User.getInstance().getToken()));
+                DhNet dhNet = new DhNet(API2.getUnfollowPerson(User.getInstance().getUserId(), User.getInstance().getToken()));
                 dhNet.addParam("targetUserId", targetId);
                 dhNet.doPostInDialog(new NetTask(getActivity()) {
                     @Override

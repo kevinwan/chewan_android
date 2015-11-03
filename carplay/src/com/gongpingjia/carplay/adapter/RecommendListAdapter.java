@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.active.ActiveDetailsActivity2;
+import com.gongpingjia.carplay.view.RoundImageView;
 
 import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.util.ViewUtil;
@@ -34,7 +35,8 @@ public class RecommendListAdapter extends RecyclerView.Adapter<RecommendListAdap
         TextView titleT, locationT, priceT, infoT, priceDescT, cityT,participate_womanT, participate_manT,unparticipateT;
         LinearLayout limitedlayoutL,unlimitedlayoutL;
 
-        ImageView picI, headI;
+        ImageView picI;
+        RoundImageView headI;
 
         public SimpleViewHolder(View view) {
             super(view);
@@ -44,7 +46,7 @@ public class RecommendListAdapter extends RecyclerView.Adapter<RecommendListAdap
             infoT = (TextView) view.findViewById(R.id.info);
             priceDescT = (TextView) view.findViewById(R.id.priceDesc);
             picI = (ImageView) view.findViewById(R.id.pic);
-            headI = (ImageView) view.findViewById(R.id.head);
+            headI = (RoundImageView) view.findViewById(R.id.head);
 
             limitedlayoutL = (LinearLayout) view.findViewById(R.id.limitedlayout);
             unlimitedlayoutL = (LinearLayout) view.findViewById(R.id.unlimitedlayout);

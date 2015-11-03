@@ -31,6 +31,7 @@ import com.gongpingjia.carplay.bean.PointRecord;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.manage.UserInfoManage;
 import com.gongpingjia.carplay.view.CarPlayGallery;
+import com.gongpingjia.carplay.view.RoundImageView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
@@ -89,10 +90,11 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
     /**
      * headview
      */
-    private ImageView imgfoldI, avatarT;
+    private ImageView imgfoldI;
     private TextView nicknameT, contentT, startTimeT, endTimeT, priceT, placeT, participate_womanT, participate_manT, introduceT, creattimeT, unparticipateT;
     private RelativeLayout foldR;
     private CarPlayGallery mViewPager;
+    RoundImageView avatarT;
 
     /**
      * footview
@@ -151,7 +153,7 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
         contentT = (TextView) mHeadView.findViewById(R.id.content);
         foldR = (RelativeLayout) mHeadView.findViewById(R.id.fold);
         imgfoldI = (ImageView) mHeadView.findViewById(R.id.imgfold);
-        avatarT = (ImageView) mHeadView.findViewById(R.id.avatar);
+        avatarT = (RoundImageView) mHeadView.findViewById(R.id.avatar);
         startTimeT = (TextView) mHeadView.findViewById(R.id.starttime);
         endTimeT = (TextView) mHeadView.findViewById(R.id.endtime);
         priceT = (TextView) mHeadView.findViewById(R.id.price);

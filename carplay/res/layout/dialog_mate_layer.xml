@@ -18,17 +18,17 @@
 
     <View
         style="@style/line_horizontal"
-        android:layout_below="@id/tv_top" />
+        android:layout_below="@id/tv_top"
+        android:layout_marginBottom="10dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_top"
         android:layout_centerInParent="true"
-
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:padding="21dp">
+        android:padding="12dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -50,7 +50,7 @@
                 <TextView
                     style="@style/text_white_small"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="20dp"
                     android:text="我请客" />
 
             </RelativeLayout>
@@ -71,7 +71,7 @@
                 <TextView
                     style="@style/text_white_small"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="20dp"
                     android:text="AA制" />
 
             </RelativeLayout>
@@ -92,7 +92,7 @@
                 <TextView
                     style="@style/text_white_small"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="20dp"
                     android:text="请我吧" />
 
             </RelativeLayout>
@@ -109,6 +109,9 @@
             android:background="@drawable/edittext_bg"
             android:gravity="center"
             android:hint="什么地方(选填)"
+            android:drawableRight="@drawable/below_btn"
+            android:drawablePadding="10dp"
+            android:textColorHint="@color/text_grey_ccc"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:textColor="@color/text_black"
@@ -118,7 +121,7 @@
             android:id="@+id/chk_pick"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:button="@null"
             android:checked="true"
             android:drawableLeft="@drawable/radio_checked"
@@ -130,10 +133,12 @@
 
         <Button
             android:id="@+id/btn_match"
-            android:layout_width="160dp"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginBottom="30dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/btn_red_fillet"
             android:text="匹配意向"
             android:textColor="@color/white"

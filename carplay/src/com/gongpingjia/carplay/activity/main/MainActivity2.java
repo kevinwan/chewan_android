@@ -208,7 +208,8 @@ public class MainActivity2 extends BaseFragmentActivity implements
         tabV = (LinearLayout) findViewById(R.id.tab);
         titleBar = findViewById(R.id.titlebar);
         rightT = (TextView) findViewById(R.id.right_text);
-        free_layout = (RelativeLayout) findViewById(R.id.free);
+         free_layout = (RelativeLayout) findViewById(R.id.free);
+        free_layout.getBackground().setAlpha(100);
         free_ck = (CheckBox) findViewById(R.id.free_check);
         free_ck.setChecked(true);
         free_ck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

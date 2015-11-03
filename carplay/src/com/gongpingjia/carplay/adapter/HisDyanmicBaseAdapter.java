@@ -205,6 +205,12 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
             holder.invitation.setVisibility(View.GONE);
             holder.yingyaohou.setVisibility(View.VISIBLE);
 
+        }else if (status == 3) {
+            holder.invitation.setVisibility(View.VISIBLE);
+            holder.yingyaohou.setVisibility(View.GONE);
+            holder.invitationT.setText("邀 TA");
+            holder.invitationI.setResourseAndBg(R.drawable.red_circle
+                    , R.drawable.red_circle);
         }
 
         if (transfer == true) {
