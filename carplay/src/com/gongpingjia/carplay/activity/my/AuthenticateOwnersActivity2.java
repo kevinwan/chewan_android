@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -41,12 +42,12 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
     public static final int MODEL = 1;
     String carModel = "";
     // 认证类型 (0:未认证 1:认证成功 2:认证中)
-    String isAuthenticated ;
+    String isAuthenticated;
 
     String brandName, brandLogo, modelName, modelSlug;
     User user;
-    String picUid ;
-    String picUids ;
+    String picUid;
+    String picUids;
     String mPhotoPath;
     // 图片缓存根目录
     private File mCacheDir;
@@ -144,7 +145,7 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
     private void updrivingPic(String path) {
         Bitmap bmp = PhotoUtil.getLocalImage(new File(path));
         driving_img.setImageBitmap(bmp);
-        DhNet net = new DhNet(API2.CWBaseurl+"/user/"+user.getUserId()+"/drivingLicense/upload?token="+user.getToken());
+        DhNet net = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId() + "/drivingLicense/upload?token=" + user.getToken());
         net.upload(new FileInfo("attach", new File(path)), new NetTask(self) {
 
             @Override
@@ -156,7 +157,7 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
                     imgs = JSONUtil.getString(jo, "photoUrl");
 //                    System.out.println("行驶证："+JSONUtil.getString(jo, "photoId"));
 
-                    System.out.println("********"+JSONUtil.getString(jo, "photoUrl"));
+                    System.out.println("********" + JSONUtil.getString(jo, "photoUrl"));
 //                    Toast.makeText(self, "111" + JSONUtil.getString(jo, "photoUrl"), Toast.LENGTH_SHORT).show();
                 } else {
                     showToast("上传失败，请重新上传");
@@ -169,7 +170,7 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
     private void updriverPic(String path) {
         Bitmap bmp = PhotoUtil.getLocalImage(new File(path));
         driver_img.setImageBitmap(bmp);
-        DhNet net = new DhNet(API2.CWBaseurl+"/user/"+user.getUserId()+ "/driverLicense/upload?token="+ user.getToken());
+        DhNet net = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId() + "/driverLicense/upload?token=" + user.getToken());
         net.upload(new FileInfo("attach", new File(path)), new NetTask(self) {
 
             @Override
@@ -206,7 +207,7 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
                     showToast("请上传驾驶证!");
                     return;
                 }
-                DhNet net = new DhNet(API2.CWBaseurl+"user/"+user.getUserId()+"/license/authentication?token="+ user.getToken());
+                DhNet net = new DhNet(API2.CWBaseurl + "user/" + user.getUserId() + "/license/authentication?token=" + user.getToken());
                 net.addParam("brand", brandName);
                 net.addParam("model", modelName);
                 net.addParam("logo", brandLogo);
@@ -252,10 +253,10 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
             case R.id.driving_img:
 
 //                if (TextUtils.isEmpty(picUid)){
-                    mPhotoPath = new File(mCacheDir, System.currentTimeMillis()
-                            + ".jpg").getAbsolutePath();
-                    PhotoUtil.getPhoto(self, DRIVING_PHOTOGRAPH, DRIVING_GALLERY,
-                            new File(mPhotoPath));
+                mPhotoPath = new File(mCacheDir, System.currentTimeMillis()
+                        + ".jpg").getAbsolutePath();
+                PhotoUtil.getPhoto(self, DRIVING_PHOTOGRAPH, DRIVING_GALLERY,
+                        new File(mPhotoPath));
 //                }else{
 //                    Intent it = new Intent(self, ImageGallery.class);
 //                    str = new String[1];
@@ -271,10 +272,10 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
                 break;
             case R.id.driver_img:
 //                if (TextUtils.isEmpty(picUids)){
-                    mPhotoPath = new File(mCacheDir, System.currentTimeMillis()
-                            + ".jpg").getAbsolutePath();
-                    PhotoUtil.getPhoto(self, DRIVER_PHOTOGRAPH, DRIVER_GALLERY,
-                            new File(mPhotoPath));
+                mPhotoPath = new File(mCacheDir, System.currentTimeMillis()
+                        + ".jpg").getAbsolutePath();
+                PhotoUtil.getPhoto(self, DRIVER_PHOTOGRAPH, DRIVER_GALLERY,
+                        new File(mPhotoPath));
 //                }else{
 //                    Intent ten = new Intent(self, ImageGallery.class);
 //                    strs = new String[1];
@@ -299,7 +300,13 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
             switch (requestCode) {
                 case MODEL:
                     brandName = data.getStringExtra("brandName");
-                    brandLogo = data.getStringExtra("brandLogo");
+                    String brandLogo1 = data.getStringExtra("brandLogo");
+                    Log.d("msg", brandLogo1);
+                    String[] brnd = brandLogo1.split("/");
+                    if (brnd != null) {
+                        brandLogo = brnd[brnd.length - 1];
+                    }
+                    Log.d("msg", "brandLogo:"+brandLogo);
                     modelName = data.getStringExtra("modelName");
                     modelSlug = data.getStringExtra("modelSlug");
                     carName.setText(modelName);

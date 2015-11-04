@@ -28,6 +28,11 @@ public class API2 {
     //忘记密码
     public static final String forgetPassword = CWBaseurl + "user/password";
 
+    public static final String allCarBrands = CWBaseurl + "/car/brand";
+
+    public static final String carDetails = CWBaseurl + "/car/model";
+
+
     //获取我关注的信息
     public static String getSubscribe(String userId, String token) {
         return String.format(CWBaseurl + "user/%s/subscribe?token=%s", userId, token);

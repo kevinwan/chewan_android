@@ -40,6 +40,8 @@ public class MatchingDialog extends BaseAlertDialog {
     private OnMatchingDialogResult mResult;
     CarPlayPerference per;
 
+    int dialogType = 0;
+
     public void setMatchingResult(OnMatchingDialogResult result) {
         mResult = result;
     }
@@ -56,6 +58,13 @@ public class MatchingDialog extends BaseAlertDialog {
 
     }
 
+    public MatchingDialog(Context context, List<Matching> data, int type) {
+        super(context, R.style.Dialog_Fullscreen);
+        mDatas = data;
+        this.context = context;
+        dialogType = type;
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +72,12 @@ public class MatchingDialog extends BaseAlertDialog {
         setContentView(R.layout.dialog_match_intention);
 
 
-
+        findViewById(R.id.bg).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
 
 
         checkBox = (CheckBox) findViewById(R.id.chk_pick);
@@ -100,10 +114,15 @@ public class MatchingDialog extends BaseAlertDialog {
 
                 final DhNet dhNet = new DhNet(API2.getMatchUrl(User.getInstance().getUserId(), User.getInstance().getToken()));
                 //类型
-                dhNet.addParam("majorType", "运动");
                 if (mDatas.size() == 1) {
                     //覆盖主类型
                     dhNet.addParam("majorType", type);
+                } else {
+                    if (dialogType == 0) {
+                        dhNet.addParam("majorType", "运动");
+                    } else {
+                        dhNet.addParam("majorType", "桌游");
+                    }
                 }
                 dhNet.addParam("type", type);
                 dhNet.addParam("transfer", pickOrNot);

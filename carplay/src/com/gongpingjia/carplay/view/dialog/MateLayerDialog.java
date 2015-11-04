@@ -66,6 +66,12 @@ public class MateLayerDialog extends BaseAlertDialog implements View.OnClickList
     private void initView() {
         user = User.getInstance();
 
+        findViewById(R.id.bg).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
         View viewMyTreat = findViewById(R.id.layout_my_treat);
         View viewAa = findViewById(R.id.layout_aa);
         View viewYourTurn = findViewById(R.id.layout_your_turn);

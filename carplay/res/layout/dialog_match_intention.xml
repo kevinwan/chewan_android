@@ -1,85 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_centerInParent="true"
-    android:layout_gravity="center"
-    android:layout_margin="40dp"
-    android:background="@drawable/btn_white_fillet">
 
-    <TextView
-        android:id="@+id/tv_top"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bg"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="10dp"
-        android:text="意向选择"
-        android:textColor="@color/text_red"
-        android:textSize="@dimen/text_title" />
-
-    <View
-        style="@style/line_horizontal"
-        android:layout_below="@id/tv_top" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv_top"
         android:layout_centerInParent="true"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
-
-        <GridView
-            android:id="@+id/gv_matching"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:layout_marginTop="18dp"
-            android:numColumns="3"
-            android:verticalSpacing="10dp" />
+        android:layout_gravity="center"
+        android:layout_margin="40dp"
+        android:background="@drawable/btn_white_fillet">
 
         <TextView
-            android:id="@+id/tv_destination"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:layout_marginTop="18dp"
-            android:background="@drawable/edittext_bg"
-            android:gravity="center"
-            android:hint="什么地方(选填)"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:textColor="@color/text_black"
-            android:textSize="@dimen/text_small" />
-
-        <CheckBox
-            android:id="@+id/chk_pick"
+            android:id="@+id/tv_top"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:button="@null"
-            android:checked="true"
-            android:drawableLeft="@drawable/radio_checked"
-            android:drawablePadding="5dp"
-            android:gravity="center_vertical"
-            android:text="包接送"
-            android:textColor="@color/dialog_blue_text" />
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10dp"
+            android:text="意向选择"
+            android:textColor="@color/text_red"
+            android:textSize="@dimen/text_title" />
+
+        <View
+            style="@style/line_horizontal"
+            android:layout_below="@id/tv_top" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_top"
+            android:layout_centerInParent="true"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <GridView
+                android:id="@+id/gv_matching"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="18dp"
+                android:numColumns="3"
+                android:verticalSpacing="10dp" />
+
+            <TextView
+                android:id="@+id/tv_destination"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="18dp"
+                android:background="@drawable/edittext_bg"
+                android:gravity="center"
+                android:hint="什么地方(选填)"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:textColor="@color/text_black"
+                android:textSize="@dimen/text_small" />
+
+            <CheckBox
+                android:id="@+id/chk_pick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:button="@null"
+                android:checked="true"
+                android:drawableLeft="@drawable/radio_checked"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
+                android:text="包接送"
+                android:textColor="@color/dialog_blue_text" />
 
 
-        <Button
-            android:id="@+id/btn_match"
-            android:layout_width="160dp"
-            android:layout_height="50dp"
-            android:layout_marginBottom="30dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/btn_red_fillet"
-            android:text="匹配意向"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_medium" />
-    </LinearLayout>
+            <Button
+                android:id="@+id/btn_match"
+                android:layout_width="160dp"
+                android:layout_height="50dp"
+                android:layout_marginBottom="30dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/btn_red_fillet"
+                android:text="匹配意向"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_medium" />
+        </LinearLayout>
 
 
+    </RelativeLayout>
 </RelativeLayout>
