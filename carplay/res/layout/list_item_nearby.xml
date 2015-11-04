@@ -13,7 +13,7 @@
         android:background="@drawable/active_bg"
         android:orientation="vertical"
         android:paddingBottom="15dp"
-        android:paddingTop="15dp">
+        android:paddingTop="14dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -49,7 +49,8 @@
                 android:ellipsize="end"
                 android:maxWidth="100dp"
                 android:singleLine="true"
-                android:text="宝马" />
+                android:text="宝马"
+                android:visibility="gone"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -62,7 +63,8 @@
                     android:layout_height="25dp"
                     android:layout_marginRight="12dp"
                     android:gravity="right"
-                    android:src="@drawable/icon_heart" />
+                    android:src="@drawable/icon_heart"
+                    android:visibility="gone"/>
             </LinearLayout>
         </LinearLayout>
 

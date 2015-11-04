@@ -238,13 +238,13 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
         String licenseAuthStatus = bundle.getString("licenseAuthStatus");
         if ("认证通过".equals(licenseAuthStatus)) {
             ViewUtil.bindNetImage(holder.dynamic_carlogo, bundle.getString("logo"), "default");
-            holder.dynamic_carname.setText(bundle.getString("brand"));
+//            holder.dynamic_carname.setText(bundle.getString("brand"));
         } else {
             holder.dynamic_carlogo.setVisibility(View.GONE);
             holder.dynamic_carname.setVisibility(View.GONE);
         }
         int distances = (int) Math.floor(distance);
-        System.out.println("传值+++++++" + distance + "/////转换：" + distances);
+//        System.out.println("传值+++++++" + distance + "/////转换：" + distances);
         holder.activity_distance.setText(CarPlayUtil.numberWithDelimiter(distances));
         JSONObject json = JSONUtil.getJSONObject(jo, "destination");
         if (json == null || JSONUtil.getString(json, "province").equals("") || JSONUtil.getString(json, "city").equals("") || JSONUtil.getString(json, "district").equals("") || JSONUtil.getString(json, "street").equals("") || JSONUtil.getString(json, "detail").equals("")) {

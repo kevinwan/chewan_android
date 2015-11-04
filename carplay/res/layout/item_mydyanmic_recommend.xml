@@ -39,17 +39,59 @@
                 android:textSize="@dimen/text_medium" />
 
             <LinearLayout
+                android:id="@+id/limitedlayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="right|center_vertical"
                 android:orientation="horizontal">
 
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/icon_women" />
+
                 <TextView
-                    android:id="@+id/people_num"
+                    android:id="@+id/participate_woman"
+                    style="@style/text_black_small"
+                    android:text="12/14" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/icon_men" />
+
+                <TextView
+                    android:id="@+id/participate_man"
+                    style="@style/text_black_small"
+                    android:text="12/14" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/unlimitedlayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="right|center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/icon_person_grey" />
+
+                <TextView
+                    android:id="@+id/unparticipate"
                     style="@style/text_black_small"
                     android:layout_marginRight="12dp"
-                    android:text="参与50人" />
-
+                    android:text="12/14" />
 
             </LinearLayout>
         </LinearLayout>
