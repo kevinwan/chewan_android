@@ -8,11 +8,11 @@
     <dimen name="car_detail_item_height">42dp</dimen>
     <dimen name="car_detail_item_pad">18dp</dimen>
     <dimen name="text_title">18sp</dimen>
-    <dimen name="text_big">15sp</dimen>
-    <dimen name="text_medium">14sp</dimen>
+    <dimen name="text_big">14sp</dimen>
+    <dimen name="text_medium">13sp</dimen>
     <dimen name="text_small">12sp</dimen>
     <dimen name="text_hot_small">12sp</dimen>
-    <dimen name="text_smaller">9sp</dimen>
+    <dimen name="text_smaller">10sp</dimen>
     <dimen name="text_time_small">10sp</dimen>
     <dimen name="lookaround_head_small">44dp</dimen>
     <dimen name="lookaround_head_medium">51dp</dimen>

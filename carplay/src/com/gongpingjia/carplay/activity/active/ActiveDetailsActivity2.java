@@ -30,6 +30,7 @@ import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.PointRecord;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.manage.UserInfoManage;
+import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.view.CarPlayGallery;
 import com.gongpingjia.carplay.view.RoundImageView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -91,7 +92,7 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
      * headview
      */
     private ImageView imgfoldI;
-    private TextView nicknameT, contentT, startTimeT, endTimeT, priceT, placeT, participate_womanT, participate_manT, introduceT, creattimeT, unparticipateT;
+    private TextView nicknameT, contentT, startTimeT, endTimeT, priceT,subsidyPriceT, placeT, participate_womanT, participate_manT, introduceT, creattimeT, unparticipateT;
     private RelativeLayout foldR;
     private CarPlayGallery mViewPager;
     RoundImageView avatarT;
@@ -157,6 +158,7 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
         startTimeT = (TextView) mHeadView.findViewById(R.id.starttime);
         endTimeT = (TextView) mHeadView.findViewById(R.id.endtime);
         priceT = (TextView) mHeadView.findViewById(R.id.price);
+        subsidyPriceT = (TextView) mHeadView.findViewById(R.id.subsidyPrice);
         placeT = (TextView) mHeadView.findViewById(R.id.place);
         participate_womanT = (TextView) mHeadView.findViewById(R.id.participate_woman);
         participate_manT = (TextView) mHeadView.findViewById(R.id.participate_man);
@@ -247,10 +249,13 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
                     JSONObject jsname = JSONUtil.getJSONObject(jo, "organizer");
                     ViewUtil.bindView(nicknameT, JSONUtil.getString(jsname, "nickname"));
                     ViewUtil.bindNetImage(avatarT, JSONUtil.getString(jsname, "avatar"), "head");
-                    ViewUtil.bindView(introduceT, JSONUtil.getString(jo, "title"));
+                    String citystr="["+JSONUtil.getString(js, "city")+"]  ";
+                    String title = citystr+JSONUtil.getString(jo, "title");
+                    ViewUtil.bindView(introduceT, CarPlayUtil.setTextColor(self, citystr, title, R.color.text_orange));
                     ViewUtil.bindView(contentT, JSONUtil.getString(jo, "instruction"));
                     ViewUtil.bindView(processT, JSONUtil.getString(jo, "description"));
-                    ViewUtil.bindView(priceT, JSONUtil.getDouble(jo, "price") + "元/人(现在报名立减" + JSONUtil.getDouble(jo, "subsidyPrice") + "元)");
+                    ViewUtil.bindView(subsidyPriceT,"(现在报名立减" + JSONUtil.getDouble(jo, "subsidyPrice") + "元! )");
+                    ViewUtil.bindView(priceT,JSONUtil.getDouble(jo, "price")+"元/人");
                     ViewUtil.bindView(explaintxtT, JSONUtil.getString(jo, "extraDesc"));
 
                     isMember = JSONUtil.getBoolean(jo, "isMember");
@@ -263,9 +268,9 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
                     }
 //                    membersAdapter.setIsMember(isMember);
 
-                    if (contentT.getLineCount() < 4) {
-                        foldR.setVisibility(View.GONE);
-                    }
+//                    if (contentT.getLineCount() < 3) {
+//                        foldR.setVisibility(View.GONE);
+//                    }
 
                     //0:无限制 1：限制总人数 2：限制男女人数
                     int limitType = JSONUtil.getInt(jo, "limitType");
@@ -273,16 +278,16 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
                     if (limitType == 1) {
                         findViewById(R.id.limitedlayout).setVisibility(View.GONE);
                         findViewById(R.id.unlimitedlayout).setVisibility(View.VISIBLE);
-                        ViewUtil.bindView(unparticipateT, JSONUtil.getInt(jo, "nowJoinNum") + "/" + JSONUtil.getInt(jo, "totalLimit"));
+                        ViewUtil.bindView(unparticipateT,CarPlayUtil.setTextColor(self,JSONUtil.getInt(jo, "nowJoinNum")+" / ",JSONUtil.getInt(jo, "nowJoinNum") + " / " + JSONUtil.getInt(jo, "totalLimit"),R.color.text_grey) );
                     } else if (limitType == 2) {
                         findViewById(R.id.limitedlayout).setVisibility(View.VISIBLE);
                         findViewById(R.id.unlimitedlayout).setVisibility(View.GONE);
-                        ViewUtil.bindView(participate_womanT, JSONUtil.getInt(jo, "femaleNum") + "/" + JSONUtil.getInt(jo, "femaleLimit"));
-                        ViewUtil.bindView(participate_manT, JSONUtil.getInt(jo, "maleNum") + "/" + JSONUtil.getInt(jo, "maleLimit"));
+                        ViewUtil.bindView(participate_womanT,CarPlayUtil.setTextColor(self,JSONUtil.getInt(jo, "femaleNum")+" / ",JSONUtil.getInt(jo, "femaleNum") + " / " + JSONUtil.getInt(jo, "femaleLimit"),R.color.text_grey) );
+                        ViewUtil.bindView(participate_manT,CarPlayUtil.setTextColor(self,JSONUtil.getInt(jo, "maleNum")+" / ",JSONUtil.getInt(jo, "maleNum") + " / " + JSONUtil.getInt(jo, "maleLimit"),R.color.text_grey) );
                     } else {
                         findViewById(R.id.limitedlayout).setVisibility(View.GONE);
                         findViewById(R.id.unlimitedlayout).setVisibility(View.VISIBLE);
-                        ViewUtil.bindView(unparticipateT, JSONUtil.getInt(jo, "nowJoinNum") + "/" + "人数不限");
+                        ViewUtil.bindView(unparticipateT,CarPlayUtil.setTextColor(self,JSONUtil.getInt(jo, "nowJoinNum")+" / ",JSONUtil.getInt(jo, "nowJoinNum") + " / " + "人数不限",R.color.text_grey)) ;
                     }
 
 //                    //参与成员

@@ -18,16 +18,16 @@
 
     <View
         style="@style/line_horizontal"
-        android:layout_below="@id/tv_top"
-        android:layout_marginBottom="10dp"/>
+        android:layout_below="@+id/tv_top"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv_top"
+        android:layout_below="@+id/tv_top"
         android:layout_centerInParent="true"
         android:gravity="center_horizontal"
         android:orientation="vertical"
+        android:layout_marginTop="12dp"
         android:padding="12dp">
 
         <LinearLayout

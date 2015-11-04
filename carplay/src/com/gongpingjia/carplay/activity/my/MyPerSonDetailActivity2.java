@@ -214,6 +214,8 @@ public class MyPerSonDetailActivity2 extends CarPlayBaseActivity implements View
                     } else if (photoAuthStatus.equals("认证通过")) {
                         attestationT.setBackgroundResource(R.drawable.btn_yellow_fillet);
                         attestationT.setText("已认证");
+                        txtphotoAuthStatusT.setTextColor(getResources().getColor(R.color.text_grey));
+                        findViewById(R.id.icon1).setVisibility(View.GONE);
                         headattestationL.setEnabled(false);
                     } else if (photoAuthStatus.equals("认证中")) {
                         attestationT.setBackgroundResource(R.drawable.radio_sex_man_focused);
@@ -225,6 +227,8 @@ public class MyPerSonDetailActivity2 extends CarPlayBaseActivity implements View
                     if (licenseAuthStatus.equals("未认证")) {
                         carattestationL.setEnabled(true);
                     } else if (licenseAuthStatus.equals("认证通过")) {
+                        attestation_txtT.setTextColor(getResources().getColor(R.color.text_grey));
+                        findViewById(R.id.icon2).setVisibility(View.GONE);
                         carattestationL.setEnabled(false);
                     } else if (licenseAuthStatus.equals("认证中")) {
                         carattestationL.setEnabled(true);

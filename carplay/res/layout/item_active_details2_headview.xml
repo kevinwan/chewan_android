@@ -53,25 +53,24 @@
         <TextView
             android:id="@+id/introduce"
             style="@style/text_black_medium"
-            android:layout_marginBottom="18dp"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="20dp"
             android:lineSpacingMultiplier="1.3"
             android:text="" />
 
         <TextView
             android:id="@+id/content"
             style="@style/text_grey_small"
-            android:layout_marginBottom="18dp"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="10dp"
             android:ellipsize="end"
-            android:lineSpacingMultiplier="1.3"
+            android:lineSpacingMultiplier="1.4"
             android:maxLines="3"
             android:text=""/>
 
         <RelativeLayout
             android:id="@+id/fold"
             android:layout_width="match_parent"
-            android:layout_height="30dp">
+            android:layout_height="40dp"
+            android:paddingBottom="2dp">
 
             <ImageView
                 android:id="@+id/imgfold"
@@ -89,7 +88,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="85dp"
+        android:layout_height="80dp"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -101,13 +100,13 @@
 
             <TextView
                 style="@style/text_grey_small"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="3dp"
                 android:layout_marginLeft="12dp"
                 android:text="开始时间" />
 
             <TextView
                 android:id="@+id/starttime"
-                style="@style/text_black_small"
+                style="@style/text_black_medium"
                 android:layout_marginLeft="12dp"
                 android:text="" />
 
@@ -127,13 +126,13 @@
 
             <TextView
                 style="@style/text_grey_small"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="3dp"
                 android:layout_marginLeft="12dp"
                 android:text="结束时间" />
 
             <TextView
                 android:id="@+id/endtime"
-                style="@style/text_black_small"
+                style="@style/text_black_medium"
                 android:layout_marginLeft="12dp"
                 android:text="" />
 
@@ -145,21 +144,32 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="85dp"
+        android:layout_height="80dp"
         android:gravity="center_vertical"
         android:orientation="vertical">
 
         <TextView
             style="@style/text_grey_small"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="3dp"
             android:layout_marginLeft="12dp"
             android:text="费用" />
 
-        <TextView
-            android:id="@+id/price"
-            style="@style/text_black_small"
-            android:layout_marginLeft="12dp"
-            android:text=" " />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/price"
+                style="@style/text_black_medium"
+                android:layout_marginLeft="12dp"
+                android:text=" " />
+            <TextView
+                android:id="@+id/subsidyPrice"
+                style="@style/text_black_medium"
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/text_orange"
+                android:text=" " />
+        </LinearLayout>
+
 
     </LinearLayout>
 
@@ -167,19 +177,19 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="85dp"
+        android:layout_height="80dp"
         android:gravity="center_vertical"
         android:orientation="vertical">
 
         <TextView
             style="@style/text_grey_small"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="3dp"
             android:layout_marginLeft="12dp"
             android:text="目的地" />
 
         <TextView
             android:id="@+id/place"
-            style="@style/text_black_small"
+            style="@style/text_black_medium"
             android:layout_marginLeft="12dp"
             android:text="" />
 
@@ -211,7 +221,7 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
+                android:layout_marginRight="5dp"
                 android:src="@drawable/icon_women" />
 
             <TextView
@@ -223,7 +233,7 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
+                android:layout_marginRight="5dp"
                 android:src="@drawable/icon_men" />
 
             <TextView
@@ -247,7 +257,7 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
+                android:layout_marginRight="5dp"
                 android:src="@drawable/icon_person_grey" />
 
             <TextView
@@ -267,6 +277,8 @@
         android:layout_height="35dp"
         android:gravity="center"
         android:text="点击下面报名活动即可出现在这里"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp"
         android:textColor="@color/text_red"
         android:textSize="@dimen/text_smaller" />
 

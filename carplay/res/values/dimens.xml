@@ -5,10 +5,10 @@
     <dimen name="car_detail_item_height">42dp</dimen>
     <dimen name="car_detail_item_pad">18dp</dimen>
     <dimen name="text_title">22sp</dimen>
-    <dimen name="text_big">19sp</dimen>
-    <dimen name="text_medium">16sp</dimen>
+    <dimen name="text_big">18sp</dimen>
+    <dimen name="text_medium">15sp</dimen>
     <dimen name="text_small">15sp</dimen>
-    <dimen name="text_smaller">13sp</dimen>
+    <dimen name="text_smaller">14sp</dimen>
     <dimen name="height_top_bar">46dp</dimen>
     <dimen name="padding_search_bar">5dp</dimen>
     <dimen name="height_row_weixin">59dp</dimen>

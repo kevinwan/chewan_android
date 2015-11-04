@@ -217,6 +217,7 @@
                     android:visibility="gone" />
 
                 <ImageView
+                    android:id="@+id/icon1"
                     android:layout_width="15dp"
                     android:layout_height="20dp"
                     android:src="@drawable/right_btn" />
@@ -257,7 +258,7 @@
                     android:visibility="gone" />
 
                 <ImageView
-                    android:id="@+id/icon"
+                    android:id="@+id/icon2"
                     android:layout_width="15dp"
                     android:layout_height="20dp"
                     android:src="@drawable/right_btn" />

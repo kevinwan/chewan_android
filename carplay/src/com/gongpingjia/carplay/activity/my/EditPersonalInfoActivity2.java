@@ -320,8 +320,14 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
     private void modification() {
         final String nickname = nicknameT.getText().toString().trim();
         // String carage = carageT.getText().toString().trim();
-        if (nickname.length() > 7 || nickname.length() == 0) {
-            showToast("昵称不能大于8个字符或者不能为空");
+
+        if (TextUtils.isEmpty(nickname)) {
+            showToast("请输入昵称");
+            return;
+        }
+
+        if (nickname.length()>7){
+            showToast("昵称不能大于7个字符");
             return;
         }
 //        if (mBirthday <= 0) {

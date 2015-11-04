@@ -277,6 +277,7 @@ public class OfficialParticipantsAdapter extends BaseAdapter {
                         holder.invite.setText("邀请同去");
                         holder.invite.setBackgroundResource(R.drawable.btn_blue_fillet);
                         holder.invite.setEnabled(true);
+                        holder.invite.setTextColor(mContext.getResources().getColor(R.color.white));
                         break;
                     case 1:
                         holder.invitelayout.setVisibility(View.VISIBLE);
@@ -284,7 +285,7 @@ public class OfficialParticipantsAdapter extends BaseAdapter {
                         holder.invite.setText("邀请同去");
                         holder.invite.setBackgroundResource(R.drawable.btn_blue_fillet);
                         holder.invite.setEnabled(true);
-
+                        holder.invite.setTextColor(mContext.getResources().getColor(R.color.white));
                         break;
                     case 2:
                         holder.invitelayout.setVisibility(View.GONE);
@@ -317,6 +318,7 @@ public class OfficialParticipantsAdapter extends BaseAdapter {
                         holder.invite.setText("邀请同去");
                         holder.invite.setBackgroundResource(R.drawable.btn_blue_fillet);
                         holder.invite.setEnabled(true);
+                        holder.invite.setTextColor(mContext.getResources().getColor(R.color.white));
                         break;
                 }
 
@@ -327,6 +329,7 @@ public class OfficialParticipantsAdapter extends BaseAdapter {
                 holder.invite.setText("邀请中");
                 holder.invite.setBackgroundResource(R.drawable.btn_grey_fillet);
                 holder.invite.setEnabled(false);
+                holder.invite.setTextColor(mContext.getResources().getColor(R.color.white));
                 break;
             case 2:
                 holder.invitelayout.setVisibility(View.GONE);
@@ -354,11 +357,41 @@ public class OfficialParticipantsAdapter extends BaseAdapter {
                 });
                 break;
             case 3:
-                holder.invitelayout.setVisibility(View.VISIBLE);
-                holder.contactlayout.setVisibility(View.GONE);
-                holder.invite.setText("邀请中");
-                holder.invite.setBackgroundResource(R.drawable.btn_grey_fillet);
-                holder.invite.setEnabled(false);
+                switch (beInvitedStatus) {
+                    case 2:
+                        holder.invitelayout.setVisibility(View.GONE);
+                        holder.contactlayout.setVisibility(View.VISIBLE);
+                        holder.sms.startScaleAnimation();
+                        holder.call.startScaleAnimation();
+                        holder.sms.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(mContext, ChatActivity.class);
+                                intent.putExtra("chatType", ChatActivity.CHATTYPE_SINGLE);
+                                intent.putExtra("activityId", activeid);
+                                intent.putExtra("userId", JSONUtil.getString(jo, "emchatName"));
+                                mContext.startActivity(intent);
+                            }
+                        });
+                        holder.call.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent it = new Intent(mContext, VoiceCallActivity.class);
+                                it.putExtra("username", JSONUtil.getString(jo, "emchatName"));
+                                it.putExtra("isComingCall", false);
+                                mContext.startActivity(it);
+                            }
+                        });
+                        break;
+                    default:
+                        holder.invitelayout.setVisibility(View.VISIBLE);
+                        holder.contactlayout.setVisibility(View.GONE);
+                        holder.invite.setText("已拒绝");
+                        holder.invite.setBackgroundResource(R.color.nothing);
+                        holder.invite.setTextColor(mContext.getResources().getColor(R.color.text_black));
+                        holder.invite.setEnabled(false);
+                        break;
+                }
                 break;
         }
     }

@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:text="车玩官方"
                 android:textColor="@color/text_red"
-                android:textSize="@dimen/text_medium" />
+                android:textSize="@dimen/text_big" />
 
             <LinearLayout
                 android:id="@+id/limitedlayout"
@@ -47,24 +47,25 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginRight="2dp"
                     android:src="@drawable/icon_women" />
 
                 <TextView
                     android:id="@+id/participate_woman"
-                    style="@style/text_black_small"
+                    style="@style/text_black_smaller"
                     android:text="12/14" />
 
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="13dp"
+                    android:layout_marginRight="2dp"
                     android:src="@drawable/icon_men" />
 
                 <TextView
                     android:id="@+id/participate_man"
-                    style="@style/text_black_small"
+                    style="@style/text_black_smaller"
+                    android:layout_marginRight="5dp"
                     android:text="12/14" />
 
 
@@ -82,13 +83,13 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginLeft="12dp"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginRight="2dp"
                     android:src="@drawable/icon_person_grey" />
 
                 <TextView
                     android:id="@+id/unparticipate"
-                    style="@style/text_black_small"
-                    android:layout_marginRight="12dp"
+                    style="@style/text_black_smaller"
+                    android:layout_marginRight="5dp"
                     android:text="12/14" />
 
             </LinearLayout>
@@ -140,7 +141,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="18dp">
+                android:layout_marginTop="10dp">
 
                 <TextView
                     android:id="@+id/city"

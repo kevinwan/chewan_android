@@ -117,6 +117,7 @@ public class OfficialMembersAdapter extends BaseAdapter {
             holder.invitelayout = (LinearLayout) convertView.findViewById(R.id.invitelayout);
             holder.sms = (AnimButtonView) convertView.findViewById(R.id.sms);
             holder.call = (AnimButtonView) convertView.findViewById(R.id.call);
+            holder.distance = (TextView) convertView.findViewById(R.id.distance);
 
             convertView.setTag(holder);
         } else {
@@ -179,15 +180,17 @@ public class OfficialMembersAdapter extends BaseAdapter {
         });
 
         holder.invite.setVisibility(userId.equals(user.getUserId()) ? View.GONE : View.VISIBLE);
-        //受邀 人数 为0 不显示
+//        //受邀 人数 为0 不显示
         int beInvitedCount = JSONUtil.getInt(jo, "beInvitedCount");
-        if (beInvitedCount == 0) {
-            holder.invitecount.setVisibility(View.INVISIBLE);
-        } else {
-            holder.invitecount.setVisibility(View.VISIBLE);
+//        if (beInvitedCount == 0) {
+//            holder.invitecount.setVisibility(View.INVISIBLE);
+//        } else {
+//            holder.invitecount.setVisibility(View.VISIBLE);
             int distance = (int) Math.floor(JSONUtil.getDouble(jo, "distance"));
-            holder.invitecount.setText(CarPlayUtil.numberWithDelimiter(distance) + "!已被" + beInvitedCount + "人邀请同去");
-        }
+            holder.distance.setText(CarPlayUtil.numberWithDelimiter(distance)+ " 丨 ");
+            String strbeInvitedCount = "已被"+beInvitedCount + "人邀请同去";
+            holder.invitecount.setText(CarPlayUtil.setTextColor(mContext,beInvitedCount+"人",strbeInvitedCount,R.color.text_orange));
+//        }
 
         //接受 人数 为0 不显示
         int acceptCount = JSONUtil.getInt(jo, "acceptCount");
@@ -225,7 +228,7 @@ public class OfficialMembersAdapter extends BaseAdapter {
         //头像
         RoundImageView head;
         //昵称,年龄,被邀请人数,邀请同去按钮,接受邀请人数
-        TextView name, age, invitecount, invite, acceptedcount;
+        TextView name, age, invitecount, invite, acceptedcount,distance;
         //接受邀请头像列表
         RecyclerView recyclerView;
 
@@ -285,6 +288,7 @@ public class OfficialMembersAdapter extends BaseAdapter {
                         holder.invite.setText("邀请同去");
                         holder.invite.setBackgroundResource(R.drawable.btn_blue_fillet);
                         holder.invite.setEnabled(true);
+                        holder.invite.setTextColor(mContext.getResources().getColor(R.color.white));
                         break;
                     case 1:
                         holder.invitelayout.setVisibility(View.VISIBLE);
@@ -292,7 +296,7 @@ public class OfficialMembersAdapter extends BaseAdapter {
                         holder.invite.setText("邀请同去");
                         holder.invite.setBackgroundResource(R.drawable.btn_blue_fillet);
                         holder.invite.setEnabled(true);
-
+                        holder.invite.setTextColor(mContext.getResources().getColor(R.color.white));
                         break;
                     case 2:
                         holder.invitelayout.setVisibility(View.GONE);
@@ -325,6 +329,7 @@ public class OfficialMembersAdapter extends BaseAdapter {
                         holder.invite.setText("邀请同去");
                         holder.invite.setBackgroundResource(R.drawable.btn_blue_fillet);
                         holder.invite.setEnabled(true);
+                        holder.invite.setTextColor(mContext.getResources().getColor(R.color.white));
                         break;
                 }
 
@@ -335,6 +340,7 @@ public class OfficialMembersAdapter extends BaseAdapter {
                 holder.invite.setText("邀请中");
                 holder.invite.setBackgroundResource(R.drawable.btn_grey_fillet);
                 holder.invite.setEnabled(false);
+                holder.invite.setTextColor(mContext.getResources().getColor(R.color.white));
                 break;
             case 2:
                 holder.invitelayout.setVisibility(View.GONE);
@@ -391,9 +397,9 @@ public class OfficialMembersAdapter extends BaseAdapter {
                     default:
                         holder.invitelayout.setVisibility(View.VISIBLE);
                         holder.contactlayout.setVisibility(View.GONE);
-                        holder.invite.setText("已拒绝");
+                        holder.invite.setText("       已拒绝");
                         holder.invite.setBackgroundResource(R.color.nothing);
-                        holder.invite.setTextColor(mContext.getResources().getColor(R.color.text_black));
+                        holder.invite.setTextColor(mContext.getResources().getColor(R.color.text_grey));
                         holder.invite.setEnabled(false);
                         break;
                 }

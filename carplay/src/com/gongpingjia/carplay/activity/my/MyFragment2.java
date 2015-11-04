@@ -239,6 +239,8 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                     } else if (photoAuthStatus.equals("认证通过")) {
                         attestationT.setBackgroundResource(R.drawable.btn_yellow_fillet);
                         txtphotoAuthStatusT.setText("认证通过");
+                        txtphotoAuthStatusT.setTextColor(mContext.getResources().getColor(R.color.text_grey));
+                        mainV.findViewById(R.id.icon1).setVisibility(View.GONE);
                         attestationT.setText("已认证");
                         headattestationL.setEnabled(false);
                     } else if (photoAuthStatus.equals("认证中")) {
@@ -255,6 +257,8 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                     } else if (licenseAuthStatus.equals("认证通过")) {
                         carattestationL.setEnabled(false);
                         attestation_txtT.setText("认证通过");
+                        attestation_txtT.setTextColor(mContext.getResources().getColor(R.color.text_grey));
+                        mainV.findViewById(R.id.icon2).setVisibility(View.GONE);
                     } else if (licenseAuthStatus.equals("认证中")) {
                         carattestationL.setEnabled(true);
                         attestation_txtT.setText("认证中");

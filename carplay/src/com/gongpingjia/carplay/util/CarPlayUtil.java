@@ -7,7 +7,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
@@ -389,15 +392,21 @@ public class CarPlayUtil {
                 isLetter = true;
             }
         }
+        //包含字母和数字
         if (isDigit && isLetter)
             return true;
         return false;
     }
 
-    private String setTextColor(String newcontent, String parscolor) {
-        String tc = "<font color='" + parscolor + "'>" + newcontent + "</font>";
+    public static SpannableStringBuilder setTextColor(Context context,String newcontent,String oldcontent, int color) {
+        /** 文字变色 */
+        int position = oldcontent.indexOf(newcontent,0);
+                    SpannableStringBuilder style = new SpannableStringBuilder(oldcontent);
+        style.setSpan(new ForegroundColorSpan(context.getResources()
+                        .getColor(color)), position,position+newcontent.length(),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-        return tc;
+        return style;
     }
 
 }
