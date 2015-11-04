@@ -20,7 +20,6 @@ import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.manage.UserInfoManage;
 import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.view.AnimButtonView;
-import com.gongpingjia.carplay.view.AttentionImageView;
 import com.gongpingjia.carplay.view.BaseAlertDialog;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -51,7 +50,7 @@ public class LookAroundDialog extends BaseAlertDialog {
 
     TextView nickname, car_name, age, pay, transfer, location, distance, join_desT;
     ImageView headatt, car_logo, sex, active_bg;
-    AttentionImageView attention;
+//    AttentionImageView attention;
     RelativeLayout sexLayout;
     AnimButtonView invite;
     Button upload, takephotos, album;
@@ -87,7 +86,7 @@ public class LookAroundDialog extends BaseAlertDialog {
         headatt = (ImageView) findViewById(R.id.head_att);
         car_logo = (ImageView) findViewById(R.id.iv_car_logo);
         car_name = (TextView) findViewById(R.id.tv_car_name);
-        attention = (AttentionImageView) findViewById(R.id.attention);
+//        attention = (AttentionImageView) findViewById(R.id.attention);
         sexLayout = (RelativeLayout) findViewById(R.id.layout_sex_and_age);
         sex = (ImageView) findViewById(R.id.iv_sex);
         age = (TextView) findViewById(R.id.tv_age);
@@ -187,14 +186,14 @@ public class LookAroundDialog extends BaseAlertDialog {
         String headattstr = JSONUtil.getString(userjo, "photoAuthStatus");
         headatt.setImageResource("认证通过".equals(headattstr) ? R.drawable.headaut_no : R.drawable.headaut_dl);
 
-        if (user.isLogin()) {
-            attention.setVisibility(JSONUtil.getString(userjo, "userId").equals(user.getUserId()) ? View.GONE : View.VISIBLE);
-        } else {
-            attention.setVisibility(View.VISIBLE);
-        }
-        //关注,是否包接送,付费类型,活动类型
-        attention.setImageResource(JSONUtil.getBoolean(userjo, "subscribeFlag") ? R.drawable.icon_hearted : R.drawable.icon_heart);
-        attention.setOnClickListener(new MyOnClick());
+//        if (user.isLogin()) {
+//            attention.setVisibility(JSONUtil.getString(userjo, "userId").equals(user.getUserId()) ? View.GONE : View.VISIBLE);
+//        } else {
+//            attention.setVisibility(View.VISIBLE);
+//        }
+//        //关注,是否包接送,付费类型,活动类型
+//        attention.setImageResource(JSONUtil.getBoolean(userjo, "subscribeFlag") ? R.drawable.icon_hearted : R.drawable.icon_heart);
+//        attention.setOnClickListener(new MyOnClick());
         boolean transferB = JSONUtil.getBoolean(jo, "transfer");
         String paystr = JSONUtil.getString(jo, "pay");
         pay.setText(paystr);
@@ -209,17 +208,21 @@ public class LookAroundDialog extends BaseAlertDialog {
         //所在地,距离
         int distanceI = (int) Math.floor(JSONUtil.getDouble(jo, "distance"));
         distance.setText(CarPlayUtil.numberWithDelimiter(distanceI));
-        location.setText(JSONUtil.getString(distancejo, "province") + JSONUtil.getString(distancejo, "city") + JSONUtil.getString(distancejo, "district") + JSONUtil.getString(distancejo, "street"));
-
+//        location.setText(JSONUtil.getString(distancejo, "province") + JSONUtil.getString(distancejo, "city") + JSONUtil.getString(distancejo, "district") + JSONUtil.getString(distancejo, "street"));
+        if (distancejo == null || JSONUtil.getString(distancejo, "province").equals("") || JSONUtil.getString(distancejo, "city").equals("") || JSONUtil.getString(distancejo, "district").equals("") || JSONUtil.getString(distancejo, "street").equals("") || JSONUtil.getString(distancejo, "detail").equals("")) {
+            location.setText("地点待定");
+        } else {
+            location.setText(JSONUtil.getString(distancejo, "province") + JSONUtil.getString(distancejo, "city") + JSONUtil.getString(distancejo, "district") + JSONUtil.getString(distancejo, "street") + JSONUtil.getString(distancejo, "detail"));
+        }
         //car logo ,car name
         if (carjo == null) {
             car_logo.setVisibility(View.GONE);
-            car_name.setVisibility(View.GONE);
+//            car_name.setVisibility(View.GONE);
         } else {
             car_logo.setVisibility(View.VISIBLE);
-            car_name.setVisibility(View.VISIBLE);
+//            car_name.setVisibility(View.VISIBLE);
             ViewUtil.bindNetImage(car_logo, JSONUtil.getString(carjo, "logo"), "head");
-            ViewUtil.bindView(car_name, JSONUtil.getString(carjo, "model"));
+//            ViewUtil.bindView(car_name, JSONUtil.getString(carjo, "model"));
         }
 
 
@@ -248,6 +251,8 @@ public class LookAroundDialog extends BaseAlertDialog {
 
         album.setOnClickListener(new MyOnClick());
     }
+
+
 
     class MyOnClick implements View.OnClickListener {
 
@@ -283,22 +288,22 @@ public class LookAroundDialog extends BaseAlertDialog {
 
                     break;
 
-                case R.id.attention:
-                    UserInfoManage.getInstance().checkLogin((Activity) mContext, new UserInfoManage.LoginCallBack() {
-                        @Override
-                        public void onisLogin() {
-                            JSONObject userjo = JSONUtil.getJSONObject(jo, "organizer");
-                            boolean type = JSONUtil.getBoolean(userjo, "subscribeFlag");
-                            String userId = JSONUtil.getString(userjo, "userId");
-                            attentionorCancle(type, userId);
-                        }
-
-                        @Override
-                        public void onLoginFail() {
-
-                        }
-                    });
-                    break;
+//                case R.id.attention:
+//                    UserInfoManage.getInstance().checkLogin((Activity) mContext, new UserInfoManage.LoginCallBack() {
+//                        @Override
+//                        public void onisLogin() {
+//                            JSONObject userjo = JSONUtil.getJSONObject(jo, "organizer");
+//                            boolean type = JSONUtil.getBoolean(userjo, "subscribeFlag");
+//                            String userId = JSONUtil.getString(userjo, "userId");
+//                            attentionorCancle(type, userId);
+//                        }
+//
+//                        @Override
+//                        public void onLoginFail() {
+//
+//                        }
+//                    });
+//                    break;
                 case R.id.invite:
                     UserInfoManage.getInstance().checkLogin((Activity) mContext, new UserInfoManage.LoginCallBack() {
                         @Override
@@ -336,39 +341,39 @@ public class LookAroundDialog extends BaseAlertDialog {
 
 
 
-    private void attentionorCancle(final boolean attentionB, String userId) {
-
-        User user = User.getInstance();
-
-        if (userId.equals(user.getUserId())) {
-
-            return;
-        }
-        String url;
-        if (!attentionB) {
-            url = API2.CWBaseurl + "/user/" + user.getUserId() + "/listen?token=" + user.getToken();
-        } else {
-            url = API2.CWBaseurl + "/user/" + user.getUserId() + "/unlisten?token=" + user.getToken();
-        }
-        DhNet net = new DhNet(url);
-        net.addParam("targetUserId", userId);
-        net.doPostInDialog(new NetTask(mContext) {
-            @Override
-            public void doInUI(Response response, Integer transfer) {
-                if (response.isSuccess()) {
-                    attention.setImage(attentionB ? R.drawable.icon_heart : R.drawable.icon_hearted);
-                    JSONObject userjo = JSONUtil.getJSONObject(jo, "organizer");
-                    try {
-                        userjo.put("subscribeFlag", !attentionB);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-
-                    }
-                }
-
-            }
-        });
-    }
+//    private void attentionorCancle(final boolean attentionB, String userId) {
+//
+//        User user = User.getInstance();
+//
+//        if (userId.equals(user.getUserId())) {
+//
+//            return;
+//        }
+//        String url;
+//        if (!attentionB) {
+//            url = API2.CWBaseurl + "/user/" + user.getUserId() + "/listen?token=" + user.getToken();
+//        } else {
+//            url = API2.CWBaseurl + "/user/" + user.getUserId() + "/unlisten?token=" + user.getToken();
+//        }
+//        DhNet net = new DhNet(url);
+//        net.addParam("targetUserId", userId);
+//        net.doPostInDialog(new NetTask(mContext) {
+//            @Override
+//            public void doInUI(Response response, Integer transfer) {
+//                if (response.isSuccess()) {
+//                    attention.setImage(attentionB ? R.drawable.icon_heart : R.drawable.icon_hearted);
+//                    JSONObject userjo = JSONUtil.getJSONObject(jo, "organizer");
+//                    try {
+//                        userjo.put("subscribeFlag", !attentionB);
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//
+//                    }
+//                }
+//
+//            }
+//        });
+//    }
 
 
     private void join(String activeId) {

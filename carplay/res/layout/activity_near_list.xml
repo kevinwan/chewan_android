@@ -25,10 +25,11 @@
         android:orientation="horizontal"
         android:background="#000000">
         <TextView
-            style="@style/text_white_medium"
+            android:id="@+id/freeT"
+            style="@style/text_white_small"
             android:layout_marginLeft="10dp"
             android:layout_centerVertical="true"
-            android:text="有空， 其他人可以邀请你参加活动"/>
+          />
         <CheckBox
             android:id="@+id/free_check"
             android:layout_width="wrap_content"

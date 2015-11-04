@@ -99,6 +99,10 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
                 carName.setText("");
                 up_button.setText("认证车主");
                 up_button.setEnabled(true);
+                driver_img.setEnabled(true);
+                driving_img.setEnabled(true);
+                brandchoice.setEnabled(true);
+                carName.setEnabled(true);
                 break;
 //            // 已认证
 //            case 1:

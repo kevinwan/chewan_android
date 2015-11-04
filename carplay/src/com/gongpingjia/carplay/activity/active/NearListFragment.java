@@ -10,6 +10,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.gongpingjia.carplay.ILoadSuccess;
 import com.gongpingjia.carplay.R;
@@ -57,7 +58,7 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
     FilterPreference2 pre;
 
     View mainV;
-
+    TextView freeT;
     LinearLayout near_layout;
     View currentview;
 
@@ -89,7 +90,9 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
         free_layout = (RelativeLayout)  mainV.findViewById(R.id.free);
         free_layout.getBackground().setAlpha(179);
         free_ck = (CheckBox)  mainV.findViewById(R.id.free_check);
+         freeT = (TextView) mainV.findViewById(R.id.freeT);
         free_ck.setChecked(true);
+        freeT.setText("无聊中～小伙伴可以邀你～");
         free_ck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -102,6 +105,7 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
                         public void doInUI(Response response, Integer transfer) {
                             if (response.isSuccess()) {
                                 System.out.println(response.isSuccess());
+                                freeT.setText("无聊中～小伙伴可以邀你～");
                             }
                         }
                     });
@@ -114,6 +118,7 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
                         public void doInUI(Response response, Integer transfer) {
                             if (response.isSuccess()) {
                                 System.out.println(response.isSuccess());
+                                freeT.setText("忙碌中～小伙伴不可约你～");
                             }
                         }
                     });
