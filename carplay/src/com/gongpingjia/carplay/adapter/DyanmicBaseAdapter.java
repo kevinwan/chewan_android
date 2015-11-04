@@ -162,10 +162,15 @@ public class DyanmicBaseAdapter extends BaseAdapter {
                 officialHolder.picI = (ImageView) view.findViewById(R.id.pic);
                 officialHolder.headI = (ImageView) view.findViewById(R.id.head);
 
-                officialHolder.maleLimitT = (TextView) view.findViewById(R.id.maleLimit);
-                officialHolder.maleNumT = (TextView) view.findViewById(R.id.maleNum);
-                officialHolder.femaleLimitT = (TextView) view.findViewById(R.id.femaleLimit);
-                officialHolder.femaleNumT = (TextView) view.findViewById(R.id.femaleNum);
+//                officialHolder.maleLimitT = (TextView) view.findViewById(R.id.maleLimit);
+//                officialHolder.maleNumT = (TextView) view.findViewById(R.id.maleNum);
+//                officialHolder.femaleLimitT = (TextView) view.findViewById(R.id.femaleLimit);
+//                officialHolder.femaleNumT = (TextView) view.findViewById(R.id.femaleNum);
+                officialHolder.limitedlayoutL = (LinearLayout) view.findViewById(R.id.limitedlayout);
+                officialHolder.unlimitedlayoutL = (LinearLayout) view.findViewById(R.id.unlimitedlayout);
+                officialHolder.participate_womanT = (TextView) view.findViewById(R.id.participate_woman);
+                officialHolder.participate_manT = (TextView) view.findViewById(R.id.participate_man);
+                officialHolder.unparticipateT = (TextView) view.findViewById(R.id.unparticipate);
                 officialHolder.cityT = (TextView) view.findViewById(R.id.city);
                 officialHolder.layoutV = (RelativeLayout) view.findViewById(R.id.layout);
                 view.setTag(officialHolder);
@@ -201,7 +206,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
 //        CarPlayUtil.bindActiveButton("邀请中", appointmentId, mContext, views);
 //        CarPlayUtil.bindActiveButton("应邀", appointmentId, mContext, viewstwo);
 //                CarPlayUtil.bindActiveButton("拒绝".views);
-
+            holder.ageT.setText(JSONUtil.getString(js,"age"));
             holder.dyanmic_one.startScaleAnimation();
             holder.dyanmic_two.startScaleAnimation();
             holder.yingyao.startScaleAnimation();
@@ -269,7 +274,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
             }
 
 
-            int distance = (int) Math.floor(JSONUtil.getDouble(js, "distance"));
+            int distance = (int) Math.floor(JSONUtil.getDouble(jo, "distance"));
 //        DecimalFormat df = new DecimalFormat("0.00");
             holder.activity_distance.setText(CarPlayUtil.numberWithDelimiter(distance));
             if (("男").equals(gender)) {
@@ -442,10 +447,10 @@ public class DyanmicBaseAdapter extends BaseAdapter {
             officialHolder.priceT.setText(JSONUtil.getString(jo, "price"));
             officialHolder.priceDescT.setText(JSONUtil.getString(jo, "priceDesc"));
             officialHolder.infoT.setText(JSONUtil.getString(jo, "title"));
-            officialHolder.maleLimitT.setText(JSONUtil.getString(jo, "maleLimit"));
-            officialHolder.maleNumT.setText(JSONUtil.getString(jo, "maleNum") + "/");
-            officialHolder.femaleLimitT.setText(JSONUtil.getString(jo, "femaleLimit"));
-            officialHolder.femaleNumT.setText(JSONUtil.getString(jo, "femaleNum") + "/");
+//            officialHolder.maleLimitT.setText(JSONUtil.getString(jo, "maleLimit"));
+//            officialHolder.maleNumT.setText(JSONUtil.getString(jo, "maleNum") + "/");
+//            officialHolder.femaleLimitT.setText(JSONUtil.getString(jo, "femaleLimit"));
+//            officialHolder.femaleNumT.setText(JSONUtil.getString(jo, "femaleNum") + "/");
 
             JSONObject locationJo = JSONUtil.getJSONObject(jo, "destination");
             officialHolder.locationT.setText(JSONUtil.getString(locationJo, "detail"));
@@ -453,6 +458,23 @@ public class DyanmicBaseAdapter extends BaseAdapter {
 
             JSONObject organizerJo = JSONUtil.getJSONObject(jo, "organizer");
             officialHolder.titleT.setText(JSONUtil.getString(organizerJo, "nickname"));
+            //0:无限制 1：限制总人数 2：限制男女人数
+            int limitType = JSONUtil.getInt(jo, "limitType");
+            //男生,女生数量,总量
+            if (limitType == 1) {
+                officialHolder.limitedlayoutL.setVisibility(View.GONE);
+                officialHolder.unlimitedlayoutL.setVisibility(View.VISIBLE);
+                ViewUtil.bindView(officialHolder.unparticipateT, JSONUtil.getInt(jo, "nowJoinNum") + "/" + JSONUtil.getInt(jo, "totalLimit"));
+            } else if (limitType == 2) {
+                officialHolder.limitedlayoutL.setVisibility(View.VISIBLE);
+                officialHolder.unlimitedlayoutL.setVisibility(View.GONE);
+                ViewUtil.bindView(officialHolder.participate_womanT, JSONUtil.getInt(jo, "femaleNum") + "/" + JSONUtil.getInt(jo, "femaleLimit"));
+                ViewUtil.bindView(officialHolder.participate_manT, JSONUtil.getInt(jo, "maleNum") + "/" + JSONUtil.getInt(jo, "maleLimit"));
+            } else {
+                officialHolder.limitedlayoutL.setVisibility(View.GONE);
+                officialHolder.unlimitedlayoutL.setVisibility(View.VISIBLE);
+                ViewUtil.bindView(officialHolder.unparticipateT, JSONUtil.getInt(jo, "nowJoinNum") + "/" + "人数不限");
+            }
             ViewUtil.bindNetImage(officialHolder.picI, JSONUtil.getString(organizerJo, "avatar"), "head");
             try {
                 JSONArray coversJSa = jo.getJSONArray("covers");
@@ -488,10 +510,10 @@ public class DyanmicBaseAdapter extends BaseAdapter {
 
 
     class OfficialHolder {
-        TextView titleT, locationT, priceT, infoT, priceDescT, cityT;
-        TextView maleLimitT, maleNumT, femaleLimitT, femaleNumT;
+        TextView titleT, locationT, priceT, infoT, priceDescT, cityT,participate_womanT, participate_manT,unparticipateT;
+//        TextView maleLimitT, maleNumT, femaleLimitT, femaleNumT;
         ImageView picI, headI;
-
+        LinearLayout limitedlayoutL,unlimitedlayoutL;
         RelativeLayout layoutV;
 
     }

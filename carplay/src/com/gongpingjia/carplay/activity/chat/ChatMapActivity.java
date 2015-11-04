@@ -3,6 +3,7 @@ package com.gongpingjia.carplay.activity.chat;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.amap.api.location.AMapLocation;
@@ -17,6 +18,8 @@ import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.MarkerOptions;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
+
+import net.duohuo.dhroid.util.UserLocation;
 
 /*
  *@author zhanglong
@@ -47,6 +50,8 @@ public class ChatMapActivity extends CarPlayBaseActivity implements AMapLocation
 
     private void setupMap(Bundle savedInstanceState) {
 
+        UserLocation location = UserLocation.getInstance();
+        location.cancleLocation();
         setTitle("位置");
         Intent it = getIntent();
         mMapView = (MapView) findViewById(R.id.mapView);
@@ -60,7 +65,7 @@ public class ChatMapActivity extends CarPlayBaseActivity implements AMapLocation
             // 要求定位
             mLocationManager = LocationManagerProxy.getInstance(this);
             mLocationManager.setGpsEnable(true);
-            mLocationManager.requestLocationData(LocationProviderProxy.AMapNetwork, 20000, 10, this);
+            mLocationManager.requestLocationData(LocationProviderProxy.AMapNetwork, -1, 10, this);
 
             setRightAction("发送", -1, new View.OnClickListener() {
 
@@ -113,6 +118,7 @@ public class ChatMapActivity extends CarPlayBaseActivity implements AMapLocation
 
     @Override
     public void onLocationChanged(AMapLocation location) {
+        Log.d("location", location.toString());
         if (location != null) {
             mCurLocation = location;
             LatLng ll = new LatLng(location.getLatitude(), location.getLongitude());
@@ -142,5 +148,7 @@ public class ChatMapActivity extends CarPlayBaseActivity implements AMapLocation
         // TODO Auto-generated method stub
         super.onDestroy();
         mMapView.onDestroy();
+        UserLocation location = UserLocation.getInstance();
+        location.init(self, 120 * 1000);
     }
 }

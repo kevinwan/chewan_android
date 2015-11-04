@@ -27,8 +27,11 @@ import com.gongpingjia.carplay.activity.my.MySubscriberActivity2;
 import com.gongpingjia.carplay.activity.my.OfficialMessageActivity;
 import com.gongpingjia.carplay.activity.my.VisitorsActivity;
 import com.gongpingjia.carplay.adapter.FragmentMsgAdapter;
+import com.gongpingjia.carplay.util.CarPlayPerference;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+
+import net.duohuo.dhroid.ioc.IocContainer;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -56,6 +59,8 @@ public class DynamicListFragment extends CarPlayBaseFragment implements PullToRe
 
 
     private boolean hidden;
+    CarPlayPerference per;
+
 
     public static DynamicListFragment getInstance() {
         if (instance == null) {
@@ -75,6 +80,29 @@ public class DynamicListFragment extends CarPlayBaseFragment implements PullToRe
     }
 
     private void initView() {
+
+        per = IocContainer.getShare().get(CarPlayPerference.class);
+        per.load();
+        if (per.isShowMessageGuilde == 0) {
+            mainV.findViewById(R.id.msg_guide).setVisibility(View.VISIBLE);
+            mainV.findViewById(R.id.guide_bg).setVisibility(View.VISIBLE);
+            mainV.findViewById(R.id.guide_icon).setVisibility(View.VISIBLE);
+        }
+
+        mainV.findViewById(R.id.msg_know).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                per.isShowMessageGuilde = 1;
+                per.commit();
+                mainV.findViewById(R.id.guide_icon).setVisibility(View.GONE);
+                mainV.findViewById(R.id.msg_guide).setVisibility(View.GONE);
+                mainV.findViewById(R.id.guide_bg).setVisibility(View.GONE);
+                mainV.getRootView().findViewById(R.id.main_msg_guide).setVisibility(View.GONE);
+
+            }
+        });
+
+
         pullToRefreshListView = (PullToRefreshListView) mainV.findViewById(R.id.listview);
         pullToRefreshListView.setOnRefreshListener(this);
 

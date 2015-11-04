@@ -1,21 +1,5 @@
 package com.gongpingjia.carplay.activity.my;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import net.duohuo.dhroid.ioc.IocContainer;
-import net.duohuo.dhroid.net.DhNet;
-import net.duohuo.dhroid.net.NetTask;
-import net.duohuo.dhroid.net.Response;
-import net.duohuo.dhroid.net.upload.FileInfo;
-import net.duohuo.dhroid.util.PhotoUtil;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -42,6 +26,21 @@ import com.gongpingjia.carplay.photo.model.PhotoModel;
 import com.gongpingjia.carplay.util.CarPlayPerference;
 import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.view.ImageGallery;
+
+import net.duohuo.dhroid.net.DhNet;
+import net.duohuo.dhroid.net.NetTask;
+import net.duohuo.dhroid.net.Response;
+import net.duohuo.dhroid.net.upload.FileInfo;
+import net.duohuo.dhroid.util.PhotoUtil;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author Administrator
@@ -89,22 +88,22 @@ public class ManageAlbumActivity extends CarPlayBaseActivity implements OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_album);
 
-        per = IocContainer.getShare().get(CarPlayPerference.class);
-        per.load();
-        if (per.isShowPhotoGuilde == 0) {
-            findViewById(R.id.guide).setVisibility(View.VISIBLE);
-        }
-
-        findViewById(R.id.know).setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                per.load();
-                per.isShowPhotoGuilde = 1;
-                per.commit();
-                findViewById(R.id.guide).setVisibility(View.GONE);
-            }
-        });
+//        per = IocContainer.getShare().get(CarPlayPerference.class);
+//        per.load();
+//        if (per.isShowPhotoGuilde == 0) {
+//            findViewById(R.id.guide).setVisibility(View.VISIBLE);
+//        }
+//
+//        findViewById(R.id.know).setOnClickListener(new OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                per.load();
+//                per.isShowPhotoGuilde = 1;
+//                per.commit();
+//                findViewById(R.id.guide).setVisibility(View.GONE);
+//            }
+//        });
 
         setTitle("相机胶卷");
         setRightAction("编辑", -1, this);

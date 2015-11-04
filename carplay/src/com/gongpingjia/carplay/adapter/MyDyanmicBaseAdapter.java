@@ -120,16 +120,21 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
             if (TYPE_1 == type) {
                 holders = new ViewHolders();
                 view = LayoutInflater.from(mContext).inflate(R.layout.item_mydyanmic_recommend, viewGroup, false);
-                holders.people_num = (TextView) view.findViewById(R.id.people_num);
+//                holders.people_num = (TextView) view.findViewById(R.id.people_num);
                 holders.info = (TextView) view.findViewById(R.id.info);
                 holders.price = (TextView) view.findViewById(R.id.price);
                 holders.priceDesc = (TextView) view.findViewById(R.id.priceDesc);
                 holders.location = (TextView) view.findViewById(R.id.location);
                 holders.city = (TextView) view.findViewById(R.id.city);
+                holders.participate_womanT = (TextView) view.findViewById(R.id.participate_woman);
+                holders.participate_manT = (TextView) view.findViewById(R.id.participate_man);
+                holders.unparticipateT = (TextView) view.findViewById(R.id.unparticipate);
                 holders.pic = (ImageView) view.findViewById(R.id.pic);
                 holders.invitation = (LinearLayout) view.findViewById(R.id.invitation);
                 holders.invitationI = (AnimButtonView) view.findViewById(R.id.invitationI);
                 holders.invitationT = (TextView) view.findViewById(R.id.invitationT);
+                holders.limitedlayoutL = (LinearLayout) view.findViewById(R.id.limitedlayout);
+                holders.unlimitedlayoutL = (LinearLayout) view.findViewById(R.id.unlimitedlayout);
                 holders.layoutV = (RelativeLayout) view.findViewById(R.id.layout);
                 LinearLayout.LayoutParams pams = (LinearLayout.LayoutParams) holders.layoutV.getLayoutParams();
                 pams.height = API2.ImageHeight;
@@ -201,7 +206,24 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
 
             }
             int people = JSONUtil.getInt(jo, "nowJoinNum");
-            holders.people_num.setText("参与" + people + "人");
+//            holders.people_num.setText("参与" + people + "人");
+            //0:无限制 1：限制总人数 2：限制男女人数
+            int limitType = JSONUtil.getInt(jo, "limitType");
+            //男生,女生数量,总量
+            if (limitType == 1) {
+                holders.limitedlayoutL.setVisibility(View.GONE);
+                holders.unlimitedlayoutL.setVisibility(View.VISIBLE);
+                ViewUtil.bindView(holders.unparticipateT, JSONUtil.getInt(jo, "nowJoinNum") + "/" + JSONUtil.getInt(jo, "totalLimit"));
+            } else if (limitType == 2) {
+                holders.limitedlayoutL.setVisibility(View.VISIBLE);
+                holders.unlimitedlayoutL.setVisibility(View.GONE);
+                ViewUtil.bindView(holders.participate_womanT, JSONUtil.getInt(jo, "femaleNum") + "/" + JSONUtil.getInt(jo, "femaleLimit"));
+                ViewUtil.bindView(holders.participate_manT, JSONUtil.getInt(jo, "maleNum") + "/" + JSONUtil.getInt(jo, "maleLimit"));
+            } else {
+                holders.limitedlayoutL.setVisibility(View.GONE);
+                holders.unlimitedlayoutL.setVisibility(View.VISIBLE);
+                ViewUtil.bindView(holders.unparticipateT, JSONUtil.getInt(jo, "nowJoinNum") + "/" + "人数不限");
+            }
             holders.price.setText(JSONUtil.getString(jo, "price"));
             String priceDesc = JSONUtil.getString(jo, "priceDesc");
             int officstatus = JSONUtil.getInt(jo, "status");
@@ -314,7 +336,7 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
             String typeT = JSONUtil.getString(jo, "type");
             String name = JSONUtil.getString(js, "nickname");
             String gender = JSONUtil.getString(js, "gender");
-
+            holder.ageT.setText(JSONUtil.getString(js,"age"));
 //        String jied = JSONUtil.getString(json, "street");
             if (json == null || JSONUtil.getString(json, "province").equals("") || JSONUtil.getString(json, "city").equals("") || JSONUtil.getString(json, "district").equals("") || JSONUtil.getString(json, "street").equals("") || JSONUtil.getString(json, "detail").equals("")) {
                 holder.activity_place.setText("地点待定");
@@ -329,7 +351,7 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                 holder.inviteT.setVisibility(View.GONE);
             }
 
-            int distance = (int) Math.floor(JSONUtil.getDouble(js, "distance"));
+            int distance = (int) Math.floor(JSONUtil.getDouble(jo, "distance"));
             System.out.println("我的活动距离" + JSONUtil.getDouble(js, "distance"));
 //        DecimalFormat df = new DecimalFormat("0.00");
             holder.activity_distance.setText(CarPlayUtil.numberWithDelimiter(distance));
@@ -343,7 +365,7 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
 
             if ("认证通过".equals(licenseAuthStatus)) {
                 ViewUtil.bindNetImage(holder.dynamic_carlogo, JSONUtil.getString(ob, "logo"), "default");
-                holder.dynamic_carname.setText(JSONUtil.getString(ob, "model"));
+//                holder.dynamic_carname.setText(JSONUtil.getString(ob, "model"));
             } else {
                 holder.dynamic_carlogo.setVisibility(View.GONE);
                 holder.dynamic_carname.setVisibility(View.GONE);
@@ -579,11 +601,12 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
     }
 
     class ViewHolders {
-        TextView people_num, info, price, priceDesc, location, city;
+        TextView info, price, priceDesc, location, city;
         ImageView pic;
         LinearLayout invitation;
+        LinearLayout limitedlayoutL,unlimitedlayoutL;
         AnimButtonView invitationI;
-        TextView invitationT;
+        TextView invitationT,unparticipateT,participate_womanT, participate_manT;
         RelativeLayout layoutV;
     }
 }

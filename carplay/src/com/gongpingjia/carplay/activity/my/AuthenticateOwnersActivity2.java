@@ -21,6 +21,7 @@ import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.net.upload.FileInfo;
 import net.duohuo.dhroid.util.PhotoUtil;
+import net.duohuo.dhroid.util.ViewUtil;
 
 import org.json.JSONObject;
 
@@ -40,7 +41,7 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
     public static final int MODEL = 1;
     String carModel = "";
     // 认证类型 (0:未认证 1:认证成功 2:认证中)
-    int isAuthenticated = 0;
+    String isAuthenticated ;
 
     String brandName, brandLogo, modelName, modelSlug;
     User user;
@@ -88,46 +89,48 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
         carName = (TextView) findViewById(R.id.carName);
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            isAuthenticated = bundle.getInt("isAuthenticated", 0);
+            isAuthenticated = bundle.getString("licenseAuthStatus");
             carModel = bundle.getString("carModel");
-//            drivingyears = bundle.getInt("drivingyears", 0);
             license = bundle.getString("license");
         }
         switch (isAuthenticated) {
             // 未认证
-            case 0:
+            case "未认证":
                 carName.setText("");
                 up_button.setText("认证车主");
                 up_button.setEnabled(true);
+                driver_img.setEnabled(true);
+                driving_img.setEnabled(true);
+                brandchoice.setEnabled(true);
+                carName.setEnabled(true);
                 break;
-            // 已认证
-            case 1:
-                carName.setText(carModel);
-//                if (!TextUtils.isEmpty(license)) {
-//                    ViewUtil.bindNetImage(picI, license,
-//                            CarPlayValueFix.optionsDefault.toString());
-//                }
-                up_button.setText("已认证");
-                up_button.setEnabled(false);
-                up_button.setBackgroundResource(R.drawable.btn_grey_fillet);
-                break;
+//            // 已认证
+//            case 1:
+//                carName.setText(carModel);
+////                if (!TextUtils.isEmpty(license)) {
+////                    ViewUtil.bindNetImage(picI, license,
+////                            CarPlayValueFix.optionsDefault.toString());
+////                }
+//                up_button.setText("已认证");
+//                up_button.setEnabled(false);
+//                up_button.setBackgroundResource(R.drawable.btn_grey_fillet);
+//                break;
             // 认证中
-            case 2:
+            case "认证中":
                 carName.setText(carModel);
-//                if (!TextUtils.isEmpty(license)) {
-//                    ViewUtil.bindNetImage(picI, license,
-//                            CarPlayValueFix.optionsDefault.toString());
-//                }
                 up_button.setText("认证中");
                 up_button.setEnabled(false);
+                carName.setText(bundle.getString("carmodel"));
                 up_button.setBackgroundResource(R.drawable.btn_grey_fillet);
+                ViewUtil.bindNetImage(driver_img, bundle.getString("driverLicenseURL"), "default");
+                ViewUtil.bindNetImage(driving_img, bundle.getString("drivingLicenseURL"), "default");
                 drivinglicense_up.setEnabled(false);
                 driverlicense_up.setEnabled(false);
                 brandchoice.setEnabled(false);
-//                drivingExperienceE.setTextColor(self.getResources().getColor(R.color.text_grey));
                 carName.setTextColor(self.getResources().getColor(R.color.text_grey));
                 carName.setEnabled(false);
-//
+                driver_img.setEnabled(false);
+                driving_img.setEnabled(false);
 //                icon_tI.setVisibility(View.INVISIBLE);
 //                icon_bI.setVisibility(View.INVISIBLE);
                 break;

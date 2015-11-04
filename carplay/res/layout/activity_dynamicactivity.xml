@@ -1,25 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/new_bg_grey"
-    android:orientation="vertical">
 
-    <include
-        layout="@layout/include_title_bar" />
+    >
 
-    <TextView
-        android:id="@+id/txt"
-        style="@style/text_black_small"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/new_bg_grey"
+        android:orientation="vertical">
+
+        <include layout="@layout/include_title_bar" />
+
+        <TextView
+            android:id="@+id/txt"
+            style="@style/text_black_small"
+            android:layout_width="fill_parent"
+            android:gravity="center"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:text="越早联系成功率越高"
+            android:textColor="@color/text_grey_new" />
+
+
+        <include layout="@layout/include_refreshlistview2" />
+
+
+    </LinearLayout>
+
+
+    <ScrollView
+        android:id="@+id/guide"
         android:layout_width="fill_parent"
-        android:gravity="center"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp"
-        android:text="越早联系成功率越高"
-        android:textColor="@color/text_grey_new" />
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="665dp">
 
 
-    <include layout="@layout/include_refreshlistview2" />
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="665dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/guide_active" />
 
 
-</LinearLayout>
+            <Button
+                android:id="@+id/know"
+                android:layout_width="160dp"
+                android:layout_height="140dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="390dp"
+                android:background="@color/nothing" />
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

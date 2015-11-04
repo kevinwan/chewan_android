@@ -70,6 +70,9 @@ public class BasicInformationActivity2 extends CarPlayBaseActivity implements Vi
     private String photoUid;
     private long mBirthday = 0;
 
+
+    CarPlayPerference per;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +86,20 @@ public class BasicInformationActivity2 extends CarPlayBaseActivity implements Vi
     @Override
     public void initView() {
         setTitle("个人信息");
+        per = IocContainer.getShare().get(CarPlayPerference.class);
+        per.load();
+        if (per.isshowPersonGuide == 0) {
+            findViewById(R.id.guide).setVisibility(View.VISIBLE);
+        }
+
+        findViewById(R.id.know).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                per.isshowPersonGuide = 1;
+                per.commit();
+                findViewById(R.id.guide).setVisibility(View.GONE);
+            }
+        });
         setLeftAction(R.drawable.action_cancel, null, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -250,7 +267,7 @@ public class BasicInformationActivity2 extends CarPlayBaseActivity implements Vi
                     if (getIntent().getStringExtra("phone") != null) {
                         //手机号完善信息
                         loginHX(MD5Util.string2MD5(JSONUtil.getString(jo,
-                                        "userId")), getIntent().getStringExtra("password"), jo);
+                                "userId")), getIntent().getStringExtra("password"), jo);
 //                        loginHX(JSONUtil.getString(jo,
 //                                "userId"), MD5Util.string2MD5(getIntent().getStringExtra("password")), jo);
                         per.phone = getIntent().getStringExtra("phone");

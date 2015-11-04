@@ -266,9 +266,11 @@
                         android:textColor="@color/text_black" />
 
                     <ImageView
+                        android:id="@+id/head_img"
                         android:layout_width="18dp"
                         android:layout_height="22dp"
-                        android:src="@drawable/right_btn" />
+                        android:src="@drawable/right_btn"
+                        android:visibility="gone"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -317,8 +319,10 @@
                         android:textColor="@color/text_black" />
 
                     <ImageView
+                        android:id="@+id/car_img"
                         android:layout_width="18dp"
                         android:layout_height="22dp"
+                        android:visibility="gone"
                         android:src="@drawable/right_btn" />
                 </LinearLayout>
 

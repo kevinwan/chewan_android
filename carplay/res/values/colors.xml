@@ -97,5 +97,6 @@
     <color name="circle_gw_bg">#FB6087</color>
     <color name="circle_hkf_bg">#E85959</color>
     <color name="circle_hj_bg">#1AAC8E</color>
+    <color name="black70">#7b000000</color>
 
 </resources>

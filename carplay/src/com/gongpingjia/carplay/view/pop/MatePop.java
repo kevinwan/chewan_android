@@ -18,9 +18,12 @@ import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.bean.Matching;
 import com.gongpingjia.carplay.bean.PointRecord;
 import com.gongpingjia.carplay.bean.TabEB;
+import com.gongpingjia.carplay.util.CarPlayPerference;
 import com.gongpingjia.carplay.view.AnimButtonView2;
 import com.gongpingjia.carplay.view.dialog.MatchingDialog;
 import com.gongpingjia.carplay.view.dialog.MateLayerDialog;
+
+import net.duohuo.dhroid.ioc.IocContainer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +49,8 @@ public class MatePop implements Runnable, View.OnClickListener {
 
     List<AnimButtonView2> list;
     AnimButtonView2 eatView, sportView, movieView, dogView, songView, nightEatView, nightShopView, shopView, coffeeView, beerView;
+    CarPlayPerference per;
+    int dialogcolor = 0;
 
 
     public MatePop(final Activity context) {
@@ -72,6 +77,8 @@ public class MatePop implements Runnable, View.OnClickListener {
     }
 
     private void initView() {
+        per = IocContainer.getShare().get(CarPlayPerference.class);
+        per.load();
         list = new ArrayList<AnimButtonView2>();
 
         vesselR = (RelativeLayout) contentV.findViewById(R.id.content_layout);
@@ -163,7 +170,7 @@ public class MatePop implements Runnable, View.OnClickListener {
      * @param v
      */
     @Override
-    public void onClick(View v) {
+    public void onClick(final View v) {
         PointRecord record = PointRecord.getInstance();
         switch (v.getId()) {
             case R.id.exercise:
@@ -222,16 +229,19 @@ public class MatePop implements Runnable, View.OnClickListener {
             matching.setName(type);
             data.add(matching);
         }
-        MatchingDialog dlg = new MatchingDialog(context, data);
+        final MatchingDialog dlg = new MatchingDialog(context, data);
         if (data.size() == 1) {
             data.get(0).setIsChecked(true);
             if (names[0].equals("遛狗")) {
                 dlg.getWindow().setBackgroundDrawableResource(R.color.circle_lg_bg);
+                dialogcolor = R.color.circle_lg_bg;
             } else {
                 dlg.getWindow().setBackgroundDrawableResource(R.color.circle_gw_bg);
+                dialogcolor = R.color.circle_lg_bg;
             }
         } else {
             dlg.getWindow().setBackgroundDrawableResource(R.color.circle_yd_bg);
+            dialogcolor = R.color.circle_yd_bg;
         }
 
         dlg.setMatchingResult(new MatchingDialog.OnMatchingDialogResult() {
@@ -243,26 +253,48 @@ public class MatePop implements Runnable, View.OnClickListener {
             }
         });
 
+        if (per.isShowDialogGuilde == 0) {
+            contentV.findViewById(R.id.guide).setBackgroundColor(dialogcolor);
+            contentV.findViewById(R.id.guide).setVisibility(View.VISIBLE);
+            contentV.findViewById(R.id.know).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    per.isShowDialogGuilde = 1;
+                    per.commit();
+                    contentV.findViewById(R.id.guide).setVisibility(View.GONE);
+                    dlg.show();
+                }
+            });
+            return;
+        }
+
         dlg.show();
     }
 
     private void showMatchingDialog(Context context, String type) {
-        MateLayerDialog dlg = new MateLayerDialog(context, type);
+        final MateLayerDialog dlg = new MateLayerDialog(context, type);
 //        dlg.getWindow().setBackgroundDrawableResource(R.color.text_red);
         if ("看电影".equals(type)) {
             dlg.getWindow().setBackgroundDrawableResource(R.color.circle_kdy_bg);
+            dialogcolor = R.color.circle_kdy_bg;
         } else if ("唱歌".equals(type)) {
             dlg.getWindow().setBackgroundDrawableResource(R.color.circle_cg_bg);
+            dialogcolor = R.color.circle_cg_bg;
         } else if ("吃饭".equals(type)) {
             dlg.getWindow().setBackgroundDrawableResource(R.color.circle_cf_bg);
+            dialogcolor = R.color.circle_cf_bg;
         } else if ("咖啡".equals(type)) {
             dlg.getWindow().setBackgroundDrawableResource(R.color.circle_hkf_bg);
+            dialogcolor = R.color.circle_hkf_bg;
         } else if ("夜宵".equals(type)) {
             dlg.getWindow().setBackgroundDrawableResource(R.color.circle_yx_bg);
+            dialogcolor = R.color.circle_yx_bg;
         } else if ("夜店".equals(type)) {
             dlg.getWindow().setBackgroundDrawableResource(R.color.circle_yd_bg);
+            dialogcolor = R.color.circle_yd_bg;
         } else if ("喝酒".equals(type)) {
             dlg.getWindow().setBackgroundDrawableResource(R.color.circle_hj_bg);
+            dialogcolor = R.color.circle_hj_bg;
         }
         dlg.setMatchingResult(new MateLayerDialog.OnMatchingDialogResult() {
             @Override
@@ -272,6 +304,21 @@ public class MatePop implements Runnable, View.OnClickListener {
                 pop.dismiss();
             }
         });
+
+        if (per.isShowDialogGuilde == 0) {
+            contentV.findViewById(R.id.guide).setBackgroundColor(dialogcolor);
+            contentV.findViewById(R.id.guide).setVisibility(View.VISIBLE);
+            contentV.findViewById(R.id.know).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    per.isShowDialogGuilde = 1;
+                    per.commit();
+                    contentV.findViewById(R.id.guide).setVisibility(View.GONE);
+                    dlg.show();
+                }
+            });
+            return;
+        }
         dlg.show();
     }
 

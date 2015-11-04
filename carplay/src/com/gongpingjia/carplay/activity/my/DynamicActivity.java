@@ -12,8 +12,11 @@ import com.gongpingjia.carplay.activity.CarPlayListActivity;
 import com.gongpingjia.carplay.adapter.DyanmicBaseAdapter;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.User;
+import com.gongpingjia.carplay.util.CarPlayPerference;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+
+import net.duohuo.dhroid.ioc.IocContainer;
 
 /**
  * Created by Administrator on 2015/10/19.
@@ -29,6 +32,8 @@ public class DynamicActivity extends CarPlayListActivity implements PullToRefres
     User user = User.getInstance();
     //    DynamicActivityAdapter adapter;
     DyanmicBaseAdapter adapter;
+    CarPlayPerference per;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +50,22 @@ public class DynamicActivity extends CarPlayListActivity implements PullToRefres
 //        JSONArray jsonarray = new JSONArray();
 //        jsonarray.put("邀请中");
 //        jsonarray.put("应邀");
+
+        per = IocContainer.getShare().get(CarPlayPerference.class);
+        per.load();
+        if (per.isShowDynamicactivityGuide == 0) {
+            findViewById(R.id.guide).setVisibility(View.VISIBLE);
+        }
+
+        findViewById(R.id.know).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                per.isShowDynamicactivityGuide = 1;
+                per.commit();
+                findViewById(R.id.guide).setVisibility(View.GONE);
+            }
+        });
+
         empty = (LinearLayout) findViewById(R.id.empty);
         msg = (TextView) findViewById(R.id.msg);
 
