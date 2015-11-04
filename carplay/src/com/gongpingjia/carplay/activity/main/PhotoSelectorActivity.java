@@ -337,6 +337,9 @@ public class PhotoSelectorActivity extends Activity implements onItemClickListen
         else
             bundle.putInt("position", position);
         bundle.putString("album", tvAlbum.getText().toString());
+        if( tvAlbum.getText().toString().equals("选择照片")) {
+            bundle.putString("album","最近照片");
+        }
         CommonUtils.launchActivity(this, PhotoPreviewActivity.class, bundle);
 
 //        PhotoModel model = (PhotoModel) photoAdapter.getItem(position);

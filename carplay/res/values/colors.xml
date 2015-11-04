@@ -19,7 +19,7 @@
     <color name="text_hint_grey">#989898</color>
 
     <!-- 分割线 -->
-    <color name="cutline">#e6e9ed</color>
+    <color name="cutline">#f7f7f7</color>
     <!-- 主题背景颜色浅蓝色 -->
     <color name="theme_bg">#47D1D4</color>
 

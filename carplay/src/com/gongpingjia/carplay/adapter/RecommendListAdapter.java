@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.active.ActiveDetailsActivity2;
+import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.view.RoundImageView;
 
 import net.duohuo.dhroid.net.JSONUtil;
@@ -78,8 +79,8 @@ public class RecommendListAdapter extends RecyclerView.Adapter<RecommendListAdap
 
         final JSONObject jo = getItem(position);
         holder.priceT.setText(JSONUtil.getString(jo, "price"));
-        holder.priceDescT.setVisibility(TextUtils.isEmpty(JSONUtil.getString(jo, "priceDesc")) ? View.GONE : View.VISIBLE);
-        holder.priceDescT.setText(JSONUtil.getString(jo, "priceDesc"));
+        holder.priceDescT.setVisibility(TextUtils.isEmpty(JSONUtil.getString(jo, "subsidyPrice")) ? View.GONE : View.VISIBLE);
+        holder.priceDescT.setText("官方补贴" + JSONUtil.getString(jo, "subsidyPrice") + "元/人");
 
         holder.infoT.setText(JSONUtil.getString(jo, "title"));
 
@@ -89,16 +90,16 @@ public class RecommendListAdapter extends RecyclerView.Adapter<RecommendListAdap
         if (limitType == 1) {
             holder.limitedlayoutL.setVisibility(View.GONE);
             holder.unlimitedlayoutL.setVisibility(View.VISIBLE);
-            ViewUtil.bindView(holder.unparticipateT, JSONUtil.getInt(jo, "nowJoinNum") + "/" + JSONUtil.getInt(jo, "totalLimit"));
+            ViewUtil.bindView(holder.unparticipateT, CarPlayUtil.setTextColor(mContext, JSONUtil.getInt(jo, "nowJoinNum")+" / ", JSONUtil.getInt(jo, "nowJoinNum") + " / " + JSONUtil.getInt(jo, "totalLimit"), R.color.text_grey));
         } else if (limitType == 2) {
             holder.limitedlayoutL.setVisibility(View.VISIBLE);
             holder.unlimitedlayoutL.setVisibility(View.GONE);
-            ViewUtil.bindView(holder.participate_womanT, JSONUtil.getInt(jo, "femaleNum") + "/" + JSONUtil.getInt(jo, "femaleLimit"));
-            ViewUtil.bindView(holder.participate_manT, JSONUtil.getInt(jo, "maleNum") + "/" + JSONUtil.getInt(jo, "maleLimit"));
+            ViewUtil.bindView(holder.participate_womanT, CarPlayUtil.setTextColor(mContext,  JSONUtil.getInt(jo, "femaleNum")+" / ", JSONUtil.getInt(jo, "femaleNum") + " / " + JSONUtil.getInt(jo, "femaleLimit"), R.color.text_grey));
+            ViewUtil.bindView(holder.participate_manT, CarPlayUtil.setTextColor(mContext,  JSONUtil.getInt(jo, "maleNum")+" / ", JSONUtil.getInt(jo, "maleNum") + " / " + JSONUtil.getInt(jo, "maleLimit"), R.color.text_grey));
         } else {
             holder.limitedlayoutL.setVisibility(View.GONE);
             holder.unlimitedlayoutL.setVisibility(View.VISIBLE);
-            ViewUtil.bindView(holder.unparticipateT, JSONUtil.getInt(jo, "nowJoinNum") + "/" + "人数不限");
+            ViewUtil.bindView(holder.unparticipateT, CarPlayUtil.setTextColor(mContext, JSONUtil.getInt(jo, "nowJoinNum")+" / ", JSONUtil.getInt(jo, "nowJoinNum") + " / " + "人数不限", R.color.text_grey)) ;
         }
 
 

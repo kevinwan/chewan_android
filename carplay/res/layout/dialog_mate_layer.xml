@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bg"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:id="@+id/bg">
-
+    android:layout_height="fill_parent">
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -26,14 +25,14 @@
 
         <View
             style="@style/line_horizontal"
-            android:layout_below="@id/tv_top"
-            android:layout_marginBottom="10dp" />
+            android:layout_below="@+id/tv_top" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_top"
+            android:layout_below="@+id/tv_top"
             android:layout_centerInParent="true"
+            android:layout_marginTop="12dp"
             android:gravity="center_horizontal"
             android:orientation="vertical"
             android:padding="12dp">
@@ -154,6 +153,5 @@
 
         </LinearLayout>
     </RelativeLayout>
-
 
 </RelativeLayout>

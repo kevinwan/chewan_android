@@ -216,6 +216,11 @@ public class BasicInformationActivity2 extends CarPlayBaseActivity implements Vi
             return;
         }
 
+        if (mEditNickname.length()>7){
+            showToast("昵称不能大于7个字符");
+            return;
+        }
+
         if (mBirthday == 0) {
             showToast("请选择生日");
             return;

@@ -163,6 +163,7 @@ public class MatchingDialog extends BaseAlertDialog {
                 establish.put("city", UserLocation.getInstance().getCity());
                 establish.put("district", UserLocation.getInstance().getDistrict());
                 dhNet.addParam("establish", establish);
+                System.out.println("000000000000000"+establish);
                 User user = User.getInstance();
                 if (user.isLogin()) {
                     dhNet.doPost(new NetTask(context) {

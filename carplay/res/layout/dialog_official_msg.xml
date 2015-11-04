@@ -35,7 +35,7 @@
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
             android:background="@drawable/edittext_bg"
-            android:hint="说句话打动妹子  (选填)"
+            android:hint="说句话打动TA  (选填)"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:textColor="@color/text_black"

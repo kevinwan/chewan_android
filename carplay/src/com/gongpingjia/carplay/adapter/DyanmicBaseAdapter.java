@@ -274,7 +274,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
             }
 
 
-            int distance = (int) Math.floor(JSONUtil.getDouble(js, "distance"));
+            int distance = (int) Math.floor(JSONUtil.getDouble(jo, "distance"));
 //        DecimalFormat df = new DecimalFormat("0.00");
             holder.activity_distance.setText(CarPlayUtil.numberWithDelimiter(distance));
             if (("男").equals(gender)) {
@@ -445,7 +445,14 @@ public class DyanmicBaseAdapter extends BaseAdapter {
             });
         } else {
             officialHolder.priceT.setText(JSONUtil.getString(jo, "price"));
-            officialHolder.priceDescT.setText(JSONUtil.getString(jo, "priceDesc"));
+            String priceDesc = JSONUtil.getString(jo, "subsidyPrice");
+            if (priceDesc.isEmpty()) {
+                officialHolder.priceDescT.setVisibility(View.GONE);
+            } else {
+                officialHolder.priceDescT.setVisibility(View.VISIBLE);
+                officialHolder.priceDescT.setText("官方补贴" + JSONUtil.getString(jo, "subsidyPrice") + "元/人");
+            }
+//            officialHolder.priceDescT.setText(JSONUtil.getString(jo, "subsidyPrice"));
             officialHolder.infoT.setText(JSONUtil.getString(jo, "title"));
 //            officialHolder.maleLimitT.setText(JSONUtil.getString(jo, "maleLimit"));
 //            officialHolder.maleNumT.setText(JSONUtil.getString(jo, "maleNum") + "/");

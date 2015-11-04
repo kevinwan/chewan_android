@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -78,7 +79,7 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
     TextView right_txt;
     private long mBirthday;
     String head_url;
-
+    ImageView car_img,head_img;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -154,6 +155,8 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
         name_layout.setOnClickListener(this);
         approve_layout_head.setOnClickListener(this);
         approve_layout_car.setOnClickListener(this);
+         car_img = (ImageView) findViewById(R.id.car_img);
+         head_img = (ImageView) findViewById(R.id.head_img);
 //        getMyDetails();
         ViewUtil.bindNetImage(headI, myIntent.getStringExtra("headimg"), "head");
         sexT.setText(myIntent.getStringExtra("gender"));
@@ -165,23 +168,45 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
 //        String carslug = myIntent.getStringExtra("carslug");
         if (myIntent.getStringExtra("licenseAuthStatus").equals("认证中")){
             car_approve.setText(myIntent.getStringExtra("licenseAuthStatus"));
+            car_approve.setTextColor(getResources().getColor(R.color.text_black));
             approve_layout_car.setEnabled(true);
+            head_img.setVisibility(View.VISIBLE);
         }else if(myIntent.getStringExtra("licenseAuthStatus").equals("未认证")){
             car_approve.setText(myIntent.getStringExtra("licenseAuthStatus"));
+            car_approve.setTextColor(getResources().getColor(R.color.text_black));
+            head_img.setVisibility(View.VISIBLE);
             approve_layout_car.setEnabled(true);
-        }else if(myIntent.getStringExtra("licenseAuthStatus").equals("已认证")){
+        }else if(myIntent.getStringExtra("licenseAuthStatus").equals("认证通过")){
             car_approve.setText(myIntent.getStringExtra("licenseAuthStatus"));
+            car_approve.setTextColor(getResources().getColor(R.color.text_grey));
+            head_img.setVisibility(View.GONE);
             approve_layout_car.setEnabled(false);
+        }else if(myIntent.getStringExtra("licenseAuthStatus").equals("认证未通过")){
+            car_approve.setText(myIntent.getStringExtra("licenseAuthStatus"));
+            car_approve.setTextColor(getResources().getColor(R.color.text_black));
+            head_img.setVisibility(View.VISIBLE);
+            approve_layout_car.setEnabled(true);
         }
         if (myIntent.getStringExtra("photoAuthStatus").equals("认证中")){
             head_approve.setText(myIntent.getStringExtra("photoAuthStatus"));
+            head_approve.setTextColor(getResources().getColor(R.color.text_black));
+            car_img.setVisibility(View.VISIBLE);
             approve_layout_head.setEnabled(true);
         }else if(myIntent.getStringExtra("photoAuthStatus").equals("未认证")){
             head_approve.setText(myIntent.getStringExtra("photoAuthStatus"));
+            head_approve.setTextColor(getResources().getColor(R.color.text_black));
+            car_img.setVisibility(View.VISIBLE);
             approve_layout_head.setEnabled(true);
-        }else if(myIntent.getStringExtra("photoAuthStatus").equals("已认证")){
+        }else if(myIntent.getStringExtra("photoAuthStatus").equals("认证通过")){
             head_approve.setText(myIntent.getStringExtra("photoAuthStatus"));
+            head_approve.setTextColor(getResources().getColor(R.color.text_grey));
+            car_img.setVisibility(View.GONE);
             approve_layout_head.setEnabled(false);
+        }else if(myIntent.getStringExtra("photoAuthStatus").equals("认证未通过")){
+            head_approve.setText(myIntent.getStringExtra("photoAuthStatus"));
+            head_approve.setTextColor(getResources().getColor(R.color.text_black));
+            car_img.setVisibility(View.VISIBLE);
+            approve_layout_head.setEnabled(true);
         }
 
 
@@ -320,8 +345,14 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
     private void modification() {
         final String nickname = nicknameT.getText().toString().trim();
         // String carage = carageT.getText().toString().trim();
-        if (nickname.length() > 7 || nickname.length() == 0) {
-            showToast("昵称不能大于8个字符或者不能为空");
+
+        if (TextUtils.isEmpty(nickname)) {
+            showToast("请输入昵称");
+            return;
+        }
+
+        if (nickname.length()>7){
+            showToast("昵称不能大于7个字符");
             return;
         }
 //        if (mBirthday <= 0) {
