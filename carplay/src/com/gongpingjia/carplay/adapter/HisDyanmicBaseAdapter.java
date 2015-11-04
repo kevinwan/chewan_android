@@ -243,7 +243,7 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
             holder.dynamic_carlogo.setVisibility(View.GONE);
             holder.dynamic_carname.setVisibility(View.GONE);
         }
-        int distances = (int) Math.floor(distance);
+        int distances = (int) Math.floor(JSONUtil.getDouble(jo,"distance"));
 //        System.out.println("传值+++++++" + distance + "/////转换：" + distances);
         holder.activity_distance.setText(CarPlayUtil.numberWithDelimiter(distances));
         JSONObject json = JSONUtil.getJSONObject(jo, "destination");

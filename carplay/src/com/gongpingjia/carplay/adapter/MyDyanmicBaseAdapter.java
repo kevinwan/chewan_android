@@ -351,7 +351,7 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                 holder.inviteT.setVisibility(View.GONE);
             }
 
-            int distance = (int) Math.floor(JSONUtil.getDouble(js, "distance"));
+            int distance = (int) Math.floor(JSONUtil.getDouble(jo, "distance"));
             System.out.println("我的活动距离" + JSONUtil.getDouble(js, "distance"));
 //        DecimalFormat df = new DecimalFormat("0.00");
             holder.activity_distance.setText(CarPlayUtil.numberWithDelimiter(distance));

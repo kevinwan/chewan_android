@@ -230,6 +230,7 @@
                     android:visibility="gone" />
 
                 <ImageView
+                    android:id="@+id/headI"
                     android:layout_width="15dp"
                     android:layout_height="20dp"
                     android:src="@drawable/right_btn" />

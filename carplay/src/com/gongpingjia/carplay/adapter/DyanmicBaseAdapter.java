@@ -274,7 +274,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
             }
 
 
-            int distance = (int) Math.floor(JSONUtil.getDouble(js, "distance"));
+            int distance = (int) Math.floor(JSONUtil.getDouble(jo, "distance"));
 //        DecimalFormat df = new DecimalFormat("0.00");
             holder.activity_distance.setText(CarPlayUtil.numberWithDelimiter(distance));
             if (("男").equals(gender)) {

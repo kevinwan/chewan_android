@@ -108,6 +108,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
     String age;
     String name, gender, headimg, photoAuthStatus, licenseAuthStatus, carbradn, carlogo, carmodel, carslug;
     String photoUrl;
+    ImageView headImg,icon;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -150,6 +151,8 @@ public class MyFragment2 extends Fragment implements OnClickListener {
         attestation_txtT = (TextView) mainV.findViewById(R.id.attestation_txt);
         addPhoto = (ImageView) mainV.findViewById(R.id.addphoto);
         recyclerView = (RecyclerView) mainV.findViewById(R.id.recyclerView);
+         headImg = (ImageView) mainV.findViewById(R.id.headI);
+         icon = (ImageView) mainV.findViewById(R.id.icon);
 
         perfectBtn.setOnClickListener(this);
         myactiveL.setOnClickListener(this);
@@ -239,28 +242,52 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                         attestationT.setText("未认证");
                         txtphotoAuthStatusT.setText("未认证");
                         headattestationL.setEnabled(true);
+                        headImg.setVisibility(View.VISIBLE);
+                        txtphotoAuthStatusT.setTextColor(getResources().getColor(R.color.text_black));
                     } else if (photoAuthStatus.equals("认证通过")) {
                         attestationT.setBackgroundResource(R.drawable.btn_yellow_fillet);
                         txtphotoAuthStatusT.setText("认证通过");
                         attestationT.setText("已认证");
                         headattestationL.setEnabled(false);
+                        headImg.setVisibility(View.GONE);
+                        txtphotoAuthStatusT.setTextColor(getResources().getColor(R.color.text_grey));
                     } else if (photoAuthStatus.equals("认证中")) {
                         attestationT.setBackgroundResource(R.drawable.radio_sex_man_focused);
                         txtphotoAuthStatusT.setText("认证中");
                         attestationT.setText("未认证");
                         headattestationL.setEnabled(true);
+                        headImg.setVisibility(View.VISIBLE);
+                        txtphotoAuthStatusT.setTextColor(getResources().getColor(R.color.text_black));
+                    }else if(photoAuthStatus.equals("认证未通过")){
+                        attestationT.setBackgroundResource(R.drawable.radio_sex_man_focused);
+                        txtphotoAuthStatusT.setText("认证未通过");
+                        attestationT.setText("未认证");
+                        headattestationL.setEnabled(true);
+                        headImg.setVisibility(View.VISIBLE);
+                        txtphotoAuthStatusT.setTextColor(getResources().getColor(R.color.text_black));
                     }
 
                     //车主认证
                     if (licenseAuthStatus.equals("未认证")) {
                         carattestationL.setEnabled(true);
                         attestation_txtT.setText("未认证");
+                        icon.setVisibility(View.VISIBLE);
+                        attestation_txtT.setTextColor(getResources().getColor(R.color.text_black));
                     } else if (licenseAuthStatus.equals("认证通过")) {
                         carattestationL.setEnabled(false);
                         attestation_txtT.setText("认证通过");
+                        icon.setVisibility(View.GONE);
+                        attestation_txtT.setTextColor(getResources().getColor(R.color.text_grey));
                     } else if (licenseAuthStatus.equals("认证中")) {
                         carattestationL.setEnabled(true);
                         attestation_txtT.setText("认证中");
+                        icon.setVisibility(View.VISIBLE);
+                        attestation_txtT.setTextColor(getResources().getColor(R.color.text_black));
+                    }else if(licenseAuthStatus.equals("认证未通过")){
+                        carattestationL.setEnabled(true);
+                        attestation_txtT.setText("认证未通过");
+                        icon.setVisibility(View.VISIBLE);
+                        attestation_txtT.setTextColor(getResources().getColor(R.color.text_black));
                     }
                     if (licenseAuthStatus.equals("未认证") && photoAuthStatus.equals("未认证")) {
                         completenessT.setText("资料完成度60%,越高越吸引人");
