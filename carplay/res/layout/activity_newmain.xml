@@ -64,33 +64,6 @@
             </View>
         </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/free"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="#b3000000"
-            android:orientation="horizontal">
-
-            <TextView
-                style="@style/text_white_medium"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:text="有空， 其他人可以邀请你参加活动" />
-
-            <CheckBox
-                android:id="@+id/free_check"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginBottom="5dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/btn_checkbox_free"
-                android:button="@null"
-                android:padding="2dp" />
-
-        </RelativeLayout>
-
 
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -317,6 +290,8 @@
                     android:layout_marginBottom="15dp"
                     android:src="@drawable/icon_nav_center" />
 
+
+
             </RelativeLayout>
 
         </RelativeLayout>
@@ -359,33 +334,27 @@
     </RelativeLayout>
 
 
-    <ScrollView
-        android:id="@+id/msg_guide"
+    <RelativeLayout
+        android:id="@+id/main_msg_guide"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="fill_parent"
+        android:visibility="gone">
 
-        <RelativeLayout
+        <View
             android:layout_width="fill_parent"
-            android:layout_height="670dp">
-
-            <ImageView
-                android:id="@+id/msg_pic"
-                android:layout_width="fill_parent"
-                android:layout_height="670dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/guide_msg" />
-
-            <Button
-                android:id="@+id/msg_know"
-                android:layout_width="120dp"
-                android:layout_height="100dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="190dp"
-                android:background="@color/nothing" />
-
-        </RelativeLayout>
+            android:layout_height="50dp"
+            android:background="@color/black70"></View>
 
 
-    </ScrollView>
+        <View
+            android:id="@+id/msg_bg"
+            android:layout_width="fill_parent"
+            android:layout_height="70dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/black70"></View>
+
+
+    </RelativeLayout>
+
 
 </RelativeLayout>

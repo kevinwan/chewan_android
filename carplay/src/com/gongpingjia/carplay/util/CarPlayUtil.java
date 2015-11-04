@@ -353,6 +353,7 @@ public class CarPlayUtil {
 
     /**
      * 距离后缀显示
+     *
      * @param num
      * @return
      */
@@ -367,19 +368,20 @@ public class CarPlayUtil {
         if (num < 1000) {
             return num + "m";
         }
-        int i=num/1000;
-        return i+"km";
+        int i = num / 1000;
+        return i + "km";
     }
 
     /**
      * 是否包含字母 和 数字
+     *
      * @param str
      * @return
      */
-    public static boolean isValidPassword(String str){
+    public static boolean isValidPassword(String str) {
         boolean isDigit = false;//定义一个boolean值，用来表示是否包含数字
         boolean isLetter = false;//定义一个boolean值，用来表示是否包含字母
-        for(int i=0 ; i<str.length() ; i++) { //循环遍历字符串
+        for (int i = 0; i < str.length(); i++) { //循环遍历字符串
             if (Character.isDigit(str.charAt(i))) {     //用char包装类中的判断数字的方法判断每一个字符
                 isDigit = true;
             }
@@ -387,9 +389,15 @@ public class CarPlayUtil {
                 isLetter = true;
             }
         }
-        if (isDigit&&isLetter)
+        if (isDigit && isLetter)
             return true;
         return false;
+    }
+
+    private String setTextColor(String newcontent, String parscolor) {
+        String tc = "<font color='" + parscolor + "'>" + newcontent + "</font>";
+
+        return tc;
     }
 
 }

@@ -169,8 +169,9 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
                     //头像
                     String headimg = JSONUtil.getString(jo, "avatar");
                     ViewUtil.bindNetImage(headI, headimg, "head");
-//                    //相册
-//                    JSONArray albumJsa = JSONUtil.getJSONArray(jo, "album");
+                    //相册
+                    JSONArray albumJsa = JSONUtil.getJSONArray(jo, "album");
+                    getAlbum(albumJsa);
 //                    try {
 //                        if (albumJsa != null) {
 //                            ViewUtil.bindNetImage(photo_bgI, albumJsa.getJSONObject(0).getString("url"), "default");

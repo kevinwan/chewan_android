@@ -104,10 +104,10 @@ public class MyFragment2 extends Fragment implements OnClickListener {
 
     //已上传的图片
     private int uploadedCount = 0;
-
+    String driverLicenseURL,drivingLicenseURL;
     String age;
     String name, gender, headimg, photoAuthStatus, licenseAuthStatus, carbradn, carlogo, carmodel, carslug;
-
+    String photoUrl;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -200,6 +200,8 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                     carmodel = JSONUtil.getString(car, "model");
                     carslug = JSONUtil.getString(car, "slug");
                     name = JSONUtil.getString(jo, "nickname");
+                     driverLicenseURL = JSONUtil.getString(jo,"driverLicense");
+                     drivingLicenseURL = JSONUtil.getString(jo,"drivingLicense");
                     ViewUtil.bindView(nameT, JSONUtil.getString(jo, "nickname"));
                     gender = JSONUtil.getString(jo, "gender");
                     if (("男").equals(gender)) {
@@ -228,6 +230,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
 
                     photoAuthStatus = JSONUtil.getString(jo, "photoAuthStatus");
                     licenseAuthStatus = JSONUtil.getString(jo, "licenseAuthStatus");
+                     photoUrl = JSONUtil.getString(jo,"photo");
                     ViewUtil.bindView(txtphotoAuthStatusT, JSONUtil.getString(jo, "photoAuthStatus"));
                     ViewUtil.bindView(attestation_txtT, JSONUtil.getString(jo, "licenseAuthStatus"));
                     //头像认证
@@ -371,6 +374,11 @@ public class MyFragment2 extends Fragment implements OnClickListener {
             //车主认证
             case R.id.carattestation:
                 it = new Intent(mContext, AuthenticateOwnersActivity2.class);
+                it.putExtra("photoUrl",photoUrl);
+                it.putExtra("carmodel",carmodel);
+                it.putExtra("licenseAuthStatus",licenseAuthStatus);
+                it.putExtra("driverLicenseURL",driverLicenseURL);
+                it.putExtra("drivingLicenseURL",drivingLicenseURL);
                 startActivityForResult(it, APPROVE_CAR);
                 break;
             //上传相册

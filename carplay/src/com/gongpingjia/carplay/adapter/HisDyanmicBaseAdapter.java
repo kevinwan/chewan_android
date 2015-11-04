@@ -205,7 +205,7 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
             holder.invitation.setVisibility(View.GONE);
             holder.yingyaohou.setVisibility(View.VISIBLE);
 
-        }else if (status == 3) {
+        } else if (status == 3) {
             holder.invitation.setVisibility(View.VISIBLE);
             holder.yingyaohou.setVisibility(View.GONE);
             holder.invitationT.setText("邀 TA");
@@ -296,7 +296,7 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
                         Toast.makeText(mContext, "抱歉，" + bundle.getString("name") + "暂时没空接受你的邀请", Toast.LENGTH_LONG).show();
                     } else {
                         JSONObject jo = (JSONObject) getItem(i);
-                        join(activityId, holder, jo);
+                        join(JSONUtil.getString(jo,"activityId"), holder, jo);
 //                        System.out.println("有空----------" + bundle.getBoolean("idle"));
                     }
 
@@ -309,11 +309,11 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
         User user = User.getInstance();
         String url = API2.CWBaseurl + "activity/" + activeId + "/join?userId=" + user.getUserId() + "&token=" + user.getToken();
         DhNet net = new DhNet(url);
-        net.addParam("type", type);
-        net.addParam("pay", pay);
-        net.addParam("transfer", transfer);
-        net.addParam("destPoint", destPoint);
-        net.addParam("destination", destination);
+        net.addParam("type", JSONUtil.getString(jo,"type"));
+        net.addParam("pay", JSONUtil.getString(jo,"pay"));
+        net.addParam("transfer", JSONUtil.getString(jo,"transfer"));
+        net.addParam("destPoint", JSONUtil.getString(jo,"destPoint"));
+        net.addParam("destination", JSONUtil.getString(jo,"destination"));
         net.doPostInDialog(new NetTask(mContext) {
             @Override
             public void doInUI(Response response, Integer transfer) {

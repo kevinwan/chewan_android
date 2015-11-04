@@ -20,7 +20,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
  * @author Aizaz AZ
- * 
  */
 
 public class PhotoItem extends LinearLayout implements OnCheckedChangeListener, OnLongClickListener, OnClickListener {
@@ -52,6 +51,12 @@ public class PhotoItem extends LinearLayout implements OnCheckedChangeListener, 
         ivPhoto = (ImageView) findViewById(R.id.iv_photo_lpsi);
         cbPhoto = (CheckBox) findViewById(R.id.cb_photo_lpsi);
         cbPhoto.setOnCheckedChangeListener(this);
+//        ivPhoto.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                cbPhoto.setChecked(!cbPhoto.isChecked());
+//            }
+//        });
     }
 
     @Override
@@ -114,7 +119,7 @@ public class PhotoItem extends LinearLayout implements OnCheckedChangeListener, 
 
     public static interface onPhotoItemCheckedListener {
         public void onCheckedChanged(PhotoModel photoModel, CompoundButton buttonView, boolean isChecked,
-                ImageView imgView);
+                                     ImageView imgView);
     }
 
     public interface onItemClickListener {
