@@ -87,7 +87,6 @@ public class DynamicListFragment extends CarPlayBaseFragment implements PullToRe
             mainV.findViewById(R.id.msg_guide).setVisibility(View.VISIBLE);
             mainV.findViewById(R.id.guide_bg).setVisibility(View.VISIBLE);
             mainV.findViewById(R.id.guide_icon).setVisibility(View.VISIBLE);
-            mainV.getRootView().findViewById(R.id.main_msg_guide).setVisibility(View.VISIBLE);
         }
 
         mainV.findViewById(R.id.msg_know).setOnClickListener(new View.OnClickListener() {

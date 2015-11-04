@@ -21,7 +21,6 @@ import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -371,6 +370,9 @@ public class MainActivity2 extends BaseFragmentActivity implements
                         setTitle("动态");
                         img.setImageResource(R.drawable.icon_nav_dongtai_f);
                         switchContent(DynamicListFragment.getInstance());
+                        if (per.isShowMessageGuilde == 0) {
+                            findViewById(R.id.main_msg_guide).setVisibility(View.VISIBLE);
+                        }
                         break;
                     case 4:
                         setTitle("我的");

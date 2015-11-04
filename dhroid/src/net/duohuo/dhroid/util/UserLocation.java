@@ -59,6 +59,10 @@ public class UserLocation implements AMapLocationListener {
                 LocationProviderProxy.AMapNetwork, locationTime, 15, this);
     }
 
+    public void cancleLocation() {
+        mLocationManagerProxy.removeUpdates(this);
+    }
+
     public String getCity() {
         return city;
     }
