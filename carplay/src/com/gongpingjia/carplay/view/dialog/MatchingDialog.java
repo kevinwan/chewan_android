@@ -15,6 +15,7 @@ import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.Matching;
 import com.gongpingjia.carplay.bean.PointRecord;
 import com.gongpingjia.carplay.bean.User;
+import com.gongpingjia.carplay.util.CarPlayPerference;
 import com.gongpingjia.carplay.view.BaseAlertDialog;
 
 import net.duohuo.dhroid.net.DhNet;
@@ -37,6 +38,7 @@ public class MatchingDialog extends BaseAlertDialog {
     private Context context;
 
     private OnMatchingDialogResult mResult;
+    CarPlayPerference per;
 
     public void setMatchingResult(OnMatchingDialogResult result) {
         mResult = result;
@@ -51,6 +53,7 @@ public class MatchingDialog extends BaseAlertDialog {
         super(context, R.style.Dialog_Fullscreen);
         mDatas = data;
         this.context = context;
+
     }
 
 
@@ -58,6 +61,10 @@ public class MatchingDialog extends BaseAlertDialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_match_intention);
+
+
+
+
 
         checkBox = (CheckBox) findViewById(R.id.chk_pick);
         textDestination = (TextView) findViewById(R.id.tv_destination);

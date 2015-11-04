@@ -1,21 +1,20 @@
 package com.gongpingjia.carplay.util;
 
-import net.duohuo.dhroid.util.Perference;
 import android.content.Context;
 
+import net.duohuo.dhroid.util.Perference;
+
 /**
- * 
  * 用于存Preferences的获取与存储
- * 
+ *
  * @author duohuo
- * 
  */
 public class CarPlayPerference extends Perference {
 
     public String channel;
 
     public String sign;
-    
+
     //三方登陆返回的id
     public String thirdId;
 
@@ -65,8 +64,13 @@ public class CarPlayPerference extends Perference {
     // 是否展示新手指导提示
     public int isShowMainGuilde = 0;
 
-    // 是否展示新手指导提示
-    public int isShowPhotoGuilde = 0;
+    // 是否展示弹框新手指导提示
+    public int isShowDialogGuilde = 0;
+
+    //是否展示活动动态新手指导
+    public int isShowDynamicactivityGuide = 0;
+
+    public int isshowPersonGuide = 0;
 
     // 是否展示新手指导提示
     public int isShowMessageGuilde = 0;
@@ -114,7 +118,7 @@ public class CarPlayPerference extends Perference {
         // });
     }
 
-    
+
     public String getThirdId() {
         return thirdId;
     }
@@ -251,12 +255,12 @@ public class CarPlayPerference extends Perference {
         this.isShowMainGuilde = isShowMainGuilde;
     }
 
-    public int getIsShowPhotoGuilde() {
-        return isShowPhotoGuilde;
+    public int getIsShowDialogGuilde() {
+        return isShowDialogGuilde;
     }
 
-    public void setIsShowPhotoGuilde(int isShowPhotoGuilde) {
-        this.isShowPhotoGuilde = isShowPhotoGuilde;
+    public void setIsShowDialogGuilde(int isShowDialogGuilde) {
+        this.isShowDialogGuilde = isShowDialogGuilde;
     }
 
     public int getIsShowMessageGuilde() {
@@ -299,4 +303,20 @@ public class CarPlayPerference extends Perference {
         this.sign = sign;
     }
 
+
+    public int getIsShowDynamicactivityGuide() {
+        return isShowDynamicactivityGuide;
+    }
+
+    public void setIsShowDynamicactivityGuide(int isShowDynamicactivityGuide) {
+        this.isShowDynamicactivityGuide = isShowDynamicactivityGuide;
+    }
+
+    public int getIsshowPersonGuide() {
+        return isshowPersonGuide;
+    }
+
+    public void setIsshowPersonGuide(int isshowPersonGuide) {
+        this.isshowPersonGuide = isshowPersonGuide;
+    }
 }

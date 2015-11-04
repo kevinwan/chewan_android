@@ -13,6 +13,7 @@ import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.PointRecord;
 import com.gongpingjia.carplay.bean.User;
+import com.gongpingjia.carplay.util.CarPlayPerference;
 import com.gongpingjia.carplay.view.BaseAlertDialog;
 
 import net.duohuo.dhroid.net.DhNet;
@@ -45,6 +46,8 @@ public class MateLayerDialog extends BaseAlertDialog implements View.OnClickList
     private String type;
 
     User user;
+    CarPlayPerference per;
+
 
     public MateLayerDialog(Context context, String type) {
         super(context, R.style.Dialog_Fullscreen);
@@ -209,18 +212,19 @@ public class MateLayerDialog extends BaseAlertDialog implements View.OnClickList
         }
     }
 
-    private void setDefault(){
-        if (!user.isLogin()){
+    private void setDefault() {
+        if (!user.isLogin()) {
             selectIndex = 2;
             imgMyTreat.setBackgroundResource(R.drawable.mate_manner_n);
             imgAa.setBackgroundResource(R.drawable.mate_manner_y);
             imgYourTurn.setBackgroundResource(R.drawable.mate_manner_n);
-        }else if ("男".equals(user.getGender())){
+        } else if ("男".equals(user.getGender())) {
             selectIndex = 1;
             imgMyTreat.setBackgroundResource(R.drawable.mate_manner_y);
             imgAa.setBackgroundResource(R.drawable.mate_manner_n);
             imgYourTurn.setBackgroundResource(R.drawable.mate_manner_n);
-        }if ("女".equals(user.getGender())){
+        }
+        if ("女".equals(user.getGender())) {
             selectIndex = 3;
             imgMyTreat.setBackgroundResource(R.drawable.mate_manner_n);
             imgAa.setBackgroundResource(R.drawable.mate_manner_n);

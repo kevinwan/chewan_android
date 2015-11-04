@@ -147,6 +147,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
     RelativeLayout free_layout;
     CheckBox free_ck;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -196,6 +197,44 @@ public class MainActivity2 extends BaseFragmentActivity implements
     }
 
     public void initView() {
+        per = IocContainer.getShare().get(CarPlayPerference.class);
+        per.load();
+        if (per.isShowMainGuilde == 0) {
+            findViewById(R.id.guide).setVisibility(View.VISIBLE);
+        }
+
+        findViewById(R.id.guide_yun).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                per.isShowMainGuilde = 1;
+                per.commit();
+                findViewById(R.id.guide).setVisibility(View.GONE);
+            }
+        });
+
+        findViewById(R.id.msg_know).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                per.isShowMessageGuilde = 1;
+                per.commit();
+                findViewById(R.id.msg_guide).setVisibility(View.GONE);
+            }
+        });
+
+
+        //不能去掉
+        findViewById(R.id.main_bg).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
+
+        //不能去掉
+        findViewById(R.id.msg_pic).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
 
 
         user = User.getInstance();
@@ -208,7 +247,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
         tabV = (LinearLayout) findViewById(R.id.tab);
         titleBar = findViewById(R.id.titlebar);
         rightT = (TextView) findViewById(R.id.right_text);
-         free_layout = (RelativeLayout) findViewById(R.id.free);
+        free_layout = (RelativeLayout) findViewById(R.id.free);
         free_layout.getBackground().setAlpha(100);
         free_ck = (CheckBox) findViewById(R.id.free_check);
         free_ck.setChecked(true);
@@ -374,6 +413,12 @@ public class MainActivity2 extends BaseFragmentActivity implements
 //                        switchContent(MateFragment.getInstance());
                         break;
                     case 3:
+                        per = IocContainer.getShare().get(CarPlayPerference.class);
+                        per.load();
+                        if (per.isShowMessageGuilde == 0) {
+                            findViewById(R.id.msg_guide).setVisibility(View.VISIBLE);
+                        }
+
                         setTitle("动态");
                         img.setImageResource(R.drawable.icon_nav_dongtai_f);
                         switchContent(DynamicListFragment.getInstance());
