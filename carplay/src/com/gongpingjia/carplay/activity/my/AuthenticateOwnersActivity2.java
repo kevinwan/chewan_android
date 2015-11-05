@@ -135,6 +135,24 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
 //                icon_tI.setVisibility(View.INVISIBLE);
 //                icon_bI.setVisibility(View.INVISIBLE);
                 break;
+            case "认证未通过":
+                carName.setText(carModel);
+                up_button.setText("认证车主");
+                up_button.setEnabled(true);
+//                carName.setText(bundle.getString("carmodel"));
+//                up_button.setBackgroundResource(R.drawable.btn_grey_fillet);
+//                ViewUtil.bindNetImage(driver_img, bundle.getString("driverLicenseURL"), "default");
+//                ViewUtil.bindNetImage(driving_img, bundle.getString("drivingLicenseURL"), "default");
+                drivinglicense_up.setEnabled(true);
+                driverlicense_up.setEnabled(true);
+                brandchoice.setEnabled(true);
+//                carName.setTextColor(self.getResources().getColor(R.color.text_black));
+                carName.setEnabled(true);
+                driver_img.setEnabled(true);
+                driving_img.setEnabled(true);
+//                icon_tI.setVisibility(View.INVISIBLE);
+//                icon_bI.setVisibility(View.INVISIBLE);
+                break;
 
             default:
                 break;
@@ -221,6 +239,9 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
                             showToast("认证车主申请成功,请等待审核!");
                             Intent it = getIntent();
                             it.putExtra("statuss", "认证中");
+                            it.putExtra("driver",img);
+                            it.putExtra("driving", imgs);
+                            it.putExtra("carName", modelName);
                             setResult(self.RESULT_OK, it);
                             finish();
 //                            showToast(response.isSuccess() + "");

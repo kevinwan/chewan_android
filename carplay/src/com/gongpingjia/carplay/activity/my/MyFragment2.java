@@ -369,7 +369,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                 it.putExtra("drivingLicenseURL",drivingLicenseURL);
 //                it.putExtra("carbradn",carbradn);
 //                it.putExtra("carlogo",carlogo);
-//                it.putExtra("carmodel",carmodel);
+                it.putExtra("carmodel",carmodel);
 //                it.putExtra("carslug",carslug);
                 it.putExtra("age", age);
                 startActivity(it);
@@ -380,6 +380,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                 it.putExtra("name", name);
                 it.putExtra("gender", gender);
                 it.putExtra("headimg", headimg);
+                it.putExtra("carmodel",carmodel);
                 it.putExtra("photoAuthStatus", photoAuthStatus);
                 it.putExtra("licenseAuthStatus", licenseAuthStatus);
                 it.putExtra("driverLicenseURL",driverLicenseURL);
