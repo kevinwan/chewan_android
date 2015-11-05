@@ -22,6 +22,7 @@ import com.gongpingjia.carplay.bean.FilterPreference2;
 import com.gongpingjia.carplay.bean.LoginEB;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.manage.UserInfoManage;
+import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.view.AnimButtonView;
 import com.gongpingjia.carplay.view.PullToRefreshRecyclerViewVertical;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -87,10 +88,10 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
         pre = IocContainer.getShare().get(FilterPreference2.class);
         pre.load();
         near_layout = (LinearLayout) mainV.findViewById(R.id.near_empty);
-        free_layout = (RelativeLayout)  mainV.findViewById(R.id.free);
+        free_layout = (RelativeLayout) mainV.findViewById(R.id.free);
         free_layout.getBackground().setAlpha(179);
-        free_ck = (CheckBox)  mainV.findViewById(R.id.free_check);
-         freeT = (TextView) mainV.findViewById(R.id.freeT);
+        free_ck = (CheckBox) mainV.findViewById(R.id.free_check);
+        freeT = (TextView) mainV.findViewById(R.id.freeT);
         free_ck.setChecked(true);
         freeT.setText("无聊中～小伙伴可以邀你～");
         free_ck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -217,7 +218,7 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
     public void onEventMainThread(FilterPreference2 pre) {
         pre = IocContainer.getShare().get(FilterPreference2.class);
         pre.load();
-        addParams("majorType", pre.getType());
+        addParams("majorType", CarPlayUtil.getTypeName(pre.getType()));
         addParams("pay", pre.getPay());
         addParams("gender", pre.getGender());
         addParams("transfer", pre.isTransfer());

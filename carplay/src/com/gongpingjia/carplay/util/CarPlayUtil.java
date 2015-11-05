@@ -398,15 +398,35 @@ public class CarPlayUtil {
         return false;
     }
 
-    public static SpannableStringBuilder setTextColor(Context context,String newcontent,String oldcontent, int color) {
+    public static SpannableStringBuilder setTextColor(Context context, String newcontent, String oldcontent, int color) {
         /** 文字变色 */
-        int position = oldcontent.indexOf(newcontent,0);
-                    SpannableStringBuilder style = new SpannableStringBuilder(oldcontent);
+        int position = oldcontent.indexOf(newcontent, 0);
+        SpannableStringBuilder style = new SpannableStringBuilder(oldcontent);
         style.setSpan(new ForegroundColorSpan(context.getResources()
-                        .getColor(color)), position,position+newcontent.length(),
+                        .getColor(color)), position, position + newcontent.length(),
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         return style;
+    }
+
+
+    public static String getTypeName(String name) {
+        if ("夜宵".equals(name)) {
+            return "吃夜宵";
+        } else if ("咖啡".equals(name)) {
+            return "喝咖啡";
+        } else if ("夜店".equals(name)) {
+            return "去夜店";
+        } else if ("足球".equals(name)) {
+            return "踢球";
+        } else if ("篮球".equals(name)) {
+            return "打篮球";
+        } else if ("羽毛球".equals(name)) {
+            return "打羽毛球";
+        } else if ("桌球".equals(name)) {
+            return "玩桌球";
+        }
+        return name;
     }
 
 }

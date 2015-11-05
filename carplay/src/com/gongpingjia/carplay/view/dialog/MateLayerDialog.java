@@ -3,9 +3,11 @@ package com.gongpingjia.carplay.view.dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,8 +16,10 @@ import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.PointRecord;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.CarPlayPerference;
+import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.view.BaseAlertDialog;
 
+import net.duohuo.dhroid.ioc.IocContainer;
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
@@ -47,12 +51,19 @@ public class MateLayerDialog extends BaseAlertDialog implements View.OnClickList
 
     User user;
     CarPlayPerference per;
+    final int[] locations = new int[2];
+
+    int color;
 
 
     public MateLayerDialog(Context context, String type) {
         super(context, R.style.Dialog_Fullscreen);
         this.mContext = context;
         this.type = type;
+    }
+
+    public  void  setCoclor (int color) {
+        this.color = color;
     }
 
     @Override
@@ -86,6 +97,44 @@ public class MateLayerDialog extends BaseAlertDialog implements View.OnClickList
 
         checkBox = (CheckBox) findViewById(R.id.chk_pick);
         textDestination = (TextView) findViewById(R.id.tv_destination);
+
+
+        per = IocContainer.getShare().get(CarPlayPerference.class);
+        per.load();
+        if (per.isShowDialogGuilde == 0) {
+            findViewById(R.id.guide_bg).setVisibility(View.VISIBLE);
+            ViewTreeObserver
+                    vto = textDestination.getViewTreeObserver();
+
+            vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+
+                @Override
+                public boolean onPreDraw() {
+
+                    textDestination.getViewTreeObserver().removeOnPreDrawListener(this);
+                    textDestination.getLocationOnScreen(locations);
+
+                    ImageView gideText = (ImageView) findViewById(R.id.guide_icon);
+                    LinearLayout.LayoutParams pams = (LinearLayout.LayoutParams) gideText.getLayoutParams();
+                    pams.topMargin = locations[1] - 288;
+                    gideText.setLayoutParams(pams);
+
+                    return true;
+                }
+
+
+            });
+        }
+
+        findViewById(R.id.know).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                per.isShowDialogGuilde = 1;
+                per.commit();
+                findViewById(R.id.guide_bg).setVisibility(View.GONE);
+
+            }
+        });
         Button btnMatch = (Button) findViewById(R.id.btn_match);
 
         //设置默认选中值
@@ -108,8 +157,8 @@ public class MateLayerDialog extends BaseAlertDialog implements View.OnClickList
 
                 final DhNet dhNet = new DhNet(API2.getMatchUrl(User.getInstance().getUserId(), User.getInstance().getToken()));
                 //类型
-                dhNet.addParam("majorType", type);
-                dhNet.addParam("type", type);
+                dhNet.addParam("majorType", CarPlayUtil.getTypeName(type));
+                dhNet.addParam("type", CarPlayUtil.getTypeName(type));
                 dhNet.addParam("transfer", pickOrNot);
 
                 switch (selectIndex) {
@@ -189,6 +238,7 @@ public class MateLayerDialog extends BaseAlertDialog implements View.OnClickList
                         textDestination.setText(place);
                     }
                 });
+                dlg.getWindow().setBackgroundDrawableResource(color);
                 dlg.show();
             }
         });

@@ -18,12 +18,9 @@ import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.bean.Matching;
 import com.gongpingjia.carplay.bean.PointRecord;
 import com.gongpingjia.carplay.bean.TabEB;
-import com.gongpingjia.carplay.util.CarPlayPerference;
 import com.gongpingjia.carplay.view.AnimButtonView2;
 import com.gongpingjia.carplay.view.dialog.MatchingDialog;
 import com.gongpingjia.carplay.view.dialog.MateLayerDialog;
-
-import net.duohuo.dhroid.ioc.IocContainer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +46,6 @@ public class MatePop implements Runnable, View.OnClickListener {
 
     List<AnimButtonView2> list;
     AnimButtonView2 eatView, sportView, movieView, dogView, songView, nightEatView, nightShopView, shopView, coffeeView, beerView;
-    CarPlayPerference per;
     int dialogcolor = 0;
     MatchingDialog dlg;
 
@@ -83,8 +79,6 @@ public class MatePop implements Runnable, View.OnClickListener {
                 pop.dismiss();
             }
         });
-        per = IocContainer.getShare().get(CarPlayPerference.class);
-        per.load();
         list = new ArrayList<AnimButtonView2>();
 
         vesselR = (RelativeLayout) contentV.findViewById(R.id.content_layout);
@@ -251,8 +245,13 @@ public class MatePop implements Runnable, View.OnClickListener {
                 dialogcolor = R.color.circle_lg_bg;
             }
         } else {
-            dlg.getWindow().setBackgroundDrawableResource(R.color.circle_yd_bg);
-            dialogcolor = R.color.circle_yd_bg;
+            if (dialogtype == 1) {
+                dlg.getWindow().setBackgroundDrawableResource(R.color.circle_yx_bg);
+                dialogcolor = R.color.circle_yx_bg;
+            } else {
+                dlg.getWindow().setBackgroundDrawableResource(R.color.circle_yd_bg);
+                dialogcolor = R.color.circle_yd_bg;
+            }
         }
 
         dlg.setMatchingResult(new MatchingDialog.OnMatchingDialogResult() {
@@ -263,22 +262,7 @@ public class MatePop implements Runnable, View.OnClickListener {
                 pop.dismiss();
             }
         });
-
-        if (per.isShowDialogGuilde == 0) {
-            contentV.findViewById(R.id.guide).setBackgroundColor(context.getResources().getColor(dialogcolor));
-            contentV.findViewById(R.id.guide).setVisibility(View.VISIBLE);
-            contentV.findViewById(R.id.know).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    per.isShowDialogGuilde = 1;
-                    per.commit();
-                    contentV.findViewById(R.id.guide).setVisibility(View.GONE);
-                    dlg.show();
-                }
-            });
-            return;
-        }
-
+        dlg.setCoclor(dialogcolor);
         dlg.show();
     }
 
@@ -297,7 +281,7 @@ public class MatePop implements Runnable, View.OnClickListener {
         } else if ("咖啡".equals(type)) {
             dlg.getWindow().setBackgroundDrawableResource(R.color.circle_hkf_bg);
             dialogcolor = R.color.circle_hkf_bg;
-        } else if ("夜宵".equals(type)) {
+        } else if ("桌游".equals(type)) {
             dlg.getWindow().setBackgroundDrawableResource(R.color.circle_yx_bg);
             dialogcolor = R.color.circle_yx_bg;
         } else if ("夜店".equals(type)) {
@@ -315,21 +299,7 @@ public class MatePop implements Runnable, View.OnClickListener {
                 pop.dismiss();
             }
         });
-
-        if (per.isShowDialogGuilde == 0) {
-            contentV.findViewById(R.id.guide).setBackgroundColor(context.getResources().getColor(dialogcolor));
-            contentV.findViewById(R.id.guide).setVisibility(View.VISIBLE);
-            contentV.findViewById(R.id.know).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    per.isShowDialogGuilde = 1;
-                    per.commit();
-                    contentV.findViewById(R.id.guide).setVisibility(View.GONE);
-                    dlg.show();
-                }
-            });
-            return;
-        }
+        dlg.setCoclor(dialogcolor);
         dlg.show();
     }
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/bg"
     android:layout_width="fill_parent"
@@ -154,4 +155,52 @@
         </LinearLayout>
     </RelativeLayout>
 
+
+    <LinearLayout
+        android:id="@+id/guide_bg"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/black70"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/guide_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/guide_text"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="50dp"
+            android:src="@drawable/guide_dialog_icon" />
+
+        <TextView
+            android:id="@+id/guide_text"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="52dp"
+            android:layout_marginRight="52dp"
+            android:background="@drawable/edittext_bg"
+            android:drawablePadding="10dp"
+            android:drawableRight="@drawable/below_btn"
+            android:gravity="center"
+            android:hint="什么地方(选填)"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:textColor="@color/text_black"
+            android:textColorHint="@color/text_grey_ccc"
+            android:textSize="@dimen/text_small" />
+
+
+        <ImageView
+            android:id="@+id/know"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/guide_text"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/guide_dialog_know" />
+
+    </LinearLayout>
 </RelativeLayout>
+
