@@ -216,7 +216,7 @@ public class BasicInformationActivity2 extends CarPlayBaseActivity implements Vi
             return;
         }
 
-        if (mEditNickname.length()>7){
+        if (mEditNickname.length() > 7) {
             showToast("昵称不能大于7个字符");
             return;
         }
@@ -259,35 +259,22 @@ public class BasicInformationActivity2 extends CarPlayBaseActivity implements Vi
             public void doInUI(Response response, Integer transfer) {
                 if (response.isSuccess()) {
                     showToast("注册成功!");
-                    CarPlayPerference per = IocContainer.getShare().get(
-                            CarPlayPerference.class);
-                    per.load();
 
                     JSONObject jo = response.jSONFromData();
                     if (getIntent().getStringExtra("phone") != null) {
                         //手机号完善信息
                         loginHX(MD5Util.string2MD5(JSONUtil.getString(jo,
-                                "userId")), getIntent().getStringExtra("password"), jo);
+                                "userId")), getIntent().getStringExtra("password"), jo, true);
 //                        loginHX(JSONUtil.getString(jo,
 //                                "userId"), MD5Util.string2MD5(getIntent().getStringExtra("password")), jo);
-                        per.phone = getIntent().getStringExtra("phone");
-                        per.password = getIntent().getStringExtra("password");
                     } else {
                         //三方登录完善信息
                         loginHX(MD5Util.string2MD5(JSONUtil.getString(jo,
                                 "userId")), MD5Util.string2MD5(getIntent()
                                 .getStringExtra("uid")
                                 + getIntent().getStringExtra("channel")
-                                + "com.gongpingjia.carplay"), jo);
-                        per.thirdId = getIntent().getStringExtra("uid");
-                        per.channel = getIntent().getStringExtra("channel");
-                        per.headUrl = getIntent().getStringExtra("avatarUrl");
-                        per.nickname = getIntent().getStringExtra("nickname");
+                                + "com.gongpingjia.carplay"), jo, false);
                     }
-                    per.commit();
-                    Intent it = new Intent(self, MainActivity2.class);
-                    startActivity(it);
-                    LoginActivity2.asyncFetchGroupsFromServer();
                 }
             }
 
@@ -295,7 +282,7 @@ public class BasicInformationActivity2 extends CarPlayBaseActivity implements Vi
     }
 
     private void loginHX(String currentUsername, String currentPassword,
-                         final JSONObject jo) {
+                         final JSONObject jo, final boolean isphonelogin) {
         EMChatManager.getInstance().login(currentUsername, currentPassword,
                 new EMCallBack() {
 
@@ -333,6 +320,23 @@ public class BasicInformationActivity2 extends CarPlayBaseActivity implements Vi
                             LoginEB loginEB = new LoginEB();
                             loginEB.setIslogin(true);
                             EventBus.getDefault().post(loginEB);
+                            LoginActivity2.asyncFetchGroupsFromServer();
+
+                            CarPlayPerference per = IocContainer.getShare().get(
+                                    CarPlayPerference.class);
+                            per.load();
+                            if (isphonelogin) {
+                                per.phone = getIntent().getStringExtra("phone");
+                                per.password = getIntent().getStringExtra("password");
+                            } else {
+                                per.thirdId = getIntent().getStringExtra("uid");
+                                per.channel = getIntent().getStringExtra("channel");
+                                per.headUrl = getIntent().getStringExtra("avatarUrl");
+                                per.nickname = getIntent().getStringExtra("nickname");
+                            }
+                            per.commit();
+                            Intent it = new Intent(self, MainActivity2.class);
+                            startActivity(it);
                             LoginActivity2.asyncFetchGroupsFromServer();
                         } catch (Exception e) {
                             e.printStackTrace();

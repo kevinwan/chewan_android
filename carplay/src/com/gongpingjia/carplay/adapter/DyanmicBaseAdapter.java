@@ -195,7 +195,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
         JSONObject jo = (JSONObject) getItem(i);
         if (type == 0) {
 
-            holder.txt.setVisibility(i==0 ? View.VISIBLE : View.GONE);
+            holder.txt.setVisibility(i == 0 ? View.VISIBLE : View.GONE);
 
             final JSONObject js = JSONUtil.getJSONObject(jo, "applicant");
             JSONObject json = JSONUtil.getJSONObject(jo, "destination");
@@ -211,7 +211,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
 //        CarPlayUtil.bindActiveButton("邀请中", appointmentId, mContext, views);
 //        CarPlayUtil.bindActiveButton("应邀", appointmentId, mContext, viewstwo);
 //                CarPlayUtil.bindActiveButton("拒绝".views);
-            holder.ageT.setText(JSONUtil.getString(js,"age"));
+            holder.ageT.setText(JSONUtil.getString(js, "age"));
             holder.dyanmic_one.startScaleAnimation();
             holder.dyanmic_two.startScaleAnimation();
             holder.yingyao.startScaleAnimation();
@@ -309,7 +309,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
             }
 
 
-            ImageLoader.getInstance().displayImage(JSONUtil.getString(js, "avatar"), holder.activity_beijing, CarPlayValueFix.optionsDefault, new ImageLoadingListener() {
+            ImageLoader.getInstance().displayImage(JSONUtil.getString(js, "cover"), holder.activity_beijing, CarPlayValueFix.optionsDefault, new ImageLoadingListener() {
                 @Override
                 public void onLoadingStarted(String s, View view) {
 
@@ -472,8 +472,8 @@ public class DyanmicBaseAdapter extends BaseAdapter {
             officialHolder.locationT.setText(JSONUtil.getString(locationJo, "detail"));
 //            officialHolder.cityT.setText("[" + JSONUtil.getString(locationJo, "city") + "]");
 
-            String citystr="["+JSONUtil.getString(locationJo, "city")+"]  ";
-            String title = citystr+JSONUtil.getString(jo, "title");
+            String citystr = "[" + JSONUtil.getString(locationJo, "city") + "]  ";
+            String title = citystr + JSONUtil.getString(jo, "title");
             ViewUtil.bindView(officialHolder.cityT, CarPlayUtil.setTextColor(mContext, citystr, title, R.color.text_orange));
 
             JSONObject organizerJo = JSONUtil.getJSONObject(jo, "organizer");
@@ -493,7 +493,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
             } else {
                 officialHolder.limitedlayoutL.setVisibility(View.GONE);
                 officialHolder.unlimitedlayoutL.setVisibility(View.VISIBLE);
-                ViewUtil.bindView(officialHolder.unparticipateT, CarPlayUtil.setTextColor(mContext, JSONUtil.getInt(jo, "nowJoinNum") + " / ", JSONUtil.getInt(jo, "nowJoinNum") + " / " + "人数不限", R.color.text_grey)) ;
+                ViewUtil.bindView(officialHolder.unparticipateT, CarPlayUtil.setTextColor(mContext, JSONUtil.getInt(jo, "nowJoinNum") + " / ", JSONUtil.getInt(jo, "nowJoinNum") + " / " + "人数不限", R.color.text_grey));
             }
             ViewUtil.bindNetImage(officialHolder.picI, JSONUtil.getString(organizerJo, "avatar"), "head");
             try {
@@ -519,7 +519,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
     }
 
     class ViewHolder {
-        TextView titleT, dynamic_carname, pay_type, travelmode, activity_place, activity_distance, ageT, inviteT, invitationT,txt;
+        TextView titleT, dynamic_carname, pay_type, travelmode, activity_place, activity_distance, ageT, inviteT, invitationT, txt;
         ImageView dynamic_carlogo, activity_beijing, certification_achievement, sexI;
         AnimButtonView dyanmic_one, dyanmic_two, yingyao, hulue, invitationI;
         LinearLayout yingyao_layout, yingyaohou, invitation;
@@ -530,10 +530,10 @@ public class DyanmicBaseAdapter extends BaseAdapter {
 
 
     class OfficialHolder {
-        TextView titleT, locationT, priceT,  priceDescT, cityT,participate_womanT, participate_manT,unparticipateT,txt;
-//        TextView maleLimitT, maleNumT, femaleLimitT, femaleNumT;
+        TextView titleT, locationT, priceT, priceDescT, cityT, participate_womanT, participate_manT, unparticipateT, txt;
+        //        TextView maleLimitT, maleNumT, femaleLimitT, femaleNumT;
         ImageView picI, headI;
-        LinearLayout limitedlayoutL,unlimitedlayoutL;
+        LinearLayout limitedlayoutL, unlimitedlayoutL;
         RelativeLayout layoutV;
 
     }

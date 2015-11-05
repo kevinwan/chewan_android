@@ -102,16 +102,16 @@ public class PullToRefreshRecyclerViewVertical extends PullToRefreshBase<Recycle
                         } else {
                             rate = 1;
                         }
-                        v.setScaleY(1 - rate * 0.1f);
-                        v.setScaleX(1 - rate * 0.1f);
+//                        v.setScaleY(1 - rate * 0.1f);
+//                        v.setScaleX(1 - rate * 0.1f);
 
                     } else {
                         //往右 从 padding 到 recyclerView.getWidth()-padding 的过程中，由大到小
                         if (v.getTop() <= recyclerView.getHeight() - padding) {
                             rate = (recyclerView.getHeight() - padding - v.getTop()) * 1f / v.getHeight();
                         }
-                        v.setScaleY(0.9f + rate * 0.1f);
-                        v.setScaleX(0.9f + rate * 0.1f);
+//                        v.setScaleY(0.9f + rate * 0.1f);
+//                        v.setScaleX(0.9f + rate * 0.1f);
                     }
                 }
 
@@ -126,9 +126,9 @@ public class PullToRefreshRecyclerViewVertical extends PullToRefreshBase<Recycle
                 if (recyclerView.getChildCount() < 3) {
                     if (recyclerView.getChildAt(1) != null) {
                         if (recyclerView.getCurrentPosition() == 0) {
-                            View v1 = recyclerView.getChildAt(1);
-                            v1.setScaleY(0.9f);
-                            v1.setScaleX(0.9f);
+//                            View v1 = recyclerView.getChildAt(1);
+//                            v1.setScaleY(0.9f);
+//                            v1.setScaleX(0.9f);
                             if (onPageChange != null) {
                                 onPageChange.change(v);
                             }
@@ -136,14 +136,14 @@ public class PullToRefreshRecyclerViewVertical extends PullToRefreshBase<Recycle
                     }
                 } else {
                     if (recyclerView.getChildAt(0) != null) {
-                        View v0 = recyclerView.getChildAt(0);
-                        v0.setScaleY(0.9f);
-                        v0.setScaleX(0.9f);
+//                        View v0 = recyclerView.getChildAt(0);
+//                        v0.setScaleY(0.9f);
+//                        v0.setScaleX(0.9f);
                     }
                     if (recyclerView.getChildAt(2) != null) {
-                        View v2 = recyclerView.getChildAt(2);
-                        v2.setScaleY(0.9f);
-                        v2.setScaleX(0.9f);
+//                        View v2 = recyclerView.getChildAt(2);
+//                        v2.setScaleY(0.9f);
+//                        v2.setScaleX(0.9f);
                     }
                 }
 

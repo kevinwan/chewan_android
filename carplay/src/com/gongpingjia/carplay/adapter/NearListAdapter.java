@@ -82,7 +82,7 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
     public class SimpleViewHolder extends RecyclerView.ViewHolder {
         TextView nickname, car_name, age, pay, transfer, location, distance, join_desT, promtpT;
         ImageView headatt, car_logo, sex, active_bg;
-//        AttentionImageView attention;
+        //        AttentionImageView attention;
         RelativeLayout sexLayout;
         AnimButtonView invite;
         Button upload, takephotos, album;
@@ -200,7 +200,7 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
             holder.phtotoV.setVisibility(View.GONE);
             holder.promtpT.setVisibility(View.GONE);
         }
-        ImageLoader.getInstance().displayImage(JSONUtil.getString(userjo, "avatar"), holder.active_bg, CarPlayValueFix.optionsDefault, new ImageLoadingListener() {
+        ImageLoader.getInstance().displayImage(JSONUtil.getString(userjo, "cover"), holder.active_bg, CarPlayValueFix.optionsDefault, new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String s, View view) {
 
@@ -469,9 +469,9 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
         DhNet net = new DhNet(url);
         net.addParam("type", JSONUtil.getString(jo, "type"));
         net.addParam("pay", JSONUtil.getString(jo, "pay"));
-        net.addParam("transfer",JSONUtil.getBoolean(jo, "transfer"));
+        net.addParam("transfer", JSONUtil.getBoolean(jo, "transfer"));
 //        net.addParam("destPoint",destPoint);
-        net.addParam("destination",JSONUtil.getJSONObject(jo, "destination"));
+        net.addParam("destination", JSONUtil.getJSONObject(jo, "destination"));
         net.doPostInDialog(new NetTask(mContext) {
             @Override
             public void doInUI(Response response, Integer transfer) {

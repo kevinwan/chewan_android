@@ -79,7 +79,11 @@ public class RecommendListFragment extends CarPlayBaseFragment implements PullTo
 
     @Override
     public void loadSuccess() {
-
+        if (mVaules.size() != 0) {
+            listV.isScrollOnFooter = false;
+        } else {
+            listV.isScrollOnFooter = true;
+        }
         adapter.setData(mVaules);
         listV.onRefreshComplete();
 

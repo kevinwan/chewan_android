@@ -9,6 +9,8 @@ public class API2 {
 
     //测试版API前缀
     public static final String CWBaseurl = "http://cwapi.gongpingjia.com:8080/v2/";
+//    public static final String CWBaseurl = "http://192.168.1.162:8080/v2/";
+
 
     //获取验证码
     public static final String getVerification = CWBaseurl + "phone/";
