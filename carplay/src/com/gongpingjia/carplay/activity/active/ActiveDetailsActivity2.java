@@ -242,8 +242,13 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
 
                     Date sdate = new Date(JSONUtil.getLong(jo, "start"));
                     ViewUtil.bindView(startTimeT, format.format(sdate));
-                    Date edate = new Date(JSONUtil.getLong(jo, "end"));
-                    ViewUtil.bindView(endTimeT, format.format(edate));
+                    if (JSONUtil.getLong(jo,"end") == 0){
+                        ViewUtil.bindView(endTimeT, "待定");
+                    }else{
+                        Date edate = new Date(JSONUtil.getLong(jo, "end"));
+                        ViewUtil.bindView(endTimeT, format.format(edate));
+                    }
+
                     ViewUtil.bindView(creattimeT, CarPlayValueFix.converTime(JSONUtil.getLong(jo, "createTime")));
 
                     //活动名字,头像,标题,介绍,价格,补贴,说明
