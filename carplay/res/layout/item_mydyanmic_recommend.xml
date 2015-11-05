@@ -49,7 +49,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginRight="2dp"
                     android:src="@drawable/icon_women" />
 
                 <TextView
@@ -60,8 +60,8 @@
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="13dp"
+                    android:layout_marginRight="2dp"
                     android:src="@drawable/icon_men" />
 
                 <TextView
@@ -84,13 +84,13 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginLeft="12dp"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginRight="2dp"
                     android:src="@drawable/icon_person_grey" />
 
                 <TextView
                     android:id="@+id/unparticipate"
                     style="@style/text_black_small"
-                    android:layout_marginRight="12dp"
+                    android:layout_marginRight="5dp"
                     android:text="12/14" />
 
             </LinearLayout>
@@ -142,14 +142,9 @@
                 <TextView
                     android:id="@+id/city"
                     style="@style/text_black_small"
-                    android:textColor="@color/text_red" />
-
-
-                <TextView
-                    android:id="@+id/info"
-                    style="@style/text_black_small"
                     android:lineSpacingMultiplier="1.3"
-                    android:text="五月天演唱会,将在鸟巢举行,官方补贴,车玩补贴,每张门票20元,名额有限." />
+                    android:minLines="2"
+                    android:text="" />
 
             </LinearLayout>
         </LinearLayout>
@@ -165,7 +160,7 @@
 
             <TextView
                 android:id="@+id/price"
-                style="@style/text_black_medium"
+                style="@style/text_black_big"
                 android:text="300"
                 android:textColor="@color/text_red" />
 

@@ -2,16 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingTop="12dp"
+    android:gravity="center"
     android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/visit"
         android:layout_width="match_parent"
-        android:layout_height="68dp"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="14dp"
-        android:paddingRight="14dp">
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp">
 
         <RelativeLayout
 
@@ -39,13 +41,13 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="22dp"
+            android:layout_marginLeft="12dp"
             android:gravity="center_vertical"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/title"
-                style="@style/text_black_medium"
+                style="@style/text_black_big"
                 android:text="最近访客" />
 
             <TextView
@@ -72,5 +74,6 @@
     </LinearLayout>
 
 
-    <View style="@style/line_horizontal" />
+    <View style="@style/line_horizontal"
+        android:layout_marginTop="12dp"/>
 </LinearLayout>

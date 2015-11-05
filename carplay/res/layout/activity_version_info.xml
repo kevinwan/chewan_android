@@ -33,7 +33,7 @@
                 android:layout_marginTop="10dp"
                 android:text="1.05版本"
                 android:textColor="@color/xiangce_rad"
-                android:textSize="@dimen/text_medium" />
+                android:textSize="@dimen/text_big" />
 
             <TextView
                 android:id="@+id/tv_version_intro"
@@ -41,8 +41,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:textColor="@color/text_black"
-                 android:lineSpacingMultiplier="1.15"
-                android:textSize="@dimen/text_medium" />
+                 android:lineSpacingMultiplier="1.3"
+                android:textSize="@dimen/text_small" />
 
         </LinearLayout>
     </LinearLayout>

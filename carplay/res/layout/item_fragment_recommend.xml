@@ -5,6 +5,7 @@
     android:orientation="vertical">
 
     <View style="@style/line" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,9 +18,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="12dp"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="12dp">
 
             <com.gongpingjia.carplay.view.RoundImageView
                 android:id="@+id/head"
@@ -34,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:text="车玩官方"
                 android:textColor="@color/text_red"
-                android:textSize="@dimen/text_big" />
+                android:textSize="@dimen/text_medium" />
 
             <LinearLayout
                 android:id="@+id/limitedlayout"
@@ -65,7 +66,6 @@
                 <TextView
                     android:id="@+id/participate_man"
                     style="@style/text_black_smaller"
-                    android:layout_marginRight="5dp"
                     android:text="12/14" />
 
 
@@ -88,7 +88,7 @@
 
                 <TextView
                     android:id="@+id/unparticipate"
-                    style="@style/text_black_smaller"
+                    style="@style/text_black_small"
                     android:layout_marginRight="5dp"
                     android:text="12/14" />
 
@@ -98,8 +98,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:minHeight="180dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:minHeight="180dp">
 
             <ImageView
                 android:id="@+id/pic"
@@ -107,11 +107,12 @@
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 android:src="@drawable/my_bg" />
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scaleType="centerCrop"
                 android:layout_alignParentBottom="true"
+                android:scaleType="centerCrop"
                 android:src="@drawable/rec_pic_bg" />
 
             <TextView
@@ -135,25 +136,20 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingLeft="12dp"
-            android:paddingRight="12dp">
+            android:paddingRight="12dp"
+            android:paddingTop="10dp">
 
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/city"
                     style="@style/text_black_small"
-                    android:textColor="@color/text_red" />
-
-
-                <TextView
-                    android:id="@+id/info"
-                    style="@style/text_black_small"
                     android:lineSpacingMultiplier="1.3"
-                    android:text="五月天演唱会,将在鸟巢举行,官方补贴,车玩补贴,每张门票20元,名额有限." />
+                    android:minLines="2"
+                    android:text="" />
 
             </LinearLayout>
         </LinearLayout>
@@ -161,8 +157,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="25dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="6dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingLeft="12dp">

@@ -145,7 +145,7 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
         type = JSONUtil.getString(jo, "type");
         transfer = JSONUtil.getBoolean(jo, "transfer");
         int status = JSONUtil.getInt(jo, "status");
-        holder.titleT.setText(bundle.getString("name") + "想约人" + type);
+        holder.titleT.setText(bundle.getString("name") + "想邀人" + type);
         holder.pay_type.setText(pay);
 //        ViewUtil.bindNetImage(holder.activity_beijing, cover, "default");
         System.out.println("adapter;;;;;;;;;;;;" + cover);

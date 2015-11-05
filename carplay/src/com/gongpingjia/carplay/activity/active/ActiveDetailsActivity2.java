@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -241,8 +242,13 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
 
                     Date sdate = new Date(JSONUtil.getLong(jo, "start"));
                     ViewUtil.bindView(startTimeT, format.format(sdate));
-                    Date edate = new Date(JSONUtil.getLong(jo, "end"));
-                    ViewUtil.bindView(endTimeT, format.format(edate));
+                    if (JSONUtil.getLong(jo,"end") == 0){
+                        ViewUtil.bindView(endTimeT, "待定");
+                    }else{
+                        Date edate = new Date(JSONUtil.getLong(jo, "end"));
+                        ViewUtil.bindView(endTimeT, format.format(edate));
+                    }
+
                     ViewUtil.bindView(creattimeT, CarPlayValueFix.converTime(JSONUtil.getLong(jo, "createTime")));
 
                     //活动名字,头像,标题,介绍,价格,补贴,说明
@@ -268,9 +274,20 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
                     }
 //                    membersAdapter.setIsMember(isMember);
 
-//                    if (contentT.getLineCount() < 3) {
-//                        foldR.setVisibility(View.GONE);
-//                    }
+
+                    //判断内容为三行以内则不显示
+                    ViewTreeObserver vto = contentT.getViewTreeObserver();
+                    vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                        @Override
+                        public boolean onPreDraw() {
+                            if (contentT.getLineCount() < 3) {
+                                foldR.setVisibility(View.GONE);
+                            }
+                            return true;
+                        }
+                    });
+
+
 
                     //0:无限制 1：限制总人数 2：限制男女人数
                     int limitType = JSONUtil.getInt(jo, "limitType");

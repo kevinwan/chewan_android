@@ -121,7 +121,6 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                 holders = new ViewHolders();
                 view = LayoutInflater.from(mContext).inflate(R.layout.item_mydyanmic_recommend, viewGroup, false);
 //                holders.people_num = (TextView) view.findViewById(R.id.people_num);
-                holders.info = (TextView) view.findViewById(R.id.info);
                 holders.price = (TextView) view.findViewById(R.id.price);
                 holders.priceDesc = (TextView) view.findViewById(R.id.priceDesc);
                 holders.location = (TextView) view.findViewById(R.id.location);
@@ -201,7 +200,7 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
             } else {
                 holders.location.setVisibility(View.VISIBLE);
                 holders.city.setVisibility(View.VISIBLE);
-                holders.city.setText(JSONUtil.getString(json, "[" + "city" + "]"));
+//                holders.city.setText(JSONUtil.getString(json, "[" + "city" + "]"));
                 holders.location.setText(JSONUtil.getString(json, "detail"));
 
             }
@@ -213,16 +212,16 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
             if (limitType == 1) {
                 holders.limitedlayoutL.setVisibility(View.GONE);
                 holders.unlimitedlayoutL.setVisibility(View.VISIBLE);
-                ViewUtil.bindView(holders.unparticipateT, JSONUtil.getInt(jo, "nowJoinNum") + "/" + JSONUtil.getInt(jo, "totalLimit"));
+                ViewUtil.bindView(holders.unparticipateT, CarPlayUtil.setTextColor(mContext, JSONUtil.getInt(jo, "nowJoinNum") + " / ", JSONUtil.getInt(jo, "nowJoinNum") + " / " + JSONUtil.getInt(jo, "totalLimit"), R.color.text_grey));
             } else if (limitType == 2) {
                 holders.limitedlayoutL.setVisibility(View.VISIBLE);
                 holders.unlimitedlayoutL.setVisibility(View.GONE);
-                ViewUtil.bindView(holders.participate_womanT, JSONUtil.getInt(jo, "femaleNum") + "/" + JSONUtil.getInt(jo, "femaleLimit"));
-                ViewUtil.bindView(holders.participate_manT, JSONUtil.getInt(jo, "maleNum") + "/" + JSONUtil.getInt(jo, "maleLimit"));
+                ViewUtil.bindView(holders.participate_womanT, CarPlayUtil.setTextColor(mContext, JSONUtil.getInt(jo, "femaleNum") + " / ", JSONUtil.getInt(jo, "femaleNum") + " / " + JSONUtil.getInt(jo, "femaleLimit"), R.color.text_grey));
+                ViewUtil.bindView(holders.participate_manT, CarPlayUtil.setTextColor(mContext, JSONUtil.getInt(jo, "maleNum") + " / ", JSONUtil.getInt(jo, "maleNum") + " / " + JSONUtil.getInt(jo, "maleLimit"), R.color.text_grey));
             } else {
                 holders.limitedlayoutL.setVisibility(View.GONE);
                 holders.unlimitedlayoutL.setVisibility(View.VISIBLE);
-                ViewUtil.bindView(holders.unparticipateT, JSONUtil.getInt(jo, "nowJoinNum") + "/" + "人数不限");
+                ViewUtil.bindView(holders.unparticipateT, CarPlayUtil.setTextColor(mContext, JSONUtil.getInt(jo, "nowJoinNum")+" / ", JSONUtil.getInt(jo, "nowJoinNum") + " / " + "人数不限", R.color.text_grey)) ;
             }
             holders.price.setText(JSONUtil.getString(jo, "price"));
             String priceDesc = JSONUtil.getString(jo, "subsidyPrice");
@@ -242,7 +241,11 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                 holders.priceDesc.setText("官方补贴" + JSONUtil.getString(jo, "subsidyPrice") + "元/人");
             }
 
-            holders.info.setText(JSONUtil.getString(jo, "title"));
+            String citystr="["+JSONUtil.getString(json, "city")+"]  ";
+            String title = citystr+JSONUtil.getString(jo, "title");
+            ViewUtil.bindView(holders.city, CarPlayUtil.setTextColor(mContext, citystr, title, R.color.text_orange));
+
+//            holders.info.setText(JSONUtil.getString(jo, "title"));
             try {
                 JSONArray coversJSa = jo.getJSONArray("covers");
                 String picUrl = coversJSa.getString(0);
@@ -601,7 +604,7 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
     }
 
     class ViewHolders {
-        TextView info, price, priceDesc, location, city;
+        TextView  price, priceDesc, location, city;
         ImageView pic;
         LinearLayout invitation;
         LinearLayout limitedlayoutL,unlimitedlayoutL;

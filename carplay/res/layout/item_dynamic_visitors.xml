@@ -7,12 +7,11 @@
     <LinearLayout
         android:id="@+id/visit"
         android:layout_width="match_parent"
-        android:layout_height="68dp"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="14dp"
         android:background="@color/white"
-        android:paddingRight="14dp">
+        android:padding="12dp">
 
         <RelativeLayout
 
@@ -40,7 +39,7 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="22dp"
+            android:layout_marginLeft="12dp"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:orientation="vertical">
@@ -53,8 +52,8 @@
 
                 <TextView
                     android:id="@+id/visitors_name"
-                    style="@style/text_black_medium"
-                    android:layout_marginRight="5dp"
+                    style="@style/text_black_big"
+                    android:layout_marginRight="10dp"
                     android:text="哈哈" />
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -101,20 +100,19 @@
                 android:layout_marginTop="6dp"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:text="黄老邪看过你的相册" />
+                android:text="看过我" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:gravity="right"
+            android:gravity="right|center_vertical"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/visitors_time"
                 style="@style/text_grey_smaller"
-                android:layout_marginTop="14dp"
                 android:text="3分钟前" />
             <TextView
                 android:id="@+id/visitors_distance"

@@ -376,7 +376,6 @@ public class MainActivity2 extends BaseFragmentActivity implements
                         break;
                     case 4:
                         setTitle("我的");
-
                         switchContent(MyFragment2.getInstance());
                         img.setImageResource(R.drawable.icon_nav_mine_f);
 

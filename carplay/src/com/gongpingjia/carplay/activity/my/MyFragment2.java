@@ -365,6 +365,8 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                 it.putExtra("headimg", headimg);
                 it.putExtra("photoAuthStatus", photoAuthStatus);
                 it.putExtra("licenseAuthStatus", licenseAuthStatus);
+                it.putExtra("driverLicenseURL",driverLicenseURL);
+                it.putExtra("drivingLicenseURL",drivingLicenseURL);
 //                it.putExtra("carbradn",carbradn);
 //                it.putExtra("carlogo",carlogo);
 //                it.putExtra("carmodel",carmodel);
@@ -380,6 +382,8 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                 it.putExtra("headimg", headimg);
                 it.putExtra("photoAuthStatus", photoAuthStatus);
                 it.putExtra("licenseAuthStatus", licenseAuthStatus);
+                it.putExtra("driverLicenseURL",driverLicenseURL);
+                it.putExtra("drivingLicenseURL",drivingLicenseURL);
                 it.putExtra("age", age);
                 startActivity(it);
                 break;

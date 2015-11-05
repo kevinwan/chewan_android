@@ -2,7 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
     android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/txt"
+        style="@style/text_black_small"
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:gravity="center_horizontal|bottom"
+        android:text="越早联系成功率越高"
+        android:visibility="gone"
+        android:textColor="@color/text_grey_new" />
 
 
     <LinearLayout
@@ -32,7 +43,7 @@
 
                 <TextView
                     android:id="@+id/dynamic_title"
-                    style="@style/text_black_medium"
+                    style="@style/text_black_big"
                     android:ellipsize="end"
                     android:maxWidth="210dp"
                     android:singleLine="true"
@@ -57,7 +68,8 @@
                     style="@style/text_grey_small"
                     android:layout_marginLeft="9dp"
                     android:ellipsize="end"
-                    android:text="328i" />
+                    android:text="328i"
+                    android:visibility="gone"/>
 
             </LinearLayout>
 

@@ -80,6 +80,7 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
     private long mBirthday;
     String head_url;
     ImageView car_img,head_img;
+    Intent myIntent ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,7 +94,7 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
         mCacheDir.mkdirs();
         setTitle("编辑资料");
         user = User.getInstance();
-        Intent myIntent = getIntent();
+
         View backV = findViewById(R.id.backLayout);
 //        right_txt = (TextView) findViewById(R.id.right_text);
 //        right_txt.setVisibility(View.VISIBLE);
@@ -158,6 +159,7 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
          car_img = (ImageView) findViewById(R.id.car_img);
          head_img = (ImageView) findViewById(R.id.head_img);
 //        getMyDetails();
+        myIntent = getIntent();
         ViewUtil.bindNetImage(headI, myIntent.getStringExtra("headimg"), "head");
         sexT.setText(myIntent.getStringExtra("gender"));
         nicknameT.setText(myIntent.getStringExtra("name"));
@@ -406,6 +408,9 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
             case R.id.approve_layout_car:
 //                showToast("车主认证");
                 Intent it = new Intent(self, AuthenticateOwnersActivity2.class);
+                it.putExtra("licenseAuthStatus", myIntent.getStringExtra("licenseAuthStatus"));
+                it.putExtra("driverLicenseURL", myIntent.getStringExtra("driverLicenseURL"));
+                it.putExtra("drivingLicenseURL", myIntent.getStringExtra("drivingLicenseURL"));
                 startActivityForResult(it, APPROVE_CAR);
 
                 break;

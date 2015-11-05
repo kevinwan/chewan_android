@@ -33,7 +33,7 @@ public class RecommendListAdapter extends RecyclerView.Adapter<RecommendListAdap
     private List<JSONObject> data;
 
     public static class SimpleViewHolder extends RecyclerView.ViewHolder {
-        TextView titleT, locationT, priceT, infoT, priceDescT, cityT,participate_womanT, participate_manT,unparticipateT;
+        TextView titleT, locationT, priceT,  priceDescT, cityT,participate_womanT, participate_manT,unparticipateT;
         LinearLayout limitedlayoutL,unlimitedlayoutL;
 
         ImageView picI;
@@ -44,7 +44,6 @@ public class RecommendListAdapter extends RecyclerView.Adapter<RecommendListAdap
             titleT = (TextView) view.findViewById(R.id.title);
             locationT = (TextView) view.findViewById(R.id.location);
             priceT = (TextView) view.findViewById(R.id.price);
-            infoT = (TextView) view.findViewById(R.id.info);
             priceDescT = (TextView) view.findViewById(R.id.priceDesc);
             picI = (ImageView) view.findViewById(R.id.pic);
             headI = (RoundImageView) view.findViewById(R.id.head);
@@ -82,7 +81,8 @@ public class RecommendListAdapter extends RecyclerView.Adapter<RecommendListAdap
         holder.priceDescT.setVisibility(TextUtils.isEmpty(JSONUtil.getString(jo, "subsidyPrice")) ? View.GONE : View.VISIBLE);
         holder.priceDescT.setText("官方补贴" + JSONUtil.getString(jo, "subsidyPrice") + "元/人");
 
-        holder.infoT.setText(JSONUtil.getString(jo, "title"));
+//        holder.infoT.setText(JSONUtil.getString(jo, "title"));
+
 
         //0:无限制 1：限制总人数 2：限制男女人数
         int limitType = JSONUtil.getInt(jo, "limitType");
@@ -106,7 +106,11 @@ public class RecommendListAdapter extends RecyclerView.Adapter<RecommendListAdap
         JSONObject locationJo = JSONUtil.getJSONObject(jo, "destination");
         String detail = JSONUtil.getString(locationJo, "detail");
         holder.locationT.setText(TextUtils.isEmpty(detail) ? "地点待定" : detail);
-        holder.cityT.setText("[" + JSONUtil.getString(locationJo, "city") + "]");
+
+        String citystr="["+JSONUtil.getString(locationJo, "city")+"]  ";
+        String title = citystr+JSONUtil.getString(jo, "title");
+        ViewUtil.bindView(holder.cityT, CarPlayUtil.setTextColor(mContext, citystr, title, R.color.text_orange));
+//        holder.cityT.setText("[" + JSONUtil.getString(locationJo, "city") + "]");
 
         JSONObject organizerJo = JSONUtil.getJSONObject(jo, "organizer");
         holder.titleT.setText(JSONUtil.getString(organizerJo, "nickname"));
