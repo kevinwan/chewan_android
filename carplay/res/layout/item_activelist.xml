@@ -68,7 +68,8 @@
                     style="@style/text_grey_small"
                     android:layout_marginLeft="9dp"
                     android:ellipsize="end"
-                    android:text="328i" />
+                    android:text="328i"
+                    android:visibility="gone"/>
 
             </LinearLayout>
 

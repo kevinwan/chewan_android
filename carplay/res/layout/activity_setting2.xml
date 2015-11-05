@@ -171,12 +171,19 @@
             android:text="版本更新" />
 
         <ImageView
+            android:id="@+id/versions_icon"
             android:layout_width="18dp"
             android:layout_height="22dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="5dp"
             android:src="@drawable/right_btn" />
+        <TextView
+            android:id="@+id/versionsT"
+            style="@style/text_black_medium"
+            android:layout_toLeftOf="@+id/versions_icon"
+            android:layout_centerVertical="true"
+            />
     </RelativeLayout>
 
     <View style="@style/line" />

@@ -175,13 +175,13 @@ public class InterestedPersonAdapter extends BaseAdapter {
         holder.headStateI.setImageResource("认证通过".equals(photoAuthStatus) ? R.drawable.headaut_dl : R.drawable.headaut_no);
         String licenseAuthStatus = JSONUtil.getString(userjo, "licenseAuthStatus");
         if ("未认证".equals(licenseAuthStatus)) {
-            holder.carNameT.setVisibility(View.GONE);
+//            holder.carNameT.setVisibility(View.GONE);
             holder.carStateI.setVisibility(View.GONE);
         } else if ("认证中".equals(licenseAuthStatus)) {
-            holder.carNameT.setVisibility(View.GONE);
+//            holder.carNameT.setVisibility(View.GONE);
             holder.carStateI.setVisibility(View.GONE);
         } else if ("认证通过".equals(licenseAuthStatus)) {
-            holder.carNameT.setVisibility(View.VISIBLE);
+//            holder.carNameT.setVisibility(View.VISIBLE);
             holder.carStateI.setVisibility(View.VISIBLE);
         }
 
@@ -196,7 +196,7 @@ public class InterestedPersonAdapter extends BaseAdapter {
             activityId = JSONUtil.getString(jo, "relatedId");
             int activityStatus = JSONUtil.getInt(jo, "activityStatus");
             //题头
-            ViewUtil.bindView(holder.titleT, JSONUtil.getString(userjo, "nickname") + "想找人一起" + JSONUtil.getString(jo, "activityType"));
+            ViewUtil.bindView(holder.titleT, JSONUtil.getString(userjo, "nickname") + "想找人" + JSONUtil.getString(jo, "activityType"));
             //所在地,距离
             int distance = (int) Math.floor(JSONUtil.getDouble(jo, "distance"));
             holder.activeDistanceT.setText(CarPlayUtil.numberWithDelimiter(distance));
