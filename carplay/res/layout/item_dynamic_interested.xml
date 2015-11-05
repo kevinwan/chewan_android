@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="14dp"
+    android:paddingBottom="14dp"
     android:orientation="vertical">
     <!--<com.andexert.library.RippleView-->
         <!--rv_centered="true"-->
@@ -48,7 +50,7 @@
 
             <TextView
                 android:id="@+id/title"
-                style="@style/text_black_medium"
+                style="@style/text_black_big"
                 android:text="最近访客" />
 
             <TextView

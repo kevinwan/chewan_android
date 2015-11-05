@@ -145,6 +145,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
                 holder.hulue = (AnimButtonView) view.findViewById(R.id.hulue);
                 holder.invitationI = (AnimButtonView) view.findViewById(R.id.invitationI);
 
+                holder.txt = (TextView) view.findViewById(R.id.txt);
 
                 holder.activity_distance = (TextView) view.findViewById(R.id.active_distance);
                 view.setTag(holder);
@@ -161,6 +162,8 @@ public class DyanmicBaseAdapter extends BaseAdapter {
                 officialHolder.priceDescT = (TextView) view.findViewById(R.id.priceDesc);
                 officialHolder.picI = (ImageView) view.findViewById(R.id.pic);
                 officialHolder.headI = (ImageView) view.findViewById(R.id.head);
+
+                officialHolder.txt = (TextView) view.findViewById(R.id.txt);
 
 //                officialHolder.maleLimitT = (TextView) view.findViewById(R.id.maleLimit);
 //                officialHolder.maleNumT = (TextView) view.findViewById(R.id.maleNum);
@@ -192,6 +195,9 @@ public class DyanmicBaseAdapter extends BaseAdapter {
 
         JSONObject jo = (JSONObject) getItem(i);
         if (type == 0) {
+
+            holder.txt.setVisibility(i==0 ? View.VISIBLE : View.INVISIBLE);
+
             final JSONObject js = JSONUtil.getJSONObject(jo, "applicant");
             JSONObject json = JSONUtil.getJSONObject(jo, "destination");
             JSONObject ob = JSONUtil.getJSONObject(js, "car");
@@ -444,9 +450,12 @@ public class DyanmicBaseAdapter extends BaseAdapter {
                 }
             });
         } else {
+
+            officialHolder.txt.setVisibility(i == 0 ? View.VISIBLE : View.INVISIBLE);
+
             officialHolder.priceT.setText(JSONUtil.getString(jo, "price"));
             officialHolder.priceDescT.setText(JSONUtil.getString(jo, "priceDesc"));
-            officialHolder.infoT.setText(JSONUtil.getString(jo, "title"));
+//            officialHolder.infoT.setText(JSONUtil.getString(jo, "title"));
 //            officialHolder.maleLimitT.setText(JSONUtil.getString(jo, "maleLimit"));
 //            officialHolder.maleNumT.setText(JSONUtil.getString(jo, "maleNum") + "/");
 //            officialHolder.femaleLimitT.setText(JSONUtil.getString(jo, "femaleLimit"));
@@ -454,7 +463,11 @@ public class DyanmicBaseAdapter extends BaseAdapter {
 
             JSONObject locationJo = JSONUtil.getJSONObject(jo, "destination");
             officialHolder.locationT.setText(JSONUtil.getString(locationJo, "detail"));
-            officialHolder.cityT.setText("[" + JSONUtil.getString(locationJo, "city") + "]");
+//            officialHolder.cityT.setText("[" + JSONUtil.getString(locationJo, "city") + "]");
+
+            String citystr="["+JSONUtil.getString(locationJo, "city")+"]  ";
+            String title = citystr+JSONUtil.getString(jo, "title");
+            ViewUtil.bindView(officialHolder.cityT, CarPlayUtil.setTextColor(mContext, citystr, title, R.color.text_orange));
 
             JSONObject organizerJo = JSONUtil.getJSONObject(jo, "organizer");
             officialHolder.titleT.setText(JSONUtil.getString(organizerJo, "nickname"));
@@ -499,7 +512,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
     }
 
     class ViewHolder {
-        TextView titleT, dynamic_carname, pay_type, travelmode, activity_place, activity_distance, ageT, inviteT, invitationT;
+        TextView titleT, dynamic_carname, pay_type, travelmode, activity_place, activity_distance, ageT, inviteT, invitationT,txt;
         ImageView dynamic_carlogo, activity_beijing, certification_achievement, sexI;
         AnimButtonView dyanmic_one, dyanmic_two, yingyao, hulue, invitationI;
         LinearLayout yingyao_layout, yingyaohou, invitation;
@@ -510,7 +523,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
 
 
     class OfficialHolder {
-        TextView titleT, locationT, priceT, infoT, priceDescT, cityT,participate_womanT, participate_manT,unparticipateT;
+        TextView titleT, locationT, priceT, infoT, priceDescT, cityT,participate_womanT, participate_manT,unparticipateT,txt;
 //        TextView maleLimitT, maleNumT, femaleLimitT, femaleNumT;
         ImageView picI, headI;
         LinearLayout limitedlayoutL,unlimitedlayoutL;

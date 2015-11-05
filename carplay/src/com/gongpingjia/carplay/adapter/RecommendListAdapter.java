@@ -82,7 +82,8 @@ public class RecommendListAdapter extends RecyclerView.Adapter<RecommendListAdap
         holder.priceDescT.setVisibility(TextUtils.isEmpty(JSONUtil.getString(jo, "priceDesc")) ? View.GONE : View.VISIBLE);
         holder.priceDescT.setText(JSONUtil.getString(jo, "priceDesc"));
 
-        holder.infoT.setText(JSONUtil.getString(jo, "title"));
+//        holder.infoT.setText(JSONUtil.getString(jo, "title"));
+
 
         //0:无限制 1：限制总人数 2：限制男女人数
         int limitType = JSONUtil.getInt(jo, "limitType");
@@ -106,7 +107,11 @@ public class RecommendListAdapter extends RecyclerView.Adapter<RecommendListAdap
         JSONObject locationJo = JSONUtil.getJSONObject(jo, "destination");
         String detail = JSONUtil.getString(locationJo, "detail");
         holder.locationT.setText(TextUtils.isEmpty(detail) ? "地点待定" : detail);
-        holder.cityT.setText("[" + JSONUtil.getString(locationJo, "city") + "]");
+
+        String citystr="["+JSONUtil.getString(locationJo, "city")+"]  ";
+        String title = citystr+JSONUtil.getString(jo, "title");
+        ViewUtil.bindView(holder.cityT, CarPlayUtil.setTextColor(mContext, citystr, title, R.color.text_orange));
+//        holder.cityT.setText("[" + JSONUtil.getString(locationJo, "city") + "]");
 
         JSONObject organizerJo = JSONUtil.getJSONObject(jo, "organizer");
         holder.titleT.setText(JSONUtil.getString(organizerJo, "nickname"));

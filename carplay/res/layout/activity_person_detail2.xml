@@ -28,12 +28,32 @@
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop" />
 
-            <com.gongpingjia.carplay.view.RoundImageView
-                android:id="@+id/head"
-                android:layout_width="113dp"
-                android:layout_height="113dp"
+            <RelativeLayout
+                android:layout_width="170dp"
+                android:layout_height="170dp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="33dp" />
+                >
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:layout_margin="28dp"
+                    android:background="@drawable/circle_ring_bg"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:layout_margin="23dp"
+                    android:background="@drawable/circle_ring_bg"/>
+                <com.gongpingjia.carplay.view.RoundImageView
+                    android:id="@+id/head"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="33dp"
+                    />
+
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/attention"

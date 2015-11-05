@@ -185,13 +185,13 @@
     <style name="line_horizontal">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">2px</item>
-        <item name="android:background">@color/line_grey</item>
+        <item name="android:background">@color/cutline</item>
     </style>
 
     <style name="line_vertical">
         <item name="android:layout_width">1.5px</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:background">@color/line_grey</item>
+        <item name="android:background">@color/cutline</item>
     </style>
 
     <!-- 拍照动画 -->

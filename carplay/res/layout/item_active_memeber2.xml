@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:descendantFocusability="blocksDescendants"
     android:gravity="center_vertical"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <LinearLayout

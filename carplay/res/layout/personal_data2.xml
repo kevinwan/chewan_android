@@ -9,7 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/new_bg_grey"
+        android:background="@color/cutline"
         android:orientation="vertical">
 
         <include layout="@layout/include_title_bar" />
@@ -52,10 +52,12 @@
             </LinearLayout>
         </RelativeLayout>
 
+        <View style="@style/line"
+            android:layout_height="10dp"/>
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="10dp"
             android:background="@color/white"
             android:orientation="horizontal">
 
@@ -81,10 +83,11 @@
             </EditText>
         </LinearLayout>
 
+        <View style="@style/line" />
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
             android:background="@color/white"
             android:gravity="center"
             android:orientation="horizontal">
@@ -144,10 +147,11 @@
             </RadioGroup>
         </LinearLayout>
 
+        <View style="@style/line"/>
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
             android:background="@color/white"
             android:gravity="center"
             android:orientation="horizontal">

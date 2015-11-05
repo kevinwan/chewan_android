@@ -2,6 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingBottom="14dp"
+    android:paddingTop="14dp"
     android:orientation="vertical">
 
     <LinearLayout
@@ -45,7 +47,7 @@
 
             <TextView
                 android:id="@+id/title"
-                style="@style/text_black_medium"
+                style="@style/text_black_big"
                 android:text="最近访客" />
 
             <TextView
