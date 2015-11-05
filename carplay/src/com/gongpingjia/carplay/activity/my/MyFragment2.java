@@ -367,6 +367,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                 it.putExtra("licenseAuthStatus", licenseAuthStatus);
                 it.putExtra("driverLicenseURL",driverLicenseURL);
                 it.putExtra("drivingLicenseURL",drivingLicenseURL);
+                System.out.println("认证状态"+licenseAuthStatus);
 //                it.putExtra("carbradn",carbradn);
 //                it.putExtra("carlogo",carlogo);
                 it.putExtra("carmodel",carmodel);

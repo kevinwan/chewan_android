@@ -179,42 +179,44 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
             car_approve.setText(myIntent.getStringExtra("licenseAuthStatus"));
             car_approve.setTextColor(getResources().getColor(R.color.text_black));
             approve_layout_car.setEnabled(true);
-            head_img.setVisibility(View.VISIBLE);
+            car_img.setVisibility(View.VISIBLE);
         } else if (myIntent.getStringExtra("licenseAuthStatus").equals("未认证")) {
             car_approve.setText(myIntent.getStringExtra("licenseAuthStatus"));
             car_approve.setTextColor(getResources().getColor(R.color.text_black));
-            head_img.setVisibility(View.VISIBLE);
             approve_layout_car.setEnabled(true);
+            car_img.setVisibility(View.VISIBLE);
         } else if (myIntent.getStringExtra("licenseAuthStatus").equals("认证通过")) {
+            System.out.println("认证通过。。。。。。。进入");
             car_approve.setText(myIntent.getStringExtra("licenseAuthStatus"));
             car_approve.setTextColor(getResources().getColor(R.color.text_grey));
-            head_img.setVisibility(View.GONE);
+            car_img.setVisibility(View.GONE);
             approve_layout_car.setEnabled(false);
         } else if (myIntent.getStringExtra("licenseAuthStatus").equals("认证未通过")) {
+            System.out.println("认证未通过。。。。。。。进入");
             car_approve.setText(myIntent.getStringExtra("licenseAuthStatus"));
             car_approve.setTextColor(getResources().getColor(R.color.text_black));
-            head_img.setVisibility(View.VISIBLE);
             approve_layout_car.setEnabled(true);
+            car_img.setVisibility(View.VISIBLE);
         }
         if (myIntent.getStringExtra("photoAuthStatus").equals("认证中")) {
             head_approve.setText(myIntent.getStringExtra("photoAuthStatus"));
             head_approve.setTextColor(getResources().getColor(R.color.text_black));
-            car_img.setVisibility(View.VISIBLE);
+            head_img.setVisibility(View.VISIBLE);
             approve_layout_head.setEnabled(true);
         } else if (myIntent.getStringExtra("photoAuthStatus").equals("未认证")) {
             head_approve.setText(myIntent.getStringExtra("photoAuthStatus"));
             head_approve.setTextColor(getResources().getColor(R.color.text_black));
-            car_img.setVisibility(View.VISIBLE);
+            head_img.setVisibility(View.VISIBLE);
             approve_layout_head.setEnabled(true);
         } else if (myIntent.getStringExtra("photoAuthStatus").equals("认证通过")) {
             head_approve.setText(myIntent.getStringExtra("photoAuthStatus"));
             head_approve.setTextColor(getResources().getColor(R.color.text_grey));
-            car_img.setVisibility(View.GONE);
+            head_img.setVisibility(View.GONE);
             approve_layout_head.setEnabled(false);
         } else if (myIntent.getStringExtra("photoAuthStatus").equals("认证未通过")) {
             head_approve.setText(myIntent.getStringExtra("photoAuthStatus"));
             head_approve.setTextColor(getResources().getColor(R.color.text_black));
-            car_img.setVisibility(View.VISIBLE);
+            head_img.setVisibility(View.VISIBLE);
             approve_layout_head.setEnabled(true);
         }
 
