@@ -79,8 +79,8 @@ public class RecommendListAdapter extends RecyclerView.Adapter<RecommendListAdap
 
         final JSONObject jo = getItem(position);
         holder.priceT.setText(JSONUtil.getString(jo, "price"));
-        holder.priceDescT.setVisibility(TextUtils.isEmpty(JSONUtil.getString(jo, "priceDesc")) ? View.GONE : View.VISIBLE);
-        holder.priceDescT.setText(JSONUtil.getString(jo, "priceDesc"));
+        holder.priceDescT.setVisibility(TextUtils.isEmpty(JSONUtil.getString(jo, "subsidyPrice")) ? View.GONE : View.VISIBLE);
+        holder.priceDescT.setText("官方补贴" + JSONUtil.getString(jo, "subsidyPrice") + "元/人");
 
 //        holder.infoT.setText(JSONUtil.getString(jo, "title"));
 

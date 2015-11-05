@@ -200,7 +200,8 @@
                     android:paddingRight="8dp"
                     android:singleLine="true"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_small" />
+                    android:textSize="@dimen/text_small"
+                    android:visibility="gone"/>
 
             </LinearLayout>
 

@@ -455,6 +455,14 @@ public class DyanmicBaseAdapter extends BaseAdapter {
 
             officialHolder.priceT.setText(JSONUtil.getString(jo, "price"));
             officialHolder.priceDescT.setText(JSONUtil.getString(jo, "priceDesc"));
+            String priceDesc = JSONUtil.getString(jo, "subsidyPrice");
+            if (priceDesc.isEmpty()) {
+                officialHolder.priceDescT.setVisibility(View.GONE);
+            } else {
+                officialHolder.priceDescT.setVisibility(View.VISIBLE);
+                officialHolder.priceDescT.setText("官方补贴" + JSONUtil.getString(jo, "subsidyPrice") + "元/人");
+            }
+//            officialHolder.priceDescT.setText(JSONUtil.getString(jo, "subsidyPrice"));
 //            officialHolder.infoT.setText(JSONUtil.getString(jo, "title"));
 //            officialHolder.maleLimitT.setText(JSONUtil.getString(jo, "maleLimit"));
 //            officialHolder.maleNumT.setText(JSONUtil.getString(jo, "maleNum") + "/");

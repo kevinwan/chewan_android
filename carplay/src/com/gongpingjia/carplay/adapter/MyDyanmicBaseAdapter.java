@@ -225,7 +225,7 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                 ViewUtil.bindView(holders.unparticipateT, JSONUtil.getInt(jo, "nowJoinNum") + "/" + "人数不限");
             }
             holders.price.setText(JSONUtil.getString(jo, "price"));
-            String priceDesc = JSONUtil.getString(jo, "priceDesc");
+            String priceDesc = JSONUtil.getString(jo, "subsidyPrice");
             int officstatus = JSONUtil.getInt(jo, "status");
             if (officstatus == 4) {
                 holders.invitation.setVisibility(View.VISIBLE);
@@ -239,7 +239,7 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                 holders.priceDesc.setVisibility(View.GONE);
             } else {
                 holders.priceDesc.setVisibility(View.VISIBLE);
-                holders.priceDesc.setText(JSONUtil.getString(jo, "priceDesc"));
+                holders.priceDesc.setText("官方补贴" + JSONUtil.getString(jo, "subsidyPrice") + "元/人");
             }
 
             holders.info.setText(JSONUtil.getString(jo, "title"));
