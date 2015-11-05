@@ -1,6 +1,8 @@
 package com.gongpingjia.carplay.activity.my;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -23,7 +25,7 @@ import java.io.File;
 public class SettingActivity2 extends CarPlayBaseActivity implements View.OnClickListener {
 
     File mCacheDir;
-    TextView mTextCacheSize;
+    TextView mTextCacheSize,versionsT;
     RelativeLayout setting_about_us, setting_versions,layout_modifypwd;
 
     @Override
@@ -43,6 +45,8 @@ public class SettingActivity2 extends CarPlayBaseActivity implements View.OnClic
         setting_about_us = (RelativeLayout) findViewById(R.id.setting_about_us);
         setting_versions = (RelativeLayout) findViewById(R.id.setting_versions);
         layout_modifypwd = (RelativeLayout) findViewById(R.id.layout_modifypwd);
+         versionsT = (TextView) findViewById(R.id.versionsT);
+        versionsT.setText(getAppVersion());
         mCacheDir = new File(getExternalCacheDir(), "CarPlay");
         mTextCacheSize = (TextView) findViewById(R.id.tv_cache_size);
         mTextCacheSize.setText(String.valueOf(FileUtil.getFileOrDirSize(mCacheDir,
@@ -88,6 +92,21 @@ public class SettingActivity2 extends CarPlayBaseActivity implements View.OnClic
                 }
                 break;
         }
+    }
+
+    public String getAppVersion() {
+        String version = "获取失败";
+        PackageManager pkgManager = getPackageManager();
+        try {
+            PackageInfo pkgInfo = pkgManager.getPackageInfo(
+                    this.getPackageName(), 0);
+            version = pkgInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return version;
+
     }
 
     private void logout() {
