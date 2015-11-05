@@ -158,7 +158,6 @@ public class DyanmicBaseAdapter extends BaseAdapter {
                 officialHolder.titleT = (TextView) view.findViewById(R.id.title);
                 officialHolder.locationT = (TextView) view.findViewById(R.id.location);
                 officialHolder.priceT = (TextView) view.findViewById(R.id.price);
-                officialHolder.infoT = (TextView) view.findViewById(R.id.info);
                 officialHolder.priceDescT = (TextView) view.findViewById(R.id.priceDesc);
                 officialHolder.picI = (ImageView) view.findViewById(R.id.pic);
                 officialHolder.headI = (ImageView) view.findViewById(R.id.head);
@@ -196,7 +195,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
         JSONObject jo = (JSONObject) getItem(i);
         if (type == 0) {
 
-            holder.txt.setVisibility(i==0 ? View.VISIBLE : View.INVISIBLE);
+            holder.txt.setVisibility(i==0 ? View.VISIBLE : View.GONE);
 
             final JSONObject js = JSONUtil.getJSONObject(jo, "applicant");
             JSONObject json = JSONUtil.getJSONObject(jo, "destination");
@@ -451,7 +450,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
             });
         } else {
 
-            officialHolder.txt.setVisibility(i == 0 ? View.VISIBLE : View.INVISIBLE);
+            officialHolder.txt.setVisibility(i == 0 ? View.VISIBLE : View.GONE);
 
             officialHolder.priceT.setText(JSONUtil.getString(jo, "price"));
             officialHolder.priceDescT.setText(JSONUtil.getString(jo, "priceDesc"));
@@ -531,7 +530,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
 
 
     class OfficialHolder {
-        TextView titleT, locationT, priceT, infoT, priceDescT, cityT,participate_womanT, participate_manT,unparticipateT,txt;
+        TextView titleT, locationT, priceT,  priceDescT, cityT,participate_womanT, participate_manT,unparticipateT,txt;
 //        TextView maleLimitT, maleNumT, femaleLimitT, femaleNumT;
         ImageView picI, headI;
         LinearLayout limitedlayoutL,unlimitedlayoutL;

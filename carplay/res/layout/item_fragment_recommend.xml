@@ -5,6 +5,7 @@
     android:orientation="vertical">
 
     <View style="@style/line" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,9 +18,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="12dp"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="12dp">
 
             <com.gongpingjia.carplay.view.RoundImageView
                 android:id="@+id/head"
@@ -97,8 +98,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:minHeight="180dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:minHeight="180dp">
 
             <ImageView
                 android:id="@+id/pic"
@@ -106,11 +107,12 @@
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 android:src="@drawable/my_bg" />
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scaleType="centerCrop"
                 android:layout_alignParentBottom="true"
+                android:scaleType="centerCrop"
                 android:src="@drawable/rec_pic_bg" />
 
             <TextView
@@ -133,9 +135,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingTop="10dp"
             android:paddingLeft="12dp"
-            android:paddingRight="12dp">
+            android:paddingRight="12dp"
+            android:paddingTop="10dp">
 
 
             <LinearLayout
@@ -143,15 +145,10 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/info"
-                    style="@style/text_black_small"
-                    android:textColor="@color/text_red" />
-
-
-                <TextView
                     android:id="@+id/city"
                     style="@style/text_black_small"
                     android:lineSpacingMultiplier="1.3"
+                    android:minLines="2"
                     android:text="" />
 
             </LinearLayout>

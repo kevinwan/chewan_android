@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    android:paddingTop="14dp"
-    android:paddingBottom="14dp"
+    android:gravity="center"
+    android:paddingTop="10dp"
     android:orientation="vertical">
 
     <LinearLayout
@@ -14,8 +14,8 @@
         android:background="@drawable/bg_s"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="14dp"
-        android:paddingRight="14dp">
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
 
         <RelativeLayout
             android:id="@+id/layout"
@@ -48,7 +48,7 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="22dp"
+            android:layout_marginLeft="12dp"
             android:layout_toRightOf="@id/layout"
             android:orientation="vertical">
 
@@ -112,6 +112,7 @@
         </LinearLayout>
     </LinearLayout>
 
-    <View style="@style/line_horizontal" />
+    <View style="@style/line_horizontal"
+        android:layout_marginTop="10dp"/>
 
 </LinearLayout>

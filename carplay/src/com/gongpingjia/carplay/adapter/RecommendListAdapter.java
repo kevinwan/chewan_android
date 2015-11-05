@@ -33,7 +33,7 @@ public class RecommendListAdapter extends RecyclerView.Adapter<RecommendListAdap
     private List<JSONObject> data;
 
     public static class SimpleViewHolder extends RecyclerView.ViewHolder {
-        TextView titleT, locationT, priceT, infoT, priceDescT, cityT,participate_womanT, participate_manT,unparticipateT;
+        TextView titleT, locationT, priceT,  priceDescT, cityT,participate_womanT, participate_manT,unparticipateT;
         LinearLayout limitedlayoutL,unlimitedlayoutL;
 
         ImageView picI;
@@ -44,7 +44,6 @@ public class RecommendListAdapter extends RecyclerView.Adapter<RecommendListAdap
             titleT = (TextView) view.findViewById(R.id.title);
             locationT = (TextView) view.findViewById(R.id.location);
             priceT = (TextView) view.findViewById(R.id.price);
-            infoT = (TextView) view.findViewById(R.id.info);
             priceDescT = (TextView) view.findViewById(R.id.priceDesc);
             picI = (ImageView) view.findViewById(R.id.pic);
             headI = (RoundImageView) view.findViewById(R.id.head);

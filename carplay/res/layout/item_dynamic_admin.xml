@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="14dp"
-    android:paddingTop="14dp"
+    android:paddingTop="10dp"
+    android:gravity="center"
     android:orientation="vertical">
 
     <LinearLayout
@@ -12,8 +12,8 @@
         android:layout_height="68dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="14dp"
-        android:paddingRight="14dp">
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
 
         <RelativeLayout
 
@@ -41,7 +41,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="22dp"
+            android:layout_marginLeft="12dp"
             android:gravity="center_vertical"
             android:orientation="vertical">
 
@@ -74,5 +74,6 @@
     </LinearLayout>
 
 
-    <View style="@style/line_horizontal" />
+    <View style="@style/line_horizontal"
+        android:layout_marginTop="10dp"/>
 </LinearLayout>
