@@ -7,15 +7,14 @@
     <include layout="@layout/include_title_bar" />
 
     <View
-        android:layout_width="fill_parent"
-        android:layout_height="10dp"
-        android:background="#e6e9ed" />
+        style="@style/line"
+        android:layout_height="10dp" />
 
     <RelativeLayout
         android:id="@+id/layout_cache_clear"
         android:layout_width="match_parent"
-        android:background="@drawable/btn_layout_effect"
-        android:layout_height="51dp">
+        android:layout_height="60dp"
+        android:background="@drawable/btn_layout_effect">
 
         <ImageView
             android:id="@+id/clear"
@@ -24,7 +23,7 @@
             android:layout_height="20dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="15dp"
             android:src="@drawable/clear" />
 
         <TextView
@@ -44,16 +43,13 @@
             android:text="清理缓存" />
     </RelativeLayout>
 
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1px"
-        android:background="#e6e9ed" />
+    <View style="@style/line" />
 
     <RelativeLayout
         android:id="@+id/layout_rate"
         android:layout_width="match_parent"
-        android:background="@drawable/btn_layout_effect"
-        android:layout_height="51dp">
+        android:layout_height="60dp"
+        android:background="@drawable/btn_layout_effect">
 
         <ImageView
             android:id="@+id/like"
@@ -62,7 +58,7 @@
             android:layout_height="20dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="15dp"
             android:src="@drawable/like" />
 
 
@@ -71,6 +67,7 @@
             android:layout_alignBottom="@+id/like"
             android:layout_toRightOf="@+id/like"
             android:text="喜欢我们打分鼓励" />
+
         <ImageView
             android:layout_width="18dp"
             android:layout_height="22dp"
@@ -80,16 +77,13 @@
             android:src="@drawable/right_btn" />
     </RelativeLayout>
 
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1px"
-        android:background="#e6e9ed" />
+    <View style="@style/line" />
 
     <RelativeLayout
         android:id="@+id/setting_about_us"
         android:layout_width="match_parent"
-        android:background="@drawable/btn_layout_effect"
-        android:layout_height="51dp">
+        android:layout_height="60dp"
+        android:background="@drawable/btn_layout_effect">
 
         <ImageView
             android:id="@+id/about_us"
@@ -98,7 +92,7 @@
             android:layout_height="20dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="15dp"
             android:src="@drawable/about_us" />
 
 
@@ -107,6 +101,7 @@
             android:layout_alignBottom="@+id/about_us"
             android:layout_toRightOf="@+id/about_us"
             android:text="关于我们" />
+
         <ImageView
             android:layout_width="18dp"
             android:layout_height="22dp"
@@ -116,16 +111,13 @@
             android:src="@drawable/right_btn" />
     </RelativeLayout>
 
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1px"
-        android:background="#e6e9ed" />
+    <View style="@style/line" />
 
     <RelativeLayout
         android:id="@+id/setting_versions"
-        android:background="@drawable/btn_layout_effect"
         android:layout_width="match_parent"
-        android:layout_height="51dp">
+        android:layout_height="60dp"
+        android:background="@drawable/btn_layout_effect">
 
         <ImageView
             android:id="@+id/versions"
@@ -134,7 +126,7 @@
             android:layout_height="20dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="15dp"
             android:src="@drawable/versions" />
 
 
@@ -143,6 +135,7 @@
             android:layout_alignBottom="@+id/versions"
             android:layout_toRightOf="@+id/versions"
             android:text="版本介绍" />
+
         <ImageView
             android:layout_width="18dp"
             android:layout_height="22dp"
@@ -152,16 +145,13 @@
             android:src="@drawable/right_btn" />
     </RelativeLayout>
 
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1px"
-        android:background="#e6e9ed" />
+    <View style="@style/line" />
 
     <RelativeLayout
         android:id="@+id/layout_update"
         android:layout_width="match_parent"
-        android:background="@drawable/btn_layout_effect"
-        android:layout_height="51dp">
+        android:layout_height="60dp"
+        android:background="@drawable/btn_layout_effect">
 
         <ImageView
             android:id="@+id/at_versions"
@@ -170,7 +160,7 @@
             android:layout_height="20dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="15dp"
             android:src="@drawable/at_versions" />
 
 
@@ -179,6 +169,7 @@
             android:layout_alignBottom="@+id/at_versions"
             android:layout_toRightOf="@+id/at_versions"
             android:text="版本更新" />
+
         <ImageView
             android:layout_width="18dp"
             android:layout_height="22dp"
@@ -188,15 +179,13 @@
             android:src="@drawable/right_btn" />
     </RelativeLayout>
 
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1px"
-        android:background="#e6e9ed" />
+    <View style="@style/line" />
+
     <RelativeLayout
         android:id="@+id/layout_modifypwd"
         android:layout_width="match_parent"
-        android:background="@drawable/btn_layout_effect"
-        android:layout_height="51dp">
+        android:layout_height="60dp"
+        android:background="@drawable/btn_layout_effect">
 
         <ImageView
             android:id="@+id/at_mima"
@@ -205,7 +194,7 @@
             android:layout_height="20dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="15dp"
             android:src="@drawable/mima" />
 
 
@@ -214,6 +203,7 @@
             android:layout_alignBottom="@+id/at_mima"
             android:layout_toRightOf="@+id/at_mima"
             android:text="修改密码" />
+
         <ImageView
             android:layout_width="18dp"
             android:layout_height="22dp"
@@ -223,19 +213,16 @@
             android:src="@drawable/right_btn" />
     </RelativeLayout>
 
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1px"
-        android:background="#e6e9ed" />
+    <View style="@style/line" />
 
     <Button
         android:id="@+id/btn_logout"
         style="@style/text_white_medium"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
+        android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:background="@drawable/btn_forgetpwd_xml"
-        android:layout_gravity="center"
         android:paddingLeft="70dp"
         android:paddingRight="70dp"
         android:text="退出登录"

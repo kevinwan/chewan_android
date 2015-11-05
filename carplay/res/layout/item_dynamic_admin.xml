@@ -2,18 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="10dp"
+    android:paddingTop="12dp"
     android:gravity="center"
     android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/visit"
         android:layout_width="match_parent"
-        android:layout_height="68dp"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp">
 
         <RelativeLayout
 
@@ -75,5 +75,5 @@
 
 
     <View style="@style/line_horizontal"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="12dp"/>
 </LinearLayout>

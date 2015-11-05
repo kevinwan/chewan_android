@@ -484,16 +484,16 @@ public class DyanmicBaseAdapter extends BaseAdapter {
             if (limitType == 1) {
                 officialHolder.limitedlayoutL.setVisibility(View.GONE);
                 officialHolder.unlimitedlayoutL.setVisibility(View.VISIBLE);
-                ViewUtil.bindView(officialHolder.unparticipateT, JSONUtil.getInt(jo, "nowJoinNum") + "/" + JSONUtil.getInt(jo, "totalLimit"));
+                ViewUtil.bindView(officialHolder.unparticipateT, CarPlayUtil.setTextColor(mContext, JSONUtil.getInt(jo, "nowJoinNum") + " / ", JSONUtil.getInt(jo, "nowJoinNum") + " / " + JSONUtil.getInt(jo, "totalLimit"), R.color.text_grey));
             } else if (limitType == 2) {
                 officialHolder.limitedlayoutL.setVisibility(View.VISIBLE);
                 officialHolder.unlimitedlayoutL.setVisibility(View.GONE);
-                ViewUtil.bindView(officialHolder.participate_womanT, JSONUtil.getInt(jo, "femaleNum") + "/" + JSONUtil.getInt(jo, "femaleLimit"));
-                ViewUtil.bindView(officialHolder.participate_manT, JSONUtil.getInt(jo, "maleNum") + "/" + JSONUtil.getInt(jo, "maleLimit"));
+                ViewUtil.bindView(officialHolder.participate_womanT, CarPlayUtil.setTextColor(mContext, JSONUtil.getInt(jo, "femaleNum") + " / ", JSONUtil.getInt(jo, "femaleNum") + " / " + JSONUtil.getInt(jo, "femaleLimit"), R.color.text_grey));
+                ViewUtil.bindView(officialHolder.participate_manT, CarPlayUtil.setTextColor(mContext, JSONUtil.getInt(jo, "maleNum") + " / ", JSONUtil.getInt(jo, "maleNum") + " / " + JSONUtil.getInt(jo, "maleLimit"), R.color.text_grey));
             } else {
                 officialHolder.limitedlayoutL.setVisibility(View.GONE);
                 officialHolder.unlimitedlayoutL.setVisibility(View.VISIBLE);
-                ViewUtil.bindView(officialHolder.unparticipateT, JSONUtil.getInt(jo, "nowJoinNum") + "/" + "人数不限");
+                ViewUtil.bindView(officialHolder.unparticipateT, CarPlayUtil.setTextColor(mContext, JSONUtil.getInt(jo, "nowJoinNum") + " / ", JSONUtil.getInt(jo, "nowJoinNum") + " / " + "人数不限", R.color.text_grey)) ;
             }
             ViewUtil.bindNetImage(officialHolder.picI, JSONUtil.getString(organizerJo, "avatar"), "head");
             try {

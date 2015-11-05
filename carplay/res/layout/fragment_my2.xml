@@ -73,7 +73,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/attestation"
+                android:layout_below="@+id/attestation"
                 android:layout_marginTop="18dp"
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
@@ -87,6 +87,7 @@
                     <TextView
                         android:id="@+id/name"
                         style="@style/text_white_medium"
+                        android:textSize="@dimen/text_big"
                         android:layout_marginRight="12dp"
                         android:text="陈小小"/>
 

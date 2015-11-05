@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_white_s"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/tv_brand_name"
@@ -11,5 +11,7 @@
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:textSize="@dimen/text_medium" />
+
+    <View style="@style/line" />
 
 </LinearLayout>

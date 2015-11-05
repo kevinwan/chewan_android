@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:descendantFocusability="blocksDescendants"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/tv_letter"
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bg_white_s"
         android:gravity="center_vertical"
-        android:padding="10dp" >
+        android:padding="10dp">
 
         <ImageView
             android:id="@+id/imgView_car_logo"
@@ -31,5 +31,7 @@
             style="@style/text_black_medium"
             android:layout_marginLeft="10dp" />
     </LinearLayout>
+
+    <View style="@style/line" />
 
 </LinearLayout>

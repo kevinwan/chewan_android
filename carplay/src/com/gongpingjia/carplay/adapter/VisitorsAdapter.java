@@ -85,7 +85,7 @@ public class VisitorsAdapter extends BaseAdapter {
         }
         JSONObject jo = (JSONObject) getItem(position);
         holder.nameT.setText(JSONUtil.getString(jo, "nickname"));
-        holder.contentT.setText(JSONUtil.getString(jo, "nickname")+"访问了你的相册");
+//        holder.contentT.setText(JSONUtil.getString(jo, "nickname")+"访问了你的相册");
 //        Log.d("msg", "nameT" + holder.nameT);
 //        Log.d("msg", "姓名：" + JSONUtil.getString(jo, "nickname"));
 

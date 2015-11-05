@@ -18,7 +18,7 @@
             android:id="@+id/isinarch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="18dp"
+            android:padding="17dp"
             android:layout_marginTop="12dp"
             android:checked="true"
             android:button="@null"
@@ -39,7 +39,7 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:textColor="@color/text_black"
-            android:textColorHint="@color/text_grey"
+            android:textColorHint="@color/text_grey_ccc"
             android:textSize="@dimen/text_small" />
 
 
@@ -48,7 +48,7 @@
             android:layout_width="160dp"
             android:layout_height="50dp"
             android:layout_marginBottom="30dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="18dp"
             android:background="@drawable/btn_red_fillet"
             android:text="发送邀请"
             android:textColor="@color/white"
