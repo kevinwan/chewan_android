@@ -1,6 +1,7 @@
 package com.gongpingjia.carplay.activity.my;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -23,7 +24,7 @@ import net.duohuo.dhroid.net.Response;
  */
 public class BoundPhoneActivity extends CarPlayBaseActivity implements View.OnClickListener{
     private EditText mEditPhone, mEditVerification, mEditPassword;
-//    private CountTimer mCountTimer;
+    private CountTimer mCountTimer;
     private Button mBtnFinish, mBtnGetVerification;
     LinearLayout password_layout;
     TextView txt;
@@ -31,7 +32,7 @@ public class BoundPhoneActivity extends CarPlayBaseActivity implements View.OnCl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.personal_data2);
-//        mCountTimer = new CountTimer(60 * 1000, 1000);
+        mCountTimer = new CountTimer(60 * 1000, 1000);
     }
 
     @Override
@@ -75,14 +76,32 @@ public class BoundPhoneActivity extends CarPlayBaseActivity implements View.OnCl
             @Override
             public void doInUI(Response response, Integer transfer) {
                 if (response.isSuccess()) {
-//                    mCountTimer.start();
+                    mCountTimer.start();
                     showToast("验证码发送成功");
                 } else {
-//                    mCountTimer.cancel();
+                    mCountTimer.cancel();
 //                    showToast(response.msg);
                 }
             }
         });
+    }
+    class CountTimer extends CountDownTimer {
+
+        public CountTimer(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+            mBtnGetVerification.setEnabled(false);
+            mBtnGetVerification.setText(millisUntilFinished / 1000 + "s");
+        }
+
+        @Override
+        public void onFinish() {
+            mBtnGetVerification.setEnabled(true);
+            mBtnGetVerification.setText("重新发送");
+        }
     }
 
 }
