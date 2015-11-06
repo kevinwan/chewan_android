@@ -191,7 +191,6 @@ public class BoundPhoneActivity extends CarPlayBaseActivity implements View.OnCl
         net.doPost(new NetTask(self) {
             @Override
             public void doInUI(Response response, Integer transfer) {
-                hidenProgressDialog();
                 if (response.isSuccess()) {
                     //三方登录完善信息
                     JSONObject jo = response.jSONFromData();
@@ -199,6 +198,8 @@ public class BoundPhoneActivity extends CarPlayBaseActivity implements View.OnCl
                             "userId")), JSONUtil.getString(jo, "password"), jo, false);
 
 
+                } else {
+                    hidenProgressDialog();
                 }
             }
         });
@@ -251,7 +252,7 @@ public class BoundPhoneActivity extends CarPlayBaseActivity implements View.OnCl
 
                     @Override
                     public void onSuccess() {
-
+                        hidenProgressDialog();
                         try {
                             // ** 第一次登录或者之前logout后再登录，加载所有本地群和回话
                             // ** manually load all local groups and
@@ -299,6 +300,7 @@ public class BoundPhoneActivity extends CarPlayBaseActivity implements View.OnCl
                         } catch (Exception e) {
                             e.printStackTrace();
                             // 取好友或者群聊失败，不让进入主页面
+                            hidenProgressDialog();
                             runOnUiThread(new Runnable() {
                                 public void run() {
                                     DemoHXSDKHelper.getInstance().logout(true,
@@ -335,6 +337,7 @@ public class BoundPhoneActivity extends CarPlayBaseActivity implements View.OnCl
                         // if (!progressShow) {
                         // return;
                         // }
+                        hidenProgressDialog();
                         runOnUiThread(new Runnable() {
                             public void run() {
                                 // pd.dismiss();
