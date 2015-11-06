@@ -215,6 +215,8 @@ public class ChatActivity extends CarPlayBaseActivity implements
     private Button btnMore;
     public String playMsgId;
 
+    private final int CHATHINT = 1000;
+
     User user;
 
 
@@ -238,6 +240,18 @@ public class ChatActivity extends CarPlayBaseActivity implements
             }
         }
     };
+
+    private Handler chatHint = new Handler() {
+        @Override
+        public void handleMessage(android.os.Message msg) {
+            // 聊天提示文字5秒后消失
+
+            if (msg.what == 1000) {
+                findViewById(R.id.chat_hint).setVisibility(View.GONE);
+            }
+        }
+    };
+
     public EMGroup group;
     public EMChatRoom room;
     public boolean isRobot;
@@ -262,6 +276,8 @@ public class ChatActivity extends CarPlayBaseActivity implements
      * initView
      */
     public void initView() {
+        chatHint.sendEmptyMessageDelayed(CHATHINT,5*1000);
+
         recordingContainer = findViewById(R.id.recording_container);
         micImage = (ImageView) findViewById(R.id.mic_image);
         recordingHint = (TextView) findViewById(R.id.recording_hint);

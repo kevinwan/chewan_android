@@ -151,7 +151,7 @@
                         android:background="@drawable/nearby_radio_btn"
                         android:button="@null"
                         android:gravity="center"
-                        android:text="夜宵"
+                        android:text="桌游"
                         android:textColor="@color/white"
                         android:textSize="@dimen/text_small" />
 
@@ -310,7 +310,7 @@
                     android:background="@drawable/nearby_radio_btn"
                     android:button="@null"
                     android:gravity="center"
-                    android:text="不限"
+                    android:text="AA制"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_small" />
 

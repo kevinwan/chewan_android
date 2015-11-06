@@ -38,7 +38,7 @@
             <TextView
                 android:id="@+id/tv_userid"
                 style="@style/text_grey_smaller"
-                android:layout_marginBottom="2dp"
+                android:layout_marginBottom="5dp"
                 android:layout_marginLeft="8dp" />
 
             <TextView
@@ -53,10 +53,10 @@
                 android:lineSpacingMultiplier="1.1"
                 android:maxWidth="225.0dip"
                 android:minHeight="42dp"
-                android:paddingBottom="8dp"
-                android:paddingLeft="16dp"
-                android:paddingRight="10dp"
-                android:paddingTop="8dp"
+                android:paddingBottom="9dp"
+                android:paddingLeft="19dp"
+                android:paddingRight="12dp"
+                android:paddingTop="9dp"
                 android:textColor="@color/text_black"
                 android:textSize="16sp" />
         </LinearLayout>

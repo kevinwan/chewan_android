@@ -4,16 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/txt"
-        style="@style/text_black_small"
-        android:layout_width="fill_parent"
-        android:layout_height="30dp"
-        android:gravity="center_horizontal|bottom"
-        android:text="越早联系成功率越高"
-        android:textColor="@color/text_grey_new"
-        android:visibility="gone" />
-
     <View style="@style/line" />
 
     <LinearLayout

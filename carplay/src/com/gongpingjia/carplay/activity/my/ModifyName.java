@@ -64,7 +64,7 @@ public class ModifyName extends CarPlayBaseActivity {
     private void modification() {
         final String nickname = edit.getText().toString().trim();
         if (nickname.length() > 7 || nickname.length() == 0) {
-            showToast("昵称不能大于8个字符或者不能为空");
+            showToast("昵称不能大于7个字符或者不能为空");
             return;
         }
 //
@@ -75,13 +75,11 @@ public class ModifyName extends CarPlayBaseActivity {
             @Override
             public void doInUI(Response response, Integer transfer) {
                 if (response.isSuccess()) {
-                    showToast("修改信息成功");
+                    showToast("昵称修改成功");
                     Intent intent = getIntent();
                     intent.putExtra("nickname", edit.getText().toString());
                     setResult(self.RESULT_OK, intent);
                     finish();
-                } else {
-                    showToast("修改信息失败");
                 }
             }
         });

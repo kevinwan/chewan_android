@@ -9,6 +9,8 @@
     <TextView
         android:id="@+id/timestamp"
         style="@style/chat_text_date_style"
+        android:layout_marginTop="@dimen/margin_chat_activity"
+        android:layout_marginBottom="@dimen/margin_chat_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
@@ -31,7 +33,7 @@
             android:id="@+id/layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="6dp"
+            android:layout_marginRight="@dimen/margin_chat_activity"
             android:layout_toLeftOf="@id/iv_userhead"
             android:orientation="vertical" >
 
@@ -39,8 +41,8 @@
                 android:id="@+id/tv_userid"
                 style="@style/text_grey_smaller"
                 android:layout_gravity="right"
-                android:layout_marginBottom="2dp"
-                android:layout_marginRight="5dp" />
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="9dp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -113,6 +115,7 @@
                     android:layout_marginLeft="6dp"
                     android:background="@drawable/chatto_bg"
                     android:gravity="right|center_vertical"
+
                     android:minHeight="42dp"
                     android:paddingRight="14dp" >
 

@@ -14,6 +14,16 @@
 
         <include layout="@layout/include_title_bar" />
 
+        <TextView
+            android:id="@+id/txt"
+            style="@style/text_black_small"
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="越早联系成功率越高"
+            android:visibility="visible"
+            android:textColor="@color/text_grey_new" />
+
         <include layout="@layout/include_refreshlistview2" />
 
 

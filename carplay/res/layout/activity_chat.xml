@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    android:background="@color/white">
+    android:background="@color/new_bg_grey">
 
     <include
         android:id="@+id/top_bar"
@@ -484,6 +484,29 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_small" />
         </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/chat_hint"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_medium"
+                android:text="提示:  "
+                android:textColor="@color/text_orange"
+                android:layout_marginLeft="12dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_medium"
+                android:text="发送地理位置对方可以快速找到你"
+                android:textColor="@color/text_black"/>
+
+        </LinearLayout>
     </RelativeLayout>
 
 </RelativeLayout>

@@ -216,6 +216,10 @@ public class NearbyFilterDialog extends BaseAlertDialog implements
         pay_id = pre.getPay_id();
         gender_id =  pre.getGender_id();
 
+        type = pre.getType();
+        pay = pre.getPay();
+        gender  = pre.getGender();
+
         //设置邀请类型
         active_pay.check(pre.getPay_id() == -1 ? R.id.pay_3 : pre.getPay_id());
         //设置性别
@@ -248,5 +252,10 @@ public class NearbyFilterDialog extends BaseAlertDialog implements
             }
         }
         active_typeG4.check(R.id.rb11);
+    }
+
+    //隐藏付费类型 并设置默认值
+    private void gonePay(){
+
     }
 }

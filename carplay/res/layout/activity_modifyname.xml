@@ -14,11 +14,6 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp">
 
-        <TextView
-            style="@style/text_grey_medium"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:text=" 新昵称" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -41,14 +36,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@color/nothing"
-                android:gravity="center_vertical|right"
+                android:gravity="center_vertical"
                 android:hint="请输入昵称"
                 android:singleLine="true" />
 
-            <ImageView
-                android:layout_width="18dp"
-                android:layout_height="22dp"
-                android:src="@drawable/right_btn" />
         </LinearLayout>
 
     </LinearLayout>

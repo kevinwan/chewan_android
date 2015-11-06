@@ -9,6 +9,8 @@
     <TextView
         android:id="@+id/timestamp"
         style="@style/chat_text_date_style"
+        android:layout_marginTop="@dimen/margin_chat_activity"
+        android:layout_marginBottom="@dimen/margin_chat_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
@@ -39,8 +41,8 @@
                 android:id="@+id/tv_userid"
                 style="@style/text_grey_smaller"
                 android:layout_gravity="right"
-                android:layout_marginBottom="2dp"
-                android:layout_marginRight="10dp" />
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="9dp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -98,15 +100,15 @@
                     android:autoLink="web"
                     android:background="@drawable/chatto_bg"
                     android:gravity="left|center"
-                    android:lineSpacingMultiplier="1.1"
+                    android:lineSpacingMultiplier="1.2"
                     android:maxWidth="225.0dip"
                     android:minHeight="42dp"
-                    android:paddingBottom="8dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="14dp"
-                    android:paddingTop="8dp"
+                    android:paddingBottom="9dp"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="19dp"
+                    android:paddingTop="9dp"
                     android:textColor="@color/white"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/text_medium" />
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

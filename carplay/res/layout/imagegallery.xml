@@ -27,7 +27,7 @@
 
         <TextView
             android:id="@+id/tv_large_pic_title"
-            style="@style/text_black_small"
+            style="@style/text_black_big"
             android:layout_centerInParent="true"
             android:text="1/3" />
 
@@ -64,16 +64,16 @@
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="20dp"
             android:background="@color/nothing"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/remove"
                 style="@style/text_black_medium"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginLeft="24dp"
-                android:layout_marginRight="24dp"
-                android:background="@color/white"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:background="@drawable/white_smallfillet"
                 android:gravity="center"
                 android:text="删除"
                 android:textColor="@color/text_blue"
@@ -84,25 +84,25 @@
                 style="@style/text_black_medium"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginLeft="24dp"
-                android:layout_marginRight="24dp"
-                android:background="@color/white"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:background="@drawable/white_smallfillet"
                 android:gravity="center"
                 android:text="保存图片"
-                android:textColor="@color/text_blue" />
+                android:textColor="@color/text_photo_bule" />
 
             <TextView
                 android:id="@+id/cancel"
                 style="@style/text_black_medium"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginLeft="24dp"
-                android:layout_marginRight="24dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
                 android:layout_marginTop="12dp"
-                android:background="@color/white"
+                android:background="@drawable/white_smallfillet"
                 android:gravity="center"
                 android:text="取消"
-                android:textColor="@color/text_blue" />
+                android:textColor="@color/text_photo_bule" />
         </LinearLayout>
     </RelativeLayout>
 

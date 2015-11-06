@@ -1,7 +1,10 @@
 package com.gongpingjia.carplay.view;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
@@ -15,13 +18,18 @@ import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.view.gallery.BasePagerAdapter.OnItemChangeListener;
 import com.gongpingjia.carplay.view.gallery.GalleryViewPager;
 import com.gongpingjia.carplay.view.gallery.UrlPagerAdapter;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
+import net.duohuo.dhroid.dialog.IDialog;
+import net.duohuo.dhroid.ioc.IocContainer;
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
+import net.duohuo.dhroid.util.PhotoUtil;
 
 import org.json.JSONArray;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -32,15 +40,15 @@ import de.greenrobot.event.EventBus;
  *@author zhanglong
  *Email:1269521147@qq.com
  */
-public class ImageGallery extends CarPlayBaseActivity implements View.OnClickListener{
+public class ImageGallery extends CarPlayBaseActivity implements View.OnClickListener {
 
     private GalleryViewPager mViewPager;
 
     private TextView mIndicatorText;
 
-    private TextView remove,save,cancel;
+    private TextView remove, save, cancel;
 
-    private ImageView back,more;
+    private ImageView back, more;
 
     private RelativeLayout operationLayout;
 
@@ -102,10 +110,10 @@ public class ImageGallery extends CarPlayBaseActivity implements View.OnClickLis
         mIndicatorText.setText(getIndicatorString(
                 it.getIntExtra("currentItem", 0) + 1, urls.length));
 
-        if ("myalbum".equals(type)){
+        if ("myalbum".equals(type)) {
             remove.setVisibility(View.VISIBLE);
             save.setVisibility(View.GONE);
-        }else {
+        } else {
             remove.setVisibility(View.GONE);
             save.setVisibility(View.VISIBLE);
         }
@@ -124,7 +132,7 @@ public class ImageGallery extends CarPlayBaseActivity implements View.OnClickLis
     /**
      * 删除图片
      */
-    private void deletePhoto(){
+    private void deletePhoto() {
         DhNet net = new DhNet(API2.CWBaseurl + "user/" + user.getUserId() + "/album/photos?token=" + user.getToken());
         JSONArray jsa = new JSONArray();
         jsa.put(itemid.get(photoCurrent));
@@ -133,7 +141,6 @@ public class ImageGallery extends CarPlayBaseActivity implements View.OnClickLis
             @Override
             public void doInUI(Response response, Integer transfer) {
                 if (response.isSuccess()) {
-                    showOperation();
                     items.remove(photoCurrent);
                     itemid.remove(photoCurrent);
                     if (items.size() != 0) {
@@ -155,17 +162,24 @@ public class ImageGallery extends CarPlayBaseActivity implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             //删除图片
             case R.id.remove:
                 deletePhoto();
                 showOperation();
-            break;
+                break;
             //保存图片
             case R.id.save:
+                showOperation();
+//                    MediaStore.Images.Media.insertImage(getContentResolver(), items.get(photoCurrent), "title", "description");
+                Bitmap btm = ImageLoader.getInstance().getMemoryCache().get(items.get(photoCurrent));
+                savePhoto(btm);
+//                Bitmap map = ImageLoad.getBitmap(items.get(photoCurrent), 0, 0);
+//                SavePhotoDialog dialog = new SavePhotoDialog(ImageGallery.this, map, 0);
+
                 break;
             //取消
-            case R.id.cancle:
+            case R.id.cancel:
                 showOperation();
                 break;
             case R.id.back:
@@ -177,13 +191,35 @@ public class ImageGallery extends CarPlayBaseActivity implements View.OnClickLis
         }
     }
 
-    private void showOperation(){
-        if (showFlag){
+    private void showOperation() {
+        if (showFlag) {
             operationLayout.setVisibility(View.VISIBLE);
             showFlag = !showFlag;
-        }else {
+        } else {
             operationLayout.setVisibility(View.GONE);
             showFlag = !showFlag;
         }
     }
+
+
+    private void savePhoto(Bitmap bitmap) {
+        File appDir = new File(Environment
+                .getExternalStorageDirectory(), "carplay");
+        if (!appDir.exists()) {
+            appDir.mkdir();
+        }
+        String fileName = System.currentTimeMillis() + ".jpg";
+        File file = new File(appDir, fileName);
+
+        PhotoUtil.saveLocalImage(bitmap, file);
+        IocContainer.getShare().get(IDialog.class)
+                .showToastShort(self, "图片保存成功!");
+        Intent intent = new Intent(
+                Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        Uri uri = Uri.fromFile(file);
+        intent.setData(uri);
+        sendBroadcast(intent);
+
+    }
+
 }

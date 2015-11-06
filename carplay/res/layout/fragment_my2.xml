@@ -31,6 +31,7 @@
                 android:layout_width="170dp"
                 android:layout_height="170dp"
                 android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
                 >
                 <ImageView
                     android:layout_width="match_parent"
@@ -44,12 +45,21 @@
                     android:layout_centerInParent="true"
                     android:layout_margin="23dp"
                     android:background="@drawable/circle_ring_bg"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/circle_white50"
+                    android:layout_margin="33dp"
+                    />
+
                 <com.gongpingjia.carplay.view.RoundImageView
                     android:id="@+id/head"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_centerHorizontal="true"
-                    android:layout_margin="33dp"
+                    android:layout_margin="35dp"
                     />
 
             </RelativeLayout>
@@ -74,7 +84,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/attestation"
-                android:layout_marginTop="18dp"
+                android:layout_marginTop="23dp"
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
@@ -96,7 +106,7 @@
 
                 <TextView
                     android:id="@+id/txt_completeness"
-                    style="@style/text_white_small"
+                    style="@style/text_white_smaller"
                     android:layout_marginTop="22dp"
                     android:text="资料完成度60%,越高越吸引人" />
 
@@ -140,7 +150,7 @@
             	android:layout_width="match_parent"
                 android:scrollbars="horizontal"
             	android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"/>
+                android:layout_marginLeft="9dp"/>
 
         </LinearLayout>
 

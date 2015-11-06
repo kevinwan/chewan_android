@@ -9,6 +9,8 @@
     <TextView
         android:id="@+id/timestamp"
         style="@style/chat_text_date_style"
+        android:layout_marginTop="@dimen/margin_chat_activity"
+        android:layout_marginBottom="@dimen/margin_chat_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
@@ -38,7 +40,7 @@
             <TextView
                 android:id="@+id/tv_userid"
                 style="@style/text_grey_smaller"
-                android:layout_marginBottom="2dp"
+                android:layout_marginBottom="5dp"
                 android:layout_marginLeft="10dp" />
 
             <LinearLayout
