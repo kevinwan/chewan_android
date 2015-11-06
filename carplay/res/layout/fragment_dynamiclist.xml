@@ -54,7 +54,9 @@
         android:layout_height="fill_parent"
         android:layout_marginBottom="16dp"
         android:background="@color/black70"
-        android:visibility="gone"></View>
+        android:visibility="gone">
+
+    </View>
 
 
     <ImageView

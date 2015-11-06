@@ -238,7 +238,7 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
                     ViewUtil.bindView(placeT, JSONUtil.getString(js, "province") + "省" + JSONUtil.getString(js, "city") + "市" + JSONUtil.getString(js, "detail"));
 
                     //开始-结束时间,创建时间
-                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd ");
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:ss");
 
                     Date sdate = new Date(JSONUtil.getLong(jo, "start"));
                     ViewUtil.bindView(startTimeT, format.format(sdate));
