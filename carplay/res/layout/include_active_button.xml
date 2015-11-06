@@ -17,9 +17,9 @@
 
             <com.gongpingjia.carplay.view.AnimButtonView
                 android:id="@+id/invitationI"
-                android:layout_width="85dp"
-                android:layout_height="85dp"
-                android:layout_marginBottom="10dp"
+                android:layout_width="95dp"
+                android:layout_height="95dp"
+                android:layout_marginBottom="6dp"
                 my:bg="@drawable/red_circle"
                 my:src="@drawable/red_circle">
 
@@ -27,7 +27,7 @@
                     android:id="@+id/invitationT"
                     style="@style/text_white_medium"
                     android:layout_centerInParent="true"
-                    android:text="邀 TA" />
+                    android:text="邀 Ta" />
             </com.gongpingjia.carplay.view.AnimButtonView>
 
     </LinearLayout>
@@ -45,9 +45,9 @@
 
             <com.gongpingjia.carplay.view.AnimButtonView
                 android:id="@+id/yingyao"
-                android:layout_width="85dp"
-                android:layout_height="85dp"
-                android:layout_marginBottom="10dp"
+                android:layout_width="95dp"
+                android:layout_height="95dp"
+                android:layout_marginBottom="6dp"
                 my:bg="@drawable/red_circle"
                 my:src="@drawable/red_circle">
 
@@ -60,10 +60,10 @@
 
             <com.gongpingjia.carplay.view.AnimButtonView
                 android:id="@+id/hulue"
-                android:layout_width="85dp"
-                android:layout_height="85dp"
+                android:layout_width="95dp"
+                android:layout_height="95dp"
                 android:layout_marginBottom="10dp"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="20dp"
                 my:bg="@drawable/dynamic_grey"
                 my:src="@drawable/dynamic_grey">
 
@@ -86,9 +86,9 @@
 
             <com.gongpingjia.carplay.view.AnimButtonView
                 android:id="@+id/dyanmic_one"
-                android:layout_width="85dp"
-                android:layout_height="85dp"
-                android:layout_marginBottom="10dp"
+                android:layout_width="95dp"
+                android:layout_height="95dp"
+                android:layout_marginBottom="6dp"
                 my:bg="@drawable/dynamic_blue"
                 my:src="@drawable/dynamic_blue">
 
@@ -103,10 +103,10 @@
 
             <com.gongpingjia.carplay.view.AnimButtonView
                 android:id="@+id/dyanmic_two"
-                android:layout_width="85dp"
-                android:layout_height="85dp"
+                android:layout_width="95dp"
+                android:layout_height="95dp"
                 android:layout_marginBottom="10dp"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="20dp"
                 my:bg="@drawable/dynamic_green"
                 my:src="@drawable/dynamic_green">
 

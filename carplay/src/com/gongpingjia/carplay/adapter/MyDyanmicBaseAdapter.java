@@ -122,6 +122,7 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                 view = LayoutInflater.from(mContext).inflate(R.layout.item_mydyanmic_recommend, viewGroup, false);
 //                holders.people_num = (TextView) view.findViewById(R.id.people_num);
                 holders.price = (TextView) view.findViewById(R.id.price);
+                holders.priceright = (TextView) view.findViewById(R.id.priceright);
                 holders.priceDesc = (TextView) view.findViewById(R.id.priceDesc);
                 holders.location = (TextView) view.findViewById(R.id.location);
                 holders.city = (TextView) view.findViewById(R.id.city);
@@ -223,8 +224,15 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                 holders.unlimitedlayoutL.setVisibility(View.VISIBLE);
                 ViewUtil.bindView(holders.unparticipateT, CarPlayUtil.setTextColor(mContext, JSONUtil.getInt(jo, "nowJoinNum")+" / ", JSONUtil.getInt(jo, "nowJoinNum") + " / " + "人数不限", R.color.text_grey)) ;
             }
-            holders.price.setText(JSONUtil.getString(jo, "price"));
-            String priceDesc = JSONUtil.getString(jo, "subsidyPrice");
+            double price=JSONUtil.getDouble(jo, "price");
+            if (((int)price)==0){
+                holders.price.setText("免费");
+                holders.priceright.setVisibility(View.GONE);
+            }else {
+                holders.price.setText(price+"");
+                holders.priceright.setVisibility(View.VISIBLE);
+            }
+//            String priceDesc = JSONUtil.getString(jo, "subsidyPrice");
             int officstatus = JSONUtil.getInt(jo, "status");
             if (officstatus == 4) {
                 holders.invitation.setVisibility(View.VISIBLE);
@@ -234,12 +242,12 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
             } else {
                 holders.invitation.setVisibility(View.GONE);
             }
-            if (priceDesc.isEmpty()) {
-                holders.priceDesc.setVisibility(View.GONE);
-            } else {
-                holders.priceDesc.setVisibility(View.VISIBLE);
-                holders.priceDesc.setText("官方补贴" + JSONUtil.getString(jo, "subsidyPrice") + "元/人");
-            }
+//            if (priceDesc.isEmpty()) {
+//                holders.priceDesc.setVisibility(View.GONE);
+//            } else {
+//                holders.priceDesc.setVisibility(View.VISIBLE);
+//                holders.priceDesc.setText("官方补贴" + JSONUtil.getString(jo, "subsidyPrice") + "元/人");
+//            }
 
             String citystr="["+JSONUtil.getString(json, "city")+"]  ";
             String title = citystr+JSONUtil.getString(jo, "title");
@@ -603,7 +611,7 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
     }
 
     class ViewHolders {
-        TextView  price, priceDesc, location, city;
+        TextView  price,priceright, priceDesc, location, city;
         ImageView pic;
         LinearLayout invitation;
         LinearLayout limitedlayoutL,unlimitedlayoutL;

@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="12dp"
+    android:layout_marginBottom="15dp"
     android:paddingLeft="10dp"
     android:paddingRight="10dp">
 
@@ -13,7 +14,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/active_bg"
         android:orientation="vertical"
-        android:paddingBottom="15dp"
+        android:paddingBottom="12dp"
         android:paddingTop="13dp">
 
         <LinearLayout
@@ -92,7 +93,7 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
                 android:text="请我吧 "
-                android:textSize="@dimen/text_small"
+                android:textSize="@dimen/text_smaller"
                 android:textColor="@color/text_red" />
 
             <TextView
@@ -100,7 +101,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="包接送 "
-                android:textSize="@dimen/text_small"
+                android:textSize="@dimen/text_smaller"
                 android:textColor="@color/text_skyblue" />
         </LinearLayout>
 

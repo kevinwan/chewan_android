@@ -225,11 +225,12 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
 
                     //第三方购票连接
                     linkTicketUrl = JSONUtil.getString(jo, "linkTicketUrl");
-                    if(linkTicketUrl.isEmpty()){
-                        buyticketsBtn.setVisibility(View.GONE);
-                    }else{
-                        buyticketsBtn.setVisibility(View.VISIBLE);
-                    }
+
+//                    if(linkTicketUrl.isEmpty()){
+//                        buyticketsBtn.setVisibility(View.GONE);
+//                    }else{
+//                        buyticketsBtn.setVisibility(View.VISIBLE);
+//                    }
                     //群组id
                     emchatGroupId = JSONUtil.getString(jo, "emchatGroupId");
 
@@ -261,8 +262,20 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
                     ViewUtil.bindView(contentT, JSONUtil.getString(jo, "instruction"));
                     ViewUtil.bindView(processT, JSONUtil.getString(jo, "description"));
                     ViewUtil.bindView(subsidyPriceT,"(现在报名立减" + JSONUtil.getDouble(jo, "subsidyPrice") + "元! )");
-                    ViewUtil.bindView(priceT,JSONUtil.getDouble(jo, "price")+"元/人");
-                    ViewUtil.bindView(explaintxtT, JSONUtil.getString(jo, "extraDesc"));
+//                    ViewUtil.bindView(priceT,JSONUtil.getDouble(jo, "price")+"元/人");
+//                    ViewUtil.bindView(explaintxtT, JSONUtil.getString(jo, "extraDesc"));
+
+                    double price=JSONUtil.getDouble(jo, "price");
+                    if (((int)price)==0){
+                        priceT.setText("免费");
+                        explaintxtT.setVisibility(View.GONE);
+                        buyticketsBtn.setVisibility(View.GONE);     //购票链接隐藏
+                    }else {
+                        priceT.setText(price+"元/人");
+                        explaintxtT.setVisibility(View.VISIBLE);
+                        ViewUtil.bindView(explaintxtT, JSONUtil.getString(jo, "extraDesc"));
+                        buyticketsBtn.setVisibility(View.VISIBLE);  //购票链接显示
+                    }
 
                     isMember = JSONUtil.getBoolean(jo, "isMember");
                     if (isMember) {

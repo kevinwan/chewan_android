@@ -151,7 +151,7 @@
                         android:background="@drawable/nearby_radio_btn"
                         android:button="@null"
                         android:gravity="center"
-                        android:text="桌游"
+                        android:text="购物"
                         android:textColor="@color/white"
                         android:textSize="@dimen/text_small" />
 
@@ -176,7 +176,7 @@
                         android:background="@drawable/nearby_radio_btn"
                         android:button="@null"
                         android:gravity="center"
-                        android:text="购物"
+                        android:text="桌游"
                         android:textColor="@color/white"
                         android:textSize="@dimen/text_small" />
 
@@ -266,6 +266,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
+                android:layout_marginBottom="12dp"
                 android:background="@drawable/btn_white_fillet"
                 android:orientation="horizontal"
                 android:paddingBottom="12dp"
@@ -323,7 +324,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
-                android:layout_marginTop="12dp"
                 android:background="@drawable/btn_white_fillet"
                 android:orientation="horizontal"
                 android:paddingBottom="12dp"
@@ -391,8 +391,10 @@
 
             <Button
                 android:id="@+id/submit"
-                android:layout_width="160dp"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
                 android:layout_marginBottom="21dp"
                 android:background="@drawable/btn_red_fillet"
                 android:text="确定"

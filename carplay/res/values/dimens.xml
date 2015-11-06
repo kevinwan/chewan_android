@@ -9,6 +9,7 @@
     <dimen name="text_medium">15sp</dimen>
     <dimen name="text_small">15sp</dimen>
     <dimen name="text_smaller">14sp</dimen>
+    <dimen name="text_smallest">12sp</dimen>
     <dimen name="height_top_bar">46dp</dimen>
     <dimen name="padding_search_bar">5dp</dimen>
     <dimen name="height_row_weixin">59dp</dimen>
@@ -28,6 +29,7 @@
     <dimen name="text_time_small">14sp</dimen>
     <dimen name="lookaround_head_small">51dp</dimen>
     <dimen name="lookaround_head_medium">58dp</dimen>
+
 
     <dimen name="lookaround_head_big">65dp</dimen>
 

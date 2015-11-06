@@ -156,6 +156,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
                 officialHolder.titleT = (TextView) view.findViewById(R.id.title);
                 officialHolder.locationT = (TextView) view.findViewById(R.id.location);
                 officialHolder.priceT = (TextView) view.findViewById(R.id.price);
+                officialHolder.pricerightT = (TextView) view.findViewById(R.id.priceright);
                 officialHolder.priceDescT = (TextView) view.findViewById(R.id.priceDesc);
                 officialHolder.picI = (ImageView) view.findViewById(R.id.pic);
                 officialHolder.headI = (ImageView) view.findViewById(R.id.head);
@@ -443,15 +444,25 @@ public class DyanmicBaseAdapter extends BaseAdapter {
             });
         } else {
 
-            officialHolder.priceT.setText(JSONUtil.getString(jo, "price"));
-            officialHolder.priceDescT.setText(JSONUtil.getString(jo, "priceDesc"));
-            String priceDesc = JSONUtil.getString(jo, "subsidyPrice");
-            if (priceDesc.isEmpty()) {
-                officialHolder.priceDescT.setVisibility(View.GONE);
-            } else {
-                officialHolder.priceDescT.setVisibility(View.VISIBLE);
-                officialHolder.priceDescT.setText("官方补贴" + JSONUtil.getString(jo, "subsidyPrice") + "元/人");
+//            officialHolder.priceT.setText(JSONUtil.getString(jo, "price"));
+            double price=JSONUtil.getDouble(jo, "price");
+            if (((int)price)==0){
+                officialHolder.priceT.setText("免费");
+                officialHolder.pricerightT.setVisibility(View.GONE);
+            }else {
+                officialHolder.priceT.setText(price+"");
+                officialHolder.pricerightT.setVisibility(View.VISIBLE);
             }
+
+
+//            officialHolder.priceDescT.setText(JSONUtil.getString(jo, "priceDesc"));
+//            String priceDesc = JSONUtil.getString(jo, "subsidyPrice");
+//            if (priceDesc.isEmpty()) {
+//                officialHolder.priceDescT.setVisibility(View.GONE);
+//            } else {
+//                officialHolder.priceDescT.setVisibility(View.VISIBLE);
+//                officialHolder.priceDescT.setText("官方补贴" + JSONUtil.getString(jo, "subsidyPrice") + "元/人");
+//            }
 //            officialHolder.priceDescT.setText(JSONUtil.getString(jo, "subsidyPrice"));
 //            officialHolder.infoT.setText(JSONUtil.getString(jo, "title"));
 //            officialHolder.maleLimitT.setText(JSONUtil.getString(jo, "maleLimit"));
@@ -522,7 +533,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
 
     class OfficialHolder {
 //        TextView maleLimitT, maleNumT, femaleLimitT, femaleNumT;
-        TextView titleT, locationT, priceT, priceDescT, cityT, participate_womanT, participate_manT, unparticipateT;
+        TextView titleT, locationT, priceT, priceDescT, cityT, participate_womanT, participate_manT, unparticipateT,pricerightT;
         //        TextView maleLimitT, maleNumT, femaleLimitT, femaleNumT;
         ImageView picI, headI;
         LinearLayout limitedlayoutL, unlimitedlayoutL;

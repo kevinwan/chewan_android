@@ -11,6 +11,7 @@
     <dimen name="text_medium">15sp</dimen>
     <dimen name="text_small">13sp</dimen>
     <dimen name="text_smaller">12sp</dimen>
+    <dimen name="text_smallest">10sp</dimen>
     <dimen name="text_hot_small">14sp</dimen>
     <dimen name="text_time_small">12sp</dimen>
 

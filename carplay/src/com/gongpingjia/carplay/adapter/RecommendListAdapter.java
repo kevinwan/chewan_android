@@ -33,7 +33,7 @@ public class RecommendListAdapter extends RecyclerView.Adapter<RecommendListAdap
     private List<JSONObject> data;
 
     public static class SimpleViewHolder extends RecyclerView.ViewHolder {
-        TextView titleT, locationT, priceT,  priceDescT, cityT,participate_womanT, participate_manT,unparticipateT;
+        TextView titleT, locationT, priceT,  priceDescT, cityT,participate_womanT, participate_manT,unparticipateT,pricerightT;
         LinearLayout limitedlayoutL,unlimitedlayoutL;
 
         ImageView picI;
@@ -44,6 +44,7 @@ public class RecommendListAdapter extends RecyclerView.Adapter<RecommendListAdap
             titleT = (TextView) view.findViewById(R.id.title);
             locationT = (TextView) view.findViewById(R.id.location);
             priceT = (TextView) view.findViewById(R.id.price);
+            pricerightT = (TextView) view.findViewById(R.id.priceright);
             priceDescT = (TextView) view.findViewById(R.id.priceDesc);
             picI = (ImageView) view.findViewById(R.id.pic);
             headI = (RoundImageView) view.findViewById(R.id.head);
@@ -77,9 +78,16 @@ public class RecommendListAdapter extends RecyclerView.Adapter<RecommendListAdap
     public void onBindViewHolder(SimpleViewHolder holder, final int position) {
 
         final JSONObject jo = getItem(position);
-        holder.priceT.setText(JSONUtil.getString(jo, "price"));
-        holder.priceDescT.setVisibility(TextUtils.isEmpty(JSONUtil.getString(jo, "subsidyPrice")) ? View.GONE : View.VISIBLE);
-        holder.priceDescT.setText("官方补贴" + JSONUtil.getString(jo, "subsidyPrice") + "元/人");
+        double price=JSONUtil.getDouble(jo, "price");
+        if (((int)price)==0){
+            holder.priceT.setText("免费");
+            holder.pricerightT.setVisibility(View.GONE);
+        }else {
+            holder.priceT.setText(price+"");
+            holder.pricerightT.setVisibility(View.VISIBLE);
+        }
+//        holder.priceDescT.setVisibility(TextUtils.isEmpty(JSONUtil.getString(jo, "subsidyPrice")) ? View.GONE : View.VISIBLE);
+//        holder.priceDescT.setText("官方补贴" + JSONUtil.getString(jo, "subsidyPrice") + "元/人");
 
 //        holder.infoT.setText(JSONUtil.getString(jo, "title"));
 

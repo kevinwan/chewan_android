@@ -151,6 +151,7 @@ public class NearbyFilterDialog extends BaseAlertDialog implements
                 setCheackedG2();
                 setCheackedG3();
                 setCheackedG4();
+                gonePay(true);
                 break;
             case R.id.active_type2:
                 radioButton =(RadioButton)findViewById(group.getCheckedRadioButtonId());
@@ -159,6 +160,7 @@ public class NearbyFilterDialog extends BaseAlertDialog implements
                 setCheackedG1();
                 setCheackedG3();
                 setCheackedG4();
+                gonePay(false);
                 break;
             case R.id.active_type3:
                 radioButton =(RadioButton)findViewById(group.getCheckedRadioButtonId());
@@ -167,6 +169,7 @@ public class NearbyFilterDialog extends BaseAlertDialog implements
                 setCheackedG1();
                 setCheackedG2();
                 setCheackedG4();
+                gonePay(true);
                 break;
             case R.id.active_type4:
                 radioButton =(RadioButton)findViewById(group.getCheckedRadioButtonId());
@@ -175,6 +178,10 @@ public class NearbyFilterDialog extends BaseAlertDialog implements
                 setCheackedG1();
                 setCheackedG2();
                 setCheackedG3();
+                if ("不限".equals(type))
+                    gonePay(false);
+                else
+                    gonePay(true);
                 break;
             case R.id.active_pay:
                 radioButton =(RadioButton)findViewById(group.getCheckedRadioButtonId());
@@ -226,6 +233,13 @@ public class NearbyFilterDialog extends BaseAlertDialog implements
         active_gender.check(pre.getGender_id()==-1 ? R.id.gender_3 : pre.getGender_id());
         //是否包接送
         active_transfer.setChecked(pre.isTransfer());
+
+        if ("运动".equals(type)||"遛狗".equals(type)||"购物".equals(type))
+            gonePay(false);
+        else
+            gonePay(true);
+
+
         //设置活动类型
         for (int i = 0;i<active_typeG1.getChildCount();i++){
             if (active_typeG1.getChildAt(i).getId()==pre.getType_id()){
@@ -255,7 +269,15 @@ public class NearbyFilterDialog extends BaseAlertDialog implements
     }
 
     //隐藏付费类型 并设置默认值
-    private void gonePay(){
+    private void gonePay(boolean isShow){
+        if (isShow)
+            active_pay.setVisibility(View.VISIBLE);
+        else{
+            active_pay.setVisibility(View.GONE);
+            pay_id=R.id.pay_3;
+            pay = "不限";
+        }
+
 
     }
 }

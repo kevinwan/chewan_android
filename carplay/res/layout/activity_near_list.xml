@@ -22,6 +22,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="#000000"
+        android:paddingBottom="3dp"
+        android:paddingTop="3dp"
         android:orientation="horizontal">
 
         <TextView
@@ -32,8 +34,8 @@
 
         <CheckBox
             android:id="@+id/free_check"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="22dp"
             android:layout_alignParentRight="true"
             android:layout_marginBottom="5dp"
             android:layout_marginRight="10dp"

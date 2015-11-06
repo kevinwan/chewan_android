@@ -50,13 +50,14 @@
 
             <TextView
                 android:id="@+id/title"
-                style="@style/text_black_big"
+                style="@style/text_black_medium"
                 android:text="最近访客" />
 
             <TextView
                 android:id="@+id/content"
                 style="@style/text_grey_small"
                 android:layout_marginTop="6dp"
+                android:maxWidth="200dp"
                 android:ellipsize="end"
                 android:singleLine="true"
                 android:text="黄老邪看过你的相册" />
