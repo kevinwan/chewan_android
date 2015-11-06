@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -265,11 +266,12 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
         int distance = (int) Math.floor(JSONUtil.getDouble(jo, "distance"));
         holder.distance.setText(CarPlayUtil.numberWithDelimiter(distance));
 
-
-        if (distancejo == null || JSONUtil.getString(distancejo, "province").equals("") || JSONUtil.getString(distancejo, "city").equals("") || JSONUtil.getString(distancejo, "district").equals("") || JSONUtil.getString(distancejo, "street").equals("") || JSONUtil.getString(distancejo, "detail").equals("")) {
+        String locationS = JSONUtil.getString(distancejo, "province") + JSONUtil.getString(distancejo, "city") + JSONUtil.getString(distancejo, "district") + JSONUtil.getString(distancejo, "street") + JSONUtil.getString(distancejo, "detail");
+        locationS=locationS.replace("null","");
+        if (TextUtils.isEmpty(locationS)) {
             holder.location.setText("地点待定");
         } else {
-            holder.location.setText(JSONUtil.getString(distancejo, "province") + JSONUtil.getString(distancejo, "city") + JSONUtil.getString(distancejo, "district") + JSONUtil.getString(distancejo, "street") + JSONUtil.getString(distancejo, "detail"));
+            holder.location.setText(locationS);
         }
 
         String licenseAuthStatus = JSONUtil.getString(userjo, "licenseAuthStatus");

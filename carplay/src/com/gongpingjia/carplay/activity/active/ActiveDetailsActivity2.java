@@ -261,19 +261,19 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
                     ViewUtil.bindView(introduceT, CarPlayUtil.setTextColor(self, citystr, title, R.color.text_orange));
                     ViewUtil.bindView(contentT, JSONUtil.getString(jo, "instruction"));
                     ViewUtil.bindView(processT, JSONUtil.getString(jo, "description"));
-                    ViewUtil.bindView(subsidyPriceT,"(现在报名立减" + JSONUtil.getDouble(jo, "subsidyPrice") + "元! )");
+//                    ViewUtil.bindView(subsidyPriceT,"(现在报名立减" + JSONUtil.getDouble(jo, "subsidyPrice") + "元! )");
 //                    ViewUtil.bindView(priceT,JSONUtil.getDouble(jo, "price")+"元/人");
-//                    ViewUtil.bindView(explaintxtT, JSONUtil.getString(jo, "extraDesc"));
+                    ViewUtil.bindView(explaintxtT, JSONUtil.getString(jo, "extraDesc"));
 
                     double price=JSONUtil.getDouble(jo, "price");
                     if (((int)price)==0){
                         priceT.setText("免费");
-                        explaintxtT.setVisibility(View.GONE);
+                        subsidyPriceT.setVisibility(View.GONE);
                         buyticketsBtn.setVisibility(View.GONE);     //购票链接隐藏
                     }else {
                         priceT.setText(price+"元/人");
-                        explaintxtT.setVisibility(View.VISIBLE);
-                        ViewUtil.bindView(explaintxtT, JSONUtil.getString(jo, "extraDesc"));
+                        subsidyPriceT.setVisibility(View.VISIBLE);
+                        ViewUtil.bindView(subsidyPriceT,"(现在报名立减" + JSONUtil.getDouble(jo, "subsidyPrice") + "元! )");
                         buyticketsBtn.setVisibility(View.VISIBLE);  //购票链接显示
                     }
 
