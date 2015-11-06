@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -74,7 +75,13 @@ public class LookAroundDialog extends BaseAlertDialog {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_lookaround);
-
+        LinearLayout beijing  = (LinearLayout) findViewById(R.id.kankan_dismiss);
+        beijing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
         mCacheDir = new File(mContext.getExternalCacheDir(), "CarPlay");
         mCacheDir.mkdirs();
         initView();

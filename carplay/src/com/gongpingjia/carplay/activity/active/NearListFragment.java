@@ -50,7 +50,7 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
     private NearListAdapter adapter;
 
     PullToRefreshRecyclerViewVertical listV;
-
+    Boolean idle;
     boolean isfirst;
     RelativeLayout free_layout;
     CheckBox free_ck;
@@ -75,8 +75,9 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mainV = inflater.inflate(R.layout.activity_near_list, null);
         EventBus.getDefault().register(this);
-        initView();
 
+        initView();
+//        personal();
 
         return mainV;
     }
@@ -92,19 +93,42 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
         free_layout.getBackground().setAlpha(179);
         free_ck = (CheckBox) mainV.findViewById(R.id.free_check);
         freeT = (TextView) mainV.findViewById(R.id.freeT);
-        free_ck.setChecked(true);
-        freeT.setText("无聊中～小伙伴可以邀你～");
+        if(!user.getUserId().isEmpty()){
+            DhNet verifyNet = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId() + "/info?viewUser=" + user.getUserId() + "&token=" + user.getToken());
+            verifyNet.doGetInDialog(new NetTask(getActivity()) {
+                @Override
+                public void doInUI(Response response, Integer transfer) {
+                    if (response.isSuccess()) {
+                        JSONObject jo = response.jSONFromData();
+                        idle = JSONUtil.getBoolean(jo, "idle");
+                        if (idle == true){
+                            free_ck.setChecked(true);
+                            freeT.setText("无聊中～小伙伴可以邀你～");
+                            System.out.println("youkong");
+                        }else{
+                            free_ck.setChecked(false);
+                            System.out.println("没空");
+                            freeT.setText("忙碌中～小伙伴不可约你～");
+                        }
+                        System.out.println("aaaaaaaaaaaaaaaa" + idle);
+                    }
+                }
+            });
+        }else{
+            free_ck.setChecked(true);
+            freeT.setText("无聊中～小伙伴可以邀你～");
+        }
         free_ck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, final boolean b) {
-                if (!User.getInstance().isLogin()) {
+
+//                if (User.getInstance().isLogin()) {
                     UserInfoManage.getInstance().checkLogin(getActivity(),
                             new UserInfoManage.LoginCallBack() {
-
                                 @Override
                                 public void onisLogin() {
                                     if (b == true) {
-//                    System.out.println("有空");
+                                        System.out.println("有空");
                                         DhNet net = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId() + "/info?token=" + user.getToken());
                                         net.addParam("idle", true);
                                         net.doPostInDialog(new NetTask(getActivity()) {
@@ -117,7 +141,7 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
                                             }
                                         });
                                     } else {
-//                    System.out.println("没空");
+                                        System.out.println("没空");
                                         DhNet net = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId() + "/info?token=" + user.getToken());
                                         net.addParam("idle", false);
                                         net.doPostInDialog(new NetTask(getActivity()) {
@@ -136,7 +160,7 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
                                 public void onLoginFail() {
                                 }
                             });
-                }
+//                }
             }
 
 
@@ -192,6 +216,10 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
         addParams("token", user.getToken());
         addParams("userId", user.getUserId());
         showNext();
+    }
+
+    public void personal() {
+
     }
 
     @Override

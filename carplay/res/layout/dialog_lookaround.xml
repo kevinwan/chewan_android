@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:my="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/kankan_dismiss"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="60dp"
@@ -14,7 +15,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/active_bg"
         android:orientation="vertical"
-        android:paddingBottom="12dp"
+        android:paddingBottom="14dp"
         android:paddingTop="12dp">
 
         <LinearLayout
@@ -26,7 +27,7 @@
 
             <TextView
                 android:id="@+id/tv_nickname"
-                style="@style/text_black_medium"
+                style="@style/text_black_big"
                 android:text="请我吃饭吧" />
 
             <ImageView
@@ -85,6 +86,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
+                android:textSize="@dimen/text_smaller"
                 android:text="请我吧 "
                 android:textColor="@color/text_red" />
 
@@ -93,6 +95,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="包接送 "
+                android:textSize="@dimen/text_smaller"
                 android:textColor="@color/text_skyblue" />
         </LinearLayout>
 

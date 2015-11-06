@@ -137,7 +137,6 @@ public class LookAroundPop {
                                 @Override
                                 public void onClick(View v) {
                                     LookAroundDialog dialog = new LookAroundDialog(context, json);
-//                                    dialog.setCancelable(false);
                                     dialog.show();
                                 }
                             });
