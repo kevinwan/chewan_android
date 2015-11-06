@@ -92,8 +92,7 @@ public class SplashActivity extends CarPlayBaseActivity {
                     } else if (json.has("userId")) {
 
                         loginHX(MD5Util.string2MD5(JSONUtil.getString(json,
-                                        "userId")), MD5Util.string2MD5(per.thirdId
-                                        + per.channel + "com.gongpingjia.carplay"),
+                                        "userId")), JSONUtil.getString(json, "password"),
                                 json);
                         // 登陆成功
                         // User user = User.getInstance();

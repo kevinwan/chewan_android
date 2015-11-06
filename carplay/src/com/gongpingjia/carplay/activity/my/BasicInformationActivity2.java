@@ -232,17 +232,18 @@ public class BasicInformationActivity2 extends CarPlayBaseActivity implements Vi
         }
         DhNet net = new DhNet(API2.register);
         String gender = mGroupSex.getCheckedRadioButtonId() == R.id.rb_female ? "女" : "男";
-        if (getIntent().getStringExtra("phone") != null) {
-            //手机号登陆
-            net.addParam("phone", getIntent().getStringExtra("phone"));
-            net.addParam("code", getIntent().getStringExtra("code"));
-            net.addParam("password", MD5Util.string2MD5(getIntent().getStringExtra("password")));
-        } else {
-            //三方登陆
+
+        net.addParam("phone", getIntent().getStringExtra("phone"));
+        net.addParam("code", getIntent().getStringExtra("code"));
+        net.addParam("password", MD5Util.string2MD5(getIntent().getStringExtra("password")));
+        if (getIntent().getStringExtra("type") != null) {
             net.addParam("uid", getIntent().getStringExtra("uid"));
             net.addParam("channel", getIntent().getStringExtra("channel"));
+            net.addParam("snsPassword", MD5Util.string2MD5(getIntent()
+                    .getStringExtra("uid")
+                    + getIntent().getStringExtra("channel")
+                    + "com.gongpingjia.carplay"));
         }
-
 
         net.addParam("nickname", mEditNickname.getText().toString());
         net.addParam("gender", gender);
@@ -258,22 +259,24 @@ public class BasicInformationActivity2 extends CarPlayBaseActivity implements Vi
             @Override
             public void doInUI(Response response, Integer transfer) {
                 if (response.isSuccess()) {
-                    showToast("注册成功!");
 
                     JSONObject jo = response.jSONFromData();
-                    if (getIntent().getStringExtra("phone") != null) {
+                    if (getIntent().getStringExtra("type") == null) {
                         //手机号完善信息
+                        Log.d("msg", "手机号完善");
                         loginHX(MD5Util.string2MD5(JSONUtil.getString(jo,
-                                "userId")), getIntent().getStringExtra("password"), jo, true);
+                                "userId")), MD5Util.string2MD5(getIntent().getStringExtra("password")), jo, true);
 //                        loginHX(JSONUtil.getString(jo,
 //                                "userId"), MD5Util.string2MD5(getIntent().getStringExtra("password")), jo);
                     } else {
                         //三方登录完善信息
-                        loginHX(MD5Util.string2MD5(JSONUtil.getString(jo,
-                                "userId")), MD5Util.string2MD5(getIntent()
+                        Log.d("msg", "三方登录完善");
+                        Log.d("msg", "密码" + MD5Util.string2MD5(getIntent()
                                 .getStringExtra("uid")
                                 + getIntent().getStringExtra("channel")
-                                + "com.gongpingjia.carplay"), jo, false);
+                                + "com.gongpingjia.carplay"));
+                        loginHX(MD5Util.string2MD5(JSONUtil.getString(jo,
+                                "userId")), MD5Util.string2MD5(getIntent().getStringExtra("password")), jo, false);
                     }
                 }
             }
@@ -281,7 +284,7 @@ public class BasicInformationActivity2 extends CarPlayBaseActivity implements Vi
         });
     }
 
-    private void loginHX(String currentUsername, String currentPassword,
+    private void loginHX(String currentUsername, final String currentPassword,
                          final JSONObject jo, final boolean isphonelogin) {
         EMChatManager.getInstance().login(currentUsername, currentPassword,
                 new EMCallBack() {
@@ -327,7 +330,7 @@ public class BasicInformationActivity2 extends CarPlayBaseActivity implements Vi
                             per.load();
                             if (isphonelogin) {
                                 per.phone = getIntent().getStringExtra("phone");
-                                per.password = getIntent().getStringExtra("password");
+                                per.password = currentPassword;
                             } else {
                                 per.thirdId = getIntent().getStringExtra("uid");
                                 per.channel = getIntent().getStringExtra("channel");
@@ -335,6 +338,7 @@ public class BasicInformationActivity2 extends CarPlayBaseActivity implements Vi
                                 per.nickname = getIntent().getStringExtra("nickname");
                             }
                             per.commit();
+                            showToast("注册成功!");
                             Intent it = new Intent(self, MainActivity2.class);
                             startActivity(it);
                             LoginActivity2.asyncFetchGroupsFromServer();

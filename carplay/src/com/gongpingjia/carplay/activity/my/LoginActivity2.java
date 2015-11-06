@@ -259,8 +259,11 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
                     JSONObject json = response.jSONFrom("data");
                     if (!json.has("token")) {
                         hidenProgressDialog();
+
+                        Intent it = new Intent(self, BoundPhoneActivity.class);
+//                        startActivity(it);
                         //数据库没有该用户
-                        Intent it = new Intent(self, BasicInformationActivity2.class);
+//                        Intent it = new Intent(self, BasicInformationActivity2.class);
                         Bundle bundle = new Bundle();
                         bundle.putString("avatarUrl", mAvatarUrl);
                         bundle.putString("nickname", mNickName);
@@ -280,8 +283,13 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
                         startActivity(it);
                     } else {
                         //数据库中有该用户
+//                        loginHX(MD5Util.string2MD5(JSONUtil.getString(json, "userId")),
+//                                MD5Util.string2MD5(mUid + mChannel + "com.gongpingjia.carplay"),
+//                                json, null);
+
+
                         loginHX(MD5Util.string2MD5(JSONUtil.getString(json, "userId")),
-                                MD5Util.string2MD5(mUid + mChannel + "com.gongpingjia.carplay"),
+                                JSONUtil.getString(json, "password"),
                                 json, null);
 
 
@@ -429,6 +437,7 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
                     per.thirdId = mUid;
                     per.channel = mChannel;
                     per.password = currentPassword;
+                    per.nickname = jo.getString("nickname");
                     if (phone != null) {
                         per.phone = phone;
                     }
@@ -487,6 +496,12 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
 //                    }
 //                });
                 hidenProgressDialog();
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        showToast(message);
+
+                    }
+                });
             }
         });
 

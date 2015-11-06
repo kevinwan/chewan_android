@@ -28,16 +28,16 @@ import org.json.JSONObject;
  */
 public class NearListActivity extends CarPlayListActivity implements PullToRefreshBase.OnRefreshListener2<RecyclerViewPager>, ILoadSuccess {
 
-
     private RecyclerViewPager mRecyclerView;
+
     private NearListAdapter adapter;
 
     PullToRefreshRecyclerViewVertical listV;
 
     User user;
 
-
     LinearLayout near_layout;
+
     View currentview;
 
     @Override

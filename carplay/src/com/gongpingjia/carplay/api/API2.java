@@ -89,4 +89,11 @@ public class API2 {
 
     public static String updateVersion = CWBaseurl + "version?product=android";
 
+
+    public static String phoneisRegister(String phone) {
+        return String.format(CWBaseurl + "user/%s/register", phone);
+    }
+
+    public static String bindPhone = CWBaseurl + "user/phone/binding";
+
 }

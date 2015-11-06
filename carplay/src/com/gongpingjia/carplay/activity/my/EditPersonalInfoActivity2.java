@@ -81,7 +81,7 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
     String head_url;
     ImageView car_img, head_img;
     Intent myIntent;
-    String car_driverLicenseURL, car_drivingLicenseURL,licenseAuthStatus;
+    String car_driverLicenseURL, car_drivingLicenseURL, licenseAuthStatus;
     String carName;
 
     @Override
@@ -379,6 +379,10 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
             public void doInUI(Response response, Integer transfer) {
                 if (response.isSuccess()) {
                     showToast("修改信息成功");
+                    User user = User.getInstance();
+                    user.setNickName(nickname);
+                    user.setHeadUrl(head_url);
+                    user.setAge(Integer.parseInt(years));
                     Intent it = getIntent();
                     it.putExtra("name", nickname);
                     it.putExtra("age", years);
