@@ -313,18 +313,20 @@ public class MainActivity2 extends BaseFragmentActivity implements
         }
     }
 
-    private void setTab(int index) {
+    private void setTab(final int index) {
 
-        if (index == 4) {
+        if (index == 4||index == 3) {
             if (!User.getInstance().isLogin()) {
                 UserInfoManage.getInstance().checkLogin(self,
                         new UserInfoManage.LoginCallBack() {
-
                             @Override
                             public void onisLogin() {
-                                setTab(4);
+                                if (index == 4){
+                                    setTab(4);
+                                }else{
+                                    setTab(3);
+                                }
                             }
-
                             @Override
                             public void onLoginFail() {
                             }
@@ -621,8 +623,8 @@ public class MainActivity2 extends BaseFragmentActivity implements
     public void onEventMainThread(TabEB tab) {
         if (tab.getIndex() == 2) {
             //切换到匹配意向,从匹配意向发过来的消息,tab.getParams()代表匹配的条件
-            MatchingListFragment.getInstance().setParams(tab.getParams());
             switchContent(MatchingListFragment.getInstance());
+            MatchingListFragment.getInstance().setParams(tab.getParams());
             setTitle("匹配意向结果");
             return;
         } else if (tab.getIndex() == 4) {

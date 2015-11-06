@@ -9,6 +9,8 @@ public class API2 {
 
     //测试版API前缀
     public static final String CWBaseurl = "http://cwapi.gongpingjia.com:8080/v2/";
+//    public static final String CWBaseurl = "http://192.168.1.162:8080/v2/";
+
 
     //获取验证码
     public static final String getVerification = CWBaseurl + "phone/";
@@ -27,6 +29,11 @@ public class API2 {
 
     //忘记密码
     public static final String forgetPassword = CWBaseurl + "user/password";
+
+    public static final String allCarBrands = CWBaseurl + "/car/brand";
+
+    public static final String carDetails = CWBaseurl + "/car/model";
+
 
     //获取我关注的信息
     public static String getSubscribe(String userId, String token) {

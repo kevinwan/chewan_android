@@ -22,6 +22,7 @@ import com.gongpingjia.carplay.bean.FilterPreference2;
 import com.gongpingjia.carplay.bean.LoginEB;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.manage.UserInfoManage;
+import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.view.AnimButtonView;
 import com.gongpingjia.carplay.view.PullToRefreshRecyclerViewVertical;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -87,44 +88,58 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
         pre = IocContainer.getShare().get(FilterPreference2.class);
         pre.load();
         near_layout = (LinearLayout) mainV.findViewById(R.id.near_empty);
-        free_layout = (RelativeLayout)  mainV.findViewById(R.id.free);
+        free_layout = (RelativeLayout) mainV.findViewById(R.id.free);
         free_layout.getBackground().setAlpha(179);
-        free_ck = (CheckBox)  mainV.findViewById(R.id.free_check);
-         freeT = (TextView) mainV.findViewById(R.id.freeT);
+        free_ck = (CheckBox) mainV.findViewById(R.id.free_check);
+        freeT = (TextView) mainV.findViewById(R.id.freeT);
         free_ck.setChecked(true);
         freeT.setText("无聊中～小伙伴可以邀你～");
         free_ck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b == true) {
-//                    System.out.println("有空");
-                    DhNet net = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId() + "/info?token=" + user.getToken());
-                    net.addParam("idle", true);
-                    net.doPostInDialog(new NetTask(getActivity()) {
-                        @Override
-                        public void doInUI(Response response, Integer transfer) {
-                            if (response.isSuccess()) {
-                                System.out.println(response.isSuccess());
-                                freeT.setText("无聊中～小伙伴可以邀你～");
-                            }
-                        }
-                    });
-                } else {
-//                    System.out.println("没空");
-                    DhNet net = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId() + "/info?token=" + user.getToken());
-                    net.addParam("idle", false);
-                    net.doPostInDialog(new NetTask(getActivity()) {
-                        @Override
-                        public void doInUI(Response response, Integer transfer) {
-                            if (response.isSuccess()) {
-                                System.out.println(response.isSuccess());
-                                freeT.setText("忙碌中～小伙伴不可约你～");
-                            }
-                        }
-                    });
-                }
+            public void onCheckedChanged(CompoundButton compoundButton, final boolean b) {
+                if (!User.getInstance().isLogin()) {
+                    UserInfoManage.getInstance().checkLogin(getActivity(),
+                            new UserInfoManage.LoginCallBack() {
 
+                                @Override
+                                public void onisLogin() {
+                                    if (b == true) {
+//                    System.out.println("有空");
+                                        DhNet net = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId() + "/info?token=" + user.getToken());
+                                        net.addParam("idle", true);
+                                        net.doPostInDialog(new NetTask(getActivity()) {
+                                            @Override
+                                            public void doInUI(Response response, Integer transfer) {
+                                                if (response.isSuccess()) {
+                                                    System.out.println(response.isSuccess());
+                                                    freeT.setText("无聊中～小伙伴可以邀你～");
+                                                }
+                                            }
+                                        });
+                                    } else {
+//                    System.out.println("没空");
+                                        DhNet net = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId() + "/info?token=" + user.getToken());
+                                        net.addParam("idle", false);
+                                        net.doPostInDialog(new NetTask(getActivity()) {
+                                            @Override
+                                            public void doInUI(Response response, Integer transfer) {
+                                                if (response.isSuccess()) {
+                                                    System.out.println(response.isSuccess());
+                                                    freeT.setText("忙碌中～小伙伴不可约你～");
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
+
+                                @Override
+                                public void onLoginFail() {
+                                }
+                            });
+                }
             }
+
+
         });
         listV = (PullToRefreshRecyclerViewVertical) mainV.findViewById(R.id.list);
         listV.setMode(PullToRefreshBase.Mode.BOTH);
@@ -217,7 +232,7 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
     public void onEventMainThread(FilterPreference2 pre) {
         pre = IocContainer.getShare().get(FilterPreference2.class);
         pre.load();
-        addParams("majorType", pre.getType());
+        addParams("majorType", CarPlayUtil.getTypeName(pre.getType()));
         addParams("pay", pre.getPay());
         addParams("gender", pre.getGender());
         addParams("transfer", pre.isTransfer());

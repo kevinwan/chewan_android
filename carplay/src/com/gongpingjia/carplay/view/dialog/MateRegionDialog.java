@@ -63,7 +63,7 @@ public class MateRegionDialog extends BaseAlertDialog implements View.OnClickLis
 
     public MateRegionDialog(Context context) {
         super(context, R.style.Dialog_Fullscreen);
-        getWindow().setBackgroundDrawableResource(R.color.circle_cf_bg);
+//        getWindow().setBackgroundDrawableResource(R.color.circle_cf_bg);
         this.mContext = context;
     }
 

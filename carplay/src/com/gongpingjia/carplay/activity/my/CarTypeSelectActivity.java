@@ -1,16 +1,5 @@
 package com.gongpingjia.carplay.activity.my;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.duohuo.dhroid.net.DhNet;
-import net.duohuo.dhroid.net.NetTask;
-import net.duohuo.dhroid.net.Response;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,12 +19,23 @@ import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.adapter.BrandAdapter;
-import com.gongpingjia.carplay.api.API;
+import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.BrandDetails;
 import com.gongpingjia.carplay.bean.CarBrand;
 import com.gongpingjia.carplay.view.SideBar;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.umeng.socialize.utils.Log;
+
+import net.duohuo.dhroid.net.DhNet;
+import net.duohuo.dhroid.net.NetTask;
+import net.duohuo.dhroid.net.Response;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Description 车型选择
@@ -127,7 +127,7 @@ public class CarTypeSelectActivity extends CarPlayBaseActivity {
         // 请求主页面所有车型
         mBrands = new ArrayList<BrandDetails>();
         mDatas = new ArrayList<CarBrand>();
-        DhNet dhNet = new DhNet(API.allCarBrands);
+        DhNet dhNet = new DhNet(API2.allCarBrands);
         dhNet.doGetInDialog(new NetTask(this) {
 
             @Override
@@ -159,7 +159,7 @@ public class CarTypeSelectActivity extends CarPlayBaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view, final int position, long id) {
                 // TODO Auto-generated method stub
-                DhNet dhNet = new DhNet(API.carDetails);
+                DhNet dhNet = new DhNet(API2.carDetails);
                 dhNet.addParam("brand", mDatas.get(position).getSlug());
                 dhNet.doGetInDialog(new NetTask(CarTypeSelectActivity.this) {
 

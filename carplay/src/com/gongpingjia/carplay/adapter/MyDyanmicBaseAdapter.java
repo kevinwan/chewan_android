@@ -370,8 +370,7 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                 ViewUtil.bindNetImage(holder.dynamic_carlogo, JSONUtil.getString(ob, "logo"), "default");
 //                holder.dynamic_carname.setText(JSONUtil.getString(ob, "model"));
             } else {
-                holder.dynamic_carlogo.setVisibility(View.GONE);
-                holder.dynamic_carname.setVisibility(View.GONE);
+                holder.dynamic_carlogo.setImageResource(R.drawable.no_car);
             }
 
 

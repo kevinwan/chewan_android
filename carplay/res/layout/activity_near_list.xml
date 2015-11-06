@@ -7,39 +7,40 @@
     android:orientation="vertical">
 
 
-
     <com.gongpingjia.carplay.view.PullToRefreshRecyclerViewVertical
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:paddingBottom="60dp"
-        android:paddingTop="40dp"
+        android:paddingTop="25dp"
         app:ptrDrawable="@drawable/lun"
         app:triggerOffset="0.1" />
+
     <RelativeLayout
         android:id="@+id/free"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="#000000">
+        android:background="#000000"
+        android:orientation="horizontal">
+
         <TextView
             android:id="@+id/freeT"
             style="@style/text_white_small"
-            android:layout_marginLeft="10dp"
             android:layout_centerVertical="true"
-          />
+            android:layout_marginLeft="10dp" />
+
         <CheckBox
             android:id="@+id/free_check"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:button="@null"
-            android:layout_marginTop="5dp"
+            android:layout_alignParentRight="true"
             android:layout_marginBottom="5dp"
             android:layout_marginRight="10dp"
-            android:layout_alignParentRight="true"
-            android:padding="2dp"
-            android:background="@drawable/btn_checkbox_free"/>
+            android:layout_marginTop="5dp"
+            android:background="@drawable/btn_checkbox_free"
+            android:button="@null"
+            android:padding="2dp" />
 
     </RelativeLayout>
 

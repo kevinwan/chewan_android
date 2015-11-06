@@ -18,12 +18,9 @@ import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.bean.Matching;
 import com.gongpingjia.carplay.bean.PointRecord;
 import com.gongpingjia.carplay.bean.TabEB;
-import com.gongpingjia.carplay.util.CarPlayPerference;
 import com.gongpingjia.carplay.view.AnimButtonView2;
 import com.gongpingjia.carplay.view.dialog.MatchingDialog;
 import com.gongpingjia.carplay.view.dialog.MateLayerDialog;
-
-import net.duohuo.dhroid.ioc.IocContainer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,9 +46,8 @@ public class MatePop implements Runnable, View.OnClickListener {
 
     List<AnimButtonView2> list;
     AnimButtonView2 eatView, sportView, movieView, dogView, songView, nightEatView, nightShopView, shopView, coffeeView, beerView;
-    CarPlayPerference per;
     int dialogcolor = 0;
-
+    MatchingDialog dlg;
 
     public MatePop(final Activity context) {
         this.context = context;
@@ -77,8 +73,12 @@ public class MatePop implements Runnable, View.OnClickListener {
     }
 
     private void initView() {
-        per = IocContainer.getShare().get(CarPlayPerference.class);
-        per.load();
+        contentV.findViewById(R.id.bg).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pop.dismiss();
+            }
+        });
         list = new ArrayList<AnimButtonView2>();
 
         vesselR = (RelativeLayout) contentV.findViewById(R.id.content_layout);
@@ -174,17 +174,17 @@ public class MatePop implements Runnable, View.OnClickListener {
         PointRecord record = PointRecord.getInstance();
         switch (v.getId()) {
             case R.id.exercise:
-                showMatchingDialog("足球", "篮球", "羽毛球", "桌球", "健身");
+                showMatchingDialog(0, "足球", "篮球", "羽毛球", "桌球", "健身");
                 record.getTypeClick().add("运动");
                 break;
 
             //不需要付费类型
             case R.id.dog:
-                showMatchingDialog("遛狗");
+                showMatchingDialog(0, "遛狗");
                 record.getTypeClick().add("遛狗");
                 break;
             case R.id.shop:
-                showMatchingDialog("购物");
+                showMatchingDialog(0, "购物");
                 record.getTypeClick().add("购物");
                 break;
 
@@ -206,8 +206,8 @@ public class MatePop implements Runnable, View.OnClickListener {
                 record.getTypeClick().add("咖啡");
                 break;
             case R.id.night_eat:
-                showMatchingDialog(context, "夜宵");
-                record.getTypeClick().add("夜宵");
+                showMatchingDialog(1, "三国杀", "杀人游戏", "狼人杀", "抵抗组织", "其他");
+                record.getTypeClick().add("桌游");
                 break;
             case R.id.night_shop:
                 showMatchingDialog(context, "夜店");
@@ -221,7 +221,7 @@ public class MatePop implements Runnable, View.OnClickListener {
     }
 
     //发布匹配意向一个参数直接代表活动类型，多个参数代表可以选择的运动类型,一个参数代表小类型
-    private void showMatchingDialog(String... names) {
+    private void showMatchingDialog(int dialogtype, String... names) {
         Matching matching;
         List<Matching> data = new ArrayList<>();
         for (String type : names) {
@@ -229,7 +229,12 @@ public class MatePop implements Runnable, View.OnClickListener {
             matching.setName(type);
             data.add(matching);
         }
-        final MatchingDialog dlg = new MatchingDialog(context, data);
+
+        if (dialogtype == 1) {
+            dlg = new MatchingDialog(context, data, 1);
+        } else {
+            dlg = new MatchingDialog(context, data);
+        }
         if (data.size() == 1) {
             data.get(0).setIsChecked(true);
             if (names[0].equals("遛狗")) {
@@ -240,8 +245,13 @@ public class MatePop implements Runnable, View.OnClickListener {
                 dialogcolor = R.color.circle_lg_bg;
             }
         } else {
-            dlg.getWindow().setBackgroundDrawableResource(R.color.circle_yd_bg);
-            dialogcolor = R.color.circle_yd_bg;
+            if (dialogtype == 1) {
+                dlg.getWindow().setBackgroundDrawableResource(R.color.circle_yx_bg);
+                dialogcolor = R.color.circle_yx_bg;
+            } else {
+                dlg.getWindow().setBackgroundDrawableResource(R.color.circle_yd_bg);
+                dialogcolor = R.color.circle_yd_bg;
+            }
         }
 
         dlg.setMatchingResult(new MatchingDialog.OnMatchingDialogResult() {
@@ -252,22 +262,7 @@ public class MatePop implements Runnable, View.OnClickListener {
                 pop.dismiss();
             }
         });
-
-        if (per.isShowDialogGuilde == 0) {
-            contentV.findViewById(R.id.guide).setBackgroundColor(dialogcolor);
-            contentV.findViewById(R.id.guide).setVisibility(View.VISIBLE);
-            contentV.findViewById(R.id.know).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    per.isShowDialogGuilde = 1;
-                    per.commit();
-                    contentV.findViewById(R.id.guide).setVisibility(View.GONE);
-                    dlg.show();
-                }
-            });
-            return;
-        }
-
+        dlg.setCoclor(dialogcolor);
         dlg.show();
     }
 
@@ -286,7 +281,7 @@ public class MatePop implements Runnable, View.OnClickListener {
         } else if ("咖啡".equals(type)) {
             dlg.getWindow().setBackgroundDrawableResource(R.color.circle_hkf_bg);
             dialogcolor = R.color.circle_hkf_bg;
-        } else if ("夜宵".equals(type)) {
+        } else if ("桌游".equals(type)) {
             dlg.getWindow().setBackgroundDrawableResource(R.color.circle_yx_bg);
             dialogcolor = R.color.circle_yx_bg;
         } else if ("夜店".equals(type)) {
@@ -304,21 +299,7 @@ public class MatePop implements Runnable, View.OnClickListener {
                 pop.dismiss();
             }
         });
-
-        if (per.isShowDialogGuilde == 0) {
-            contentV.findViewById(R.id.guide).setBackgroundColor(dialogcolor);
-            contentV.findViewById(R.id.guide).setVisibility(View.VISIBLE);
-            contentV.findViewById(R.id.know).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    per.isShowDialogGuilde = 1;
-                    per.commit();
-                    contentV.findViewById(R.id.guide).setVisibility(View.GONE);
-                    dlg.show();
-                }
-            });
-            return;
-        }
+        dlg.setCoclor(dialogcolor);
         dlg.show();
     }
 

@@ -162,8 +162,6 @@ public class RecyclerViewPager extends RecyclerView {
         if(position==-1) {
             return;
         }
-        Log.d("msg", "position:" + position);
-        Log.d("msg", "smoothScrollToPosition:" + mSmoothScrollTargetPosition);
         mSmoothScrollTargetPosition = position;
         super.smoothScrollToPosition(position);
     }

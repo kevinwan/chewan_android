@@ -1,112 +1,185 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_centerInParent="true"
-    android:layout_gravity="center"
-    android:layout_margin="40dp"
-    android:background="@drawable/btn_white_fillet">
 
-    <TextView
-        android:id="@+id/tv_top"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bg"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="10dp"
-        android:text="意向选择"
-        android:textColor="@color/text_red"
-        android:textSize="@dimen/text_title" />
-
-    <View
-        style="@style/line_horizontal"
-        android:layout_below="@+id/tv_top"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_top"
         android:layout_centerInParent="true"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:layout_marginTop="12dp"
-        android:padding="12dp">
+        android:layout_gravity="center"
+        android:layout_margin="40dp"
+        android:background="@drawable/btn_white_fillet">
+
+        <TextView
+            android:id="@+id/tv_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10dp"
+            android:text="意向选择"
+            android:textColor="@color/text_red"
+            android:textSize="@dimen/text_title" />
+
+        <View
+            style="@style/line_horizontal"
+            android:layout_below="@+id/tv_top" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_top"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="12dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="12dp">
 
-            <RelativeLayout
-                android:id="@+id/layout_my_treat"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_height="match_parent">
 
-                <ImageView
-                    android:id="@+id/iv_pay_my_treat"
-                    android:layout_width="60dp"
-                    android:layout_height="90dp"
-                    android:layout_centerInParent="true"
-                    android:background="@drawable/mate_manner_n" />
+                <RelativeLayout
+                    android:id="@+id/layout_my_treat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
 
-                <TextView
-                    style="@style/text_white_small"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="20dp"
-                    android:text="我请客" />
+                    <ImageView
+                        android:id="@+id/iv_pay_my_treat"
+                        android:layout_width="60dp"
+                        android:layout_height="90dp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/mate_manner_n" />
 
-            </RelativeLayout>
+                    <TextView
+                        style="@style/text_white_small"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="20dp"
+                        android:text="我请客" />
 
-            <RelativeLayout
-                android:id="@+id/layout_aa"
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/layout_aa"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@+id/iv_pay_aa"
+                        android:layout_width="60dp"
+                        android:layout_height="90dp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/mate_manner_n" />
+
+                    <TextView
+                        style="@style/text_white_small"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="20dp"
+                        android:text="AA制" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/layout_your_turn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@+id/iv_pay_your_turn"
+                        android:layout_width="60dp"
+                        android:layout_height="90dp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/mate_manner_n" />
+
+                    <TextView
+                        style="@style/text_white_small"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="20dp"
+                        android:text="请我吧" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_destination"
                 android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="18dp"
+                android:background="@drawable/edittext_bg"
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/below_btn"
+                android:gravity="center"
+                android:hint="什么地方(选填)"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:textColor="@color/text_black"
+                android:textColorHint="@color/text_grey_ccc"
+                android:textSize="@dimen/text_small" />
+
+            <CheckBox
+                android:id="@+id/chk_pick"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_marginTop="20dp"
+                android:button="@null"
+                android:checked="true"
+                android:drawableLeft="@drawable/radio_checked"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
+                android:text="包接送"
+                android:textColor="@color/dialog_blue_text" />
 
-                <ImageView
-                    android:id="@+id/iv_pay_aa"
-                    android:layout_width="60dp"
-                    android:layout_height="90dp"
-                    android:layout_centerInParent="true"
-                    android:background="@drawable/mate_manner_n" />
 
-                <TextView
-                    style="@style/text_white_small"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="20dp"
-                    android:text="AA制" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/layout_your_turn"
+            <Button
+                android:id="@+id/btn_match"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
-
-                <ImageView
-                    android:id="@+id/iv_pay_your_turn"
-                    android:layout_width="60dp"
-                    android:layout_height="90dp"
-                    android:layout_centerInParent="true"
-                    android:background="@drawable/mate_manner_n" />
-
-                <TextView
-                    style="@style/text_white_small"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="20dp"
-                    android:text="请我吧" />
-
-            </RelativeLayout>
+                android:layout_height="50dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/btn_red_fillet"
+                android:text="匹配意向"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_medium" />
 
         </LinearLayout>
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:id="@+id/guide_bg"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/black70"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/guide_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/guide_text"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="50dp"
+            android:src="@drawable/guide_dialog_icon" />
 
         <TextView
-            android:id="@+id/tv_destination"
+            android:id="@+id/guide_text"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:layout_marginTop="18dp"
+            android:layout_marginLeft="52dp"
+            android:layout_marginRight="52dp"
             android:background="@drawable/edittext_bg"
             android:drawablePadding="10dp"
             android:drawableRight="@drawable/below_btn"
@@ -118,34 +191,16 @@
             android:textColorHint="@color/text_grey_ccc"
             android:textSize="@dimen/text_small" />
 
-        <CheckBox
-            android:id="@+id/chk_pick"
+
+        <ImageView
+            android:id="@+id/know"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/guide_text"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
-            android:button="@null"
-            android:checked="true"
-            android:drawableLeft="@drawable/radio_checked"
-            android:drawablePadding="5dp"
-            android:gravity="center_vertical"
-            android:text="包接送"
-            android:textColor="@color/dialog_blue_text" />
-
-
-        <Button
-            android:id="@+id/btn_match"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/btn_red_fillet"
-            android:text="匹配意向"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_medium" />
+            android:src="@drawable/guide_dialog_know" />
 
     </LinearLayout>
 </RelativeLayout>
-
 

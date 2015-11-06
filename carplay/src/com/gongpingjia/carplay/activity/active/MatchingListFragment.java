@@ -21,6 +21,7 @@ import com.gongpingjia.carplay.adapter.NearListAdapter;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.FilterPreference2;
 import com.gongpingjia.carplay.bean.User;
+import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.view.AnimButtonView;
 import com.gongpingjia.carplay.view.PullToRefreshRecyclerViewVertical;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -70,6 +71,8 @@ public class MatchingListFragment extends CarPlayBaseFragment implements PullToR
 
     ImageView iv_lunI, lineI;
 
+    boolean isCleanParams = false;
+
     public void setParams(Map<String, Object> params) {
 
         if (mParams == null) {
@@ -79,15 +82,15 @@ public class MatchingListFragment extends CarPlayBaseFragment implements PullToR
             //显示倒计时,隐藏内容
             countdownView.setVisibility(View.VISIBLE);
             contentView.setVisibility(View.GONE);
-            addParams("type", mParams.get("type"));
+            addParams("type", CarPlayUtil.getTypeName(mParams.get("type").toString()));
             addParams("pay", mParams.get("pay"));
-            addParams("majorType", mParams.get("majorType"));
+            addParams("majorType", CarPlayUtil.getTypeName(mParams.get("majorType").toString()));
             addParams("transfer", mParams.get("transfer"));
             //倒计时60s,等待
             startAnim();
             timeCount = new TimeCount(10 * 1000, 1000);
             timeCount.start();
-            refresh();
+            refreshNoDialog();
         }
     }
 
@@ -163,6 +166,13 @@ public class MatchingListFragment extends CarPlayBaseFragment implements PullToR
     @Override
     public void loadSuccess() {
         adapter.setData(mVaules);
+        if (mVaules.size() == 0 && !isCleanParams) {
+            addParams("type", "");
+            addParams("pay", "");
+            addParams("transfer", "");
+            refreshNoDialog();
+            isCleanParams = true;
+        }
         listV.onRefreshComplete();
     }
 

@@ -34,6 +34,7 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
+                    android:id="@+id/bg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scaleType="fitStart"
@@ -100,7 +101,7 @@
                     android:layout_height="98dp"
                     android:layout_marginLeft="140dp"
                     android:layout_marginTop="220dp"
-                    my:bg="@drawable/mate_yx"
+                    my:bg="@drawable/icon_zhuoyou"
                     my:src="@drawable/circle_yx">
 
                 </com.gongpingjia.carplay.view.AnimButtonView2>
@@ -170,44 +171,5 @@
 
     </LinearLayout>
 
-
-    <RelativeLayout
-        android:id="@+id/guide"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:visibility="gone">
-
-
-
-
-        <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/guide_match" />
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:background="@color/black70"></View>
-
-        <View
-            android:id="@+id/empty"
-            android:layout_width="100dp"
-            android:layout_height="70dp"
-            android:layout_centerInParent="true"></View>
-
-        <Button
-            android:id="@+id/know"
-            android:layout_width="140dp"
-            android:layout_height="100dp"
-            android:layout_below="@+id/empty"
-            android:background="@color/nothing"
-            android:layout_centerHorizontal="true" />
-
-    </RelativeLayout>
 
 </RelativeLayout>

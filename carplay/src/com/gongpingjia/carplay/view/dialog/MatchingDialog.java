@@ -3,9 +3,12 @@ package com.gongpingjia.carplay.view.dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,8 +19,10 @@ import com.gongpingjia.carplay.bean.Matching;
 import com.gongpingjia.carplay.bean.PointRecord;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.CarPlayPerference;
+import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.view.BaseAlertDialog;
 
+import net.duohuo.dhroid.ioc.IocContainer;
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
@@ -38,7 +43,13 @@ public class MatchingDialog extends BaseAlertDialog {
     private Context context;
 
     private OnMatchingDialogResult mResult;
+
+    int dialogType = 0;
+
+    final int[] locations = new int[2];
     CarPlayPerference per;
+
+    int color;
 
     public void setMatchingResult(OnMatchingDialogResult result) {
         mResult = result;
@@ -56,6 +67,16 @@ public class MatchingDialog extends BaseAlertDialog {
 
     }
 
+    public MatchingDialog(Context context, List<Matching> data, int type) {
+        super(context, R.style.Dialog_Fullscreen);
+        mDatas = data;
+        this.context = context;
+        dialogType = type;
+    }
+
+    public void setCoclor(int color) {
+        this.color = color;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,11 +84,54 @@ public class MatchingDialog extends BaseAlertDialog {
         setContentView(R.layout.dialog_match_intention);
 
 
-
+        findViewById(R.id.bg).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
 
 
         checkBox = (CheckBox) findViewById(R.id.chk_pick);
         textDestination = (TextView) findViewById(R.id.tv_destination);
+        per = IocContainer.getShare().get(CarPlayPerference.class);
+        per.load();
+        if (per.isShowDialogGuilde == 0) {
+            findViewById(R.id.guide_bg).setVisibility(View.VISIBLE);
+            ViewTreeObserver
+                    vto = textDestination.getViewTreeObserver();
+
+            vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+
+                @Override
+                public boolean onPreDraw() {
+
+                    textDestination.getViewTreeObserver().removeOnPreDrawListener(this);
+                    textDestination.getLocationOnScreen(locations);
+
+                    ImageView gideText = (ImageView) findViewById(R.id.guide_icon);
+                    LinearLayout.LayoutParams pams = (LinearLayout.LayoutParams) gideText.getLayoutParams();
+                    pams.topMargin = locations[1] - 288;
+                    gideText.setLayoutParams(pams);
+
+                    return true;
+                }
+
+
+            });
+        }
+
+        findViewById(R.id.know).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                per.isShowDialogGuilde = 1;
+                per.commit();
+                findViewById(R.id.guide_bg).setVisibility(View.GONE);
+
+            }
+        });
+
+
         Button btnMatch = (Button) findViewById(R.id.btn_match);
 
         GridView gridView = (GridView) findViewById(R.id.gv_matching);
@@ -100,12 +164,17 @@ public class MatchingDialog extends BaseAlertDialog {
 
                 final DhNet dhNet = new DhNet(API2.getMatchUrl(User.getInstance().getUserId(), User.getInstance().getToken()));
                 //类型
-                dhNet.addParam("majorType", "运动");
                 if (mDatas.size() == 1) {
                     //覆盖主类型
-                    dhNet.addParam("majorType", type);
+                    dhNet.addParam("majorType", CarPlayUtil.getTypeName(type));
+                } else {
+                    if (dialogType == 0) {
+                        dhNet.addParam("majorType", "运动");
+                    } else {
+                        dhNet.addParam("majorType", "桌游");
+                    }
                 }
-                dhNet.addParam("type", type);
+                dhNet.addParam("type", CarPlayUtil.getTypeName(type));
                 dhNet.addParam("transfer", pickOrNot);
 
                 //暂时写死
@@ -144,7 +213,7 @@ public class MatchingDialog extends BaseAlertDialog {
                 establish.put("city", UserLocation.getInstance().getCity());
                 establish.put("district", UserLocation.getInstance().getDistrict());
                 dhNet.addParam("establish", establish);
-                System.out.println("000000000000000"+establish);
+                System.out.println("000000000000000" + establish);
                 User user = User.getInstance();
                 if (user.isLogin()) {
                     dhNet.doPost(new NetTask(context) {
@@ -180,6 +249,7 @@ public class MatchingDialog extends BaseAlertDialog {
                         textDestination.setText(place);
                     }
                 });
+                dlg.getWindow().setBackgroundDrawableResource(color);
                 dlg.show();
             }
         });
