@@ -216,7 +216,7 @@ public class LookAroundDialog extends BaseAlertDialog {
         }
         //car logo ,car name
         if (carjo == null) {
-            car_logo.setVisibility(View.GONE);
+            car_logo.setImageResource(R.drawable.no_car);
 //            car_name.setVisibility(View.GONE);
         } else {
             car_logo.setVisibility(View.VISIBLE);

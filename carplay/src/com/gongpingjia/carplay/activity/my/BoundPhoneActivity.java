@@ -33,6 +33,7 @@ public class BoundPhoneActivity extends CarPlayBaseActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.personal_data2);
         mCountTimer = new CountTimer(60 * 1000, 1000);
+        //BoundPhoneDialog   手机已被注册后弹出dialog
     }
 
     @Override

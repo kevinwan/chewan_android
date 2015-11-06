@@ -313,18 +313,20 @@ public class MainActivity2 extends BaseFragmentActivity implements
         }
     }
 
-    private void setTab(int index) {
+    private void setTab(final int index) {
 
-        if (index == 4) {
+        if (index == 4||index == 3) {
             if (!User.getInstance().isLogin()) {
                 UserInfoManage.getInstance().checkLogin(self,
                         new UserInfoManage.LoginCallBack() {
-
                             @Override
                             public void onisLogin() {
-                                setTab(4);
+                                if (index == 4){
+                                    setTab(4);
+                                }else{
+                                    setTab(3);
+                                }
                             }
-
                             @Override
                             public void onLoginFail() {
                             }

@@ -240,8 +240,7 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
             ViewUtil.bindNetImage(holder.dynamic_carlogo, bundle.getString("logo"), "default");
 //            holder.dynamic_carname.setText(bundle.getString("brand"));
         } else {
-            holder.dynamic_carlogo.setVisibility(View.GONE);
-            holder.dynamic_carname.setVisibility(View.GONE);
+            holder.dynamic_carlogo.setImageResource(R.drawable.no_car);
         }
         int distances = (int) Math.floor(JSONUtil.getDouble(jo,"distance"));
 //        System.out.println("传值+++++++" + distance + "/////转换：" + distances);

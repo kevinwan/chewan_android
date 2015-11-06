@@ -18,7 +18,6 @@ package com.gongpingjia.carplay.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -31,7 +30,6 @@ import android.widget.TextView;
 
 import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
-import com.gongpingjia.carplay.activity.my.PersonDetailActivity2;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.PointRecord;
@@ -196,10 +194,11 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
         if (user.isLogin()) {
             holder.phtotoV.setVisibility(user.isHasAlbum() ? View.GONE : View.VISIBLE);
             holder.promtpT.setVisibility(user.isHasAlbum() ? View.GONE : View.VISIBLE);
-        } else {
-            holder.phtotoV.setVisibility(View.GONE);
-            holder.promtpT.setVisibility(View.GONE);
         }
+//        else {
+////            holder.phtotoV.setVisibility(View.GONE);
+////            holder.promtpT.setVisibility(View.GONE);
+//        }
         ImageLoader.getInstance().displayImage(JSONUtil.getString(userjo, "cover"), holder.active_bg, CarPlayValueFix.optionsDefault, new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String s, View view) {
@@ -282,8 +281,8 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
             ViewUtil.bindNetImage(holder.car_logo, JSONUtil.getString(carjo, "logo"), "head");
 //            ViewUtil.bindView(holder.car_name, JSONUtil.getString(carjo, "model"));
         } else {
-            holder.car_logo.setVisibility(View.GONE);
-            holder.car_name.setVisibility(View.GONE);
+            holder.car_logo.setImageResource(R.drawable.no_car);
+//            holder.car_name.setVisibility(View.GONE);
 
         }
 
@@ -292,10 +291,10 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent it = new Intent(mContext, PersonDetailActivity2.class);
-                String userId = JSONUtil.getString(userjo, "userId");
-                it.putExtra("userId", userId);
-                mContext.startActivity(it);
+//                Intent it = new Intent(mContext, PersonDetailActivity2.class);
+//                String userId = JSONUtil.getString(userjo, "userId");
+//                it.putExtra("userId", userId);
+//                mContext.startActivity(it);
                 if (onItemClick != null) {
                     onItemClick.onItemClick(position, jo);
                 }

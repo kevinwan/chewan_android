@@ -174,15 +174,10 @@ public class InterestedPersonAdapter extends BaseAdapter {
 //        holder.headStateI.setImageResource("未认证".equals(photoAuthStatus) ? R.drawable.headaut_no : R.drawable.headaut_dl);
         holder.headStateI.setImageResource("认证通过".equals(photoAuthStatus) ? R.drawable.headaut_dl : R.drawable.headaut_no);
         String licenseAuthStatus = JSONUtil.getString(userjo, "licenseAuthStatus");
-        if ("未认证".equals(licenseAuthStatus)) {
-//            holder.carNameT.setVisibility(View.GONE);
-            holder.carStateI.setVisibility(View.GONE);
-        } else if ("认证中".equals(licenseAuthStatus)) {
-//            holder.carNameT.setVisibility(View.GONE);
-            holder.carStateI.setVisibility(View.GONE);
-        } else if ("认证通过".equals(licenseAuthStatus)) {
-//            holder.carNameT.setVisibility(View.VISIBLE);
-            holder.carStateI.setVisibility(View.VISIBLE);
+        if (licenseAuthStatus.equals("认证通过")) {
+            ViewUtil.bindNetImage(holder.carStateI, JSONUtil.getString(carjo, "logo"), "default");
+        } else {
+            holder.carStateI.setImageResource(R.drawable.no_car);
         }
 
         // 0为活动信息   1位上传相册信息

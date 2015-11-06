@@ -292,10 +292,9 @@ public class DyanmicBaseAdapter extends BaseAdapter {
 
             if (licenseAuthStatus.equals("认证通过")) {
                 ViewUtil.bindNetImage(holder.dynamic_carlogo, JSONUtil.getString(ob, "logo"), "default");
-                holder.dynamic_carname.setText(JSONUtil.getString(ob, "model"));
+//                holder.dynamic_carname.setText(JSONUtil.getString(ob, "model"));
             } else {
-                holder.dynamic_carlogo.setVisibility(View.GONE);
-                holder.dynamic_carname.setVisibility(View.GONE);
+                holder.dynamic_carlogo.setImageResource(R.drawable.no_car);
             }
 //            holder.titleT.setText(name + "想邀请你" + typeT);
 
