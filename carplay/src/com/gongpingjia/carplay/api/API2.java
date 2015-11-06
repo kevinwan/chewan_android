@@ -87,4 +87,6 @@ public class API2 {
         return String.format(CWBaseurl + "user/%s/location?token=%s", userId, token);
     }
 
+    public static String updateVersion = CWBaseurl + "version?product=android";
+
 }

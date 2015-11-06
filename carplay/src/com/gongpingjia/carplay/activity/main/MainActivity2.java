@@ -47,7 +47,6 @@ import com.gongpingjia.carplay.activity.dynamic.DynamicListFragment;
 import com.gongpingjia.carplay.activity.my.LoginActivity2;
 import com.gongpingjia.carplay.activity.my.MyFragment2;
 import com.gongpingjia.carplay.activity.my.SettingActivity2;
-import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.FilterPreference2;
@@ -150,10 +149,9 @@ public class MainActivity2 extends BaseFragmentActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_newmain);
         EventBus.getDefault().register(this);
-
         initView();
-        isAuthen();
-//        updateApp();
+//        isAuthen();
+        updateApp();
 
         IntentFilter cmdIntentFilter = new IntentFilter(EMChatManager
                 .getInstance().getCmdMessageBroadcastAction());
@@ -163,6 +161,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
         updateUnreadLabel();
 
     }
+
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -470,7 +469,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
 
     public void updateApp() {
         final String mCurrentVersion = getAppVersion();
-        DhNet net = new DhNet(API.update);
+        DhNet net = new DhNet(API2.updateVersion);
         net.doGet(new NetTask(self) {
 
             @Override
@@ -740,6 +739,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Log.d("msg", "onDestroy");
         EventBus.getDefault().unregister(this);
         if (connectionListener != null) {
             EMChatManager.getInstance().removeConnectionListener(
@@ -792,6 +792,9 @@ public class MainActivity2 extends BaseFragmentActivity implements
     public void onPause() {
         // TODO Auto-generated method stub
         super.onPause();
+        Log.d("msg", "onPause");
+        Toast toast = IocContainer.getShare().get(Toast.class);
+        toast.cancel();
     }
 
     static public class ExitRunnable implements Runnable {
@@ -812,7 +815,6 @@ public class MainActivity2 extends BaseFragmentActivity implements
             } else {
 //                Intent it = new Intent(self, MsgService.class);
 //                stopService(it);
-                IocContainer.getShare().get(Toast.class).cancel();
                 ActivityTack.getInstanse().exit(self);
             }
             return false;
@@ -1034,7 +1036,6 @@ public class MainActivity2 extends BaseFragmentActivity implements
             public void doInUI(Response response, Integer transfer) {
 
                 if (response.isSuccess()) {
-                    showToast("埋点");
                 }
             }
         });

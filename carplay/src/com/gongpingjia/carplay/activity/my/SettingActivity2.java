@@ -1,8 +1,11 @@
 package com.gongpingjia.carplay.activity.my;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +15,7 @@ import android.widget.TextView;
 import com.easemob.EMCallBack;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
+import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.chat.DemoHXSDKHelper;
 import com.gongpingjia.carplay.util.CarPlayPerference;
@@ -19,14 +23,20 @@ import com.gongpingjia.carplay.util.FileUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import net.duohuo.dhroid.ioc.IocContainer;
+import net.duohuo.dhroid.net.DhNet;
+import net.duohuo.dhroid.net.JSONUtil;
+import net.duohuo.dhroid.net.NetTask;
+import net.duohuo.dhroid.net.Response;
+
+import org.json.JSONObject;
 
 import java.io.File;
 
 public class SettingActivity2 extends CarPlayBaseActivity implements View.OnClickListener {
 
     File mCacheDir;
-    TextView mTextCacheSize,versionsT;
-    RelativeLayout setting_about_us, setting_versions,layout_modifypwd;
+    TextView mTextCacheSize, versionsT;
+    RelativeLayout setting_about_us, setting_versions, layout_modifypwd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +55,7 @@ public class SettingActivity2 extends CarPlayBaseActivity implements View.OnClic
         setting_about_us = (RelativeLayout) findViewById(R.id.setting_about_us);
         setting_versions = (RelativeLayout) findViewById(R.id.setting_versions);
         layout_modifypwd = (RelativeLayout) findViewById(R.id.layout_modifypwd);
-         versionsT = (TextView) findViewById(R.id.versionsT);
+        versionsT = (TextView) findViewById(R.id.versionsT);
         versionsT.setText(getAppVersion());
         mCacheDir = new File(getExternalCacheDir(), "CarPlay");
         mTextCacheSize = (TextView) findViewById(R.id.tv_cache_size);
@@ -55,6 +65,7 @@ public class SettingActivity2 extends CarPlayBaseActivity implements View.OnClic
         layoutClearCache.setOnClickListener(this);
         setting_versions.setOnClickListener(this);
         layout_modifypwd.setOnClickListener(this);
+        findViewById(R.id.layout_update).setOnClickListener(this);
         btnLogout.setOnClickListener(this);
 
         if (!User.getInstance().isLogin()) {
@@ -90,6 +101,10 @@ public class SettingActivity2 extends CarPlayBaseActivity implements View.OnClic
                 } else {
                     showToast("不需要清理了哦");
                 }
+                break;
+
+            case R.id.layout_update:
+                updateApp();
                 break;
         }
     }
@@ -146,5 +161,55 @@ public class SettingActivity2 extends CarPlayBaseActivity implements View.OnClic
                 hidenProgressDialog();
             }
         });
+    }
+
+
+    public void updateApp() {
+        final String mCurrentVersion = getAppVersion();
+        DhNet net = new DhNet(API2.updateVersion);
+        net.doGet(new NetTask(self) {
+
+            @Override
+            public void doInUI(Response response, Integer transfer) {
+                if (response.isSuccess()) {
+                    JSONObject jo = response.jSONFromData();
+                    String version = JSONUtil.getString(jo, "version");
+                    if (0 < version.compareTo(mCurrentVersion)) {
+                        showUpdateDialog(jo);
+                    } else {
+                        showToast("未发现新版本!");
+                    }
+                }
+            }
+        });
+    }
+
+    private void showUpdateDialog(final JSONObject jo) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("发现新版本 " + JSONUtil.getString(jo, "version"));
+        builder.setMessage(JSONUtil.getString(jo, "remarks"));
+        builder.setPositiveButton("立即更新",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        Intent it = new Intent(Intent.ACTION_VIEW);
+                        Uri uri = Uri.parse(JSONUtil.getString(jo, "url"));
+                        it.setData(uri);
+                        startActivity(it);
+                    }
+
+                });
+        builder.setNegativeButton("以后再说",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        if (JSONUtil.getInt(jo, "forceUpgrade") == 1) {
+                            finish();
+                        }
+                    }
+                });
+        builder.create().show();
     }
 }

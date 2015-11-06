@@ -203,7 +203,7 @@ public class MatchingListFragment extends CarPlayBaseFragment implements PullToR
     public void onStop() {
         super.onStop();
         if (timeCount != null) {
-            timeCount.cancel();
+            timeCount.onFinish();
         }
 
 //        if (mRotateAnimation != null) {
@@ -219,7 +219,7 @@ public class MatchingListFragment extends CarPlayBaseFragment implements PullToR
     public void onPause() {
         super.onPause();
         if (timeCount != null) {
-            timeCount.cancel();
+            timeCount.onFinish();
         }
 
     }

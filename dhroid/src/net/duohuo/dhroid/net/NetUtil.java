@@ -106,13 +106,14 @@ public class NetUtil {
                     for (String key : params.keySet()) {
                         if (params.get(key) != null) {
                             Object params1 = params.get(key);
-                            if (params1.toString().contains("{")) {
+                            if (params1.toString().contains("{") && params1.toString().contains("=")) {
                                 HashMap<String, Object> map = (HashMap<String, Object>) params.get(key);
                                 JSONObject jo1 = new JSONObject();
                                 for (String key1 : map.keySet()) {
                                     jo1.put(key1, map.get(key1));
                                 }
                                 jo.put(key, jo1);
+
                             } else {
                                 jo.put(key, params1);
                             }
