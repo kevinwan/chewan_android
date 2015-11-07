@@ -33,7 +33,7 @@
 
                 <TextView
                     android:id="@+id/dynamic_title"
-                    style="@style/text_black_big"
+                    style="@style/text_black_medium"
                     android:singleLine="true"
                     android:text="陈信宏想邀请你吃个饭" />
 

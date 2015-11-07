@@ -13,7 +13,7 @@ public class FilterPreference2 extends Perference {
     //性别
     private String gender="";
     //是否包接送
-    private boolean transfer=false;
+    private boolean transfer=true;
 
     //记录上一次选择的位置id
     //活动类型id

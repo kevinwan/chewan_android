@@ -7,6 +7,6 @@
         android:layout_width="77dp"
         android:layout_height="77dp"
         android:layout_marginRight="9dp"
-        android:scaleType="fitXY"/>
+        android:scaleType="centerCrop"/>
 
 </LinearLayout>

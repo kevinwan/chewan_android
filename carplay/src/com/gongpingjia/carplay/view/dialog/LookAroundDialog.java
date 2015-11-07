@@ -174,7 +174,7 @@ public class LookAroundDialog extends BaseAlertDialog {
                         img.setImageBitmap(bitmap);
                         Blurry.with(mContext)
                                 .radius(10)
-                                .sampling(4)
+                                .sampling(8)
                                 .async()
                                 .capture(img)
                                 .into(img);

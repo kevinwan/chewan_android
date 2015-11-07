@@ -177,6 +177,7 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
                 animButtonView.startScaleAnimation();
             }
         });
+        
         mRecyclerView = listV.getRefreshableView();
         adapter = new NearListAdapter(getActivity());
         adapter.setOnItemClick(new NearListAdapter.OnItemClick() {
