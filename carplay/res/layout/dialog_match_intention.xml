@@ -44,9 +44,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
-                android:layout_marginTop="18dp"
+                android:horizontalSpacing="12dp"
                 android:numColumns="3"
-                android:verticalSpacing="10dp" />
+                android:verticalSpacing="12dp" />
 
             <TextView
                 android:id="@+id/tv_destination"

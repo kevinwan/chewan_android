@@ -18,6 +18,8 @@
     <dimen name="lookaround_head_small">44dp</dimen>
     <dimen name="lookaround_head_medium">51dp</dimen>
 
+    <dimen name="mysubscriber_head_img">44dp</dimen>
+
     <dimen name="lookaround_head_big">58dp</dimen>
     <dimen name="lookaround_marginleft">40dp</dimen>
     <dimen name="lookaround_marginright">36dp</dimen>

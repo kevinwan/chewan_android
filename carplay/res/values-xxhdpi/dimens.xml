@@ -7,14 +7,16 @@
     <dimen name="slidingmenuOffset">150dp</dimen>
     <dimen name="car_detail_item_height">42dp</dimen>
     <dimen name="car_detail_item_pad">18dp</dimen>
-    <dimen name="text_title">22sp</dimen>
-    <dimen name="text_big">18sp</dimen>
-    <dimen name="text_medium">17sp</dimen>
-    <dimen name="text_small">15sp</dimen>
-    <dimen name="text_smaller">13sp</dimen>
-    <dimen name="text_smallest">11sp</dimen>
+    <dimen name="text_title">23sp</dimen>
+    <dimen name="text_big">20sp</dimen>
+    <dimen name="text_medium">18sp</dimen>
+    <dimen name="text_small">16sp</dimen>
+    <dimen name="text_smaller">14sp</dimen>
+    <dimen name="text_smallest">12sp</dimen>
     <dimen name="text_hot_small">16sp</dimen>
     <dimen name="text_time_small">14sp</dimen>
+
+    <dimen name="mysubscriber_head_img">54dp</dimen>
 
 
     <dimen name="lookaround_head_small">53dp</dimen>

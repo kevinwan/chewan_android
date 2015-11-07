@@ -47,6 +47,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
@@ -278,7 +279,7 @@ public class MyPerSonDetailActivity2 extends CarPlayBaseActivity implements View
                             img.setImageBitmap(bitmap);
                             Blurry.with(self)
                                     .radius(10)
-                                    .sampling(4)
+                                    .sampling(8)
                                     .async()
                                     .capture(img)
                                     .into(img);
@@ -417,7 +418,7 @@ public class MyPerSonDetailActivity2 extends CarPlayBaseActivity implements View
                         btp1.recycle();
 
 
-                        showProgressDialog("上传头像中...");
+                        showProgressDialog("图片上传中...");
                         uploadPhotoCount = 1;
                         uploadHead(newPath);
                         break;
@@ -459,6 +460,7 @@ public class MyPerSonDetailActivity2 extends CarPlayBaseActivity implements View
                         if (uploadPhotoCount == uploadedCount) {
 //                            album.add(0, new JSONObject().put("url", photoUrl));
                             Log.d("msg", "相册大小" + newAlbm.size());
+                            Collections.reverse(newAlbm);
                             album.addAll(0, newAlbm);
                             mAdapter.setData(album);
                             uploadedCount = 0;

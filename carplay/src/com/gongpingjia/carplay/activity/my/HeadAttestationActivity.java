@@ -7,11 +7,9 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
-import com.gongpingjia.carplay.api.API;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.User;
@@ -22,8 +20,8 @@ import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.net.upload.FileInfo;
-import net.duohuo.dhroid.util.ImageUtil;
 import net.duohuo.dhroid.util.PhotoUtil;
+import net.duohuo.dhroid.util.ViewUtil;
 
 import org.json.JSONObject;
 
@@ -40,6 +38,8 @@ public class HeadAttestationActivity extends CarPlayBaseActivity implements View
     private String mPhotoPath;
     String photoUid;
     User user;
+    String  photoUrl;
+    String status,photo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,15 +56,42 @@ public class HeadAttestationActivity extends CarPlayBaseActivity implements View
          up_head.setOnClickListener(this);
         head_authenticate.setOnClickListener(this);
         user = User.getInstance();
-
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            status = bundle.getString("status");
+            photo = bundle.getString("photoUrl");
+        }
         if (getIntent().getStringExtra("photoId") != null) {
             ImageLoader.getInstance().displayImage(
                     getIntent().getStringExtra("photoUrl"), up_head);
 
             photoUid = getIntent().getStringExtra("photoId");
         }
-
-
+        if (status.equals("未认证")){
+            head_authenticate.setEnabled(true);
+            up_head.setEnabled(true);
+            head_authenticate.setBackgroundResource(R.drawable.btn_red_fillet);
+            head_authenticate.setText("马上认证");
+            up_head.setImageResource(R.drawable.mofangdongzuo);
+//        }else if(status.equals("已认证")){
+//            up_head.setEnabled(false);
+//            head_authenticate.setEnabled(false);
+//            head_authenticate.setBackgroundResource(R.drawable.btn_grey_fillet);
+//            head_authenticate.setText("已认证");
+//            ViewUtil.bindNetImage(up_head,photo,"default");
+        }else if(status.equals("认证未通过")){
+            up_head.setEnabled(true);
+            head_authenticate.setEnabled(true);
+            head_authenticate.setBackgroundResource(R.drawable.btn_red_fillet);
+            head_authenticate.setText("马上认证");
+            up_head.setImageResource(R.drawable.mofangdongzuo);
+        }else if(status.equals("认证中")){
+            up_head.setEnabled(false);
+            head_authenticate.setEnabled(false);
+            head_authenticate.setBackgroundResource(R.drawable.btn_grey_fillet);
+            head_authenticate.setText("认证中");
+            ViewUtil.bindNetImage(up_head, photo, "default");
+        }
     }
     private void uploadHead(String path) {
         Bitmap bmp = PhotoUtil.getLocalImage(new File(path));
@@ -78,7 +105,7 @@ public class HeadAttestationActivity extends CarPlayBaseActivity implements View
                 if (response.isSuccess()) {
                     JSONObject jo = response.jSONFromData();
                     photoUid = JSONUtil.getString(jo, "photoId");
-
+                      photoUrl = JSONUtil.getString(jo,"photoUrl");
                 } else {
                     up_head.setImageResource(R.drawable.head_icon);
                     photoUid = "";
@@ -110,6 +137,7 @@ public class HeadAttestationActivity extends CarPlayBaseActivity implements View
                         if(response.isSuccess()){
                             Intent intent = getIntent();
                             intent.putExtra("status", "认证中");
+                            intent.putExtra("photoUrl", photoUrl);
                             setResult(self.RESULT_OK, intent);
                             finish();
                         }

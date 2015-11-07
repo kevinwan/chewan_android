@@ -17,8 +17,10 @@
     <color name="text_skyblue">#74ced6</color>
     <color name="text_call_bule">#77c0f7</color>
     <color name="text_hint_grey">#989898</color>
-
+    <color name="text_grey_999">#999</color>
+    <color name="text_grey_666">#666</color>
     <color name="text_photo_bule">#157efb</color>
+
 
     <!-- 分割线 -->
     <color name="cutline">#f7f7f7</color>
