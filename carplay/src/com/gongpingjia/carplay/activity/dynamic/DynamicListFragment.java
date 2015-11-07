@@ -79,15 +79,9 @@ public class DynamicListFragment extends CarPlayBaseFragment implements PullToRe
         return mainV;
     }
 
+
     private void initView() {
 
-        per = IocContainer.getShare().get(CarPlayPerference.class);
-        per.load();
-        if (per.isShowMessageGuilde == 0) {
-            mainV.findViewById(R.id.msg_guide).setVisibility(View.VISIBLE);
-            mainV.findViewById(R.id.guide_bg).setVisibility(View.VISIBLE);
-            mainV.findViewById(R.id.guide_icon).setVisibility(View.VISIBLE);
-        }
 
         mainV.findViewById(R.id.msg_know).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,7 +171,14 @@ public class DynamicListFragment extends CarPlayBaseFragment implements PullToRe
     @Override
     public void onResume() {
         super.onResume();
-
+        per = IocContainer.getShare().get(CarPlayPerference.class);
+        per.load();
+        if (per.isShowMessageGuilde == 0) {
+            mainV.findViewById(R.id.msg_guide).setVisibility(View.VISIBLE);
+            mainV.findViewById(R.id.guide_bg).setVisibility(View.VISIBLE);
+            mainV.findViewById(R.id.guide_icon).setVisibility(View.VISIBLE);
+            mainV.getRootView().findViewById(R.id.main_msg_guide).setVisibility(View.VISIBLE);
+        }
         conversationList.clear();
         conversationList = loadConversationsWithRecentChat();
         mAdapter.setGroupMessageData(conversationList);

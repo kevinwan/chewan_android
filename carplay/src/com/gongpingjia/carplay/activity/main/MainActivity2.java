@@ -314,18 +314,19 @@ public class MainActivity2 extends BaseFragmentActivity implements
 
     private void setTab(final int index) {
 
-        if (index == 4||index == 3) {
+        if (index == 4 || index == 3) {
             if (!User.getInstance().isLogin()) {
                 UserInfoManage.getInstance().checkLogin(self,
                         new UserInfoManage.LoginCallBack() {
                             @Override
                             public void onisLogin() {
-                                if (index == 4){
+                                if (index == 4) {
                                     setTab(4);
-                                }else{
+                                } else {
                                     setTab(3);
                                 }
                             }
+
                             @Override
                             public void onLoginFail() {
                             }
@@ -371,9 +372,9 @@ public class MainActivity2 extends BaseFragmentActivity implements
                         setTitle("动态");
                         img.setImageResource(R.drawable.icon_nav_dongtai_f);
                         switchContent(DynamicListFragment.getInstance());
-                        if (per.isShowMessageGuilde == 0) {
-                            findViewById(R.id.main_msg_guide).setVisibility(View.VISIBLE);
-                        }
+//                        if (per.isShowMessageGuilde == 0) {
+//                            findViewById(R.id.main_msg_guide).setVisibility(View.VISIBLE);
+//                        }
                         break;
                     case 4:
                         setTitle("我的");

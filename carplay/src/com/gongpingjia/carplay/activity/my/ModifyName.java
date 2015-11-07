@@ -25,6 +25,7 @@ public class ModifyName extends CarPlayBaseActivity {
     EditText edit;
     String inName;
     User user = User.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +62,7 @@ public class ModifyName extends CarPlayBaseActivity {
 
 
     }
+
     private void modification() {
         final String nickname = edit.getText().toString().trim();
         if (nickname.length() > 7 || nickname.length() == 0) {
@@ -76,6 +78,8 @@ public class ModifyName extends CarPlayBaseActivity {
             public void doInUI(Response response, Integer transfer) {
                 if (response.isSuccess()) {
                     showToast("昵称修改成功");
+                    User user = User.getInstance();
+                    user.setNickName(nickname);
                     Intent intent = getIntent();
                     intent.putExtra("nickname", edit.getText().toString());
                     setResult(self.RESULT_OK, intent);
