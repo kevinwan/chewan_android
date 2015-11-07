@@ -175,7 +175,7 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
                     imgs = JSONUtil.getString(jo, "photoUrl");
 //                    System.out.println("行驶证："+JSONUtil.getString(jo, "photoId"));
 
-                    System.out.println("********" + JSONUtil.getString(jo, "photoUrl"));
+//                    System.out.println("********" + JSONUtil.getString(jo, "photoUrl"));
 //                    Toast.makeText(self, "111" + JSONUtil.getString(jo, "photoUrl"), Toast.LENGTH_SHORT).show();
                 } else {
                     showToast("上传失败，请重新上传");
