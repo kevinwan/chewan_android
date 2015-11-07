@@ -128,7 +128,7 @@
                 <ImageView
                     android:layout_width="19dp"
                     android:layout_height="19dp"
-                    android:src="@drawable/right_btn" />
+                    android:src="@drawable/renzheng_camera" />
             </LinearLayout>
         </LinearLayout>
 
@@ -168,7 +168,7 @@
                 <ImageView
                     android:layout_width="19dp"
                     android:layout_height="19dp"
-                    android:src="@drawable/right_btn" />
+                    android:src="@drawable/renzheng_camera" />
             </LinearLayout>
 
         </LinearLayout>

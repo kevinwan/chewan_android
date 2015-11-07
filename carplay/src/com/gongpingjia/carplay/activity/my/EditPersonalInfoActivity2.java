@@ -82,7 +82,7 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
     ImageView car_img, head_img;
     Intent myIntent;
     String car_driverLicenseURL, car_drivingLicenseURL, licenseAuthStatus;
-    String carName;
+    String carName,status,photoUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +102,8 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
         car_drivingLicenseURL = myIntent.getStringExtra("drivingLicenseURL");
         licenseAuthStatus = myIntent.getStringExtra("licenseAuthStatus");
         carName = myIntent.getStringExtra("carmodel");
+         status = myIntent.getStringExtra("status");
+         photoUrl = myIntent.getStringExtra("photoUrl");
         View backV = findViewById(R.id.backLayout);
 //        right_txt = (TextView) findViewById(R.id.right_text);
 //        right_txt.setVisibility(View.VISIBLE);
@@ -414,6 +416,8 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
             case R.id.approve_layout_head:
 //                showToast("头像认证");
                 Intent intent = new Intent(self, HeadAttestationActivity.class);
+                intent.putExtra("status",status);
+                intent.putExtra("photoUrl",photoUrl);
                 startActivityForResult(intent, APPROVE_HEAD);
 
                 break;

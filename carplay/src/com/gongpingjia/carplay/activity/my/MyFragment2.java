@@ -106,9 +106,10 @@ public class MyFragment2 extends Fragment implements OnClickListener {
     private int uploadedCount = 0;
     String driverLicenseURL,drivingLicenseURL;
     String age;
-    String name, gender, headimg, photoAuthStatus, licenseAuthStatus, carbradn, carlogo, carmodel, carslug;
+    String name, gender, headimg,licenseAuthStatus, carbradn, carlogo, carmodel, carslug;
     String photoUrl;
     ImageView headImg,icon;
+    String photoAuthStatus;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -361,6 +362,8 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                 it.putExtra("name", name);
                 it.putExtra("gender", gender);
                 it.putExtra("headimg", headimg);
+                it.putExtra("photoUrl",photoUrl);
+                it.putExtra("status",photoAuthStatus);
                 it.putExtra("photoAuthStatus", photoAuthStatus);
                 it.putExtra("licenseAuthStatus", licenseAuthStatus);
                 it.putExtra("driverLicenseURL",driverLicenseURL);
@@ -380,6 +383,8 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                 it.putExtra("gender", gender);
                 it.putExtra("headimg", headimg);
                 it.putExtra("carmodel",carmodel);
+                it.putExtra("photoUrl",photoUrl);
+                it.putExtra("status",photoAuthStatus);
                 it.putExtra("photoAuthStatus", photoAuthStatus);
                 it.putExtra("licenseAuthStatus", licenseAuthStatus);
                 it.putExtra("driverLicenseURL",driverLicenseURL);
@@ -400,6 +405,8 @@ public class MyFragment2 extends Fragment implements OnClickListener {
             //头像认证
             case R.id.headattestation:
                 it = new Intent(mContext, HeadAttestationActivity.class);
+                it.putExtra("photoUrl",photoUrl);
+                it.putExtra("status",photoAuthStatus);
                 startActivityForResult(it, APPROVE_HEAD);
                 break;
             //车主认证
@@ -492,9 +499,9 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                     ViewUtil.bindNetImage(headI, data.getStringExtra("head"), "head");
                     break;
                 case APPROVE_HEAD:
-
+                    photoAuthStatus = data.getStringExtra("status");
                     txtphotoAuthStatusT.setText(data.getStringExtra("status"));
-
+                     photoUrl = data.getStringExtra("photoUrl");
 
                     break;
                 case APPROVE_CAR:
