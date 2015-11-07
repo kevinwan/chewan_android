@@ -66,7 +66,9 @@ public class MyPerSonDetailActivity2 extends CarPlayBaseActivity implements View
     private LinearLayout myphotoL, myactiveL, myattentionL, headattestationL, carattestationL;
     private RecyclerView recyclerView;
     public static final int PERSONAL = 2;
-
+    public static final int APPROVE_HEAD = 3;
+    public static final int APPROVE_CAR = 4;
+    String driverLicenseURL, drivingLicenseURL;
     User user;
 
     // 图片缓存根目录
@@ -89,7 +91,7 @@ public class MyPerSonDetailActivity2 extends CarPlayBaseActivity implements View
 
     String age;
     String name, gender, headimg, photoAuthStatus, licenseAuthStatus, carbradn, carlogo, carmodel, carslug;
-
+    String photoUrl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -176,6 +178,8 @@ public class MyPerSonDetailActivity2 extends CarPlayBaseActivity implements View
                     carmodel = JSONUtil.getString(car, "model");
                     carslug = JSONUtil.getString(car, "slug");
                     name = JSONUtil.getString(jo, "nickname");
+                    driverLicenseURL = JSONUtil.getString(jo, "driverLicense");
+                    drivingLicenseURL = JSONUtil.getString(jo, "drivingLicense");
                     ViewUtil.bindView(nameT, JSONUtil.getString(jo, "nickname"));
                     gender = JSONUtil.getString(jo, "gender");
                     if (("男").equals(gender)) {
@@ -205,6 +209,7 @@ public class MyPerSonDetailActivity2 extends CarPlayBaseActivity implements View
 
                     photoAuthStatus = JSONUtil.getString(jo, "photoAuthStatus");
                     licenseAuthStatus = JSONUtil.getString(jo, "licenseAuthStatus");
+                    photoUrl = JSONUtil.getString(jo, "photo");
                     ViewUtil.bindView(txtphotoAuthStatusT, JSONUtil.getString(jo, "photoAuthStatus"));
                     ViewUtil.bindView(attestation_txtT, JSONUtil.getString(jo, "licenseAuthStatus"));
                     //头像认证
@@ -312,9 +317,11 @@ public class MyPerSonDetailActivity2 extends CarPlayBaseActivity implements View
                     it.putExtra("headimg", headimg);
                     it.putExtra("photoAuthStatus", photoAuthStatus);
                     it.putExtra("licenseAuthStatus", licenseAuthStatus);
+                    it.putExtra("driverLicenseURL", driverLicenseURL);
+                    it.putExtra("drivingLicenseURL", drivingLicenseURL);
 //                it.putExtra("carbradn",carbradn);
 //                it.putExtra("carlogo",carlogo);
-//                it.putExtra("carmodel",carmodel);
+                it.putExtra("carmodel",carmodel);
 //                it.putExtra("carslug",carslug);
                     it.putExtra("age", age);
                     startActivity(it);
@@ -325,8 +332,11 @@ public class MyPerSonDetailActivity2 extends CarPlayBaseActivity implements View
                     it.putExtra("name", name);
                     it.putExtra("gender", gender);
                     it.putExtra("headimg", headimg);
+                    it.putExtra("carmodel", carmodel);
                     it.putExtra("photoAuthStatus", photoAuthStatus);
                     it.putExtra("licenseAuthStatus", licenseAuthStatus);
+                    it.putExtra("driverLicenseURL", driverLicenseURL);
+                    it.putExtra("drivingLicenseURL", drivingLicenseURL);
                     it.putExtra("age", age);
                     startActivity(it);
                     break;
@@ -343,11 +353,18 @@ public class MyPerSonDetailActivity2 extends CarPlayBaseActivity implements View
                 //头像认证
                 case R.id.headattestation:
                     it = new Intent(self, HeadAttestationActivity.class);
+                    it.putExtra("status",photoAuthStatus);
+                    it.putExtra("photoUrl", photoUrl);
                     startActivity(it);
                     break;
                 //车主认证
                 case R.id.carattestation:
                     it = new Intent(self, AuthenticateOwnersActivity2.class);
+                    it.putExtra("photoUrl", photoUrl);
+                    it.putExtra("carmodel", carmodel);
+                    it.putExtra("licenseAuthStatus", licenseAuthStatus);
+                    it.putExtra("driverLicenseURL", driverLicenseURL);
+                    it.putExtra("drivingLicenseURL", drivingLicenseURL);
                     startActivity(it);
                     break;
                 //上传相册
@@ -426,8 +443,23 @@ public class MyPerSonDetailActivity2 extends CarPlayBaseActivity implements View
                         txtphotoAuthStatusT.setText(data.getStringExtra("photoAuthStatus"));
                         nameT.setText(data.getStringExtra("nickname"));
                         ageT.setText(data.getStringExtra("age"));
-                        attestation_txtT.setText(data.getStringExtra("licenseAuthStatus"));
+                        txtphotoAuthStatusT.setText(data.getStringExtra("licenseAuthStatus"));
                         ViewUtil.bindNetImage(headI, data.getStringExtra("head"), "head");
+                        break;
+                    case APPROVE_HEAD:
+
+                        txtphotoAuthStatusT.setText(data.getStringExtra("status"));
+                        photoAuthStatus = data.getStringExtra("status");
+                        photoUrl = data.getStringExtra("photoUrl");
+
+
+                        break;
+                    case APPROVE_CAR:
+                        licenseAuthStatus = data.getStringExtra("statuss");
+                        attestation_txtT.setText(data.getStringExtra("statuss"));
+                        carmodel = data.getStringExtra("carName");
+                        driverLicenseURL = data.getStringExtra("driver");
+                        drivingLicenseURL = data.getStringExtra("driving");
                         break;
                 }
             }

@@ -403,12 +403,13 @@ public class MyFragment2 extends Fragment implements OnClickListener {
             //头像认证
             case R.id.headattestation:
                 it = new Intent(mContext, HeadAttestationActivity.class);
+                it.putExtra("status",photoAuthStatus);
+                it.putExtra("photoUrl", photoUrl);
                 startActivityForResult(it, APPROVE_HEAD);
                 break;
             //车主认证
             case R.id.carattestation:
                 it = new Intent(mContext, AuthenticateOwnersActivity2.class);
-                it.putExtra("photoUrl", photoUrl);
                 it.putExtra("carmodel", carmodel);
                 it.putExtra("licenseAuthStatus", licenseAuthStatus);
                 it.putExtra("driverLicenseURL", driverLicenseURL);
@@ -497,6 +498,9 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                 case APPROVE_HEAD:
 
                     txtphotoAuthStatusT.setText(data.getStringExtra("status"));
+                    photoAuthStatus = data.getStringExtra("status");
+                    photoUrl = data.getStringExtra("photoUrl");
+
 
 
                     break;
