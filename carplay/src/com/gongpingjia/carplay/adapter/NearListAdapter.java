@@ -266,12 +266,21 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
         int distance = (int) Math.floor(JSONUtil.getDouble(jo, "distance"));
         holder.distance.setText(CarPlayUtil.numberWithDelimiter(distance));
 
-        String locationS = JSONUtil.getString(distancejo, "province") + JSONUtil.getString(distancejo, "city") + JSONUtil.getString(distancejo, "district") + JSONUtil.getString(distancejo, "street") + JSONUtil.getString(distancejo, "detail");
+//        String locationS = JSONUtil.getString(distancejo, "province") + JSONUtil.getString(distancejo, "city") + JSONUtil.getString(distancejo, "district") + JSONUtil.getString(distancejo, "street") + JSONUtil.getString(distancejo, "detail");
+        String locationS =  JSONUtil.getString(distancejo, "city") + JSONUtil.getString(distancejo, "district") + JSONUtil.getString(distancejo, "street");
         locationS=locationS.replace("null","");
+        String district = JSONUtil.getString(distancejo,"district");
+        String street = JSONUtil.getString(distancejo,"street");
+//        System.out.println("区"+district+"街道"+street);
         if (TextUtils.isEmpty(locationS)) {
             holder.location.setText("地点待定");
         } else {
-            holder.location.setText(locationS);
+            if (district.equals(street)){
+                holder.location.setText(JSONUtil.getString(distancejo, "city")+"市" + JSONUtil.getString(distancejo, "district"));
+            }else{
+                holder.location.setText(JSONUtil.getString(distancejo, "city")+"市" + JSONUtil.getString(distancejo, "district")+ JSONUtil.getString(distancejo, "street"));
+            }
+
         }
 
         String licenseAuthStatus = JSONUtil.getString(userjo, "licenseAuthStatus");

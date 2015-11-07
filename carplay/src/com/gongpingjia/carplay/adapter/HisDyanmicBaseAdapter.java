@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
@@ -246,10 +246,34 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
 //        System.out.println("传值+++++++" + distance + "/////转换：" + distances);
         holder.activity_distance.setText(CarPlayUtil.numberWithDelimiter(distances));
         JSONObject json = JSONUtil.getJSONObject(jo, "destination");
-        if (json == null || JSONUtil.getString(json, "province").equals("") || JSONUtil.getString(json, "city").equals("") || JSONUtil.getString(json, "district").equals("") || JSONUtil.getString(json, "street").equals("") || JSONUtil.getString(json, "detail").equals("")) {
+        String locationS = JSONUtil.getString(json, "province") + JSONUtil.getString(json, "city") + JSONUtil.getString(json, "district") + JSONUtil.getString(json, "street") + JSONUtil.getString(json, "detail");
+        locationS=locationS.replace("null","");
+        String district = JSONUtil.getString(json, "district");
+        String street = JSONUtil.getString(json,"street");
+        if (TextUtils.isEmpty(locationS)) {
             holder.activity_place.setText("地点待定");
         } else {
-            holder.activity_place.setText(JSONUtil.getString(json, "province") + JSONUtil.getString(json, "city") + JSONUtil.getString(json, "district") + JSONUtil.getString(json, "street") + JSONUtil.getString(json, "detail"));
+            if (district.equals(street)){
+                holder.activity_place.setText(JSONUtil.getString(json, "city")+"市" + JSONUtil.getString(json, "district"));
+            }else{
+                holder.activity_place.setText(JSONUtil.getString(json, "city")+"市" + JSONUtil.getString(json, "district")+ JSONUtil.getString(json, "street"));
+            }
+        }
+        if (bundle.getString("idel").equals("false")) {
+//            Toast.makeText(mContext, "抱歉，" + bundle.getString("name") + "暂时没空接受你的邀请", Toast.LENGTH_LONG).show();
+            holder.invitationT.setText("Ta没空");
+            holder.invitationI.setResourseAndBg(R.drawable.dynamic_grey
+                    , R.drawable.dynamic_grey);
+            holder.invitationI.setEnabled(false);
+
+        } else {
+//            JSONObject jo = (JSONObject) getItem(i);
+            holder.invitationI.setEnabled(true);
+            holder.invitationT.setText("应邀");
+            holder.invitationI.setResourseAndBg(R.drawable.btn_red_fillet
+                    , R.drawable.btn_red_fillet);
+//            join(JSONUtil.getString(jo, "activityId"), holder, jo);
+//                        System.out.println("有空----------" + bundle.getBoolean("idle"));
         }
         holder.invitationI.setOnClickListener(new MyOnClick(holder, i));
         holder.dyanmic_one.setOnClickListener(new View.OnClickListener() {
@@ -290,14 +314,14 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.invitationI:
-                    if (bundle.getString("idel").equals("false")) {
-//                        System.out.println("没空----------" +bundle.getBoolean("idle"));
-                        Toast.makeText(mContext, "抱歉，" + bundle.getString("name") + "暂时没空接受你的邀请", Toast.LENGTH_LONG).show();
-                    } else {
+//                    if (bundle.getString("idel").equals("false")) {
+////                        System.out.println("没空----------" +bundle.getBoolean("idle"));
+//                        Toast.makeText(mContext, "抱歉，" + bundle.getString("name") + "暂时没空接受你的邀请", Toast.LENGTH_LONG).show();
+//                    } else {
                         JSONObject jo = (JSONObject) getItem(i);
                         join(JSONUtil.getString(jo,"activityId"), holder, jo);
 //                        System.out.println("有空----------" + bundle.getBoolean("idle"));
-                    }
+//                    }
 
                     break;
             }

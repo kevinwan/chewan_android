@@ -2,6 +2,7 @@ package com.gongpingjia.carplay.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -195,10 +196,18 @@ public class InterestedPersonAdapter extends BaseAdapter {
             //所在地,距离
             int distance = (int) Math.floor(JSONUtil.getDouble(jo, "distance"));
             holder.activeDistanceT.setText(CarPlayUtil.numberWithDelimiter(distance));
-            if (distancejo == null||JSONUtil.getString(distancejo,"province").equals("")||JSONUtil.getString(distancejo,"city").equals("")||JSONUtil.getString(distancejo,"district").equals("")||JSONUtil.getString(distancejo,"street").equals("")||JSONUtil.getString(distancejo,"detail").equals("")) {
+            String locationS = JSONUtil.getString(distancejo, "province") + JSONUtil.getString(distancejo, "city") + JSONUtil.getString(distancejo, "district") + JSONUtil.getString(distancejo, "street") + JSONUtil.getString(distancejo, "detail");
+            locationS=locationS.replace("null","");
+            String district = JSONUtil.getString(distancejo,"district");
+            String street = JSONUtil.getString(distancejo,"street");
+            if (TextUtils.isEmpty(locationS)) {
                 holder.locationT.setText("地点待定");
             } else {
-                holder.locationT.setText(JSONUtil.getString(distancejo, "province") + JSONUtil.getString(distancejo, "city") + JSONUtil.getString(distancejo, "district") + JSONUtil.getString(distancejo, "street"));
+                if (district.equals(street)){
+                    holder.locationT.setText(JSONUtil.getString(distancejo, "city")+"市" + JSONUtil.getString(distancejo, "district"));
+                }else{
+                    holder.locationT.setText(JSONUtil.getString(distancejo, "city")+"市" + JSONUtil.getString(distancejo, "district")+ JSONUtil.getString(distancejo, "street"));
+                }
             }
 
             //付费类型,是否包接送

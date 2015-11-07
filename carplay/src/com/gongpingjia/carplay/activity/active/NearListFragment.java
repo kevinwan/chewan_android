@@ -104,13 +104,13 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
                         if (idle == true){
                             free_ck.setChecked(true);
                             freeT.setText("无聊中～小伙伴可以邀你～");
-                            System.out.println("youkong");
+//                            System.out.println("youkong");
                         }else{
                             free_ck.setChecked(false);
-                            System.out.println("没空");
+//                            System.out.println("没空");
                             freeT.setText("忙碌中～小伙伴不可约你～");
                         }
-                        System.out.println("aaaaaaaaaaaaaaaa" + idle);
+//                        System.out.println("aaaaaaaaaaaaaaaa" + idle);
                     }
                 }
             });
@@ -128,7 +128,7 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
                                 @Override
                                 public void onisLogin() {
                                     if (b == true) {
-                                        System.out.println("有空");
+//                                        System.out.println("有空");
                                         DhNet net = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId() + "/info?token=" + user.getToken());
                                         net.addParam("idle", true);
                                         net.doPostInDialog(new NetTask(getActivity()) {
@@ -141,7 +141,7 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
                                             }
                                         });
                                     } else {
-                                        System.out.println("没空");
+//                                        System.out.println("没空");
                                         DhNet net = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId() + "/info?token=" + user.getToken());
                                         net.addParam("idle", false);
                                         net.doPostInDialog(new NetTask(getActivity()) {

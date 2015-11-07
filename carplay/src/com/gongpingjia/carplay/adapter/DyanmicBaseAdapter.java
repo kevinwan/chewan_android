@@ -267,10 +267,18 @@ public class DyanmicBaseAdapter extends BaseAdapter {
             String gender = JSONUtil.getString(js, "gender");
 
 //        String jied = JSONUtil.getString(json, "street");
-            if (json == null || JSONUtil.getString(json, "province").equals("") || JSONUtil.getString(json, "city").equals("") || JSONUtil.getString(json, "district").equals("") || JSONUtil.getString(json, "street").equals("") || JSONUtil.getString(json, "detail").equals("")) {
+            String locationS = JSONUtil.getString(json, "province") + JSONUtil.getString(json, "city") + JSONUtil.getString(json, "district") + JSONUtil.getString(json, "street") + JSONUtil.getString(json, "detail");
+            locationS=locationS.replace("null","");
+            String district = JSONUtil.getString(json,"district");
+            String street = JSONUtil.getString(json,"street");
+            if (TextUtils.isEmpty(locationS)) {
                 holder.activity_place.setText("地点待定");
             } else {
-                holder.activity_place.setText(JSONUtil.getString(json, "province") + JSONUtil.getString(json, "city") + JSONUtil.getString(json, "district") + JSONUtil.getString(json, "street") + JSONUtil.getString(json, "detail"));
+                if (district.equals(street)){
+                    holder.activity_place.setText(JSONUtil.getString(json, "city")+"市" + JSONUtil.getString(json, "district"));
+                }else{
+                    holder.activity_place.setText(JSONUtil.getString(json, "city")+"市" + JSONUtil.getString(json, "district")+ JSONUtil.getString(json, "street"));
+                }
             }
 
 
