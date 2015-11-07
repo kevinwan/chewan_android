@@ -355,7 +355,7 @@ public class MyPerSonDetailActivity2 extends CarPlayBaseActivity implements View
                     it = new Intent(self, HeadAttestationActivity.class);
                     it.putExtra("status",photoAuthStatus);
                     it.putExtra("photoUrl", photoUrl);
-                    startActivity(it);
+                    startActivityForResult(it, APPROVE_HEAD);
                     break;
                 //车主认证
                 case R.id.carattestation:
@@ -365,7 +365,7 @@ public class MyPerSonDetailActivity2 extends CarPlayBaseActivity implements View
                     it.putExtra("licenseAuthStatus", licenseAuthStatus);
                     it.putExtra("driverLicenseURL", driverLicenseURL);
                     it.putExtra("drivingLicenseURL", drivingLicenseURL);
-                    startActivity(it);
+                    startActivityForResult(it, APPROVE_CAR);
                     break;
                 //上传相册
                 case R.id.addphoto:
@@ -447,12 +447,9 @@ public class MyPerSonDetailActivity2 extends CarPlayBaseActivity implements View
                         ViewUtil.bindNetImage(headI, data.getStringExtra("head"), "head");
                         break;
                     case APPROVE_HEAD:
-
                         txtphotoAuthStatusT.setText(data.getStringExtra("status"));
                         photoAuthStatus = data.getStringExtra("status");
                         photoUrl = data.getStringExtra("photoUrl");
-
-
                         break;
                     case APPROVE_CAR:
                         licenseAuthStatus = data.getStringExtra("statuss");
