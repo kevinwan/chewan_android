@@ -341,15 +341,26 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
             switch (v.getId()) {
                 //上传
                 case R.id.upload:
-                    if (uploadFlag) {
-                        uploadFlag = !uploadFlag;
-                        holder.takephotos.setVisibility(View.VISIBLE);
-                        holder.album.setVisibility(View.VISIBLE);
-                    } else {
-                        uploadFlag = !uploadFlag;
-                        holder.takephotos.setVisibility(View.GONE);
-                        holder.album.setVisibility(View.GONE);
-                    }
+                    UserInfoManage.getInstance().checkLogin((Activity)mContext, new UserInfoManage.LoginCallBack() {
+                        @Override
+                        public void onisLogin() {
+                            if (uploadFlag) {
+                                uploadFlag = !uploadFlag;
+                                holder.takephotos.setVisibility(View.VISIBLE);
+                                holder.album.setVisibility(View.VISIBLE);
+                            } else {
+                                uploadFlag = !uploadFlag;
+                                holder.takephotos.setVisibility(View.GONE);
+                                holder.album.setVisibility(View.GONE);
+                            }
+                        }
+
+                        @Override
+                        public void onLoginFail() {
+
+                        }
+                    });
+
                     break;
                 //拍照
                 case R.id.takephotos:
