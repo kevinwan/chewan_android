@@ -102,6 +102,12 @@ public class DynamicListFragment extends CarPlayBaseFragment implements PullToRe
 
         listV = pullToRefreshListView.getRefreshableView();
         mAdapter = new FragmentMsgAdapter(getActivity());
+        mAdapter.setOnEmptyListener(new FragmentMsgAdapter.OnEmptyListener() {
+            @Override
+            public void onEmpty(boolean isEmpty) {
+                mainV.findViewById(R.id.empty).setVisibility(isEmpty ? View.VISIBLE : View.GONE);
+            }
+        });
         listV.setAdapter(mAdapter);
         listV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

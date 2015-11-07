@@ -59,6 +59,8 @@ public class FragmentMsgAdapter extends BaseAdapter {
     List<JSONArray> headList;
     List<String> GroupIdlist;
 
+    OnEmptyListener onEmptyListener;
+
     public FragmentMsgAdapter(Context context) {
         mContext = context;
         mInflater = LayoutInflater.from(mContext);
@@ -66,11 +68,29 @@ public class FragmentMsgAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        if (conversationList == null) {
+        if (conversationList == null || conversationList.size() == 0) {
+            if (onEmptyListener != null) {
+                onEmptyListener.onEmpty(true);
+            }
             return 0;
         } else {
+            if (onEmptyListener != null) {
+                onEmptyListener.onEmpty(false);
+            }
             return conversationList.size();
         }
+    }
+
+    public OnEmptyListener getOnEmptyListener() {
+        return onEmptyListener;
+    }
+
+    public void setOnEmptyListener(OnEmptyListener onEmptyListener) {
+        this.onEmptyListener = onEmptyListener;
+    }
+
+    public interface OnEmptyListener {
+        void onEmpty(boolean isEmpty);
     }
 
     @Override
@@ -136,7 +156,7 @@ public class FragmentMsgAdapter extends BaseAdapter {
         switch (type) {
             case 0:
                 holder.titleT.setText("感兴趣的人");
-                ViewUtil.bindView(holder.right_headI,
+                ViewUtil.bindNetImage(holder.right_headI,
                         lastMessage.getStringAttribute("avatar", ""), "head");
 //                holder.right_headI.setTag(lastMessage.getStringAttribute(""));
                 break;
@@ -340,7 +360,6 @@ public class FragmentMsgAdapter extends BaseAdapter {
      * 设置群组头像状态
      *
      * @param holder
-     *
      */
     private void setPicState(ViewHolder holder, String[] urls, int poi) {
         holder.head_one.setVisibility(View.GONE);

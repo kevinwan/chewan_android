@@ -91,7 +91,6 @@ public class MatchingDialog extends BaseAlertDialog {
             }
         });
 
-
         checkBox = (CheckBox) findViewById(R.id.chk_pick);
         textDestination = (TextView) findViewById(R.id.tv_destination);
         per = IocContainer.getShare().get(CarPlayPerference.class);
@@ -225,16 +224,21 @@ public class MatchingDialog extends BaseAlertDialog {
                                     mResult.onResult(dhNet.getParams());
                                 }
                             }
+
+                            dismiss();
+                            PointRecord record = PointRecord.getInstance();
+                            record.setActivityMatchCount(record.getActivityMatchCount() + 1);
                         }
                     });
                 } else {
                     if (mResult != null) {
                         mResult.onResult(dhNet.getParams());
                     }
+
+                    dismiss();
+                    PointRecord record = PointRecord.getInstance();
+                    record.setActivityMatchCount(record.getActivityMatchCount() + 1);
                 }
-                dismiss();
-                PointRecord record = PointRecord.getInstance();
-                record.setActivityMatchCount(record.getActivityMatchCount() + 1);
 
             }
         });

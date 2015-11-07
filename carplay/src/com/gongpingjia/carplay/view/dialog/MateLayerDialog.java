@@ -214,16 +214,19 @@ public class MateLayerDialog extends BaseAlertDialog implements View.OnClickList
                                     mResult.onResult(dhNet.getParams());
                                 }
                             }
+                            dismiss();
+                            PointRecord record = PointRecord.getInstance();
+                            record.setActivityMatchCount(record.getActivityMatchCount() + 1);
                         }
                     });
                 } else {
                     if (mResult != null) {
                         mResult.onResult(dhNet.getParams());
                     }
+                    dismiss();
+                    PointRecord record = PointRecord.getInstance();
+                    record.setActivityMatchCount(record.getActivityMatchCount() + 1);
                 }
-                dismiss();
-                PointRecord record = PointRecord.getInstance();
-                record.setActivityMatchCount(record.getActivityMatchCount() + 1);
             }
         });
 

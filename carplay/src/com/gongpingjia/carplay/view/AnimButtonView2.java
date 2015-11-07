@@ -22,8 +22,8 @@ public class AnimButtonView2 extends RelativeLayout {
 //    private static final int OFFSET = 600; // 每个动画的播放时间间隔
 //    private static final int MSG_WAVE2_ANIMATION = 2;
 
-//    RoundImageView image1, image2;
-ImageView image1;
+    //    RoundImageView image1, image2;
+    ImageView image1;
 
     RoundImageView bg;
 
@@ -55,7 +55,7 @@ ImageView image1;
 
 
         RelativeLayout.LayoutParams pa = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-        int margin = DhUtil.dip2px(mContext, 15);
+        int margin = DhUtil.dip2px(mContext, 18);
 
         pa.setMargins(margin, margin, margin, margin);
         image1 = new ImageView(mContext);

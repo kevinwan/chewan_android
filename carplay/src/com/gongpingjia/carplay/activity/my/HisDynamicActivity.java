@@ -1,6 +1,7 @@
 package com.gongpingjia.carplay.activity.my;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -117,8 +118,11 @@ public class HisDynamicActivity extends CarPlayListActivity implements PullToRef
 
     @Override
     public void load(JSONObject jo) {
-        JSONObject json = JSONUtil.getJSONObject(jo,"data");
-        cover = JSONUtil.getString(json, "cover");
+        JSONObject json = JSONUtil.getJSONObject(jo, "data");
+        String hiscover = JSONUtil.getString(json, "cover");
+        if (!TextUtils.isEmpty(hiscover)) {
+            cover = hiscover;
+        }
         distance = JSONUtil.getDouble(json, "distance");
 
 //        System.out.println("Ta的活动背景++++++" + cover);
