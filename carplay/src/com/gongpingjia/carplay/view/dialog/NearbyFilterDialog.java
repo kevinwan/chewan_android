@@ -234,7 +234,7 @@ public class NearbyFilterDialog extends BaseAlertDialog implements
         //是否包接送
         active_transfer.setChecked(pre.isTransfer());
 
-        if ("运动".equals(type)||"遛狗".equals(type)||"购物".equals(type))
+        if ("运动".equals(type)||"遛狗".equals(type)||"购物".equals(type)||"".equals(type))
             gonePay(false);
         else
             gonePay(true);
@@ -270,8 +270,12 @@ public class NearbyFilterDialog extends BaseAlertDialog implements
 
     //隐藏付费类型 并设置默认值
     private void gonePay(boolean isShow){
-        if (isShow)
+        if (isShow) {
             active_pay.setVisibility(View.VISIBLE);
+            if("".equals(pay)||"不限".equals(pay)){
+                pay = "AA制";
+            }
+        }
         else{
             active_pay.setVisibility(View.GONE);
             pay_id=R.id.pay_3;
