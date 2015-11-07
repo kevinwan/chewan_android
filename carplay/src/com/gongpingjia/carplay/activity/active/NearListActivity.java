@@ -122,7 +122,6 @@ public class NearListActivity extends CarPlayListActivity implements PullToRefre
         pre = IocContainer.getShare().get(FilterPreference2.class);
         pre.load();
         addParams("type", pre.getType());
-        showToast("---" + pre.getType());
         addParams("pay", pre.getPay());
         addParams("gender", pre.getGender());
         addParams("transfer", pre.isTransfer());
