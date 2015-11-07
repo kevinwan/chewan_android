@@ -67,7 +67,7 @@
                 android:id="@+id/icon_msg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/empty_img" />
+                android:src="@drawable/empty_imgs" />
 
             <TextView
                 android:id="@+id/msg"

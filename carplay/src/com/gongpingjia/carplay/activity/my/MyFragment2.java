@@ -222,8 +222,6 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                     age = String.valueOf(JSONUtil.getInt(jo, "age"));
                     ViewUtil.bindView(ageT, JSONUtil.getInt(jo, "age"));
 //                    //设置高斯模糊
-
-
 //                    Blurry.with(getActivity())
 //                            .radius(10)
 //                            .sampling(8)
@@ -500,9 +498,11 @@ public class MyFragment2 extends Fragment implements OnClickListener {
 
                     break;
                 case APPROVE_CAR:
-
+                    licenseAuthStatus = data.getStringExtra("statuss");
                     attestation_txtT.setText(data.getStringExtra("statuss"));
-
+                    carmodel = data.getStringExtra("carName");
+                    driverLicenseURL = data.getStringExtra("driver");
+                    drivingLicenseURL = data.getStringExtra("driving");
                     break;
             }
         }
