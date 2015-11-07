@@ -8,18 +8,24 @@
         android:id="@+id/tv_letter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/bg_grey"
+        android:background="@color/cutline"
         android:paddingBottom="5dp"
-        android:paddingLeft="10dp"
+        android:paddingLeft="18dp"
         android:paddingTop="5dp"
         android:text="A"
-        android:textSize="@dimen/text_medium"
+        android:textSize="@dimen/text_smaller"
+        android:textColor="@color/text_grey_999"
         android:visibility="gone" />
 
     <TextView
         android:id="@+id/tv_place"
-        style="@style/text_black_medium"
-        android:padding="10dp"
+        style="@style/text_black_small"
+        android:textColor="@color/text_grey_666"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:paddingLeft="18dp"
         android:text="北京" />
+
+    <View style="@style/line"/>
 
 </LinearLayout>
