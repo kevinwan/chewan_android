@@ -52,6 +52,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
@@ -75,6 +76,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
     public static final int PERSONAL = 2;
     public static final int APPROVE_HEAD = 3;
     public static final int APPROVE_CAR = 4;
+
     public static MyFragment2 getInstance() {
         if (instance == null) {
             instance = new MyFragment2();
@@ -104,12 +106,12 @@ public class MyFragment2 extends Fragment implements OnClickListener {
 
     //已上传的图片
     private int uploadedCount = 0;
-    String driverLicenseURL,drivingLicenseURL;
+    String driverLicenseURL, drivingLicenseURL;
     String age;
-    String name, gender, headimg,licenseAuthStatus, carbradn, carlogo, carmodel, carslug;
+    String name, gender, headimg, photoAuthStatus, licenseAuthStatus, carbradn, carlogo, carmodel, carslug;
     String photoUrl;
-    ImageView headImg,icon;
-    String photoAuthStatus;
+    ImageView headImg, icon;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -152,8 +154,8 @@ public class MyFragment2 extends Fragment implements OnClickListener {
         attestation_txtT = (TextView) mainV.findViewById(R.id.attestation_txt);
         addPhoto = (ImageView) mainV.findViewById(R.id.addphoto);
         recyclerView = (RecyclerView) mainV.findViewById(R.id.recyclerView);
-         headImg = (ImageView) mainV.findViewById(R.id.headI);
-         icon = (ImageView) mainV.findViewById(R.id.icon);
+        headImg = (ImageView) mainV.findViewById(R.id.headI);
+        icon = (ImageView) mainV.findViewById(R.id.icon);
 
         perfectBtn.setOnClickListener(this);
         myactiveL.setOnClickListener(this);
@@ -204,8 +206,8 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                     carmodel = JSONUtil.getString(car, "model");
                     carslug = JSONUtil.getString(car, "slug");
                     name = JSONUtil.getString(jo, "nickname");
-                     driverLicenseURL = JSONUtil.getString(jo,"driverLicense");
-                     drivingLicenseURL = JSONUtil.getString(jo,"drivingLicense");
+                    driverLicenseURL = JSONUtil.getString(jo, "driverLicense");
+                    drivingLicenseURL = JSONUtil.getString(jo, "drivingLicense");
                     ViewUtil.bindView(nameT, JSONUtil.getString(jo, "nickname"));
                     gender = JSONUtil.getString(jo, "gender");
                     if (("男").equals(gender)) {
@@ -232,7 +234,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
 
                     photoAuthStatus = JSONUtil.getString(jo, "photoAuthStatus");
                     licenseAuthStatus = JSONUtil.getString(jo, "licenseAuthStatus");
-                     photoUrl = JSONUtil.getString(jo,"photo");
+                    photoUrl = JSONUtil.getString(jo, "photo");
                     ViewUtil.bindView(txtphotoAuthStatusT, JSONUtil.getString(jo, "photoAuthStatus"));
                     ViewUtil.bindView(attestation_txtT, JSONUtil.getString(jo, "licenseAuthStatus"));
                     //头像认证
@@ -257,7 +259,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                         headattestationL.setEnabled(true);
                         headImg.setVisibility(View.VISIBLE);
                         txtphotoAuthStatusT.setTextColor(getResources().getColor(R.color.text_black));
-                    }else if(photoAuthStatus.equals("认证未通过")){
+                    } else if (photoAuthStatus.equals("认证未通过")) {
                         attestationT.setBackgroundResource(R.drawable.radio_sex_man_focused);
                         txtphotoAuthStatusT.setText("认证未通过");
                         attestationT.setText("未认证");
@@ -282,7 +284,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                         attestation_txtT.setText("认证中");
                         icon.setVisibility(View.VISIBLE);
                         attestation_txtT.setTextColor(getResources().getColor(R.color.text_black));
-                    }else if(licenseAuthStatus.equals("认证未通过")){
+                    } else if (licenseAuthStatus.equals("认证未通过")) {
                         carattestationL.setEnabled(true);
                         attestation_txtT.setText("认证未通过");
                         icon.setVisibility(View.VISIBLE);
@@ -294,10 +296,10 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                     } else if (licenseAuthStatus.equals("认证中") && photoAuthStatus.equals("认证中")) {
                         completenessT.setText("资料完成度60%,越高越吸引人");
                         perfectBtn.setVisibility(View.VISIBLE);
-                    }  else if (licenseAuthStatus.equals("认证通过") && photoAuthStatus.equals("认证通过")) {
+                    } else if (licenseAuthStatus.equals("认证通过") && photoAuthStatus.equals("认证通过")) {
                         completenessT.setText("资料完成度100%,越高越吸引人");
                         perfectBtn.setVisibility(View.GONE);
-                    }else if (licenseAuthStatus.equals("认证通过") || photoAuthStatus.equals("认证通过")) {
+                    } else if (licenseAuthStatus.equals("认证通过") || photoAuthStatus.equals("认证通过")) {
                         completenessT.setText("资料完成度80%,越高越吸引人");
                         perfectBtn.setVisibility(View.VISIBLE);
                     }
@@ -334,7 +336,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                             img.setImageBitmap(bitmap);
                             Blurry.with(mContext)
                                     .radius(10)
-                                    .sampling(4)
+                                    .sampling(8)
                                     .async()
                                     .capture(img)
                                     .into(img);
@@ -362,16 +364,14 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                 it.putExtra("name", name);
                 it.putExtra("gender", gender);
                 it.putExtra("headimg", headimg);
-                it.putExtra("photoUrl",photoUrl);
-                it.putExtra("status",photoAuthStatus);
                 it.putExtra("photoAuthStatus", photoAuthStatus);
                 it.putExtra("licenseAuthStatus", licenseAuthStatus);
-                it.putExtra("driverLicenseURL",driverLicenseURL);
-                it.putExtra("drivingLicenseURL",drivingLicenseURL);
-                System.out.println("认证状态"+licenseAuthStatus);
+                it.putExtra("driverLicenseURL", driverLicenseURL);
+                it.putExtra("drivingLicenseURL", drivingLicenseURL);
+                System.out.println("认证状态" + licenseAuthStatus);
 //                it.putExtra("carbradn",carbradn);
 //                it.putExtra("carlogo",carlogo);
-                it.putExtra("carmodel",carmodel);
+                it.putExtra("carmodel", carmodel);
 //                it.putExtra("carslug",carslug);
                 it.putExtra("age", age);
                 startActivity(it);
@@ -382,13 +382,11 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                 it.putExtra("name", name);
                 it.putExtra("gender", gender);
                 it.putExtra("headimg", headimg);
-                it.putExtra("carmodel",carmodel);
-                it.putExtra("photoUrl",photoUrl);
-                it.putExtra("status",photoAuthStatus);
+                it.putExtra("carmodel", carmodel);
                 it.putExtra("photoAuthStatus", photoAuthStatus);
                 it.putExtra("licenseAuthStatus", licenseAuthStatus);
-                it.putExtra("driverLicenseURL",driverLicenseURL);
-                it.putExtra("drivingLicenseURL",drivingLicenseURL);
+                it.putExtra("driverLicenseURL", driverLicenseURL);
+                it.putExtra("drivingLicenseURL", drivingLicenseURL);
                 it.putExtra("age", age);
                 startActivity(it);
                 break;
@@ -405,18 +403,17 @@ public class MyFragment2 extends Fragment implements OnClickListener {
             //头像认证
             case R.id.headattestation:
                 it = new Intent(mContext, HeadAttestationActivity.class);
-                it.putExtra("photoUrl",photoUrl);
                 it.putExtra("status",photoAuthStatus);
+                it.putExtra("photoUrl", photoUrl);
                 startActivityForResult(it, APPROVE_HEAD);
                 break;
             //车主认证
             case R.id.carattestation:
                 it = new Intent(mContext, AuthenticateOwnersActivity2.class);
-                it.putExtra("photoUrl",photoUrl);
-                it.putExtra("carmodel",carmodel);
-                it.putExtra("licenseAuthStatus",licenseAuthStatus);
-                it.putExtra("driverLicenseURL",driverLicenseURL);
-                it.putExtra("drivingLicenseURL",drivingLicenseURL);
+                it.putExtra("carmodel", carmodel);
+                it.putExtra("licenseAuthStatus", licenseAuthStatus);
+                it.putExtra("driverLicenseURL", driverLicenseURL);
+                it.putExtra("drivingLicenseURL", drivingLicenseURL);
                 startActivityForResult(it, APPROVE_CAR);
                 break;
             //上传相册
@@ -487,7 +484,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                     btp1.recycle();
 
 
-                    ((MainActivity2) getActivity()).showProgressDialog("上传头像中...");
+                    ((MainActivity2) getActivity()).showProgressDialog("图片上传中...");
                     uploadPhotoCount = 1;
                     uploadHead(newPath);
                     break;
@@ -499,9 +496,12 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                     ViewUtil.bindNetImage(headI, data.getStringExtra("head"), "head");
                     break;
                 case APPROVE_HEAD:
-                    photoAuthStatus = data.getStringExtra("status");
+
                     txtphotoAuthStatusT.setText(data.getStringExtra("status"));
-                     photoUrl = data.getStringExtra("photoUrl");
+                    photoAuthStatus = data.getStringExtra("status");
+                    photoUrl = data.getStringExtra("photoUrl");
+
+
 
                     break;
                 case APPROVE_CAR:
@@ -518,7 +518,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
 
     private void uploadHead(String path) {
 
-        Bitmap bmp = PhotoUtil.getLocalImage(new File(path));
+//        Bitmap bmp = PhotoUtil.getLocalImage(new File(path));
 //        addPhoto.setImageBitmap(bmp);
         DhNet net = new DhNet(API2.CWBaseurl + "user/" + user.getUserId() + "/album/upload?token=" + user.getToken());
         net.upload(new FileInfo("attach", new File(path)), new NetTask(mContext) {
@@ -546,6 +546,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                             EventBus.getDefault().post(new String("刷新附近列表"));
 //                            album.add(0, new JSONObject().put("url", photoUrl));
                             Log.d("msg", "相册大小" + newAlbm.size());
+                            Collections.reverse(newAlbm);
                             album.addAll(0, newAlbm);
                             mAdapter.setData(album);
                             uploadedCount = 0;

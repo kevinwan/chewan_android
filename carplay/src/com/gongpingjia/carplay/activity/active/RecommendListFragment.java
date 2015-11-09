@@ -17,6 +17,7 @@ import com.gongpingjia.carplay.view.PullToRefreshRecyclerViewHorizontal;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
 
+import net.duohuo.dhroid.net.cache.CachePolicy;
 import net.duohuo.dhroid.util.UserLocation;
 
 /**
@@ -63,6 +64,7 @@ public class RecommendListFragment extends CarPlayBaseFragment implements PullTo
         adapter = new RecommendListAdapter(getActivity());
         recyclerView.setAdapter(adapter);
         setOnLoadSuccess(this);
+        useCache(CachePolicy.POLICY_NOCACHE);
         UserLocation location = UserLocation.getInstance();
         fromWhat("data");
         setUrl(API2.recommendList);

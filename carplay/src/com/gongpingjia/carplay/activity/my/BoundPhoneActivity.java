@@ -1,5 +1,6 @@
 package com.gongpingjia.carplay.activity.my;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -25,7 +26,9 @@ import com.gongpingjia.carplay.chat.bean.ChatUser;
 import com.gongpingjia.carplay.chat.controller.HXSDKHelper;
 import com.gongpingjia.carplay.chat.db.UserDao;
 import com.gongpingjia.carplay.util.CarPlayPerference;
+import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.util.MD5Util;
+import com.gongpingjia.carplay.view.dialog.BindPhoneDialog;
 
 import net.duohuo.dhroid.ioc.IocContainer;
 import net.duohuo.dhroid.net.DhNet;
@@ -101,6 +104,17 @@ public class BoundPhoneActivity extends CarPlayBaseActivity implements View.OnCl
                         showToast("请输入密码!");
                         return;
                     }
+
+                    if (password.length() < 6 || password.length() > 15) {
+                        showToast("密码为6-15位字母和数字的组合");
+                        return;
+                    }
+
+                    if (!CarPlayUtil.isValidPassword(password)) {
+                        showToast("密码为6-15位字母和数字的组合");
+                        return;
+                    }
+
                 }
                 showProgressDialog("绑定中...");
                 checkCode(verification, phone);
@@ -114,6 +128,11 @@ public class BoundPhoneActivity extends CarPlayBaseActivity implements View.OnCl
     public void getVerification(String phone) {
         if (TextUtils.isEmpty(phone)) {
             showToast("手机号不能为空");
+            return;
+        }
+
+        if (phone.length() != 11) {
+            showToast("手机号不合法");
             return;
         }
         getPhoneIsRegister(phone);
@@ -217,7 +236,30 @@ public class BoundPhoneActivity extends CarPlayBaseActivity implements View.OnCl
             public void doInUI(Response response, Integer transfer) {
                 if (response.isSuccess()) {
                     if (phoneisRegister) {
-                        bindPhone(phone, mEditVerification.getText().toString());
+                        String des = null;
+                        String chanel = getIntent().getStringExtra("channel");
+                        if (chanel.equals("wechat")) {
+                            des = "绑定后可用微信号登录";
+                        } else if (chanel.equals("sinaWeibo")) {
+                            des = "绑定后可用新浪微博号登录";
+                        } else if (chanel.equals("qq")) {
+                            des = "绑定后可用QQ号登录";
+                        }
+                        BindPhoneDialog dialog = new BindPhoneDialog(self, des);
+                        dialog.setOnCLickResult(new BindPhoneDialog.OnCLickResult() {
+                            @Override
+                            public void clickResult() {
+                                showProgressDialog("绑定中...");
+                                bindPhone(phone, mEditVerification.getText().toString());
+                            }
+                        });
+                        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                            @Override
+                            public void onDismiss(DialogInterface dialog) {
+                                hidenProgressDialog();
+                            }
+                        });
+                        dialog.show();
                     } else {
                         hidenProgressDialog();
                         Intent it = new Intent(self, BasicInformationActivity2.class);
@@ -393,5 +435,6 @@ public class BoundPhoneActivity extends CarPlayBaseActivity implements View.OnCl
         List<ChatUser> users = new ArrayList<ChatUser>(userlist.values());
         dao.saveContactList(users);
     }
+
 
 }

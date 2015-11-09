@@ -127,45 +127,46 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, final boolean b) {
 
-//                if (User.getInstance().isLogin()) {
-                UserInfoManage.getInstance().checkLogin(getActivity(),
-                        new UserInfoManage.LoginCallBack() {
-                            @Override
-                            public void onisLogin() {
-                                if (b == true) {
+                if (User.getInstance().isLogin()){
+                    if (b == true) {
 //                                        System.out.println("有空");
-                                    DhNet net = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId() + "/info?token=" + user.getToken());
-                                    net.addParam("idle", true);
-                                    net.doPostInDialog(new NetTask(getActivity()) {
-                                        @Override
-                                        public void doInUI(Response response, Integer transfer) {
-                                            if (response.isSuccess()) {
-                                                System.out.println(response.isSuccess());
-                                                freeT.setText("无聊中～小伙伴可以邀你～");
-                                            }
-                                        }
-                                    });
-                                } else {
-//                                        System.out.println("没空");
-                                    DhNet net = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId() + "/info?token=" + user.getToken());
-                                    net.addParam("idle", false);
-                                    net.doPostInDialog(new NetTask(getActivity()) {
-                                        @Override
-                                        public void doInUI(Response response, Integer transfer) {
-                                            if (response.isSuccess()) {
-                                                System.out.println(response.isSuccess());
-                                                freeT.setText("忙碌中～小伙伴不可约你～");
-                                            }
-                                        }
-                                    });
+                        DhNet net = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId() + "/info?token=" + user.getToken());
+                        net.addParam("idle", true);
+                        net.doPostInDialog(new NetTask(getActivity()) {
+                            @Override
+                            public void doInUI(Response response, Integer transfer) {
+                                if (response.isSuccess()) {
+                                    System.out.println(response.isSuccess());
+                                    freeT.setText("无聊中～小伙伴可以邀你～");
                                 }
                             }
-
+                        });
+                    } else {
+//                                        System.out.println("没空");
+                        DhNet net = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId() + "/info?token=" + user.getToken());
+                        net.addParam("idle", false);
+                        net.doPostInDialog(new NetTask(getActivity()) {
                             @Override
-                            public void onLoginFail() {
+                            public void doInUI(Response response, Integer transfer) {
+                                if (response.isSuccess()) {
+                                    System.out.println(response.isSuccess());
+                                    freeT.setText("忙碌中～小伙伴不可约你～");
+                                }
                             }
                         });
-//                }
+                    }
+                }else{
+                    free_ck.setChecked(true);
+                    UserInfoManage.getInstance().checkLogin(getActivity(), new UserInfoManage.LoginCallBack() {
+                        @Override
+                        public void onisLogin() {
+
+                        }
+                        @Override
+                        public void onLoginFail() {
+                        }
+                    });
+                }
             }
 
 
