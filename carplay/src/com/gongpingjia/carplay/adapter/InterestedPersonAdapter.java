@@ -204,9 +204,9 @@ public class InterestedPersonAdapter extends BaseAdapter {
                 holder.locationT.setText("地点待定");
             } else {
                 if (district.equals(street)){
-                    holder.locationT.setText(JSONUtil.getString(distancejo, "city")+"市" + JSONUtil.getString(distancejo, "district"));
+                    holder.locationT.setText(JSONUtil.getString(distancejo, "city") + JSONUtil.getString(distancejo, "district"));
                 }else{
-                    holder.locationT.setText(JSONUtil.getString(distancejo, "city")+"市" + JSONUtil.getString(distancejo, "district")+ JSONUtil.getString(distancejo, "street"));
+                    holder.locationT.setText(JSONUtil.getString(distancejo, "city") + JSONUtil.getString(distancejo, "district")+ JSONUtil.getString(distancejo, "street"));
                 }
             }
 

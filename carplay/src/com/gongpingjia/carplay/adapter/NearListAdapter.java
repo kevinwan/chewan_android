@@ -277,9 +277,9 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
             holder.location.setText("地点待定");
         } else {
             if (district.equals(street)) {
-                holder.location.setText(JSONUtil.getString(distancejo, "city") + "市" + JSONUtil.getString(distancejo, "district"));
+                holder.location.setText(JSONUtil.getString(distancejo, "city")  + JSONUtil.getString(distancejo, "district"));
             } else {
-                holder.location.setText(JSONUtil.getString(distancejo, "city") + "市" + JSONUtil.getString(distancejo, "district") + JSONUtil.getString(distancejo, "street"));
+                holder.location.setText(JSONUtil.getString(distancejo, "city")  + JSONUtil.getString(distancejo, "district") + JSONUtil.getString(distancejo, "street"));
             }
 
         }

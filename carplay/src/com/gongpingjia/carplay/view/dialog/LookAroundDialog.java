@@ -225,9 +225,9 @@ public class LookAroundDialog extends BaseAlertDialog {
             location.setText("地点待定");
         } else {
             if (district.equals(street)){
-                location.setText(JSONUtil.getString(distancejo, "city")+"市" + JSONUtil.getString(distancejo, "district"));
+                location.setText(JSONUtil.getString(distancejo, "city") + JSONUtil.getString(distancejo, "district"));
             }else{
-                location.setText(JSONUtil.getString(distancejo, "city")+"市" + JSONUtil.getString(distancejo, "district")+ JSONUtil.getString(distancejo, "street"));
+                location.setText(JSONUtil.getString(distancejo, "city") + JSONUtil.getString(distancejo, "district")+ JSONUtil.getString(distancejo, "street"));
             }
         }
         //car logo ,car name

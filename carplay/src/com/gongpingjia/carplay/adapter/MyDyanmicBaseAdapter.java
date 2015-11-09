@@ -357,9 +357,9 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                 holder.activity_place.setText("地点待定");
             } else {
                 if (district.equals(street)){
-                    holder.activity_place.setText(JSONUtil.getString(json, "city")+"市" + JSONUtil.getString(json, "district"));
+                    holder.activity_place.setText(JSONUtil.getString(json, "city")+ JSONUtil.getString(json, "district"));
                 }else{
-                    holder.activity_place.setText(JSONUtil.getString(json, "city")+"市" + JSONUtil.getString(json, "district")+ JSONUtil.getString(json, "street"));
+                    holder.activity_place.setText(JSONUtil.getString(json, "city") + JSONUtil.getString(json, "district")+ JSONUtil.getString(json, "street"));
                 }
             }
             String message = JSONUtil.getString(jo, "message");
