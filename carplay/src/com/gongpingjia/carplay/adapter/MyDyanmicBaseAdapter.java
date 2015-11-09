@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.gongpingjia.carplay.CarPlayApplication;
 import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.active.ActiveDetailsActivity2;
@@ -137,7 +138,7 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                 holders.unlimitedlayoutL = (LinearLayout) view.findViewById(R.id.unlimitedlayout);
                 holders.layoutV = (RelativeLayout) view.findViewById(R.id.layout);
                 LinearLayout.LayoutParams pams = (LinearLayout.LayoutParams) holders.layoutV.getLayoutParams();
-                pams.height = API2.ImageHeight;
+                pams.height = CarPlayApplication.getInstance().getImageHeight();
                 holders.layoutV.setLayoutParams(pams);
                 view.setTag(holders);
             } else {
@@ -175,7 +176,7 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                 holder.invitationT = (TextView) view.findViewById(R.id.invitationT);
                 holder.layoutV = (RelativeLayout) view.findViewById(R.id.layout);
                 FrameLayout.LayoutParams pams = (FrameLayout.LayoutParams) holder.layoutV.getLayoutParams();
-                pams.height = API2.ImageHeight;
+                pams.height = CarPlayApplication.getInstance().getImageHeight();
                 holder.layoutV.setLayoutParams(pams);
                 view.setTag(holder);
             }

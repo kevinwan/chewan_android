@@ -21,7 +21,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +29,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.gongpingjia.carplay.CarPlayApplication;
 import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.api.API2;
@@ -227,10 +227,9 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
                     } else {
                         img.setImageBitmap(bitmap);
                     }
-                    if (!API2.imageHeightInit) {
-                        API2.ImageHeight = holder.active_bg.getHeight();
-                        API2.imageHeightInit = true;
-                        Log.d("msg", " API2.imageHeightInit:" + API2.ImageHeight);
+                    if (!CarPlayApplication.getInstance().isImageHeightInit() && holder.active_bg.getHeight() != 0) {
+                        CarPlayApplication.getInstance().setImageHeight(holder.active_bg.getHeight());
+                        CarPlayApplication.getInstance().setImageHeightInit(true);
                     }
                 }
 

@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.gongpingjia.carplay.CarPlayApplication;
 import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.chat.ChatActivity;
@@ -125,7 +126,7 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
 
             holder.layoutV = (RelativeLayout) view.findViewById(R.id.layout);
             FrameLayout.LayoutParams pams = (FrameLayout.LayoutParams) holder.layoutV.getLayoutParams();
-            pams.height = API2.ImageHeight;
+            pams.height = CarPlayApplication.getInstance().getImageHeight();
             holder.layoutV.setLayoutParams(pams);
             view.setTag(holder);
 

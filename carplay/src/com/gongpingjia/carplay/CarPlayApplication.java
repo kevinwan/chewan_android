@@ -32,6 +32,7 @@ import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.GlobalCodeHandler;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
+import net.duohuo.dhroid.util.DhUtil;
 import net.duohuo.dhroid.util.UserLocation;
 
 public class CarPlayApplication extends Application implements
@@ -48,6 +49,10 @@ public class CarPlayApplication extends Application implements
     public static CarPlayApplication getInstance() {
         return instance;
     }
+
+    public boolean imageHeightInit = false;
+
+    public int ImageHeight = 0;
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -127,7 +132,7 @@ public class CarPlayApplication extends Application implements
                 }
             }
         });
-
+        ImageHeight = DhUtil.dip2px(getApplicationContext(), 260);
 
     }
 
@@ -194,4 +199,19 @@ public class CarPlayApplication extends Application implements
         });
     }
 
+    public boolean isImageHeightInit() {
+        return imageHeightInit;
+    }
+
+    public void setImageHeightInit(boolean imageHeightInit) {
+        this.imageHeightInit = imageHeightInit;
+    }
+
+    public int getImageHeight() {
+        return ImageHeight;
+    }
+
+    public void setImageHeight(int imageHeight) {
+        ImageHeight = imageHeight;
+    }
 }
