@@ -15,7 +15,6 @@ import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.User;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
@@ -95,6 +94,7 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
             carModel = bundle.getString("carModel");
             license = bundle.getString("license");
         }
+        System.out.println("第一个......"+ bundle.getString("driverLicenseURL")+"第二个"+bundle.getString("drivingLicenseURL"));
         switch (isAuthenticated) {
             // 未认证
             case "未认证":
@@ -126,6 +126,7 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
                 up_button.setBackgroundResource(R.drawable.btn_grey_fillet);
                 ViewUtil.bindNetImage(driver_img, bundle.getString("driverLicenseURL"), "default");
                 ViewUtil.bindNetImage(driving_img, bundle.getString("drivingLicenseURL"), "default");
+
                 drivinglicense_up.setEnabled(false);
                 driverlicense_up.setEnabled(false);
                 brandchoice.setEnabled(false);
@@ -151,6 +152,7 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
                 carName.setEnabled(true);
                 driver_img.setEnabled(true);
                 driving_img.setEnabled(true);
+
 //                icon_tI.setVisibility(View.INVISIBLE);
 //                icon_bI.setVisibility(View.INVISIBLE);
                 break;
@@ -174,12 +176,11 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
                     JSONObject jo = response.jSONFromData();
                     picUid = JSONUtil.getString(jo, "photoId");
                     imgs = JSONUtil.getString(jo, "photoUrl");
-                    boolean a = ImageLoader.getInstance().getDiskCache()
-                            .remove(imgs);
-                    Bitmap b = ImageLoader.getInstance().getMemoryCache()
-                            .remove(imgs);
-//                    System.out.println("行驶证："+JSONUtil.getString(jo, "photoId"));
-
+//                    boolean a = ImageLoader.getInstance().getDiskCache()
+//                            .remove(imgs);
+//                    Bitmap b = ImageLoader.getInstance().getMemoryCache()
+//                            .remove(imgs);
+                    System.out.println("第二张......行驶证："+JSONUtil.getString(jo, "photoId"));
 //                    System.out.println("********" + JSONUtil.getString(jo, "photoUrl"));
 //                    Toast.makeText(self, "111" + JSONUtil.getString(jo, "photoUrl"), Toast.LENGTH_SHORT).show();
                 } else {
@@ -202,9 +203,12 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
                 if (response.isSuccess()) {
                     JSONObject jo = response.jSONFromData();
                     picUids = JSONUtil.getString(jo, "photoId");
-//                    System.out.println("驾驶证："+JSONUtil.getString(jo, "photoId"));
+                    System.out.println("第一张......驾驶证："+JSONUtil.getString(jo, "photoId"));
                     img = JSONUtil.getString(jo, "photoUrl");
-
+//                    boolean a = ImageLoader.getInstance().getDiskCache()
+//                            .remove(img);
+//                    Bitmap b = ImageLoader.getInstance().getMemoryCache()
+//                            .remove(img);
 //                    Toast.makeText(self, "2222" + response.isSuccess(), Toast.LENGTH_SHORT).show();
                 } else {
                     showToast("上传失败，请重新上传");

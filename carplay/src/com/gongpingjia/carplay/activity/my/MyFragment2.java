@@ -414,6 +414,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                 it.putExtra("licenseAuthStatus", licenseAuthStatus);
                 it.putExtra("driverLicenseURL", driverLicenseURL);
                 it.putExtra("drivingLicenseURL", drivingLicenseURL);
+                System.out.println("我的界面：：：：：："+driverLicenseURL+"另外一个"+drivingLicenseURL);
                 startActivityForResult(it, APPROVE_CAR);
                 break;
             //上传相册
