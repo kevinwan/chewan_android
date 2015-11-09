@@ -425,6 +425,8 @@ public class CarPlayUtil {
             return "打羽毛球";
         } else if ("桌球".equals(name)) {
             return "玩桌球";
+        } else if ("其他".equals(name)) {
+            return "玩桌球";
         }
         return name;
     }
