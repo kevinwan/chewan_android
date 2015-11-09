@@ -26,6 +26,7 @@
 
 
             <LinearLayout
+                android:id="@+id/titlelayout"
                 android:layout_width="match_parent"
                 android:layout_height="26dp"
                 android:gravity="center_vertical"
@@ -36,6 +37,12 @@
                     style="@style/text_black_medium"
                     android:singleLine="true"
                     android:text="陈信宏想邀请你吃个饭" />
+                <TextView
+                    android:id="@+id/dynamic_type"
+                    style="@style/text_black_medium"
+                    android:textColor="@color/text_orange"
+                    android:singleLine="true"
+                    android:text="活动" />
 
                 <ImageView
                     android:id="@+id/certification_achievement"
