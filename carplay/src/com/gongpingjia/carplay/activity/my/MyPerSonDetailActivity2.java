@@ -315,10 +315,11 @@ public class MyPerSonDetailActivity2 extends CarPlayBaseActivity implements View
                     it.putExtra("name", name);
                     it.putExtra("gender", gender);
                     it.putExtra("headimg", headimg);
-                    it.putExtra("photoAuthStatus", photoAuthStatus);
+                    it.putExtra("status", photoAuthStatus);
                     it.putExtra("licenseAuthStatus", licenseAuthStatus);
                     it.putExtra("driverLicenseURL", driverLicenseURL);
                     it.putExtra("drivingLicenseURL", drivingLicenseURL);
+                    it.putExtra("photoUrl", photoUrl);
 //                it.putExtra("carbradn",carbradn);
 //                it.putExtra("carlogo",carlogo);
                 it.putExtra("carmodel",carmodel);
@@ -333,7 +334,8 @@ public class MyPerSonDetailActivity2 extends CarPlayBaseActivity implements View
                     it.putExtra("gender", gender);
                     it.putExtra("headimg", headimg);
                     it.putExtra("carmodel", carmodel);
-                    it.putExtra("photoAuthStatus", photoAuthStatus);
+                    it.putExtra("photoUrl", photoUrl);
+                    it.putExtra("status", photoAuthStatus);
                     it.putExtra("licenseAuthStatus", licenseAuthStatus);
                     it.putExtra("driverLicenseURL", driverLicenseURL);
                     it.putExtra("drivingLicenseURL", drivingLicenseURL);

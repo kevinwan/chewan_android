@@ -200,23 +200,23 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
             approve_layout_car.setEnabled(true);
             car_img.setVisibility(View.VISIBLE);
         }
-        if (myIntent.getStringExtra("photoAuthStatus").equals("认证中")) {
-            head_approve.setText(myIntent.getStringExtra("photoAuthStatus"));
+        if (myIntent.getStringExtra("status").equals("认证中")) {
+            head_approve.setText(myIntent.getStringExtra("status"));
             head_approve.setTextColor(getResources().getColor(R.color.text_black));
             head_img.setVisibility(View.VISIBLE);
             approve_layout_head.setEnabled(true);
-        } else if (myIntent.getStringExtra("photoAuthStatus").equals("未认证")) {
-            head_approve.setText(myIntent.getStringExtra("photoAuthStatus"));
+        } else if (myIntent.getStringExtra("status").equals("未认证")) {
+            head_approve.setText(myIntent.getStringExtra("status"));
             head_approve.setTextColor(getResources().getColor(R.color.text_black));
             head_img.setVisibility(View.VISIBLE);
             approve_layout_head.setEnabled(true);
-        } else if (myIntent.getStringExtra("photoAuthStatus").equals("认证通过")) {
-            head_approve.setText(myIntent.getStringExtra("photoAuthStatus"));
+        } else if (myIntent.getStringExtra("status").equals("认证通过")) {
+            head_approve.setText(myIntent.getStringExtra("status"));
             head_approve.setTextColor(getResources().getColor(R.color.text_grey));
             head_img.setVisibility(View.GONE);
             approve_layout_head.setEnabled(false);
-        } else if (myIntent.getStringExtra("photoAuthStatus").equals("认证未通过")) {
-            head_approve.setText(myIntent.getStringExtra("photoAuthStatus"));
+        } else if (myIntent.getStringExtra("status").equals("认证未通过")) {
+            head_approve.setText(myIntent.getStringExtra("status"));
             head_approve.setTextColor(getResources().getColor(R.color.text_black));
             head_img.setVisibility(View.VISIBLE);
             approve_layout_head.setEnabled(true);
@@ -418,6 +418,7 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
                 Intent intent = new Intent(self, HeadAttestationActivity.class);
                 intent.putExtra("status",status);
                 intent.putExtra("photoUrl",photoUrl);
+                System.out.println("头像认证"+photoUrl);
                 startActivityForResult(intent, APPROVE_HEAD);
 
                 break;

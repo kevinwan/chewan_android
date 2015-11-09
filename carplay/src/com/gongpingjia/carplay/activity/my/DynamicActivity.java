@@ -18,6 +18,8 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import net.duohuo.dhroid.ioc.IocContainer;
 
+import de.greenrobot.event.EventBus;
+
 /**
  * Created by Administrator on 2015/10/19.
  * 活动动态
@@ -39,6 +41,7 @@ public class DynamicActivity extends CarPlayListActivity implements PullToRefres
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dynamicactivity);
+        EventBus.getDefault().register(this);
 
     }
 
@@ -119,5 +122,11 @@ public class DynamicActivity extends CarPlayListActivity implements PullToRefres
     @Override
     public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
         showNext();
+    }
+
+    public void onEventMainThread(String success) {
+        if ("刷新活动动态".equals(success)) {
+            refresh();
+        }
     }
 }
