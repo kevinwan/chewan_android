@@ -7,12 +7,14 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.view.BaseAlertDialog;
 import com.gongpingjia.carplay.view.wheel.OnWheelChangedListener;
 import com.gongpingjia.carplay.view.wheel.WheelView;
 import com.gongpingjia.carplay.view.wheel.adapter.ArrayWheelAdapter;
 
 import java.util.Calendar;
+import java.util.Date;
 
 public class DateTimerDialog2 extends BaseAlertDialog implements
         android.view.View.OnClickListener, OnWheelChangedListener {
@@ -89,8 +91,8 @@ public class DateTimerDialog2 extends BaseAlertDialog implements
     }
 
     private String[] getYear() {
-        String[] years = new String[56];
-        for (int i = 0; i < 56; i++) {
+        String[] years = new String[76];
+        for (int i = 0; i < 76; i++) {
             years[i] = String.valueOf((1960 + i));
         }
         return years;
@@ -179,9 +181,18 @@ public class DateTimerDialog2 extends BaseAlertDialog implements
         if (dateTimerResultListener != null) {
             mCurrentYearName = getYear()[mViewYear.getCurrentItem()];
             mCurrentMonthName = getMonth()[mViewMonth.getCurrentItem()];
-
-
             mCurrentDayName = getDay(getMaxDate(mCurrentYearName,mCurrentMonthName))[mViewDay.getCurrentItem()];
+
+            //获取当前年月日  如果大于今天 默认返回今天
+            Long date=CarPlayUtil.getStringToDate(mCurrentYearName+"年"+mCurrentMonthName+"月"+mCurrentDayName+"日");
+            Date curDate = new Date(System.currentTimeMillis());//获取当前时间
+            if (date>System.currentTimeMillis()){
+                Calendar mCalendar=Calendar.getInstance();
+                mCurrentYearName = mCalendar.get(Calendar.YEAR)+"";
+                mCurrentMonthName = mCalendar.get(Calendar.MONTH)+1+"";
+                mCurrentDayName = mCalendar.get(Calendar.DAY_OF_MONTH)+"";
+            }
+
             dateTimerResultListener.onResult(mCurrentYearName,
                     mCurrentMonthName, mCurrentDayName);
         }

@@ -76,6 +76,7 @@
         </LinearLayout>
 
         <View
+            android:id="@+id/line"
             style="@style/line"
             android:layout_height="12dp" />
 

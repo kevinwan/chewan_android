@@ -265,6 +265,17 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
 //                    ViewUtil.bindView(priceT,JSONUtil.getDouble(jo, "price")+"元/人");
                     ViewUtil.bindView(explaintxtT, JSONUtil.getString(jo, "extraDesc"));
 
+                    //没有活动流程和说明 不可点击
+                    if (TextUtils.isEmpty(JSONUtil.getString(jo, "description"))){
+                        processL.setVisibility(View.GONE);
+                        mFootView.findViewById(R.id.line).setVisibility(View.GONE);
+                    }
+
+                    if (TextUtils.isEmpty(JSONUtil.getString(jo, "extraDesc"))){
+                        explainL.setVisibility(View.GONE);
+                    }
+
+
                     double price=JSONUtil.getDouble(jo, "price");
                     if (((int)price)==0){
                         priceT.setText("免费");

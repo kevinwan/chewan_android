@@ -33,7 +33,9 @@ import net.duohuo.dhroid.util.ViewUtil;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class CarPlayUtil {
 
@@ -429,6 +431,18 @@ public class CarPlayUtil {
             return "玩桌球";
         }
         return name;
+    }
+
+    /*将字符串转为时间戳*/
+    public static long getStringToDate(String time) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
+        Date date = new Date();
+        try {
+            date = sdf.parse(time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date.getTime();
     }
 
 }
