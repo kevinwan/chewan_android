@@ -744,6 +744,8 @@ public class MessageAdapter extends BaseAdapter {
                             EventBus.getDefault().post(new TabEB(4, null));
                         } else {
                             Intent it = new Intent(context, HeadAttestationActivity.class);
+                            it.putExtra("status", "认证未通过");
+                            it.putExtra("photoUrl", "");
                             context.startActivity(it);
                         }
                     }
@@ -761,6 +763,9 @@ public class MessageAdapter extends BaseAdapter {
                         } else {
                             Intent it = new Intent(context, AuthenticateOwnersActivity2
                                     .class);
+                            it.putExtra("licenseAuthStatus", "认证未通过");
+                            it.putExtra("driverLicenseURL", "");
+                            it.putExtra("drivingLicenseURL", "");
                             context.startActivity(it);
                         }
                     }

@@ -149,6 +149,7 @@ public class DynamicListFragment extends CarPlayBaseFragment implements PullToRe
                         break;
                     case 1:
                         //车玩官方
+
                         if (username.equals("OfficialAdmin")) {
                             intent = new Intent(getActivity(), ChatActivity.class);
                             intent.putExtra("chatType", ChatActivity.CHATTYPE_SINGLE);

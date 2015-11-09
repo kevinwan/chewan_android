@@ -7,7 +7,7 @@ public class API2 {
 
 
     //测试版API前缀
-    public static final String CWBaseurl = "http://cwapi.gongpingjia.com:8080/v2/";
+    public static final String CWBaseurl = "http://chewanapi.gongpingjia.com/v2/";
 //    public static final String CWBaseurl = "http://192.168.1.162:8080/v2/";
 
 
