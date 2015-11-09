@@ -13,10 +13,6 @@
  */
 package com.gongpingjia.carplay.activity.chat;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.graphics.Bitmap;
@@ -40,13 +36,16 @@ import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.chat.task.LoadLocalBigImgTask;
 import com.gongpingjia.carplay.chat.task.LoadLocalBigImgTask.OnLoadResult;
 import com.gongpingjia.carplay.chat.util.ImageCache;
-import com.gongpingjia.carplay.chat.view.PhotoView;
 import com.gongpingjia.carplay.view.dialog.SavePhotoDialog;
 import com.gongpingjia.carplay.view.gallery.TouchImageView;
 
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 下载显示大图
- * 
+ *
  */
 public class ShowBigImage extends CarPlayBaseActivity {
 	private static final String TAG = "ShowBigImage";
@@ -139,7 +138,7 @@ public class ShowBigImage extends CarPlayBaseActivity {
 
 	/**
 	 * 通过远程URL，确定下本地下载后的localurl
-	 * 
+	 *
 	 * @param remoteUrl
 	 * @return
 	 */
@@ -157,7 +156,7 @@ public class ShowBigImage extends CarPlayBaseActivity {
 
 	/**
 	 * 下载图片
-	 * 
+	 *
 	 * @param remoteFilePath
 	 */
 	private void downloadImage(final String remoteFilePath,

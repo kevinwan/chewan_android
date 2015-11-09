@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
@@ -46,7 +48,7 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
 
 
     static NearListFragment instance;
-    private RecyclerViewPager mRecyclerView;
+    public RecyclerViewPager mRecyclerView;
     private NearListAdapter adapter;
 
     PullToRefreshRecyclerViewVertical listV;
@@ -62,6 +64,9 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
     TextView freeT;
     LinearLayout near_layout;
     View currentview;
+
+    private int mLastY = 0;
+    private int freeisshow;
 
     public static NearListFragment getInstance() {
         if (instance == null) {
@@ -93,7 +98,7 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
         free_layout.getBackground().setAlpha(179);
         free_ck = (CheckBox) mainV.findViewById(R.id.free_check);
         freeT = (TextView) mainV.findViewById(R.id.freeT);
-        if(!user.getUserId().isEmpty()){
+        if (!user.getUserId().isEmpty()) {
             DhNet verifyNet = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId() + "/info?viewUser=" + user.getUserId() + "&token=" + user.getToken());
             verifyNet.doGetInDialog(new NetTask(getActivity()) {
                 @Override
@@ -101,11 +106,11 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
                     if (response.isSuccess()) {
                         JSONObject jo = response.jSONFromData();
                         idle = JSONUtil.getBoolean(jo, "idle");
-                        if (idle == true){
+                        if (idle == true) {
                             free_ck.setChecked(true);
                             freeT.setText("无聊中～小伙伴可以邀你～");
 //                            System.out.println("youkong");
-                        }else{
+                        } else {
                             free_ck.setChecked(false);
 //                            System.out.println("没空");
                             freeT.setText("忙碌中～小伙伴不可约你～");
@@ -114,7 +119,7 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
                     }
                 }
             });
-        }else{
+        } else {
             free_ck.setChecked(true);
             freeT.setText("无聊中～小伙伴可以邀你～");
         }
@@ -123,43 +128,43 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
             public void onCheckedChanged(CompoundButton compoundButton, final boolean b) {
 
 //                if (User.getInstance().isLogin()) {
-                    UserInfoManage.getInstance().checkLogin(getActivity(),
-                            new UserInfoManage.LoginCallBack() {
-                                @Override
-                                public void onisLogin() {
-                                    if (b == true) {
+                UserInfoManage.getInstance().checkLogin(getActivity(),
+                        new UserInfoManage.LoginCallBack() {
+                            @Override
+                            public void onisLogin() {
+                                if (b == true) {
 //                                        System.out.println("有空");
-                                        DhNet net = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId() + "/info?token=" + user.getToken());
-                                        net.addParam("idle", true);
-                                        net.doPostInDialog(new NetTask(getActivity()) {
-                                            @Override
-                                            public void doInUI(Response response, Integer transfer) {
-                                                if (response.isSuccess()) {
-                                                    System.out.println(response.isSuccess());
-                                                    freeT.setText("无聊中～小伙伴可以邀你～");
-                                                }
+                                    DhNet net = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId() + "/info?token=" + user.getToken());
+                                    net.addParam("idle", true);
+                                    net.doPostInDialog(new NetTask(getActivity()) {
+                                        @Override
+                                        public void doInUI(Response response, Integer transfer) {
+                                            if (response.isSuccess()) {
+                                                System.out.println(response.isSuccess());
+                                                freeT.setText("无聊中～小伙伴可以邀你～");
                                             }
-                                        });
-                                    } else {
+                                        }
+                                    });
+                                } else {
 //                                        System.out.println("没空");
-                                        DhNet net = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId() + "/info?token=" + user.getToken());
-                                        net.addParam("idle", false);
-                                        net.doPostInDialog(new NetTask(getActivity()) {
-                                            @Override
-                                            public void doInUI(Response response, Integer transfer) {
-                                                if (response.isSuccess()) {
-                                                    System.out.println(response.isSuccess());
-                                                    freeT.setText("忙碌中～小伙伴不可约你～");
-                                                }
+                                    DhNet net = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId() + "/info?token=" + user.getToken());
+                                    net.addParam("idle", false);
+                                    net.doPostInDialog(new NetTask(getActivity()) {
+                                        @Override
+                                        public void doInUI(Response response, Integer transfer) {
+                                            if (response.isSuccess()) {
+                                                System.out.println(response.isSuccess());
+                                                freeT.setText("忙碌中～小伙伴不可约你～");
                                             }
-                                        });
-                                    }
+                                        }
+                                    });
                                 }
+                            }
 
-                                @Override
-                                public void onLoginFail() {
-                                }
-                            });
+                            @Override
+                            public void onLoginFail() {
+                            }
+                        });
 //                }
             }
 
@@ -177,7 +182,7 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
                 animButtonView.startScaleAnimation();
             }
         });
-        
+
         mRecyclerView = listV.getRefreshableView();
         adapter = new NearListAdapter(getActivity());
         adapter.setOnItemClick(new NearListAdapter.OnItemClick() {
@@ -202,6 +207,45 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
             }
         });
         mRecyclerView.setAdapter(adapter);
+        mRecyclerView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                    // System.out.println("MOVE");  //接触到ListView移动时
+                    final int action = event.getAction();
+                    switch (action & MotionEvent.ACTION_MASK) {
+                        case MotionEvent.ACTION_MOVE:
+                            final int y = (int) event.getY();
+                            if (y > mLastY){ // 向下
+                                freeisshow = View.VISIBLE;
+                            }
+                            else{ // 向上
+                                freeisshow = View.GONE;
+                            }
+                            mLastY = y;
+                            break;
+                    }
+                }
+                else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    // System.out.println("up");   //离开ListView时
+                    int isshow=free_layout.getVisibility();
+                    if (!(isshow==freeisshow)) {
+                        if (freeisshow == View.VISIBLE) {
+                            free_layout.setVisibility(freeisshow);
+                            free_layout.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.translate_down_current));
+                        } else {
+                            free_layout.setVisibility(freeisshow);
+                            free_layout.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.translate_up));
+                        }
+                    }
+                }
+//                else if (event.getAction() == MotionEvent.ACTION_DOWN) {
+//                    free_layout.setVisibility(View.VISIBLE);
+//                    // System.out.println("down");   //接触到ListView时
+//                }
+                return false;
+            }
+        });
         setOnLoadSuccess(this);
         fromWhat("data");
         setUrl(API2.CWBaseurl + "activity/list?");

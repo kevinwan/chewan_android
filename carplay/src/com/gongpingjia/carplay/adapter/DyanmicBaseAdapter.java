@@ -348,7 +348,14 @@ public class DyanmicBaseAdapter extends BaseAdapter {
                 }
             });
 
-            ViewUtil.bindNetImage(holder.activity_beijing, JSONUtil.getString(js, "avatar"), "back");
+//            ViewUtil.bindNetImage(holder.activity_beijing, JSONUtil.getString(js, "avatar"), "default");
+            try {
+                JSONArray coversJSa = jo.getJSONArray("covers");
+                String picUrl = coversJSa.getString(0);
+                ViewUtil.bindNetImage(holder.activity_beijing, picUrl, "default");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             String message = JSONUtil.getString(jo, "message");
             if (!message.isEmpty()) {
                 holder.inviteT.setVisibility(View.VISIBLE);
@@ -505,7 +512,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
                 officialHolder.unlimitedlayoutL.setVisibility(View.VISIBLE);
                 ViewUtil.bindView(officialHolder.unparticipateT, CarPlayUtil.setTextColor(mContext, JSONUtil.getInt(jo, "nowJoinNum") + " / ", JSONUtil.getInt(jo, "nowJoinNum") + " / " + "人数不限", R.color.text_grey));
             }
-            ViewUtil.bindNetImage(officialHolder.picI, JSONUtil.getString(organizerJo, "avatar"), "head");
+//            ViewUtil.bindNetImage(officialHolder.picI, JSONUtil.getString(organizerJo, "avatar"), "default");
             try {
                 JSONArray coversJSa = jo.getJSONArray("covers");
                 String picUrl = coversJSa.getString(0);
