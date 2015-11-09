@@ -255,7 +255,7 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
         addParams("latitude", location.getLatitude());
         addParams("longitude", location.getLongitude());
         addParams("maxDistance", "5000000");
-        addParams("majorType", pre.getType());
+        addParams("majorType", CarPlayUtil.getTypeName(pre.getType()));
         addParams("pay", pre.getPay());
         addParams("gender", pre.getGender());
         addParams("transfer", pre.isTransfer());

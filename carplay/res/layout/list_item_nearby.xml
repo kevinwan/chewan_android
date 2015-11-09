@@ -201,6 +201,9 @@
             <TextView
                 android:id="@+id/location"
                 style="@style/text_grey_small"
+                android:maxWidth="230dp"
+                android:singleLine="true"
+                android:ellipsize="end"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:text="南京邮电大学" />

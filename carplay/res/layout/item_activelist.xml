@@ -154,6 +154,9 @@
             <TextView
                 android:id="@+id/activity_place"
                 style="@style/text_grey_small"
+                android:maxWidth="230dp"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:text="北京烤鸭大酒店" />
 
             <LinearLayout
