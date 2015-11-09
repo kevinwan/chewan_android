@@ -52,7 +52,7 @@
 
                 <TextView
                     android:id="@+id/visitors_name"
-                    style="@style/text_black_big"
+                    style="@style/text_black_medium"
                     android:layout_marginRight="10dp"
                     android:text="哈哈" />
                 <RelativeLayout

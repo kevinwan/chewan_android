@@ -207,7 +207,7 @@
         android:orientation="horizontal">
 
         <TextView
-            style="@style/text_black_big"
+            style="@style/text_black_medium"
             android:layout_marginLeft="12dp"
             android:text="参与成员" />
 

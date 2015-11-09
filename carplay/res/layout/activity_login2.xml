@@ -31,6 +31,7 @@
             android:drawableLeft="@drawable/ic_phone"
             android:hint="手机号"
             android:textColorHint="@color/text_hint_grey"
+            android:textSize="@dimen/text_medium"
             android:drawablePadding="10dp"
             android:inputType="phone"
             android:textColor="@color/text_red" />
@@ -52,6 +53,7 @@
                 android:drawableLeft="@drawable/ic_lock"
                 android:hint="密码"
                 android:textColorHint="@color/text_hint_grey"
+                android:textSize="@dimen/text_medium"
                 android:drawablePadding="10dp"
                 android:inputType="textPassword"
                 android:textColor="@color/text_red" />

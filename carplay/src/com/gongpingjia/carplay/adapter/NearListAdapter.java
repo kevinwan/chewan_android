@@ -21,6 +21,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -229,6 +230,7 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
                     if (!API2.imageHeightInit) {
                         API2.ImageHeight = holder.active_bg.getHeight();
                         API2.imageHeightInit = true;
+                        Log.d("msg", " API2.imageHeightInit:" + API2.ImageHeight);
                     }
                 }
 
@@ -277,9 +279,9 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
             holder.location.setText("地点待定");
         } else {
             if (district.equals(street)) {
-                holder.location.setText(JSONUtil.getString(distancejo, "city")  + JSONUtil.getString(distancejo, "district"));
+                holder.location.setText(JSONUtil.getString(distancejo, "city") + JSONUtil.getString(distancejo, "district"));
             } else {
-                holder.location.setText(JSONUtil.getString(distancejo, "city")  + JSONUtil.getString(distancejo, "district") + JSONUtil.getString(distancejo, "street"));
+                holder.location.setText(JSONUtil.getString(distancejo, "city") + JSONUtil.getString(distancejo, "district") + JSONUtil.getString(distancejo, "street"));
             }
 
         }
@@ -342,7 +344,7 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
             switch (v.getId()) {
                 //上传
                 case R.id.upload:
-                    UserInfoManage.getInstance().checkLogin((Activity)mContext, new UserInfoManage.LoginCallBack() {
+                    UserInfoManage.getInstance().checkLogin((Activity) mContext, new UserInfoManage.LoginCallBack() {
                         @Override
                         public void onisLogin() {
                             if (uploadFlag) {

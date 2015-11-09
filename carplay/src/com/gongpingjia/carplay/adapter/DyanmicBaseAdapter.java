@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -147,9 +148,9 @@ public class DyanmicBaseAdapter extends BaseAdapter {
 
                 holder.activity_distance = (TextView) view.findViewById(R.id.active_distance);
                 view.setTag(holder);
-                FrameLayout.LayoutParams pams = (FrameLayout.LayoutParams) holder.layoutV.getLayoutParams();
-                pams.height = API2.ImageHeight;
-                holder.layoutV.setLayoutParams(pams);
+                FrameLayout.LayoutParams pam = (FrameLayout.LayoutParams) holder.layoutV.getLayoutParams();
+                pam.height = API2.ImageHeight;
+                holder.layoutV.setLayoutParams(pam);
             } else {
                 view = LayoutInflater.from(mContext).inflate(R.layout.item_offical, viewGroup, false);
                 officialHolder = new OfficialHolder();
@@ -173,9 +174,10 @@ public class DyanmicBaseAdapter extends BaseAdapter {
                 officialHolder.cityT = (TextView) view.findViewById(R.id.city);
                 officialHolder.layoutV = (RelativeLayout) view.findViewById(R.id.layout);
                 view.setTag(officialHolder);
-                LinearLayout.LayoutParams pams = (LinearLayout.LayoutParams) officialHolder.layoutV.getLayoutParams();
-                pams.height = API2.ImageHeight;
-                officialHolder.layoutV.setLayoutParams(pams);
+                LinearLayout.LayoutParams pam = (LinearLayout.LayoutParams) officialHolder.layoutV.getLayoutParams();
+                pam.height = API2.ImageHeight;
+                Log.d("msg"," API2.ImageHeight:"+ API2.ImageHeight);
+                officialHolder.layoutV.setLayoutParams(pam);
 
             }
 //
