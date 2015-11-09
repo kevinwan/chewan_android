@@ -220,6 +220,8 @@
                                 android:layout_width="8dp"
                                 android:layout_height="8dp"
                                 android:layout_alignParentRight="true"
+                                android:layout_marginRight="2dp"
+                                android:layout_marginTop="3dp"
                                 android:src="@drawable/red_point"
                                 android:visibility="gone" />
 
@@ -228,6 +230,8 @@
                                 android:layout_width="8dp"
                                 android:layout_height="8dp"
                                 android:layout_alignParentRight="true"
+                                android:layout_marginRight="2dp"
+                                android:layout_marginTop="3dp"
                                 android:src="@drawable/red_point"
                                 android:visibility="gone" />
                         </RelativeLayout>
@@ -289,7 +293,6 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="15dp"
                     android:src="@drawable/icon_nav_center" />
-
 
 
             </RelativeLayout>

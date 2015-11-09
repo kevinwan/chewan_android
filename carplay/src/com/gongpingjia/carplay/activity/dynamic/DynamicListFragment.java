@@ -28,6 +28,7 @@ import com.gongpingjia.carplay.activity.my.OfficialMessageActivity;
 import com.gongpingjia.carplay.activity.my.VisitorsActivity;
 import com.gongpingjia.carplay.adapter.FragmentMsgAdapter;
 import com.gongpingjia.carplay.util.CarPlayPerference;
+import com.gongpingjia.carplay.view.dialog.DynamicDelDialog;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
@@ -109,6 +110,28 @@ public class DynamicListFragment extends CarPlayBaseFragment implements PullToRe
             }
         });
         listV.setAdapter(mAdapter);
+        listV.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                DynamicDelDialog dialog = new DynamicDelDialog(getActivity());
+                dialog.setOnCLickResult(new DynamicDelDialog.OnCLickResult() {
+                    @Override
+                    public void clickResult() {
+                        int currentPosition = position - 1;
+                        EMConversation conversation = mAdapter.getItem(currentPosition);
+                        conversation.clear();
+                        conversationList.remove(currentPosition);
+                        mAdapter.notifyDataSetChanged();
+                    }
+                });
+
+                dialog.show();
+
+                return true;
+            }
+        });
+
+
         listV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

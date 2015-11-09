@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:paddingTop="12dp"
     android:gravity="center"
+    android:background="@drawable/bg_s"
     android:orientation="vertical">
     <!--<com.andexert.library.RippleView-->
         <!--rv_centered="true"-->

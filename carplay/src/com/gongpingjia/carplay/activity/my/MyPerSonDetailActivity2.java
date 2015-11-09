@@ -436,7 +436,7 @@ public class MyPerSonDetailActivity2 extends CarPlayBaseActivity implements View
 
     private void uploadHead(String path) {
 
-        Bitmap bmp = PhotoUtil.getLocalImage(new File(path));
+//        Bitmap bmp = PhotoUtil.getLocalImage(new File(path));
 //        addPhoto.setImageBitmap(bmp);
         DhNet net = new DhNet(API2.CWBaseurl + "user/" + user.getUserId() + "/album/upload?token=" + user.getToken());
         net.upload(new FileInfo("attach", new File(path)), new NetTask(self) {

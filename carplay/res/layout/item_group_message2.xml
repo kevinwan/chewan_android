@@ -2,16 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="@drawable/bg_s"
     android:gravity="center"
-    android:paddingTop="12dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingTop="12dp">
 
     <LinearLayout
         android:id="@+id/leave_comments_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_s"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingLeft="12dp"
@@ -62,10 +61,9 @@
                 <TextView
                     android:id="@+id/title"
                     style="@style/text_black_medium"
-                    android:maxWidth="200dp"
                     android:ellipsize="end"
-                    android:singleLine="true"
-                    android:text="陈小小" />
+                    android:maxWidth="120dp"
+                    android:singleLine="true" />
 
                 <RelativeLayout
                     android:layout_width="0dp"
@@ -106,13 +104,13 @@
                     android:layout_weight="1"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:paddingRight="5dp"
-                    android:text="包接送吗？" />
+                    android:paddingRight="5dp"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
-    <View style="@style/line_horizontal"
-        android:layout_marginTop="12dp"/>
+    <View
+        style="@style/line_horizontal"
+        android:layout_marginTop="12dp" />
 
 </LinearLayout>
