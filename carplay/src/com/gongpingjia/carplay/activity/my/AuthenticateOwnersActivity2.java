@@ -15,6 +15,7 @@ import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.User;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
@@ -58,7 +59,7 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
     String[] strid;
     String[] strs;
     String[] strsid;
-    String license = "";
+//    String license = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,9 +93,9 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
         if (bundle != null) {
             isAuthenticated = bundle.getString("licenseAuthStatus");
             carModel = bundle.getString("carModel");
-            license = bundle.getString("license");
+//            license = bundle.getString("license");
         }
-        System.out.println("第一个......"+ bundle.getString("driverLicenseURL")+"第二个"+bundle.getString("drivingLicenseURL"));
+        System.out.println("第一个......" + bundle.getString("driverLicenseURL") + "第二个" + bundle.getString("drivingLicenseURL"));
         switch (isAuthenticated) {
             // 未认证
             case "未认证":
@@ -124,9 +125,21 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
                 up_button.setEnabled(false);
                 carName.setText(bundle.getString("carmodel"));
                 up_button.setBackgroundResource(R.drawable.btn_grey_fillet);
+//                boolean cleandriverCache = ImageLoader.getInstance().getDiskCache()
+//                        .remove(bundle.getString("driverLicenseURL"));
+//                Bitmap cleandriverBitmapL = ImageLoader.getInstance().getMemoryCache()
+//                        .remove(bundle.getString("driverLicenseURL"));
+//
+//                boolean drivingCache = ImageLoader.getInstance().getDiskCache()
+//                        .remove(bundle.getString("drivingLicenseURL"));
+//                Bitmap drivingBitmap = ImageLoader.getInstance().getMemoryCache()
+//                        .remove(bundle.getString("drivingLicenseURL"));
+
+                ImageLoader.getInstance().getMemoryCache().clear();
+                ImageLoader.getInstance().getDiskCache().clear();
+
                 ViewUtil.bindNetImage(driver_img, bundle.getString("driverLicenseURL"), "default");
                 ViewUtil.bindNetImage(driving_img, bundle.getString("drivingLicenseURL"), "default");
-
                 drivinglicense_up.setEnabled(false);
                 driverlicense_up.setEnabled(false);
                 brandchoice.setEnabled(false);
@@ -163,6 +176,7 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
 
     }
 
+    //上传行驶证
     private void updrivingPic(String path) {
         Bitmap bmp = PhotoUtil.getLocalImage(new File(path));
         driving_img.setImageBitmap(bmp);
@@ -176,11 +190,6 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
                     JSONObject jo = response.jSONFromData();
                     picUid = JSONUtil.getString(jo, "photoId");
                     imgs = JSONUtil.getString(jo, "photoUrl");
-//                    boolean a = ImageLoader.getInstance().getDiskCache()
-//                            .remove(imgs);
-//                    Bitmap b = ImageLoader.getInstance().getMemoryCache()
-//                            .remove(imgs);
-                    System.out.println("第二张......行驶证："+JSONUtil.getString(jo, "photoId"));
 //                    System.out.println("********" + JSONUtil.getString(jo, "photoUrl"));
 //                    Toast.makeText(self, "111" + JSONUtil.getString(jo, "photoUrl"), Toast.LENGTH_SHORT).show();
                 } else {
@@ -191,6 +200,7 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
         });
     }
 
+    //上传驾驶证
     private void updriverPic(String path) {
         Bitmap bmp = PhotoUtil.getLocalImage(new File(path));
         driver_img.setImageBitmap(bmp);
@@ -203,12 +213,8 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
                 if (response.isSuccess()) {
                     JSONObject jo = response.jSONFromData();
                     picUids = JSONUtil.getString(jo, "photoId");
-                    System.out.println("第一张......驾驶证："+JSONUtil.getString(jo, "photoId"));
+                    System.out.println("第一张......驾驶证：" + JSONUtil.getString(jo, "photoId"));
                     img = JSONUtil.getString(jo, "photoUrl");
-//                    boolean a = ImageLoader.getInstance().getDiskCache()
-//                            .remove(img);
-//                    Bitmap b = ImageLoader.getInstance().getMemoryCache()
-//                            .remove(img);
 //                    Toast.makeText(self, "2222" + response.isSuccess(), Toast.LENGTH_SHORT).show();
                 } else {
                     showToast("上传失败，请重新上传");
@@ -248,7 +254,7 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
                             showToast("认证车主申请成功,请等待审核!");
                             Intent it = getIntent();
                             it.putExtra("statuss", "认证中");
-                            it.putExtra("driver",img);
+                            it.putExtra("driver", img);
                             it.putExtra("driving", imgs);
                             it.putExtra("carName", modelName);
                             setResult(self.RESULT_OK, it);
@@ -336,7 +342,7 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
                     if (brnd != null) {
                         brandLogo = brnd[brnd.length - 1];
                     }
-                    Log.d("msg", "brandLogo:"+brandLogo);
+                    Log.d("msg", "brandLogo:" + brandLogo);
                     modelName = data.getStringExtra("modelName");
                     modelSlug = data.getStringExtra("modelSlug");
                     carName.setText(modelName);
