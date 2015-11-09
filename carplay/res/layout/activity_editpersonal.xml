@@ -85,7 +85,7 @@
                     <!--android:singleLine="true" />-->
                     <TextView
                         android:id="@+id/nickname"
-                        style="@style/text_blacklight_medium"
+                        style="@style/text_black_medium"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
                         android:background="@color/nothing"

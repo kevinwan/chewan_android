@@ -15,6 +15,7 @@ import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.User;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
@@ -173,6 +174,10 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
                     JSONObject jo = response.jSONFromData();
                     picUid = JSONUtil.getString(jo, "photoId");
                     imgs = JSONUtil.getString(jo, "photoUrl");
+                    boolean a = ImageLoader.getInstance().getDiskCache()
+                            .remove(imgs);
+                    Bitmap b = ImageLoader.getInstance().getMemoryCache()
+                            .remove(imgs);
 //                    System.out.println("行驶证："+JSONUtil.getString(jo, "photoId"));
 
 //                    System.out.println("********" + JSONUtil.getString(jo, "photoUrl"));
@@ -284,7 +289,7 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
 //                    str[0] = imgs;
 //                    strid = new String[1];
 //                    strid [0] = picUid;
-////                    System.out.println("++++++++++"+str[0]);
+//////                    System.out.println("++++++++++"+str[0]);
 //                    it.putExtra("imgurls", str);
 //                    it.putExtra("imgids", strid);
 //                    startActivity(it);

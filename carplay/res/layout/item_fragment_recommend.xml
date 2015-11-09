@@ -87,7 +87,7 @@
 
                 <TextView
                     android:id="@+id/unparticipate"
-                    style="@style/text_black_small"
+                    style="@style/text_black_smaller"
                     android:layout_marginRight="5dp"
                     android:text="12/14" />
 
@@ -146,7 +146,7 @@
                 <TextView
                     android:id="@+id/city"
                     style="@style/text_black_small"
-                    android:lineSpacingMultiplier="1.3"
+                    android:lineSpacingExtra="5dp"
                     android:minLines="2"
                     android:maxLines="2"
                     android:ellipsize="end"

@@ -55,7 +55,7 @@
 
                 <TextView
                     android:id="@+id/participate_woman"
-                    style="@style/text_black_small"
+                    style="@style/text_black_smaller"
                     android:text="12/14" />
 
                 <ImageView
@@ -67,7 +67,7 @@
 
                 <TextView
                     android:id="@+id/participate_man"
-                    style="@style/text_black_small"
+                    style="@style/text_black_smaller"
                     android:layout_marginRight="5dp"
                     android:text="12/14" />
 
@@ -91,7 +91,7 @@
 
                 <TextView
                     android:id="@+id/unparticipate"
-                    style="@style/text_black_small"
+                    style="@style/text_black_smaller"
                     android:layout_marginRight="5dp"
                     android:text="12/14" />
 

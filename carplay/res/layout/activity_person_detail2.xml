@@ -65,17 +65,17 @@
 
             <TextView
                 android:id="@+id/attention"
-                style="@style/text_white_small"
+                style="@style/text_white_smaller"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="125dp"
                 android:background="@drawable/radio_sex_man_focused"
                 android:gravity="center"
-                android:paddingBottom="4dp"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:paddingTop="4dp"
+                android:paddingBottom="3dp"
+                android:paddingLeft="13dp"
+                android:paddingRight="13dp"
+                android:paddingTop="3dp"
                 android:text="未认证"
                  />
 
@@ -194,7 +194,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="18dp"
-                android:paddingLeft="10dp"
                 android:paddingTop="18dp">
 
                 <android.support.v7.widget.RecyclerView
@@ -202,7 +201,7 @@
                     android:layout_width="match_parent"
                     android:scrollbars="horizontal"
                     android:layout_height="77dp"
-                    android:layout_marginLeft="10dp"/>
+                    android:paddingLeft="10dp"/>
 
             </LinearLayout>
         </LinearLayout>

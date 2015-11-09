@@ -201,7 +201,7 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
                             img.setImageBitmap(bitmap);
                             Blurry.with(self)
                                     .radius(10)
-                                    .sampling(4)
+                                    .sampling(8)
                                     .async()
                                     .capture(img)
                                     .into(img);

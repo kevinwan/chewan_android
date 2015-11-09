@@ -8,15 +8,6 @@
 
     <include layout="@layout/include_title_bar" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/line_grey"
-        android:gravity="center_horizontal"
-        android:paddingBottom="12dp"
-        android:paddingTop="12dp">
-
-    </LinearLayout>
 
     <include layout="@layout/include_refreshlistview2" />
 

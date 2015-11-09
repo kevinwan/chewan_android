@@ -69,8 +69,8 @@
             android:text="喜欢我们打分鼓励" />
 
         <ImageView
-            android:layout_width="18dp"
-            android:layout_height="22dp"
+            android:layout_width="15dp"
+            android:layout_height="20dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="5dp"
@@ -103,8 +103,8 @@
             android:text="关于我们" />
 
         <ImageView
-            android:layout_width="18dp"
-            android:layout_height="22dp"
+            android:layout_width="15dp"
+            android:layout_height="20dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="5dp"
@@ -137,8 +137,8 @@
             android:text="版本介绍" />
 
         <ImageView
-            android:layout_width="18dp"
-            android:layout_height="22dp"
+            android:layout_width="15dp"
+            android:layout_height="20dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="5dp"
@@ -172,8 +172,8 @@
 
         <ImageView
             android:id="@+id/versions_icon"
-            android:layout_width="18dp"
-            android:layout_height="22dp"
+            android:layout_width="15dp"
+            android:layout_height="20dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="5dp"
@@ -212,8 +212,8 @@
             android:text="修改密码" />
 
         <ImageView
-            android:layout_width="18dp"
-            android:layout_height="22dp"
+            android:layout_width="15dp"
+            android:layout_height="20dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="5dp"
