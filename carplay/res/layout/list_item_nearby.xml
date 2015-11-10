@@ -91,7 +91,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
                 android:text="请我吧 "
                 android:textSize="@dimen/text_smaller"
                 android:textColor="@color/text_red" />
@@ -101,6 +100,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="包接送 "
+                android:layout_marginLeft="12dp"
                 android:textSize="@dimen/text_smaller"
                 android:textColor="@color/text_skyblue" />
         </LinearLayout>
@@ -126,6 +126,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_toLeftOf="@+id/phtoto"
                 android:layout_marginRight="25dp"
+                android:gravity="center"
                 android:text="上传照片即可查看Ta的照片哟~"/>
 
 

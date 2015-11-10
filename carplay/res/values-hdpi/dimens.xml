@@ -10,7 +10,7 @@
     <dimen name="text_title">16sp</dimen>
     <dimen name="text_big">14sp</dimen>
     <dimen name="text_medium">13sp</dimen>
-    <dimen name="text_small">12sp</dimen>
+    <dimen name="text_small">11sp</dimen>
     <dimen name="text_smallest">10sp</dimen>
     <dimen name="text_hot_small">12sp</dimen>
     <dimen name="text_smaller">10sp</dimen>

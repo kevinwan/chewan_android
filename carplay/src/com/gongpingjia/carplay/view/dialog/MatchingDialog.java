@@ -9,6 +9,8 @@ import android.widget.CheckBox;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +41,7 @@ public class MatchingDialog extends BaseAlertDialog {
 
     private List<Matching> mDatas;
     private CheckBox checkBox;
+    private RadioGroup paygroup;
     private TextView textDestination;
     private Context context;
 
@@ -93,6 +96,7 @@ public class MatchingDialog extends BaseAlertDialog {
 
         checkBox = (CheckBox) findViewById(R.id.chk_pick);
         textDestination = (TextView) findViewById(R.id.tv_destination);
+        paygroup = (RadioGroup) findViewById(R.id.paygroup);
         per = IocContainer.getShare().get(CarPlayPerference.class);
         per.load();
         if (per.isShowDialogGuilde == 0) {
@@ -144,6 +148,13 @@ public class MatchingDialog extends BaseAlertDialog {
             gridView.setAdapter(mAdapter);
         }
 
+        if (dialogType == 0) {
+            paygroup.setVisibility(View.GONE);
+        } else {
+            paygroup.setVisibility(View.VISIBLE);
+            paygroup.check(R.id.pay_aa);
+        }
+
         btnMatch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -169,15 +180,18 @@ public class MatchingDialog extends BaseAlertDialog {
                 } else {
                     if (dialogType == 0) {
                         dhNet.addParam("majorType", "运动");
+                        dhNet.addParam("pay","");
+                        paygroup.setVisibility(View.GONE);
                     } else {
                         dhNet.addParam("majorType", "桌游");
+                        paygroup.setVisibility(View.VISIBLE);
+                        String pay=((RadioButton)findViewById(paygroup.getCheckedRadioButtonId())).getText().toString();
+                        dhNet.addParam("pay", pay);
                     }
                 }
                 dhNet.addParam("type", CarPlayUtil.getTypeName(type));
                 dhNet.addParam("transfer", pickOrNot);
 
-                //暂时写死
-                dhNet.addParam("pay", "我请客");
 
 
                 //目的地信息

@@ -75,7 +75,6 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
     JSONObject distancejo;
     boolean transfer;
     String name;
-    String activetype;
 
     public int type = 0;
 
@@ -166,7 +165,7 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
         JSONObject carjo = JSONUtil.getJSONObject(userjo, "car");
         JSONArray albumjsa = JSONUtil.getJSONArray(userjo, "album");
         //昵称,活动类型,年龄,性别,头像
-        activetype = JSONUtil.getString(jo, "type");
+        String activetype = JSONUtil.getString(jo, "type");
         holder.nickname.setText(JSONUtil.getString(userjo, "nickname") + "想找人" + activetype);
         holder.age.setText(JSONUtil.getInt(userjo, "age") + "");
         String sex = JSONUtil.getString(userjo, "gender");
@@ -254,6 +253,7 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
 //        holder.attention.setImageResource(JSONUtil.getBoolean(userjo, "subscribeFlag") ? R.drawable.icon_hearted : R.drawable.icon_heart);
 //        holder.attention.setOnClickListener(new MyOnClick(holder, position));
         transfer = JSONUtil.getBoolean(jo, "transfer");
+        isShowPay(activetype,holder);
         pay = JSONUtil.getString(jo, "pay");
         holder.pay.setText(pay);
         if (transfer) {
@@ -511,6 +511,17 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
                 }
             }
         });
+    }
+
+    //type 为 遛狗 运动 购物 则不显示付费类型
+    private void isShowPay(String type,SimpleViewHolder holder){
+        String sType = CarPlayUtil.getTypeName(type);
+        if ("遛狗".equals(sType)||"购物".equals(sType)||"踢球".equals(sType)||"打篮球".equals(sType)||"打羽毛球".equals(sType)||"玩桌球".equals(sType)||"健身".equals(sType)){
+            holder.pay.setVisibility(View.GONE);
+        }else {
+            holder.pay.setVisibility(View.VISIBLE);
+        }
+
     }
 
 

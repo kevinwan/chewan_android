@@ -54,12 +54,48 @@
                 android:layout_height="40dp"
                 android:layout_marginTop="28dp"
                 android:background="@drawable/edittext_bg"
-                android:gravity="center"
                 android:hint="什么地方(选填)"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
                 android:textColor="@color/text_black"
                 android:textSize="@dimen/text_small" />
+
+            <RadioGroup
+                android:id="@+id/paygroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@null"
+                    android:drawableLeft="@drawable/radio_checked"
+                    android:drawablePadding="5dp"
+                    android:text="我请客"
+                    android:layout_weight="1"
+                    android:textColor="@color/dialog_blue_text" />
+                <RadioButton
+                    android:id="@+id/pay_aa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@null"
+                    android:drawableLeft="@drawable/radio_checked"
+                    android:drawablePadding="5dp"
+                    android:text="AA制"
+                    android:layout_weight="1"
+                    android:textColor="@color/dialog_blue_text" />
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@null"
+                    android:drawableLeft="@drawable/radio_checked"
+                    android:drawablePadding="5dp"
+                    android:text="请我吧"
+                    android:layout_weight="1"
+                    android:textColor="@color/dialog_blue_text" />
+            </RadioGroup>
 
             <CheckBox
                 android:id="@+id/chk_pick"

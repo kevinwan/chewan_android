@@ -27,7 +27,7 @@
     <RelativeLayout
         android:layout_width="185dp"
         android:layout_height="wrap_content"
-        android:paddingTop="30dp"
+        android:paddingTop="15dp"
         android:layout_below="@id/attestationlayout"
         android:layout_centerHorizontal="true">
         <ImageView
