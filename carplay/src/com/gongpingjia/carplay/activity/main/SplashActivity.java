@@ -118,6 +118,12 @@ public class SplashActivity extends CarPlayBaseActivity {
                     startActivity(it);
                 }
             }
+
+            @Override
+            public void onErray(Response response) {
+                super.onErray(response);
+                notFirst();
+            }
         });
     }
 

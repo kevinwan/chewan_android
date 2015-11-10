@@ -4,7 +4,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -83,7 +85,32 @@ public class BoundPhoneActivity extends CarPlayBaseActivity implements View.OnCl
         bphone_passwordE = (EditText) findViewById(R.id.bphone_password);
         mBtnGetVerification.setOnClickListener(this);
         mBtnFinish.setOnClickListener(this);
+        TextWatcher mEditText = new TextWatcher() {
+            private CharSequence temp;
+
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (mEditPhone.getText().length() == 11) {
+                    getPhoneIsRegister(mEditPhone.getText().toString());
+                }
+
+            }
+        };
+        mEditPhone.addTextChangedListener(mEditText);
+
+
     }
+
 
     @Override
     public void onClick(View view) {
@@ -92,7 +119,17 @@ public class BoundPhoneActivity extends CarPlayBaseActivity implements View.OnCl
         String password = mEditPassword.getText().toString().trim();
         switch (view.getId()) {
             case R.id.bphone_get_verification:
-                getVerification(phone);
+                if (TextUtils.isEmpty(phone)) {
+                    showToast("手机号不能为空");
+                    return;
+                }
+
+                if (phone.length() != 11) {
+                    showToast("手机号不合法");
+                    return;
+                }
+                getCode(phone);
+//                getVerification(phone);
                 break;
             case R.id.btn_finish:
                 if (TextUtils.isEmpty(verification)) {
@@ -161,14 +198,13 @@ public class BoundPhoneActivity extends CarPlayBaseActivity implements View.OnCl
 
     private void getPhoneIsRegister(final String phone) {
         DhNet net = new DhNet(API2.phoneisRegister(phone));
-        net.doGet(new NetTask(self) {
+        net.doGetInDialog(new NetTask(self) {
             @Override
             public void doInUI(Response response, Integer transfer) {
                 if (response.isSuccess()) {
                     JSONObject jo = response.jSONFromData();
                     phoneisRegister = JSONUtil.getBoolean(jo, "exist");
                     findViewById(R.id.password_layout).setVisibility(phoneisRegister ? View.GONE : View.VISIBLE);
-                    getCode(phone);
                 }
             }
         });
