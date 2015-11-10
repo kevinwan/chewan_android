@@ -40,9 +40,8 @@
                 <TextView
                     android:id="@+id/dynamic_type"
                     style="@style/text_black_medium"
-                    android:textColor="@color/text_orange"
                     android:singleLine="true"
-                    android:text="活动" />
+                     />
 
                 <ImageView
                     android:id="@+id/certification_achievement"
