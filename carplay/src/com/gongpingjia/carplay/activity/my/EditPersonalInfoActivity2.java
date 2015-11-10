@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.api.API2;
@@ -82,7 +83,7 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
     ImageView car_img, head_img;
     Intent myIntent;
     String car_driverLicenseURL, car_drivingLicenseURL, licenseAuthStatus;
-    String carName,status,photoUrl;
+    String carName, status, photoUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,8 +103,8 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
         car_drivingLicenseURL = myIntent.getStringExtra("drivingLicenseURL");
         licenseAuthStatus = myIntent.getStringExtra("licenseAuthStatus");
         carName = myIntent.getStringExtra("carmodel");
-         status = myIntent.getStringExtra("status");
-         photoUrl = myIntent.getStringExtra("photoUrl");
+        status = myIntent.getStringExtra("status");
+        photoUrl = myIntent.getStringExtra("photoUrl");
         View backV = findViewById(R.id.backLayout);
 //        right_txt = (TextView) findViewById(R.id.right_text);
 //        right_txt.setVisibility(View.VISIBLE);
@@ -146,7 +147,7 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
         }
         if (getIntent().getStringExtra("photoId") != null) {
             ImageLoader.getInstance().displayImage(
-                    getIntent().getStringExtra("photoUrl"), headI);
+                    getIntent().getStringExtra("photoUrl"), headI, CarPlayValueFix.optionsDefault);
 
             photoUid = getIntent().getStringExtra("photoId");
         }
@@ -416,9 +417,9 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
             case R.id.approve_layout_head:
 //                showToast("头像认证");
                 Intent intent = new Intent(self, HeadAttestationActivity.class);
-                intent.putExtra("status",status);
-                intent.putExtra("photoUrl",photoUrl);
-                System.out.println("头像认证"+photoUrl);
+                intent.putExtra("status", status);
+                intent.putExtra("photoUrl", photoUrl);
+                System.out.println("头像认证" + photoUrl);
                 startActivityForResult(intent, APPROVE_HEAD);
 
                 break;

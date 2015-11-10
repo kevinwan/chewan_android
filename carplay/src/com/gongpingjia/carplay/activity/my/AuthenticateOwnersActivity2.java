@@ -125,18 +125,10 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
                 up_button.setEnabled(false);
                 carName.setText(bundle.getString("carmodel"));
                 up_button.setBackgroundResource(R.drawable.btn_grey_fillet);
-//                boolean cleandriverCache = ImageLoader.getInstance().getDiskCache()
-//                        .remove(bundle.getString("driverLicenseURL"));
-//                Bitmap cleandriverBitmapL = ImageLoader.getInstance().getMemoryCache()
-//                        .remove(bundle.getString("driverLicenseURL"));
-//
-//                boolean drivingCache = ImageLoader.getInstance().getDiskCache()
-//                        .remove(bundle.getString("drivingLicenseURL"));
-//                Bitmap drivingBitmap = ImageLoader.getInstance().getMemoryCache()
-//                        .remove(bundle.getString("drivingLicenseURL"));
 
-                ImageLoader.getInstance().getMemoryCache().clear();
-                ImageLoader.getInstance().getDiskCache().clear();
+//                ImageLoader.getInstance().getMemoryCache().clear();
+//                ImageLoader.getInstance().getDiskCache().clear();
+
 
                 ViewUtil.bindNetImage(driver_img, bundle.getString("driverLicenseURL"), "default");
                 ViewUtil.bindNetImage(driving_img, bundle.getString("drivingLicenseURL"), "default");
@@ -151,13 +143,24 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
 //                icon_bI.setVisibility(View.INVISIBLE);
                 break;
             case "认证未通过":
+
+                boolean cleandriverCache = ImageLoader.getInstance().getDiskCache()
+                        .remove(bundle.getString("driverLicenseURL"));
+                Bitmap cleandriverBitmapL = ImageLoader.getInstance().getMemoryCache()
+                        .remove(bundle.getString("driverLicenseURL"));
+
+                boolean drivingCache = ImageLoader.getInstance().getDiskCache()
+                        .remove(bundle.getString("drivingLicenseURL"));
+                Bitmap drivingBitmap = ImageLoader.getInstance().getMemoryCache()
+                        .remove(bundle.getString("drivingLicenseURL"));
                 carName.setText(carModel);
                 up_button.setText("认证车主");
                 up_button.setEnabled(true);
 //                carName.setText(bundle.getString("carmodel"));
 //                up_button.setBackgroundResource(R.drawable.btn_grey_fillet);
 //                ViewUtil.bindNetImage(driver_img, bundle.getString("driverLicenseURL"), "default");
-//                ViewUtil.bindNetImage(driving_img, bundle.getString("drivingLicenseURL"), "default");
+//                ViewUtil.bindNetImage(driving_img, bundle.
+// ("drivingLicenseURL"), "default");
                 drivinglicense_up.setEnabled(true);
                 driverlicense_up.setEnabled(true);
                 brandchoice.setEnabled(true);
