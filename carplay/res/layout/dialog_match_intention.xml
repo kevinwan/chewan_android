@@ -57,6 +57,7 @@
                 android:hint="什么地方(选填)"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
+                android:gravity="center_vertical"
                 android:textColor="@color/text_black"
                 android:textSize="@dimen/text_small" />
 
