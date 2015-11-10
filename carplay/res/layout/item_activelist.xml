@@ -85,7 +85,7 @@
 
                 <TextView
                     android:id="@+id/travelmode"
-                    style="@style/text_black_small"
+                    style="@style/text_black_smaller"
                     android:text="包接送"
                     android:textColor="@color/text_skyblue" />
 

@@ -83,6 +83,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/btn_red_fillet"
                 android:text="登录"
+                android:textSize="@dimen/text_medium"
                 android:textColor="@color/white" />
 
 
@@ -94,6 +95,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/btn_blue_fillet"
                 android:text="注册"
+                android:textSize="@dimen/text_medium"
                 android:textColor="@color/white" />
 
 
