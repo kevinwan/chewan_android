@@ -95,6 +95,7 @@ public class MatchingDialog extends BaseAlertDialog {
         });
 
         checkBox = (CheckBox) findViewById(R.id.chk_pick);
+        checkBox.setChecked("女".equals(User.getInstance().getGender()) ? false : true);
         textDestination = (TextView) findViewById(R.id.tv_destination);
         paygroup = (RadioGroup) findViewById(R.id.paygroup);
         per = IocContainer.getShare().get(CarPlayPerference.class);

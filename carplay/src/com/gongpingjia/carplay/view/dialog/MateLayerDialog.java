@@ -96,6 +96,7 @@ public class MateLayerDialog extends BaseAlertDialog implements View.OnClickList
         imgYourTurn = (ImageView) findViewById(R.id.iv_pay_your_turn);
 
         checkBox = (CheckBox) findViewById(R.id.chk_pick);
+        checkBox.setChecked("女".equals(User.getInstance().getGender()) ? false : true);
         textDestination = (TextView) findViewById(R.id.tv_destination);
 
 
