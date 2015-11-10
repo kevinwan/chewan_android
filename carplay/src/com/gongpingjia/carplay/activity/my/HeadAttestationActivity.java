@@ -30,7 +30,7 @@ import java.io.File;
 /**
  * 头像认证
  */
-public class HeadAttestationActivity extends CarPlayBaseActivity implements View.OnClickListener{
+public class HeadAttestationActivity extends CarPlayBaseActivity implements View.OnClickListener {
     Button head_authenticate;
     ImageView up_head;
     // 图片缓存根目录
@@ -38,8 +38,9 @@ public class HeadAttestationActivity extends CarPlayBaseActivity implements View
     private String mPhotoPath;
     String photoUid;
     User user;
-    String  photoUrl;
-    String status,photo;
+    String photoUrl;
+    String status, photo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,9 +52,9 @@ public class HeadAttestationActivity extends CarPlayBaseActivity implements View
         setTitle("头像认证");
         mCacheDir = new File(getExternalCacheDir(), "CarPlay");
         mCacheDir.mkdirs();
-         head_authenticate = (Button) findViewById(R.id.head_authenticate);
-         up_head = (ImageView) findViewById(R.id.up_head);
-         up_head.setOnClickListener(this);
+        head_authenticate = (Button) findViewById(R.id.head_authenticate);
+        up_head = (ImageView) findViewById(R.id.up_head);
+        up_head.setOnClickListener(this);
         head_authenticate.setOnClickListener(this);
         user = User.getInstance();
         Bundle bundle = getIntent().getExtras();
@@ -67,19 +68,23 @@ public class HeadAttestationActivity extends CarPlayBaseActivity implements View
 
             photoUid = getIntent().getStringExtra("photoId");
         }
-        if (status.equals("未认证")){
+        if (status.equals("未认证")) {
             head_authenticate.setEnabled(true);
             up_head.setEnabled(true);
             head_authenticate.setBackgroundResource(R.drawable.btn_red_fillet);
             head_authenticate.setText("马上认证");
             up_head.setImageResource(R.drawable.mofangdongzuo);
-        }else if(status.equals("认证未通过")){
+        } else if (status.equals("认证未通过")) {
             up_head.setEnabled(true);
             head_authenticate.setEnabled(true);
+            boolean drivingCache = ImageLoader.getInstance().getDiskCache()
+                    .remove(bundle.getString("photoUrl"));
+            Bitmap drivingBitmap = ImageLoader.getInstance().getMemoryCache()
+                    .remove(bundle.getString("photoUrl"));
             head_authenticate.setBackgroundResource(R.drawable.btn_red_fillet);
             head_authenticate.setText("马上认证");
             up_head.setImageResource(R.drawable.mofangdongzuo);
-        }else if(status.equals("认证中")){
+        } else if (status.equals("认证中")) {
             up_head.setEnabled(false);
             head_authenticate.setEnabled(false);
             head_authenticate.setBackgroundResource(R.drawable.btn_grey_fillet);
@@ -87,10 +92,11 @@ public class HeadAttestationActivity extends CarPlayBaseActivity implements View
             ViewUtil.bindNetImage(up_head, photo, "default");
         }
     }
+
     private void uploadHead(String path) {
         Bitmap bmp = PhotoUtil.getLocalImage(new File(path));
         up_head.setImageBitmap(bmp);
-        DhNet net = new DhNet(API2.CWBaseurl+"/user/"+user.getUserId()+"/photo/upload?token="+user.getToken());
+        DhNet net = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId() + "/photo/upload?token=" + user.getToken());
         net.upload(new FileInfo("attach", new File(path)), new NetTask(self) {
 
             @Override
@@ -99,7 +105,7 @@ public class HeadAttestationActivity extends CarPlayBaseActivity implements View
                 if (response.isSuccess()) {
                     JSONObject jo = response.jSONFromData();
                     photoUid = JSONUtil.getString(jo, "photoId");
-                      photoUrl = JSONUtil.getString(jo,"photoUrl");
+                    photoUrl = JSONUtil.getString(jo, "photoUrl");
                 } else {
                     up_head.setImageResource(R.drawable.head_icon);
                     photoUid = "";
@@ -111,7 +117,7 @@ public class HeadAttestationActivity extends CarPlayBaseActivity implements View
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.up_head:
                 mPhotoPath = new File(mCacheDir, System.currentTimeMillis()
                         + ".jpg").getAbsolutePath();
@@ -123,12 +129,12 @@ public class HeadAttestationActivity extends CarPlayBaseActivity implements View
                     showToast("请上传头像");
                     return;
                 }
-                DhNet net = new DhNet(API2.CWBaseurl+"/user/"+user.getUserId()+"/photo/authentication?token="+user.getToken());
-                net.addParam("photoId",photoUid);
+                DhNet net = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId() + "/photo/authentication?token=" + user.getToken());
+                net.addParam("photoId", photoUid);
                 net.doPostInDialog(new NetTask(self) {
                     @Override
                     public void doInUI(Response response, Integer transfer) {
-                        if(response.isSuccess()){
+                        if (response.isSuccess()) {
                             Intent intent = getIntent();
                             intent.putExtra("status", "认证中");
                             intent.putExtra("photoUrl", photoUrl);
@@ -144,8 +150,8 @@ public class HeadAttestationActivity extends CarPlayBaseActivity implements View
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if (resultCode == RESULT_OK){
-            switch (requestCode){
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
                 case Constant.PICK_PHOTO:
                     Bitmap btp = PhotoUtil.checkImage(self, data);
                     PhotoUtil.saveLocalImage(btp, new File(mPhotoPath));
