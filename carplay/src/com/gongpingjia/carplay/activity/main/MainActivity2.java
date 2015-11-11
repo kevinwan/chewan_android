@@ -78,7 +78,6 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.List;
-import java.util.Stack;
 import java.util.Timer;
 
 import de.greenrobot.event.EventBus;
@@ -92,8 +91,6 @@ public class MainActivity2 extends BaseFragmentActivity implements
     FragmentManager fm;
 
     // Fragment 的栈
-    Stack<Fragment> slist;
-
     View titleBar;
 
     CarPlayPerference per;
@@ -143,6 +140,8 @@ public class MainActivity2 extends BaseFragmentActivity implements
 //    RelativeLayout free_layout;
 //    CheckBox free_ck;
 
+
+    Fragment currentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -229,7 +228,6 @@ public class MainActivity2 extends BaseFragmentActivity implements
         mCacheDir.mkdirs();
 
         mHandler = new Handler();
-        slist = new Stack<Fragment>();
         fm = getSupportFragmentManager();
         tabV = (LinearLayout) findViewById(R.id.tab);
         titleBar = findViewById(R.id.titlebar);
@@ -416,28 +414,21 @@ public class MainActivity2 extends BaseFragmentActivity implements
         }
     }
 
+
+
     public void switchContent(Fragment fragment) {
         try {
             FragmentTransaction t = fm.beginTransaction();
-            List<Fragment> flist = fm.getFragments();
-            if (flist == null) {
+            if (currentFragment != null) {
+                t.hide(currentFragment);
+            }
+            if (!fragment.isAdded()) {
                 t.add(R.id.main_content, fragment);
-            } else {
-                if (!flist.contains(fragment)) {
-                    t.add(R.id.main_content, fragment);
-                }
-                t.hide(slist.get(slist.size() - 1));
-                t.show(fragment);
             }
-
-            if (slist.contains(fragment)) {
-                slist.remove(fragment);
-            }
-
-            slist.add(fragment);
+            t.show(fragment);
 
             t.commitAllowingStateLoss();
-
+            currentFragment = fragment;
         } catch (Exception e) {
         }
     }
@@ -954,6 +945,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
                                           String decliner, String reason) {
             // 加群申请被拒绝，demo未实现
         }
+
     }
 
     private BroadcastReceiver cmdMessageReceiver = new BroadcastReceiver() {
