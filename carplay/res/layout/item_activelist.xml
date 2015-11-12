@@ -144,7 +144,7 @@
                 android:paddingTop="6dp"
                 android:paddingLeft="10dp"
                 android:paddingBottom="6dp"
-                android:visibility="visible" />
+                android:visibility="gone" />
             <!--</LinearLayout>-->
 
         </FrameLayout>

@@ -41,6 +41,7 @@ import org.json.JSONObject;
 
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
 import jp.wasabeef.blurry.internal.BlurFactor;
 import jp.wasabeef.blurry.internal.BlurTask;
 
@@ -206,33 +207,44 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
                                         FailReason failReason) {
             }
         });
-
-
-        if (status == 0) {
-            holder.invitation.setVisibility(View.VISIBLE);
-            holder.yingyaohou.setVisibility(View.GONE);
-            holder.invitationT.setText("邀 TA");
-            holder.invitationI.setResourseAndBg(R.drawable.red_circle
-                    , R.drawable.red_circle);
-
-        } else if (status == 1) {
-            holder.invitation.setVisibility(View.VISIBLE);
-            holder.yingyaohou.setVisibility(View.GONE);
-            holder.invitationT.setText("邀请中");
+        if (bundle.getString("idel").equals("false")) {
+//            Toast.makeText(mContext, "抱歉，" + bundle.getString("name") + "暂时没空接受你的邀请", Toast.LENGTH_LONG).show();
+            holder.invitationT.setText("Ta没空");
             holder.invitationI.setResourseAndBg(R.drawable.dynamic_grey
-                    , R.drawable.dynamic_grey
-            );
+                    , R.drawable.dynamic_grey);
+            holder.invitationI.setEnabled(false);
 
-        } else if (status == 2) {
-            holder.invitation.setVisibility(View.GONE);
-            holder.yingyaohou.setVisibility(View.VISIBLE);
+        } else {
+//            JSONObject jo = (JSONObject) getItem(i);
+//            holder.invitationI.setEnabled(true);
+//            holder.invitationT.setText("邀 TA");
+//            holder.invitationI.setResourseAndBg(R.drawable.btn_red_fillet
+//                    , R.drawable.btn_red_fillet);
+//            join(JSONUtil.getString(jo, "activityId"), holder, jo);
+//                        System.out.println("有空----------" + bundle.getBoolean("idle"));
+            if (status == 0) {
+                holder.invitation.setVisibility(View.VISIBLE);
+                holder.yingyaohou.setVisibility(View.GONE);
+                holder.invitationT.setText("邀 TA");
+                holder.invitationI.setResourseAndBg(R.drawable.red_circle, R.drawable.red_circle);
+            } else if (status == 1) {
+                holder.invitation.setVisibility(View.VISIBLE);
+                holder.yingyaohou.setVisibility(View.GONE);
+                holder.invitationT.setText("邀请中");
+                System.out.println("邀请中。。。。。。。。。。");
+                holder.invitationI.setResourseAndBg(R.drawable.dynamic_grey, R.drawable.dynamic_grey
+                );
+            } else if (status == 2) {
+                holder.invitation.setVisibility(View.GONE);
+                holder.yingyaohou.setVisibility(View.VISIBLE);
 
-        } else if (status == 3) {
-            holder.invitation.setVisibility(View.VISIBLE);
-            holder.yingyaohou.setVisibility(View.GONE);
-            holder.invitationT.setText("邀 TA");
-            holder.invitationI.setResourseAndBg(R.drawable.red_circle
-                    , R.drawable.red_circle);
+            } else if (status == 3) {
+                holder.invitation.setVisibility(View.VISIBLE);
+                holder.yingyaohou.setVisibility(View.GONE);
+                holder.invitationT.setText("邀 TA");
+                holder.invitationI.setResourseAndBg(R.drawable.red_circle
+                        , R.drawable.red_circle);
+            }
         }
 
         if (transfer == true) {
@@ -281,22 +293,7 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
                 holder.activity_place.setText(JSONUtil.getString(json, "city") + JSONUtil.getString(json, "district") + JSONUtil.getString(json, "street"));
             }
         }
-        if (bundle.getString("idel").equals("false")) {
-//            Toast.makeText(mContext, "抱歉，" + bundle.getString("name") + "暂时没空接受你的邀请", Toast.LENGTH_LONG).show();
-            holder.invitationT.setText("Ta没空");
-            holder.invitationI.setResourseAndBg(R.drawable.dynamic_grey
-                    , R.drawable.dynamic_grey);
-            holder.invitationI.setEnabled(false);
 
-        } else {
-//            JSONObject jo = (JSONObject) getItem(i);
-            holder.invitationI.setEnabled(true);
-            holder.invitationT.setText("应邀");
-            holder.invitationI.setResourseAndBg(R.drawable.btn_red_fillet
-                    , R.drawable.btn_red_fillet);
-//            join(JSONUtil.getString(jo, "activityId"), holder, jo);
-//                        System.out.println("有空----------" + bundle.getBoolean("idle"));
-        }
         holder.invitationI.setOnClickListener(new MyOnClick(holder, i));
         holder.dyanmic_one.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -364,9 +361,8 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
             public void doInUI(Response response, Integer transfer) {
                 if (response.isSuccess()) {
                     holder.invitationT.setText("邀请中");
-                    holder.invitationI.setResourseAndBg(R.drawable.dynamic_grey
-                            , R.drawable.dynamic_grey
-                    );
+                    holder.invitationI.setResourseAndBg(R.drawable.dynamic_grey, R.drawable.dynamic_grey);
+                    EventBus.getDefault().post("刷新Ta的活动");
                     System.out.println("邀Ta" + response.isSuccess());
                     try {
                         jo.put("status", 2);

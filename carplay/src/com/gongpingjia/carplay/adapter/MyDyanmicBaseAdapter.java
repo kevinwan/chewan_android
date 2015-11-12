@@ -27,7 +27,6 @@ import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.view.AnimButtonView;
-import com.gongpingjia.carplay.view.dialog.ActiveDialog;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
@@ -45,6 +44,7 @@ import org.json.JSONObject;
 
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
 import jp.wasabeef.blurry.Blurry;
 import jp.wasabeef.blurry.internal.BlurFactor;
 import jp.wasabeef.blurry.internal.BlurTask;
@@ -597,21 +597,21 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
             switch (view.getId()) {
                 case R.id.yingyao: {
                     String appID = JSONUtil.getString(jo, "appointmentId");
-                    if (TextUtils.isEmpty(user.getPhone())) {
-//                    System.out.println("获取:" + user.getPhone());
-                        ActiveDialog dialog = new ActiveDialog(mContext, appID);
-                        dialog.setOnPickResultListener(new ActiveDialog.OnPickResultListener() {
-
-                            @Override
-                            public void onResult(int result) {
-                                if (result == 1) {
-                                    holder.yingyao_layout.setVisibility(View.GONE);
-                                    holder.yingyaohou.setVisibility(View.VISIBLE);
-                                }
-                            }
-                        });
-                        dialog.show();
-                    } else {
+//                    if (TextUtils.isEmpty(user.getPhone())) {
+////                    System.out.println("获取:" + user.getPhone());
+//                        ActiveDialog dialog = new ActiveDialog(mContext, appID);
+//                        dialog.setOnPickResultListener(new ActiveDialog.OnPickResultListener() {
+//
+//                            @Override
+//                            public void onResult(int result) {
+//                                if (result == 1) {
+//                                    holder.yingyao_layout.setVisibility(View.GONE);
+//                                    holder.yingyaohou.setVisibility(View.VISIBLE);
+//                                }
+//                            }
+//                        });
+//                        dialog.show();
+//                    } else {
                         DhNet net = new DhNet(API2.CWBaseurl + "/application/" + appID + "/process?userId=" + user.getUserId() + "&token=" + user.getToken());
 //                    DhNet net = new DhNet(API2.CWBaseurl + "application/" + appointmentId + "/process?userId=5609eb6d0cf224e7d878f695&token=a767ead8-7c00-4b90-b6de-9dcdb4d5bc41");
                         net.addParam("accept", true);
@@ -621,11 +621,13 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                                 if (response.isSuccess()) {
                                     holder.yingyao_layout.setVisibility(View.GONE);
                                     holder.yingyaohou.setVisibility(View.VISIBLE);
+                                    holder.invitation.setVisibility(View.GONE);
+                                    EventBus.getDefault().post("刷新我的活动");
                                     System.out.println("应邀：" + response.isSuccess());
                                 }
                             }
                         });
-                    }
+//                    }
                 }
                 break;
             }

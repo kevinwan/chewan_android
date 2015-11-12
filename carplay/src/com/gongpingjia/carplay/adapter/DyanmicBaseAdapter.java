@@ -28,7 +28,6 @@ import com.gongpingjia.carplay.bean.PointRecord;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.view.AnimButtonView;
-import com.gongpingjia.carplay.view.dialog.ActiveDialog;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
@@ -438,21 +437,21 @@ public class DyanmicBaseAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View view) {
 //                    JSONObject jo = getItem(i);
-                    if (TextUtils.isEmpty(user.getPhone())) {
-                        System.out.println("获取:" + user.getPhone());
-                        ActiveDialog dialog = new ActiveDialog(mContext, appointmentId);
-                        dialog.setOnPickResultListener(new ActiveDialog.OnPickResultListener() {
-
-                            @Override
-                            public void onResult(int result) {
-                                if (result == 1) {
-                                    finalHolder1.yingyao_layout.setVisibility(View.GONE);
-                                    finalHolder1.yingyaohou.setVisibility(View.VISIBLE);
-                                }
-                            }
-                        });
-                        dialog.show();
-                    } else {
+//                    if (TextUtils.isEmpty(user.getPhone())) {
+//                        System.out.println("获取:" + user.getPhone());
+//                        ActiveDialog dialog = new ActiveDialog(mContext, appointmentId);
+//                        dialog.setOnPickResultListener(new ActiveDialog.OnPickResultListener() {
+//
+//                            @Override
+//                            public void onResult(int result) {
+//                                if (result == 1) {
+//                                    finalHolder1.yingyao_layout.setVisibility(View.GONE);
+//                                    finalHolder1.yingyaohou.setVisibility(View.VISIBLE);
+//                                }
+//                            }
+//                        });
+//                        dialog.show();
+//                    } else {
                         DhNet net = new DhNet(API2.CWBaseurl + "/application/" + appointmentId + "/process?userId=" + user.getUserId() + "&token=" + user.getToken());
 //                    DhNet net = new DhNet(API2.CWBaseurl + "application/" + appointmentId + "/process?userId=5609eb6d0cf224e7d878f695&token=a767ead8-7c00-4b90-b6de-9dcdb4d5bc41");
                         net.addParam("accept", true);
@@ -469,7 +468,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
                                 }
                             }
                         });
-                    }
+//                    }
                 }
             });
             holder.hulue.setOnClickListener(new View.OnClickListener() {

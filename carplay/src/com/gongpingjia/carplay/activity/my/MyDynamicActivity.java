@@ -15,6 +15,8 @@ import com.gongpingjia.carplay.bean.User;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
+import de.greenrobot.event.EventBus;
+
 /**
  * Created by Administrator on 2015/10/19.
  * 我的活动
@@ -33,6 +35,7 @@ public class MyDynamicActivity extends CarPlayListActivity implements PullToRefr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_dynamic);
+        EventBus.getDefault().register(this);
     }
 
 
@@ -91,5 +94,10 @@ public class MyDynamicActivity extends CarPlayListActivity implements PullToRefr
     @Override
     public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
         showNext();
+    }
+    public void onEventMainThread(String success) {
+        if ("刷新我的活动".equals(success)) {
+            refresh();
+        }
     }
 }
