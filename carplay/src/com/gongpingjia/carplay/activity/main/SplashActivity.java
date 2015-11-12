@@ -20,6 +20,7 @@ import com.gongpingjia.carplay.chat.bean.ChatUser;
 import com.gongpingjia.carplay.chat.controller.HXSDKHelper;
 import com.gongpingjia.carplay.chat.db.UserDao;
 import com.gongpingjia.carplay.util.CarPlayPerference;
+import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.util.MD5Util;
 
 import net.duohuo.dhroid.ioc.IocContainer;
@@ -52,6 +53,16 @@ public class SplashActivity extends CarPlayBaseActivity {
     public void initView() {
         per = IocContainer.getShare().get(CarPlayPerference.class);
         per.load();
+
+        if (per.lastLoginTime ==(CarPlayUtil.getTodayDate()-(1000*60*60*24))){
+            per.setIsTodayFirst(true);
+//            System.out.println(per.lastLoginTime+"-----------------------");
+        }else {
+//            System.out.println(per.lastLoginTime+"----++++++++++++++---"+(CarPlayUtil.getTodayDate()-(1000*60*60*24)));
+            per.setIsTodayFirst(false);
+        }
+        per.setLastLoginTime(CarPlayUtil.getTodayDate());
+        per.commit();
 
         if (!TextUtils.isEmpty(per.channel)) {
             // 三方登陆

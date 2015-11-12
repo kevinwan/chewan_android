@@ -446,6 +446,26 @@ public class CarPlayUtil {
         }
         return date.getTime();
     }
+    /*时间戳转换成字符窜*/
+    public static String getDateToString(long time) {
+        Date d = new Date(time);
+        SimpleDateFormat sf = new SimpleDateFormat("yyyy年MM月dd日");
+        return sf.format(d);
+    }
+    /* 获得今日时间戳 */
+    public static long getTodayDate() {
+        long time=System.currentTimeMillis();
+        Date d = new Date(time);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
+
+        Date date = new Date();
+        try {
+            date = sdf.parse(sdf.format(d));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date.getTime();
+    }
 
 
     public static Bitmap zoomImage(Bitmap bgimage, double newWidth,

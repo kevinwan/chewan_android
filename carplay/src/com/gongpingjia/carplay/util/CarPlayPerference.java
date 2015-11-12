@@ -91,6 +91,18 @@ public class CarPlayPerference extends Perference {
 
     public String settingbg;
 
+    //上一次登录时间
+    public long lastLoginTime=0;
+    public boolean isTodayFirst=true;
+
+    public boolean isTodayFirst() {
+        return isTodayFirst;
+    }
+
+    public void setIsTodayFirst(boolean isTodayFirst) {
+        this.isTodayFirst = isTodayFirst;
+    }
+
     // 网络更新用户信息
     public void refreshUserInfo(Context context) {
         // DhNet net = new DhNet(API.persondetail);
@@ -116,6 +128,14 @@ public class CarPlayPerference extends Perference {
         // }
         // }
         // });
+    }
+
+    public long getLastLoginTime() {
+        return lastLoginTime;
+    }
+
+    public void setLastLoginTime(long lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
     }
 
 

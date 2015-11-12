@@ -207,7 +207,6 @@ public class MainActivity2 extends BaseFragmentActivity implements
             }
         });
 
-
         //不能去掉
         findViewById(R.id.main_bg).setOnClickListener(new OnClickListener() {
             @Override
@@ -289,7 +288,17 @@ public class MainActivity2 extends BaseFragmentActivity implements
         rotateAnimation.setInterpolator(new LinearInterpolator());
         appointmentI.setAnimation(rotateAnimation);
         rotateAnimation.start();
-//        sendLoaction(20.12, 120.12);
+        sendLoaction(20.12, 120.12);
+
+        if (per.isTodayFirst){
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    MatePop.getInstance(MainActivity2.this).show();
+                }
+            }, 1000);
+        }
+
 
 
         //图片模糊处理
