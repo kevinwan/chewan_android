@@ -19,8 +19,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="fitXY"
-                android:src="@drawable/model_pic" />
+                android:scaleType="fitXY" />
 
             <com.gongpingjia.carplay.view.RoundImageView
                 android:id="@+id/iv_avatar"

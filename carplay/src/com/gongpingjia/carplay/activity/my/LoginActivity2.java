@@ -438,6 +438,8 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
                     per.channel = mChannel;
                     per.password = currentPassword;
                     per.nickname = jo.getString("nickname");
+                    per.headUrl = jo.getString("avatar");
+
                     if (phone != null) {
                         per.phone = phone;
                     }

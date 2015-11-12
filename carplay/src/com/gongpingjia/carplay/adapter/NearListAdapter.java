@@ -19,11 +19,13 @@ package com.gongpingjia.carplay.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -41,7 +43,7 @@ import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.view.AnimButtonView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
@@ -57,7 +59,8 @@ import java.io.File;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
-import jp.wasabeef.blurry.Blurry;
+import jp.wasabeef.blurry.internal.BlurFactor;
+import jp.wasabeef.blurry.internal.BlurTask;
 
 public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.SimpleViewHolder> {
     private static final int COUNT = 5;
@@ -200,29 +203,47 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
 ////            holder.phtotoV.setVisibility(View.GONE);
 ////            holder.promtpT.setVisibility(View.GONE);
 //        }
-        ImageLoader.getInstance().displayImage(JSONUtil.getString(userjo, "cover"), holder.active_bg, CarPlayValueFix.optionsDefault, new ImageLoadingListener() {
-            @Override
-            public void onLoadingStarted(String s, View view) {
 
+        ImageLoader.getInstance().loadImage(JSONUtil.getString(userjo, "cover"), CarPlayValueFix.optionsDefault,new SimpleImageLoadingListener() {
+            @Override
+            public void onLoadingStarted(String imageUri, View view) {
+                super.onLoadingStarted(imageUri, view);
             }
 
             @Override
-            public void onLoadingFailed(String s, View view, FailReason failReason) {
+            public void onLoadingComplete(String imageUri, View view,
+                                          final Bitmap bitmap) {
 
-            }
-
-            @Override
-            public void onLoadingComplete(String s, View view, final Bitmap bitmap) {
                 if (bitmap != null) {
-                    final ImageView img = (ImageView) view;
+                    final ImageView img = holder.active_bg;
                     if (!user.isHasAlbum()) {
-                        img.setImageBitmap(bitmap);
-                        Blurry.with(mContext)
-                                .radius(10)
-                                .sampling(8)
-                                .async()
-                                .capture(img)
-                                .into(img);
+                        ViewTreeObserver
+                                vto = img.getViewTreeObserver();
+                        vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+
+                            @Override
+                            public boolean onPreDraw() {
+                                BlurFactor factor = new BlurFactor();
+                                img.getViewTreeObserver().removeOnPreDrawListener(this);
+                                factor.width = img.getMeasuredWidth();
+                                factor.height = img.getMeasuredHeight();
+                                factor.radius = 10;
+                                factor.sampling = 8;
+                                final Bitmap newBitmap = CarPlayUtil.zoomImage(bitmap, factor.width, factor.height);
+                                BlurTask task = new BlurTask(img, factor, newBitmap, new BlurTask.Callback() {
+                                    @Override
+                                    public void done(BitmapDrawable drawable) {
+                                        img.setImageDrawable(drawable);
+                                        newBitmap.recycle();
+                                    }
+                                });
+                                task.execute();
+
+                                return true;
+                            }
+
+
+                        });
                     } else {
                         img.setImageBitmap(bitmap);
                     }
@@ -231,12 +252,11 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
                         CarPlayApplication.getInstance().setImageHeightInit(true);
                     }
                 }
-
             }
 
             @Override
-            public void onLoadingCancelled(String s, View view) {
-
+            public void onLoadingFailed(String imageUri, View view,
+                                        FailReason failReason) {
             }
         });
 
@@ -253,7 +273,7 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
 //        holder.attention.setImageResource(JSONUtil.getBoolean(userjo, "subscribeFlag") ? R.drawable.icon_hearted : R.drawable.icon_heart);
 //        holder.attention.setOnClickListener(new MyOnClick(holder, position));
         transfer = JSONUtil.getBoolean(jo, "transfer");
-        isShowPay(activetype,holder);
+        isShowPay(activetype, holder);
         pay = JSONUtil.getString(jo, "pay");
         holder.pay.setText(pay);
         if (transfer) {
@@ -514,11 +534,11 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
     }
 
     //type 为 遛狗 运动 购物 则不显示付费类型
-    private void isShowPay(String type,SimpleViewHolder holder){
+    private void isShowPay(String type, SimpleViewHolder holder) {
         String sType = CarPlayUtil.getTypeName(type);
-        if ("遛狗".equals(sType)||"购物".equals(sType)||"踢球".equals(sType)||"打篮球".equals(sType)||"打羽毛球".equals(sType)||"玩桌球".equals(sType)||"健身".equals(sType)){
+        if ("遛狗".equals(sType) || "购物".equals(sType) || "踢球".equals(sType) || "打篮球".equals(sType) || "打羽毛球".equals(sType) || "玩桌球".equals(sType) || "健身".equals(sType)) {
             holder.pay.setVisibility(View.GONE);
-        }else {
+        } else {
             holder.pay.setVisibility(View.VISIBLE);
         }
 

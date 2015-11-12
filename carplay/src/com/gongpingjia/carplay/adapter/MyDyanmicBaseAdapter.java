@@ -3,10 +3,12 @@ package com.gongpingjia.carplay.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -25,10 +27,10 @@ import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.view.AnimButtonView;
-import com.gongpingjia.carplay.view.dialog.ActiveDialog;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
@@ -42,7 +44,10 @@ import org.json.JSONObject;
 
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
 import jp.wasabeef.blurry.Blurry;
+import jp.wasabeef.blurry.internal.BlurFactor;
+import jp.wasabeef.blurry.internal.BlurTask;
 
 
 /**
@@ -223,14 +228,14 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
             } else {
                 holders.limitedlayoutL.setVisibility(View.GONE);
                 holders.unlimitedlayoutL.setVisibility(View.VISIBLE);
-                ViewUtil.bindView(holders.unparticipateT, CarPlayUtil.setTextColor(mContext, JSONUtil.getInt(jo, "nowJoinNum")+" / ", JSONUtil.getInt(jo, "nowJoinNum") + " / " + "人数不限", R.color.text_grey)) ;
+                ViewUtil.bindView(holders.unparticipateT, CarPlayUtil.setTextColor(mContext, JSONUtil.getInt(jo, "nowJoinNum") + " / ", JSONUtil.getInt(jo, "nowJoinNum") + " / " + "人数不限", R.color.text_grey));
             }
-            double price=JSONUtil.getDouble(jo, "price");
-            if (((int)price)==0){
+            double price = JSONUtil.getDouble(jo, "price");
+            if (((int) price) == 0) {
                 holders.price.setText("免费");
                 holders.priceright.setVisibility(View.GONE);
-            }else {
-                holders.price.setText(price+"");
+            } else {
+                holders.price.setText(price + "");
                 holders.priceright.setVisibility(View.VISIBLE);
             }
 //            String priceDesc = JSONUtil.getString(jo, "subsidyPrice");
@@ -250,8 +255,8 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
 //                holders.priceDesc.setText("官方补贴" + JSONUtil.getString(jo, "subsidyPrice") + "元/人");
 //            }
 
-            String citystr="["+JSONUtil.getString(json, "city")+"]  ";
-            String title = citystr+JSONUtil.getString(jo, "title");
+            String citystr = "[" + JSONUtil.getString(json, "city") + "]  ";
+            String title = citystr + JSONUtil.getString(jo, "title");
             ViewUtil.bindView(holders.city, CarPlayUtil.setTextColor(mContext, citystr, title, R.color.text_orange));
 
 //            holders.info.setText(JSONUtil.getString(jo, "title"));
@@ -259,31 +264,48 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                 JSONArray coversJSa = jo.getJSONArray("covers");
                 String picUrl = coversJSa.getString(0);
 
-                ImageLoader.getInstance().displayImage(picUrl, holders.pic, CarPlayValueFix.optionsDefault, new ImageLoadingListener() {
-                    @Override
-                    public void onLoadingStarted(String s, View view) {
 
+                final ViewHolders finalHolders = holders;
+                ImageLoader.getInstance().loadImage(picUrl, CarPlayValueFix.optionsDefault, new SimpleImageLoadingListener() {
+                    @Override
+                    public void onLoadingStarted(String imageUri, View view) {
+                        super.onLoadingStarted(imageUri, view);
                     }
 
                     @Override
-                    public void onLoadingFailed(String s, View view, FailReason failReason) {
+                    public void onLoadingComplete(String imageUri, View view,
+                                                  final Bitmap bitmap) {
 
-                    }
-
-                    @Override
-                    public void onLoadingComplete(String s, View view, final Bitmap bitmap) {
                         if (bitmap != null) {
-                            final ImageView img = (ImageView) view;
+                            final ImageView img = finalHolders.pic;
                             if (!user.isHasAlbum() && !user.getUserId().equals(JSONUtil.getString(js, "userId"))) {
-                                img.setImageBitmap(bitmap);
-                                Blurry.with(mContext)
-                                        .radius(10)
-                                        .sampling(8)
-                                        .async()
-                                        .capture(img)
-                                        .into(img);
+                                ViewTreeObserver
+                                        vto = img.getViewTreeObserver();
+                                vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+
+                                    @Override
+                                    public boolean onPreDraw() {
+                                        BlurFactor factor = new BlurFactor();
+                                        img.getViewTreeObserver().removeOnPreDrawListener(this);
+                                        factor.width = img.getMeasuredWidth();
+                                        factor.height = img.getMeasuredHeight();
+                                        factor.radius = 10;
+                                        factor.sampling = 8;
+                                        final Bitmap newBitmap = CarPlayUtil.zoomImage(bitmap, factor.width, factor.height);
+                                        BlurTask task = new BlurTask(img, factor, newBitmap, new BlurTask.Callback() {
+                                            @Override
+                                            public void done(BitmapDrawable drawable) {
+                                                img.setImageDrawable(drawable);
+                                                newBitmap.recycle();
+                                            }
+                                        });
+                                        task.execute();
+
+                                        return true;
+                                    }
 
 
+                                });
                             } else {
                                 img.setImageBitmap(bitmap);
                             }
@@ -291,10 +313,11 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                     }
 
                     @Override
-                    public void onLoadingCancelled(String s, View view) {
-
+                    public void onLoadingFailed(String imageUri, View view,
+                                                FailReason failReason) {
                     }
                 });
+
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -348,19 +371,19 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
             String typeT = JSONUtil.getString(jo, "type");
             String name = JSONUtil.getString(js, "nickname");
             String gender = JSONUtil.getString(js, "gender");
-            holder.ageT.setText(JSONUtil.getString(js,"age"));
+            holder.ageT.setText(JSONUtil.getString(js, "age"));
 //        String jied = JSONUtil.getString(json, "street");
             String locationS = JSONUtil.getString(json, "province") + JSONUtil.getString(json, "city") + JSONUtil.getString(json, "district") + JSONUtil.getString(json, "street") + JSONUtil.getString(json, "detail");
-            locationS=locationS.replace("null","");
-            String district = JSONUtil.getString(json,"district");
-            String street = JSONUtil.getString(json,"street");
+            locationS = locationS.replace("null", "");
+            String district = JSONUtil.getString(json, "district");
+            String street = JSONUtil.getString(json, "street");
             if (TextUtils.isEmpty(locationS)) {
                 holder.activity_place.setText("地点待定");
             } else {
-                if (district.equals(street)){
-                    holder.activity_place.setText(JSONUtil.getString(json, "city")+ JSONUtil.getString(json, "district"));
-                }else{
-                    holder.activity_place.setText(JSONUtil.getString(json, "city") + JSONUtil.getString(json, "district")+ JSONUtil.getString(json, "street"));
+                if (district.equals(street)) {
+                    holder.activity_place.setText(JSONUtil.getString(json, "city") + JSONUtil.getString(json, "district"));
+                } else {
+                    holder.activity_place.setText(JSONUtil.getString(json, "city") + JSONUtil.getString(json, "district") + JSONUtil.getString(json, "street"));
                 }
             }
             String message = JSONUtil.getString(jo, "message");
@@ -574,21 +597,21 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
             switch (view.getId()) {
                 case R.id.yingyao: {
                     String appID = JSONUtil.getString(jo, "appointmentId");
-                    if (TextUtils.isEmpty(user.getPhone())) {
-//                    System.out.println("获取:" + user.getPhone());
-                        ActiveDialog dialog = new ActiveDialog(mContext, appID);
-                        dialog.setOnPickResultListener(new ActiveDialog.OnPickResultListener() {
-
-                            @Override
-                            public void onResult(int result) {
-                                if (result == 1) {
-                                    holder.yingyao_layout.setVisibility(View.GONE);
-                                    holder.yingyaohou.setVisibility(View.VISIBLE);
-                                }
-                            }
-                        });
-                        dialog.show();
-                    } else {
+//                    if (TextUtils.isEmpty(user.getPhone())) {
+////                    System.out.println("获取:" + user.getPhone());
+//                        ActiveDialog dialog = new ActiveDialog(mContext, appID);
+//                        dialog.setOnPickResultListener(new ActiveDialog.OnPickResultListener() {
+//
+//                            @Override
+//                            public void onResult(int result) {
+//                                if (result == 1) {
+//                                    holder.yingyao_layout.setVisibility(View.GONE);
+//                                    holder.yingyaohou.setVisibility(View.VISIBLE);
+//                                }
+//                            }
+//                        });
+//                        dialog.show();
+//                    } else {
                         DhNet net = new DhNet(API2.CWBaseurl + "/application/" + appID + "/process?userId=" + user.getUserId() + "&token=" + user.getToken());
 //                    DhNet net = new DhNet(API2.CWBaseurl + "application/" + appointmentId + "/process?userId=5609eb6d0cf224e7d878f695&token=a767ead8-7c00-4b90-b6de-9dcdb4d5bc41");
                         net.addParam("accept", true);
@@ -598,11 +621,13 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                                 if (response.isSuccess()) {
                                     holder.yingyao_layout.setVisibility(View.GONE);
                                     holder.yingyaohou.setVisibility(View.VISIBLE);
+                                    holder.invitation.setVisibility(View.GONE);
+                                    EventBus.getDefault().post("刷新我的活动");
                                     System.out.println("应邀：" + response.isSuccess());
                                 }
                             }
                         });
-                    }
+//                    }
                 }
                 break;
             }
@@ -620,12 +645,12 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
     }
 
     class ViewHolders {
-        TextView  price,priceright, priceDesc, location, city;
+        TextView price, priceright, priceDesc, location, city;
         ImageView pic;
         LinearLayout invitation;
-        LinearLayout limitedlayoutL,unlimitedlayoutL;
+        LinearLayout limitedlayoutL, unlimitedlayoutL;
         AnimButtonView invitationI;
-        TextView invitationT,unparticipateT,participate_womanT, participate_manT;
+        TextView invitationT, unparticipateT, participate_womanT, participate_manT;
         RelativeLayout layoutV;
     }
 }

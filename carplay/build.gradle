@@ -67,6 +67,22 @@ android {
         QQ {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "QQ"]
         }
+
+        _360 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "360"]
+        }
+
+        wandoujia {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "wandoujia"]
+        }
+
+        Baidu {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Baidu"]
+        }
+
+        Jifeng {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Jifeng"]
+        }
     }
     productFlavors.all {
         flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]

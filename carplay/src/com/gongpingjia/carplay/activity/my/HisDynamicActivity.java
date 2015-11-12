@@ -20,6 +20,8 @@ import net.duohuo.dhroid.net.JSONUtil;
 
 import org.json.JSONObject;
 
+import de.greenrobot.event.EventBus;
+
 /**
  * Created by Administrator on 2015/10/19.
  * TA的活动
@@ -42,7 +44,7 @@ public class HisDynamicActivity extends CarPlayListActivity implements PullToRef
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_dynamic);
-
+        EventBus.getDefault().register(this);
     }
 
 
@@ -134,5 +136,10 @@ public class HisDynamicActivity extends CarPlayListActivity implements PullToRef
                 recyclerView.setAdapter(adapter);
             }
         });
+    }
+    public void onEventMainThread(String success) {
+        if ("刷新Ta的活动".equals(success)) {
+            refresh();
+        }
     }
 }

@@ -126,8 +126,8 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
                 carName.setText(bundle.getString("carmodel"));
                 up_button.setBackgroundResource(R.drawable.btn_grey_fillet);
 
-//                ImageLoader.getInstance().getMemoryCache().clear();
-//                ImageLoader.getInstance().getDiskCache().clear();
+                ImageLoader.getInstance().getMemoryCache().clear();
+                ImageLoader.getInstance().getDiskCache().clear();
 
 
                 ViewUtil.bindNetImage(driver_img, bundle.getString("driverLicenseURL"), "default");

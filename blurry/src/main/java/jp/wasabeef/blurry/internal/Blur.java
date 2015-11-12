@@ -10,6 +10,7 @@ import android.support.v8.renderscript.Allocation;
 import android.support.v8.renderscript.Element;
 import android.support.v8.renderscript.RenderScript;
 import android.support.v8.renderscript.ScriptIntrinsicBlur;
+import android.util.Log;
 import android.view.View;
 
 /**
@@ -43,6 +44,10 @@ public class Blur {
     public static Bitmap rs(Context context, Bitmap source, BlurFactor factor) {
         int width = factor.width / factor.sampling;
         int height = factor.height / factor.sampling;
+
+        Log.d("rs","width:"+width);
+
+        Log.d("rs","sampling:"+factor.sampling);
 
         if (Helper.hasZero(width, height)) {
             return null;

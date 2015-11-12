@@ -16,6 +16,7 @@
             android:id="@+id/icon1"
             android:layout_width="21dp"
             android:layout_height="21dp"
+            android:padding="2dp"
             android:src="@drawable/head_icon" />
 
         <com.gongpingjia.carplay.view.RoundImageView

@@ -3,10 +3,12 @@ package com.gongpingjia.carplay.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -26,10 +28,9 @@ import com.gongpingjia.carplay.bean.PointRecord;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.view.AnimButtonView;
-import com.gongpingjia.carplay.view.dialog.ActiveDialog;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
@@ -44,7 +45,8 @@ import org.json.JSONObject;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
-import jp.wasabeef.blurry.Blurry;
+import jp.wasabeef.blurry.internal.BlurFactor;
+import jp.wasabeef.blurry.internal.BlurTask;
 
 
 /**
@@ -53,7 +55,7 @@ import jp.wasabeef.blurry.Blurry;
  */
 public class DyanmicBaseAdapter extends BaseAdapter {
     private final Context mContext;
-//    String activityId;
+    //    String activityId;
     private List<JSONObject> data;
 
     User user = User.getInstance();
@@ -186,8 +188,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
                 officialHolder.layoutV.setLayoutParams(pam);
 
             }
-        }
-        else {
+        } else {
             if (type == 0) {
                 holder = (ViewHolder) view.getTag();
             } else {
@@ -203,7 +204,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
             JSONObject json = JSONUtil.getJSONObject(jo, "destination");
             JSONObject ob = JSONUtil.getJSONObject(js, "car");
             //活动id
-           final String  activityId = JSONUtil.getString(jo, "activityId");
+            final String activityId = JSONUtil.getString(jo, "activityId");
             int status = JSONUtil.getInt(jo, "status");
             final String appointmentId = JSONUtil.getString(jo, "appointmentId");
             Boolean isApplicant = JSONUtil.getBoolean(jo, "isApplicant");
@@ -261,17 +262,17 @@ public class DyanmicBaseAdapter extends BaseAdapter {
                 }
             }
             holder.dynamic_typeT.setText(typeT);
-            if ("邀请同去".equals(JSONUtil.getString(jo, "activityCategory"))){
+            if ("邀请同去".equals(JSONUtil.getString(jo, "activityCategory"))) {
                 holder.dynamic_typeT.setTextColor(mContext.getResources().getColor(R.color.text_orange));
                 holder.titlelayoutL.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent= new Intent(mContext,ActiveDetailsActivity2.class);
-                        intent.putExtra("activityId",activityId);
+                        Intent intent = new Intent(mContext, ActiveDetailsActivity2.class);
+                        intent.putExtra("activityId", activityId);
                         mContext.startActivity(intent);
                     }
                 });
-            }else {
+            } else {
                 holder.dynamic_typeT.setTextColor(mContext.getResources().getColor(R.color.text_black));
                 holder.titlelayoutL.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -318,16 +319,16 @@ public class DyanmicBaseAdapter extends BaseAdapter {
 
 //        String jied = JSONUtil.getString(json, "street");
             String locationS = JSONUtil.getString(json, "province") + JSONUtil.getString(json, "city") + JSONUtil.getString(json, "district") + JSONUtil.getString(json, "street") + JSONUtil.getString(json, "detail");
-            locationS=locationS.replace("null","");
-            String district = JSONUtil.getString(json,"district");
-            String street = JSONUtil.getString(json,"street");
+            locationS = locationS.replace("null", "");
+            String district = JSONUtil.getString(json, "district");
+            String street = JSONUtil.getString(json, "street");
             if (TextUtils.isEmpty(locationS)) {
                 holder.activity_place.setText("地点待定");
             } else {
-                if (district.equals(street)){
+                if (district.equals(street)) {
                     holder.activity_place.setText(JSONUtil.getString(json, "city") + JSONUtil.getString(json, "district"));
-                }else{
-                    holder.activity_place.setText(JSONUtil.getString(json, "city") + JSONUtil.getString(json, "district")+ JSONUtil.getString(json, "street"));
+                } else {
+                    holder.activity_place.setText(JSONUtil.getString(json, "city") + JSONUtil.getString(json, "district") + JSONUtil.getString(json, "street"));
                 }
             }
 
@@ -361,31 +362,47 @@ public class DyanmicBaseAdapter extends BaseAdapter {
             }
 
 
-            ImageLoader.getInstance().displayImage(JSONUtil.getString(js, "cover"), holder.activity_beijing, CarPlayValueFix.optionsDefault, new ImageLoadingListener() {
+            final ViewHolder finalHolder2 = holder;
+            ImageLoader.getInstance().loadImage(JSONUtil.getString(js, "cover"), CarPlayValueFix.optionsDefault, new SimpleImageLoadingListener() {
                 @Override
-                public void onLoadingStarted(String s, View view) {
-
+                public void onLoadingStarted(String imageUri, View view) {
+                    super.onLoadingStarted(imageUri, view);
                 }
 
                 @Override
-                public void onLoadingFailed(String s, View view, FailReason failReason) {
+                public void onLoadingComplete(String imageUri, View view,
+                                              final Bitmap bitmap) {
 
-                }
-
-                @Override
-                public void onLoadingComplete(String s, View view, final Bitmap bitmap) {
                     if (bitmap != null) {
-                        final ImageView img = (ImageView) view;
+                        final ImageView img = finalHolder2.activity_beijing;
                         if (!user.isHasAlbum() && !user.getUserId().equals(JSONUtil.getString(js, "userId"))) {
-                            img.setImageBitmap(bitmap);
-                            Blurry.with(mContext)
-                                    .radius(10)
-                                    .sampling(8)
-                                    .async()
-                                    .capture(img)
-                                    .into(img);
+                            ViewTreeObserver
+                                    vto = img.getViewTreeObserver();
+                            vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+
+                                @Override
+                                public boolean onPreDraw() {
+                                    BlurFactor factor = new BlurFactor();
+                                    img.getViewTreeObserver().removeOnPreDrawListener(this);
+                                    factor.width = img.getMeasuredWidth();
+                                    factor.height = img.getMeasuredHeight();
+                                    factor.radius = 10;
+                                    factor.sampling = 8;
+                                    final Bitmap newBitmap = CarPlayUtil.zoomImage(bitmap, factor.width, factor.height);
+                                    BlurTask task = new BlurTask(img, factor, newBitmap, new BlurTask.Callback() {
+                                        @Override
+                                        public void done(BitmapDrawable drawable) {
+                                            img.setImageDrawable(drawable);
+                                            newBitmap.recycle();
+                                        }
+                                    });
+                                    task.execute();
+
+                                    return true;
+                                }
 
 
+                            });
                         } else {
                             img.setImageBitmap(bitmap);
                         }
@@ -393,8 +410,8 @@ public class DyanmicBaseAdapter extends BaseAdapter {
                 }
 
                 @Override
-                public void onLoadingCancelled(String s, View view) {
-
+                public void onLoadingFailed(String imageUri, View view,
+                                            FailReason failReason) {
                 }
             });
 
@@ -420,21 +437,21 @@ public class DyanmicBaseAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View view) {
 //                    JSONObject jo = getItem(i);
-                    if (TextUtils.isEmpty(user.getPhone())) {
-                        System.out.println("获取:" + user.getPhone());
-                        ActiveDialog dialog = new ActiveDialog(mContext, appointmentId);
-                        dialog.setOnPickResultListener(new ActiveDialog.OnPickResultListener() {
-
-                            @Override
-                            public void onResult(int result) {
-                                if (result == 1) {
-                                    finalHolder1.yingyao_layout.setVisibility(View.GONE);
-                                    finalHolder1.yingyaohou.setVisibility(View.VISIBLE);
-                                }
-                            }
-                        });
-                        dialog.show();
-                    } else {
+//                    if (TextUtils.isEmpty(user.getPhone())) {
+//                        System.out.println("获取:" + user.getPhone());
+//                        ActiveDialog dialog = new ActiveDialog(mContext, appointmentId);
+//                        dialog.setOnPickResultListener(new ActiveDialog.OnPickResultListener() {
+//
+//                            @Override
+//                            public void onResult(int result) {
+//                                if (result == 1) {
+//                                    finalHolder1.yingyao_layout.setVisibility(View.GONE);
+//                                    finalHolder1.yingyaohou.setVisibility(View.VISIBLE);
+//                                }
+//                            }
+//                        });
+//                        dialog.show();
+//                    } else {
                         DhNet net = new DhNet(API2.CWBaseurl + "/application/" + appointmentId + "/process?userId=" + user.getUserId() + "&token=" + user.getToken());
 //                    DhNet net = new DhNet(API2.CWBaseurl + "application/" + appointmentId + "/process?userId=5609eb6d0cf224e7d878f695&token=a767ead8-7c00-4b90-b6de-9dcdb4d5bc41");
                         net.addParam("accept", true);
@@ -446,12 +463,12 @@ public class DyanmicBaseAdapter extends BaseAdapter {
                                     finalHolder.yingyaohou.setVisibility(View.VISIBLE);
                                     finalHolder.invitation.setVisibility(View.GONE);
 //                                    notifyDataSetChanged();
-                                            EventBus.getDefault().post("刷新活动动态");
+                                    EventBus.getDefault().post("刷新活动动态");
                                     System.out.println("应邀：" + response.isSuccess());
                                 }
                             }
                         });
-                    }
+//                    }
                 }
             });
             holder.hulue.setOnClickListener(new View.OnClickListener() {
@@ -513,12 +530,12 @@ public class DyanmicBaseAdapter extends BaseAdapter {
         } else {
 
 //            officialHolder.priceT.setText(JSONUtil.getString(jo, "price"));
-            double price=JSONUtil.getDouble(jo, "price");
-            if (((int)price)==0){
+            double price = JSONUtil.getDouble(jo, "price");
+            if (((int) price) == 0) {
                 officialHolder.priceT.setText("免费");
                 officialHolder.pricerightT.setVisibility(View.GONE);
-            }else {
-                officialHolder.priceT.setText(price+"");
+            } else {
+                officialHolder.priceT.setText(price + "");
                 officialHolder.pricerightT.setVisibility(View.VISIBLE);
             }
 
@@ -598,10 +615,10 @@ public class DyanmicBaseAdapter extends BaseAdapter {
     }
 
     class ViewHolder {
-        TextView titleT, dynamic_carname, pay_type, travelmode, activity_place, activity_distance, ageT, inviteT, invitationT,dynamic_typeT;
+        TextView titleT, dynamic_carname, pay_type, travelmode, activity_place, activity_distance, ageT, inviteT, invitationT, dynamic_typeT;
         ImageView dynamic_carlogo, activity_beijing, certification_achievement, sexI;
         AnimButtonView dyanmic_one, dyanmic_two, yingyao, hulue, invitationI;
-        LinearLayout yingyao_layout, yingyaohou, invitation,titlelayoutL;
+        LinearLayout yingyao_layout, yingyaohou, invitation, titlelayoutL;
 
         RelativeLayout layoutV;
         private RelativeLayout sexbgR;
@@ -609,8 +626,8 @@ public class DyanmicBaseAdapter extends BaseAdapter {
 
 
     class OfficialHolder {
-//        TextView maleLimitT, maleNumT, femaleLimitT, femaleNumT;
-        TextView titleT, locationT, priceT, priceDescT, cityT, participate_womanT, participate_manT, unparticipateT,pricerightT,invitationT;
+        //        TextView maleLimitT, maleNumT, femaleLimitT, femaleNumT;
+        TextView titleT, locationT, priceT, priceDescT, cityT, participate_womanT, participate_manT, unparticipateT, pricerightT, invitationT;
         //        TextView maleLimitT, maleNumT, femaleLimitT, femaleNumT;
         ImageView picI, headI;
         LinearLayout invitation;

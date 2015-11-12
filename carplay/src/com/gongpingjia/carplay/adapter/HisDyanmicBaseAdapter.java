@@ -3,11 +3,13 @@ package com.gongpingjia.carplay.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -26,7 +28,7 @@ import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.view.AnimButtonView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
@@ -39,7 +41,9 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-import jp.wasabeef.blurry.Blurry;
+import de.greenrobot.event.EventBus;
+import jp.wasabeef.blurry.internal.BlurFactor;
+import jp.wasabeef.blurry.internal.BlurTask;
 
 
 /**
@@ -150,31 +154,48 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
         holder.pay_type.setText(pay);
 //        ViewUtil.bindNetImage(holder.activity_beijing, cover, "default");
         System.out.println("adapter;;;;;;;;;;;;" + cover);
-        ImageLoader.getInstance().displayImage(cover, holder.activity_beijing, CarPlayValueFix.optionsDefault, new ImageLoadingListener() {
-            @Override
-            public void onLoadingStarted(String s, View view) {
 
+        final ViewHolder finalHolder = holder;
+        ImageLoader.getInstance().loadImage(cover, CarPlayValueFix.optionsDefault, new SimpleImageLoadingListener() {
+            @Override
+            public void onLoadingStarted(String imageUri, View view) {
+                super.onLoadingStarted(imageUri, view);
             }
 
             @Override
-            public void onLoadingFailed(String s, View view, FailReason failReason) {
+            public void onLoadingComplete(String imageUri, View view,
+                                          final Bitmap bitmap) {
 
-            }
-
-            @Override
-            public void onLoadingComplete(String s, View view, final Bitmap bitmap) {
                 if (bitmap != null) {
-                    final ImageView img = (ImageView) view;
+                    final ImageView img = finalHolder.activity_beijing;
                     if (!user.isHasAlbum() && !user.getUserId().equals(bundle.getString("userId"))) {
-                        img.setImageBitmap(bitmap);
-                        Blurry.with(mContext)
-                                .radius(10)
-                                .sampling(8)
-                                .async()
-                                .capture(img)
-                                .into(img);
+                        ViewTreeObserver
+                                vto = img.getViewTreeObserver();
+                        vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+
+                            @Override
+                            public boolean onPreDraw() {
+                                BlurFactor factor = new BlurFactor();
+                                img.getViewTreeObserver().removeOnPreDrawListener(this);
+                                factor.width = img.getMeasuredWidth();
+                                factor.height = img.getMeasuredHeight();
+                                factor.radius = 10;
+                                factor.sampling = 8;
+                                final Bitmap newBitmap = CarPlayUtil.zoomImage(bitmap, factor.width, factor.height);
+                                BlurTask task = new BlurTask(img, factor, newBitmap, new BlurTask.Callback() {
+                                    @Override
+                                    public void done(BitmapDrawable drawable) {
+                                        img.setImageDrawable(drawable);
+                                        newBitmap.recycle();
+                                    }
+                                });
+                                task.execute();
+
+                                return true;
+                            }
 
 
+                        });
                     } else {
                         img.setImageBitmap(bitmap);
                     }
@@ -182,36 +203,48 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
             }
 
             @Override
-            public void onLoadingCancelled(String s, View view) {
-
+            public void onLoadingFailed(String imageUri, View view,
+                                        FailReason failReason) {
             }
         });
-
-        if (status == 0) {
-            holder.invitation.setVisibility(View.VISIBLE);
-            holder.yingyaohou.setVisibility(View.GONE);
-            holder.invitationT.setText("邀 TA");
-            holder.invitationI.setResourseAndBg(R.drawable.red_circle
-                    , R.drawable.red_circle);
-
-        } else if (status == 1) {
-            holder.invitation.setVisibility(View.VISIBLE);
-            holder.yingyaohou.setVisibility(View.GONE);
-            holder.invitationT.setText("邀请中");
+        if (bundle.getString("idel").equals("false")) {
+//            Toast.makeText(mContext, "抱歉，" + bundle.getString("name") + "暂时没空接受你的邀请", Toast.LENGTH_LONG).show();
+            holder.invitationT.setText("Ta没空");
             holder.invitationI.setResourseAndBg(R.drawable.dynamic_grey
-                    , R.drawable.dynamic_grey
-            );
+                    , R.drawable.dynamic_grey);
+            holder.invitationI.setEnabled(false);
 
-        } else if (status == 2) {
-            holder.invitation.setVisibility(View.GONE);
-            holder.yingyaohou.setVisibility(View.VISIBLE);
+        } else {
+//            JSONObject jo = (JSONObject) getItem(i);
+//            holder.invitationI.setEnabled(true);
+//            holder.invitationT.setText("邀 TA");
+//            holder.invitationI.setResourseAndBg(R.drawable.btn_red_fillet
+//                    , R.drawable.btn_red_fillet);
+//            join(JSONUtil.getString(jo, "activityId"), holder, jo);
+//                        System.out.println("有空----------" + bundle.getBoolean("idle"));
+            if (status == 0) {
+                holder.invitation.setVisibility(View.VISIBLE);
+                holder.yingyaohou.setVisibility(View.GONE);
+                holder.invitationT.setText("邀 TA");
+                holder.invitationI.setResourseAndBg(R.drawable.red_circle, R.drawable.red_circle);
+            } else if (status == 1) {
+                holder.invitation.setVisibility(View.VISIBLE);
+                holder.yingyaohou.setVisibility(View.GONE);
+                holder.invitationT.setText("邀请中");
+                System.out.println("邀请中。。。。。。。。。。");
+                holder.invitationI.setResourseAndBg(R.drawable.dynamic_grey, R.drawable.dynamic_grey
+                );
+            } else if (status == 2) {
+                holder.invitation.setVisibility(View.GONE);
+                holder.yingyaohou.setVisibility(View.VISIBLE);
 
-        } else if (status == 3) {
-            holder.invitation.setVisibility(View.VISIBLE);
-            holder.yingyaohou.setVisibility(View.GONE);
-            holder.invitationT.setText("邀 TA");
-            holder.invitationI.setResourseAndBg(R.drawable.red_circle
-                    , R.drawable.red_circle);
+            } else if (status == 3) {
+                holder.invitation.setVisibility(View.VISIBLE);
+                holder.yingyaohou.setVisibility(View.GONE);
+                holder.invitationT.setText("邀 TA");
+                holder.invitationI.setResourseAndBg(R.drawable.red_circle
+                        , R.drawable.red_circle);
+            }
         }
 
         if (transfer == true) {
@@ -243,39 +276,24 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
         } else {
             holder.dynamic_carlogo.setImageResource(R.drawable.no_car);
         }
-        int distances = (int) Math.floor(JSONUtil.getDouble(jo,"distance"));
+        int distances = (int) Math.floor(JSONUtil.getDouble(jo, "distance"));
 //        System.out.println("传值+++++++" + distance + "/////转换：" + distances);
         holder.activity_distance.setText(CarPlayUtil.numberWithDelimiter(distances));
         JSONObject json = JSONUtil.getJSONObject(jo, "destination");
         String locationS = JSONUtil.getString(json, "province") + JSONUtil.getString(json, "city") + JSONUtil.getString(json, "district") + JSONUtil.getString(json, "street") + JSONUtil.getString(json, "detail");
-        locationS=locationS.replace("null","");
+        locationS = locationS.replace("null", "");
         String district = JSONUtil.getString(json, "district");
-        String street = JSONUtil.getString(json,"street");
+        String street = JSONUtil.getString(json, "street");
         if (TextUtils.isEmpty(locationS)) {
             holder.activity_place.setText("地点待定");
         } else {
-            if (district.equals(street)){
-                holder.activity_place.setText(JSONUtil.getString(json, "city")+ JSONUtil.getString(json, "district"));
-            }else{
-                holder.activity_place.setText(JSONUtil.getString(json, "city") + JSONUtil.getString(json, "district")+ JSONUtil.getString(json, "street"));
+            if (district.equals(street)) {
+                holder.activity_place.setText(JSONUtil.getString(json, "city") + JSONUtil.getString(json, "district"));
+            } else {
+                holder.activity_place.setText(JSONUtil.getString(json, "city") + JSONUtil.getString(json, "district") + JSONUtil.getString(json, "street"));
             }
         }
-        if (bundle.getString("idel").equals("false")) {
-//            Toast.makeText(mContext, "抱歉，" + bundle.getString("name") + "暂时没空接受你的邀请", Toast.LENGTH_LONG).show();
-            holder.invitationT.setText("Ta没空");
-            holder.invitationI.setResourseAndBg(R.drawable.dynamic_grey
-                    , R.drawable.dynamic_grey);
-            holder.invitationI.setEnabled(false);
 
-        } else {
-//            JSONObject jo = (JSONObject) getItem(i);
-            holder.invitationI.setEnabled(true);
-            holder.invitationT.setText("应邀");
-            holder.invitationI.setResourseAndBg(R.drawable.btn_red_fillet
-                    , R.drawable.btn_red_fillet);
-//            join(JSONUtil.getString(jo, "activityId"), holder, jo);
-//                        System.out.println("有空----------" + bundle.getBoolean("idle"));
-        }
         holder.invitationI.setOnClickListener(new MyOnClick(holder, i));
         holder.dyanmic_one.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -319,8 +337,8 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
 ////                        System.out.println("没空----------" +bundle.getBoolean("idle"));
 //                        Toast.makeText(mContext, "抱歉，" + bundle.getString("name") + "暂时没空接受你的邀请", Toast.LENGTH_LONG).show();
 //                    } else {
-                        JSONObject jo = (JSONObject) getItem(i);
-                        join(JSONUtil.getString(jo,"activityId"), holder, jo);
+                    JSONObject jo = (JSONObject) getItem(i);
+                    join(JSONUtil.getString(jo, "activityId"), holder, jo);
 //                        System.out.println("有空----------" + bundle.getBoolean("idle"));
 //                    }
 
@@ -333,19 +351,18 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
         User user = User.getInstance();
         String url = API2.CWBaseurl + "activity/" + activeId + "/join?userId=" + user.getUserId() + "&token=" + user.getToken();
         DhNet net = new DhNet(url);
-        net.addParam("type", JSONUtil.getString(jo,"type"));
-        net.addParam("pay", JSONUtil.getString(jo,"pay"));
-        net.addParam("transfer", JSONUtil.getString(jo,"transfer"));
-        net.addParam("destPoint", JSONUtil.getString(jo,"destPoint"));
-        net.addParam("destination", JSONUtil.getString(jo,"destination"));
+        net.addParam("type", JSONUtil.getString(jo, "type"));
+        net.addParam("pay", JSONUtil.getString(jo, "pay"));
+        net.addParam("transfer", JSONUtil.getString(jo, "transfer"));
+        net.addParam("destPoint", JSONUtil.getString(jo, "destPoint"));
+        net.addParam("destination", JSONUtil.getString(jo, "destination"));
         net.doPostInDialog(new NetTask(mContext) {
             @Override
             public void doInUI(Response response, Integer transfer) {
                 if (response.isSuccess()) {
                     holder.invitationT.setText("邀请中");
-                    holder.invitationI.setResourseAndBg(R.drawable.dynamic_grey
-                            , R.drawable.dynamic_grey
-                    );
+                    holder.invitationI.setResourseAndBg(R.drawable.dynamic_grey, R.drawable.dynamic_grey);
+                    EventBus.getDefault().post("刷新Ta的活动");
                     System.out.println("邀Ta" + response.isSuccess());
                     try {
                         jo.put("status", 2);
