@@ -2,9 +2,11 @@ package com.gongpingjia.carplay.view;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
@@ -29,7 +31,13 @@ import net.duohuo.dhroid.util.PhotoUtil;
 
 import org.json.JSONArray;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -173,9 +181,29 @@ public class ImageGallery extends CarPlayBaseActivity implements View.OnClickLis
                 showOperation();
 //                    MediaStore.Images.Media.insertImage(getContentResolver(), items.get(photoCurrent), "title", "description");
                 Bitmap btm = ImageLoader.getInstance().getMemoryCache().get(items.get(photoCurrent));
-                savePhoto(btm);
+//                savePhoto(btm);
 //                Bitmap map = ImageLoad.getBitmap(items.get(photoCurrent), 0, 0);
 //                SavePhotoDialog dialog = new SavePhotoDialog(ImageGallery.this, map, 0);
+                new Thread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        byte[] data = getImage();
+                        final Bitmap bitmap = BitmapFactory.decodeByteArray(
+                                data, 0, data.length);
+                        System.out.println("Bitmap*****" + bitmap);
+                        new Handler(getMainLooper()).post(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                savePhoto(bitmap);
+//                                ((ImageView) findViewById(R.id.imageView1))
+//                                        .setImageBitmap(bitmap);
+                            }
+                        });
+
+                    }
+                }).start();
 
                 break;
             //取消
@@ -190,6 +218,39 @@ public class ImageGallery extends CarPlayBaseActivity implements View.OnClickLis
                 break;
         }
     }
+    //url转化为bitmap
+    public byte[] getImage() {
+        byte[] data = null;
+        try {
+            // 建立URL
+            URL url = new URL(items.get(photoCurrent));
+
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setReadTimeout(5000);
+
+            InputStream input = conn.getInputStream();// 到这可以直接BitmapFactory.decodeFile也行。 返回bitmap
+
+            ByteArrayOutputStream output = new ByteArrayOutputStream();
+            byte[] buffer = new byte[1024];
+            int len = 0;
+            while ((len = input.read(buffer)) != -1) {
+                output.write(buffer, 0, len);
+            }
+
+            input.close();
+            data = output.toByteArray();
+            System.out.println("下载完毕！");
+        } catch (MalformedURLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return data;
+    }
+
 
     private void showOperation() {
         if (showFlag) {
