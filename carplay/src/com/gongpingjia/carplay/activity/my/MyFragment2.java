@@ -529,7 +529,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
             public void doInUI(Response response, Integer transfer) {
                 ((MainActivity2) getActivity()).hidenProgressDialog();
                 if (response.isSuccess()) {
-                    user.setHasAlbum(true);         //设置相册状态
+
 
                     uploadedCount = uploadedCount + 1;
                     JSONObject jo = response.jSONFromData();
@@ -551,6 +551,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                             Collections.reverse(newAlbm);
                             album.addAll(0, newAlbm);
                             mAdapter.setData(album);
+                            user.setHasAlbum(album.size()>1);         //设置相册状态
                             uploadedCount = 0;
 //                            ViewUtil.bindNetImage(photo_bgI, (String) album.get(0).get("url"), "head");
                             DhNet net = new DhNet(API2.CWBaseurl + "user/" + user.getUserId() + "/photoCount?token=" + user.getToken());

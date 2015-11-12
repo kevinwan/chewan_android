@@ -217,7 +217,7 @@ public class SplashActivity extends CarPlayBaseActivity {
                             user.setEmName(jo.getString("emchatName"));
                             user.setPhone(per.phone);
                             JSONArray jsa = JSONUtil.getJSONArray(jo, "album");
-                            user.setHasAlbum(jsa != null && jsa.length() != 0);
+                            user.setHasAlbum(jsa != null && jsa.length() > 1);
                             user.setLogin(true);
                             user.setGender(JSONUtil.getString(jo, "gender"));
                             user.setAge(JSONUtil.getInt(jo, "age"));

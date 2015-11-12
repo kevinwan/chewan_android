@@ -149,16 +149,19 @@ public class ImageGallery extends CarPlayBaseActivity implements View.OnClickLis
             @Override
             public void doInUI(Response response, Integer transfer) {
                 if (response.isSuccess()) {
+
                     items.remove(photoCurrent);
                     itemid.remove(photoCurrent);
+                    if (items.size() < 2){
+                        user.setHasAlbum(false);         //设置相册状态
+                        EventBus.getDefault().post(new String("刷新附近列表"));
+                    }
                     if (items.size() != 0) {
                         pagerAdapter.notifyDataSetChanged();
                         mViewPager.setCurrentItem(0);
                         mIndicatorText.setText(getIndicatorString(0,
                                 items.size()));
                     } else {
-                        user.setHasAlbum(false);         //设置相册状态
-                        EventBus.getDefault().post(new String("刷新附近列表"));
                         finish();
                     }
                     EventBus.getDefault().post(new String("上传成功"));

@@ -74,7 +74,8 @@ public class MatchingListFragment extends CarPlayBaseFragment implements PullToR
     boolean isCleanParams = false;
 
     public void setParams(Map<String, Object> params) {
-
+        params.put("pay",getOppositePay(params.get("pay").toString()));
+        params.put("transfer",getOppositeTransfer((boolean) params.get("transfer")));
         if (mParams == null) {
             mParams = params;
         } else {
@@ -167,9 +168,13 @@ public class MatchingListFragment extends CarPlayBaseFragment implements PullToR
     public void loadSuccess() {
         adapter.setData(mVaules);
         if (mVaules.size() == 0 && !isCleanParams) {
-            addParams("type", "");
-            addParams("pay", "");
-            addParams("transfer", "");
+            addParams("type", mParams.get("type"));
+            addParams("pay", mParams.get("pay"));
+            addParams("majorType", mParams.get("majorType"));
+            addParams("transfer", mParams.get("transfer"));
+//            addParams("type", "");
+//            addParams("pay", "");
+//            addParams("transfer", "");
             refreshNoDialog();
             isCleanParams = true;
         }
@@ -297,5 +302,30 @@ public class MatchingListFragment extends CarPlayBaseFragment implements PullToR
             countdownView.setVisibility(View.GONE);
             contentView.setVisibility(View.VISIBLE);
         }
+    }
+
+    /**
+     * 获取相反词进行查询
+     * 我请客<--->请我吧
+     * AA制<---->AA制
+     * @return
+     */
+    private String getOppositePay(String pay){
+        if ("我请客".equals(pay)){
+            return "请我吧";
+        }
+        if ("请我吧".equals(pay)){
+            return "我请客";
+        }
+        if ("AA制".equals(pay)){
+            return "AA制";
+        }
+        return "";
+    }
+
+    private boolean getOppositeTransfer(boolean transfer){
+        if (transfer)
+            return false;
+        return true;
     }
 }
