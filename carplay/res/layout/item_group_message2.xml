@@ -62,7 +62,7 @@
                     android:id="@+id/title"
                     style="@style/text_black_medium"
                     android:ellipsize="end"
-                    android:maxWidth="120dp"
+                    android:maxWidth="180dp"
                     android:singleLine="true" />
 
                 <RelativeLayout

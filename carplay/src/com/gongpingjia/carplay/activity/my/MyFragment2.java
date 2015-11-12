@@ -535,7 +535,6 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                     JSONObject jo = response.jSONFromData();
                     String photoUrl = JSONUtil.getString(jo, "photoUrl");
                     String photoId = JSONUtil.getString(jo, "photoId");
-                    ((MainActivity2) getActivity()).showToast("上传成功");
 
                     try {
                         JSONObject json = new JSONObject();
@@ -544,6 +543,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                         newAlbm.add(json);
                         Log.d("msg", "添加数据");
                         if (uploadPhotoCount == uploadedCount) {
+                            ((MainActivity2) getActivity()).showToast("上传成功");
                             //控制附近列表刷新
                             EventBus.getDefault().post(new String("刷新附近列表"));
 //                            album.add(0, new JSONObject().put("url", photoUrl));

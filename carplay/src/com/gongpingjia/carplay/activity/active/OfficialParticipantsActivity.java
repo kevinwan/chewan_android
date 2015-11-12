@@ -89,20 +89,21 @@ public class OfficialParticipantsActivity extends CarPlayListActivity implements
         setOnLoadSuccess(this);
         setOnLoadDataSuccess(this);
         fromWhat("data.members");
-        setUrl(API2.CWBaseurl + "/official/activity/" + activeid + "/members?userId=" + user.getUserId() + "&token=" + user.getToken());
+        setUrl(API2.CWBaseurl + "/official/activity/" + groupId + "/members?userId=" + user.getUserId() + "&token=" + user.getToken());
+        addParams("idType",1);
         showNext();
 
         mRecyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent it;
-                String userId = JSONUtil.getString(adapter.getItem(position), "userId");
+                String userId = JSONUtil.getString(adapter.getItem(position-2), "userId");
                 if (userId.equals(user.getUserId())) {
                     it = new Intent(self, MyPerSonDetailActivity2.class);
                     startActivity(it);
                 } else {
                     it = new Intent(self, PersonDetailActivity2.class);
-                    it.putExtra("activeid", userId);
+                    it.putExtra("userId", userId);
                     startActivity(it);
                 }
             }
@@ -137,7 +138,8 @@ public class OfficialParticipantsActivity extends CarPlayListActivity implements
     public void load(JSONObject jo) {
         JSONObject json = JSONUtil.getJSONObject(jo, "data");
         isMember = JSONUtil.getBoolean(json, "isMember");
-        System.out.println("参与成员" + JSONUtil.getBoolean(json, "isMember"));
+        activeid = JSONUtil.getString(json, "officialActivityId");
+        System.out.println("参与成员" + JSONUtil.getString(json, "officialActivityId"));
     }
 
     private void changeMsg(final boolean isChecked) {

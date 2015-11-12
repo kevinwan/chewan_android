@@ -59,6 +59,12 @@
 
                         <include layout="@layout/include_sex" />
 
+                        <ImageView
+                            android:id="@+id/car_logo"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_marginLeft="5dp" />
+
 
                     </LinearLayout>
 

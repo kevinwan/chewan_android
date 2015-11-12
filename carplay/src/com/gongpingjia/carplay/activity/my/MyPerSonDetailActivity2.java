@@ -480,7 +480,6 @@ public class MyPerSonDetailActivity2 extends CarPlayBaseActivity implements View
                     JSONObject jo = response.jSONFromData();
                     String photoUrl = JSONUtil.getString(jo, "photoUrl");
                     String photoId = JSONUtil.getString(jo, "photoId");
-                    showToast("上传成功");
 
                     try {
                         JSONObject json = new JSONObject();
@@ -489,6 +488,7 @@ public class MyPerSonDetailActivity2 extends CarPlayBaseActivity implements View
                         newAlbm.add(json);
                         Log.d("msg", "添加数据");
                         if (uploadPhotoCount == uploadedCount) {
+                            showToast("上传成功");
 //                            album.add(0, new JSONObject().put("url", photoUrl));
                             Log.d("msg", "相册大小" + newAlbm.size());
                             Collections.reverse(newAlbm);

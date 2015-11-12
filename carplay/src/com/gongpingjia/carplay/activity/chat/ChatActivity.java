@@ -256,6 +256,7 @@ public class ChatActivity extends CarPlayBaseActivity implements
     public EMChatRoom room;
     public boolean isRobot;
     String activiyId;
+    String groupId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -267,6 +268,7 @@ public class ChatActivity extends CarPlayBaseActivity implements
         // sdkHelper.pushActivity(this);
         activityInstance = this;
         activiyId = getIntent().getStringExtra("activityId");
+        groupId = getIntent().getStringExtra("groupId");
         user = User.getInstance();
         initView();
         setUpView();
@@ -434,7 +436,7 @@ public class ChatActivity extends CarPlayBaseActivity implements
                 public void onClick(View v) {
                     Intent it = new Intent(self, OfficialParticipantsActivity.class);
                     it.putExtra("activityId", activiyId);
-                    it.putExtra("groupId", getIntent().getStringExtra("groupId"));
+                    it.putExtra("groupId", groupId);
                     startActivity(it);
                 }
             });

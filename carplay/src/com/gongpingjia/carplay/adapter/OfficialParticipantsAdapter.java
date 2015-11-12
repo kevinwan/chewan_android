@@ -16,7 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
-import com.gongpingjia.carplay.activity.active.ActiveDetailsActivity2;
+import com.gongpingjia.carplay.activity.active.OfficialParticipantsActivity;
 import com.gongpingjia.carplay.activity.chat.ChatActivity;
 import com.gongpingjia.carplay.activity.chat.VoiceCallActivity;
 import com.gongpingjia.carplay.api.API2;
@@ -118,6 +118,7 @@ public class OfficialParticipantsAdapter extends BaseAdapter {
             holder.invitelayout = (LinearLayout) convertView.findViewById(R.id.invitelayout);
             holder.sms = (AnimButtonView) convertView.findViewById(R.id.sms);
             holder.call = (AnimButtonView) convertView.findViewById(R.id.call);
+            holder.carLogo = (ImageView) convertView.findViewById(R.id.car_logo);
 
             convertView.setTag(holder);
         } else {
@@ -140,6 +141,14 @@ public class OfficialParticipantsAdapter extends BaseAdapter {
         }
         String photoAuthStatus = JSONUtil.getString(jo, "photoAuthStatus");
         holder.headstatus.setVisibility("已认证".equals(photoAuthStatus) ? View.VISIBLE : View.GONE);
+
+        if ("认证通过".equals(JSONUtil.getString(jo, "licenseAuthStatus"))){
+            holder.carLogo.setVisibility(View.VISIBLE);
+            JSONObject carjo=JSONUtil.getJSONObject(jo,"car");
+            ViewUtil.bindNetImage(holder.carLogo,JSONUtil.getString(carjo,"logo"),"head");
+        }else {
+            holder.carLogo.setVisibility(View.GONE);
+        }
         //邀请的状态
         final int inviteStatus = JSONUtil.getInt(jo, "inviteStatus");
         final int beInvitedStatus = JSONUtil.getInt(jo, "beInvitedStatus");
@@ -156,7 +165,7 @@ public class OfficialParticipantsAdapter extends BaseAdapter {
                         //已参加该活动
                         if (isMember) {
                             if (inviteStatus == 0 && beInvitedStatus == 1) {
-                                ((ActiveDetailsActivity2) mContext).showToast("已邀请您,请您去活动动态里处理邀请");
+                                ((OfficialParticipantsActivity) mContext).showToast("已邀请您,请您去活动动态里处理邀请");
                             } else {
                                 inviteTogether(userId);
                             }
@@ -223,7 +232,7 @@ public class OfficialParticipantsAdapter extends BaseAdapter {
 
         RelativeLayout sexLayout;
         //性别,头像认证
-        ImageView sex, headstatus;
+        ImageView sex, headstatus,carLogo;
 
         LinearLayout acceptedlayout, contactlayout, invitelayout;
 
@@ -251,7 +260,7 @@ public class OfficialParticipantsAdapter extends BaseAdapter {
                     @Override
                     public void doInUI(Response response, Integer transfer) {
                         if (response.isSuccess()) {
-                            ((ActiveDetailsActivity2) mContext).showToast("邀请成功");
+                            ((OfficialParticipantsActivity) mContext).showToast("邀请成功");
                             EventBus.getDefault().post("刷新列表");
                         }
                     }

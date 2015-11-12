@@ -582,9 +582,9 @@ public class MainActivity2 extends BaseFragmentActivity implements
                     user.setHasAlbum(true);         //设置相册状态
                     uploadedCount = uploadedCount + 1;
                     JSONObject jo = response.jSONFromData();
-                    showToast("上传成功");
                     String success = "上传成功";
                     if (uploadPhotoCount == uploadedCount) {
+                        showToast("上传成功");
                         //控制附近列表刷新
                         EventBus.getDefault().post(new String("刷新附近列表"));
                         EventBus.getDefault().post(success);

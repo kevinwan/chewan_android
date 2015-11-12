@@ -113,7 +113,6 @@ public class LookAroundPop {
                 }
             }
         });
-
     }
 
     private void bindData(JSONArray jsa) {

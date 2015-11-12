@@ -118,6 +118,7 @@ public class OfficialMembersAdapter extends BaseAdapter {
             holder.sms = (AnimButtonView) convertView.findViewById(R.id.sms);
             holder.call = (AnimButtonView) convertView.findViewById(R.id.call);
             holder.distance = (TextView) convertView.findViewById(R.id.distance);
+            holder.carLogo = (ImageView) convertView.findViewById(R.id.car_logo);
 
             convertView.setTag(holder);
         } else {
@@ -129,7 +130,6 @@ public class OfficialMembersAdapter extends BaseAdapter {
 
         ViewUtil.bindNetImage(holder.head, JSONUtil.getString(jo, "avatar"), "head");
         holder.head.setTag(userId);
-
 
         ViewUtil.bindView(holder.name, JSONUtil.getString(jo, "nickname"));
         ViewUtil.bindView(holder.age, JSONUtil.getInt(jo, "age"));
@@ -143,6 +143,15 @@ public class OfficialMembersAdapter extends BaseAdapter {
         }
         String photoAuthStatus = JSONUtil.getString(jo, "photoAuthStatus");
         holder.headstatus.setVisibility("认证通过".equals(photoAuthStatus) ? View.VISIBLE : View.GONE);
+
+        if ("认证通过".equals(JSONUtil.getString(jo, "licenseAuthStatus"))){
+            holder.carLogo.setVisibility(View.VISIBLE);
+            JSONObject carjo=JSONUtil.getJSONObject(jo,"car");
+            ViewUtil.bindNetImage(holder.carLogo,JSONUtil.getString(carjo,"logo"),"head");
+        }else {
+            holder.carLogo.setVisibility(View.GONE);
+        }
+
         //邀请的状态
         final int inviteStatus = JSONUtil.getInt(jo, "inviteStatus");
         final int beInvitedStatus = JSONUtil.getInt(jo, "beInvitedStatus");
@@ -234,7 +243,7 @@ public class OfficialMembersAdapter extends BaseAdapter {
 
         RelativeLayout sexLayout;
         //性别,头像认证
-        ImageView sex, headstatus;
+        ImageView sex, headstatus,carLogo;
 
         LinearLayout acceptedlayout, contactlayout, invitelayout;
 

@@ -36,13 +36,23 @@
                 android:orientation="vertical">
 
 
-                <TextView
-                    android:id="@+id/nickname"
-                    style="@style/text_black_big"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
-                    android:text="陈小小" />
+                    android:layout_marginRight="5dp">
+                    <TextView
+                        android:id="@+id/nickname"
+                        style="@style/text_black_big"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="陈小小" />
+                    <ImageView
+                        android:id="@+id/car_logo"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginLeft="5dp" />
+                </LinearLayout>
+
 
                 <LinearLayout
                     android:layout_width="wrap_content"
