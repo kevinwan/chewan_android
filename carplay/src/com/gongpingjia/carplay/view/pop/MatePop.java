@@ -67,9 +67,10 @@ public class MatePop implements Runnable, View.OnClickListener {
     }
 
     public static MatePop getInstance(Activity context) {
-        instance = new MatePop(context);
+        if (instance == null) {
+            instance = new MatePop(context);
+        }
         return instance;
-
     }
 
     private void initView() {

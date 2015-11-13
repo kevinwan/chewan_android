@@ -76,9 +76,10 @@ public class LookAroundPop {
     }
 
     public static LookAroundPop getInstance(Activity context) {
-        instance = new LookAroundPop(context);
+        if (instance == null) {
+            instance = new LookAroundPop(context);
+        }
         return instance;
-
     }
 
     private void initView() {
