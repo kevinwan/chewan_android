@@ -126,7 +126,6 @@
                     android:id="@+id/activity_beijing"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/img_loading"
                     android:scaleType="centerCrop" />
 
                 <include layout="@layout/include_active_button" />
