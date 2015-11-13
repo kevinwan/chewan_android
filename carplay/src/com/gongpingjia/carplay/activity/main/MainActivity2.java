@@ -287,7 +287,6 @@ public class MainActivity2 extends BaseFragmentActivity implements
         rotateAnimation.setInterpolator(new LinearInterpolator());
         appointmentI.setAnimation(rotateAnimation);
         rotateAnimation.start();
-        sendLoaction(20.12, 120.12);
 
         if (per.isTodayFirst){
             new Handler().postDelayed(new Runnable() {
@@ -974,20 +973,6 @@ public class MainActivity2 extends BaseFragmentActivity implements
         }
     };
 
-    private void sendLoaction(double latitude, double longitude) {
-        User user = User.getInstance();
-        DhNet net = new DhNet(API2.sendLocation(user.getUserId(), user.getToken()));
-        net.addParam("latitude", latitude);
-        net.addParam("longitude", longitude);
-        net.doPost(new NetTask(getApplicationContext()) {
-            @Override
-            public void doInUI(Response response, Integer transfer) {
-                if (response.isSuccess()) {
-                    Log.d("msg", "成功");
-                }
-            }
-        });
-    }
 
 
     private void uploadPointRecord() {

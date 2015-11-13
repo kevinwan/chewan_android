@@ -208,7 +208,7 @@ public class NearListAdapter extends RecyclerView.Adapter<NearListAdapter.Simple
             @Override
             public void onLoadingStarted(String imageUri, View view) {
                 super.onLoadingStarted(imageUri, view);
-                holder.active_bg.setImageResource(R.drawable.img_loading);
+//                holder.active_bg.setImageResource(R.drawable.img_loading);
             }
 
             @Override
