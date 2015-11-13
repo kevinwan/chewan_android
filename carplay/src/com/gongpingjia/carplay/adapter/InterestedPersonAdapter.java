@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.api.API2;
+import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.view.AnimButtonView;
@@ -153,7 +154,7 @@ public class InterestedPersonAdapter extends BaseAdapter {
                         img.setImageBitmap(bitmap);
                         Blurry.with(mContext)
                                 .radius(10)
-                                .sampling(8)
+                                .sampling(Constant.BLUR_VALUE)
                                 .async()
                                 .capture(img)
                                 .into(img);

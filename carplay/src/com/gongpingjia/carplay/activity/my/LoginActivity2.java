@@ -423,7 +423,7 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
                     user.setEmName(jo.getString("emchatName"));
                     user.setPhone(mEditNum.getText().toString().trim());
                     JSONArray jsa = JSONUtil.getJSONArray(jo, "album");
-                    user.setHasAlbum(jsa != null && jsa.length() != 0);
+                    user.setHasAlbum(jsa != null && jsa.length() > 1);
 //                    user.setHasAlbum(jsa.length() == 0 ? false : true);
                     user.setLogin(true);
                     user.setGender(JSONUtil.getString(jo, "gender"));

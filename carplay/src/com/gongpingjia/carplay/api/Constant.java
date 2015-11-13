@@ -16,6 +16,10 @@ public class Constant {
      */
     public static final int ZOOM_PIC = 1003;
 
+    /**
+     * 图片模糊度
+     */
+    public static final int BLUR_VALUE=6;
 //	// 测试版
 //	public static final String WX_APP_KEY = "wx9c80b151c6d4ae54";
 //	public static final String WX_APP_SECRET = "81077629b31790b0e8e8da336acdf4bb";

@@ -336,7 +336,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                             img.setImageBitmap(bitmap);
                             Blurry.with(mContext)
                                     .radius(10)
-                                    .sampling(8)
+                                    .sampling(Constant.BLUR_VALUE)
                                     .async()
                                     .capture(img)
                                     .into(img);

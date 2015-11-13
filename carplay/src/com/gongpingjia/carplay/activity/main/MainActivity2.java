@@ -579,7 +579,6 @@ public class MainActivity2 extends BaseFragmentActivity implements
             public void doInUI(Response response, Integer transfer) {
                 hidenProgressDialog();
                 if (response.isSuccess()) {
-                    user.setHasAlbum(true);         //设置相册状态
                     uploadedCount = uploadedCount + 1;
                     JSONObject jo = response.jSONFromData();
                     String success = "上传成功";
@@ -589,7 +588,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
                         EventBus.getDefault().post(new String("刷新附近列表"));
                         EventBus.getDefault().post(success);
                         uploadedCount = 0;
-
+                        setHasAlbm();
                         DhNet net = new DhNet(API2.CWBaseurl + "user/" + user.getUserId() + "/photoCount?token=" + user.getToken());
                         net.addParam("count", uploadPhotoCount);
                         net.doPost(new NetTask(self) {
@@ -600,6 +599,18 @@ public class MainActivity2 extends BaseFragmentActivity implements
                         });
                     }
                 }
+            }
+        });
+    }
+    private void setHasAlbm(){
+        DhNet net = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId()
+                + "/info?viewUser=" + user.getUserId() + "&token=" + user.getToken());
+        net.doGet(new NetTask(self) {
+            @Override
+            public void doInUI(Response response, Integer transfer) {
+                JSONObject jo = response.jSONFromData();
+                JSONArray albumJsa = JSONUtil.getJSONArray(jo, "album");
+                user.setHasAlbum(albumJsa.length()>1);         //设置相册状态
             }
         });
     }

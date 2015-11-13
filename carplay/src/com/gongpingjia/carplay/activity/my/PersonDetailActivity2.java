@@ -201,7 +201,7 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
                             img.setImageBitmap(bitmap);
                             Blurry.with(self)
                                     .radius(10)
-                                    .sampling(8)
+                                    .sampling(Constant.BLUR_VALUE)
                                     .async()
                                     .capture(img)
                                     .into(img);
@@ -400,9 +400,7 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
             public void doInUI(Response response, Integer transfer) {
                 hidenProgressDialog();
                 if (response.isSuccess()) {
-                    user.setHasAlbum(true);         //设置相册状态
-                    ((RelativeLayout) findViewById(R.id.uploadlayout)).setVisibility(View.GONE);
-                    ((LinearLayout) findViewById(R.id.photolayout)).setVisibility(View.VISIBLE);        //可以查看
+//                    user.setHasAlbum(true);         //设置相册状态
                     uploadedCount = uploadedCount + 1;
                     JSONObject jo = response.jSONFromData();
                     showToast("上传成功");
@@ -410,6 +408,7 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
                     if (uploadPhotoCount == uploadedCount) {
                         EventBus.getDefault().post(success);
                         uploadedCount = 0;
+                        setHasAlbm();
 
                         DhNet net = new DhNet(API2.CWBaseurl + "user/" + user.getUserId() + "/photoCount?token=" + user.getToken());
                         net.addParam("count", uploadPhotoCount);
@@ -421,6 +420,29 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
                         });
                     }
                 }
+            }
+        });
+    }
+
+    private void setHasAlbm(){
+        DhNet net = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId()
+                + "/info?viewUser=" + user.getUserId() + "&token=" + user.getToken());
+        net.doGet(new NetTask(self) {
+            @Override
+            public void doInUI(Response response, Integer transfer) {
+                JSONObject jo = response.jSONFromData();
+                JSONArray albumJsa = JSONUtil.getJSONArray(jo, "album");
+                if (albumJsa.length() > 1) {
+                    user.setHasAlbum(true);         //设置相册状态
+                    ((LinearLayout) findViewById(R.id.photolayout)).setVisibility(View.VISIBLE);        //可以查看
+                    ((RelativeLayout) findViewById(R.id.uploadlayout)).setVisibility(View.GONE);
+                    //控制附近列表刷新
+                    EventBus.getDefault().post(new String("刷新附近列表"));
+                } else {
+                    ((LinearLayout) findViewById(R.id.photolayout)).setVisibility(View.GONE);        //可以查看
+                    ((RelativeLayout) findViewById(R.id.uploadlayout)).setVisibility(View.VISIBLE);
+                }
+
             }
         });
     }

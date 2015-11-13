@@ -113,7 +113,7 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
                         } else {
                             free_ck.setChecked(false);
 //                            System.out.println("没空");
-                            freeT.setText("忙碌中～小伙伴不可约你～");
+                            freeT.setText("忙碌中～小伙伴不可邀你～");
                         }
 //                        System.out.println("aaaaaaaaaaaaaaaa" + idle);
                     }
@@ -150,7 +150,7 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
                             public void doInUI(Response response, Integer transfer) {
                                 if (response.isSuccess()) {
                                     System.out.println(response.isSuccess());
-                                    freeT.setText("忙碌中～小伙伴不可约你～");
+                                    freeT.setText("忙碌中～小伙伴不可邀你～");
                                 }
                             }
                         });

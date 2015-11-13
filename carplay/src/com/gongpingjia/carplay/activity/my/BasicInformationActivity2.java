@@ -308,7 +308,7 @@ public class BasicInformationActivity2 extends CarPlayBaseActivity implements Vi
                             user.setPhotoAuthStatus("认证通过".equals(jo.getString("photoAuthStatus")));
                             user.setEmName(jo.getString("emchatName"));
                             JSONArray jsa = JSONUtil.getJSONArray(jo, "album");
-                            user.setHasAlbum(jsa != null && jsa.length() != 0);
+                            user.setHasAlbum(jsa != null && jsa.length() > 1);
 //                    user.setHasAlbum(jsa.length() == 0 ? false : true);
                             user.setGender(JSONUtil.getString(jo, "gender"));
                             user.setAge(JSONUtil.getInt(jo, "age"));
