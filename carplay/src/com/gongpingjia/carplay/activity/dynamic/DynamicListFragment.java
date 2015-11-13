@@ -151,7 +151,6 @@ public class DynamicListFragment extends CarPlayBaseFragment implements PullToRe
                         //车玩官方
 
                         if (username.equals("OfficialAdmin")) {
-                            EMGroup group = EMGroupManager.getInstance().getGroup(username);
                             intent = new Intent(getActivity(), ChatActivity.class);
                             intent.putExtra("chatType", ChatActivity.CHATTYPE_SINGLE);
                             intent.putExtra("activityId","" );

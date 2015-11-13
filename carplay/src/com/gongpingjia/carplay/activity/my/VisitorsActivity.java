@@ -19,7 +19,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
  * 最近访客
  * Created by Administrator on 2015/10/27.
  */
-public class VisitorsActivity extends CarPlayListActivity implements PullToRefreshBase.OnRefreshListener<ListView>, ILoadSuccess {
+public class VisitorsActivity extends CarPlayListActivity implements PullToRefreshBase.OnRefreshListener2<ListView>, ILoadSuccess {
 
     private ListView recyclerView;
 
@@ -75,8 +75,14 @@ public class VisitorsActivity extends CarPlayListActivity implements PullToRefre
         }
     }
 
+
     @Override
-    public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+    public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
         refresh();
+    }
+
+    @Override
+    public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+        showNext();
     }
 }

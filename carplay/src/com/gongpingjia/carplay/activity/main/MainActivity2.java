@@ -24,7 +24,6 @@ import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.easemob.EMCallBack;
 import com.easemob.EMConnectionListener;
@@ -753,6 +752,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
         super.onDestroy();
         Log.d("msg", "onDestroy");
         EventBus.getDefault().unregister(this);
+        EMChatManager.getInstance().unregisterEventListener(this);
         if (connectionListener != null) {
             EMChatManager.getInstance().removeConnectionListener(
                     connectionListener);
@@ -765,26 +765,6 @@ public class MainActivity2 extends BaseFragmentActivity implements
         }
 
         unregisterReceiver(cmdMessageReceiver);
-
-//        PointRecord record = PointRecord.getInstance();
-//
-//        Log.d("msg", record.getActivityDynamicCallList().toString());
-//        Log.d("msg", record.getActivityDynamicChatList().toString());
-//        Log.d("msg", record.getTypeClick().toString());
-//
-//        Log.d("msg", record.getActivityMatchCount() + "");
-//        Log.d("msg", record.getActivityMatchInvitedCountList().toString());
-//        Log.d("msg", record.getDynamicNearbyInvitedList().toString());
-//
-//        Log.d("msg", record.getOfficialActivityChatJoinList().toString());
-//
-//        Log.d("msg", record.getOfficialActivityBuyTicketList().toString());
-//
-//        Log.d("msg", record.getUserRegister() + "");
-//        Log.d("msg", record.getUnRegisterNearbyInvited() + "");
-//
-//
-//        Log.d("msg", record.getUnRegisterMatchInvited() + "");
         uploadPointRecord();
 
 
@@ -792,9 +772,9 @@ public class MainActivity2 extends BaseFragmentActivity implements
 
     @Override
     protected void onStop() {
-        EMChatManager.getInstance().unregisterEventListener(this);
-        DemoHXSDKHelper sdkHelper = (DemoHXSDKHelper) DemoHXSDKHelper
-                .getInstance();
+//        EMChatManager.getInstance().unregisterEventListener(this);
+//        DemoHXSDKHelper sdkHelper = (DemoHXSDKHelper) DemoHXSDKHelper
+//                .getInstance();
 
         super.onStop();
 
@@ -804,9 +784,6 @@ public class MainActivity2 extends BaseFragmentActivity implements
     public void onPause() {
         // TODO Auto-generated method stub
         super.onPause();
-        Log.d("msg", "onPause");
-        Toast toast = IocContainer.getShare().get(Toast.class);
-        toast.cancel();
     }
 
     static public class ExitRunnable implements Runnable {
@@ -836,18 +813,19 @@ public class MainActivity2 extends BaseFragmentActivity implements
 
     @Override
     public void onEvent(EMNotifierEvent event) {
-
         switch (event.getEvent()) {
             case EventNewMessage: // 普通消息
             {
-
+                Log.d("msg","普通");
                 EMMessage message = (EMMessage) event.getData();
 
 
                 final int type = message.getIntAttribute("type", -1);
 
+                Log.d("msg","type:"+type);
                 if (type != -1) {
                     EventBus.getDefault().post("上传成功");
+                    Log.d("msg", "发送了:");
                 }
 
 
@@ -863,6 +841,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
             }
 
             case EventOfflineMessage: {
+                Log.d("msg","离线");
                 EMMessage message = (EMMessage) event.getData();
                 runOnUiThread(new Runnable() {
                     public void run() {
@@ -876,6 +855,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
             }
 
             case EventConversationListChanged: {
+                Log.d("msg","未知");
                 break;
             }
 

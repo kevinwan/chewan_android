@@ -397,7 +397,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
             //头像认证
             case R.id.headattestation:
                 it = new Intent(mContext, HeadAttestationActivity.class);
-                it.putExtra("status",photoAuthStatus);
+                it.putExtra("status", photoAuthStatus);
                 it.putExtra("photoUrl", photoUrl);
                 startActivityForResult(it, APPROVE_HEAD);
                 break;
@@ -408,7 +408,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                 it.putExtra("licenseAuthStatus", licenseAuthStatus);
                 it.putExtra("driverLicenseURL", driverLicenseURL);
                 it.putExtra("drivingLicenseURL", drivingLicenseURL);
-                System.out.println("我的界面：：：：：："+driverLicenseURL+"另外一个"+drivingLicenseURL);
+                System.out.println("我的界面：：：：：：" + driverLicenseURL + "另外一个" + drivingLicenseURL);
                 startActivityForResult(it, APPROVE_CAR);
                 break;
             //上传相册
@@ -497,7 +497,6 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                     photoUrl = data.getStringExtra("photoUrl");
 
 
-
                     break;
                 case APPROVE_CAR:
                     licenseAuthStatus = data.getStringExtra("statuss");
@@ -544,7 +543,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                             Collections.reverse(newAlbm);
                             album.addAll(0, newAlbm);
                             mAdapter.setData(album);
-                            user.setHasAlbum(album.size()>1);         //设置相册状态
+                            user.setHasAlbum(album.size() > 1);         //设置相册状态
                             uploadedCount = 0;
 //                            ViewUtil.bindNetImage(photo_bgI, (String) album.get(0).get("url"), "head");
                             DhNet net = new DhNet(API2.CWBaseurl + "user/" + user.getUserId() + "/photoCount?token=" + user.getToken());

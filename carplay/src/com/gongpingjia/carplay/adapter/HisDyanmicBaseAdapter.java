@@ -160,6 +160,7 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
             @Override
             public void onLoadingStarted(String imageUri, View view) {
                 super.onLoadingStarted(imageUri, view);
+                finalHolder.activity_beijing.setImageResource(R.drawable.img_loading);
             }
 
             @Override

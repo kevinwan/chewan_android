@@ -271,6 +271,7 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                     @Override
                     public void onLoadingStarted(String imageUri, View view) {
                         super.onLoadingStarted(imageUri, view);
+                        finalHolders.pic.setImageResource(R.drawable.img_loading);
                     }
 
                     @Override
