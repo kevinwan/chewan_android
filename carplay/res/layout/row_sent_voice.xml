@@ -26,7 +26,6 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:layout_marginRight="@dimen/margin_chat_activity"
-            android:background="@drawable/head_icon"
             android:scaleType="fitXY" />
 
         <LinearLayout
