@@ -95,18 +95,19 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
             carModel = bundle.getString("carModel");
 //            license = bundle.getString("license");
         }
-        System.out.println("第一个......" + bundle.getString("driverLicenseURL") + "第二个" + bundle.getString("drivingLicenseURL"));
-        switch (isAuthenticated) {
-            // 未认证
-            case "未认证":
-                carName.setText("");
-                up_button.setText("认证车主");
-                up_button.setEnabled(true);
-                driver_img.setEnabled(true);
-                driving_img.setEnabled(true);
-                brandchoice.setEnabled(true);
-                carName.setEnabled(true);
-                break;
+//        System.out.println("第一个......" + bundle.getString("driverLicenseURL") + "第二个" + bundle.getString("drivingLicenseURL"));
+        if(isAuthenticated != null){
+            switch (isAuthenticated) {
+                // 未认证
+                case "未认证":
+                    carName.setText("");
+                    up_button.setText("认证车主");
+                    up_button.setEnabled(true);
+                    driver_img.setEnabled(true);
+                    driving_img.setEnabled(true);
+                    brandchoice.setEnabled(true);
+                    carName.setEnabled(true);
+                    break;
 //            // 已认证
 //            case 1:
 //                carName.setText(carModel);
@@ -118,64 +119,66 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
 //                up_button.setEnabled(false);
 //                up_button.setBackgroundResource(R.drawable.btn_grey_fillet);
 //                break;
-            // 认证中
-            case "认证中":
-                carName.setText(carModel);
-                up_button.setText("认证中");
-                up_button.setEnabled(false);
-                carName.setText(bundle.getString("carmodel"));
-                up_button.setBackgroundResource(R.drawable.btn_grey_fillet);
+                // 认证中
+                case "认证中":
+                    carName.setText(carModel);
+                    up_button.setText("认证中");
+                    up_button.setEnabled(false);
+                    carName.setText(bundle.getString("carmodel"));
+                    up_button.setBackgroundResource(R.drawable.btn_grey_fillet);
 
-                ImageLoader.getInstance().getMemoryCache().clear();
-                ImageLoader.getInstance().getDiskCache().clear();
+                    ImageLoader.getInstance().getMemoryCache().clear();
+                    ImageLoader.getInstance().getDiskCache().clear();
 
 
-                ViewUtil.bindNetImage(driver_img, bundle.getString("driverLicenseURL"), "default");
-                ViewUtil.bindNetImage(driving_img, bundle.getString("drivingLicenseURL"), "default");
-                drivinglicense_up.setEnabled(false);
-                driverlicense_up.setEnabled(false);
-                brandchoice.setEnabled(false);
-                carName.setTextColor(self.getResources().getColor(R.color.text_grey));
-                carName.setEnabled(false);
-                driver_img.setEnabled(false);
-                driving_img.setEnabled(false);
+                    ViewUtil.bindNetImage(driver_img, bundle.getString("driverLicenseURL"), "default");
+                    ViewUtil.bindNetImage(driving_img, bundle.getString("drivingLicenseURL"), "default");
+                    drivinglicense_up.setEnabled(false);
+                    driverlicense_up.setEnabled(false);
+                    brandchoice.setEnabled(false);
+                    carName.setTextColor(self.getResources().getColor(R.color.text_grey));
+                    carName.setEnabled(false);
+                    driver_img.setEnabled(false);
+                    driving_img.setEnabled(false);
 //                icon_tI.setVisibility(View.INVISIBLE);
 //                icon_bI.setVisibility(View.INVISIBLE);
-                break;
-            case "认证未通过":
+                    break;
+                case "认证未通过":
 
-                boolean cleandriverCache = ImageLoader.getInstance().getDiskCache()
-                        .remove(bundle.getString("driverLicenseURL"));
-                Bitmap cleandriverBitmapL = ImageLoader.getInstance().getMemoryCache()
-                        .remove(bundle.getString("driverLicenseURL"));
+                    boolean cleandriverCache = ImageLoader.getInstance().getDiskCache()
+                            .remove(bundle.getString("driverLicenseURL"));
+                    Bitmap cleandriverBitmapL = ImageLoader.getInstance().getMemoryCache()
+                            .remove(bundle.getString("driverLicenseURL"));
 
-                boolean drivingCache = ImageLoader.getInstance().getDiskCache()
-                        .remove(bundle.getString("drivingLicenseURL"));
-                Bitmap drivingBitmap = ImageLoader.getInstance().getMemoryCache()
-                        .remove(bundle.getString("drivingLicenseURL"));
-                carName.setText(carModel);
-                up_button.setText("认证车主");
-                up_button.setEnabled(true);
+                    boolean drivingCache = ImageLoader.getInstance().getDiskCache()
+                            .remove(bundle.getString("drivingLicenseURL"));
+                    Bitmap drivingBitmap = ImageLoader.getInstance().getMemoryCache()
+                            .remove(bundle.getString("drivingLicenseURL"));
+                    carName.setText(carModel);
+                    up_button.setText("认证车主");
+                    up_button.setEnabled(true);
 //                carName.setText(bundle.getString("carmodel"));
 //                up_button.setBackgroundResource(R.drawable.btn_grey_fillet);
 //                ViewUtil.bindNetImage(driver_img, bundle.getString("driverLicenseURL"), "default");
 //                ViewUtil.bindNetImage(driving_img, bundle.
 // ("drivingLicenseURL"), "default");
-                drivinglicense_up.setEnabled(true);
-                driverlicense_up.setEnabled(true);
-                brandchoice.setEnabled(true);
+                    drivinglicense_up.setEnabled(true);
+                    driverlicense_up.setEnabled(true);
+                    brandchoice.setEnabled(true);
 //                carName.setTextColor(self.getResources().getColor(R.color.text_black));
-                carName.setEnabled(true);
-                driver_img.setEnabled(true);
-                driving_img.setEnabled(true);
+                    carName.setEnabled(true);
+                    driver_img.setEnabled(true);
+                    driving_img.setEnabled(true);
 
 //                icon_tI.setVisibility(View.INVISIBLE);
 //                icon_bI.setVisibility(View.INVISIBLE);
-                break;
+                    break;
 
-            default:
-                break;
+                default:
+                    break;
+            }
         }
+
 
     }
 

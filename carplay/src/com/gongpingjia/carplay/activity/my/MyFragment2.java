@@ -224,13 +224,6 @@ public class MyFragment2 extends Fragment implements OnClickListener {
 //                    photo_bgI.setBackgroundResource(R.drawable.vp_third);
                     age = String.valueOf(JSONUtil.getInt(jo, "age"));
                     ViewUtil.bindView(ageT, JSONUtil.getInt(jo, "age"));
-//                    //设置高斯模糊
-//                    Blurry.with(getActivity())
-//                            .radius(10)
-//                            .sampling(8)
-//                            .async()
-//                            .capture(photo_bgI)
-//                            .into((ImageView) photo_bgI);
 
                     photoAuthStatus = JSONUtil.getString(jo, "photoAuthStatus");
                     licenseAuthStatus = JSONUtil.getString(jo, "licenseAuthStatus");
