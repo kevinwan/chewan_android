@@ -212,6 +212,9 @@ public class FragmentMsgAdapter extends BaseAdapter {
 //                    }
 
                 } else {
+                    holder.head_two.setVisibility(View.GONE);
+                    holder.head_three.setVisibility(View.GONE);
+                    holder.head_four.setVisibility(View.GONE);
                     holder.head_one.setVisibility(View.VISIBLE);
                     holder.layout_sex_and_ageV.setVisibility(View.VISIBLE);
                     if (TextUtils.isEmpty(lastMessage.getStringAttribute("headUrl", ""))) {
