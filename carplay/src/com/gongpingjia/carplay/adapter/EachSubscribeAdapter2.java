@@ -2,7 +2,6 @@ package com.gongpingjia.carplay.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +18,8 @@ import com.gongpingjia.carplay.view.RoundImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import net.duohuo.dhroid.net.JSONUtil;
+import net.duohuo.dhroid.util.ViewUtil;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -73,6 +72,7 @@ public class EachSubscribeAdapter2 extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         final JSONObject obj = (JSONObject) getItem(position);
+        JSONObject car = JSONUtil.getJSONObject(obj, "car");
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_each_subscribe2, parent, false);
             holder = new ViewHolder();
@@ -85,6 +85,7 @@ public class EachSubscribeAdapter2 extends BaseAdapter {
             holder.imgPhone = (ImageView) convertView.findViewById(R.id.iv_phone);
             holder.sexbgR = (RelativeLayout) convertView.findViewById(R.id.layout_sex_and_age);
             holder.sexI = (ImageView) convertView.findViewById(R.id.iv_sex);
+            holder.icon = (ImageView) convertView.findViewById(R.id.dynamic_carlogo);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -92,6 +93,8 @@ public class EachSubscribeAdapter2 extends BaseAdapter {
         holder.roundImageView.setTag(JSONUtil.getString(obj, "userId"));
         holder.textNickname.setText(JSONUtil.getString(obj, "nickname"));
         int distance = (int) Math.floor(JSONUtil.getDouble(obj, "distance"));
+        String licenseAuthStatus  = JSONUtil.getString(obj,"licenseAuthStatus");
+
         holder.textDistance.setText(CarPlayUtil.numberWithDelimiter(distance));
         holder.textAge.setText(JSONUtil.getString(obj, "age"));
         String sex = JSONUtil.getString(obj, "gender");
@@ -101,6 +104,13 @@ public class EachSubscribeAdapter2 extends BaseAdapter {
         } else {
             holder.sexbgR.setBackgroundResource(R.drawable.radion_sex_woman_normal);
             holder.sexI.setBackgroundResource(R.drawable.icon_woman3x);
+        }
+        //车主认证
+        if ("认证通过".equals(licenseAuthStatus)) {
+            holder.icon.setVisibility(View.VISIBLE);
+            ViewUtil.bindNetImage(holder.icon, JSONUtil.getString(car,"logo"), "default");
+        } else {
+            holder.icon.setVisibility(View.GONE);
         }
         holder.imgMessage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,5 +162,6 @@ public class EachSubscribeAdapter2 extends BaseAdapter {
         ImageView imgMessage;
         private RelativeLayout sexbgR;
         ImageView sexI;
+        ImageView icon;
     }
 }

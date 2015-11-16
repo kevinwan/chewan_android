@@ -16,8 +16,8 @@ import com.gongpingjia.carplay.view.RoundImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import net.duohuo.dhroid.net.JSONUtil;
+import net.duohuo.dhroid.util.ViewUtil;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -72,6 +72,7 @@ public class MySubscriberAdapter2 extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         final JSONObject obj = (JSONObject) getItem(position);
+        JSONObject car = JSONUtil.getJSONObject(obj, "car");
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_my_subscriber, parent, false);
             holder = new ViewHolder();
@@ -82,6 +83,7 @@ public class MySubscriberAdapter2 extends BaseAdapter {
             holder.textAge = (TextView) convertView.findViewById(R.id.tv_age);
             holder.sexbgR = (RelativeLayout) convertView.findViewById(R.id.layout_sex_and_age);
             holder.sexI = (ImageView) convertView.findViewById(R.id.iv_sex);
+            holder.icon = (ImageView) convertView.findViewById(R.id.dynamic_carlogo);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -98,6 +100,14 @@ public class MySubscriberAdapter2 extends BaseAdapter {
         } else {
             holder.sexbgR.setBackgroundResource(R.drawable.radion_sex_woman_normal);
             holder.sexI.setBackgroundResource(R.drawable.icon_woman3x);
+        }
+        String licenseAuthStatus  = JSONUtil.getString(obj,"licenseAuthStatus");
+        //车主认证
+        if ("认证通过".equals(licenseAuthStatus)) {
+            holder.icon.setVisibility(View.VISIBLE);
+            ViewUtil.bindNetImage(holder.icon, JSONUtil.getString(car, "logo"), "default");
+        } else {
+            holder.icon.setVisibility(View.GONE);
         }
         holder.textAge.setText(JSONUtil.getString(obj, "age"));
         holder.heartView.setOnClickListener(new View.OnClickListener() {
@@ -124,5 +134,6 @@ public class MySubscriberAdapter2 extends BaseAdapter {
         TextView textAge;
         private RelativeLayout sexbgR;
         ImageView sexI;
+        ImageView icon;
     }
 }
