@@ -10,51 +10,51 @@
     <include layout="@layout/include_title_bar" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingBottom="26dp"
-        android:paddingLeft="14dp"
-        android:paddingTop="14dp">
-
-        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:paddingBottom="25dp"
+            android:paddingLeft="14dp"
+            android:paddingTop="14dp">
 
-            <ImageView
-                android:layout_width="21dp"
-                android:layout_height="21dp"
-                android:src="@drawable/aut_paiming" />
-
-            <TextView
-                style="@style/text_grey_new_hot_small"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:paddingLeft="14dp"
-                android:text="车主认证以后在附近排名靠前" />
-        </LinearLayout>
+                android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="21dp"
+                    android:layout_height="21dp"
+                    android:src="@drawable/aut_paiming" />
 
-            <ImageView
-                android:layout_width="21dp"
-                android:layout_height="21dp"
-                android:src="@drawable/aut_zungui" />
+                <TextView
+                    style="@style/text_grey_new_hot_small"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="14dp"
+                    android:text="车主认证以后在附近排名靠前" />
+            </LinearLayout>
 
-            <TextView
-                style="@style/text_grey_new_hot_small"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
                 android:gravity="center_vertical"
-                android:paddingLeft="14dp"
-                android:text="车主认证后将拥有尊贵图标" />
-        </LinearLayout>
+                android:orientation="horizontal">
 
-    </LinearLayout>
+                <ImageView
+                    android:layout_width="21dp"
+                    android:layout_height="21dp"
+                    android:src="@drawable/aut_zungui" />
+
+                <TextView
+                    style="@style/text_grey_new_hot_small"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="14dp"
+                    android:text="车主认证后将拥有尊贵图标" />
+            </LinearLayout>
+
+        </LinearLayout>
 
 
         <LinearLayout
@@ -93,8 +93,7 @@
         </LinearLayout>
 
 
-    <View style="@style/line" />
-
+        <View style="@style/line" />
 
 
         <LinearLayout
@@ -102,39 +101,51 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:gravity="center_vertical"
             android:orientation="horizontal">
-
-            <TextView
-                style="@style/text_grey_new_medium"
-                android:layout_marginLeft="14dp"
-                android:text="上传行驶证" />
-
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:gravity="right|center_vertical"
-                android:orientation="horizontal"
-                android:paddingRight="14dp">
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:orientation="horizontal">
+                <TextView
+                    style="@style/text_grey_new_medium"
+                    android:layout_marginLeft="14dp"
+                    android:text="上传行驶证" />
 
                 <ImageView
                     android:id="@+id/driving_img"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginRight="5dp"
-                    android:gravity="center_vertical|right"
-                    android:scaleType="centerCrop" />
-
-                <ImageView
-                    android:layout_width="19dp"
-                    android:layout_height="19dp"
-                    android:src="@drawable/renzheng_camera" />
+                    android:layout_width="150dp"
+                    android:layout_height="75dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="6dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/head_camera" />
             </LinearLayout>
+            <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="60dp"-->
+            <!--android:gravity="right|center_vertical"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:paddingRight="14dp">-->
+
+            <!--<ImageView-->
+            <!--android:id="@+id/driving_img"-->
+            <!--android:layout_width="40dp"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:layout_marginRight="5dp"-->
+            <!--android:gravity="center_vertical|right"-->
+            <!--android:scaleType="centerCrop" />-->
+
+            <!--<ImageView-->
+            <!--android:layout_width="19dp"-->
+            <!--android:layout_height="19dp"-->
+            <!--android:src="@drawable/renzheng_camera" />-->
+            <!--</LinearLayout>-->
         </LinearLayout>
 
 
-    <View style="@style/line" />
-
+        <View style="@style/line" />
 
 
         <LinearLayout
@@ -142,47 +153,64 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                style="@style/text_grey_new_medium"
-                android:layout_marginLeft="14dp"
-                android:text="上传驾驶证" />
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:gravity="right|center_vertical"
-                android:orientation="horizontal"
-                android:paddingRight="14dp">
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/text_grey_new_medium"
+                    android:layout_marginLeft="14dp"
+                    android:text="上传驾驶证" />
 
                 <ImageView
                     android:id="@+id/driver_img"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginRight="5dp"
-                    android:gravity="center_vertical|right"
-                    android:scaleType="centerCrop" />
-
-                <ImageView
-                    android:layout_width="19dp"
-                    android:layout_height="19dp"
-                    android:src="@drawable/renzheng_camera" />
+                    android:layout_width="150dp"
+                    android:layout_height="75dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginLeft="15dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/head_camera"
+                    />
             </LinearLayout>
 
+
+            <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="60dp"-->
+            <!--android:gravity="right|center_vertical"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:paddingRight="14dp">-->
+
+            <!--<ImageView-->
+            <!--android:id="@+id/driver_img"-->
+            <!--android:layout_width="40dp"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:layout_marginRight="5dp"-->
+            <!--android:gravity="center_vertical|right"-->
+            <!--android:scaleType="centerCrop" />-->
+
+            <!--<ImageView-->
+            <!--android:layout_width="19dp"-->
+            <!--android:layout_height="19dp"-->
+            <!--android:src="@drawable/renzheng_camera" />-->
+            <!--</LinearLayout>-->
+
         </LinearLayout>
-
-
 
 
         <Button
             android:id="@+id/up_button"
             android:layout_width="158dp"
             android:layout_height="43dp"
-            android:layout_marginTop="27dp"
+            android:layout_marginTop="25dp"
             android:background="@drawable/button_owners_bg"
             android:text="提交认证"
             android:textColor="@color/white" />
+
 
 </LinearLayout>

@@ -107,6 +107,8 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
                     driving_img.setEnabled(true);
                     brandchoice.setEnabled(true);
                     carName.setEnabled(true);
+                    driver_img.setImageResource(R.drawable.head_camera);
+                    driving_img.setImageResource(R.drawable.head_camera);
                     break;
 //            // 已认证
 //            case 1:
@@ -169,7 +171,8 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
                     carName.setEnabled(true);
                     driver_img.setEnabled(true);
                     driving_img.setEnabled(true);
-
+                    driver_img.setImageResource(R.drawable.head_camera);
+                    driving_img.setImageResource(R.drawable.head_camera);
 //                icon_tI.setVisibility(View.INVISIBLE);
 //                icon_bI.setVisibility(View.INVISIBLE);
                     break;
@@ -219,7 +222,7 @@ public class AuthenticateOwnersActivity2 extends CarPlayBaseActivity implements 
                 if (response.isSuccess()) {
                     JSONObject jo = response.jSONFromData();
                     picUids = JSONUtil.getString(jo, "photoId");
-                    System.out.println("第一张......驾驶证：" + JSONUtil.getString(jo, "photoId"));
+//                    System.out.println("第一张......驾驶证：" + JSONUtil.getString(jo, "photoId"));
                     img = JSONUtil.getString(jo, "photoUrl");
 //                    Toast.makeText(self, "2222" + response.isSuccess(), Toast.LENGTH_SHORT).show();
                 } else {
