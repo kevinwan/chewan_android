@@ -38,7 +38,7 @@
             android:layout_marginLeft="120dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/point"
-            android:visibility="invisible"/>
+           />
 
         <ImageView
             android:layout_width="2dp"
@@ -46,7 +46,6 @@
             android:layout_below="@id/tv_call_state"
             android:layout_marginLeft="110dp"
             android:layout_marginTop="60dp"
-            android:visibility="invisible"
             android:background="@drawable/point" />
 
 
@@ -81,6 +80,7 @@
             android:id="@+id/tv_is_p2p"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="invisible"
             android:textColor="#fff" />
 
         <TextView

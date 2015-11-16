@@ -242,7 +242,7 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
                                         .setText(EMChatManager.getInstance()
                                                 .isDirectCall() ? R.string.direct_call
                                                 : R.string.relay_call);
-                                chronometer.setVisibility(View.VISIBLE);
+                                chronometer.setVisibility(View.INVISIBLE);
                                 chronometer.setBase(SystemClock.elapsedRealtime());
                                 // 开始记时
                                 chronometer.start();
