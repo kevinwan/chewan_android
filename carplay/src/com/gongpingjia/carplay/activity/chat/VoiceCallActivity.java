@@ -21,6 +21,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.os.Vibrator;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
@@ -39,6 +40,7 @@ import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.chat.controller.HXSDKHelper;
+import com.gongpingjia.carplay.util.Utils;
 import com.gongpingjia.carplay.view.AnimButtonView2;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -79,7 +81,8 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
     private LinearLayout answering_layout, call_layout;
     //	private LinearLayout voiceContronlLayout;
     AnimButtonView2 swing_card;
-
+    private Vibrator vibrator;
+    long[] pattern = {1000,2000,1000,2000,1000,2000,1000,2000};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -186,6 +189,9 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
             audioManager.setSpeakerphoneOn(true);
             ringtone = RingtoneManager.getRingtone(this, ringUri);
             ringtone.play();
+            vibrator = (Vibrator)getSystemService(self.VIBRATOR_SERVICE);
+            Utils.Vibrate(self, pattern, true);
+
         }
     }
 
@@ -359,8 +365,10 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_refuse_call: // 拒绝接听
+
                 refuseBtn.setEnabled(false);
                 if (ringtone != null)
+                    vibrator.cancel();
                     ringtone.stop();
                 try {
                     EMChatManager.getInstance().rejectCall();
@@ -373,9 +381,11 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
                 break;
 
             case R.id.btn_answer_call: // 接听电话
+
                 answerBtn.setEnabled(false);
                 if (ringtone != null)
                     ringtone.stop();
+                                vibrator.cancel();
                 if (isInComingCall) {
                     try {
                         callStateTextView.setText("正在接听...");
