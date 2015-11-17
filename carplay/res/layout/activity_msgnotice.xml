@@ -6,7 +6,7 @@
     android:orientation="vertical">
     <include layout="@layout/include_title_bar" />
     <RelativeLayout
-        android:id="@+id/layout_rate"
+        android:id="@+id/layout_sound"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginTop="10dp"
@@ -18,13 +18,43 @@
             android:layout_marginLeft="10dp"
             android:text="声音" />
 
-        <ImageView
-            android:layout_width="15dp"
-            android:layout_height="20dp"
+        <CheckBox
+            android:id="@+id/sound_check"
+            android:layout_width="50dp"
+            android:layout_height="22dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
-            android:src="@drawable/right_btn" />
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/btn_checkbox_notice"
+            android:button="@null"
+            android:padding="2dp" />
+    </RelativeLayout>
+
+    <View style="@style/line" />
+    <RelativeLayout
+        android:id="@+id/layout_shock"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/btn_layout_effect">
+
+        <TextView
+            style="@style/text_black_medium"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:text="振动" />
+
+        <CheckBox
+            android:id="@+id/shock_check"
+            android:layout_width="50dp"
+            android:layout_height="22dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/btn_checkbox_notice"
+            android:button="@null"
+            android:padding="2dp" />
     </RelativeLayout>
 
     <View style="@style/line" />

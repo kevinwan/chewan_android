@@ -66,6 +66,7 @@ public class SettingActivity2 extends CarPlayBaseActivity implements View.OnClic
         layoutClearCache.setOnClickListener(this);
         setting_versions.setOnClickListener(this);
         layout_modifypwd.setOnClickListener(this);
+        layout_notice.setOnClickListener(this);
         findViewById(R.id.layout_update).setOnClickListener(this);
         btnLogout.setOnClickListener(this);
 
@@ -107,7 +108,7 @@ public class SettingActivity2 extends CarPlayBaseActivity implements View.OnClic
                 updateApp();
                 break;
             case R.id.layout_notice:
-                it = new Intent(this, RevisePassword.class);
+                it = new Intent(this, MsgNotice.class);
                 startActivity(it);
             break;
         }
