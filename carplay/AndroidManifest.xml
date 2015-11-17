@@ -342,6 +342,11 @@
             android:screenOrientation="portrait">
 
         </activity>
+        <activity android:name=".activity.my.MsgNotice"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait">
+
+        </activity>
 
     </application>
 

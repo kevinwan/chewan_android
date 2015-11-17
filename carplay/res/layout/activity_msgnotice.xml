@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/new_bg_grey"
+    android:orientation="vertical">
+    <include layout="@layout/include_title_bar" />
+    <RelativeLayout
+        android:id="@+id/layout_rate"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/btn_layout_effect">
+
+        <TextView
+            style="@style/text_black_medium"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:text="声音" />
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/right_btn" />
+    </RelativeLayout>
+
+    <View style="@style/line" />
+
+</LinearLayout>

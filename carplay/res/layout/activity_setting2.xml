@@ -221,6 +221,39 @@
     </RelativeLayout>
 
     <View style="@style/line" />
+    <RelativeLayout
+        android:id="@+id/layout_notice"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/btn_layout_effect">
+
+        <ImageView
+            android:id="@+id/at_notice"
+            style="@style/icon_style"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/notice" />
+
+
+        <TextView
+            style="@style/text_black_medium"
+            android:layout_alignBottom="@+id/at_notice"
+            android:layout_toRightOf="@+id/at_notice"
+            android:text="消息通知" />
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/right_btn" />
+    </RelativeLayout>
+
+    <View style="@style/line" />
 
     <Button
         android:id="@+id/btn_logout"
