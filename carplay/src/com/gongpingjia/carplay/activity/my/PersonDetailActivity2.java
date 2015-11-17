@@ -26,6 +26,7 @@ import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.photo.model.PhotoModel;
+import com.gongpingjia.carplay.view.ImageGallery;
 import com.gongpingjia.carplay.view.RoundImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -308,9 +309,12 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
 
                 break;
             case R.id.head:
-//                it = new Intent(self,ImageGallery.class);
-//                it.putExtra("imgurls", headimg);
-//                startActivity(it);
+                it = new Intent(self,ImageGallery.class);
+                String[] photos ={headimg};
+                it.putExtra("imgurls", photos);
+//                it.putExtra("imgids", "123456");
+                it.putExtra("type", "his");
+                startActivity(it);
                 break;
             default:
                 break;
