@@ -252,8 +252,6 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
     }
 
     private void uploadHead(String path) {
-        Bitmap bmp = PhotoUtil.getLocalImage(new File(path));
-        headI.setImageBitmap(bmp);
         DhNet net = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId() + "/avatar?token=" + user.getToken());
         net.upload(new FileInfo("attach", new File(path)), new NetTask(self) {
 
@@ -469,23 +467,44 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case Constant.PICK_PHOTO:
-                    Bitmap btp = PhotoUtil.checkImage(self, data);
-                    PhotoUtil.saveLocalImage(btp, new File(mPhotoPath));
-                    btp.recycle();
-                    showProgressDialog("上传头像中...");
-                    uploadHead(mPhotoPath);
+
+
+                    PhotoUtil.onPhotoFromPick(self, Constant.ZOOM_PIC, mPhotoPath,
+                            data, 1, 1, 1000);
+
+//                    Bitmap btp = PhotoUtil.checkImage(self, data);
+//                    PhotoUtil.saveLocalImage(btp, new File(mPhotoPath));
+//                    btp.recycle();
+//                    showProgressDialog("上传头像中...");
+//                    uploadHead(mPhotoPath);
                     break;
                 case Constant.TAKE_PHOTO:
-                    File file = new File(mPhotoPath);
-                    Bitmap btp1 = PhotoUtil.getLocalImage(file);
+
                     String newPath = new File(mCacheDir, System.currentTimeMillis()
                             + ".jpg").getAbsolutePath();
-                    int degree = PhotoUtil.getBitmapDegree(mPhotoPath);
-                    PhotoUtil.saveLocalImage(btp1, new File(newPath), degree);
-                    btp1.recycle();
-                    showProgressDialog("上传头像中...");
-                    uploadHead(newPath);
+                    String path = PhotoUtil.onPhotoFromCamera(self,
+                            Constant.ZOOM_PIC, mPhotoPath, 1, 1, 1000, newPath);
+                    mPhotoPath = path;
+
+
+//                    File file = new File(mPhotoPath);
+//                    Bitmap btp1 = PhotoUtil.getLocalImage(file);
+//                    String newPath = new File(mCacheDir, System.currentTimeMillis()
+//                            + ".jpg").getAbsolutePath();
+//                    int degree = PhotoUtil.getBitmapDegree(mPhotoPath);
+//                    PhotoUtil.saveLocalImage(btp1, new File(newPath), degree);
+//                    btp1.recycle();
+//                    showProgressDialog("上传头像中...");
+//                    uploadHead(newPath);
                     break;
+
+                case Constant.ZOOM_PIC:
+                    Bitmap bmp = PhotoUtil.getLocalImage(new File(mPhotoPath));
+                    showProgressDialog("上传头像中...");
+                    headI.setImageBitmap(bmp);
+                    uploadHead(mPhotoPath);
+                    break;
+
 
                 case APPROVE_HEAD:
 

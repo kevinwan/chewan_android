@@ -60,9 +60,6 @@ android {
         release.setRoot('build-types/release')
     }
     productFlavors {
-        xiaomi {
-            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Mi"]
-        }
 
         QQ {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "QQ"]
@@ -72,10 +69,6 @@ android {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "360"]
         }
 
-        wandoujia {
-            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "wandoujia"]
-        }
-
         Baidu {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Baidu"]
         }
@@ -83,6 +76,15 @@ android {
         Jifeng {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Jifeng"]
         }
+
+        Huawei {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "huawei"]
+        }
+
+        Wandoujia {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "wandoujia"]
+        }
+
     }
     productFlavors.all {
         flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]

@@ -13,6 +13,7 @@ import com.gongpingjia.carplay.adapter.NearListAdapter;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.FilterPreference2;
 import com.gongpingjia.carplay.bean.User;
+import com.gongpingjia.carplay.manage.UserInfoManage;
 import com.gongpingjia.carplay.view.AnimButtonView;
 import com.gongpingjia.carplay.view.PullToRefreshRecyclerViewVertical;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -67,12 +68,24 @@ public class NearListActivity extends CarPlayListActivity implements PullToRefre
         adapter = new NearListAdapter(self, 2);
         adapter.setOnItemClick(new NearListAdapter.OnItemClick() {
             @Override
-            public void onItemClick(int position, JSONObject jo) {
-                Intent it = new Intent(self, PersonDetailActivity2.class);
-                JSONObject userjo = JSONUtil.getJSONObject(jo, "organizer");
-                String userId = JSONUtil.getString(userjo, "userId");
-                it.putExtra("userId", userId);
-                startActivity(it);
+            public void onItemClick(int position, final JSONObject jo) {
+
+                UserInfoManage.getInstance().checkLogin(self, new UserInfoManage.LoginCallBack() {
+                    @Override
+                    public void onisLogin() {
+                        Intent it = new Intent(self, PersonDetailActivity2.class);
+                        JSONObject userjo = JSONUtil.getJSONObject(jo, "organizer");
+                        String userId = JSONUtil.getString(userjo, "userId");
+                        it.putExtra("userId", userId);
+                        startActivity(it);
+                    }
+
+                    @Override
+                    public void onLoginFail() {
+
+                    }
+                });
+
             }
         });
         mRecyclerView.setAdapter(adapter);

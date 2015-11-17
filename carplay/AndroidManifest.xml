@@ -83,6 +83,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/CustomDia" />
         <activity
+
             android:name=".activity.chat.ChatActivity"
             android:screenOrientation="portrait" />
         <activity

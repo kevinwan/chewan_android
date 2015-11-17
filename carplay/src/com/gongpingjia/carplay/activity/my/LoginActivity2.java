@@ -133,7 +133,6 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
                 com.gongpingjia.carplay.api.Constant.WX_APP_SECRET);
         qqSsoHandler = new UMQQSsoHandler(self, com.gongpingjia.carplay.api.Constant.QQ_APP_ID,
                 com.gongpingjia.carplay.api.Constant.QQ_APP_KEY);
-
         qqSsoHandler.addToSocialSDK();
         wxHandler.addToSocialSDK();
     }
@@ -150,13 +149,21 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
                 break;
 
             case R.id.iv_qq:
-                doOauthVerify(SHARE_MEDIA.QQ);
+                if(qqSsoHandler.isClientInstalled()) {
+                    doOauthVerify(SHARE_MEDIA.QQ);
+                } else {
+                    showToast("请先安装QQ!");
+                }
                 break;
             case R.id.iv_weibo:
                 doOauthVerify(SHARE_MEDIA.SINA);
                 break;
             case R.id.iv_weixin:
-                doOauthVerify(SHARE_MEDIA.WEIXIN);
+                if(wxHandler.isClientInstalled()) {
+                    doOauthVerify(SHARE_MEDIA.WEIXIN);
+                } else {
+                    showToast("请先安装微信!");
+                }
                 break;
 
             case R.id.tv_forget_password:

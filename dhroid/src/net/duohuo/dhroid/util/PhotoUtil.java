@@ -364,21 +364,13 @@ public class PhotoUtil {
         }
     }
 
-    public static String saveLocalImage(Bitmap bm, int degree, Context mContext) {
+    //保存照片为正方形
+    public static void saveLocalImageSquare(Bitmap bm, File f) {
         if (bm == null)
-            return null;
+            return;
+        File file = f;
         try {
-
-            File appDir = new File(Environment
-                    .getExternalStorageDirectory(), "carplay");
-            if (!appDir.exists()) {
-                appDir.mkdir();
-            }
-            String fileName = System.currentTimeMillis() + ".jpg";
-            File file = new File(appDir, fileName);
-
-
-//			file.createNewFile();
+            file.createNewFile();
 
             // ByteArrayOutputStream baos = new ByteArrayOutputStream();
             // // bm.compress(Bitmap.CompressFormat.JPEG, 100, baos);//
@@ -394,16 +386,46 @@ public class PhotoUtil {
             // baos.reset();
             // baos.flush();
             // baos.close();
+            Bitmap squareBitmap = ImageCrop(bm);
+
+            OutputStream outStream = new FileOutputStream(file);
+            compressImage(squareBitmap, outStream);
+            outStream.flush();
+            outStream.close();
+            bm.recycle();
+            squareBitmap.recycle();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    //将照片存到本地相册(保存的图片为正方形)
+    public static String saveLocalImage(Bitmap bm, int degree, Context mContext) {
+        if (bm == null)
+            return null;
+        try {
+
+            File appDir = new File(Environment
+                    .getExternalStorageDirectory(), "carplay");
+            if (!appDir.exists()) {
+                appDir.mkdir();
+            }
+            String fileName = System.currentTimeMillis() + ".jpg";
+            File file = new File(appDir, fileName);
 
             if (degree != 0) {
                 bm = rotateBitmapByDegree(bm, degree);
             }
-
+            Bitmap squareBitmap = ImageCrop(bm);
             OutputStream outStream = new FileOutputStream(file);
-            compressImage(bm, outStream);
+            compressImage(squareBitmap, outStream);
             outStream.flush();
             outStream.close();
             bm.recycle();
+            squareBitmap.recycle();
             Intent intent = new Intent(
                     Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
             Uri uri = Uri.fromFile(file);
@@ -420,6 +442,7 @@ public class PhotoUtil {
         return null;
     }
 
+    //拍照存储照片
     public static void saveLocalImage(Bitmap bm, File f, int degree) {
         if (bm == null)
             return;
@@ -435,22 +458,8 @@ public class PhotoUtil {
 //            File file1 = new File(appDir, fileName);
 
 
-			file.createNewFile();
+            file.createNewFile();
 
-            // ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            // // bm.compress(Bitmap.CompressFormat.JPEG, 100, baos);//
-            // 质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
-            // int options = 100;
-            // while (baos.toByteArray().length / 1024 > 100)
-            // { // 循环判断如果压缩后图片是否大于100kb,大于继续压缩
-            // baos.reset();// 重置baos即清空baos
-            // bm.compress(Bitmap.CompressFormat.JPEG, options, baos);//
-            // 这里压缩options%，把压缩后的数据存放到baos中
-            // options -= 10;// 每次都减少10
-            // }
-            // baos.reset();
-            // baos.flush();
-            // baos.close();
 
             if (degree != 0) {
                 bm = rotateBitmapByDegree(bm, degree);
@@ -462,6 +471,43 @@ public class PhotoUtil {
             outStream.close();
             bm.recycle();
 
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    //拍照保存正方形图片
+    public static void saveLocalImageSquare(Bitmap bm, File f, int degree) {
+        if (bm == null)
+            return;
+        File file = f;
+        try {
+//
+//            File appDir = new File(Environment
+//                    .getExternalStorageDirectory(), "carplay");
+//            if (!appDir.exists()) {
+//                appDir.mkdir();
+//            }
+//            String fileName = System.currentTimeMillis() + ".jpg";
+//            File file1 = new File(appDir, fileName);
+
+
+            file.createNewFile();
+
+
+            if (degree != 0) {
+                bm = rotateBitmapByDegree(bm, degree);
+            }
+            Bitmap squareBitmap = ImageCrop(bm);
+            OutputStream outStream = new FileOutputStream(file);
+            compressImage(squareBitmap, outStream);
+            outStream.flush();
+            outStream.close();
+            bm.recycle();
+            squareBitmap.recycle();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -603,6 +649,20 @@ public class PhotoUtil {
             bm.recycle();
         }
         return returnBm;
+    }
+
+
+    public static Bitmap ImageCrop(Bitmap bitmap) {
+        int w = bitmap.getWidth(); // 得到图片的宽，高
+        int h = bitmap.getHeight();
+
+        int wh = w > h ? h : w;// 裁切后所取的正方形区域边长
+
+        int retX = w > h ? (w - h) / 2 : 0;//基于原图，取正方形左上角x坐标
+        int retY = w > h ? 0 : (h - w) / 2;
+
+        //下面这句是关键
+        return Bitmap.createBitmap(bitmap, retX, retY, wh, wh, null, false);
     }
 
 }

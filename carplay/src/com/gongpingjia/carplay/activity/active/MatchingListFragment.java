@@ -1,5 +1,6 @@
 package com.gongpingjia.carplay.activity.active;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.Html;
@@ -17,10 +18,12 @@ import android.widget.TextView;
 import com.gongpingjia.carplay.ILoadSuccess;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseFragment;
+import com.gongpingjia.carplay.activity.my.PersonDetailActivity2;
 import com.gongpingjia.carplay.adapter.NearListAdapter;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.FilterPreference2;
 import com.gongpingjia.carplay.bean.User;
+import com.gongpingjia.carplay.manage.UserInfoManage;
 import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.view.AnimButtonView;
 import com.gongpingjia.carplay.view.PullToRefreshRecyclerViewVertical;
@@ -28,7 +31,10 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
 
 import net.duohuo.dhroid.ioc.IocContainer;
+import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.util.UserLocation;
+
+import org.json.JSONObject;
 
 import java.util.Map;
 
@@ -74,8 +80,8 @@ public class MatchingListFragment extends CarPlayBaseFragment implements PullToR
     boolean isCleanParams = false;
 
     public void setParams(Map<String, Object> params) {
-        params.put("pay",getOppositePay(params.get("pay").toString()));
-        params.put("transfer",getOppositeTransfer((boolean) params.get("transfer")));
+        params.put("pay", getOppositePay(params.get("pay").toString()));
+        params.put("transfer", getOppositeTransfer((boolean) params.get("transfer")));
         if (mParams == null) {
             mParams = params;
         } else {
@@ -138,8 +144,32 @@ public class MatchingListFragment extends CarPlayBaseFragment implements PullToR
                 animButtonView.startScaleAnimation();
             }
         });
+
+
         mRecyclerView = listV.getRefreshableView();
         adapter = new NearListAdapter(getActivity(), 1);
+        adapter.setOnItemClick(new NearListAdapter.OnItemClick() {
+            @Override
+            public void onItemClick(int position, final JSONObject jo) {
+
+                UserInfoManage.getInstance().checkLogin(getActivity(), new UserInfoManage.LoginCallBack() {
+                    @Override
+                    public void onisLogin() {
+                        Intent it = new Intent(getActivity(), PersonDetailActivity2.class);
+                        JSONObject userjo = JSONUtil.getJSONObject(jo, "organizer");
+                        String userId = JSONUtil.getString(userjo, "userId");
+                        it.putExtra("userId", userId);
+                        startActivity(it);
+                    }
+
+                    @Override
+                    public void onLoginFail() {
+
+                    }
+                });
+
+            }
+        });
         mRecyclerView.setAdapter(adapter);
         setOnLoadSuccess(this);
         fromWhat("data");
@@ -308,22 +338,23 @@ public class MatchingListFragment extends CarPlayBaseFragment implements PullToR
      * 获取相反词进行查询
      * 我请客<--->请我吧
      * AA制<---->AA制
+     *
      * @return
      */
-    private String getOppositePay(String pay){
-        if ("我请客".equals(pay)){
+    private String getOppositePay(String pay) {
+        if ("我请客".equals(pay)) {
             return "请我吧";
         }
-        if ("请我吧".equals(pay)){
+        if ("请我吧".equals(pay)) {
             return "我请客";
         }
-        if ("AA制".equals(pay)){
+        if ("AA制".equals(pay)) {
             return "AA制";
         }
         return "";
     }
 
-    private boolean getOppositeTransfer(boolean transfer){
+    private boolean getOppositeTransfer(boolean transfer) {
         if (transfer)
             return false;
         return true;

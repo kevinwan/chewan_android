@@ -544,7 +544,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
                                 String newPhotoPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg")
                                         .getAbsolutePath();
                                 Bitmap btp = PhotoUtil.getLocalImage(new File(photos.get(i).getOriginalPath()));
-                                PhotoUtil.saveLocalImage(btp, new File(newPhotoPath));
+                                PhotoUtil.saveLocalImageSquare(btp, new File(newPhotoPath));
                                 uploadHead(newPhotoPath);
                             }
                         }
@@ -555,9 +555,9 @@ public class MainActivity2 extends BaseFragmentActivity implements
                     String newPath = new File(mCacheDir, System.currentTimeMillis()
                             + ".jpg").getAbsolutePath();
                     int degree = PhotoUtil.getBitmapDegree(mPhotoPath);
-                    PhotoUtil.saveLocalImage(btp1, new File(newPath), degree);
+                    PhotoUtil.saveLocalImageSquare(btp1, new File(newPath), degree);
                     btp1.recycle();
-                    showProgressDialog("上传头像中...");
+                    showProgressDialog("图片上传中...");
                     uploadPhotoCount = 1;
                     uploadHead(newPath);
                     break;

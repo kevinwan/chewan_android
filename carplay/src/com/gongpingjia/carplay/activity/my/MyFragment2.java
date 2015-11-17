@@ -464,7 +464,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                                 String newPhotoPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg")
                                         .getAbsolutePath();
                                 Bitmap btp = PhotoUtil.getLocalImage(new File(photos.get(i).getOriginalPath()));
-                                PhotoUtil.saveLocalImage(btp, new File(newPhotoPath));
+                                PhotoUtil.saveLocalImageSquare(btp, new File(newPhotoPath));
                                 uploadHead(newPhotoPath);
                             }
                         }
@@ -513,7 +513,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
     private void uploadHead(String path) {
 
 //        Bitmap bmp = PhotoUtil.getLocalImage(new File(path));
-//        addPhoto.setImageBitmap(bmp);
+
         DhNet net = new DhNet(API2.CWBaseurl + "user/" + user.getUserId() + "/album/upload?token=" + user.getToken());
         net.upload(new FileInfo("attach", new File(path)), new NetTask(mContext) {
 

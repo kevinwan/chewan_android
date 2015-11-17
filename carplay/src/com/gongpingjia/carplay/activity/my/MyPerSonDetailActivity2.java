@@ -422,7 +422,7 @@ public class MyPerSonDetailActivity2 extends CarPlayBaseActivity implements View
                                     String newPhotoPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg")
                                             .getAbsolutePath();
                                     Bitmap btp = PhotoUtil.getLocalImage(new File(photos.get(i).getOriginalPath()));
-                                    PhotoUtil.saveLocalImage(btp, new File(newPhotoPath));
+                                    PhotoUtil.saveLocalImageSquare(btp, new File(newPhotoPath));
                                     uploadHead(newPhotoPath);
                                 }
                             }

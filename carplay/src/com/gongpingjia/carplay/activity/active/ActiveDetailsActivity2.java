@@ -277,15 +277,18 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
 
 
                     double price=JSONUtil.getDouble(jo, "price");
-                    if (((int)price)==0){
+                    if (price==0){
                         priceT.setText("免费");
-                        subsidyPriceT.setVisibility(View.GONE);
                         buyticketsBtn.setVisibility(View.GONE);     //购票链接隐藏
                     }else {
-                        priceT.setText(price+"元/人");
+                        priceT.setText(price + "元/人");
+                        buyticketsBtn.setVisibility(View.VISIBLE);  //购票链接显示
+                    }
+                    if (JSONUtil.getDouble(jo, "subsidyPrice")==0){
+                        subsidyPriceT.setVisibility(View.GONE);
+                    }else {
                         subsidyPriceT.setVisibility(View.VISIBLE);
                         ViewUtil.bindView(subsidyPriceT,"(现在报名立减" + JSONUtil.getDouble(jo, "subsidyPrice") + "元! )");
-                        buyticketsBtn.setVisibility(View.VISIBLE);  //购票链接显示
                     }
 
                     isMember = JSONUtil.getBoolean(jo, "isMember");

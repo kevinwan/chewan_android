@@ -54,7 +54,7 @@ public class SplashActivity extends CarPlayBaseActivity {
         per = IocContainer.getShare().get(CarPlayPerference.class);
         per.load();
 
-        if (per.lastLoginTime ==(CarPlayUtil.getTodayDate()-(1000*60*60*24))){
+        if (per.lastLoginTime ==(CarPlayUtil.getTodayDate()-(1000*60*60*24))||per.lastLoginTime==0){
             per.setIsTodayFirst(true);
 //            System.out.println(per.lastLoginTime+"-----------------------");
         }else {
