@@ -112,7 +112,7 @@ public class BeSubscribedAdaptertwo extends BaseAdapter {
         //车主认证
         if ("认证通过".equals(licenseAuthStatus)) {
             holder.dynamic_carlogoI.setVisibility(View.VISIBLE);
-            ViewUtil.bindNetImage(holder.dynamic_carlogoI, JSONUtil.getString(obj, "carjo"), "default");
+            ViewUtil.bindNetImage(holder.dynamic_carlogoI, JSONUtil.getString(carjo, "logo"), "default");
         } else {
             holder.dynamic_carlogoI.setVisibility(View.GONE);
         }

@@ -89,6 +89,8 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
     String age;
     String emchatName;
     String idel;
+    private String headimg;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -167,7 +169,7 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
                     ViewUtil.bindView(ageT, JSONUtil.getInt(jo, "age"));
 
                     //头像
-                    String headimg = JSONUtil.getString(jo, "avatar");
+                     headimg = JSONUtil.getString(jo, "avatar");
                     ViewUtil.bindNetImage(headI, headimg, "head");
                     //相册
                     JSONArray albumJsa = JSONUtil.getJSONArray(jo, "album");
@@ -304,6 +306,11 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
                 window.setWindowAnimations(R.style.mystyle);
                 dlg.show();
 
+                break;
+            case R.id.head:
+//                it = new Intent(self,ImageGallery.class);
+//                it.putExtra("imgurls", headimg);
+//                startActivity(it);
                 break;
             default:
                 break;
