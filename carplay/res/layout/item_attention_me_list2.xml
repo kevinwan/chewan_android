@@ -16,11 +16,23 @@
         android:paddingLeft="12dp"
         android:orientation="horizontal">
 
-        <com.gongpingjia.carplay.view.RoundImageView
-            android:id="@+id/head"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/trends_official" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <com.gongpingjia.carplay.view.RoundImageView
+                android:id="@+id/head"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/trends_official" />
+            <ImageView
+                android:id="@+id/headstatus"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginTop="30dp"
+                android:src="@drawable/headaut_dl" />
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -35,6 +47,13 @@
                 android:text="车玩官方" />
 
             <include layout="@layout/include_sex" />
+
+            <ImageView
+                android:id="@+id/dynamic_carlogo"
+                android:layout_width="21dp"
+                android:layout_height="21dp"
+                android:layout_marginLeft="5dp"
+                />
 
         </LinearLayout>
 

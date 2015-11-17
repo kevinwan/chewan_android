@@ -13,9 +13,17 @@
 
         <com.gongpingjia.carplay.view.RoundImageView
             android:id="@+id/iv_avatar"
-            android:layout_width="@dimen/mysubscriber_head_img"
-            android:layout_height="@dimen/mysubscriber_head_img"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:src="@drawable/head_icon" />
+
+        <ImageView
+            android:id="@+id/headstatus"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/headaut_dl" />
 
         <LinearLayout
             android:layout_width="wrap_content"

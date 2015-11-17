@@ -499,6 +499,7 @@ public class EditPersonalInfoActivity2 extends CarPlayBaseActivity implements Vi
                     break;
 
                 case Constant.ZOOM_PIC:
+                    System.out.println("mPhotoPath: -----------   "+mPhotoPath);
                     Bitmap bmp = PhotoUtil.getLocalImage(new File(mPhotoPath));
                     showProgressDialog("上传头像中...");
                     headI.setImageBitmap(bmp);

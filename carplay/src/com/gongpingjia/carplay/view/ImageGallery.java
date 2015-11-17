@@ -1,12 +1,14 @@
 package com.gongpingjia.carplay.view;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseActivity;
 import com.gongpingjia.carplay.api.API2;
+import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.view.gallery.BasePagerAdapter.OnItemChangeListener;
 import com.gongpingjia.carplay.view.gallery.GalleryViewPager;
@@ -54,7 +57,7 @@ public class ImageGallery extends CarPlayBaseActivity implements View.OnClickLis
 
     private TextView mIndicatorText;
 
-    private TextView remove, save, cancel;
+    private TextView remove, save, cancel,sethead;
 
     private ImageView back, more;
 
@@ -63,6 +66,8 @@ public class ImageGallery extends CarPlayBaseActivity implements View.OnClickLis
     User user;
 
     String type;
+
+    String mPhotoPath;
 
     int photoCurrent;
 
@@ -86,6 +91,7 @@ public class ImageGallery extends CarPlayBaseActivity implements View.OnClickLis
         mIndicatorText = (TextView) findViewById(R.id.tv_large_pic_title);
         remove = (TextView) findViewById(R.id.remove);
         save = (TextView) findViewById(R.id.save);
+        sethead = (TextView) findViewById(R.id.sethead);
         cancel = (TextView) findViewById(R.id.cancel);
         back = (ImageView) findViewById(R.id.back);
         more = (ImageView) findViewById(R.id.more);
@@ -121,9 +127,11 @@ public class ImageGallery extends CarPlayBaseActivity implements View.OnClickLis
         if ("myalbum".equals(type)) {
             remove.setVisibility(View.VISIBLE);
             save.setVisibility(View.GONE);
+            sethead.setVisibility(View.VISIBLE);
         } else {
             remove.setVisibility(View.GONE);
             save.setVisibility(View.VISIBLE);
+            sethead.setVisibility(View.GONE);
         }
 
         remove.setOnClickListener(this);
@@ -131,6 +139,7 @@ public class ImageGallery extends CarPlayBaseActivity implements View.OnClickLis
         cancel.setOnClickListener(this);
         back.setOnClickListener(this);
         more.setOnClickListener(this);
+        sethead.setOnClickListener(this);
     }
 
     private String getIndicatorString(int index, int total) {
@@ -182,11 +191,7 @@ public class ImageGallery extends CarPlayBaseActivity implements View.OnClickLis
             //保存图片
             case R.id.save:
                 showOperation();
-//                    MediaStore.Images.Media.insertImage(getContentResolver(), items.get(photoCurrent), "title", "description");
                 Bitmap btm = ImageLoader.getInstance().getMemoryCache().get(items.get(photoCurrent));
-//                savePhoto(btm);
-//                Bitmap map = ImageLoad.getBitmap(items.get(photoCurrent), 0, 0);
-//                SavePhotoDialog dialog = new SavePhotoDialog(ImageGallery.this, map, 0);
                 new Thread(new Runnable() {
 
                     @Override
@@ -200,8 +205,6 @@ public class ImageGallery extends CarPlayBaseActivity implements View.OnClickLis
                             @Override
                             public void run() {
                                 savePhoto(bitmap);
-//                                ((ImageView) findViewById(R.id.imageView1))
-//                                        .setImageBitmap(bitmap);
                             }
                         });
 
@@ -218,6 +221,11 @@ public class ImageGallery extends CarPlayBaseActivity implements View.OnClickLis
                 break;
             case R.id.more:
                 showOperation();
+                break;
+            //设置为头像
+            case R.id.sethead:
+                setHeadImage();
+
                 break;
         }
     }
@@ -286,4 +294,94 @@ public class ImageGallery extends CarPlayBaseActivity implements View.OnClickLis
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case Constant.PICK_PHOTO:
+
+
+                    PhotoUtil.onPhotoFromPick(self, Constant.ZOOM_PIC, mPhotoPath,
+                            data, 1, 1, 1000);
+
+//                    Bitmap btp = PhotoUtil.checkImage(self, data);
+//                    PhotoUtil.saveLocalImage(btp, new File(mPhotoPath));
+//                    btp.recycle();
+//                    showProgressDialog("上传头像中...");
+//                    uploadHead(mPhotoPath);
+                    break;
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void setHeadImage(){
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                byte[] data = getImage();
+                final Bitmap bitmap = BitmapFactory.decodeByteArray(
+                        data, 0, data.length);
+                System.out.println("Bitmap*****" + bitmap);
+                new Handler(getMainLooper()).post(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        File appDir = new File(Environment
+                                .getExternalStorageDirectory(), "carplay");
+                        if (!appDir.exists()) {
+                            appDir.mkdir();
+                        }
+                        String fileName = System.currentTimeMillis() + ".jpg";
+                        File file = new File(appDir, fileName);
+                        Uri uri = Uri.fromFile(file);
+//                        mPhotoPath = PhotoUtil.getRealPathFromURI(self, uri);
+                        mPhotoPath=getRealPath(uri);
+                        System.out.println("mPhotoPath: -----------   "+mPhotoPath);
+//                        Intent getImage = new Intent(
+//                                Intent.ACTION_GET_CONTENT);
+//                        getImage.addCategory(Intent.CATEGORY_OPENABLE);
+//                        getImage.setType("image/jpeg");
+//                        startActivityForResult(getImage, Constant.PICK_PHOTO);
+                        PhotoUtil.onPhotoFromPick(self, Constant.ZOOM_PIC, mPhotoPath,
+                                bitmap, 1, 1, 1000);
+                    }
+                });
+
+            }
+        }).start();
+    }
+
+    private String getRealPath(Uri fileUrl){
+        String fileName = null;
+        Uri filePathUri = fileUrl;
+        if(fileUrl!= null){
+            if (fileUrl.getScheme().toString().compareTo("content")==0)           //content://开头的uri
+            {
+                Cursor cursor = getContentResolver().query(fileUrl, null, null, null, null);
+                if (cursor != null && cursor.moveToFirst())
+                {
+                    int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                    fileName = cursor.getString(column_index);          //取出文件路径
+                    if(!fileName.startsWith("/mnt")){
+//检查是否有”/mnt“前缀
+
+                        fileName = "/mnt" + fileName;
+                    }
+                    cursor.close();
+                }
+            }else if (fileUrl.getScheme().compareTo("file")==0)         //file:///开头的uri
+            {
+                fileName = filePathUri.toString();
+                fileName = filePathUri.toString().replace("file://", "");
+//替换file://
+                if(!fileName.startsWith("/mnt")){
+//加上"/mnt"头
+                    fileName += "/mnt";
+                }
+            }
+        }
+        return fileName;
+    }
 }

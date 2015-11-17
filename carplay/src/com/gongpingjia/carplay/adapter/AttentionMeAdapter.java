@@ -90,6 +90,8 @@ public class AttentionMeAdapter extends BaseAdapter{
             holder.sexLayoutR = (RelativeLayout) convertView.findViewById(R.id.layout_sex_and_age);
             holder.sexI = (ImageView) convertView.findViewById(R.id.iv_sex);
             holder.ageT = (TextView) convertView.findViewById(R.id.tv_age);
+            holder.dynamic_carlogoI = (ImageView) convertView.findViewById(R.id.dynamic_carlogo);
+            holder.headstatusI = (ImageView) convertView.findViewById(R.id.headstatus);
 
             convertView.setTag(holder);
         }
@@ -99,6 +101,7 @@ public class AttentionMeAdapter extends BaseAdapter{
         }
 
         final JSONObject jo = getItem(position);
+        final JSONObject carjo = JSONUtil.getJSONObject(jo,"car");
 
         ViewUtil.bindNetImage(holder.headI, JSONUtil.getString(jo, "avatar"), "head");
         ViewUtil.bindView(holder.nicknameT, JSONUtil.getString(jo, "nickname"));
@@ -116,13 +119,23 @@ public class AttentionMeAdapter extends BaseAdapter{
             holder.sexLayoutR.setBackgroundResource(R.drawable.radion_sex_woman_normal);
             holder.sexI.setBackgroundResource(R.drawable.icon_woman3x);
         }
+        String licenseAuthStatus  = JSONUtil.getString(jo,"licenseAuthStatus");
+        //车主认证
+        if ("认证通过".equals(licenseAuthStatus)) {
+            holder.dynamic_carlogoI.setVisibility(View.VISIBLE);
+            ViewUtil.bindNetImage(holder.dynamic_carlogoI, JSONUtil.getString(carjo, "logo"), "default");
+        } else {
+            holder.dynamic_carlogoI.setVisibility(View.GONE);
+        }
+        //头像认证
+        holder.headstatusI.setVisibility("认证通过".equals(JSONUtil.getString(jo,"photoAuthStatus")) ? View.VISIBLE : View.GONE);
 
         return convertView;
     }
 
     class ViewHolder{
         RoundImageView headI;
-        ImageView sexI;
+        ImageView sexI,dynamic_carlogoI,headstatusI;
         RelativeLayout sexLayoutR;
         TextView nicknameT,timeT,distanceT,ageT;
     }
