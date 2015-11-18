@@ -75,7 +75,7 @@ public class CarPlayApplication extends Application implements
         Const.response_success = "result";
         Const.response_msg = "errmsg";
         Const.response_result_status = "0";
-        Const.netadapter_no_more = "已加载全部数据";
+        Const.netadapter_no_more = "到底啦~";
         Const.postType = 2;
         IocContainer.getShare().initApplication(this);
         IocContainer.getShare().bind(CarPlayValueFix.class).to(ValueFix.class)
