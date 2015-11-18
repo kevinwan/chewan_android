@@ -24,8 +24,8 @@ public class UserInfoManage {
         boolean islogin = User.getInstance().isLogin();
         if (!islogin) {
             if (context != null) {
-//				IocContainer.getShare().get(IDialog.class)
-//						.showToastShort(context, "请先登录!");
+				IocContainer.getShare().get(IDialog.class)
+						.showToastShort(context, "请先登录!");
                 LoginActivity2.loginCall = loginCallBack;
                 Intent it = new Intent(context, LoginActivity2.class);
                 context.startActivity(it);

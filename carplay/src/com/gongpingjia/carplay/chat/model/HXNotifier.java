@@ -302,7 +302,6 @@ public class HXNotifier {
 				// notificationManager.notify(foregroundNotifyID, notification);
 				// notificationManager.cancel(foregroundNotifyID);
 			} else {
-				System.out.println("222222222");
 				notificationManager.notify(notifyID, notification);
 			}
 

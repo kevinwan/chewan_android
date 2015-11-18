@@ -15,9 +15,7 @@
 package com.gongpingjia.carplay.activity.chat;
 
 import android.media.AudioManager;
-import android.media.RingtoneManager;
 import android.media.SoundPool;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -40,6 +38,7 @@ import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.chat.controller.HXSDKHelper;
+import com.gongpingjia.carplay.chat.model.HXSDKModel;
 import com.gongpingjia.carplay.util.Utils;
 import com.gongpingjia.carplay.view.AnimButtonView2;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -82,7 +81,8 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
     //	private LinearLayout voiceContronlLayout;
     AnimButtonView2 swing_card;
     private Vibrator vibrator;
-    long[] pattern = {1000,2000,1000,2000,1000,2000,1000,2000};
+    long[] pattern = {1000, 2000, 1000, 2000, 1000, 2000, 1000, 2000};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -151,7 +151,7 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
 
         if (!isInComingCall) {// 拨打电话
             soundPool = new SoundPool(1, AudioManager.STREAM_RING, 0);
-            outgoing = soundPool.load(this, R.raw.outgoing, 1);
+            outgoing = soundPool.load(this, R.raw.callringdudu, 1);
 
 //			comingBtnContainer.setVisibility(View.INVISIBLE);
             answering_layout.setVisibility(View.GONE);
@@ -183,16 +183,30 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
 //            answering_layout.setVisibility(View.INVISIBLE);
             answering_layout.setVisibility(View.VISIBLE);
             call_layout.setVisibility(View.GONE);
-            Uri ringUri = RingtoneManager
-                    .getDefaultUri(RingtoneManager.TYPE_RINGTONE);
-            audioManager.setMode(AudioManager.MODE_RINGTONE);
-            audioManager.setSpeakerphoneOn(true);
-            ringtone = RingtoneManager.getRingtone(this, ringUri);
-            ringtone.play();
+
+
+
+            HXSDKModel model = HXSDKHelper.getInstance().getModel();
+            if (!model.getSettingMsgNotification()) {
+                return;
+            }
+            soundPool = new SoundPool(1, AudioManager.STREAM_RING, 0);
+            outgoing = soundPool.load(this, R.raw.cpcallring, 1);
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    streamID = playMakeCallSounds();
+                }
+            }, 300);
+//            Uri ringUri = RingtoneManager
+//                    .getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+//            audioManager.setMode(AudioManager.MODE_RINGTONE);
+//            audioManager.setSpeakerphoneOn(true);
+//            ringtone = RingtoneManager.getRingtone(this, ringUri);
+//            ringtone.play();
             vibrator = (Vibrator)getSystemService(self.VIBRATOR_SERVICE);
             Utils.Vibrate(self, pattern, true);
-
         }
+
     }
 
     /**
@@ -367,9 +381,17 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
             case R.id.btn_refuse_call: // 拒绝接听
 
                 refuseBtn.setEnabled(false);
-                if (ringtone != null)
-                    vibrator.cancel();
+
+                try {
+                    if (soundPool != null)
+                        soundPool.stop(streamID);
+                } catch (Exception e) {
+                }
+
+                if (ringtone != null) {
                     ringtone.stop();
+                }
+                vibrator.cancel();
                 try {
                     EMChatManager.getInstance().rejectCall();
                 } catch (Exception e1) {
@@ -383,9 +405,15 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
             case R.id.btn_answer_call: // 接听电话
 
                 answerBtn.setEnabled(false);
+
+                try {
+                    if (soundPool != null)
+                        soundPool.stop(streamID);
+                } catch (Exception e) {
+                }
                 if (ringtone != null)
                     ringtone.stop();
-                                vibrator.cancel();
+                vibrator.cancel();
                 if (isInComingCall) {
                     try {
                         callStateTextView.setText("正在接听...");

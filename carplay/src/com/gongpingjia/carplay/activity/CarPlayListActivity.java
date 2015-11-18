@@ -205,8 +205,13 @@ public class CarPlayListActivity extends CarPlayBaseActivity {
         }
         net.addParam("ignore", ignore);
         net.addParam("limit", limit);
-        net.execuseInDialog("", nettask);
+        if (ignore == 0) {
+            net.execuseInDialog("", nettask);
+        } else {
+            net.execuse(nettask);
+        }
     }
+
 
     public void showNext(int ignore) {
         net.addParam("ignore", ignore);
