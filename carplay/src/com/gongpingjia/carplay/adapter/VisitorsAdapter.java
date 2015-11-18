@@ -75,15 +75,17 @@ public class VisitorsAdapter extends BaseAdapter {
             holder.timeT = (TextView) view.findViewById(R.id.visitors_time);
             holder.distanceT = (TextView) view.findViewById(R.id.visitors_distance);
             holder.tv_ageT = (TextView) view.findViewById(R.id.tv_age);
-
+            holder.dynamic_carlogoI = (ImageView) view.findViewById(R.id.dynamic_carlogo);
             holder.sexLayout = (RelativeLayout) view.findViewById(R.id.layout_sex_and_age);
             holder.iv_sexl = (ImageView) view.findViewById(R.id.iv_sex);
             holder.icon = (RoundImageView) view.findViewById(R.id.visitors_icon);
+            holder.headstatusI = (ImageView) view.findViewById(R.id.headstatus);
             view.setTag(holder);
         } else {
             holder = (ViewHolder) view.getTag();
         }
         JSONObject jo = (JSONObject) getItem(position);
+        final JSONObject carjo = JSONUtil.getJSONObject(jo,"car");
         holder.nameT.setText(JSONUtil.getString(jo, "nickname"));
 //        holder.contentT.setText(JSONUtil.getString(jo, "nickname")+"访问了你的相册");
 //        Log.d("msg", "nameT" + holder.nameT);
@@ -99,21 +101,31 @@ public class VisitorsAdapter extends BaseAdapter {
 //            holder.iv_sexl.setImageResource(R.drawable.icon_woman3x);
 //        }
         holder.tv_ageT.setText(JSONUtil.getString(jo, "age"));
-
+        String licenseAuthStatus  = JSONUtil.getString(jo,"licenseAuthStatus");
+        //车主认证
+        if ("认证通过".equals(licenseAuthStatus)) {
+            holder.dynamic_carlogoI.setVisibility(View.VISIBLE);
+            ViewUtil.bindNetImage(holder.dynamic_carlogoI, JSONUtil.getString(carjo, "logo"), "default");
+        } else {
+            holder.dynamic_carlogoI.setVisibility(View.GONE);
+        }
+        //头像认证
+        holder.headstatusI.setVisibility("认证通过".equals(JSONUtil.getString(jo,"photoAuthStatus")) ? View.VISIBLE : View.GONE);
         ViewUtil.bindNetImage(holder.icon, JSONUtil.getString(jo, "avatar"), "head");
         String id = JSONUtil.getString(jo,"userId");
         holder.icon.setTag(id);
 
         int distance = (int) Math.floor(JSONUtil.getDouble(jo, "distance"));
         holder.distanceT.setText(CarPlayUtil.numberWithDelimiter(distance));
+//        long time = JSONUtil.getLong(jo, "viewTime");
+//        holder.timeT.setText(CarPlayValueFix.converTime(time));
         long time = JSONUtil.getLong(jo, "viewTime");
         holder.timeT.setText(CarPlayValueFix.converTime(time));
         return view;
     }
-
     class ViewHolder {
         TextView nameT, contentT, timeT, distanceT, tv_ageT;
-        ImageView iv_sexl;
+        ImageView iv_sexl,dynamic_carlogoI,headstatusI;
         RelativeLayout sexLayout;
         RoundImageView icon;
     }

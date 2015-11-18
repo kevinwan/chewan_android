@@ -11,6 +11,7 @@ import android.widget.ImageView;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.view.ImageGallery;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import net.duohuo.dhroid.net.JSONUtil;
 import net.duohuo.dhroid.util.ViewUtil;
@@ -62,9 +63,11 @@ public class MyFragmentAlbumAdapter extends RecyclerView.Adapter<MyFragmentAlbum
                 Intent it = new Intent(mContext, ImageGallery.class);
                 String[] photos =new String[data.size()];
                 String[] photosid =new String[data.size()];
+                String[] photoFile = new String[data.size()];
                 for (int i=0;i<data.size();i++){
                     try {
                         photos[i]= (String) data.get(i).get("url");
+                        photoFile[i] =  ImageLoader.getInstance().getDiskCache().get( photos[i]).toString();
                         photosid[i] = (String) data.get(i).get("id");
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -72,6 +75,7 @@ public class MyFragmentAlbumAdapter extends RecyclerView.Adapter<MyFragmentAlbum
                 }
                 it.putExtra("type","myalbum");
                 it.putExtra("imgurls", photos);
+                it.putExtra("imgfile", photoFile);
                 it.putExtra("currentItem", current);
                 it.putExtra("imgids", photosid);
                 mContext.startActivity(it);

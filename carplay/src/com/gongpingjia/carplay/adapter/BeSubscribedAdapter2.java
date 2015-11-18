@@ -88,6 +88,7 @@ public class BeSubscribedAdapter2 extends BaseAdapter {
             holder.sexbgR = (RelativeLayout) convertView.findViewById(R.id.layout_sex_and_age);
             holder.sexI = (ImageView) convertView.findViewById(R.id.iv_sex);
             holder.icon = (ImageView) convertView.findViewById(R.id.dynamic_carlogo);
+            holder.headstatusI = (ImageView) convertView.findViewById(R.id.headstatus);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -114,6 +115,9 @@ public class BeSubscribedAdapter2 extends BaseAdapter {
         } else {
             holder.icon.setVisibility(View.GONE);
         }
+        //头像认证
+        holder.headstatusI.setVisibility("认证通过".equals(JSONUtil.getString(obj,"photoAuthStatus")) ? View.VISIBLE : View.GONE);
+
         holder.heartView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -142,6 +146,7 @@ public class BeSubscribedAdapter2 extends BaseAdapter {
         private RelativeLayout sexbgR;
         ImageView sexI;
         ImageView icon;
+        ImageView headstatusI;
     }
 
     private void attention() {

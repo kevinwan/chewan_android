@@ -67,6 +67,20 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/sethead"
+                style="@style/text_black_medium"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/white_smallfillet"
+                android:gravity="center"
+                android:text="设置为头像"
+                android:textColor="@color/text_blue"
+                android:visibility="gone" />
+
+            <TextView
                 android:id="@+id/remove"
                 style="@style/text_black_medium"
                 android:layout_width="match_parent"

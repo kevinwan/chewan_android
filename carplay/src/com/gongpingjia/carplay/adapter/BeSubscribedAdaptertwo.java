@@ -16,6 +16,7 @@ import com.gongpingjia.carplay.view.RoundImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import net.duohuo.dhroid.net.JSONUtil;
+import net.duohuo.dhroid.util.ViewUtil;
 
 import org.json.JSONObject;
 
@@ -74,6 +75,7 @@ public class BeSubscribedAdaptertwo extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         final JSONObject obj = getItem(position);
+        final JSONObject carjo = JSONUtil.getJSONObject(obj,"car");
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_be_subscribedtwo, parent, false);
             holder = new ViewHolder();
@@ -85,6 +87,9 @@ public class BeSubscribedAdaptertwo extends BaseAdapter {
             holder.textAge = (TextView) convertView.findViewById(R.id.tv_age);
             holder.sexbgR = (RelativeLayout) convertView.findViewById(R.id.layout_sex_and_age);
             holder.sexI = (ImageView) convertView.findViewById(R.id.iv_sex);
+            holder.dynamic_carlogoI = (ImageView) convertView.findViewById(R.id.dynamic_carlogo);
+            holder.headstatusI = (ImageView) convertView.findViewById(R.id.headstatus);
+
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -102,6 +107,17 @@ public class BeSubscribedAdaptertwo extends BaseAdapter {
             holder.sexbgR.setBackgroundResource(R.drawable.radion_sex_woman_normal);
             holder.sexI.setBackgroundResource(R.drawable.icon_woman3x);
         }
+
+        String licenseAuthStatus  = JSONUtil.getString(obj,"licenseAuthStatus");
+        //车主认证
+        if ("认证通过".equals(licenseAuthStatus)) {
+            holder.dynamic_carlogoI.setVisibility(View.VISIBLE);
+            ViewUtil.bindNetImage(holder.dynamic_carlogoI, JSONUtil.getString(carjo, "logo"), "default");
+        } else {
+            holder.dynamic_carlogoI.setVisibility(View.GONE);
+        }
+        //头像认证
+        holder.headstatusI.setVisibility("认证通过".equals(JSONUtil.getString(obj,"photoAuthStatus")) ? View.VISIBLE : View.GONE);
 //        holder.heartView.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -131,7 +147,7 @@ public class BeSubscribedAdaptertwo extends BaseAdapter {
         TextView textAge;
         TextView visitors_time;
         private RelativeLayout sexbgR;
-        ImageView sexI;
+        ImageView sexI,dynamic_carlogoI,headstatusI;
     }
 
     private void attention() {

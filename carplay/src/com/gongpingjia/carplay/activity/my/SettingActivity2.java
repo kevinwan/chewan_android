@@ -36,7 +36,7 @@ public class SettingActivity2 extends CarPlayBaseActivity implements View.OnClic
 
     File mCacheDir;
     TextView mTextCacheSize, versionsT;
-    RelativeLayout setting_about_us, setting_versions, layout_modifypwd;
+    RelativeLayout setting_about_us, setting_versions, layout_modifypwd,layout_notice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +55,7 @@ public class SettingActivity2 extends CarPlayBaseActivity implements View.OnClic
         setting_about_us = (RelativeLayout) findViewById(R.id.setting_about_us);
         setting_versions = (RelativeLayout) findViewById(R.id.setting_versions);
         layout_modifypwd = (RelativeLayout) findViewById(R.id.layout_modifypwd);
+        layout_notice = (RelativeLayout) findViewById(R.id.layout_notice);
         versionsT = (TextView) findViewById(R.id.versionsT);
         versionsT.setText(getAppVersion());
         mCacheDir = new File(getExternalCacheDir(), "CarPlay");
@@ -65,6 +66,7 @@ public class SettingActivity2 extends CarPlayBaseActivity implements View.OnClic
         layoutClearCache.setOnClickListener(this);
         setting_versions.setOnClickListener(this);
         layout_modifypwd.setOnClickListener(this);
+        layout_notice.setOnClickListener(this);
         findViewById(R.id.layout_update).setOnClickListener(this);
         btnLogout.setOnClickListener(this);
 
@@ -102,10 +104,13 @@ public class SettingActivity2 extends CarPlayBaseActivity implements View.OnClic
                     showToast("不需要清理了哦");
                 }
                 break;
-
             case R.id.layout_update:
                 updateApp();
                 break;
+            case R.id.layout_notice:
+                it = new Intent(this, MsgNotice.class);
+                startActivity(it);
+            break;
         }
     }
 

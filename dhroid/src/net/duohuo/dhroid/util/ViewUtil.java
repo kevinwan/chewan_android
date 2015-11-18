@@ -1,10 +1,5 @@
 package net.duohuo.dhroid.util;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
-
-import net.duohuo.dhroid.adapter.ValueFix;
-import net.duohuo.dhroid.image.ImageLoad;
-import net.duohuo.dhroid.ioc.IocContainer;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
@@ -12,6 +7,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
+
+import net.duohuo.dhroid.adapter.ValueFix;
+import net.duohuo.dhroid.ioc.IocContainer;
 
 public class ViewUtil
 {

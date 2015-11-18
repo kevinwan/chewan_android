@@ -26,6 +26,7 @@ import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.photo.model.PhotoModel;
+import com.gongpingjia.carplay.view.ImageGallery;
 import com.gongpingjia.carplay.view.RoundImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -89,6 +90,8 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
     String age;
     String emchatName;
     String idel;
+    private String headimg;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -167,7 +170,7 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
                     ViewUtil.bindView(ageT, JSONUtil.getInt(jo, "age"));
 
                     //头像
-                    String headimg = JSONUtil.getString(jo, "avatar");
+                     headimg = JSONUtil.getString(jo, "avatar");
                     ViewUtil.bindNetImage(headI, headimg, "head");
                     //相册
                     JSONArray albumJsa = JSONUtil.getJSONArray(jo, "album");
@@ -304,6 +307,14 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
                 window.setWindowAnimations(R.style.mystyle);
                 dlg.show();
 
+                break;
+            case R.id.head:
+                it = new Intent(self,ImageGallery.class);
+                String[] photos ={headimg};
+                it.putExtra("imgurls", photos);
+//                it.putExtra("imgids", "123456");
+                it.putExtra("type", "his");
+                startActivity(it);
                 break;
             default:
                 break;

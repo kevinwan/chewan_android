@@ -132,6 +132,14 @@ public class PhotoUtil {
                 outx);
     }
 
+    public static void onPhotoFromPick(Activity context, int zoomCode,
+                                       String temppath,  Bitmap btp, int aspectX, int aspectY, int outx) {
+        saveLocalImage(btp, new File(temppath));
+        PhotoUtil.photoZoom(context, Uri.fromFile(new File(temppath)),
+                Uri.fromFile(new File(temppath)), zoomCode, aspectX, aspectY,
+                outx);
+    }
+
     public static String onPhotoFromPick(Activity context, int zoomCode,
                                          String temppath, Intent data, int aspectX, int aspectY, int outx,
                                          String newPath) {
