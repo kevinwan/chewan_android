@@ -69,6 +69,7 @@ public class ImageGallery extends CarPlayBaseActivity implements View.OnClickLis
     String type;
 
     String mPhotoPath;
+    String newPhotoPath;
     String photoUid;
     String head_url;
 
@@ -83,12 +84,15 @@ public class ImageGallery extends CarPlayBaseActivity implements View.OnClickLis
 
     boolean showFlag = true;
 
+    private File mCacheDir;
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.imagegallery);
         user = User.getInstance();
-
+        mCacheDir = new File(getExternalCacheDir(), "CarPlay");
+        mCacheDir.mkdirs();
     }
 
     @Override
@@ -109,14 +113,14 @@ public class ImageGallery extends CarPlayBaseActivity implements View.OnClickLis
         final String[] ids = bundle.getStringArray("imgids");
         final String[] files = bundle.getStringArray("imgfile");
         items = new ArrayList<String>();
-        if (urls!=null)
-        Collections.addAll(items, urls);
+        if (urls != null)
+            Collections.addAll(items, urls);
         itemid = new ArrayList<String>();
-        if (ids!=null)
-        Collections.addAll(itemid, ids);
+        if (ids != null)
+            Collections.addAll(itemid, ids);
         itemspath = new ArrayList<String>();
-        if (files!=null)
-        Collections.addAll(itemspath, files);
+        if (files != null)
+            Collections.addAll(itemspath, files);
 
         pagerAdapter = new UrlPagerAdapter(this, items);
         pagerAdapter.setOnItemChangeListener(new OnItemChangeListener() {
@@ -172,6 +176,7 @@ public class ImageGallery extends CarPlayBaseActivity implements View.OnClickLis
 
                     items.remove(photoCurrent);
                     itemid.remove(photoCurrent);
+                    itemspath.remove(photoCurrent);
                     if (items.size() < 2) {
                         user.setHasAlbum(false);         //设置相册状态
                         EventBus.getDefault().post(new String("刷新附近列表"));
@@ -235,10 +240,19 @@ public class ImageGallery extends CarPlayBaseActivity implements View.OnClickLis
                 break;
             //设置为头像
             case R.id.sethead:
+//                showOperation();
+//                mPhotoPath = itemspath.get(photoCurrent);
+//                PhotoUtil.onPhotoFromPick(self, Constant.ZOOM_PIC, mPhotoPath,
+//                        PhotoUtil.getLocalImage(new File(mPhotoPath)), 1, 1, 1000);
+
                 showOperation();
-                mPhotoPath = itemspath.get(photoCurrent);
-                PhotoUtil.onPhotoFromPick(self, Constant.ZOOM_PIC, mPhotoPath,
-                        PhotoUtil.getLocalImage(new File(mPhotoPath)), 1, 1, 1000);
+                mPhotoPath = itemspath.get(photoCurrent);       //获取选中图片路径
+                newPhotoPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg").getAbsolutePath();     //生成新路径
+                Bitmap bitmap = PhotoUtil.getLocalImage(new File(mPhotoPath));
+                PhotoUtil.saveLocalImage(bitmap, new File(newPhotoPath));        //保存为临时图片
+                Bitmap bt = PhotoUtil.getLocalImage(new File(newPhotoPath));      //获取临时图片的bitmap
+                PhotoUtil.onPhotoFromPick(self, Constant.ZOOM_PIC, newPhotoPath,        //裁剪临时图片
+                        bt, 1, 1, 1000);
                 break;
         }
     }
@@ -314,7 +328,7 @@ public class ImageGallery extends CarPlayBaseActivity implements View.OnClickLis
             switch (requestCode) {
                 case Constant.ZOOM_PIC:
                     showProgressDialog("上传头像中...");
-                    uploadHead(mPhotoPath);
+                    uploadHead(newPhotoPath);
                     break;
             }
         }
