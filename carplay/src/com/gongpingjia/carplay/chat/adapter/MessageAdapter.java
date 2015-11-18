@@ -14,6 +14,7 @@
 package com.gongpingjia.carplay.chat.adapter;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -21,6 +22,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Handler;
 import android.text.Spannable;
 import android.text.TextUtils;
@@ -442,6 +444,7 @@ public class MessageAdapter extends BaseAdapter {
 
                     holder.tv_usernick = (TextView) convertView
                             .findViewById(R.id.tv_userid);
+                    holder.locationLayoutV = (LinearLayout) convertView.findViewById(R.id.location_layout);
                 } catch (Exception e) {
                 }
             } else if (message.getType() == EMMessage.Type.VIDEO) {
@@ -514,6 +517,7 @@ public class MessageAdapter extends BaseAdapter {
             holder.tv_usernick.setText(message.getStringAttribute("nickName",
                     ""));
 
+
             // UserUtils.setUserNick(message.getStringAttribute("nickName", ""),
             // holder.tv_usernick);
             // UserUtils.setCurrentUserNick(message.);
@@ -574,6 +578,9 @@ public class MessageAdapter extends BaseAdapter {
         }
         // 设置用户头像
         // setUserAvatar(message, holder.iv_avatar);
+
+        //设置发送者聊天样式(背景色)
+        setSendChatBg(holder, message);
 
         switch (message.getType()) {
             // 根据消息type显示item
@@ -1819,6 +1826,7 @@ public class MessageAdapter extends BaseAdapter {
         TextView size;
         LinearLayout container_status_btn;
         LinearLayout ll_container;
+        LinearLayout locationLayoutV;
         ImageView iv_read_status;
         // 显示已读回执状态
         TextView tv_ack;
@@ -1879,6 +1887,46 @@ public class MessageAdapter extends BaseAdapter {
                 }
             }
         });
+    }
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    private void setSendChatBg(ViewHolder holder, EMMessage message) {
+        String gender = message.getStringAttribute("gender", "");
+        if (message.direct == EMMessage.Direct.SEND) {
+            switch (message.getType()) {
+                // 根据消息type显示item
+                case IMAGE: // 图片
+                    if ("女".equals(gender)) {
+                        holder.iv.setBackground(context.getResources().getDrawable(R.drawable.chat_woman_bg));
+                    } else {
+                        holder.iv.setBackground(context.getResources().getDrawable(R.drawable.chat_man_bg));
+                    }
+                    break;
+                case TXT: // 文本
+                    if ("女".equals(gender)) {
+                        holder.tv.setBackground(context.getResources().getDrawable(R.drawable.chat_woman_bg));
+                    } else {
+                        holder.tv.setBackground(context.getResources().getDrawable(R.drawable.chat_man_bg));
+                    }
+                    break;
+                case LOCATION: // 位置
+                    if ("女".equals(gender)) {
+                        holder.locationLayoutV.setBackground(context.getResources().getDrawable(R.drawable.chat_woman_bg));
+                    } else {
+                        holder.locationLayoutV.setBackground(context.getResources().getDrawable(R.drawable.chat_man_bg));
+                    }
+                    break;
+                case VOICE: // 语音
+                    if ("女".equals(gender)) {
+                        holder.voiceLayoutV.setBackground(context.getResources().getDrawable(R.drawable.chat_woman_bg));
+                    } else {
+                        holder.voiceLayoutV.setBackground(context.getResources().getDrawable(R.drawable.chat_man_bg));
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
 }
