@@ -344,7 +344,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
                 holder.sexI.setBackgroundResource(R.drawable.icon_woman3x);
             }
 
-            if (licenseAuthStatus.equals("认证通过")) {
+            if (("认证通过").equals(licenseAuthStatus)) {
                 ViewUtil.bindNetImage(holder.dynamic_carlogo, JSONUtil.getString(ob, "logo"), "default");
 //                holder.dynamic_carname.setText(JSONUtil.getString(ob, "model"));
             } else {
