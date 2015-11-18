@@ -123,7 +123,6 @@ public class VisitorsAdapter extends BaseAdapter {
         holder.timeT.setText(CarPlayValueFix.converTime(time));
         return view;
     }
-
     class ViewHolder {
         TextView nameT, contentT, timeT, distanceT, tv_ageT;
         ImageView iv_sexl,dynamic_carlogoI,headstatusI;
