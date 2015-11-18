@@ -77,12 +77,27 @@ android {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Jifeng"]
         }
 
+        Wandoujia {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Wandoujia"]
+        }
+        
         Huawei {
-            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "huawei"]
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Huawei"]
         }
 
-        Wandoujia {
-            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "wandoujia"]
+
+
+        Anzhi {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Anzhi"]
+        }
+
+
+        Yingyonghui {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Yingyonghui"]
+        }
+
+        Meizu {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Meizu"]
         }
 
     }
@@ -91,8 +106,6 @@ android {
     }
 
     buildTypes {
-        debug {
-        }
         release {
             signingConfig signingConfigs.config
         }
