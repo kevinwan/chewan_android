@@ -201,7 +201,8 @@ public class MateRegionDialog extends BaseAlertDialog implements View.OnClickLis
      */
     private List<Place> jsonArrayToList(JSONArray jsonArray) {
         if (jsonArray == null || jsonArray.length() == 0) {
-            throw new NullPointerException("JSONArray can't be empty or null");
+            return new ArrayList<Place>();
+//            throw new NullPointerException("JSONArray can't be empty or null");
         }
         List<Place> places = new ArrayList<>();
         for (int i = 0; i < jsonArray.length(); i++) {

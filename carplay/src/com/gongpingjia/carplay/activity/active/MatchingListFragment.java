@@ -80,6 +80,7 @@ public class MatchingListFragment extends CarPlayBaseFragment implements PullToR
     boolean isCleanParams = false;
 
     public void setParams(Map<String, Object> params) {
+        isCleanParams = false;
         params.put("pay", getOppositePay(params.get("pay").toString()));
         params.put("transfer", getOppositeTransfer((boolean) params.get("transfer")));
         if (mParams == null) {
@@ -119,7 +120,6 @@ public class MatchingListFragment extends CarPlayBaseFragment implements PullToR
 
 
     private void initView() {
-
         contentView = mainV.findViewById(R.id.layout_content);
         countdownView = mainV.findViewById(R.id.layout_countdown);
         iv_lunI = (ImageView) mainV.findViewById(R.id.iv_lun);
@@ -197,6 +197,9 @@ public class MatchingListFragment extends CarPlayBaseFragment implements PullToR
     @Override
     public void loadSuccess() {
         adapter.setData(mVaules);
+        if (mVaules.size() != 0 || isCleanParams) {
+            timeCount.onFinish();
+        }
         if (mVaules.size() == 0 && !isCleanParams) {
             addParams("type", mParams.get("type"));
             addParams("pay", mParams.get("pay"));

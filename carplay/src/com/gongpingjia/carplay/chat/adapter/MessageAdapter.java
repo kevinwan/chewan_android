@@ -569,21 +569,31 @@ public class MessageAdapter extends BaseAdapter {
             }
         }
 
-
-        if (TextUtils.isEmpty(message.getStringAttribute("headUrl", ""))) {
-            ChatUser user = UserUtils.getUserInfo(toChatUsername);
-            if (user.getNick().contains("Admin")) {
-                holder.tv_usernick.setText(jsonObject.getString("nickname"));
-                holder.iv_avatar.setTag(jsonObject.getString("userId"));
-                ImageLoader.getInstance().displayImage(jsonObject.getString("avatar"), holder.iv_avatar, CarPlayValueFix.headOptions);
-            } else {
-                getUserInfo(message.getFrom(), holder);
-            }
+        if(message.getFrom().contains("Admin")) {
+            holder.tv_usernick.setText("车玩官方");
+            holder.iv_avatar.setImageResource(R.drawable.ic_launcher);
         } else {
-            ViewUtil.bindNetImage(holder.iv_avatar,
-                    message.getStringAttribute("headUrl", ""), "head");
-            holder.iv_avatar.setTag(message.getStringAttribute("userId", ""));
+            if (TextUtils.isEmpty(message.getStringAttribute("headUrl", ""))) {
+                getUserInfo(message.getFrom(), holder);
+            } else {
+                ViewUtil.bindNetImage(holder.iv_avatar,
+                        message.getStringAttribute("headUrl", ""), "head");
+                holder.iv_avatar.setTag(message.getStringAttribute("userId", ""));
+            }
         }
+
+//        if (TextUtils.isEmpty(message.getStringAttribute("nickName", ""))) {
+//            getUserInfo(message.getFrom(), holder);
+//        } else {
+//            if (message.getStringAttribute("nickName", "").contains("Admin")) {
+//                holder.tv_usernick.setText("车玩官方");
+//                holder.iv_avatar.setImageResource(R.drawable.ic_launcher);
+//            } else {
+//                ViewUtil.bindNetImage(holder.iv_avatar,
+//                        message.getStringAttribute("headUrl", ""), "head");
+//                holder.iv_avatar.setTag(message.getStringAttribute("userId", ""));
+//            }
+//        }
         // 设置用户头像
         // setUserAvatar(message, holder.iv_avatar);
 

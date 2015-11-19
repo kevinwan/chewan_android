@@ -278,7 +278,7 @@ public class ChatActivity extends CarPlayBaseActivity implements
      * initView
      */
     public void initView() {
-        chatHint.sendEmptyMessageDelayed(CHATHINT,5*1000);
+        chatHint.sendEmptyMessageDelayed(CHATHINT, 5 * 1000);
 
         recordingContainer = findViewById(R.id.recording_container);
         micImage = (ImageView) findViewById(R.id.mic_image);
@@ -408,6 +408,10 @@ public class ChatActivity extends CarPlayBaseActivity implements
         if (chatType == CHATTYPE_SINGLE) { // 单聊
 
             toChatUsername = getIntent().getStringExtra("userId");
+//            if(toChatUsername.contains("Admin")) {
+//                toChatUsername = "OfficalAdmin";
+
+//            }
             Map<String, RobotUser> robotMap = ((DemoHXSDKHelper) HXSDKHelper
                     .getInstance()).getRobotList();
             if (robotMap != null && robotMap.containsKey(toChatUsername)) {
@@ -416,6 +420,8 @@ public class ChatActivity extends CarPlayBaseActivity implements
                 if (!TextUtils.isEmpty(nick)) {
                     setTitle(nick);
                 } else {
+
+
 //                    getUserInfo(toChatUsername);
                     setTitle(toChatUsername);
                 }
