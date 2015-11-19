@@ -402,6 +402,7 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
 //                showProgressDialog("加载中...");
 //                showNext(memberList.size());
                 showNext();
+                setoffic("offic");
                 break;
             //前往购票
             case R.id.buytickets:
