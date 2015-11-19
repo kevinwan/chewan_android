@@ -61,6 +61,7 @@ android {
     }
     productFlavors {
 
+
         QQ {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "QQ"]
         }
@@ -80,7 +81,7 @@ android {
         Wandoujia {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Wandoujia"]
         }
-        
+
         Huawei {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Huawei"]
         }
@@ -98,6 +99,34 @@ android {
 
         Meizu {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Meizu"]
+        }
+
+        PP {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "PP"]
+        }
+
+        Dianle {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Dianle"]
+        }
+
+        Mumayi {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Mumayi"]
+        }
+
+        Lianxiang {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Lianxiang"]
+        }
+
+        Wangyi {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Wangyi"]
+        }
+
+        Duomeng {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Duomeng"]
+        }
+
+        Oppo {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Oppo"]
         }
 
     }

@@ -38,7 +38,6 @@ import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.chat.controller.HXSDKHelper;
-import com.gongpingjia.carplay.chat.model.HXSDKModel;
 import com.gongpingjia.carplay.util.Utils;
 import com.gongpingjia.carplay.view.AnimButtonView2;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -184,27 +183,28 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
             answering_layout.setVisibility(View.VISIBLE);
             call_layout.setVisibility(View.GONE);
 
-
-
-            HXSDKModel model = HXSDKHelper.getInstance().getModel();
-            if (!model.getSettingMsgNotification()) {
+            if (audioManager.getRingerMode() == AudioManager.RINGER_MODE_SILENT) {
                 return;
+            } else if (audioManager.getRingerMode() == AudioManager.RINGER_MODE_NORMAL) {
+                soundPool = new SoundPool(1, AudioManager.STREAM_RING, 0);
+                outgoing = soundPool.load(this, R.raw.cpcallring, 1);
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        streamID = playMakeCallSounds();
+                    }
+                }, 300);
+            } else {
+                vibrator = (Vibrator) getSystemService(self.VIBRATOR_SERVICE);
+                Utils.Vibrate(self, pattern, true);
             }
-            soundPool = new SoundPool(1, AudioManager.STREAM_RING, 0);
-            outgoing = soundPool.load(this, R.raw.cpcallring, 1);
-            handler.postDelayed(new Runnable() {
-                public void run() {
-                    streamID = playMakeCallSounds();
-                }
-            }, 300);
+
+
 //            Uri ringUri = RingtoneManager
 //                    .getDefaultUri(RingtoneManager.TYPE_RINGTONE);
 //            audioManager.setMode(AudioManager.MODE_RINGTONE);
 //            audioManager.setSpeakerphoneOn(true);
 //            ringtone = RingtoneManager.getRingtone(this, ringUri);
 //            ringtone.play();
-            vibrator = (Vibrator)getSystemService(self.VIBRATOR_SERVICE);
-            Utils.Vibrate(self, pattern, true);
         }
 
     }
@@ -391,7 +391,9 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
                 if (ringtone != null) {
                     ringtone.stop();
                 }
-                vibrator.cancel();
+                if (vibrator != null) {
+                    vibrator.cancel();
+                }
                 try {
                     EMChatManager.getInstance().rejectCall();
                 } catch (Exception e1) {
@@ -413,12 +415,12 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
                 }
                 if (ringtone != null)
                     ringtone.stop();
-                vibrator.cancel();
+                if (vibrator != null) {
+                    vibrator.cancel();
+                }
                 if (isInComingCall) {
                     try {
                         callStateTextView.setText("正在接听...");
-
-
                         EMChatManager.getInstance().answerCall();
                         isAnswered = true;
                     } catch (Exception e) {

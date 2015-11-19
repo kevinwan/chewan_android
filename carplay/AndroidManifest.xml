@@ -46,7 +46,7 @@
             android:name="UMENG_APPKEY"
             android:value="55c80d4be0f55af652003627" />
         <!-- 正式版 -->
-        <!--<meta-data
+       <!-- <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="f5a41f709dd7b958bda5c51d3a0a247e" />-->
         <!--<meta-data
@@ -57,7 +57,7 @@
               android:value="427c3acc9b4358fd1fa1823194709ae3" />
 
         <!-- 正式版 -->
-        <!--<meta-data
+    <!--    <meta-data
             android:name="EASEMOB_APPKEY"
             android:value="gongpingjia#chewanapi" />-->
         <!--<meta-data-->
