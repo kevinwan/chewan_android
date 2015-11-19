@@ -79,6 +79,7 @@ import com.gongpingjia.carplay.bean.TabEB;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.chat.Constant;
 import com.gongpingjia.carplay.chat.DemoHXSDKHelper;
+import com.gongpingjia.carplay.chat.bean.ChatUser;
 import com.gongpingjia.carplay.chat.controller.HXSDKHelper;
 import com.gongpingjia.carplay.chat.task.LoadImageTask;
 import com.gongpingjia.carplay.chat.util.ImageCache;
@@ -570,7 +571,14 @@ public class MessageAdapter extends BaseAdapter {
 
 
         if (TextUtils.isEmpty(message.getStringAttribute("headUrl", ""))) {
-            getUserInfo(message.getFrom(), holder);
+            ChatUser user = UserUtils.getUserInfo(toChatUsername);
+            if (user.getNick().contains("Admin")) {
+                holder.tv_usernick.setText(jsonObject.getString("nickname"));
+                holder.iv_avatar.setTag(jsonObject.getString("userId"));
+                ImageLoader.getInstance().displayImage(jsonObject.getString("avatar"), holder.iv_avatar, CarPlayValueFix.headOptions);
+            } else {
+                getUserInfo(message.getFrom(), holder);
+            }
         } else {
             ViewUtil.bindNetImage(holder.iv_avatar,
                     message.getStringAttribute("headUrl", ""), "head");
