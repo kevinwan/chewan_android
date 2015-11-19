@@ -116,7 +116,7 @@
                     android:layout_gravity="center_vertical|right"
                     android:layout_margin="1dip"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/chatting_biaoqing_btn_normal"
+                    android:src="@drawable/chating_biaoqing_btn"
                     android:visibility="visible" />
 
                 <ImageView
@@ -126,7 +126,7 @@
                     android:layout_gravity="center_vertical|right"
                     android:layout_margin="1dip"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/chatting_biaoqing_btn_enable"
+                    android:src="@drawable/chating_biaoqing_btn"
                     android:visibility="invisible" />
             </RelativeLayout>
 

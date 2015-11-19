@@ -176,7 +176,7 @@ public class InterestedPersonAdapter extends BaseAdapter {
 //        holder.headStateI.setImageResource("未认证".equals(photoAuthStatus) ? R.drawable.headaut_no : R.drawable.headaut_dl);
         holder.headStateI.setImageResource("认证通过".equals(photoAuthStatus) ? R.drawable.headaut_dl : R.drawable.headaut_no);
         String licenseAuthStatus = JSONUtil.getString(userjo, "licenseAuthStatus");
-        if (licenseAuthStatus.equals("认证通过")) {
+        if ("认证通过".equals(licenseAuthStatus)) {
             ViewUtil.bindNetImage(holder.carStateI, JSONUtil.getString(carjo, "logo"), "default");
         } else {
             holder.carStateI.setImageResource(R.drawable.no_car);

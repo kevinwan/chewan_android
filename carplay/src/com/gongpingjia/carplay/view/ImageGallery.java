@@ -155,6 +155,7 @@ public class ImageGallery extends CarPlayBaseActivity implements View.OnClickLis
         back.setOnClickListener(this);
         more.setOnClickListener(this);
         sethead.setOnClickListener(this);
+        operationLayout.setOnClickListener(this);
     }
 
     private String getIndicatorString(int index, int total) {
@@ -230,6 +231,9 @@ public class ImageGallery extends CarPlayBaseActivity implements View.OnClickLis
                 break;
             //取消
             case R.id.cancel:
+                showOperation();
+                break;
+            case R.id.operationLayout:
                 showOperation();
                 break;
             case R.id.back:

@@ -103,7 +103,7 @@
                 android:background="@drawable/white_smallfillet"
                 android:gravity="center"
                 android:text="保存图片"
-                android:textColor="@color/text_photo_bule" />
+                android:textColor="@color/text_blue" />
 
             <TextView
                 android:id="@+id/cancel"
