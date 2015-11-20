@@ -8,19 +8,27 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.api.API2;
+import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.view.RoundImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.JSONUtil;
+import net.duohuo.dhroid.net.NetTask;
+import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.util.ViewUtil;
 
 import org.json.JSONObject;
 
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by Administrator on 2015/10/17.
@@ -34,6 +42,7 @@ public class BeSubscribedAdaptertwo extends BaseAdapter {
     List<JSONObject> mDatum;
 
     int type = 0;
+    User user = User.getInstance();
 
     public void setSubscribeListener(SubscribeListener listener) {
         mSubscribeListener = listener;
@@ -73,14 +82,16 @@ public class BeSubscribedAdaptertwo extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
+        final ViewHolder holder;
         final JSONObject obj = getItem(position);
-        final JSONObject carjo = JSONUtil.getJSONObject(obj,"car");
+        final JSONObject carjo = JSONUtil.getJSONObject(obj, "car");
+        Boolean subscribeFlag = JSONUtil.getBoolean(obj, "subscribeFlag");
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_be_subscribedtwo, parent, false);
             holder = new ViewHolder();
             holder.visitors_time = (TextView) convertView.findViewById(R.id.visitors_time);
             holder.textDistance = (TextView) convertView.findViewById(R.id.tv_distance);
+            holder.heartView = (ImageView) convertView.findViewById(R.id.cb_heart);
 //            holder.heartView = (HeartView) convertView.findViewById(R.id.iv_heart);
             holder.roundImageView = (RoundImageView) convertView.findViewById(R.id.iv_avatar);
             holder.textNickname = (TextView) convertView.findViewById(R.id.tv_nickname);
@@ -94,6 +105,7 @@ public class BeSubscribedAdaptertwo extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
+
         holder.roundImageView.setTag(JSONUtil.getString(obj, "userId"));
         holder.textNickname.setText(JSONUtil.getString(obj, "nickname"));
         int distances = (int) Math.floor(JSONUtil.getDouble(obj, "distance"));
@@ -107,8 +119,45 @@ public class BeSubscribedAdaptertwo extends BaseAdapter {
             holder.sexbgR.setBackgroundResource(R.drawable.radion_sex_woman_normal);
             holder.sexI.setBackgroundResource(R.drawable.icon_woman3x);
         }
-
-        String licenseAuthStatus  = JSONUtil.getString(obj,"licenseAuthStatus");
+        holder.heartView.setOnClickListener(new MyOnClick(holder, obj));
+        if (subscribeFlag == true){
+            holder.heartView.setImageResource(R.drawable.icon_subscribe_each);
+        }else{
+            holder.heartView.setImageResource(R.drawable.icon_heart);
+        }
+//        holder.heartView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (att_type == true) {
+//                    //关注
+//                    DhNet net = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId() + "listen?token=" + user.getToken());
+////                    net.addParam("targetUserId",targetUserId);
+//                    net.doPostInDialog(new NetTask(mContext) {
+//                        @Override
+//                        public void doInUI(Response response, Integer transfer) {
+//                            if (response.isSuccess()) {
+//                                holder.heartView.setImageResource(R.drawable.icon_subscribe_each);
+//                                att_type = false;
+//                            }
+//                        }
+//                    });
+//                } else {
+//                    //取消关注
+//                    DhNet net = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId() + "unlisten?token=" + user.getToken());
+////                    net.addParam("targetUserId",targetUserId);
+//                    net.doPostInDialog(new NetTask(mContext) {
+//                        @Override
+//                        public void doInUI(Response response, Integer transfer) {
+//                            if (response.isSuccess()) {
+//                                holder.heartView.setImageResource(R.drawable.icon_heart);
+//                                att_type = true;
+//                            }
+//                        }
+//                    });
+//                }
+//            }
+//        });
+        String licenseAuthStatus = JSONUtil.getString(obj, "licenseAuthStatus");
         //车主认证
         if ("认证通过".equals(licenseAuthStatus)) {
             holder.dynamic_carlogoI.setVisibility(View.VISIBLE);
@@ -116,41 +165,77 @@ public class BeSubscribedAdaptertwo extends BaseAdapter {
         } else {
             holder.dynamic_carlogoI.setVisibility(View.GONE);
         }
+
         //头像认证
-        holder.headstatusI.setVisibility("认证通过".equals(JSONUtil.getString(obj,"photoAuthStatus")) ? View.VISIBLE : View.GONE);
-//        holder.heartView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (mSubscribeListener != null) {
-//                    try {
-//                        mSubscribeListener.onSubscribe(obj.getString("userId"));
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//
-//                    }
-//                }
-//            }
-//        });
-//        boolean subscribeFlag = JSONUtil.getBoolean(obj, "subscribeFlag");
-//        holder.heartView.setVisibility(type == 0 ? View.VISIBLE : View.GONE);
+        holder.headstatusI.setVisibility("认证通过".equals(JSONUtil.getString(obj, "photoAuthStatus")) ? View.VISIBLE : View.GONE);
         ImageLoader.getInstance().displayImage(JSONUtil.getString(obj, "avatar"), holder.roundImageView);
         long time = JSONUtil.getLong(obj, "subscribeTime");
-        holder.visitors_time.setText(CarPlayValueFix.converTime(time));
+        holder.visitors_time.setText(CarPlayValueFix.converTime(time) + " | ");
         return convertView;
+    }
+
+    class MyOnClick implements View.OnClickListener {
+        ViewHolder holder;
+        JSONObject jo;
+
+        public MyOnClick(ViewHolder holder, JSONObject jo) {
+            this.holder = holder;
+            this.jo = jo;
+        }
+
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.cb_heart: {
+                    String targetUserId = JSONUtil.getString(jo, "userId");
+                    Boolean att_type = JSONUtil.getBoolean(jo, "subscribeFlag");
+                    if (att_type == true) {
+                        //取消关注
+                        Toast.makeText(mContext,"取消关注",Toast.LENGTH_SHORT).show();
+                        DhNet net = new DhNet(API2.getUnfollowPerson(User.getInstance().getUserId(), User.getInstance().getToken()));
+                        net.addParam("targetUserId", targetUserId);
+                        net.doPostInDialog(new NetTask(mContext) {
+                            @Override
+                            public void doInUI(Response response, Integer transfer) {
+                                if (response.isSuccess()) {
+                                    holder.heartView.setImageResource(R.drawable.icon_heart);
+                                    EventBus.getDefault().post("刷新关注状态");
+                                }
+                            }
+                        });
+                    } else {
+                        //关注
+                        Toast.makeText(mContext,"关注",Toast.LENGTH_SHORT).show();
+                        DhNet net = new DhNet(API2.getFollowPerson(User.getInstance().getUserId(), User.getInstance().getToken()));
+                        net.addParam("targetUserId", targetUserId);
+                        net.doPostInDialog(new NetTask(mContext) {
+                            @Override
+                            public void doInUI(Response response, Integer transfer) {
+                                if (response.isSuccess()) {
+                                    holder.heartView.setImageResource(R.drawable.icon_subscribe_each);
+                                    EventBus.getDefault().post("刷新关注状态");
+                                }
+                            }
+                        });
+                    }
+                }
+                break;
+            }
+        }
     }
 
     class ViewHolder {
         RoundImageView roundImageView;
         TextView textNickname;
         TextView textDistance;
-//        HeartView heartView;
         TextView textAge;
         TextView visitors_time;
         private RelativeLayout sexbgR;
-        ImageView sexI,dynamic_carlogoI,headstatusI;
+        ImageView sexI, dynamic_carlogoI, headstatusI;
+        ImageView heartView;
     }
 
-    private void attention() {
+//    private void attention() {
 //        DhNet dhNet = new DhNet(API2.getFollowPerson(User.getInstance().getUserId(), User.getInstance().getToken()));
 //        dhNet.addParam("targetUserId", targetId);
 //        dhNet.doPostInDialog(new NetTask(self) {
@@ -162,7 +247,7 @@ public class BeSubscribedAdaptertwo extends BaseAdapter {
 //                }
 //            }
 //        });
-    }
+//    }
 
 
 }
