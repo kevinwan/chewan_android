@@ -8,7 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
@@ -92,7 +91,6 @@ public class BeSubscribedAdaptertwo extends BaseAdapter {
             holder.visitors_time = (TextView) convertView.findViewById(R.id.visitors_time);
             holder.textDistance = (TextView) convertView.findViewById(R.id.tv_distance);
             holder.heartView = (ImageView) convertView.findViewById(R.id.cb_heart);
-//            holder.heartView = (HeartView) convertView.findViewById(R.id.iv_heart);
             holder.roundImageView = (RoundImageView) convertView.findViewById(R.id.iv_avatar);
             holder.textNickname = (TextView) convertView.findViewById(R.id.tv_nickname);
             holder.textAge = (TextView) convertView.findViewById(R.id.tv_age);
@@ -125,38 +123,6 @@ public class BeSubscribedAdaptertwo extends BaseAdapter {
         }else{
             holder.heartView.setImageResource(R.drawable.icon_heart);
         }
-//        holder.heartView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (att_type == true) {
-//                    //关注
-//                    DhNet net = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId() + "listen?token=" + user.getToken());
-////                    net.addParam("targetUserId",targetUserId);
-//                    net.doPostInDialog(new NetTask(mContext) {
-//                        @Override
-//                        public void doInUI(Response response, Integer transfer) {
-//                            if (response.isSuccess()) {
-//                                holder.heartView.setImageResource(R.drawable.icon_subscribe_each);
-//                                att_type = false;
-//                            }
-//                        }
-//                    });
-//                } else {
-//                    //取消关注
-//                    DhNet net = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId() + "unlisten?token=" + user.getToken());
-////                    net.addParam("targetUserId",targetUserId);
-//                    net.doPostInDialog(new NetTask(mContext) {
-//                        @Override
-//                        public void doInUI(Response response, Integer transfer) {
-//                            if (response.isSuccess()) {
-//                                holder.heartView.setImageResource(R.drawable.icon_heart);
-//                                att_type = true;
-//                            }
-//                        }
-//                    });
-//                }
-//            }
-//        });
         String licenseAuthStatus = JSONUtil.getString(obj, "licenseAuthStatus");
         //车主认证
         if ("认证通过".equals(licenseAuthStatus)) {
@@ -173,7 +139,6 @@ public class BeSubscribedAdaptertwo extends BaseAdapter {
         holder.visitors_time.setText(CarPlayValueFix.converTime(time) + " | ");
         return convertView;
     }
-
     class MyOnClick implements View.OnClickListener {
         ViewHolder holder;
         JSONObject jo;
@@ -191,7 +156,6 @@ public class BeSubscribedAdaptertwo extends BaseAdapter {
                     Boolean att_type = JSONUtil.getBoolean(jo, "subscribeFlag");
                     if (att_type == true) {
                         //取消关注
-                        Toast.makeText(mContext,"取消关注",Toast.LENGTH_SHORT).show();
                         DhNet net = new DhNet(API2.getUnfollowPerson(User.getInstance().getUserId(), User.getInstance().getToken()));
                         net.addParam("targetUserId", targetUserId);
                         net.doPostInDialog(new NetTask(mContext) {
@@ -205,7 +169,6 @@ public class BeSubscribedAdaptertwo extends BaseAdapter {
                         });
                     } else {
                         //关注
-                        Toast.makeText(mContext,"关注",Toast.LENGTH_SHORT).show();
                         DhNet net = new DhNet(API2.getFollowPerson(User.getInstance().getUserId(), User.getInstance().getToken()));
                         net.addParam("targetUserId", targetUserId);
                         net.doPostInDialog(new NetTask(mContext) {
@@ -235,19 +198,6 @@ public class BeSubscribedAdaptertwo extends BaseAdapter {
         ImageView heartView;
     }
 
-//    private void attention() {
-//        DhNet dhNet = new DhNet(API2.getFollowPerson(User.getInstance().getUserId(), User.getInstance().getToken()));
-//        dhNet.addParam("targetUserId", targetId);
-//        dhNet.doPostInDialog(new NetTask(self) {
-//            @Override
-//            public void doInUI(Response response, Integer transfer) {
-//                if (response.isSuccess()) {
-//                    //取消关注成功
-//                    refresh();
-//                }
-//            }
-//        });
-//    }
 
 
 }
