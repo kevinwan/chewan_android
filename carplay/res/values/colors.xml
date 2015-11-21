@@ -28,7 +28,7 @@
     <color name="theme_bg">#47D1D4</color>
 
     <!-- 背景灰 -->
-    <color name="bg_grey">#f5f7fa</color>
+    <color name="bg_grey">#f7f7f7</color>
     <color name="new_bg_grey">#EFEFEF</color>
     <color name="dialog_blue">#23bde1</color>
     <!-- 线灰 -->

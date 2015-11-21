@@ -8,7 +8,6 @@
     android:orientation="vertical" >
 
     <LinearLayout
-        android:id="@+id/layout_share_weixin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -16,38 +15,49 @@
         android:orientation="horizontal"
         android:padding="15dp" >
 
-        <ImageView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/layout_share_wxcircle"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/icon_share_weixin" />
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/icon_share_circle" />
 
-        <TextView
-            style="@style/text_grey_medium"
-            android:layout_marginLeft="10dp"
-            android:text="邀请微信好友" />
+            <TextView
+                style="@style/text_grey_medium"
+                android:layout_marginTop="12dp"
+                android:text="朋友圈" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_share_weixin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/icon_share_weixin" />
+
+            <TextView
+                style="@style/text_grey_medium"
+                android:layout_marginTop="12dp"
+                android:text="微信好友" />
+
+        </LinearLayout>
+
+
     </LinearLayout>
 
     <View style="@style/line_horizontal" />
 
-    <LinearLayout
-        android:id="@+id/layout_share_wxcircle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:gravity="center_vertical|center_horizontal"
-        android:orientation="horizontal"
-        android:padding="15dp" >
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/icon_share_circle" />
-
-        <TextView
-            style="@style/text_grey_medium"
-            android:layout_marginLeft="10dp"
-            android:text="分享到朋友圈" />
-    </LinearLayout>
 
     <TextView
         android:id="@+id/tv_cancel"

@@ -34,6 +34,7 @@ import com.gongpingjia.carplay.manage.UserInfoManage;
 import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.view.CarPlayGallery;
 import com.gongpingjia.carplay.view.RoundImageView;
+import com.gongpingjia.carplay.view.pop.SharePop;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
@@ -44,6 +45,7 @@ import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.util.ViewUtil;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
@@ -111,6 +113,13 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
 
     List<JSONObject> memberList;
 
+    JSONObject jo;
+    String title;
+    String starttime;
+    String price;
+    String place;
+    String active_img;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,6 +135,22 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
         user = User.getInstance();
         setTitle("活动详情");
         activeid = getIntent().getStringExtra("activityId");
+        setRightAction("", R.drawable.share_icon, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Intent intent = new Intent(self,ActiveShareActivity.class);
+//                intent.putExtra("activityId",activeid);
+//                startActivity(intent);
+                getSharDetails();
+                Bundle bundle = new Bundle();
+                bundle.putString("shareUrl","http://www.chewanapp.com/appshare.html?id="+activeid+"&time="+System.currentTimeMillis());
+                bundle.putString("shareTitle",title+"\n");
+                bundle.putString("shareContent",starttime+"\n"+price+"\n"+place);
+                bundle.putString("image",active_img);
+                SharePop pop = new SharePop(self, bundle,0);
+                pop.show();
+            }
+        });
 
 
         //参与成员信息
@@ -221,7 +246,7 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
             @Override
             public void doInUI(Response response, Integer transfer) {
                 if (response.isSuccess()) {
-                    JSONObject jo = response.jSONFromData();
+                    jo = response.jSONFromData();
 
                     //第三方购票连接
                     linkTicketUrl = JSONUtil.getString(jo, "linkTicketUrl");
@@ -236,8 +261,8 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
 
                     //目的地
                     JSONObject js = JSONUtil.getJSONObject(jo, "destination");
-                    ViewUtil.bindView(placeT, JSONUtil.getString(js, "province") + "省" + JSONUtil.getString(js, "city") + "市" + JSONUtil.getString(js, "detail"));
-
+//                    ViewUtil.bindView(placeT, JSONUtil.getString(js, "province") + "省" + JSONUtil.getString(js, "city") + "市" + JSONUtil.getString(js, "detail"));
+                    ViewUtil.bindView(placeT,JSONUtil.getString(js, "province") + "省"+ JSONUtil.getString(js, "detail"));
                     //开始-结束时间,创建时间
                     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:ss");
 
@@ -553,5 +578,29 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
         JSONObject json = JSONUtil.getJSONObject(jo, "data");
         isMember = JSONUtil.getBoolean(json, "isMember");
 //        System.out.println("官方活动详情"+JSONUtil.getBoolean(json, "isMember"));
+    }
+
+    private void getSharDetails(){
+        JSONArray jsc = JSONUtil.getJSONArray(jo, "covers");
+
+        title = "我正在参加 " + JSONUtil.getString(jo, "title") + "活动 ,来跟我一起参加吧~";
+        SimpleDateFormat format = new SimpleDateFormat("MM年dd月 HH:ss");
+        Date sdate = new Date(JSONUtil.getLong(jo, "start"));
+        starttime = format.format(sdate);
+
+        double dPrice = JSONUtil.getDouble(jo, "price");
+        if (dPrice == 0) {
+            price = "价格 : 免费";
+        } else {
+            price = "价格 : " + dPrice + "元/人";
+        }
+        //目的地
+        JSONObject js = JSONUtil.getJSONObject(jo, "destination");
+        place = JSONUtil.getString(js, "province") + "省"+ JSONUtil.getString(js, "detail");
+        try {
+            active_img = jsc.get(0).toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/cutline"
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp"
+    tools:context="com.gongpingjia.carplay.activity.active.ActiveShareActivity">
+
+    <include layout="@layout/include_title_bar"/>
+
+    <EditText
+        android:id="@+id/remarks"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:hint="说点什么"
+        android:gravity="top"
+        android:layout_marginTop="20dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/active_img"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/activetitle"
+            style="@style/text_black_medium"
+            android:text="活动标题"/>
+
+            <TextView
+                android:id="@+id/starttime"
+                style="@style/text_black_medium"
+                android:text="开始时间"/>
+
+            <TextView
+                android:id="@+id/price"
+                style="@style/text_black_medium"
+                android:text="价格"/>
+
+            <TextView
+                android:id="@+id/place"
+                style="@style/text_black_medium"
+                android:text="地点"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/share"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:text="分享"
+        android:textColor="@color/white"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_red_fillet"/>
+
+
+
+
+</LinearLayout>

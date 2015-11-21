@@ -55,10 +55,13 @@
                 android:layout_marginTop="28dp"
                 android:background="@drawable/edittext_bg"
                 android:hint="什么地方(选填)"
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/below_btn"
+                android:gravity="center"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
-                android:gravity="center_vertical"
                 android:textColor="@color/text_black"
+                android:textColorHint="@color/text_grey_ccc"
                 android:textSize="@dimen/text_small" />
 
             <RadioGroup
@@ -112,18 +115,19 @@
                 android:textColor="@color/dialog_blue_text" />
 
 
-            <Button
-                android:id="@+id/btn_match"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginBottom="30dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/btn_red_fillet"
-                android:text="匹配意向"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_medium" />
-        </LinearLayout>
+                <Button
+                    android:id="@+id/btn_match"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="30dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/btn_red_fillet"
+                    android:text="匹配意向"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_medium" />
 
+            </LinearLayout>
 
     </RelativeLayout>
 
