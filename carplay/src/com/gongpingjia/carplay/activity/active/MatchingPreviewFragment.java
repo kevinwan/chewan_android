@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayBaseFragment;
+import com.gongpingjia.carplay.view.pop.SelectPicturePop;
 
 import de.greenrobot.event.EventBus;
 
@@ -70,7 +71,29 @@ public class MatchingPreviewFragment extends CarPlayBaseFragment implements View
         switch (v.getId()){
             //更换照片
             case R.id.changephoto:
-
+                final SelectPicturePop pop = SelectPicturePop.getInstance(getActivity(),0);
+                //拍照
+                pop.setPhotoGraphListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        pop.dismiss();
+                    }
+                });
+                //相册
+                pop.setAlbumListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        pop.dismiss();
+                    }
+                });
+                //上传过的图片
+                pop.setExistingListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        pop.dismiss();
+                    }
+                });
+                pop.show();
                 break;
             //继续匹配
             case R.id.nextmatching:

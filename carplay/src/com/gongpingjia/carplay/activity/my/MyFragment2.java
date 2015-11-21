@@ -1,8 +1,6 @@
 package com.gongpingjia.carplay.activity.my;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -16,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -34,6 +31,7 @@ import com.gongpingjia.carplay.bean.PhotoState;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.photo.model.PhotoModel;
 import com.gongpingjia.carplay.view.RoundImageView;
+import com.gongpingjia.carplay.view.pop.SelectPicturePop;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
@@ -416,30 +414,56 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                 newAlbm.clear();
                 mPhotoPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg").getAbsolutePath();
                 final File tempFile = new File(mPhotoPath);
-                final CharSequence[] items = {"相册", "拍照"};
-                AlertDialog dlg = new AlertDialog.Builder(getActivity()).setTitle("选择图片")
-                        .setItems(items, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int item) {
-                                if (item == 1) {
-                                    Intent getImageByCamera = new Intent(
-                                            "android.media.action.IMAGE_CAPTURE");
-                                    getImageByCamera.putExtra(MediaStore.EXTRA_OUTPUT,
-                                            Uri.fromFile(tempFile));
-                                    startActivityForResult(getImageByCamera,
-                                            Constant.TAKE_PHOTO);
-                                } else {
-                                    Intent intent = new Intent(getActivity(),
-                                            PhotoSelectorActivity.class);
-                                    intent.putExtra(PhotoSelectorActivity.KEY_MAX,
-                                            9);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                                    startActivityForResult(intent, Constant.PICK_PHOTO);
-                                }
-                            }
-                        }).create();
-                Window window = dlg.getWindow();
-                window.setWindowAnimations(R.style.mystyle);
-                dlg.show();
+//                final CharSequence[] items = {"相册", "拍照"};
+//                AlertDialog dlg = new AlertDialog.Builder(getActivity()).setTitle("选择图片")
+//                        .setItems(items, new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int item) {
+//                                if (item == 1) {
+//                                    Intent getImageByCamera = new Intent(
+//                                            "android.media.action.IMAGE_CAPTURE");
+//                                    getImageByCamera.putExtra(MediaStore.EXTRA_OUTPUT,
+//                                            Uri.fromFile(tempFile));
+//                                    startActivityForResult(getImageByCamera,
+//                                            Constant.TAKE_PHOTO);
+//                                } else {
+//                                    Intent intent = new Intent(getActivity(),
+//                                            PhotoSelectorActivity.class);
+//                                    intent.putExtra(PhotoSelectorActivity.KEY_MAX,
+//                                            9);
+//                                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+//                                    startActivityForResult(intent, Constant.PICK_PHOTO);
+//                                }
+//                            }
+//                        }).create();
+//                Window window = dlg.getWindow();
+//                window.setWindowAnimations(R.style.mystyle);
+//                dlg.show();
+                final SelectPicturePop pop = SelectPicturePop.getInstance(getActivity(),-1);
+                pop.setPhotoGraphListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent getImageByCamera = new Intent(
+                                "android.media.action.IMAGE_CAPTURE");
+                        getImageByCamera.putExtra(MediaStore.EXTRA_OUTPUT,
+                                Uri.fromFile(tempFile));
+                        startActivityForResult(getImageByCamera,
+                                Constant.TAKE_PHOTO);
+                        pop.dismiss();
+                    }
+                });
+                pop.setAlbumListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getActivity(),
+                                PhotoSelectorActivity.class);
+                        intent.putExtra(PhotoSelectorActivity.KEY_MAX,
+                                9);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        startActivityForResult(intent, Constant.PICK_PHOTO);
+                        pop.dismiss();
+                    }
+                });
+                pop.show();
                 break;
 
 
