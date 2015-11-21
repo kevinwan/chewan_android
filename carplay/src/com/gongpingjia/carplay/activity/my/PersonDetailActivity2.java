@@ -28,6 +28,7 @@ import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.photo.model.PhotoModel;
 import com.gongpingjia.carplay.view.ImageGallery;
 import com.gongpingjia.carplay.view.RoundImageView;
+import com.gongpingjia.carplay.view.pop.ReportPop;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
@@ -61,7 +62,7 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
 
     private RoundImageView headI,carLogo;
     private ImageView sexI, photo_bgI;
-    private TextView nameT, ageT, attentionT, carName;
+    private TextView nameT, ageT, attentionT, carName,right_text;
     private RelativeLayout sexbgR;
     private LinearLayout myactiveL;
     private Button uploadBtn, perfectBtn;
@@ -120,11 +121,14 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
         carName = (TextView) findViewById(R.id.carname);
         perfectBtn = (Button) findViewById(R.id.perfect);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-
+        right_text = (TextView) findViewById(R.id.right_text);
+        right_text.setVisibility(View.VISIBLE);
+        right_text.setText("举报");
         headI.setOnClickListener(this);
         myactiveL.setOnClickListener(this);
         uploadBtn.setOnClickListener(this);
         perfectBtn.setOnClickListener(this);
+        right_text.setOnClickListener(this);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(self);
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -315,6 +319,9 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
 //                it.putExtra("imgids", "123456");
                 it.putExtra("type", "his");
                 startActivity(it);
+                break;
+            case R.id.right_text:
+                ReportPop.getInstance(self).show();
                 break;
             default:
                 break;

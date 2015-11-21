@@ -65,6 +65,7 @@ public class HisDynamicActivity extends CarPlayListActivity implements PullToRef
         empty = (LinearLayout) findViewById(R.id.empty);
         msg = (TextView) findViewById(R.id.msg);
 
+
         listV = (PullToRefreshListView) findViewById(R.id.listview);
         listV.setMode(PullToRefreshBase.Mode.BOTH);
         listV.setOnRefreshListener(this);
