@@ -52,7 +52,6 @@ public class CarPlayBaseFragment extends Fragment {
     int limit = 10;
     ILoadSuccess onLoadSuccess;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,7 +103,9 @@ public class CarPlayBaseFragment extends Fragment {
                             dialoger.showToastShort(self, response.msg);
                         }
                     } else {
-                        dialoger.showToastShort(self, response.msg);
+
+                            dialoger.showToastShort(self, response.msg);
+
                     }
                 }
 
@@ -181,6 +182,7 @@ public class CarPlayBaseFragment extends Fragment {
         };
 
     }
+
 
 
     public void addParams(String key, Object value) {

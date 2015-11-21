@@ -7,7 +7,6 @@ import android.widget.ListView;
 import com.gongpingjia.carplay.ILoadSuccess;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.CarPlayListActivity;
-import com.gongpingjia.carplay.adapter.BeSubscribedAdapter2;
 import com.gongpingjia.carplay.adapter.BeSubscribedAdaptertwo;
 import com.gongpingjia.carplay.adapter.SubscribeListener;
 import com.gongpingjia.carplay.api.API2;
@@ -18,6 +17,8 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by Administrator on 2015/10/27.
@@ -32,6 +33,7 @@ public class MySubscriberActivity2 extends CarPlayListActivity implements ILoadS
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_subscriber);
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -84,5 +86,10 @@ public class MySubscriberActivity2 extends CarPlayListActivity implements ILoadS
     @Override
     public void loadSuccessOnFirst() {
 
+    }
+    public void onEventMainThread(String success) {
+        if ("刷新关注状态".equals(success)) {
+            refresh();
+        }
     }
 }

@@ -46,7 +46,7 @@ public class CarPlayListActivity extends CarPlayBaseActivity {
     int limit = 10;
 
     onLoadDataSuccess onLoadDataSuccess;
-
+    String str = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +54,7 @@ public class CarPlayListActivity extends CarPlayBaseActivity {
         net.setMethod(DhNet.METHOD_GET);
         useCache(CachePolicy.POLICY_BEFORE_AND_AFTER_NET);
         mVaules = new ArrayList<JSONObject>();
+
         nettask = new NetTask(CarPlayListActivity.this) {
             @Override
             public void doInBackground(Response response) {
@@ -99,7 +100,11 @@ public class CarPlayListActivity extends CarPlayBaseActivity {
                             dialoger.showToastShort(self, response.msg);
                         }
                     } else {
-                        dialoger.showToastShort(self, response.msg);
+                        if (!str.isEmpty()){
+                            dialoger.showToastShort(self, "AAAAAA");
+                        }else{
+                            dialoger.showToastShort(self, response.msg);
+                        }
                     }
                 }
 
@@ -129,10 +134,15 @@ public class CarPlayListActivity extends CarPlayBaseActivity {
                 if (list.size() == 0 || list.size() < limit) {
                     if (dialoger != null) {
                         if (!response.isCache()) {
-                            if (ignore > 0) {
-                                dialoger.showToastShort(self,
-                                        Const.netadapter_no_more);
+                            if (!str.isEmpty()){
+                                dialoger.showToastShort(self, "已没有更多的人");
+                            }else{
+                                if (ignore > 0) {
+                                    dialoger.showToastShort(self,
+                                            Const.netadapter_no_more);
+                                }
                             }
+
                         }
                     }
                     hasMore = false;
@@ -172,7 +182,9 @@ public class CarPlayListActivity extends CarPlayBaseActivity {
             }
         };
     }
-
+    public void setoffic(String stop){
+        str = stop;
+    }
 
     public void addParams(String key, Object value) {
         net.addParam(key, value);
