@@ -71,6 +71,22 @@ public class ReportPop implements  View.OnClickListener {
     }
     @Override
     public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.pornography://色情
+                break;
+            case R.id.submit://提交
+                break;
+            case R.id.cancel://取消
+                break;
+            case R.id.illegal://违法
+                break;
+            case R.id.bilk://诈骗
+                break;
+            case R.id.political://政治
+                break;
+            case R.id.advertising://广告
+                break;
+        }
 
     }
 
