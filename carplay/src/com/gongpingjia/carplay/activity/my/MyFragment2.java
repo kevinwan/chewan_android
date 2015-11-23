@@ -507,6 +507,7 @@ public class MyFragment2 extends Fragment implements OnClickListener {
                     uploadPhotoCount = 1;
                     uploadHead(newPath);
                     break;
+                //认证
                 case PERSONAL:
                     txtphotoAuthStatusT.setText(data.getStringExtra("photoAuthStatus"));
                     nameT.setText(data.getStringExtra("nickname"));
