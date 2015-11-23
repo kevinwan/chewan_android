@@ -218,7 +218,6 @@ public class MatchingDialog extends BaseAlertDialog {
         dhNet.addParam("transfer", pickOrNot);
 
 
-
         //目的地信息
         if (textDestination.getText().toString().trim().length() == 0 || textDestination.getText().toString().trim().split(" ").length < 3) {
             //没有填写目的地

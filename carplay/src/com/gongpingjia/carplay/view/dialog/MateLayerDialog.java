@@ -146,9 +146,6 @@ public class MateLayerDialog extends BaseAlertDialog implements View.OnClickList
             public void onClick(View v) {
 
                 User user = User.getInstance();
-                if (user.isLogin()) {
-
-                }
 
                 final boolean pickOrNot = checkBox.isChecked();
                 if (selectIndex < 0) {
