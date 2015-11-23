@@ -47,6 +47,8 @@ import jp.wasabeef.blurry.internal.BlurTask;
 
 
 /**
+ *
+ * Ta的活动
  * Created by Administrator on 2015/10/20.
  */
 public class HisDyanmicBaseAdapter extends BaseAdapter {
@@ -56,14 +58,14 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
     User user = User.getInstance();
     JSONObject destPoint, destination;
     Bundle bundle;
-    String cover;
+//    String cover;
     Double distance;
     Boolean transfer;
 
-    public HisDyanmicBaseAdapter(Context context, Bundle bundle, String cover, Double distance) {
+    public HisDyanmicBaseAdapter(Context context, Bundle bundle, Double distance) {
         mContext = context;
         this.bundle = bundle;
-        this.cover = cover;
+//        this.cover = cover;
         this.distance = distance;
     }
 
@@ -153,10 +155,11 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
         holder.titleT.setText(bundle.getString("name") + "想邀人" + type);
         holder.pay_type.setText(pay);
 //        ViewUtil.bindNetImage(holder.activity_beijing, cover, "default");
-        System.out.println("adapter;;;;;;;;;;;;" + cover);
+
+        System.out.println("adapter;;;;;;;;;;;;" + JSONUtil.getString(jo,"cover"));
 
         final ViewHolder finalHolder = holder;
-        ImageLoader.getInstance().loadImage(cover, CarPlayValueFix.optionsDefault, new SimpleImageLoadingListener() {
+        ImageLoader.getInstance().loadImage(JSONUtil.getString(jo,"cover"), CarPlayValueFix.optionsDefault, new SimpleImageLoadingListener() {
             @Override
             public void onLoadingStarted(String imageUri, View view) {
                 super.onLoadingStarted(imageUri, view);
@@ -166,7 +169,7 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
             @Override
             public void onLoadingComplete(String imageUri, View view,
                                           final Bitmap bitmap) {
-
+//bundle.getString("userId")
                 if (bitmap != null) {
                     final ImageView img = finalHolder.activity_beijing;
                     if (!user.isHasAlbum() && !user.getUserId().equals(bundle.getString("userId"))) {

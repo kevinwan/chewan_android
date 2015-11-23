@@ -133,7 +133,7 @@ public class HisDynamicActivity extends CarPlayListActivity implements PullToRef
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                adapter = new HisDyanmicBaseAdapter(self, bundle, cover, distance);
+                adapter = new HisDyanmicBaseAdapter(self, bundle,distance);
                 recyclerView.setAdapter(adapter);
             }
         });
