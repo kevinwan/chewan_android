@@ -29,6 +29,7 @@ public class ReportPop implements  View.OnClickListener {
     static ReportPop instance;
     View contentV;
     String activityid,id;
+    String type = "色情低俗";
     PopupWindow pop;
     User user = User.getInstance();
     TextView pornography,advertising,political,bilk,illegal,cancel,submit;
@@ -84,25 +85,32 @@ public class ReportPop implements  View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.pornography://色情
-                request();
+                type = "色情低俗";
                 break;
             case R.id.submit://提交
+                request();
                 break;
             case R.id.cancel://取消
+                pop.dismiss();
                 break;
             case R.id.illegal://违法
+                type = "违法";
                 break;
             case R.id.bilk://诈骗
+                type = "诈骗";
                 break;
             case R.id.political://政治
+                type = "政治敏感";
                 break;
             case R.id.advertising://广告
+                type = "广告骚扰";
                 break;
         }
 
     }
     public void request(){
         DhNet net = new DhNet(API2.CWBaseurl+"user/"+id+"/report?userId="+user.getUserId()+"&token="+user.getToken()+"&activityId="+activityid);
+        net.addParam("type",type);
         net.doPostInDialog(new NetTask(context) {
             @Override
             public void doInUI(Response response, Integer transfer) {
