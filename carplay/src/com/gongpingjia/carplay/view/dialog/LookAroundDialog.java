@@ -342,6 +342,7 @@ public class LookAroundDialog extends BaseAlertDialog {
                             String userId = JSONUtil.getString(userjo, "userId");
                             it.putExtra("userId", userId);
                             it.putExtra("activityId", JSONUtil.getString(jo,"activityId"));
+//                            System.out.println("dialog+"+JSONUtil.getString(jo,"activityId"));
                             it.putExtra("type", "activity");
                             mContext.startActivity(it);
                         }

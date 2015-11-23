@@ -195,10 +195,9 @@ public class NearListFragment extends CarPlayBaseFragment implements PullToRefre
                         Intent it = new Intent(getActivity(), PersonDetailActivity2.class);
                         JSONObject userjo = JSONUtil.getJSONObject(jo, "organizer");
                         String userId = JSONUtil.getString(userjo, "userId");
-                        JSONObject json = JSONUtil.getJSONObject(jo, "data");
-                        String activityid = JSONUtil.getString(json, "activityId");
                         it.putExtra("userId", userId);
-                        it.putExtra("activityId", activityid);
+                        it.putExtra("activityId", JSONUtil.getString(jo, "activityId"));
+//                        System.out.println("活动id"+JSONUtil.getString(jo, "activityId"));
                         it.putExtra("type", "activity");
                         startActivity(it);
                     }

@@ -577,6 +577,7 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                     String userId = JSONUtil.getString(js, "userId");
                     it.putExtra("userId", userId);
                     it.putExtra("activityId", JSONUtil.getString(jo,"activityId"));
+//                    System.out.println("我的活动+"+ JSONUtil.getString(jo,"activityId"));
                     it.putExtra("type", "activity");
                     mContext.startActivity(it);
                 }

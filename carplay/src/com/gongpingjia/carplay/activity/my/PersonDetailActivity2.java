@@ -355,6 +355,7 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
                 startActivity(it);
                 break;
             case R.id.right_text:
+                System.out.println("举报id"+bundle.getString("activityId"));
                 ReportPop.getInstance(self,bundle.getString("activityId"),userId).show();
                 break;
             default:

@@ -55,6 +55,7 @@ public class ReportPop implements  View.OnClickListener {
         return instance;
     }
     public void initView(){
+        System.out.println("接受举报id"+activityid+"和id"+id);
         contentV.findViewById(R.id.pop_background).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

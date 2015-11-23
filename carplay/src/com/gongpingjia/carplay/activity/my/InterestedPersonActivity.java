@@ -58,12 +58,10 @@ public class InterestedPersonActivity extends CarPlayListActivity implements Pul
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 JSONObject jo = adapter.getItem(position - 1);
                 JSONObject userjo = JSONUtil.getJSONObject(jo, "user");
-                JSONObject json = JSONUtil.getJSONObject(jo, "data");
-                String activityid = JSONUtil.getString(json, "activityId");
                 Intent it = new Intent(self, PersonDetailActivity2.class);
                 String userId = JSONUtil.getString(userjo, "userId");
                 it.putExtra("userId", userId);
-                it.putExtra("activityId", activityid);
+                it.putExtra("activityId", JSONUtil.getString(jo, "activityId"));
                 it.putExtra("type", "activity");
                 startActivity(it);
             }
@@ -74,7 +72,6 @@ public class InterestedPersonActivity extends CarPlayListActivity implements Pul
         setOnLoadSuccess(this);
         fromWhat("data");
         setUrl(API2.CWBaseurl + "user/" + user.getUserId() + "/interest/list?token=" + user.getToken());
-//        setUrl(API2.CWBaseurl + "user/" + "561f755b0cf24f3b99211d12" + "/interest/list?token=" + "ea9f3e5e-d52c-4be3-9d87-962be9bbb83c");
         showNext();
 
     }
