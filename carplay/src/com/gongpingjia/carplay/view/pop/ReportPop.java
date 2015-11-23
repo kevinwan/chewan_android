@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.api.API2;
@@ -29,7 +30,7 @@ public class ReportPop implements  View.OnClickListener {
     static ReportPop instance;
     View contentV;
     String activityid,id;
-    String type = "色情低俗";
+    String type ;
     PopupWindow pop;
     User user = User.getInstance();
     TextView pornography,advertising,political,bilk,illegal,cancel,submit;
@@ -87,24 +88,29 @@ public class ReportPop implements  View.OnClickListener {
         switch (view.getId()){
             case R.id.pornography://色情
                 type = "色情低俗";
-                break;
-            case R.id.submit://提交
                 request();
                 break;
+//            case R.id.submit://提交
+//                request();
+//                break;
             case R.id.cancel://取消
                 pop.dismiss();
                 break;
             case R.id.illegal://违法
                 type = "违法";
+                request();
                 break;
             case R.id.bilk://诈骗
                 type = "诈骗";
+                request();
                 break;
             case R.id.political://政治
                 type = "政治敏感";
+                request();
                 break;
             case R.id.advertising://广告
                 type = "广告骚扰";
+                request();
                 break;
         }
 
@@ -116,13 +122,14 @@ public class ReportPop implements  View.OnClickListener {
             @Override
             public void doInUI(Response response, Integer transfer) {
                 if (response.isSuccess()){
+
+                    Toast.makeText(context,"举报成功",Toast.LENGTH_SHORT).show();
+                    pop.dismiss();
                     System.out.println(response.isSuccess());
                 }
 
             }
         });
-
-
     }
 
 

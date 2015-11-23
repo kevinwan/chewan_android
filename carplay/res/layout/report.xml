@@ -95,7 +95,6 @@
                 android:layout_height="50dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:layout_marginRight="1dp"
                 android:background="@drawable/btn_layout_left_pop"
                 android:textColor="@color/text_blue"
                 android:text="取消"/>
@@ -109,7 +108,8 @@
                 android:layout_marginLeft="1dp"
                 android:background="@drawable/btn_layout_right_pop"
                 android:textColor="@color/text_blue"
-                android:text="提交"/>
+                android:text="提交"
+                android:visibility="gone"/>
         </LinearLayout>
 
     </LinearLayout>
