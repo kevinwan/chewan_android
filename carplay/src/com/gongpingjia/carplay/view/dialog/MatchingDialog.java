@@ -16,8 +16,8 @@ import android.widget.Toast;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.adapter.MatchingAdapter;
-import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.bean.Matching;
+import com.gongpingjia.carplay.bean.MatchingEB;
 import com.gongpingjia.carplay.bean.PointRecord;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.CarPlayPerference;
@@ -25,14 +25,13 @@ import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.view.BaseAlertDialog;
 
 import net.duohuo.dhroid.ioc.IocContainer;
-import net.duohuo.dhroid.net.DhNet;
-import net.duohuo.dhroid.net.NetTask;
-import net.duohuo.dhroid.net.Response;
 import net.duohuo.dhroid.util.UserLocation;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by Administrator on 2015/10/12.
@@ -197,26 +196,34 @@ public class MatchingDialog extends BaseAlertDialog {
             return;
         }
 
-        final DhNet dhNet = new DhNet(API2.getMatchUrl(User.getInstance().getUserId(), User.getInstance().getToken()));
+        MatchingEB matchingEB = new MatchingEB();
+
+//        final DhNet dhNet = new DhNet(API2.getMatchUrl(User.getInstance().getUserId(), User.getInstance().getToken()));
         //类型
         if (mDatas.size() == 1) {
             //覆盖主类型
-            dhNet.addParam("majorType", CarPlayUtil.getTypeName(type));
+            matchingEB.setMajorType(CarPlayUtil.getTypeName(type));
+//            dhNet.addParam("majorType", CarPlayUtil.getTypeName(type));
         } else {
             if (dialogType == 0) {
-                dhNet.addParam("majorType", "运动");
-                dhNet.addParam("pay","");
+                matchingEB.setMajorType("运动");
+                matchingEB.setPay("");
+//                dhNet.addParam("majorType", "运动");
+//                dhNet.addParam("pay","");
                 paygroup.setVisibility(View.GONE);
             } else {
-                dhNet.addParam("majorType", "桌游");
+//                dhNet.addParam("majorType", "桌游");
+                matchingEB.setMajorType("桌游");
                 paygroup.setVisibility(View.VISIBLE);
                 String pay=((RadioButton)findViewById(paygroup.getCheckedRadioButtonId())).getText().toString();
-                dhNet.addParam("pay", pay);
+//                dhNet.addParam("pay", pay);
+                matchingEB.setPay(pay);
             }
         }
-        dhNet.addParam("type", CarPlayUtil.getTypeName(type));
-        dhNet.addParam("transfer", pickOrNot);
-
+//        dhNet.addParam("type", CarPlayUtil.getTypeName(type));
+//        dhNet.addParam("transfer", pickOrNot);
+        matchingEB.setType(CarPlayUtil.getTypeName(type));
+        matchingEB.setTransfer(pickOrNot);
 
         //目的地信息
         if (textDestination.getText().toString().trim().length() == 0 || textDestination.getText().toString().trim().split(" ").length < 3) {
@@ -235,48 +242,58 @@ public class MatchingDialog extends BaseAlertDialog {
                 //普通地区
                 destination.put("street", destinations[3]);
             }
-            dhNet.addParam("destination", destination);
+//            dhNet.addParam("destination", destination);
+            matchingEB.setDestination(destination);
         }
 
         //发布地经纬度
         Map<String, Double> estabPoint = new HashMap<String, Double>();
         estabPoint.put("longitude", UserLocation.getInstance().getLongitude());
         estabPoint.put("latitude", UserLocation.getInstance().getLatitude());
-        dhNet.addParam("estabPoint", estabPoint);
+//        dhNet.addParam("estabPoint", estabPoint);
+        matchingEB.setEstabPoint(estabPoint);
 
         //发布地地理位置信息
         Map<String, String> establish = new HashMap<String, String>();
         establish.put("province", UserLocation.getInstance().getProvice());
         establish.put("city", UserLocation.getInstance().getCity());
         establish.put("district", UserLocation.getInstance().getDistrict());
-        dhNet.addParam("establish", establish);
-        System.out.println("000000000000000" + establish);
-        User user = User.getInstance();
-        if (user.isLogin()) {
-            dhNet.doPost(new NetTask(context) {
-                @Override
-                public void doInUI(Response response, Integer transfer) {
-                    if (response.isSuccess()) {
-                        Toast.makeText(context, "发布成功", Toast.LENGTH_SHORT).show();
-                        if (mResult != null) {
-                            mResult.onResult(dhNet.getParams());
-                        }
-                    }
-
-                    dismiss();
-                    PointRecord record = PointRecord.getInstance();
-                    record.setActivityMatchCount(record.getActivityMatchCount() + 1);
-                }
-            });
-        } else {
-            if (mResult != null) {
-                mResult.onResult(dhNet.getParams());
-            }
-
-            dismiss();
-            PointRecord record = PointRecord.getInstance();
-            record.setActivityMatchCount(record.getActivityMatchCount() + 1);
+//        dhNet.addParam("establish", establish);
+        matchingEB.setEstablish(establish);
+        if (mResult != null) {
+            mResult.onResult(null);
         }
+        EventBus.getDefault().post(matchingEB);
+        dismiss();
+        PointRecord record = PointRecord.getInstance();
+        record.setActivityMatchCount(record.getActivityMatchCount() + 1);
+        System.out.println("000000000000000" + establish);
+//        User user = User.getInstance();
+//        if (user.isLogin()) {
+//            dhNet.doPost(new NetTask(context) {
+//                @Override
+//                public void doInUI(Response response, Integer transfer) {
+//                    if (response.isSuccess()) {
+//                        Toast.makeText(context, "发布成功", Toast.LENGTH_SHORT).show();
+//                        if (mResult != null) {
+//                            mResult.onResult(dhNet.getParams());
+//                        }
+//                    }
+//
+//                    dismiss();
+//                    PointRecord record = PointRecord.getInstance();
+//                    record.setActivityMatchCount(record.getActivityMatchCount() + 1);
+//                }
+//            });
+//        } else {
+//            if (mResult != null) {
+//                mResult.onResult(dhNet.getParams());
+//            }
+//
+//            dismiss();
+//            PointRecord record = PointRecord.getInstance();
+//            record.setActivityMatchCount(record.getActivityMatchCount() + 1);
+//        }
     }
 
     public interface OnMatchingDialogResult {
