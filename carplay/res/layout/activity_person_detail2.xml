@@ -142,6 +142,7 @@
                     android:layout_marginTop="12dp"
                     android:background="@drawable/btn_red_fillet"
                     android:text="关注"
+                    android:visibility="gone"
                     android:textSize="@dimen/text_medium"
                     android:textColor="@color/white"
                      />

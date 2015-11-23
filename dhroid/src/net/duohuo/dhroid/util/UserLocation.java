@@ -23,6 +23,8 @@ public class UserLocation implements AMapLocationListener {
     static UserLocation instance;
 
     private String district = "";
+
+    private String street = "";
     OnLocationChanged onLocationChanged;
     private static double EARTH_RADIUS = 6378.137;
 
@@ -77,6 +79,14 @@ public class UserLocation implements AMapLocationListener {
 
     public void setProvice(String provice) {
         this.provice = provice;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
     }
 
     public double getLatitude() {
@@ -165,6 +175,8 @@ public class UserLocation implements AMapLocationListener {
             }
 
             district = amapLocation.getDistrict();
+
+            street = amapLocation.getStreet();
 
             if (longitude != 0 && latitude != 0) {
                 double distance = distance(longitude, latitude, amapLocation.getLongitude(), amapLocation.getLatitude());

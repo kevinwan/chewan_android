@@ -31,10 +31,14 @@ public class DynamicActivity extends CarPlayListActivity implements PullToRefres
     PullToRefreshListView listV;
     LinearLayout empty;
     TextView msg;
+    TextView txt;
     User user = User.getInstance();
     //    DynamicActivityAdapter adapter;
     DyanmicBaseAdapter adapter;
     CarPlayPerference per;
+
+    private int mLastY = 0;
+    private int freeisshow;
 
 
     @Override
@@ -71,6 +75,7 @@ public class DynamicActivity extends CarPlayListActivity implements PullToRefres
 
         empty = (LinearLayout) findViewById(R.id.empty);
         msg = (TextView) findViewById(R.id.msg);
+        txt = (TextView) findViewById(R.id.txt);
 
         listV = (PullToRefreshListView) findViewById(R.id.listview);
         listV.setMode(PullToRefreshBase.Mode.BOTH);

@@ -58,9 +58,9 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
 
     User user;
 
-    private RoundImageView headI,carLogo;
+    private RoundImageView headI, carLogo;
     private ImageView sexI, photo_bgI;
-    private TextView nameT, ageT, attentionT, carName,right_text;
+    private TextView nameT, ageT, attentionT, carName, right_text;
     private RelativeLayout sexbgR;
     private LinearLayout myactiveL;
     private Button uploadBtn, perfectBtn;
@@ -79,7 +79,7 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
 
     //已上传的图片
     private int uploadedCount = 0;
-    String  name,logo,brand;
+    String name, logo, brand;
     JSONObject jo;
     String userId;
     boolean issubscribe;        //是否关注
@@ -159,18 +159,18 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
 //                System.out.println(user.getUserId()+"---------"+user.getToken());
                 if (response.isSuccess()) {
                     jo = response.jSONFromData();
-                     idel = JSONUtil.getString(jo, "idle");
+                    idel = JSONUtil.getString(jo, "idle");
 //                    System.out.println("他的详情"+JSONUtil.getString(jo, "idle"));
                     JSONObject carjo = JSONUtil.getJSONObject(jo, "car");
-                      name = JSONUtil.getString(jo, "nickname");
+                    name = JSONUtil.getString(jo, "nickname");
                     logo = JSONUtil.getString(carjo, "logo");
                     brand = JSONUtil.getString(carjo, "brand");
 
-                     emchatName = JSONUtil.getString(jo,"emchatName");
+                    emchatName = JSONUtil.getString(jo, "emchatName");
                     //昵称,性别,年龄
                     ViewUtil.bindView(nameT, JSONUtil.getString(jo, "nickname"));
-                     gender = JSONUtil.getString(jo, "gender");
-                     age = JSONUtil.getString(jo, "age");
+                    gender = JSONUtil.getString(jo, "gender");
+                    age = JSONUtil.getString(jo, "age");
                     if (gender.equals("男")) {
                         sexbgR.setBackgroundResource(R.drawable.radio_sex_man_normal);
                         sexI.setBackgroundResource(R.drawable.icon_man3x);
@@ -181,7 +181,7 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
                     ViewUtil.bindView(ageT, JSONUtil.getInt(jo, "age"));
 
                     //头像
-                     headimg = JSONUtil.getString(jo, "avatar");
+                    headimg = JSONUtil.getString(jo, "avatar");
                     ViewUtil.bindNetImage(headI, headimg, "head");
                     //相册
                     JSONArray albumJsa = JSONUtil.getJSONArray(jo, "album");
@@ -237,8 +237,10 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
                     }
                     issubscribe = JSONUtil.getBoolean(jo, "subscribeFlag");
                     perfectBtn.setBackgroundResource(issubscribe ? R.drawable.btn_grey_fillet : R.drawable.btn_red_fillet);
+                    perfectBtn.setText(issubscribe ? "取消关注" : "关注");
+                    perfectBtn.setVisibility(View.VISIBLE);
                     //头像认证
-                     photoAuthStatus = JSONUtil.getString(jo, "photoAuthStatus");
+                    photoAuthStatus = JSONUtil.getString(jo, "photoAuthStatus");
                     if (photoAuthStatus.equals("认证通过")) {
                         attentionT.setBackgroundResource(R.drawable.btn_yellow_fillet);
                         attentionT.setText("已认证");
@@ -247,7 +249,7 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
                         attentionT.setText("未认证");
                     }
                     //车主认证
-                     licenseAuthStatus = JSONUtil.getString(jo, "licenseAuthStatus");
+                    licenseAuthStatus = JSONUtil.getString(jo, "licenseAuthStatus");
                     if (licenseAuthStatus.equals("认证通过")) {
                         findViewById(R.id.carlayout).setVisibility(View.VISIBLE);
                         ViewUtil.bindNetImage(carLogo, JSONUtil.getString(carjo, "logo"), "head");
@@ -270,23 +272,21 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
         switch (v.getId()) {
             //关注
             case R.id.perfect:
-                if (!issubscribe) {
-                    attentionorCancle();
-                }
+                attentionorCancle();
                 break;
             //TA的活动
             case R.id.myactive:
-                it = new Intent(self,HisDynamicActivity.class);
-                it.putExtra("userId",userId);
-                it.putExtra("name",name);
-                it.putExtra("photoAuthStatus",photoAuthStatus);
-                it.putExtra("licenseAuthStatus",licenseAuthStatus);
-                it.putExtra("gender",gender);
-                it.putExtra("age",age);
-                it.putExtra("brand",brand);
-                it.putExtra("logo",logo);
-                it.putExtra("emchatName",emchatName);
-                it.putExtra("idel",idel);
+                it = new Intent(self, HisDynamicActivity.class);
+                it.putExtra("userId", userId);
+                it.putExtra("name", name);
+                it.putExtra("photoAuthStatus", photoAuthStatus);
+                it.putExtra("licenseAuthStatus", licenseAuthStatus);
+                it.putExtra("gender", gender);
+                it.putExtra("age", age);
+                it.putExtra("brand", brand);
+                it.putExtra("logo", logo);
+                it.putExtra("emchatName", emchatName);
+                it.putExtra("idel", idel);
                 startActivity(it);
                 break;
             //上传照片
@@ -347,8 +347,8 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
 
                 break;
             case R.id.head:
-                it = new Intent(self,ImageGallery.class);
-                String[] photos ={headimg};
+                it = new Intent(self, ImageGallery.class);
+                String[] photos = {headimg};
                 it.putExtra("imgurls", photos);
 //                it.putExtra("imgids", "123456");
                 it.putExtra("type", "his");
@@ -381,13 +381,27 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
 
     //关注
     private void attentionorCancle() {
-        DhNet net = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId() + "/listen?token=" + user.getToken());
+        String url;
+        if (issubscribe) {
+            url = API2.CWBaseurl + "/user/" + user.getUserId() + "/unlisten?token=" + user.getToken();
+        } else {
+            url = API2.CWBaseurl + "/user/" + user.getUserId() + "/listen?token=" + user.getToken();
+        }
+        DhNet net = new DhNet(url);
         net.addParam("targetUserId", userId);
         net.doPostInDialog(new NetTask(self) {
             @Override
             public void doInUI(Response response, Integer transfer) {
                 if (response.isSuccess()) {
-                    perfectBtn.setBackgroundResource(R.drawable.radio_sex_man_focused);
+                    issubscribe = !issubscribe;
+                    if (!issubscribe) {
+                        perfectBtn.setBackgroundResource(R.drawable.btn_red_fillet);
+                        perfectBtn.setText("关注");
+                    } else {
+                        perfectBtn.setBackgroundResource(R.drawable.radio_sex_man_focused);
+                        perfectBtn.setText("取消关注");
+                    }
+
 //                    JSONObject userjo = JSONUtil.getJSONObject(jo, "organizer");
 //                    try {
 //                        userjo.put("subscribeFlag", !attention);
@@ -477,7 +491,7 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
         });
     }
 
-    private void setHasAlbm(){
+    private void setHasAlbm() {
         DhNet net = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId()
                 + "/info?viewUser=" + user.getUserId() + "&token=" + user.getToken());
         net.doGet(new NetTask(self) {

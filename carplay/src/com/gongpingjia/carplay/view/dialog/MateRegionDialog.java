@@ -94,7 +94,7 @@ public class MateRegionDialog extends BaseAlertDialog implements View.OnClickLis
         if (TextUtils.isEmpty(UserLocation.getInstance().getProvice())) {
             mTextGpsPlace.setText("请打开GPS重新定位");
         } else {
-            mTextGpsPlace.setText(UserLocation.getInstance().getProvice() + " " + UserLocation.getInstance().getCity() + " " + UserLocation.getInstance().getDistrict());
+            mTextGpsPlace.setText(UserLocation.getInstance().getProvice() + " " + UserLocation.getInstance().getCity() + " " + UserLocation.getInstance().getDistrict() + " " + UserLocation.getInstance().getStreet());
         }
         mBtnReselect.setOnClickListener(this);
         mBtnReselect.setOnClickListener(this);
