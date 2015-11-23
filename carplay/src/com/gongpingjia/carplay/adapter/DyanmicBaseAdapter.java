@@ -197,7 +197,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
 
         }
 
-        JSONObject jo = (JSONObject) getItem(i);
+        final JSONObject jo = (JSONObject) getItem(i);
         if (type == 0) {
 
             final JSONObject js = JSONUtil.getJSONObject(jo, "applicant");
@@ -415,7 +415,6 @@ public class DyanmicBaseAdapter extends BaseAdapter {
                                             FailReason failReason) {
                 }
             });
-
 //            ViewUtil.bindNetImage(holder.activity_beijing, JSONUtil.getString(js, "avatar"), "default");
             try {
                 JSONArray coversJSa = jo.getJSONArray("covers");
@@ -437,24 +436,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
             holder.yingyao.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    JSONObject jo = getItem(i);
-//                    if (TextUtils.isEmpty(user.getPhone())) {
-//                        System.out.println("获取:" + user.getPhone());
-//                        ActiveDialog dialog = new ActiveDialog(mContext, appointmentId);
-//                        dialog.setOnPickResultListener(new ActiveDialog.OnPickResultListener() {
-//
-//                            @Override
-//                            public void onResult(int result) {
-//                                if (result == 1) {
-//                                    finalHolder1.yingyao_layout.setVisibility(View.GONE);
-//                                    finalHolder1.yingyaohou.setVisibility(View.VISIBLE);
-//                                }
-//                            }
-//                        });
-//                        dialog.show();
-//                    } else {
                         DhNet net = new DhNet(API2.CWBaseurl + "/application/" + appointmentId + "/process?userId=" + user.getUserId() + "&token=" + user.getToken());
-//                    DhNet net = new DhNet(API2.CWBaseurl + "application/" + appointmentId + "/process?userId=5609eb6d0cf224e7d878f695&token=a767ead8-7c00-4b90-b6de-9dcdb4d5bc41");
                         net.addParam("accept", true);
                         net.doPostInDialog(new NetTask(mContext) {
                             @Override
@@ -463,7 +445,6 @@ public class DyanmicBaseAdapter extends BaseAdapter {
                                     finalHolder.yingyao_layout.setVisibility(View.GONE);
                                     finalHolder.yingyaohou.setVisibility(View.VISIBLE);
                                     finalHolder.invitation.setVisibility(View.GONE);
-//                                    notifyDataSetChanged();
                                     EventBus.getDefault().post("刷新活动动态");
                                     System.out.println("应邀：" + response.isSuccess());
                                 }
@@ -525,6 +506,8 @@ public class DyanmicBaseAdapter extends BaseAdapter {
                     Intent it = new Intent(mContext, PersonDetailActivity2.class);
                     String userId = JSONUtil.getString(js, "userId");
                     it.putExtra("userId", userId);
+                    it.putExtra("activityId", JSONUtil.getString(jo,"activityId"));
+                    it.putExtra("type", "activity");
                     mContext.startActivity(it);
                 }
             });

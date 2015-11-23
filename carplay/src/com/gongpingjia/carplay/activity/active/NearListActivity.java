@@ -75,8 +75,12 @@ public class NearListActivity extends CarPlayListActivity implements PullToRefre
                     public void onisLogin() {
                         Intent it = new Intent(self, PersonDetailActivity2.class);
                         JSONObject userjo = JSONUtil.getJSONObject(jo, "organizer");
+                        JSONObject json = JSONUtil.getJSONObject(jo, "data");
+                        String activityid = JSONUtil.getString(json, "activityId");
                         String userId = JSONUtil.getString(userjo, "userId");
                         it.putExtra("userId", userId);
+                        it.putExtra("activityId", activityid);
+                        it.putExtra("type", "activity");
                         startActivity(it);
                     }
 

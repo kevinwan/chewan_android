@@ -100,11 +100,7 @@ public class CarPlayListActivity extends CarPlayBaseActivity {
                             dialoger.showToastShort(self, response.msg);
                         }
                     } else {
-                        if (!str.isEmpty()){
-                            dialoger.showToastShort(self, "AAAAAA");
-                        }else{
                             dialoger.showToastShort(self, response.msg);
-                        }
                     }
                 }
 

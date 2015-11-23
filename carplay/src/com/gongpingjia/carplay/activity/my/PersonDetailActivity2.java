@@ -89,8 +89,9 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
     String age;
     String emchatName;
     String idel;
+    String type ;
     private String headimg;
-
+    Bundle bundle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,6 +106,8 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
         mCacheDir = new File(getExternalCacheDir(), "CarPlay");
         mCacheDir.mkdirs();
         album = new ArrayList<JSONObject>();
+        bundle = getIntent().getExtras();
+        type = bundle.getString("type");
 
         headI = (RoundImageView) findViewById(R.id.head);
         nameT = (TextView) findViewById(R.id.name);
@@ -120,8 +123,14 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
         perfectBtn = (Button) findViewById(R.id.perfect);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         right_text = (TextView) findViewById(R.id.right_text);
-        right_text.setVisibility(View.VISIBLE);
-        right_text.setText("举报");
+        if ("activity".equals(type)){
+            right_text.setVisibility(View.VISIBLE);
+            right_text.setText("举报");
+
+        }else{
+            right_text.setVisibility(View.GONE);
+        }
+
         headI.setOnClickListener(this);
         myactiveL.setOnClickListener(this);
         uploadBtn.setOnClickListener(this);
@@ -346,7 +355,7 @@ public class PersonDetailActivity2 extends CarPlayBaseActivity implements View.O
                 startActivity(it);
                 break;
             case R.id.right_text:
-                ReportPop.getInstance(self).show();
+                ReportPop.getInstance(self,bundle.getString("activityId"),userId).show();
                 break;
             default:
                 break;

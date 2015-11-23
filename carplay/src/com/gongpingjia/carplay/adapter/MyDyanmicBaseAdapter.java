@@ -559,15 +559,15 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                     }
                 }
             });
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent it = new Intent(mContext, PersonDetailActivity2.class);
-                    String userId = JSONUtil.getString(js, "userId");
-                    it.putExtra("userId", userId);
-                    mContext.startActivity(it);
-                }
-            });
+//            view.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Intent it = new Intent(mContext, PersonDetailActivity2.class);
+//                    String userId = JSONUtil.getString(js, "userId");
+//                    it.putExtra("userId", userId);
+//                    mContext.startActivity(it);
+//                }
+//            });
 
 
             view.setOnClickListener(new View.OnClickListener() {
@@ -576,6 +576,8 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                     Intent it = new Intent(mContext, PersonDetailActivity2.class);
                     String userId = JSONUtil.getString(js, "userId");
                     it.putExtra("userId", userId);
+                    it.putExtra("activityId", JSONUtil.getString(jo,"activityId"));
+                    it.putExtra("type", "activity");
                     mContext.startActivity(it);
                 }
             });

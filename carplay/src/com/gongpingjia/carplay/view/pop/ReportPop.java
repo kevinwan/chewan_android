@@ -11,8 +11,16 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.api.API2;
+import com.gongpingjia.carplay.bean.User;
+
+import net.duohuo.dhroid.net.DhNet;
+import net.duohuo.dhroid.net.NetTask;
+import net.duohuo.dhroid.net.Response;
 
 /**
+ * 举报
+ *
  * Created by Administrator on 2015/11/21.
  */
 public class ReportPop implements  View.OnClickListener {
@@ -20,12 +28,15 @@ public class ReportPop implements  View.OnClickListener {
     Activity context;
     static ReportPop instance;
     View contentV;
+    String activityid,id;
     PopupWindow pop;
+    User user = User.getInstance();
     TextView pornography,advertising,political,bilk,illegal,cancel,submit;
-    public ReportPop(final Activity context) {
+    public ReportPop(final Activity context ,String activityid , String id) {
         this.context = context;
+        this.activityid = activityid;
+        this.id = id;
         contentV = LayoutInflater.from(context).inflate(R.layout.report, null);
-
         pop = new PopupWindow(contentV, ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT, true);
         // 需要设置一下此参数，点击外边可消失
         pop.setBackgroundDrawable(new BitmapDrawable());
@@ -38,8 +49,8 @@ public class ReportPop implements  View.OnClickListener {
         initView();
 
     }
-    public static ReportPop getInstance(Activity context) {
-        instance = new ReportPop(context);
+    public static ReportPop getInstance(Activity context,String activityid , String id) {
+        instance = new ReportPop(context,activityid,id);
         return instance;
     }
     public void initView(){
@@ -73,6 +84,7 @@ public class ReportPop implements  View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.pornography://色情
+                request();
                 break;
             case R.id.submit://提交
                 break;
@@ -87,6 +99,20 @@ public class ReportPop implements  View.OnClickListener {
             case R.id.advertising://广告
                 break;
         }
+
+    }
+    public void request(){
+        DhNet net = new DhNet(API2.CWBaseurl+"user/"+id+"/report?userId="+user.getUserId()+"&token="+user.getToken()+"&activityId="+activityid);
+        net.doPostInDialog(new NetTask(context) {
+            @Override
+            public void doInUI(Response response, Integer transfer) {
+                if (response.isSuccess()){
+                    System.out.println(response.isSuccess());
+                }
+
+            }
+        });
+
 
     }
 
