@@ -212,7 +212,7 @@ public class InterestedPersonAdapter extends BaseAdapter {
             }
 
             //付费类型,是否包接送
-            ViewUtil.bindView(holder.payT, JSONUtil.getString(jo, "pay"));
+            ViewUtil.bindView(holder.payT, JSONUtil.getString(jo, "activityPay"));
             boolean transfer = JSONUtil.getBoolean(jo, "transfer");
             if (transfer) {
                 holder.transferT.setVisibility(View.VISIBLE);

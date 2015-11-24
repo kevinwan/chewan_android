@@ -156,7 +156,7 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
         holder.pay_type.setText(pay);
 //        ViewUtil.bindNetImage(holder.activity_beijing, cover, "default");
 
-        System.out.println("adapter;;;;;;;;;;;;" + JSONUtil.getString(jo,"cover"));
+//        System.out.println("adapter;;;;;;;;;;;;" + JSONUtil.getString(jo,"cover"));
 
         final ViewHolder finalHolder = holder;
         ImageLoader.getInstance().loadImage(JSONUtil.getString(jo,"cover"), CarPlayValueFix.optionsDefault, new SimpleImageLoadingListener() {
