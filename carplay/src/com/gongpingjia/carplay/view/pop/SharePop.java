@@ -136,10 +136,12 @@ public class SharePop implements View.OnClickListener {
         switch (v.getId()) {
             //好友
             case R.id.layout_share_weixin:
+                pop.dismiss();
                 shareToWeixinFriend();
                 break;
             //朋友圈
             case R.id.layout_share_wxcircle:
+                pop.dismiss();
                 shareToWeixinCircle();
                 break;
             case R.id.tv_cancel:
