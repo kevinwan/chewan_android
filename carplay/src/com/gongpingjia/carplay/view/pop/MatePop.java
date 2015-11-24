@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.bean.Matching;
 import com.gongpingjia.carplay.bean.PointRecord;
+import com.gongpingjia.carplay.bean.TabEB;
 import com.gongpingjia.carplay.view.AnimButtonView2;
 import com.gongpingjia.carplay.view.dialog.MatchingDialog;
 import com.gongpingjia.carplay.view.dialog.MateLayerDialog;
@@ -24,6 +25,8 @@ import com.gongpingjia.carplay.view.dialog.MateLayerDialog;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by Administrator on 2015/10/21.
@@ -254,7 +257,10 @@ public class MatePop implements Runnable, View.OnClickListener {
             @Override
             public void onResult(Map<String, Object> params) {
                 //匹配意向的参数
-//                EventBus.getDefault().post(new TabEB(2, params));
+                if (params != null) {
+                    EventBus.getDefault().post(new TabEB(2, params));
+                }
+
                 pop.dismiss();
             }
         });
@@ -291,7 +297,9 @@ public class MatePop implements Runnable, View.OnClickListener {
             @Override
             public void onResult(Map<String, Object> params) {
                 //匹配意向的参数
-//                EventBus.getDefault().post(new TabEB(2, params));
+                if (params != null) {
+                    EventBus.getDefault().post(new TabEB(2, params));
+                }
                 pop.dismiss();
             }
         });

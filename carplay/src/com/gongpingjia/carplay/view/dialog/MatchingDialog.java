@@ -180,7 +180,7 @@ public class MatchingDialog extends BaseAlertDialog {
         });
     }
 
-    private void setMatchIntention(){
+    private void setMatchIntention() {
 
 
         boolean pickOrNot = checkBox.isChecked();
@@ -215,7 +215,7 @@ public class MatchingDialog extends BaseAlertDialog {
 //                dhNet.addParam("majorType", "桌游");
                 matchingEB.setMajorType("桌游");
                 paygroup.setVisibility(View.VISIBLE);
-                String pay=((RadioButton)findViewById(paygroup.getCheckedRadioButtonId())).getText().toString();
+                String pay = ((RadioButton) findViewById(paygroup.getCheckedRadioButtonId())).getText().toString();
 //                dhNet.addParam("pay", pay);
                 matchingEB.setPay(pay);
             }
@@ -260,14 +260,30 @@ public class MatchingDialog extends BaseAlertDialog {
         establish.put("district", UserLocation.getInstance().getDistrict());
 //        dhNet.addParam("establish", establish);
         matchingEB.setEstablish(establish);
-        if (mResult != null) {
-            mResult.onResult(null);
+        User user = User.getInstance();
+        if (user.isLogin()) {
+            EventBus.getDefault().post(matchingEB);
+            if (mResult != null) {
+                mResult.onResult(null);
+            }
+        } else {
+            Map<String, Object> params = new HashMap<String, Object>();
+            params.put("majorType", matchingEB.getMajorType());
+            params.put("type", matchingEB.getType());
+            params.put("transfer", matchingEB.isTransfer());
+            params.put("pay", matchingEB.getPay());
+            params.put("destination", matchingEB.getDestination());
+            params.put("estabPoint", matchingEB.getEstabPoint());
+            params.put("establish", matchingEB.getEstablish());
+            if (mResult != null) {
+                mResult.onResult(params);
+            }
         }
-        EventBus.getDefault().post(matchingEB);
         dismiss();
         PointRecord record = PointRecord.getInstance();
         record.setActivityMatchCount(record.getActivityMatchCount() + 1);
-        System.out.println("000000000000000" + establish);
+
+
 //        User user = User.getInstance();
 //        if (user.isLogin()) {
 //            dhNet.doPost(new NetTask(context) {

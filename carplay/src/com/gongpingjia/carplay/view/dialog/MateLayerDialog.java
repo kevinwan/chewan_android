@@ -221,10 +221,24 @@ public class MateLayerDialog extends BaseAlertDialog implements View.OnClickList
                 establish.put("district", UserLocation.getInstance().getDistrict());
 //                dhNet.addParam("establish", establish);
                 matchingEB.setEstablish(establish);
-                if (mResult != null) {
-                    mResult.onResult(null);
+                if (user.isLogin()) {
+                    EventBus.getDefault().post(matchingEB);
+                    if (mResult != null) {
+                        mResult.onResult(null);
+                    }
+                } else {
+                    Map<String, Object> params = new HashMap<String, Object>();
+                    params.put("majorType", matchingEB.getMajorType());
+                    params.put("type", matchingEB.getType());
+                    params.put("transfer", matchingEB.isTransfer());
+                    params.put("pay", matchingEB.getPay());
+                    params.put("destination", matchingEB.getDestination());
+                    params.put("estabPoint", matchingEB.getEstabPoint());
+                    params.put("establish", matchingEB.getEstablish());
+                    if (mResult != null) {
+                        mResult.onResult(params);
+                    }
                 }
-                EventBus.getDefault().post(matchingEB);
                 dismiss();
                 PointRecord record = PointRecord.getInstance();
                 record.setActivityMatchCount(record.getActivityMatchCount() + 1);
