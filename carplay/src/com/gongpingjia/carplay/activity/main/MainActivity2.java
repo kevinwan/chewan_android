@@ -637,7 +637,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
             switchContent(MatchingListFragment.getInstance());
             MatchingListFragment.getInstance().setParams(tab.getParams());
             setTitle("匹配意向结果");
-            right_icon.setVisibility(View.VISIBLE);
+            right_icon.setVisibility(View.GONE);
             return;
         } else if (tab.getIndex() == 4) {
             setTab(4);
