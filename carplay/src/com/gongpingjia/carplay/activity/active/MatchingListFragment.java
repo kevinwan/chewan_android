@@ -277,6 +277,7 @@ public class MatchingListFragment extends CarPlayBaseFragment implements PullToR
             AnimButtonView animButtonView = (AnimButtonView) currentview.findViewById(R.id.invite);
             animButtonView.clearAnimation();
             animButtonView.startScaleAnimation();
+
         }
     }
 
