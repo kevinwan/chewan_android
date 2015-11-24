@@ -18,6 +18,7 @@ import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.PersonShareActive;
+import com.gongpingjia.carplay.bean.TabEB;
 import com.gongpingjia.carplay.bean.User;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.bean.SocializeEntity;
@@ -35,6 +36,11 @@ import net.duohuo.dhroid.net.Response;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by Administrator on 2015/11/19.
@@ -251,14 +257,14 @@ public class SharePop implements View.OnClickListener {
                         e.printStackTrace();
                     }
 
-//                    Map<String, Object> map = new HashMap<String, Object>();
-//                    map.put("type", matchingEB.getType());
-//                    map.put("pay", matchingEB.getPay());
-//                    map.put("majorType", matchingEB.getMajorType());
-//                    map.put("transfer", matchingEB.isTransfer());
-//                    TabEB tab = new TabEB(2, map);
-//                    //控制主页跳往匹配意向结果页
-//                    EventBus.getDefault().post(tab);
+                    Map<String, Object> map = new HashMap<String, Object>();
+                    map.put("type", PersonShareActive.matchingEB.getType());
+                    map.put("pay", PersonShareActive.matchingEB.getPay());
+                    map.put("majorType", PersonShareActive.matchingEB.getMajorType());
+                    map.put("transfer", PersonShareActive.matchingEB.isTransfer());
+                    TabEB tab = new TabEB(2, map);
+                    //控制主页跳往匹配意向结果页
+                    EventBus.getDefault().post(tab);
                 }
             }
         });
