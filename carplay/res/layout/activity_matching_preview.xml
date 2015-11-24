@@ -3,203 +3,221 @@
     xmlns:my="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="12dp"
     android:layout_marginBottom="15dp"
+    android:layout_marginTop="12dp"
     android:background="@color/cutline"
     android:orientation="vertical"
     android:paddingLeft="10dp"
     android:paddingRight="10dp">
 
-    <TextView
+    <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textColor="@color/text_grey_999"
-        android:textSize="@dimen/text_small"
-        android:lineSpacingMultiplier="1.3"
-        android:paddingRight="24dp"
-        android:paddingLeft="24dp"
-        android:paddingBottom="12dp"
-        android:text="你的 '意向' 将以下面的形式展示给他人
-         不上传真人头像被邀请率会很低哟~"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/active_bg"
-        android:orientation="vertical"
-        android:paddingBottom="12dp"
-        android:paddingTop="13dp">
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="26dp"
-            android:layout_marginLeft="12dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_nickname"
-                style="@style/text_black_medium"
-                android:text="请我吃饭吧" />
-
-            <ImageView
-                android:id="@+id/head_att"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:src="@drawable/headaut_dl" />
-
-            <ImageView
-                android:id="@+id/iv_car_logo"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/no_car" />
-
-            <TextView
-                android:id="@+id/tv_car_name"
-                style="@style/text_grey_small"
-                android:layout_marginLeft="7dp"
-                android:ellipsize="end"
-                android:maxWidth="100dp"
-                android:singleLine="true"
-                android:text="宝马"
-                android:visibility="gone"/>
+                android:id="@+id/prompt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:lineSpacingMultiplier="1.3"
+                android:paddingBottom="12dp"
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp"
+                android:text=""
+                android:textColor="@color/text_grey_999"
+                android:textSize="@dimen/text_small" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right">
+                android:background="@drawable/active_bg"
+                android:orientation="vertical"
+                android:paddingBottom="12dp"
+                android:paddingTop="13dp">
 
-                <com.gongpingjia.carplay.view.AttentionImageView
-                    android:id="@+id/attention"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_marginRight="12dp"
-                    android:gravity="right"
-                    android:src="@drawable/icon_heart"
-                    android:visibility="gone"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="26dp"
+                    android:layout_marginLeft="12dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_nickname"
+                        style="@style/text_black_medium"
+                        android:text="" />
+
+                    <TextView
+                        android:id="@+id/activetype"
+                        style="@style/text_black_medium"
+                        android:text="" />
+
+                    <ImageView
+                        android:id="@+id/head_att"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:src="@drawable/headaut_dl" />
+
+                    <ImageView
+                        android:id="@+id/iv_car_logo"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/no_car" />
+
+                    <TextView
+                        android:id="@+id/tv_car_name"
+                        style="@style/text_grey_small"
+                        android:layout_marginLeft="7dp"
+                        android:ellipsize="end"
+                        android:maxWidth="100dp"
+                        android:singleLine="true"
+                        android:text="宝马"
+                        android:visibility="gone" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right">
+
+                        <com.gongpingjia.carplay.view.AttentionImageView
+                            android:id="@+id/attention"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_marginRight="12dp"
+                            android:gravity="right"
+                            android:src="@drawable/icon_heart"
+                            android:visibility="gone" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginBottom="9dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="1dp">
+
+                        <include layout="@layout/include_sex" />
+                    </RelativeLayout>
+
+
+                    <TextView
+                        android:id="@+id/pay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:text="请我吧 "
+                        android:textColor="@color/text_red"
+                        android:textSize="@dimen/text_smaller" />
+
+                    <TextView
+                        android:id="@+id/transfer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:text="包接送 "
+                        android:textColor="@color/text_skyblue"
+                        android:textSize="@dimen/text_smaller" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@+id/active_bg"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/img_loading"
+                        android:scaleType="centerCrop" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_alignParentBottom="true"
+                        android:gravity="center"
+                        android:layout_marginBottom="12dp"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/changephoto"
+                            android:layout_width="125dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="20dp"
+                            android:background="@drawable/btn_blue_fillet"
+                            android:text="更换照片"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_small" />
+
+                        <Button
+                            android:id="@+id/nextmatching"
+                            android:layout_width="125dp"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/btn_red_fillet"
+                            android:text="继续匹配"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_small" />
+
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:id="@+id/location"
+                        style="@style/text_grey_small"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:ellipsize="end"
+                        android:maxWidth="230dp"
+                        android:singleLine="true"
+                        android:text="南京邮电大学" />
+
+                    <TextView
+                        android:id="@+id/tv_distance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:gravity="center"
+                        android:paddingBottom="2dp"
+                        android:paddingTop="2dp"
+                        android:text="0m"
+                        android:textColor="@color/text_green" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="3dp"
+                        android:layout_toLeftOf="@id/tv_distance"
+                        android:src="@drawable/distance_icon" />
+                </RelativeLayout>
             </LinearLayout>
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingLeft="10dp"
-            android:layout_marginBottom="9dp"
-            android:paddingRight="10dp">
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="1dp">
-                <include layout="@layout/include_sex" />
-            </RelativeLayout>
-
-
-            <TextView
-                android:id="@+id/pay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
-                android:text="请我吧 "
-                android:textSize="@dimen/text_smaller"
-                android:textColor="@color/text_red" />
-
-            <TextView
-                android:id="@+id/transfer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="包接送 "
-                android:layout_marginLeft="12dp"
-                android:textSize="@dimen/text_smaller"
-                android:textColor="@color/text_skyblue" />
-        </LinearLayout>
-
-        <RelativeLayout
-            android:id="@+id/layout"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
-
-            <ImageView
-                android:id="@+id/active_bg"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/img_loading"
-                android:scaleType="centerCrop"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:orientation="horizontal"
-                android:layout_alignParentBottom="true"
-                android:gravity="center"
-                android:layout_marginBottom="12dp">
-
-                <Button
-                    android:id="@+id/changephoto"
-                    android:layout_width="125dp"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/btn_blue_fillet"
-                    android:text="更换照片"
-                    android:textSize="@dimen/text_small"
-                    android:textColor="@color/white"
-                    android:layout_marginRight="20dp"/>
-                <Button
-                    android:id="@+id/nextmatching"
-                    android:layout_width="125dp"
-                    android:layout_height="match_parent"
-                    android:text="继续匹配"
-                    android:textSize="@dimen/text_small"
-                    android:textColor="@color/white"
-                    android:background="@drawable/btn_red_fillet"/>
-
-
-            </LinearLayout>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp">
-
-            <TextView
-                android:id="@+id/location"
-                style="@style/text_grey_small"
-                android:maxWidth="230dp"
-                android:singleLine="true"
-                android:ellipsize="end"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:text="南京邮电大学" />
-
-            <TextView
-                android:id="@+id/tv_distance"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:gravity="center"
-                android:text="20m"
-                android:paddingTop="2dp"
-                android:paddingBottom="2dp"
-                android:textColor="@color/text_green" />
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginRight="3dp"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@id/tv_distance"
-                android:src="@drawable/distance_icon" />
-        </RelativeLayout>
-    </LinearLayout>
-
-
+    </ScrollView>
 </LinearLayout>

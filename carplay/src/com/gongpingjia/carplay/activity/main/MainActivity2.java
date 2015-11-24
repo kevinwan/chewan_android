@@ -40,6 +40,7 @@ import com.easemob.chat.EMMessage;
 import com.easemob.exceptions.EaseMobException;
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.active.MatchingListFragment;
+import com.gongpingjia.carplay.activity.active.MatchingPreviewFragment;
 import com.gongpingjia.carplay.activity.active.NearListFragment;
 import com.gongpingjia.carplay.activity.active.RecommendListFragment;
 import com.gongpingjia.carplay.activity.dynamic.DynamicListFragment;
@@ -49,6 +50,7 @@ import com.gongpingjia.carplay.activity.my.SettingActivity2;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.FilterPreference2;
+import com.gongpingjia.carplay.bean.MatchingEB;
 import com.gongpingjia.carplay.bean.PointRecord;
 import com.gongpingjia.carplay.bean.TabEB;
 import com.gongpingjia.carplay.bean.User;
@@ -60,6 +62,7 @@ import com.gongpingjia.carplay.photo.model.PhotoModel;
 import com.gongpingjia.carplay.util.CarPlayPerference;
 import com.gongpingjia.carplay.view.dialog.NearbyFilterDialog;
 import com.gongpingjia.carplay.view.pop.MatePop;
+import com.gongpingjia.carplay.view.pop.SharePop;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import net.duohuo.dhroid.activity.ActivityTack;
@@ -252,16 +255,6 @@ public class MainActivity2 extends BaseFragmentActivity implements
             }
         });
         right_icon = (ImageView) findViewById(R.id.right_icon);
-        right_icon.setImageResource(R.drawable.setting);
-        right_icon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //设置
-                Intent it = new Intent(self, SettingActivity2.class);
-                startActivity(it);
-
-            }
-        });
         initTab();
         setTab(0);
         msgT = (ImageView) findViewById(R.id.msg_point);
@@ -385,7 +378,16 @@ public class MainActivity2 extends BaseFragmentActivity implements
                         setTitle("我的");
                         switchContent(MyFragment2.getInstance());
                         img.setImageResource(R.drawable.icon_nav_mine_f);
+                        right_icon.setImageResource(R.drawable.setting);
+                        right_icon.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                //设置
+                                Intent it = new Intent(self, SettingActivity2.class);
+                                startActivity(it);
 
+                            }
+                        });
                         break;
 
 
@@ -608,7 +610,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
             public void doInUI(Response response, Integer transfer) {
                 JSONObject jo = response.jSONFromData();
                 JSONArray albumJsa = JSONUtil.getJSONArray(jo, "album");
-                user.setHasAlbum(albumJsa.length()>1);         //设置相册状态
+                user.setHasAlbum(albumJsa.length() > 1);         //设置相册状态
             }
         });
     }
@@ -641,6 +643,32 @@ public class MainActivity2 extends BaseFragmentActivity implements
             return;
         }
         setTab(0);
+    }
+
+    public void onEventMainThread(MatchingEB matchingEB) {
+            //切换到匹配意向,从匹配意向发过来的消息,tab.getParams()代表匹配的条件
+        MatchingPreviewFragment matching = new MatchingPreviewFragment(matchingEB);
+        switchContent(matching);
+//            switchContent(MatchingPreviewFragment.getInstance());
+//            MatchingPreviewFragment.getInstance().setParams(matchingEB);
+            setTitle("匹配活动预览");
+        right_icon.setVisibility(View.VISIBLE);
+        right_icon.setImageResource(R.drawable.share_icon);
+        right_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //分享
+                Bundle bundle = new Bundle();
+//                bundle.putString("shareUrl","http://www.chewanapp.com/appdetail.html?id="+PersonShareActive.activeId);
+//                bundle.putString("shareTitle", PersonShareActive.shareTitle+"\n");
+//                bundle.putString("shareContent",PersonShareActive.shareContent);
+//                bundle.putString("image",PersonShareActive.image);
+                SharePop pop = new SharePop(self, bundle,1);
+                pop.show();
+
+            }
+        });
+
     }
 
     //附近adapter,随便看看dialog

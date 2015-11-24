@@ -3,6 +3,7 @@ package com.gongpingjia.carplay.view.pop;
 import android.app.Activity;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +12,13 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.api.Constant;
+import com.gongpingjia.carplay.bean.PersonShareActive;
+import com.gongpingjia.carplay.bean.User;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.bean.SocializeEntity;
 import com.umeng.socialize.controller.UMServiceFactory;
@@ -23,6 +28,13 @@ import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.weixin.controller.UMWXHandler;
 import com.umeng.socialize.weixin.media.CircleShareContent;
 import com.umeng.socialize.weixin.media.WeiXinShareContent;
+
+import net.duohuo.dhroid.net.DhNet;
+import net.duohuo.dhroid.net.NetTask;
+import net.duohuo.dhroid.net.Response;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by Administrator on 2015/11/19.
@@ -45,6 +57,8 @@ public class SharePop implements View.OnClickListener {
     LinearLayout layout_share_weixin, layout_share_wxcircle;
     TextView tv_cancel;
 
+    User user ;
+
     // umeng分享
     private UMSocialService mController = UMServiceFactory
             .getUMSocialService("com.umeng.share");
@@ -63,10 +77,13 @@ public class SharePop implements View.OnClickListener {
     // 微信朋友圈
     private UMWXHandler wxCircleHandler;
 
+    String activeId ;
+
     public SharePop(Activity context, Bundle bundle,int type) {
         this.context = context;
         this.bundle = bundle;
         this.type = type;
+        user = User.getInstance();
         contentV = LayoutInflater.from(context).inflate(R.layout.pop_share, null);
         pop = new PopupWindow(contentV, ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT, true);
         // 需要设置一下此参数，点击外边可消失
@@ -97,6 +114,8 @@ public class SharePop implements View.OnClickListener {
         layout_share_weixin.setOnClickListener(this);
         layout_share_wxcircle.setOnClickListener(this);
         tv_cancel.setOnClickListener(this);
+
+        nextMatching();
 
         setupShare();
     }
@@ -140,10 +159,17 @@ public class SharePop implements View.OnClickListener {
         if (bundle != null) {
             // TODO Auto-generated method stub
             WeiXinShareContent wxContent = new WeiXinShareContent();
-            wxContent.setTargetUrl(bundle.get("shareUrl").toString());
-            wxContent.setTitle(bundle.get("shareTitle").toString());
-            wxContent.setShareContent(bundle.get("shareContent").toString());
-            wxContent.setShareImage(new UMImage(context, bundle.get("image").toString()));
+            if (type==1){
+                wxContent.setTargetUrl("http://www.chewanapp.com/appdetail.html?id="+activeId);
+                wxContent.setTitle(PersonShareActive.shareTitle+"\n");
+                wxContent.setShareContent(PersonShareActive.shareContent);
+                wxContent.setShareImage(new UMImage(context, PersonShareActive.image));
+            }else {
+                wxContent.setTargetUrl(bundle.get("shareUrl").toString());
+                wxContent.setTitle(bundle.get("shareTitle").toString());
+                wxContent.setShareContent(bundle.get("shareContent").toString());
+                wxContent.setShareImage(new UMImage(context, bundle.get("image").toString()));
+            }
             mController.setShareMedia(wxContent);
             mController.postShare(context,
                     SHARE_MEDIA.WEIXIN,
@@ -170,10 +196,17 @@ public class SharePop implements View.OnClickListener {
         if (bundle != null) {
             // TODO Auto-generated method stub
             CircleShareContent ccContent = new CircleShareContent();
-            ccContent.setTargetUrl(bundle.get("shareUrl").toString());
-            ccContent.setShareContent(bundle.get("shareContent").toString());
-            ccContent.setTitle(bundle.get("shareTitle").toString());
-            ccContent.setShareImage(new UMImage(context, bundle.get("image").toString()));
+            if (type==1){
+                ccContent.setTargetUrl("http://www.chewanapp.com/appdetail.html?id="+activeId);
+                ccContent.setTitle(PersonShareActive.shareTitle+"\n");
+                ccContent.setShareContent(PersonShareActive.shareContent);
+                ccContent.setShareImage(new UMImage(context, PersonShareActive.image));
+            }else {
+                ccContent.setTargetUrl(bundle.get("shareUrl").toString());
+                ccContent.setTitle(bundle.get("shareTitle").toString());
+                ccContent.setShareContent(bundle.get("shareContent").toString());
+                ccContent.setShareImage(new UMImage(context, bundle.get("image").toString()));
+            }
             mController.setShareMedia(ccContent);
             mController.postShare(context,
                     SHARE_MEDIA.WEIXIN_CIRCLE,
@@ -191,5 +224,44 @@ public class SharePop implements View.OnClickListener {
                         }
                     });
         }
+    }
+
+    private void nextMatching(){
+        final DhNet dhNet = new DhNet(API2.getMatchUrl(user.getUserId(), user.getToken()));
+        dhNet.addParam("majorType", PersonShareActive.matchingEB.getMajorType() );
+        dhNet.addParam("type",PersonShareActive.matchingEB.getType());
+        dhNet.addParam("pay",PersonShareActive.matchingEB.getPay());
+        dhNet.addParam("transfer",PersonShareActive.matchingEB.isTransfer());
+        dhNet.addParam("destination", PersonShareActive.matchingEB.getDestination());
+        dhNet.addParam("estabPoint", PersonShareActive.matchingEB.getEstabPoint());
+        dhNet.addParam("establish", PersonShareActive.matchingEB.getEstablish());
+        if (!TextUtils.isEmpty(PersonShareActive.photoId)){
+            dhNet.addParam("cover", PersonShareActive.photoId);
+        }
+
+        dhNet.doPost(new NetTask(context) {
+            @Override
+            public void doInUI(Response response, Integer transfer) {
+                if (response.isSuccess()) {
+                    Toast.makeText(context, "发布成功", Toast.LENGTH_SHORT).show();
+                    JSONObject jo=response.jSON();
+                    try {
+                        activeId = jo.get("data").toString();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+//                    Map<String, Object> map = new HashMap<String, Object>();
+//                    map.put("type", matchingEB.getType());
+//                    map.put("pay", matchingEB.getPay());
+//                    map.put("majorType", matchingEB.getMajorType());
+//                    map.put("transfer", matchingEB.isTransfer());
+//                    TabEB tab = new TabEB(2, map);
+//                    //控制主页跳往匹配意向结果页
+//                    EventBus.getDefault().post(tab);
+                }
+            }
+        });
+
     }
 }
