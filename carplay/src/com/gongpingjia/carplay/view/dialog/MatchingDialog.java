@@ -203,6 +203,7 @@ public class MatchingDialog extends BaseAlertDialog {
         if (mDatas.size() == 1) {
             //覆盖主类型
             matchingEB.setMajorType(CarPlayUtil.getTypeName(type));
+            matchingEB.setPay("");
 //            dhNet.addParam("majorType", CarPlayUtil.getTypeName(type));
         } else {
             if (dialogType == 0) {
