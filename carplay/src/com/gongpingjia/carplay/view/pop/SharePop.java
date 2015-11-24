@@ -252,12 +252,15 @@ public class SharePop implements View.OnClickListener {
             public void doInUI(Response response, Integer transfer) {
                 if (response.isSuccess()) {
                     Toast.makeText(context, "发布成功", Toast.LENGTH_SHORT).show();
+
                     JSONObject jo=response.jSON();
                     try {
                         activeId = jo.get("data").toString();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    layout_share_weixin.setVisibility(View.VISIBLE);
+                    layout_share_wxcircle.setVisibility(View.VISIBLE);
 
                     Map<String, Object> map = new HashMap<String, Object>();
                     map.put("type", PersonShareActive.matchingEB.getType());
