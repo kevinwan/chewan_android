@@ -2,7 +2,9 @@ package com.gongpingjia.carplay.view.dialog;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.TextView;
 
 import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.view.BaseAlertDialog;
@@ -13,7 +15,7 @@ import com.gongpingjia.carplay.view.BaseAlertDialog;
 public class DynamicDelDialog extends BaseAlertDialog {
 
     OnCLickResult onCLickResult;
-
+    String des="";
 
     public DynamicDelDialog(Context context, int theme) {
         super(context, theme);
@@ -21,6 +23,11 @@ public class DynamicDelDialog extends BaseAlertDialog {
 
     public DynamicDelDialog(Context context) {
         super(context);
+    }
+
+    public DynamicDelDialog(Context context,String des) {
+        super(context);
+        this.des = des;
     }
 
     @Override
@@ -53,7 +60,9 @@ public class DynamicDelDialog extends BaseAlertDialog {
                 dismiss();
             }
         });
-
+        if (!TextUtils.isEmpty(des)) {
+            ((TextView) findViewById(R.id.des)).setText(des);
+        }
 
     }
 

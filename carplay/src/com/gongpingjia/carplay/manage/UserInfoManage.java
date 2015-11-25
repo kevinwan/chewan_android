@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import com.gongpingjia.carplay.activity.my.LoginActivity2;
 import com.gongpingjia.carplay.bean.User;
+import com.gongpingjia.carplay.view.dialog.DynamicDelDialog;
 
 import net.duohuo.dhroid.dialog.IDialog;
 import net.duohuo.dhroid.ioc.IocContainer;
@@ -20,12 +21,36 @@ public class UserInfoManage {
         return instance;
     }
 
-    public boolean checkLogin(Activity context, LoginCallBack loginCallBack) {
+    public void checkLogin(final Activity context, final LoginCallBack loginCallBack){
+        DynamicDelDialog dialog = new DynamicDelDialog(context,"您还未登陆,现在就去登录么");
+        dialog.setOnCLickResult(new DynamicDelDialog.OnCLickResult() {
+            @Override
+            public void clickResult() {
+                checkToLogin(context, loginCallBack);
+            }
+        });
+
+        dialog.show();
+    }
+
+    public void checkLogin(final Activity context, final String from, final LoginCallBack loginCallBack){
+        DynamicDelDialog dialog = new DynamicDelDialog(context,"您还未登陆,现在就去登录么");
+        dialog.setOnCLickResult(new DynamicDelDialog.OnCLickResult() {
+            @Override
+            public void clickResult() {
+                checkToLogin(context, from, loginCallBack);
+            }
+        });
+
+        dialog.show();
+    }
+
+    public boolean checkToLogin(Activity context, LoginCallBack loginCallBack) {
         boolean islogin = User.getInstance().isLogin();
         if (!islogin) {
             if (context != null) {
 				IocContainer.getShare().get(IDialog.class)
-						.showToastShort(context, "请先登录!");
+						.showToastShort(context, "");
                 LoginActivity2.loginCall = loginCallBack;
                 Intent it = new Intent(context, LoginActivity2.class);
                 context.startActivity(it);
@@ -40,13 +65,13 @@ public class UserInfoManage {
         return islogin;
     }
 
-    public boolean checkLogin(Activity context, String from,
+    public boolean checkToLogin(Activity context, String from,
                               LoginCallBack loginCallBack) {
         boolean islogin = User.getInstance().isLogin();
         if (!islogin) {
             if (context != null) {
                 IocContainer.getShare().get(IDialog.class)
-                        .showToastShort(context, "请先登录!");
+                        .showToastShort(context, "");
                 LoginActivity2.loginCall = loginCallBack;
                 Intent it = new Intent(context, LoginActivity2.class);
                 // 是否从用户头像点击注册

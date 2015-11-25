@@ -121,7 +121,11 @@ public class SharePop implements View.OnClickListener {
         layout_share_wxcircle.setOnClickListener(this);
         tv_cancel.setOnClickListener(this);
 
-        nextMatching();
+        if (type==1) {
+            layout_share_weixin.setVisibility(View.INVISIBLE);
+            layout_share_wxcircle.setVisibility(View.INVISIBLE);
+            nextMatching();
+        }
 
         setupShare();
     }
