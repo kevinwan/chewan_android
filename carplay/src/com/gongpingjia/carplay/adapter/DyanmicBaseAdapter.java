@@ -250,7 +250,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
                     holder.yingyao_layout.setVisibility(View.GONE);
                     holder.yingyaohou.setVisibility(View.VISIBLE);
                     holder.invitation.setVisibility(View.GONE);
-                    holder.titleT.setText("你邀请" + name + "去");
+                    holder.titleT.setText(name+"接受了您的");
 //                    holder.invitationT.setText("邀请中");
 //                    holder.invitationI.setResourseAndBg(R.drawable.dynamic_grey
 //                            , R.drawable.dynamic_grey);
@@ -258,10 +258,11 @@ public class DyanmicBaseAdapter extends BaseAdapter {
                     holder.yingyao_layout.setVisibility(View.GONE);
                     holder.invitation.setVisibility(View.GONE);
                     holder.yingyaohou.setVisibility(View.VISIBLE);
-                    holder.titleT.setText(name + "想邀请你");
+//                    holder.titleT.setText(name + "想邀请你");
+                    holder.titleT.setText("您同意了"+name +"的");
                 }
             }
-            holder.dynamic_typeT.setText(typeT);
+            holder.dynamic_typeT.setText(typeT+"邀请");
             if ("邀请同去".equals(JSONUtil.getString(jo, "activityCategory"))) {
                 holder.dynamic_typeT.setTextColor(mContext.getResources().getColor(R.color.text_orange));
                 holder.titlelayoutL.setOnClickListener(new View.OnClickListener() {
