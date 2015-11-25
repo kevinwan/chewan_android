@@ -21,20 +21,30 @@ public class UserInfoManage {
         return instance;
     }
 
-    public void checkLogin(final Activity context, final LoginCallBack loginCallBack){
-        DynamicDelDialog dialog = new DynamicDelDialog(context,"您还未登陆,现在就去登录么");
-        dialog.setOnCLickResult(new DynamicDelDialog.OnCLickResult() {
-            @Override
-            public void clickResult() {
-                checkToLogin(context, loginCallBack);
-            }
-        });
+    public boolean checkLogin(final Activity context, final LoginCallBack loginCallBack) {
+        boolean islogin = User.getInstance().isLogin();
+        if (!islogin) {
+            DynamicDelDialog dialog = new DynamicDelDialog(context, "您还未登陆,现在就去登录么");
+            dialog.setOnCLickResult(new DynamicDelDialog.OnCLickResult() {
+                @Override
+                public void clickResult() {
+                    checkToLogin(context, loginCallBack);
+                }
+            });
 
-        dialog.show();
+            dialog.show();
+        }else {
+            if (loginCallBack != null) {
+                loginCallBack.onisLogin();
+            }
+        }
+        return islogin;
     }
 
-    public void checkLogin(final Activity context, final String from, final LoginCallBack loginCallBack){
-        DynamicDelDialog dialog = new DynamicDelDialog(context,"您还未登陆,现在就去登录么");
+    public boolean checkLogin(final Activity context, final String from, final LoginCallBack loginCallBack) {
+        boolean islogin = User.getInstance().isLogin();
+        if (!islogin) {
+        DynamicDelDialog dialog = new DynamicDelDialog(context, "您还未登陆,现在就去登录么");
         dialog.setOnCLickResult(new DynamicDelDialog.OnCLickResult() {
             @Override
             public void clickResult() {
@@ -43,32 +53,38 @@ public class UserInfoManage {
         });
 
         dialog.show();
-    }
-
-    public boolean checkToLogin(Activity context, LoginCallBack loginCallBack) {
-        boolean islogin = User.getInstance().isLogin();
-        if (!islogin) {
-            if (context != null) {
-				IocContainer.getShare().get(IDialog.class)
-						.showToastShort(context, "");
-                LoginActivity2.loginCall = loginCallBack;
-                Intent it = new Intent(context, LoginActivity2.class);
-                context.startActivity(it);
-                return false;
-            }
-        } else {
+        }else {
             if (loginCallBack != null) {
                 loginCallBack.onisLogin();
-
             }
         }
         return islogin;
     }
 
-    public boolean checkToLogin(Activity context, String from,
-                              LoginCallBack loginCallBack) {
-        boolean islogin = User.getInstance().isLogin();
-        if (!islogin) {
+    public void checkToLogin(Activity context, LoginCallBack loginCallBack) {
+//        boolean islogin = User.getInstance().isLogin();
+//        if (!islogin) {
+            if (context != null) {
+                IocContainer.getShare().get(IDialog.class)
+                        .showToastShort(context, "");
+                LoginActivity2.loginCall = loginCallBack;
+                Intent it = new Intent(context, LoginActivity2.class);
+                context.startActivity(it);
+//                return false;
+            }
+//        } else {
+//            if (loginCallBack != null) {
+//                loginCallBack.onisLogin();
+//
+//            }
+//        }
+//        return islogin;
+    }
+
+    public void checkToLogin(Activity context, String from,
+                                LoginCallBack loginCallBack) {
+//        boolean islogin = User.getInstance().isLogin();
+//        if (!islogin) {
             if (context != null) {
                 IocContainer.getShare().get(IDialog.class)
                         .showToastShort(context, "");
@@ -77,14 +93,14 @@ public class UserInfoManage {
                 // 是否从用户头像点击注册
                 it.putExtra("from", from);
                 context.startActivity(it);
-                return false;
+//                return false;
             }
-        } else {
-            if (loginCallBack != null) {
-                loginCallBack.onisLogin();
-            }
-        }
-        return islogin;
+//        } else {
+//            if (loginCallBack != null) {
+//                loginCallBack.onisLogin();
+//            }
+//        }
+//        return islogin;
     }
 
     public interface LoginCallBack {
