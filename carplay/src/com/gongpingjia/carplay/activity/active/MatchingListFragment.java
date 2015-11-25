@@ -275,8 +275,10 @@ public class MatchingListFragment extends CarPlayBaseFragment implements PullToR
         }
         if (currentview != null) {
             AnimButtonView animButtonView = (AnimButtonView) currentview.findViewById(R.id.invite);
-            animButtonView.clearAnimation();
-            animButtonView.startScaleAnimation();
+            if (animButtonView != null) {
+                animButtonView.clearAnimation();
+                animButtonView.startScaleAnimation();
+            }
 
         }
     }
