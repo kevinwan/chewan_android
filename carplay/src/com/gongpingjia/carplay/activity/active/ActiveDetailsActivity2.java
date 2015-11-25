@@ -585,9 +585,9 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
         JSONArray jsc = JSONUtil.getJSONArray(jo, "covers");
 
         title = "我正在参加 " + JSONUtil.getString(jo, "title") + "活动 ,来跟我一起参加吧~";
-        SimpleDateFormat format = new SimpleDateFormat("MM年dd月 HH:ss");
+        SimpleDateFormat format = new SimpleDateFormat("MM月dd日 HH:ss");
         Date sdate = new Date(JSONUtil.getLong(jo, "start"));
-        starttime = format.format(sdate);
+        starttime = "开始时间 : "+format.format(sdate);
 
         double dPrice = JSONUtil.getDouble(jo, "price");
         if (dPrice == 0) {
