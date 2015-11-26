@@ -90,6 +90,7 @@ public class SettingActivity2 extends CarPlayBaseActivity implements View.OnClic
                 break;
             case R.id.setting_versions:
                 it = new Intent(this, VersionIntroActivity.class);
+                it.putExtra("carplay_version",getAppVersion());
                 startActivity(it);
                 break;
             case R.id.layout_modifypwd:

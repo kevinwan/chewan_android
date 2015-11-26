@@ -35,6 +35,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginTop="15dp"
                     android:orientation="vertical" >
 
                     <TextView
@@ -48,7 +49,7 @@
                         style="@style/text_black_small"
                         android:layout_marginTop="10dp"
                         android:lineSpacingMultiplier="1.3"
-                        android:text="同城车主和非车主聚会，自驾游，活动神器即使你没有车，也可以邂逅身边的车主，一起自驾游，一起外出活动。还有更多格式各样的同城热闹活动等你来参与，让自己的汽车人生更加精彩！" />
+                        android:text="同城车主和非车主聚会，自驾游，活动神器即使你没有车，也可以邂逅身边的车主，一起自驾游，一起外出活动。还有更多各式各样的同城热闹的活动等你来参与，让自己的汽车人生更加丰富精彩！" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -59,15 +60,16 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="horizontal"
-                android:paddingBottom="20dp"
                 android:paddingLeft="10dp"
+                android:paddingBottom="20dp"
                 android:paddingRight="10dp"
                 android:paddingTop="20dp" >
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/icon_about_us" />
+                    android:background="@drawable/icon_about_us"
+                    android:visibility="invisible"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -86,9 +88,15 @@
                         style="@style/text_black_small"
                         android:layout_marginTop="10dp"
                         android:lineSpacingMultiplier="1.3"
-                        android:text="同城车主和非车主聚会，自驾游，活动神器即使你没有车，也可以邂逅身边的车主，一起自驾游，一起外出活动。还有更多格式各样的同城热闹活动等你来参与，让自己的汽车人生更加精彩！" />
+                        android:text="创新高效、年轻激情的车玩团队始终致力于为您提供最佳的汽车移动体验。怀着对产品的无限热情，我们将不断追求完美！亲爱的车玩用户，希望您能从每一个精雕细琢的细节中体会车玩团队的用心，体验有车的生活乐趣。" />
+                    <TextView
+                        style="@style/text_black_small"
+                        android:layout_marginTop="10dp"
+                        android:lineSpacingMultiplier="1.3"
+                        android:text="车玩的大未来，你我同行！"/>
                 </LinearLayout>
             </LinearLayout>
+            <View style="@style/line_horizontal" />
         </LinearLayout>
     </ScrollView>
 
