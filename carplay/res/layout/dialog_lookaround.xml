@@ -109,6 +109,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop" />
+            <TextView
+                android:id="@+id/promtp"
+                style="@style/text_white_small"
+                android:layout_marginTop="20dp"
+                android:layout_toLeftOf="@+id/phtoto"
+                android:layout_marginRight="10dp"
+                android:gravity="center"
+                android:text="你不传2张照片就想看我的,不公平哦"/>
 
 
             <com.gongpingjia.carplay.view.AnimButtonView
@@ -130,6 +138,7 @@
 
 
             <LinearLayout
+                android:id="@+id/phtoto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"

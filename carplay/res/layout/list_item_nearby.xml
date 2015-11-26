@@ -125,9 +125,9 @@
                 style="@style/text_white_small"
                 android:layout_marginTop="20dp"
                 android:layout_toLeftOf="@+id/phtoto"
-                android:layout_marginRight="25dp"
+                android:layout_marginRight="10dp"
                 android:gravity="center"
-                android:text="上传照片即可查看Ta的照片哟~"/>
+                android:text="你不传2张照片就想看我的，不公平哦"/>
 
 
             <com.gongpingjia.carplay.view.AnimButtonView
@@ -153,7 +153,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="12dp"
+                android:layout_marginRight="10dp"
                 android:layout_marginTop="16dp"
                 android:animateLayoutChanges="true"
                 android:orientation="vertical">
