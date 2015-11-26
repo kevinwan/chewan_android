@@ -47,6 +47,7 @@ public class CarPlayListActivity extends CarPlayBaseActivity {
 
     onLoadDataSuccess onLoadDataSuccess;
     String str = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,7 +101,7 @@ public class CarPlayListActivity extends CarPlayBaseActivity {
                             dialoger.showToastShort(self, response.msg);
                         }
                     } else {
-                            dialoger.showToastShort(self, response.msg);
+                        dialoger.showToastShort(self, response.msg);
                     }
                 }
 
@@ -130,9 +131,9 @@ public class CarPlayListActivity extends CarPlayBaseActivity {
                 if (list.size() == 0 || list.size() < limit) {
                     if (dialoger != null) {
                         if (!response.isCache()) {
-                            if (!str.isEmpty()){
+                            if (!str.isEmpty()) {
                                 dialoger.showToastShort(self, "已没有更多的人");
-                            }else{
+                            } else {
                                 if (ignore > 0) {
                                     dialoger.showToastShort(self,
                                             Const.netadapter_no_more);
@@ -178,7 +179,8 @@ public class CarPlayListActivity extends CarPlayBaseActivity {
             }
         };
     }
-    public void setoffic(String stop){
+
+    public void setoffic(String stop) {
         str = stop;
     }
 
@@ -206,6 +208,9 @@ public class CarPlayListActivity extends CarPlayBaseActivity {
 
 
     public void showNext() {
+        if (!hasMore) {
+            return;
+        }
         synchronized (isLoading) {
             if (isLoading)
                 return;
@@ -222,6 +227,9 @@ public class CarPlayListActivity extends CarPlayBaseActivity {
 
 
     public void showNext(int ignore) {
+        if (!hasMore) {
+            return;
+        }
         net.addParam("ignore", ignore);
         net.addParam("limit", limit);
         net.execuseInDialog("", nettask);

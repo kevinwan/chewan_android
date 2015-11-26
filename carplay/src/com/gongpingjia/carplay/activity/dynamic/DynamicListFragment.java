@@ -122,6 +122,7 @@ public class DynamicListFragment extends CarPlayBaseFragment implements PullToRe
                         conversation.clear();
                         conversationList.remove(currentPosition);
                         mAdapter.notifyDataSetChanged();
+                        ((MainActivity2) getActivity()).updateUnreadLabel();
                     }
                 });
 

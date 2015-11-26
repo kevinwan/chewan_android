@@ -158,7 +158,6 @@ public class MainActivity2 extends BaseFragmentActivity implements
                 .getInstance().getCmdMessageBroadcastAction());
         registerReceiver(cmdMessageReceiver, cmdIntentFilter);
 
-
         updateUnreadLabel();
 
     }

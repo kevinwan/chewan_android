@@ -221,6 +221,9 @@ public class CarPlayBaseFragment extends Fragment {
 
 
     public void showNext() {
+        if (!hasMore) {
+            return;
+        }
         synchronized (isLoading) {
             if (isLoading)
                 return;
@@ -237,6 +240,9 @@ public class CarPlayBaseFragment extends Fragment {
 
 
     public void showNextNoDialog() {
+        if (!hasMore) {
+            return;
+        }
         synchronized (isLoading) {
             if (isLoading)
                 return;
