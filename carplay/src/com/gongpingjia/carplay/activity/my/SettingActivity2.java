@@ -36,7 +36,7 @@ public class SettingActivity2 extends CarPlayBaseActivity implements View.OnClic
 
     File mCacheDir;
     TextView mTextCacheSize, versionsT;
-    RelativeLayout setting_about_us, setting_versions, layout_modifypwd,layout_notice;
+    RelativeLayout setting_about_us, setting_versions, layout_modifypwd,layout_notice,layout_rate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +55,7 @@ public class SettingActivity2 extends CarPlayBaseActivity implements View.OnClic
         setting_about_us = (RelativeLayout) findViewById(R.id.setting_about_us);
         setting_versions = (RelativeLayout) findViewById(R.id.setting_versions);
         layout_modifypwd = (RelativeLayout) findViewById(R.id.layout_modifypwd);
+        layout_rate = (RelativeLayout) findViewById(R.id.layout_rate);
         layout_notice = (RelativeLayout) findViewById(R.id.layout_notice);
         versionsT = (TextView) findViewById(R.id.versionsT);
         versionsT.setText(getAppVersion());
@@ -67,6 +68,7 @@ public class SettingActivity2 extends CarPlayBaseActivity implements View.OnClic
         setting_versions.setOnClickListener(this);
         layout_modifypwd.setOnClickListener(this);
         layout_notice.setOnClickListener(this);
+        layout_rate.setOnClickListener(this);
         findViewById(R.id.layout_update).setOnClickListener(this);
         btnLogout.setOnClickListener(this);
 
@@ -109,7 +111,12 @@ public class SettingActivity2 extends CarPlayBaseActivity implements View.OnClic
                 break;
             case R.id.layout_notice:
                 it = new Intent(this, MsgNotice.class);
-                startActivity(it);
+
+            case R.id.layout_rate:
+                Intent viewIntent = new Intent("android.intent.action.VIEW",
+                        Uri.parse("market://details?id=com.gongpingjia.carplay"));
+                viewIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(viewIntent);
             break;
         }
     }
