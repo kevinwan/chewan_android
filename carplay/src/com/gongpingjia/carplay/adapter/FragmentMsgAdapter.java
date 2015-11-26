@@ -155,7 +155,7 @@ public class FragmentMsgAdapter extends BaseAdapter {
         EMMessage lastMessage = conversation.getLastMessage();
         switch (type) {
             case 0:
-                holder.titleT.setText("感兴趣的人");
+                holder.titleT.setText("感兴趣的");
                 ViewUtil.bindNetImage(holder.right_headI,
                         lastMessage.getStringAttribute("avatar", ""), "head");
 //                holder.right_headI.setTag(lastMessage.getStringAttribute(""));

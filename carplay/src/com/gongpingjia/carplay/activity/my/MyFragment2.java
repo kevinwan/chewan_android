@@ -310,39 +310,43 @@ public class MyFragment2 extends Fragment implements OnClickListener {
 //                    }
 
                     //模糊效果
-                    ImageLoader.getInstance().displayImage(headimg, photo_bgI, CarPlayValueFix.optionsDefault, new ImageLoadingListener() {
-                        @Override
-                        public void onLoadingStarted(String s, View view) {
-
-                        }
-
-                        @Override
-                        public void onLoadingFailed(String s, View view, FailReason failReason) {
-
-                        }
-
-                        @Override
-                        public void onLoadingComplete(String s, View view, final Bitmap bitmap) {
-                            final ImageView img = (ImageView) view;
-                            img.setImageBitmap(bitmap);
-                            Blurry.with(mContext)
-                                    .radius(10)
-                                    .sampling(Constant.BLUR_VALUE)
-                                    .async()
-                                    .capture(img)
-                                    .into(img);
-                        }
-
-                        @Override
-                        public void onLoadingCancelled(String s, View view) {
-
-                        }
-                    });
+                    setBlur(headimg);
 
                 }
             }
         });
 
+    }
+
+    private void setBlur(String photo){
+        ImageLoader.getInstance().displayImage(photo, photo_bgI, CarPlayValueFix.optionsDefault, new ImageLoadingListener() {
+            @Override
+            public void onLoadingStarted(String s, View view) {
+
+            }
+
+            @Override
+            public void onLoadingFailed(String s, View view, FailReason failReason) {
+
+            }
+
+            @Override
+            public void onLoadingComplete(String s, View view, final Bitmap bitmap) {
+                final ImageView img = (ImageView) view;
+                img.setImageBitmap(bitmap);
+                Blurry.with(mContext)
+                        .radius(10)
+                        .sampling(Constant.BLUR_VALUE)
+                        .async()
+                        .capture(img)
+                        .into(img);
+            }
+
+            @Override
+            public void onLoadingCancelled(String s, View view) {
+
+            }
+        });
     }
 
     @Override
@@ -599,6 +603,16 @@ public class MyFragment2 extends Fragment implements OnClickListener {
     public void onEventMainThread(String success) {
         if ("上传成功".equals(success)) {
             getMyDetails();
+        }
+    }
+    //设置头像后 更改当前头像和背景
+    public void onEventMainThread(Bundle bd) {
+        if (null!=bd.get("head_url")) {
+            ImageLoader.getInstance().getMemoryCache().clear();
+            ImageLoader.getInstance().getDiskCache().clear();
+//            getMyDetails();
+            ViewUtil.bindNetImage(headI, bd.get("head_url").toString(), "head");
+            setBlur(bd.get("head_url").toString());
         }
     }
 }

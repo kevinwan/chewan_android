@@ -24,7 +24,7 @@ public class UserInfoManage {
     public boolean checkLogin(final Activity context, final LoginCallBack loginCallBack) {
         boolean islogin = User.getInstance().isLogin();
         if (!islogin) {
-            DynamicDelDialog dialog = new DynamicDelDialog(context, "您还未登陆,现在就去登录么");
+            DynamicDelDialog dialog = new DynamicDelDialog(context, "您还未登录,现在就去登录么");
             dialog.setOnCLickResult(new DynamicDelDialog.OnCLickResult() {
                 @Override
                 public void clickResult() {
@@ -44,7 +44,7 @@ public class UserInfoManage {
     public boolean checkLogin(final Activity context, final String from, final LoginCallBack loginCallBack) {
         boolean islogin = User.getInstance().isLogin();
         if (!islogin) {
-        DynamicDelDialog dialog = new DynamicDelDialog(context, "您还未登陆,现在就去登录么");
+        DynamicDelDialog dialog = new DynamicDelDialog(context, "您还未登录,现在就去登录么");
         dialog.setOnCLickResult(new DynamicDelDialog.OnCLickResult() {
             @Override
             public void clickResult() {

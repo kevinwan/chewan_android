@@ -361,11 +361,13 @@ public class ImageGallery extends CarPlayBaseActivity implements View.OnClickLis
                             .remove(head_url);
                     Bitmap b = ImageLoader.getInstance().getMemoryCache()
                             .remove(head_url);
-//                    System.out.println("第一个：+++++++++++" + a);
-//                    System.out.println("第二个：***************" + b);
-//                    System.out.println("更改头像返回：" + JSONUtil.getString(jo, "photoUrl"));
+                    System.out.println("第一个：+++++++++++" + a);
+                    System.out.println("第二个：***************" + b);
+                    System.out.println("更改头像返回：" + JSONUtil.getString(jo, "photoUrl"));
                     showToast("更改头像成功");
-                    EventBus.getDefault().post("上传成功");
+                     Bundle bd = new Bundle();
+                    bd.putString("head_url",head_url);
+                    EventBus.getDefault().post(bd);
                     finish();
 //
                 } else {

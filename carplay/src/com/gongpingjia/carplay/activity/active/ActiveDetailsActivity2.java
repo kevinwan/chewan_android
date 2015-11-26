@@ -593,7 +593,11 @@ public class ActiveDetailsActivity2 extends CarPlayListActivity implements View.
         if (dPrice == 0) {
             price = "价格 : 免费";
         } else {
-            price = "价格 : " + dPrice + "元/人";
+            if(JSONUtil.getDouble(jo, "subsidyPrice")==0){
+                price = "价格 : " + dPrice + "元/人";
+            }else {
+                price = "价格 : " + dPrice + "元/人"+"  (现在报名立减" + JSONUtil.getDouble(jo, "subsidyPrice") + "元! )";
+            }
         }
         //目的地
         JSONObject js = JSONUtil.getJSONObject(jo, "destination");
