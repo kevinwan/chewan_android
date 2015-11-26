@@ -112,6 +112,7 @@ public class SettingActivity2 extends CarPlayBaseActivity implements View.OnClic
             case R.id.layout_notice:
                 it = new Intent(this, MsgNotice.class);
                 startActivity(it);
+                break;
             case R.id.layout_rate:
                 Intent viewIntent = new Intent("android.intent.action.VIEW",
                         Uri.parse("market://details?id=com.gongpingjia.carplay"));
