@@ -208,9 +208,12 @@ public class CarPlayListActivity extends CarPlayBaseActivity {
 
 
     public void showNext() {
-        if (!hasMore) {
-            return;
-        }
+//        if (!hasMore) {
+//            if (onLoadSuccess != null) {
+//                onLoadSuccess.loadSuccess();
+//            }
+//            return;
+//        }
         synchronized (isLoading) {
             if (isLoading)
                 return;
@@ -227,9 +230,12 @@ public class CarPlayListActivity extends CarPlayBaseActivity {
 
 
     public void showNext(int ignore) {
-        if (!hasMore) {
-            return;
-        }
+//        if (!hasMore) {
+//            if (onLoadSuccess != null) {
+//                onLoadSuccess.loadSuccess();
+//            }
+//            return;
+//        }
         net.addParam("ignore", ignore);
         net.addParam("limit", limit);
         net.execuseInDialog("", nettask);

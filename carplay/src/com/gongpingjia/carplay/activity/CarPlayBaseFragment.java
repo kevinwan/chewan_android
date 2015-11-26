@@ -221,9 +221,12 @@ public class CarPlayBaseFragment extends Fragment {
 
 
     public void showNext() {
-        if (!hasMore) {
-            return;
-        }
+//        if (!hasMore) {
+//            if (onLoadSuccess != null) {
+//                onLoadSuccess.loadSuccess();
+//            }
+//            return;
+//        }
         synchronized (isLoading) {
             if (isLoading)
                 return;
@@ -240,9 +243,12 @@ public class CarPlayBaseFragment extends Fragment {
 
 
     public void showNextNoDialog() {
-        if (!hasMore) {
-            return;
-        }
+//        if (!hasMore) {
+//            if (onLoadSuccess != null) {
+//                onLoadSuccess.loadSuccess();
+//            }
+//            return;
+//        }
         synchronized (isLoading) {
             if (isLoading)
                 return;

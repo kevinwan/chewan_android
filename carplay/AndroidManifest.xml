@@ -51,21 +51,17 @@
             android:name="com.amap.api.v2.apikey"
             android:value="f5a41f709dd7b958bda5c51d3a0a247e" />
         -->
-        <!--
             <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="f5a41f709dd7b958bda5c51d3a0a247e" />
-        -->
-        <meta-data
+    <!--    <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="427c3acc9b4358fd1fa1823194709ae3" />
+            android:value="427c3acc9b4358fd1fa1823194709ae3" />-->
 
         <!-- 正式版 -->
-        <!--
             <meta-data
             android:name="EASEMOB_APPKEY"
             android:value="gongpingjia#chewanapi" />
-        -->
         <!-- <meta-data -->
         <!-- android:name="EASEMOB_APPKEY" -->
         <!-- android:value="gongpingjia#chewanapi" /> -->
@@ -84,9 +80,9 @@
              android:value="gongpingjia#
              " />
         -->
-        <meta-data
+  <!--      <meta-data
             android:name="EASEMOB_APPKEY"
-            android:value="gongpingjia#carplayapp" />
+            android:value="gongpingjia#carplayapp" />-->
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="${UMENG_CHANNEL_VALUE}" />
