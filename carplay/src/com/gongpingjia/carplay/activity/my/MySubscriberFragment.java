@@ -38,6 +38,7 @@ public class MySubscriberFragment extends CarPlayBaseFragment implements ILoadSu
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_follow_each_other, container, false);
+//        EventBus.getDefault().register(this);
         mListView = (PullToRefreshListView) view.findViewById(R.id.refresh_list_view);
 
         empty = (LinearLayout) view.findViewById(R.id.empty);
@@ -65,6 +66,7 @@ public class MySubscriberFragment extends CarPlayBaseFragment implements ILoadSu
                     public void doInUI(Response response, Integer transfer) {
                         if (response.isSuccess()) {
                             //取消关注成功
+//                            EventBus.getDefault().post("刷新我的关注");
                             refresh();
                         }
                     }
@@ -77,6 +79,12 @@ public class MySubscriberFragment extends CarPlayBaseFragment implements ILoadSu
         fromWhat("data.mySubscribe");
         refresh();
     }
+
+//    public void onEventMainThread(String result) {
+//        if ("刷新我的关注".equals(result)){
+//            refresh();
+//        }
+//    }
 
 
     @Override

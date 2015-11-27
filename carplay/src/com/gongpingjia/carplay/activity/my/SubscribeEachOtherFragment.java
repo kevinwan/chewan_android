@@ -24,6 +24,8 @@ import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
 
+import de.greenrobot.event.EventBus;
+
 /**
  * Created by Administrator on 2015/10/16.
  * 互相关注
@@ -43,6 +45,7 @@ public class SubscribeEachOtherFragment extends CarPlayBaseFragment implements I
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
        view = inflater.inflate(R.layout.fragment_follow_each_other, container, false);
+        EventBus.getDefault().register(this);
         mListView = (PullToRefreshListView) view.findViewById(R.id.refresh_list_view);
 
         empty = (LinearLayout) view.findViewById(R.id.empty);
@@ -69,6 +72,7 @@ public class SubscribeEachOtherFragment extends CarPlayBaseFragment implements I
                     @Override
                     public void doInUI(Response response, Integer transfer) {
                         if (response.isSuccess()) {
+                            EventBus.getDefault().post("刷新我的关注");
                             //取消关注成功
                             refresh();
                         }
@@ -81,6 +85,12 @@ public class SubscribeEachOtherFragment extends CarPlayBaseFragment implements I
         setUrl(API2.getSubscribe(User.getInstance().getUserId(), User.getInstance().getToken()));
         fromWhat("data.eachSubscribe");
         refresh();
+    }
+
+    public void onEventMainThread(String result) {
+        if ("刷新我的关注".equals(result)){
+            refresh();
+        }
     }
 
 //    private void refreshList() {

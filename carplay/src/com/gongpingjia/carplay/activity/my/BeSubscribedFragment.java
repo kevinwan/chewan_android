@@ -23,13 +23,15 @@ import net.duohuo.dhroid.net.DhNet;
 import net.duohuo.dhroid.net.NetTask;
 import net.duohuo.dhroid.net.Response;
 
+import de.greenrobot.event.EventBus;
+
 /**
  * Created by Administrator on 2015/10/16.
  * 关注我的人
  */
 public class BeSubscribedFragment extends CarPlayBaseFragment implements ILoadSuccess {
     private PullToRefreshListView mListView;
-    private BeSubscribedAdapter2 beSubscribeAdapter;
+    public BeSubscribedAdapter2 beSubscribeAdapter;
     View view;
     LinearLayout empty;
     TextView msg;
@@ -38,6 +40,7 @@ public class BeSubscribedFragment extends CarPlayBaseFragment implements ILoadSu
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_follow_each_other, container, false);
+        EventBus.getDefault().register(this);
         mListView = (PullToRefreshListView) view.findViewById(R.id.refresh_list_view);
 
         empty = (LinearLayout) view.findViewById(R.id.empty);
@@ -66,6 +69,7 @@ public class BeSubscribedFragment extends CarPlayBaseFragment implements ILoadSu
                     @Override
                     public void doInUI(Response response, Integer transfer) {
                         if (response.isSuccess()) {
+                            EventBus.getDefault().post("刷新我的关注");
                             //取消关注成功
                             refresh();
                         }
@@ -78,6 +82,12 @@ public class BeSubscribedFragment extends CarPlayBaseFragment implements ILoadSu
         setUrl(API2.getSubscribe(User.getInstance().getUserId(), User.getInstance().getToken()));
         fromWhat("data.beSubscribed");
         refresh();
+    }
+
+    public void onEventMainThread(String result) {
+        if ("刷新我的关注".equals(result)){
+            refresh();
+        }
     }
 
 
