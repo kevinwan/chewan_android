@@ -129,6 +129,19 @@ android {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Oppo"]
         }
 
+        Jinli {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Jinli"]
+        }
+
+        Yiyou {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Yiyou"]
+        }
+
+        Anbei {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Anbei"]
+        }
+
+
     }
     productFlavors.all {
         flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]

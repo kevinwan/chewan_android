@@ -338,6 +338,7 @@ public class MatchingPreviewFragment extends CarPlayBaseFragment implements View
                     String photoUrl = JSONUtil.getString(jo, "photoUrl");
                     photoId = JSONUtil.getString(jo, "photoId");
                     ViewUtil.bindNetImage(active_bgI, photoUrl, "default");
+                    setHasAlbm();
                     //控制附近列表刷新
                     EventBus.getDefault().post(new String("刷新附近列表"));
                     //控制我的页面刷新
@@ -345,6 +346,19 @@ public class MatchingPreviewFragment extends CarPlayBaseFragment implements View
                     PersonShareActive.photoId = photoId;
                     PersonShareActive.image = photoUrl;
                 }
+            }
+        });
+    }
+
+    private void setHasAlbm() {
+        DhNet net = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId()
+                + "/info?viewUser=" + user.getUserId() + "&token=" + user.getToken());
+        net.doGet(new NetTask(getActivity()) {
+            @Override
+            public void doInUI(Response response, Integer transfer) {
+                JSONObject jo = response.jSONFromData();
+                JSONArray albumJsa = JSONUtil.getJSONArray(jo, "album");
+                user.setHasAlbum(albumJsa.length() > 1);         //设置相册状态
             }
         });
     }
