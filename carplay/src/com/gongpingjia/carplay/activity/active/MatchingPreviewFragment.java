@@ -150,8 +150,8 @@ public class MatchingPreviewFragment extends CarPlayBaseFragment implements View
 
         getMatchingEB();
 
-        promptT.setText("你的 '匹配活动意向意向' 将以下面的形式展示给他人" + "\n" +
-                "不上传真人头像被邀请率会很低哟~");
+        promptT.setText("你的“意向”将以下面的形式展示给他人" + "\n" +
+                "不上传真人头像被邀请率很低呦~");
         Log.d("msg", "initView");
         getMyDetails();
     }

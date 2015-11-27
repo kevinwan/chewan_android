@@ -139,8 +139,7 @@
                 <RelativeLayout
                     android:id="@+id/layout"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1">
+                    android:layout_height="wrap_content">
 
                     <ImageView
                         android:id="@+id/active_bg"
@@ -150,34 +149,37 @@
                         android:scaleType="centerCrop" />
 
                     <LinearLayout
+                        android:id="@+id/ln_layout"
                         android:layout_width="match_parent"
-                        android:layout_height="45dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
                         android:layout_alignParentBottom="true"
-                        android:gravity="center"
-                        android:layout_marginBottom="12dp"
                         android:orientation="horizontal">
 
                         <Button
                             android:id="@+id/changephoto"
                             android:layout_width="125dp"
-                            android:layout_height="match_parent"
+                            android:layout_height="45dp"
                             android:layout_marginRight="20dp"
-                            android:background="@drawable/btn_blue_fillet"
+                            android:background="@drawable/btn_darkblue_fillet"
                             android:text="更换照片"
+                            android:layout_marginBottom="12dp"
                             android:textColor="@color/white"
                             android:textSize="@dimen/text_small" />
 
                         <Button
                             android:id="@+id/nextmatching"
                             android:layout_width="125dp"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/btn_red_fillet"
+                            android:layout_height="45dp"
+                            android:background="@drawable/btn_pink_fillet"
                             android:text="继续匹配"
+                            android:layout_marginBottom="12dp"
                             android:textColor="@color/white"
                             android:textSize="@dimen/text_small" />
 
 
                     </LinearLayout>
+
 
                 </RelativeLayout>
 

@@ -129,7 +129,7 @@ public class SubscribeEachOtherFragment extends CarPlayBaseFragment implements I
     public void loadSuccessOnFirst() {
         if (mVaules.size() == 0) {
             empty.setVisibility(View.VISIBLE);
-            msg.setText("您未和Ta人相互关注");
+            msg.setText("您未和Ta人互相关注");
         } else {
             empty.setVisibility(View.GONE);
         }

@@ -334,6 +334,9 @@ public class MainActivity2 extends BaseFragmentActivity implements
         if (index == 4 && !User.getInstance().isLogin()) {
             return;
         }
+        if (index == 3 && !User.getInstance().isLogin()) {
+            return;
+        }
 
 
         rightT.setVisibility(index == 0 ? View.VISIBLE : View.GONE);
