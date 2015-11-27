@@ -1,5 +1,6 @@
 package com.gongpingjia.carplay.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,7 +25,9 @@ import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.chat.ChatActivity;
 import com.gongpingjia.carplay.activity.chat.VoiceCallActivity;
 import com.gongpingjia.carplay.api.API2;
+import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.User;
+import com.gongpingjia.carplay.manage.UserInfoManage;
 import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.view.AnimButtonView;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -61,7 +65,7 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
 //    String cover;
     Double distance;
     Boolean transfer;
-
+    private boolean uploadFlag = true;
     public HisDyanmicBaseAdapter(Context context, Bundle bundle, Double distance) {
         mContext = context;
         this.bundle = bundle;
@@ -118,7 +122,11 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
             holder.sexbgR = (RelativeLayout) view.findViewById(R.id.layout_sex_and_age);
             holder.sexI = (ImageView) view.findViewById(R.id.iv_sex);
             holder.ageT = (TextView) view.findViewById(R.id.tv_age);
-
+            holder.upload = (Button) view.findViewById(R.id.upload);
+            holder.takephotos = (Button) view.findViewById(R.id.takephotos);
+            holder.album = (Button) view.findViewById(R.id.album);
+            holder.phtotoV = (LinearLayout) view.findViewById(R.id.phtoto);
+            holder.promtpT = (TextView) view.findViewById(R.id.promtp);
 
             holder.dynamic_carlogo = (ImageView) view.findViewById(R.id.dynamic_carlogo);
             holder.certification_achievement = (ImageView) view.findViewById(R.id.certification_achievement);
@@ -297,8 +305,14 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
                 holder.activity_place.setText(JSONUtil.getString(json, "city") + JSONUtil.getString(json, "district") + JSONUtil.getString(json, "street"));
             }
         }
-
+        if (user.isLogin()) {
+            holder.phtotoV.setVisibility(user.isHasAlbum() ? View.GONE : View.VISIBLE);
+            holder.promtpT.setVisibility(user.isHasAlbum() ? View.GONE : View.VISIBLE);
+        }
         holder.invitationI.setOnClickListener(new MyOnClick(holder, i));
+        holder.upload.setOnClickListener(new MyupOnClick(holder, i));
+        holder.takephotos.setOnClickListener(new MyupOnClick(holder, i));
+        holder.album.setOnClickListener(new MyupOnClick(holder, i));
         holder.dyanmic_one.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -350,6 +364,58 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
             }
         }
     }
+    class MyupOnClick implements View.OnClickListener {
+
+        ViewHolder holder;
+        int position;
+        public MyupOnClick(ViewHolder holder, int position) {
+            this.holder = holder;
+            this.position = position;
+        }
+
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()) {
+                //上传
+                case R.id.upload:
+                    UserInfoManage.getInstance().checkLogin((Activity) mContext, new UserInfoManage.LoginCallBack() {
+                        @Override
+                        public void onisLogin() {
+                            if (uploadFlag) {
+                                uploadFlag = !uploadFlag;
+                                holder.takephotos.setVisibility(View.VISIBLE);
+                                holder.album.setVisibility(View.VISIBLE);
+                            } else {
+                                uploadFlag = !uploadFlag;
+                                holder.takephotos.setVisibility(View.GONE);
+                                holder.album.setVisibility(View.GONE);
+                            }
+                        }
+
+                        @Override
+                        public void onLoginFail() {
+
+                        }
+                    });
+
+                    break;
+                //拍照
+                case R.id.takephotos:
+                    Integer takephotos = Constant.TAKE_PHOTO;
+                    //传给Main2
+                    EventBus.getDefault().post(takephotos);
+                    break;
+                //相册
+                case R.id.album:
+                    Integer album = Constant.PICK_PHOTO;
+                    //传给Main2
+                    EventBus.getDefault().post(album);
+
+                    break;
+
+            }
+        }
+    }
 
     private void join(String activeId, final ViewHolder holder, final JSONObject jo) {
         User user = User.getInstance();
@@ -380,12 +446,13 @@ public class HisDyanmicBaseAdapter extends BaseAdapter {
 
 
     class ViewHolder {
-        TextView titleT, dynamic_carname, pay_type, travelmode, activity_place, activity_distance, ageT, invitationT;
+        TextView titleT, dynamic_carname, pay_type, travelmode, activity_place, activity_distance, ageT, invitationT,promtpT;
         ImageView dynamic_carlogo, activity_beijing, certification_achievement, sexI;
         AnimButtonView dyanmic_one, dyanmic_two, invitationI;
-        LinearLayout yingyaohou, invitation;
+        LinearLayout yingyaohou, invitation,phtotoV;
         RelativeLayout sexbgR;
         RelativeLayout layoutV;
+        Button upload, takephotos, album;
     }
 
 }

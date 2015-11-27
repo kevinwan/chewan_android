@@ -1,5 +1,6 @@
 package com.gongpingjia.carplay.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,6 +28,7 @@ import com.gongpingjia.carplay.activity.my.PersonDetailActivity2;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.User;
+import com.gongpingjia.carplay.manage.UserInfoManage;
 import com.gongpingjia.carplay.util.CarPlayUtil;
 import com.gongpingjia.carplay.view.AnimButtonView;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -58,7 +61,7 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
     private final Context mContext;
     String activityId;
     private List<JSONObject> data;
-
+    private boolean uploadFlag = true;
     User user = User.getInstance();
 
     final int TYPE_1 = 0;       //官方活动
@@ -122,73 +125,74 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
 
         int type = getItemViewType(i);
 
-        if (view == null) {
-//            if ("官方活动".equals(type)) {
-            if (TYPE_1 == type) {
-                holders = new ViewHolders();
-                view = LayoutInflater.from(mContext).inflate(R.layout.item_mydyanmic_recommend, viewGroup, false);
+        //            if ("官方活动".equals(type)) {
+        if (view == null) if (TYPE_1 == type) {
+            holders = new ViewHolders();
+            view = LayoutInflater.from(mContext).inflate(R.layout.item_mydyanmic_recommend, viewGroup, false);
 //                holders.people_num = (TextView) view.findViewById(R.id.people_num);
-                holders.price = (TextView) view.findViewById(R.id.price);
-                holders.priceright = (TextView) view.findViewById(R.id.priceright);
-                holders.priceDesc = (TextView) view.findViewById(R.id.priceDesc);
-                holders.location = (TextView) view.findViewById(R.id.location);
-                holders.city = (TextView) view.findViewById(R.id.city);
-                holders.participate_womanT = (TextView) view.findViewById(R.id.participate_woman);
-                holders.participate_manT = (TextView) view.findViewById(R.id.participate_man);
-                holders.unparticipateT = (TextView) view.findViewById(R.id.unparticipate);
-                holders.pic = (ImageView) view.findViewById(R.id.pic);
-                holders.invitation = (LinearLayout) view.findViewById(R.id.invitation);
-                holders.invitationI = (AnimButtonView) view.findViewById(R.id.invitationI);
-                holders.invitationT = (TextView) view.findViewById(R.id.invitationT);
-                holders.limitedlayoutL = (LinearLayout) view.findViewById(R.id.limitedlayout);
-                holders.unlimitedlayoutL = (LinearLayout) view.findViewById(R.id.unlimitedlayout);
-                holders.layoutV = (RelativeLayout) view.findViewById(R.id.layout);
-                LinearLayout.LayoutParams pams = (LinearLayout.LayoutParams) holders.layoutV.getLayoutParams();
-                pams.height = CarPlayApplication.getInstance().getImageHeight();
-                holders.layoutV.setLayoutParams(pams);
-                view.setTag(holders);
-            } else {
-                holder = new ViewHolder();
-                view = LayoutInflater.from(mContext).inflate(R.layout.item_activelist, viewGroup, false);
-
-                holder.yingyaohou = (LinearLayout) view.findViewById(R.id.yingyaohou);
-                holder.yingyao_layout = (LinearLayout) view.findViewById(R.id.yingyao_layout);
-                holder.invitation = (LinearLayout) view.findViewById(R.id.invitation);
-                holder.titleT = (TextView) view.findViewById(R.id.dynamic_title);
-                holder.dynamic_carname = (TextView) view.findViewById(R.id.dynamic_carname);
-                holder.pay_type = (TextView) view.findViewById(R.id.pay_type);
-                holder.travelmode = (TextView) view.findViewById(R.id.travelmode);
-                holder.activity_place = (TextView) view.findViewById(R.id.activity_place);
-                holder.inviteT = (TextView) view.findViewById(R.id.inviteT);
-
-                holder.sexbgR = (RelativeLayout) view.findViewById(R.id.layout_sex_and_age);
-                holder.sexI = (ImageView) view.findViewById(R.id.iv_sex);
-                holder.ageT = (TextView) view.findViewById(R.id.tv_age);
-
-
-                holder.dynamic_carlogo = (ImageView) view.findViewById(R.id.dynamic_carlogo);
-                holder.certification_achievement = (ImageView) view.findViewById(R.id.certification_achievement);
-                holder.activity_beijing = (ImageView) view.findViewById(R.id.activity_beijing);
-
-
-                holder.dyanmic_one = (AnimButtonView) view.findViewById(R.id.dyanmic_one);
-                holder.dyanmic_two = (AnimButtonView) view.findViewById(R.id.dyanmic_two);
-                holder.yingyao = (AnimButtonView) view.findViewById(R.id.yingyao);
-                holder.hulue = (AnimButtonView) view.findViewById(R.id.hulue);
-                holder.invitationI = (AnimButtonView) view.findViewById(R.id.invitationI);
-
-
-                holder.activity_distance = (TextView) view.findViewById(R.id.active_distance);
-                holder.invitationT = (TextView) view.findViewById(R.id.invitationT);
-                holder.layoutV = (RelativeLayout) view.findViewById(R.id.layout);
-                FrameLayout.LayoutParams pams = (FrameLayout.LayoutParams) holder.layoutV.getLayoutParams();
-                pams.height = CarPlayApplication.getInstance().getImageHeight();
-                holder.layoutV.setLayoutParams(pams);
-                view.setTag(holder);
-            }
-
-
+            holders.price = (TextView) view.findViewById(R.id.price);
+            holders.priceright = (TextView) view.findViewById(R.id.priceright);
+            holders.priceDesc = (TextView) view.findViewById(R.id.priceDesc);
+            holders.location = (TextView) view.findViewById(R.id.location);
+            holders.city = (TextView) view.findViewById(R.id.city);
+            holders.participate_womanT = (TextView) view.findViewById(R.id.participate_woman);
+            holders.participate_manT = (TextView) view.findViewById(R.id.participate_man);
+            holders.unparticipateT = (TextView) view.findViewById(R.id.unparticipate);
+            holders.pic = (ImageView) view.findViewById(R.id.pic);
+            holders.invitation = (LinearLayout) view.findViewById(R.id.invitation);
+            holders.invitationI = (AnimButtonView) view.findViewById(R.id.invitationI);
+            holders.invitationT = (TextView) view.findViewById(R.id.invitationT);
+            holders.limitedlayoutL = (LinearLayout) view.findViewById(R.id.limitedlayout);
+            holders.unlimitedlayoutL = (LinearLayout) view.findViewById(R.id.unlimitedlayout);
+            holders.layoutV = (RelativeLayout) view.findViewById(R.id.layout);
+            LinearLayout.LayoutParams pams = (LinearLayout.LayoutParams) holders.layoutV.getLayoutParams();
+            pams.height = CarPlayApplication.getInstance().getImageHeight();
+            holders.layoutV.setLayoutParams(pams);
+            view.setTag(holders);
         } else {
+            holder = new ViewHolder();
+            view = LayoutInflater.from(mContext).inflate(R.layout.item_activelist, viewGroup, false);
+
+            holder.yingyaohou = (LinearLayout) view.findViewById(R.id.yingyaohou);
+            holder.yingyao_layout = (LinearLayout) view.findViewById(R.id.yingyao_layout);
+            holder.invitation = (LinearLayout) view.findViewById(R.id.invitation);
+            holder.titleT = (TextView) view.findViewById(R.id.dynamic_title);
+            holder.dynamic_carname = (TextView) view.findViewById(R.id.dynamic_carname);
+            holder.pay_type = (TextView) view.findViewById(R.id.pay_type);
+            holder.travelmode = (TextView) view.findViewById(R.id.travelmode);
+            holder.activity_place = (TextView) view.findViewById(R.id.activity_place);
+            holder.inviteT = (TextView) view.findViewById(R.id.inviteT);
+
+            holder.sexbgR = (RelativeLayout) view.findViewById(R.id.layout_sex_and_age);
+            holder.sexI = (ImageView) view.findViewById(R.id.iv_sex);
+            holder.ageT = (TextView) view.findViewById(R.id.tv_age);
+            holder.upload = (Button) view.findViewById(R.id.upload);
+            holder.takephotos = (Button) view.findViewById(R.id.takephotos);
+            holder.album = (Button) view.findViewById(R.id.album);
+
+
+            holder.dynamic_carlogo = (ImageView) view.findViewById(R.id.dynamic_carlogo);
+            holder.certification_achievement = (ImageView) view.findViewById(R.id.certification_achievement);
+            holder.activity_beijing = (ImageView) view.findViewById(R.id.activity_beijing);
+            holder.phtotoV = (LinearLayout) view.findViewById(R.id.phtoto);
+            holder.promtpT = (TextView) view.findViewById(R.id.promtp);
+
+            holder.dyanmic_one = (AnimButtonView) view.findViewById(R.id.dyanmic_one);
+            holder.dyanmic_two = (AnimButtonView) view.findViewById(R.id.dyanmic_two);
+            holder.yingyao = (AnimButtonView) view.findViewById(R.id.yingyao);
+            holder.hulue = (AnimButtonView) view.findViewById(R.id.hulue);
+            holder.invitationI = (AnimButtonView) view.findViewById(R.id.invitationI);
+
+
+            holder.activity_distance = (TextView) view.findViewById(R.id.active_distance);
+            holder.invitationT = (TextView) view.findViewById(R.id.invitationT);
+            holder.layoutV = (RelativeLayout) view.findViewById(R.id.layout);
+            FrameLayout.LayoutParams pams = (FrameLayout.LayoutParams) holder.layoutV.getLayoutParams();
+            pams.height = CarPlayApplication.getInstance().getImageHeight();
+            holder.layoutV.setLayoutParams(pams);
+            view.setTag(holder);
+        }
+        else {
 //            if ("官方活动".equals(type)) {
             if (TYPE_1 == type) {
                 holders = (ViewHolders) view.getTag();
@@ -358,7 +362,10 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
             holder.hulue.startScaleAnimation();
             holder.invitationI.startScaleAnimation();
 
-
+            if (user.isLogin()) {
+                holder.phtotoV.setVisibility(user.isHasAlbum() ? View.GONE : View.VISIBLE);
+                holder.promtpT.setVisibility(user.isHasAlbum() ? View.GONE : View.VISIBLE);
+            }
             Boolean isApplicant = JSONUtil.getBoolean(jo, "isApplicant");
 
             String licenseAuthStatus = JSONUtil.getString(js, "licenseAuthStatus");
@@ -517,6 +524,12 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                 }
             }
             holder.yingyao.setOnClickListener(new MyOnClick(holder, jo));
+
+            holder.upload.setOnClickListener(new MyupOnClick(holder, i));
+
+            holder.takephotos.setOnClickListener(new MyupOnClick(holder, i));
+
+            holder.album.setOnClickListener(new MyupOnClick(holder, i));
             holder.hulue.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -576,7 +589,7 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                     Intent it = new Intent(mContext, PersonDetailActivity2.class);
                     String userId = JSONUtil.getString(js, "userId");
                     it.putExtra("userId", userId);
-                    it.putExtra("activityId", JSONUtil.getString(jo,"activityId"));
+                    it.putExtra("activityId", JSONUtil.getString(jo, "activityId"));
 //                    System.out.println("我的活动+"+ JSONUtil.getString(jo,"activityId"));
                     it.putExtra("type", "activity");
                     mContext.startActivity(it);
@@ -587,6 +600,7 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
 
         return view;
     }
+
 
     class MyOnClick implements View.OnClickListener {
         ViewHolder holder;
@@ -617,36 +631,128 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
 //                        });
 //                        dialog.show();
 //                    } else {
-                        DhNet net = new DhNet(API2.CWBaseurl + "/application/" + appID + "/process?userId=" + user.getUserId() + "&token=" + user.getToken());
+                    DhNet net = new DhNet(API2.CWBaseurl + "/application/" + appID + "/process?userId=" + user.getUserId() + "&token=" + user.getToken());
 //                    DhNet net = new DhNet(API2.CWBaseurl + "application/" + appointmentId + "/process?userId=5609eb6d0cf224e7d878f695&token=a767ead8-7c00-4b90-b6de-9dcdb4d5bc41");
-                        net.addParam("accept", true);
-                        net.doPostInDialog(new NetTask(mContext) {
-                            @Override
-                            public void doInUI(Response response, Integer transfer) {
-                                if (response.isSuccess()) {
-                                    holder.yingyao_layout.setVisibility(View.GONE);
-                                    holder.yingyaohou.setVisibility(View.VISIBLE);
-                                    holder.invitation.setVisibility(View.GONE);
-                                    EventBus.getDefault().post("刷新我的活动");
-                                    System.out.println("应邀：" + response.isSuccess());
-                                }
+                    net.addParam("accept", true);
+                    net.doPostInDialog(new NetTask(mContext) {
+                        @Override
+                        public void doInUI(Response response, Integer transfer) {
+                            if (response.isSuccess()) {
+                                holder.yingyao_layout.setVisibility(View.GONE);
+                                holder.yingyaohou.setVisibility(View.VISIBLE);
+                                holder.invitation.setVisibility(View.GONE);
+                                EventBus.getDefault().post("刷新我的活动");
+                                System.out.println("应邀：" + response.isSuccess());
                             }
-                        });
+                        }
+                    });
 //                    }
                 }
                 break;
+                //上传
+                case R.id.upload:
+                    UserInfoManage.getInstance().checkLogin((Activity) mContext, new UserInfoManage.LoginCallBack() {
+                        @Override
+                        public void onisLogin() {
+                            if (uploadFlag) {
+                                uploadFlag = !uploadFlag;
+                                holder.takephotos.setVisibility(View.VISIBLE);
+                                holder.album.setVisibility(View.VISIBLE);
+                            } else {
+                                uploadFlag = !uploadFlag;
+                                holder.takephotos.setVisibility(View.GONE);
+                                holder.album.setVisibility(View.GONE);
+                            }
+                        }
+
+                        @Override
+                        public void onLoginFail() {
+
+                        }
+                    });
+
+                    break;
+                //拍照
+                case R.id.takephotos:
+                    Integer takephotos = Constant.TAKE_PHOTO;
+                    //传给Main2
+                    EventBus.getDefault().post(takephotos);
+                    EventBus.getDefault().post(takephotos);
+                    break;
+                //相册
+                case R.id.album:
+                    Integer album = Constant.PICK_PHOTO;
+                    //传给Main2
+                    EventBus.getDefault().post(album);
+                    EventBus.getDefault().post(album);
+                    break;
+
+            }
+        }
+    }
+
+    class MyupOnClick implements View.OnClickListener {
+
+        ViewHolder holder;
+        int position;
+        public MyupOnClick(ViewHolder holder, int position) {
+            this.holder = holder;
+            this.position = position;
+        }
+
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()) {
+                //上传
+                case R.id.upload:
+                    UserInfoManage.getInstance().checkLogin((Activity) mContext, new UserInfoManage.LoginCallBack() {
+                        @Override
+                        public void onisLogin() {
+                            if (uploadFlag) {
+                                uploadFlag = !uploadFlag;
+                                holder.takephotos.setVisibility(View.VISIBLE);
+                                holder.album.setVisibility(View.VISIBLE);
+                            } else {
+                                uploadFlag = !uploadFlag;
+                                holder.takephotos.setVisibility(View.GONE);
+                                holder.album.setVisibility(View.GONE);
+                            }
+                        }
+
+                        @Override
+                        public void onLoginFail() {
+
+                        }
+                    });
+
+                    break;
+                //拍照
+                case R.id.takephotos:
+                    Integer takephotos = Constant.TAKE_PHOTO;
+                    //传给Main2
+                    EventBus.getDefault().post(takephotos);
+                    break;
+                //相册
+                case R.id.album:
+                    Integer album = Constant.PICK_PHOTO;
+                    //传给Main2
+                    EventBus.getDefault().post(album);
+
+                    break;
+
             }
         }
     }
 
 
     class ViewHolder {
-        TextView titleT, dynamic_carname, pay_type, travelmode, activity_place, activity_distance, ageT, invitationT, inviteT;
+        TextView titleT, dynamic_carname, pay_type, travelmode, activity_place, activity_distance, ageT, invitationT, inviteT, promtpT;
         ImageView dynamic_carlogo, activity_beijing, certification_achievement, sexI;
         AnimButtonView dyanmic_one, dyanmic_two, yingyao, hulue, invitationI;
-        LinearLayout yingyao_layout, yingyaohou, invitation;
+        LinearLayout yingyao_layout, yingyaohou, invitation, phtotoV;
         private RelativeLayout sexbgR;
         RelativeLayout layoutV;
+        Button upload, takephotos, album;
     }
 
     class ViewHolders {

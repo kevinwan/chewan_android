@@ -128,6 +128,14 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/img_loading"
                     android:scaleType="centerCrop" />
+                <TextView
+                    android:id="@+id/promtp"
+                    style="@style/text_white_small"
+                    android:layout_marginTop="20dp"
+                    android:layout_toLeftOf="@+id/phtoto"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center"
+                    android:text="你不传2张照片就想看我的，不公平哦"/>
 
                 <TextView
                     android:id="@+id/promtp"
@@ -182,7 +190,48 @@
                 </LinearLayout>
 
                 <include layout="@layout/include_active_button" />
+                <LinearLayout
+                    android:id="@+id/phtoto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="16dp"
+                    android:animateLayoutChanges="true"
+                    android:orientation="vertical">
 
+                    <Button
+                        android:id="@+id/upload"
+                        android:layout_width="70dp"
+                        android:layout_height="38dp"
+                        android:background="@drawable/white_btn_bg"
+                        android:text="上传"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_small"
+                        android:visibility="visible" />
+
+                    <Button
+                        android:id="@+id/takephotos"
+                        android:layout_width="70dp"
+                        android:layout_height="38dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/white_btn_bg"
+                        android:text="拍照"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_small"
+                        android:visibility="gone" />
+
+                    <Button
+                        android:id="@+id/album"
+                        android:layout_width="70dp"
+                        android:layout_height="38dp"
+                        android:background="@drawable/white_btn_bg"
+                        android:text="相册"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_small"
+                        android:visibility="gone" />
+                </LinearLayout>
             </RelativeLayout>
             <!--<LinearLayout-->
             <!--android:layout_width="fill_parent"-->
