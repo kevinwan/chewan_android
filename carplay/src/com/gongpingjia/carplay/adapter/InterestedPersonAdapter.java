@@ -321,7 +321,6 @@ public class InterestedPersonAdapter extends BaseAdapter {
                             "android.media.action.IMAGE_CAPTURE");
                     getImageByCamera.putExtra(MediaStore.EXTRA_OUTPUT,
                             Uri.fromFile(new File(mPhotoPath)));
-                    getImageByCamera.putExtra("mPhotoPath",mPhotoPath);
                     ((Activity)mContext).startActivityForResult(getImageByCamera,
                             Constant.TAKE_PHOTO);
                     break;
