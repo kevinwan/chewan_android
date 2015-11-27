@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +26,7 @@ import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.active.ActiveDetailsActivity2;
 import com.gongpingjia.carplay.activity.chat.ChatActivity;
 import com.gongpingjia.carplay.activity.chat.VoiceCallActivity;
+import com.gongpingjia.carplay.activity.main.PhotoSelectorActivity;
 import com.gongpingjia.carplay.activity.my.PersonDetailActivity2;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.api.Constant;
@@ -46,6 +49,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
@@ -63,13 +67,14 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
     private List<JSONObject> data;
     private boolean uploadFlag = true;
     User user = User.getInstance();
-
+    public String mPhotoPath;
     final int TYPE_1 = 0;       //官方活动
     final int TYPE_2 = 1;
-
+    File mCacheDir;
     public MyDyanmicBaseAdapter(Context context) {
         mContext = context;
-
+        mCacheDir = new File(mContext.getExternalCacheDir(), "CarPlay");
+        mCacheDir.mkdirs();
     }
 
     public void setData(List<JSONObject> data) {
@@ -524,12 +529,9 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                 }
             }
             holder.yingyao.setOnClickListener(new MyOnClick(holder, jo));
-
-            holder.upload.setOnClickListener(new MyupOnClick(holder, i));
-
-            holder.takephotos.setOnClickListener(new MyupOnClick(holder, i));
-
-            holder.album.setOnClickListener(new MyupOnClick(holder, i));
+            holder.upload.setOnClickListener(new MyOnClick(holder, jo));
+            holder.takephotos.setOnClickListener(new MyOnClick(holder, jo));
+            holder.album.setOnClickListener(new MyOnClick(holder, jo));
             holder.hulue.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -674,75 +676,47 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                     break;
                 //拍照
                 case R.id.takephotos:
-                    Integer takephotos = Constant.TAKE_PHOTO;
-                    //传给Main2
-                    EventBus.getDefault().post(takephotos);
-                    EventBus.getDefault().post(takephotos);
+                    mPhotoPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg").getAbsolutePath();
+                    Intent getImageByCamera = new Intent(
+                            "android.media.action.IMAGE_CAPTURE");
+                    getImageByCamera.putExtra(MediaStore.EXTRA_OUTPUT,
+                            Uri.fromFile(new File(mPhotoPath)));
+                    getImageByCamera.putExtra("mPhotoPath", mPhotoPath);
+                    ((Activity)mContext).startActivityForResult(getImageByCamera,
+                            Constant.TAKE_PHOTO);
                     break;
                 //相册
                 case R.id.album:
-                    Integer album = Constant.PICK_PHOTO;
-                    //传给Main2
-                    EventBus.getDefault().post(album);
-                    EventBus.getDefault().post(album);
+                    mPhotoPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg").getAbsolutePath();
+                    Intent intent = new Intent(mContext,
+                            PhotoSelectorActivity.class);
+                    intent.putExtra(PhotoSelectorActivity.KEY_MAX,
+                            10);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    ((Activity)mContext).startActivityForResult(intent, Constant.PICK_PHOTO);
                     break;
+
 
             }
         }
     }
 
-    class MyupOnClick implements View.OnClickListener {
-
-        ViewHolder holder;
-        int position;
-        public MyupOnClick(ViewHolder holder, int position) {
-            this.holder = holder;
-            this.position = position;
-        }
-
-        @Override
-        public void onClick(View view) {
-            switch (view.getId()) {
-                //上传
-                case R.id.upload:
-                    UserInfoManage.getInstance().checkLogin((Activity) mContext, new UserInfoManage.LoginCallBack() {
-                        @Override
-                        public void onisLogin() {
-                            if (uploadFlag) {
-                                uploadFlag = !uploadFlag;
-                                holder.takephotos.setVisibility(View.VISIBLE);
-                                holder.album.setVisibility(View.VISIBLE);
-                            } else {
-                                uploadFlag = !uploadFlag;
-                                holder.takephotos.setVisibility(View.GONE);
-                                holder.album.setVisibility(View.GONE);
-                            }
-                        }
-
-                        @Override
-                        public void onLoginFail() {
-
-                        }
-                    });
-
-                    break;
-                //拍照
-                case R.id.takephotos:
-                    Integer takephotos = Constant.TAKE_PHOTO;
-                    //传给Main2
-                    EventBus.getDefault().post(takephotos);
-                    break;
-                //相册
-                case R.id.album:
-                    Integer album = Constant.PICK_PHOTO;
-                    //传给Main2
-                    EventBus.getDefault().post(album);
-
-                    break;
-
-            }
-        }
-    }
+//    class MyupOnClick implements View.OnClickListener {
+//
+//        ViewHolder holder;
+//        int position;
+//        public MyupOnClick(ViewHolder holder, int position) {
+//            this.holder = holder;
+//            this.position = position;
+//        }
+//
+//        @Override
+//        public void onClick(View view) {
+//            switch (view.getId()) {
+//
+//            }
+//        }
+//    }
 
 
     class ViewHolder {
