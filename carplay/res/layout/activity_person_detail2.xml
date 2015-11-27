@@ -175,7 +175,7 @@
                     style="@style/text_white_small"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="27dp"
-                    android:text="你不传2张照片就想看我的，不公平哦~" />
+                    android:text="你要传两张照片才能看哟~" />
 
                 <Button
                     android:id="@+id/upload"

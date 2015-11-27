@@ -114,9 +114,9 @@
                 style="@style/text_white_small"
                 android:layout_marginTop="20dp"
                 android:layout_toLeftOf="@+id/phtoto"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="25dp"
                 android:gravity="center"
-                android:text="你不传2张照片就想看我的,不公平哦"/>
+                android:text="你要传两张照片才能看哟~"/>
 
 
             <com.gongpingjia.carplay.view.AnimButtonView

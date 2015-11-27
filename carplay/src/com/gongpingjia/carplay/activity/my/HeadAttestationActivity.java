@@ -86,6 +86,7 @@ public class HeadAttestationActivity extends CarPlayBaseActivity implements View
             up_head.setImageResource(R.drawable.mofangdongzuo);
         } else if (status.equals("认证中")) {
             up_head.setEnabled(false);
+            up_head.setScaleType(ImageView.ScaleType.CENTER_CROP);
             head_authenticate.setEnabled(false);
             head_authenticate.setBackgroundResource(R.drawable.btn_grey_fillet);
             head_authenticate.setText("认证中");

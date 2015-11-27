@@ -552,7 +552,12 @@ public class DyanmicBaseAdapter extends BaseAdapter {
                     it.putExtra("userId", userId);
                     it.putExtra("activityId", JSONUtil.getString(jo,"activityId"));
 //                    System.out.println("活动动态+"+JSONUtil.getString(jo,"activityId"));
-                    it.putExtra("type", "activity");
+                    if ("邀请同去".equals(JSONUtil.getString(jo, "activityCategory"))){
+                        it.putExtra("type", "yaotatongqu");
+                    }else{
+                        it.putExtra("type", "activity");
+                    }
+
                     mContext.startActivity(it);
                 }
             });
