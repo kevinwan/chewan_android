@@ -20,8 +20,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingBottom="9dp"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp"
+            android:paddingLeft="11dp"
+            android:paddingRight="11dp"
             android:paddingTop="15dp">
 
 
@@ -42,29 +42,37 @@
                     style="@style/text_black_medium"
                     android:singleLine="true"
                      />
-
-                <ImageView
-                    android:id="@+id/certification_achievement"
-                    android:layout_width="21dp"
-                    android:layout_height="21dp"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginRight="12dp"
-                    android:src="@drawable/headaut_dl" />
-
-                <ImageView
-                    android:id="@+id/dynamic_carlogo"
-                    android:layout_width="21dp"
-                    android:layout_height="21dp"
-                    android:src="@drawable/headaut_dl" />
-
                 <TextView
-                    android:id="@+id/dynamic_carname"
-                    style="@style/text_grey_small"
-                    android:layout_marginLeft="9dp"
-                    android:ellipsize="end"
-                    android:text="328i"
-                    android:visibility="gone"/>
+                    android:id="@+id/dynamic_yq"
+                    style="@style/text_black_medium"
+                    android:visibility="gone"
+                   android:text="邀请" />
+                <LinearLayout
+                    android:layout_width="62dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:id="@+id/certification_achievement"
+                        android:layout_width="21dp"
+                        android:layout_height="21dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:src="@drawable/headaut_dl" />
 
+                    <ImageView
+                        android:id="@+id/dynamic_carlogo"
+                        android:layout_width="21dp"
+                        android:layout_height="21dp"
+                        android:src="@drawable/headaut_dl" />
+
+                    <TextView
+                        android:id="@+id/dynamic_carname"
+                        style="@style/text_grey_small"
+                        android:layout_marginLeft="9dp"
+                        android:ellipsize="end"
+                        android:text="328i"
+                        android:visibility="gone"/>
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout

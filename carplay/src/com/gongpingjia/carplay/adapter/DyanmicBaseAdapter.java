@@ -147,6 +147,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
                 holder.pay_type = (TextView) view.findViewById(R.id.pay_type);
                 holder.travelmode = (TextView) view.findViewById(R.id.travelmode);
                 holder.activity_place = (TextView) view.findViewById(R.id.activity_place);
+                holder.dynamic_yq = (TextView) view.findViewById(R.id.dynamic_yq);
 
 
                 holder.sexbgR = (RelativeLayout) view.findViewById(R.id.layout_sex_and_age);
@@ -266,23 +267,29 @@ public class DyanmicBaseAdapter extends BaseAdapter {
                     holder.yingyaohou.setVisibility(View.GONE);
                     holder.titleT.setText("你邀请" + name + "去");
                     holder.invitationT.setText("邀请中");
+                    holder.dynamic_typeT.setText(typeT);
                     holder.invitationI.setResourseAndBg(R.drawable.dynamic_grey
                             , R.drawable.dynamic_grey);
+//                    holder.dynamic_yq.setVisibility(View.GONE);
                 } else {
 //                System.out.println("别人应邀我。。。。。。。。。。。。");
                     holder.yingyao_layout.setVisibility(View.VISIBLE);
                     holder.invitation.setVisibility(View.GONE);
                     holder.yingyaohou.setVisibility(View.GONE);
                     holder.titleT.setText(name + "想邀请你");
+                    holder.dynamic_typeT.setText(typeT);
                     holder.invitationI.setResourseAndBg(R.drawable.btn_red_fillet
                             , R.drawable.btn_red_fillet);
+//                    holder.dynamic_yq.setVisibility(View.GONE);
                 }
             } else if (status == 2) {
                 if (isApplicant == true) {
                     holder.yingyao_layout.setVisibility(View.GONE);
                     holder.yingyaohou.setVisibility(View.VISIBLE);
                     holder.invitation.setVisibility(View.GONE);
-                    holder.titleT.setText(name+"接受了您的");
+                    holder.titleT.setText(name + "接受了您的");
+                    holder.dynamic_typeT.setText(typeT+"邀请");
+//                    holder.dynamic_yq.setVisibility(View.VISIBLE);
 //                    holder.invitationT.setText("邀请中");
 //                    holder.invitationI.setResourseAndBg(R.drawable.dynamic_grey
 //                            , R.drawable.dynamic_grey);
@@ -290,13 +297,17 @@ public class DyanmicBaseAdapter extends BaseAdapter {
                     holder.yingyao_layout.setVisibility(View.GONE);
                     holder.invitation.setVisibility(View.GONE);
                     holder.yingyaohou.setVisibility(View.VISIBLE);
+//                    holder.dynamic_yq.setVisibility(View.VISIBLE);
 //                    holder.titleT.setText(name + "想邀请你");
                     holder.titleT.setText("您同意了"+name +"的");
+                    holder.dynamic_typeT.setText(typeT+"邀请");
                 }
             }
-            holder.dynamic_typeT.setText(typeT+"邀请");
+//            holder.dynamic_typeT.setText(typeT);
+//            holder.dynamic_yq.setText("邀请");
             if ("邀请同去".equals(JSONUtil.getString(jo, "activityCategory"))) {
                 holder.dynamic_typeT.setTextColor(mContext.getResources().getColor(R.color.text_orange));
+//                holder.dynamic_yq.setTextColor(mContext.getResources().getColor(R.color.text_orange));
                 holder.titlelayoutL.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -633,7 +644,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
     }
 
     class ViewHolder {
-        TextView titleT, dynamic_carname, pay_type, travelmode, activity_place, activity_distance, ageT, inviteT, invitationT, dynamic_typeT,promtpT;
+        TextView titleT, dynamic_carname, pay_type, travelmode, activity_place, activity_distance, ageT, inviteT, invitationT, dynamic_typeT,promtpT,dynamic_yq;
         ImageView dynamic_carlogo, activity_beijing, certification_achievement, sexI;
         AnimButtonView dyanmic_one, dyanmic_two, yingyao, hulue, invitationI;
         LinearLayout yingyao_layout, yingyaohou, invitation, titlelayoutL,phtotoV;

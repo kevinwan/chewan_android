@@ -161,9 +161,12 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
             holder.yingyaohou = (LinearLayout) view.findViewById(R.id.yingyaohou);
             holder.yingyao_layout = (LinearLayout) view.findViewById(R.id.yingyao_layout);
             holder.invitation = (LinearLayout) view.findViewById(R.id.invitation);
+            holder.titlelayoutL = (LinearLayout) view.findViewById(R.id.titlelayout);
             holder.titleT = (TextView) view.findViewById(R.id.dynamic_title);
+            holder.dynamic_yq = (TextView) view.findViewById(R.id.dynamic_yq);
             holder.dynamic_carname = (TextView) view.findViewById(R.id.dynamic_carname);
             holder.pay_type = (TextView) view.findViewById(R.id.pay_type);
+            holder.dynamic_typeT = (TextView) view.findViewById(R.id.dynamic_type);
             holder.travelmode = (TextView) view.findViewById(R.id.travelmode);
             holder.activity_place = (TextView) view.findViewById(R.id.activity_place);
             holder.inviteT = (TextView) view.findViewById(R.id.inviteT);
@@ -480,8 +483,10 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                     holder.invitation.setVisibility(View.VISIBLE);
                     holder.yingyao_layout.setVisibility(View.GONE);
                     holder.yingyaohou.setVisibility(View.GONE);
-                    holder.titleT.setText("你邀请" + name + "去" + typeT);
+                    holder.titleT.setText("你邀请" + name + "去");
                     holder.invitationT.setText("邀请中");
+                    holder.dynamic_typeT.setText(typeT);
+//                    holder.dynamic_yq.setVisibility(View.GONE);
                     holder.invitationI.setResourseAndBg(R.drawable.dynamic_grey
                             , R.drawable.dynamic_grey);
 
@@ -489,8 +494,10 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
 //                System.out.println("别人应邀我。。。。。。。。。。。。");
                     holder.yingyao_layout.setVisibility(View.VISIBLE);
                     holder.invitation.setVisibility(View.GONE);
+                    holder.dynamic_typeT.setText(typeT);
                     holder.yingyaohou.setVisibility(View.GONE);
-                    holder.titleT.setText(name + "想邀请你" + typeT);
+//                    holder.dynamic_yq.setVisibility(View.GONE);
+                    holder.titleT.setText(name + "想邀请你" );
                 }
 
             } else if (status == 2) {
@@ -498,15 +505,19 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                     holder.yingyao_layout.setVisibility(View.GONE);
                     holder.yingyaohou.setVisibility(View.VISIBLE);
                     holder.invitation.setVisibility(View.GONE);
-                    holder.titleT.setText("你邀请" + name + "去" + typeT);
+                    holder.titleT.setText(name + "接受了您的" );
                     holder.invitationT.setText("邀请中");
+                    holder.dynamic_typeT.setText(typeT + "邀请");
+//                    holder.dynamic_yq.setVisibility(View.VISIBLE);
                     holder.invitationI.setResourseAndBg(R.drawable.dynamic_grey
                             , R.drawable.dynamic_grey);
                 } else {
                     holder.yingyao_layout.setVisibility(View.GONE);
                     holder.invitation.setVisibility(View.GONE);
                     holder.yingyaohou.setVisibility(View.VISIBLE);
-                    holder.titleT.setText(name + "想邀请你" + typeT);
+//                    holder.dynamic_yq.setVisibility(View.VISIBLE);
+                    holder.dynamic_typeT.setText(typeT+"邀请");
+                    holder.titleT.setText("您同意了"+name +"的");
                 }
 
             } else if (status == 4) {
@@ -514,8 +525,10 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                     holder.yingyao_layout.setVisibility(View.GONE);
                     holder.yingyaohou.setVisibility(View.GONE);
                     holder.invitation.setVisibility(View.VISIBLE);
-                    holder.titleT.setText("你邀请" + name + "去" + typeT);
+                    holder.titleT.setText("你邀请" + name + "去");
                     holder.invitationT.setText("已失效");
+                    holder.dynamic_typeT.setText(typeT);
+//                    holder.dynamic_yq.setVisibility(View.GONE);
                     holder.invitationI.setResourseAndBg(R.drawable.dynamic_grey
                             , R.drawable.dynamic_grey);
                 } else {
@@ -523,11 +536,39 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
                     holder.yingyaohou.setVisibility(View.GONE);
                     holder.invitation.setVisibility(View.VISIBLE);
                     holder.invitationT.setText("已失效");
+                    holder.dynamic_typeT.setText(typeT);
+//                    holder.dynamic_yq.setVisibility(View.GONE);
                     holder.invitationI.setResourseAndBg(R.drawable.dynamic_grey
                             , R.drawable.dynamic_grey);
-                    holder.titleT.setText(name + "想邀请你" + typeT);
+                    holder.titleT.setText(name + "想邀请你" );
                 }
             }
+//            holder.dynamic_typeT.setText(typeT);
+//            holder.dynamic_yq.setText("邀请");
+            if ("邀请同去".equals(JSONUtil.getString(jo, "activityCategory"))) {
+                holder.dynamic_typeT.setTextColor(mContext.getResources().getColor(R.color.text_orange));
+//                holder.dynamic_yq.setTextColor(mContext.getResources().getColor(R.color.text_orange));
+                holder.titlelayoutL.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(mContext, ActiveDetailsActivity2.class);
+                        intent.putExtra("activityId", activityId);
+                        mContext.startActivity(intent);
+                    }
+                });
+            } else {
+                holder.dynamic_typeT.setTextColor(mContext.getResources().getColor(R.color.text_black));
+                holder.titlelayoutL.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent it = new Intent(mContext, PersonDetailActivity2.class);
+                        String userId = JSONUtil.getString(js, "userId");
+                        it.putExtra("userId", userId);
+                        mContext.startActivity(it);
+                    }
+                });
+            }
+
             holder.yingyao.setOnClickListener(new MyOnClick(holder, jo));
             holder.upload.setOnClickListener(new MyOnClick(holder, jo));
             holder.takephotos.setOnClickListener(new MyOnClick(holder, jo));
@@ -720,10 +761,10 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
 
 
     class ViewHolder {
-        TextView titleT, dynamic_carname, pay_type, travelmode, activity_place, activity_distance, ageT, invitationT, inviteT, promtpT;
+        TextView titleT, dynamic_carname, pay_type, travelmode, activity_place, activity_distance, ageT, invitationT, inviteT, promtpT,dynamic_typeT,dynamic_yq;
         ImageView dynamic_carlogo, activity_beijing, certification_achievement, sexI;
         AnimButtonView dyanmic_one, dyanmic_two, yingyao, hulue, invitationI;
-        LinearLayout yingyao_layout, yingyaohou, invitation, phtotoV;
+        LinearLayout yingyao_layout, yingyaohou, invitation, phtotoV,titlelayoutL;
         private RelativeLayout sexbgR;
         RelativeLayout layoutV;
         Button upload, takephotos, album;
