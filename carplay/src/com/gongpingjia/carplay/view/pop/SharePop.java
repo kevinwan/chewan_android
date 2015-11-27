@@ -18,7 +18,6 @@ import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.PersonShareActive;
-import com.gongpingjia.carplay.bean.TabEB;
 import com.gongpingjia.carplay.bean.User;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.bean.SocializeEntity;
@@ -36,11 +35,6 @@ import net.duohuo.dhroid.net.Response;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import de.greenrobot.event.EventBus;
 
 /**
  * Created by Administrator on 2015/11/19.
@@ -121,11 +115,11 @@ public class SharePop implements View.OnClickListener {
         layout_share_wxcircle.setOnClickListener(this);
         tv_cancel.setOnClickListener(this);
 
-        if (type==1) {
-            layout_share_weixin.setVisibility(View.INVISIBLE);
-            layout_share_wxcircle.setVisibility(View.INVISIBLE);
-            nextMatching();
-        }
+//        if (type==1) {
+//            layout_share_weixin.setVisibility(View.INVISIBLE);
+//            layout_share_wxcircle.setVisibility(View.INVISIBLE);
+//            nextMatching();
+//        }
 
         setupShare();
     }
@@ -141,12 +135,22 @@ public class SharePop implements View.OnClickListener {
             //好友
             case R.id.layout_share_weixin:
                 pop.dismiss();
-                shareToWeixinFriend();
+                if (type==1){
+                    nextMatching(0);
+                }else {
+                    shareToWeixinFriend();
+                }
+
                 break;
             //朋友圈
             case R.id.layout_share_wxcircle:
                 pop.dismiss();
-                shareToWeixinCircle();
+                if (type==1){
+                    nextMatching(1);
+                }else {
+                    shareToWeixinCircle();
+                }
+
                 break;
             case R.id.tv_cancel:
                 pop.dismiss();
@@ -238,7 +242,8 @@ public class SharePop implements View.OnClickListener {
         }
     }
 
-    private void nextMatching(){
+    // type :   0 好友   1朋友圈
+    private void nextMatching(final int sharetype){
         final DhNet dhNet = new DhNet(API2.getMatchUrl(user.getUserId(), user.getToken()));
         dhNet.addParam("majorType", PersonShareActive.matchingEB.getMajorType() );
         dhNet.addParam("type",PersonShareActive.matchingEB.getType());
@@ -263,17 +268,21 @@ public class SharePop implements View.OnClickListener {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    layout_share_weixin.setVisibility(View.VISIBLE);
-                    layout_share_wxcircle.setVisibility(View.VISIBLE);
-
-                    Map<String, Object> map = new HashMap<String, Object>();
-                    map.put("type", PersonShareActive.matchingEB.getType());
-                    map.put("pay", PersonShareActive.matchingEB.getPay());
-                    map.put("majorType", PersonShareActive.matchingEB.getMajorType());
-                    map.put("transfer", PersonShareActive.matchingEB.isTransfer());
-                    TabEB tab = new TabEB(2, map);
-                    //控制主页跳往匹配意向结果页
-                    EventBus.getDefault().post(tab);
+//                    layout_share_weixin.setVisibility(View.VISIBLE);
+//                    layout_share_wxcircle.setVisibility(View.VISIBLE);
+                    if (sharetype==0){
+                        shareToWeixinFriend();
+                    }else if (sharetype==1){
+                        shareToWeixinCircle();
+                    }
+//                    Map<String, Object> map = new HashMap<String, Object>();
+//                    map.put("type", PersonShareActive.matchingEB.getType());
+//                    map.put("pay", PersonShareActive.matchingEB.getPay());
+//                    map.put("majorType", PersonShareActive.matchingEB.getMajorType());
+//                    map.put("transfer", PersonShareActive.matchingEB.isTransfer());
+//                    TabEB tab = new TabEB(2, map);
+//                    //控制主页跳往匹配意向结果页
+//                    EventBus.getDefault().post(tab);
                 }
             }
         });

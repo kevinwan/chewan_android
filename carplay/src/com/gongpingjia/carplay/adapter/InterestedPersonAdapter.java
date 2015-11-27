@@ -1,12 +1,17 @@
 package com.gongpingjia.carplay.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -14,6 +19,7 @@ import android.widget.TextView;
 
 import com.gongpingjia.carplay.CarPlayValueFix;
 import com.gongpingjia.carplay.R;
+import com.gongpingjia.carplay.activity.main.PhotoSelectorActivity;
 import com.gongpingjia.carplay.api.API2;
 import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.User;
@@ -32,6 +38,7 @@ import net.duohuo.dhroid.util.ViewUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.List;
 
 import jp.wasabeef.blurry.Blurry;
@@ -50,8 +57,16 @@ public class InterestedPersonAdapter extends BaseAdapter {
     String name, pay, activityType;
     boolean activityTransfer;
 
+    private boolean uploadFlag = true;
+
+    public String mPhotoPath;
+
+    File mCacheDir;
+
     public InterestedPersonAdapter(Context context) {
         mContext = context;
+        mCacheDir = new File(mContext.getExternalCacheDir(), "CarPlay");
+        mCacheDir.mkdirs();
     }
 
     public void setData(List<JSONObject> data) {
@@ -106,6 +121,12 @@ public class InterestedPersonAdapter extends BaseAdapter {
             holder.photoDistancelayoutL = (LinearLayout) convertView.findViewById(R.id.photo_distancelayout);
             holder.activeDistancelayoutl = (LinearLayout) convertView.findViewById(R.id.active_distancelayout);
             holder.invitationI = (AnimButtonView) convertView.findViewById(R.id.invitationI);
+
+            holder.upload = (Button) convertView.findViewById(R.id.upload);
+            holder.takephotos = (Button) convertView.findViewById(R.id.takephotos);
+            holder.album = (Button) convertView.findViewById(R.id.album);
+            holder.phtotoV = (LinearLayout)convertView.findViewById(R.id.phtoto);
+            holder.promtpT = (TextView) convertView.findViewById(R.id.promtp);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -181,6 +202,18 @@ public class InterestedPersonAdapter extends BaseAdapter {
         } else {
             holder.carStateI.setImageResource(R.drawable.no_car);
         }
+
+        final User user = User.getInstance();
+        if (user.isLogin()) {
+            holder.phtotoV.setVisibility(user.isHasAlbum() ? View.GONE : View.VISIBLE);
+            holder.promtpT.setVisibility(user.isHasAlbum() ? View.GONE : View.VISIBLE);
+        }
+
+        holder.upload.setOnClickListener(new MyOnClick(holder, position));
+
+        holder.takephotos.setOnClickListener(new MyOnClick(holder, position));
+
+        holder.album.setOnClickListener(new MyOnClick(holder, position));
 
         // 0为活动信息   1位上传相册信息
         int type = JSONUtil.getInt(jo, "type");
@@ -268,6 +301,41 @@ public class InterestedPersonAdapter extends BaseAdapter {
                     JSONObject jo = getItem(position);
                     join(JSONUtil.getString(jo, "relatedId"), holder, jo);
                     break;
+                //上传
+                case R.id.upload:
+                            if (uploadFlag) {
+                                uploadFlag = !uploadFlag;
+                                holder.takephotos.setVisibility(View.VISIBLE);
+                                holder.album.setVisibility(View.VISIBLE);
+                            } else {
+                                uploadFlag = !uploadFlag;
+                                holder.takephotos.setVisibility(View.GONE);
+                                holder.album.setVisibility(View.GONE);
+                            }
+
+                    break;
+                //拍照
+                case R.id.takephotos:
+                    mPhotoPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg").getAbsolutePath();
+                    Intent getImageByCamera = new Intent(
+                            "android.media.action.IMAGE_CAPTURE");
+                    getImageByCamera.putExtra(MediaStore.EXTRA_OUTPUT,
+                            Uri.fromFile(new File(mPhotoPath)));
+                    getImageByCamera.putExtra("mPhotoPath",mPhotoPath);
+                    ((Activity)mContext).startActivityForResult(getImageByCamera,
+                            Constant.TAKE_PHOTO);
+                    break;
+                //相册
+                case R.id.album:
+                    mPhotoPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg").getAbsolutePath();
+                    Intent intent = new Intent(mContext,
+                            PhotoSelectorActivity.class);
+                    intent.putExtra(PhotoSelectorActivity.KEY_MAX,
+                            10);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    ((Activity)mContext).startActivityForResult(intent, Constant.PICK_PHOTO);
+                    break;
+
             }
         }
     }
@@ -299,14 +367,16 @@ public class InterestedPersonAdapter extends BaseAdapter {
     }
 
     class ViewHolder {
-        TextView titleT, carNameT, ageT, payT, transferT, locationT, activeDistanceT, photoDistanceT, invitationT;
+        TextView titleT, carNameT, ageT, payT, transferT, locationT, activeDistanceT, photoDistanceT, invitationT,promtpT;
 
         ImageView headStateI, carStateI, sexI, headbgI;
 
         RelativeLayout sexLayoutR;
+        Button upload,takephotos,album;
 
         AnimButtonView invitationI;
-        LinearLayout invitationL, activeDistancelayoutl, photoDistancelayoutL;
+        LinearLayout invitationL, activeDistancelayoutl, photoDistancelayoutL,phtotoV;
+
     }
 
 
