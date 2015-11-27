@@ -124,7 +124,7 @@ public class LookAroundDialog extends BaseAlertDialog {
         JSONArray albumjsa = JSONUtil.getJSONArray(userjo, "album");
         //昵称,活动类型,年龄,性别,头像
         String activetype = JSONUtil.getString(jo, "type");
-        nickname.setText(JSONUtil.getString(userjo, "nickname") + "想约人" + activetype);
+        nickname.setText(JSONUtil.getString(userjo, "nickname") + "想找人" + activetype);
         age.setText(JSONUtil.getInt(userjo, "age") + "");
         String sexstr = JSONUtil.getString(userjo, "gender");
 
