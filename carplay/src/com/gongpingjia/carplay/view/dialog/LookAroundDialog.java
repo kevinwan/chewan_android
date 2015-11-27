@@ -50,7 +50,7 @@ public class LookAroundDialog extends BaseAlertDialog {
 
     Context mContext;
 
-    TextView nickname, car_name, age, pay, transfer, location, distance, join_desT;
+    TextView nickname, car_name, age, pay, transfer, location, distance, join_desT,promtpT;
     ImageView headatt, car_logo, sex, active_bg;
 //    AttentionImageView attention;
     RelativeLayout sexLayout;
@@ -59,12 +59,14 @@ public class LookAroundDialog extends BaseAlertDialog {
 
     JSONObject jo;
 
+    String avatar;
+
     private boolean uploadFlag = true;
 
     // 图片缓存根目录
     private File mCacheDir;
     private String mPhotoPath;
-
+    LinearLayout phtoto;
     public LookAroundDialog(Context context, JSONObject jo) {
         super(context);
         this.mContext = context;
@@ -76,6 +78,7 @@ public class LookAroundDialog extends BaseAlertDialog {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_lookaround);
+        EventBus.getDefault().register(this);
         LinearLayout beijing  = (LinearLayout) findViewById(R.id.kankan_dismiss);
         beijing.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,8 +109,10 @@ public class LookAroundDialog extends BaseAlertDialog {
         distance = (TextView) findViewById(R.id.tv_distance);
         upload = (Button) findViewById(R.id.upload);
         takephotos = (Button) findViewById(R.id.takephotos);
+         phtoto = (LinearLayout) findViewById(R.id.phtoto);
         album = (Button) findViewById(R.id.album);
         join_desT = (TextView) findViewById(R.id.join_des);
+        promtpT = (TextView) findViewById(R.id.promtp);
 
         if (jo != null) {
             bindData();
@@ -152,10 +157,12 @@ public class LookAroundDialog extends BaseAlertDialog {
         final User user = User.getInstance();
         if (user.isLogin()) {
             upload.setVisibility(user.isHasAlbum() ? View.GONE : View.VISIBLE);
+            promtpT.setVisibility(user.isHasAlbum() ? View.GONE : View.VISIBLE);
         } else {
             upload.setVisibility(View.GONE);
         }
-        ImageLoader.getInstance().displayImage(JSONUtil.getString(userjo, "avatar"), active_bg, CarPlayValueFix.optionsDefault, new ImageLoadingListener() {
+        avatar=JSONUtil.getString(userjo, "avatar");
+        ImageLoader.getInstance().displayImage(avatar, active_bg, CarPlayValueFix.optionsDefault, new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String s, View view) {
 
@@ -415,6 +422,15 @@ public class LookAroundDialog extends BaseAlertDialog {
                 }
             }
         });
+    }
+
+    public void onEventMainThread(String response) {
+        if ("刷新随便看看弹框".equals(response)) {
+            ViewUtil.bindNetImage(active_bg, avatar, "default");
+//            upload.setVisibility(View.GONE);
+            promtpT.setVisibility(View.GONE);
+            phtoto.setVisibility(View.GONE);
+        }
     }
 
 }

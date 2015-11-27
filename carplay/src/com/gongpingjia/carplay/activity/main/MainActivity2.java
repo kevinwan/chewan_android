@@ -613,6 +613,9 @@ public class MainActivity2 extends BaseFragmentActivity implements
                 JSONObject jo = response.jSONFromData();
                 JSONArray albumJsa = JSONUtil.getJSONArray(jo, "album");
                 user.setHasAlbum(albumJsa.length() > 1);         //设置相册状态
+                if (albumJsa.length() > 1){
+                    EventBus.getDefault().post("刷新随便看看弹框");
+                }
             }
         });
     }
