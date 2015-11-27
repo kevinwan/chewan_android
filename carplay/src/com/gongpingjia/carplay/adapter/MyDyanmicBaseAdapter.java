@@ -163,7 +163,7 @@ public class MyDyanmicBaseAdapter extends BaseAdapter {
             holder.invitation = (LinearLayout) view.findViewById(R.id.invitation);
             holder.titlelayoutL = (LinearLayout) view.findViewById(R.id.titlelayout);
             holder.titleT = (TextView) view.findViewById(R.id.dynamic_title);
-            holder.dynamic_yq = (TextView) view.findViewById(R.id.dynamic_yq);
+//            holder.dynamic_yq = (TextView) view.findViewById(R.id.dynamic_yq);
             holder.dynamic_carname = (TextView) view.findViewById(R.id.dynamic_carname);
             holder.pay_type = (TextView) view.findViewById(R.id.pay_type);
             holder.dynamic_typeT = (TextView) view.findViewById(R.id.dynamic_type);

@@ -147,7 +147,7 @@ public class DyanmicBaseAdapter extends BaseAdapter {
                 holder.pay_type = (TextView) view.findViewById(R.id.pay_type);
                 holder.travelmode = (TextView) view.findViewById(R.id.travelmode);
                 holder.activity_place = (TextView) view.findViewById(R.id.activity_place);
-                holder.dynamic_yq = (TextView) view.findViewById(R.id.dynamic_yq);
+//                holder.dynamic_yq = (TextView) view.findViewById(R.id.dynamic_yq);
 
 
                 holder.sexbgR = (RelativeLayout) view.findViewById(R.id.layout_sex_and_age);
