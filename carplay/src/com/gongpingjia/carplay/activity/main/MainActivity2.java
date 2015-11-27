@@ -280,7 +280,8 @@ public class MainActivity2 extends BaseFragmentActivity implements
         appointmentI.setAnimation(rotateAnimation);
         rotateAnimation.start();
 
-        if (per.isTodayFirst){
+        if (per.isTodayFirst) {
+
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -288,7 +289,6 @@ public class MainActivity2 extends BaseFragmentActivity implements
                 }
             }, 1000);
         }
-
 
 
         //图片模糊处理
@@ -424,7 +424,6 @@ public class MainActivity2 extends BaseFragmentActivity implements
             }
         }
     }
-
 
 
     public void switchContent(Fragment fragment) {
@@ -604,7 +603,8 @@ public class MainActivity2 extends BaseFragmentActivity implements
             }
         });
     }
-    private void setHasAlbm(){
+
+    private void setHasAlbm() {
         DhNet net = new DhNet(API2.CWBaseurl + "/user/" + user.getUserId()
                 + "/info?viewUser=" + user.getUserId() + "&token=" + user.getToken());
         net.doGet(new NetTask(self) {
@@ -649,12 +649,12 @@ public class MainActivity2 extends BaseFragmentActivity implements
     }
 
     public void onEventMainThread(MatchingEB matchingEB) {
-            //切换到匹配意向,从匹配意向发过来的消息,tab.getParams()代表匹配的条件
+        //切换到匹配意向,从匹配意向发过来的消息,tab.getParams()代表匹配的条件
         MatchingPreviewFragment matching = new MatchingPreviewFragment(matchingEB);
         switchContent(matching);
 //            switchContent(MatchingPreviewFragment.getInstance());
 //            MatchingPreviewFragment.getInstance().setParams(matchingEB);
-            setTitle("匹配活动预览");
+        setTitle("匹配活动预览");
         right_icon.setVisibility(View.VISIBLE);
         right_icon.setImageResource(R.drawable.share_icon);
         right_icon.setOnClickListener(new View.OnClickListener() {
@@ -666,7 +666,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
 //                bundle.putString("shareTitle", PersonShareActive.shareTitle+"\n");
 //                bundle.putString("shareContent",PersonShareActive.shareContent);
 //                bundle.putString("image",PersonShareActive.image);
-                SharePop pop = new SharePop(self, bundle,1);
+                SharePop pop = new SharePop(self, bundle, 1);
                 pop.show();
 
             }
@@ -846,13 +846,13 @@ public class MainActivity2 extends BaseFragmentActivity implements
         switch (event.getEvent()) {
             case EventNewMessage: // 普通消息
             {
-                Log.d("msg","普通");
+                Log.d("msg", "普通");
                 EMMessage message = (EMMessage) event.getData();
 
 
                 final int type = message.getIntAttribute("type", -1);
 
-                Log.d("msg","type:"+type);
+                Log.d("msg", "type:" + type);
                 if (type != -1) {
                     EventBus.getDefault().post("上传成功");
                     Log.d("msg", "发送了:");
@@ -871,7 +871,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
             }
 
             case EventOfflineMessage: {
-                Log.d("msg","离线");
+                Log.d("msg", "离线");
                 EMMessage message = (EMMessage) event.getData();
                 runOnUiThread(new Runnable() {
                     public void run() {
@@ -885,7 +885,7 @@ public class MainActivity2 extends BaseFragmentActivity implements
             }
 
             case EventConversationListChanged: {
-                Log.d("msg","未知");
+                Log.d("msg", "未知");
                 break;
             }
 
@@ -1003,7 +1003,6 @@ public class MainActivity2 extends BaseFragmentActivity implements
             }
         }
     };
-
 
 
     private void uploadPointRecord() {
