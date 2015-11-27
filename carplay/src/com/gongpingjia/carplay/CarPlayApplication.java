@@ -2,6 +2,7 @@ package com.gongpingjia.carplay;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDex;
 import android.util.Log;
 
 import com.easemob.EMCallBack;
@@ -56,7 +57,7 @@ public class CarPlayApplication extends Application implements
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-//        MultiDex.install(this);
+        MultiDex.install(this);
     }
 
     @Override
