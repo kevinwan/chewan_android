@@ -142,6 +142,43 @@ android {
         }
 
 
+        Woshangdian {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Woshangdian"]
+        }
+
+        Suning {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Suning"]
+        }
+
+        Nduo {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Nduo"]
+        }
+
+        Souhu {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Souhu"]
+        }
+
+        Tongbutui {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Tongbutui"]
+        }
+
+        Mogu {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Mogu"]
+        }
+
+        Liqu {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Liqu"]
+        }
+
+        MaoPaotang {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "MaoPaotang"]
+        }
+
+        Sougou {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Sougou"]
+        }
+
+
     }
     productFlavors.all {
         flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
