@@ -1,15 +1,19 @@
 package com.gongpingjia.carplay.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,8 +26,10 @@ import com.gongpingjia.carplay.R;
 import com.gongpingjia.carplay.activity.active.ActiveDetailsActivity2;
 import com.gongpingjia.carplay.activity.chat.ChatActivity;
 import com.gongpingjia.carplay.activity.chat.VoiceCallActivity;
+import com.gongpingjia.carplay.activity.main.PhotoSelectorActivity;
 import com.gongpingjia.carplay.activity.my.PersonDetailActivity2;
 import com.gongpingjia.carplay.api.API2;
+import com.gongpingjia.carplay.api.Constant;
 import com.gongpingjia.carplay.bean.PointRecord;
 import com.gongpingjia.carplay.bean.User;
 import com.gongpingjia.carplay.util.CarPlayUtil;
@@ -42,6 +48,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
@@ -60,9 +67,16 @@ public class DyanmicBaseAdapter extends BaseAdapter {
 
     User user = User.getInstance();
 
+    private boolean uploadFlag = true;
+
+    public String mPhotoPath;
+
+    File mCacheDir;
+
     public DyanmicBaseAdapter(Context context) {
         mContext = context;
-
+        mCacheDir = new File(mContext.getExternalCacheDir(), "CarPlay");
+        mCacheDir.mkdirs();
     }
 
     public void setData(List<JSONObject> data) {
@@ -153,6 +167,12 @@ public class DyanmicBaseAdapter extends BaseAdapter {
                 holder.hulue = (AnimButtonView) view.findViewById(R.id.hulue);
                 holder.invitationI = (AnimButtonView) view.findViewById(R.id.invitationI);
 
+                holder.upload = (Button) view.findViewById(R.id.upload);
+                holder.takephotos = (Button) view.findViewById(R.id.takephotos);
+                holder.album = (Button) view.findViewById(R.id.album);
+                holder.phtotoV = (LinearLayout)view.findViewById(R.id.phtoto);
+                holder.promtpT = (TextView) view.findViewById(R.id.promtp);
+
                 holder.activity_distance = (TextView) view.findViewById(R.id.active_distance);
                 view.setTag(holder);
                 FrameLayout.LayoutParams pam = (FrameLayout.LayoutParams) holder.layoutV.getLayoutParams();
@@ -225,6 +245,18 @@ public class DyanmicBaseAdapter extends BaseAdapter {
             CarPlayUtil.bindActiveButton2("邀请中", appointmentId, mContext, holder.yingyao_layout, holder.yingyaohou);
             String typeT = JSONUtil.getString(jo, "type");
             String name = JSONUtil.getString(js, "nickname");
+
+            if (user.isLogin()) {
+                holder.phtotoV.setVisibility(user.isHasAlbum() ? View.GONE : View.VISIBLE);
+                holder.promtpT.setVisibility(user.isHasAlbum() ? View.GONE : View.VISIBLE);
+            }
+
+            holder.upload.setOnClickListener(new MyOnClick(holder, i));
+
+            holder.takephotos.setOnClickListener(new MyOnClick(holder, i));
+
+            holder.album.setOnClickListener(new MyOnClick(holder, i));
+
 
             if (status == 1) {
                 if (isApplicant == true) {
@@ -601,10 +633,11 @@ public class DyanmicBaseAdapter extends BaseAdapter {
     }
 
     class ViewHolder {
-        TextView titleT, dynamic_carname, pay_type, travelmode, activity_place, activity_distance, ageT, inviteT, invitationT, dynamic_typeT;
+        TextView titleT, dynamic_carname, pay_type, travelmode, activity_place, activity_distance, ageT, inviteT, invitationT, dynamic_typeT,promtpT;
         ImageView dynamic_carlogo, activity_beijing, certification_achievement, sexI;
         AnimButtonView dyanmic_one, dyanmic_two, yingyao, hulue, invitationI;
-        LinearLayout yingyao_layout, yingyaohou, invitation, titlelayoutL;
+        LinearLayout yingyao_layout, yingyaohou, invitation, titlelayoutL,phtotoV;
+        Button upload,takephotos,album;
 
         RelativeLayout layoutV;
         private RelativeLayout sexbgR;
@@ -621,5 +654,56 @@ public class DyanmicBaseAdapter extends BaseAdapter {
         LinearLayout limitedlayoutL, unlimitedlayoutL;
         RelativeLayout layoutV;
 
+    }
+
+    class MyOnClick implements View.OnClickListener {
+        ViewHolder holder;
+
+        int position;
+
+        public MyOnClick(ViewHolder holder, int position) {
+            this.holder = holder;
+            this.position = position;
+        }
+
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()) {
+                //上传
+                case R.id.upload:
+                    if (uploadFlag) {
+                        uploadFlag = !uploadFlag;
+                        holder.takephotos.setVisibility(View.VISIBLE);
+                        holder.album.setVisibility(View.VISIBLE);
+                    } else {
+                        uploadFlag = !uploadFlag;
+                        holder.takephotos.setVisibility(View.GONE);
+                        holder.album.setVisibility(View.GONE);
+                    }
+
+                    break;
+                //拍照
+                case R.id.takephotos:
+                    mPhotoPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg").getAbsolutePath();
+                    Intent getImageByCamera = new Intent(
+                            "android.media.action.IMAGE_CAPTURE");
+                    getImageByCamera.putExtra(MediaStore.EXTRA_OUTPUT,
+                            Uri.fromFile(new File(mPhotoPath)));
+                    ((Activity)mContext).startActivityForResult(getImageByCamera,
+                            Constant.TAKE_PHOTO);
+                    break;
+                //相册
+                case R.id.album:
+                    mPhotoPath = new File(mCacheDir, System.currentTimeMillis() + ".jpg").getAbsolutePath();
+                    Intent intent = new Intent(mContext,
+                            PhotoSelectorActivity.class);
+                    intent.putExtra(PhotoSelectorActivity.KEY_MAX,
+                            10);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    ((Activity)mContext).startActivityForResult(intent, Constant.PICK_PHOTO);
+                    break;
+
+            }
+        }
     }
 }

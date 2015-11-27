@@ -138,10 +138,21 @@
                     android:text="你不传2张照片就想看我的，不公平哦"/>
 
                 <TextView
+                    android:id="@+id/inviteT"
+                    style="@style/text_white_small"
+                    android:layout_width="fill_parent"
+                    android:background="#b3000000"
+                    android:paddingTop="6dp"
+                    android:paddingLeft="10dp"
+                    android:paddingBottom="6dp"
+                    android:visibility="gone" />
+
+                <TextView
                     android:id="@+id/promtp"
                     style="@style/text_white_small"
                     android:layout_marginTop="20dp"
                     android:layout_toLeftOf="@+id/phtoto"
+                    android:layout_below="@+id/inviteT"
                     android:layout_marginRight="10dp"
                     android:gravity="center"
                     android:text="你不传2张照片就想看我的，不公平哦"/>
@@ -150,6 +161,7 @@
                     android:id="@+id/phtoto"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/inviteT"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="16dp"
@@ -238,15 +250,7 @@
             <!--android:layout_height="wrap_content"-->
             <!--android:background="#50000000"-->
             <!--android:visibility="gone">-->
-            <TextView
-                android:id="@+id/inviteT"
-                style="@style/text_white_small"
-                android:layout_width="fill_parent"
-                android:background="#b3000000"
-                android:paddingTop="6dp"
-                android:paddingLeft="10dp"
-                android:paddingBottom="6dp"
-                android:visibility="gone" />
+
             <!--</LinearLayout>-->
 
         </FrameLayout>
