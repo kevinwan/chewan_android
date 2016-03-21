@@ -14,8 +14,8 @@ public class API2 {
     public static boolean imageHeightInit = false;
 
     //测试版API前缀
-//    public static final String CWBaseurl = "http://cwapi.gongpingjia.com:8080/v2/";
-    public static final String CWBaseurl = "http://chewanapi.gongpingjia.com/v2/";
+    public static final String CWBaseurl = "http://cwapi.gongpingjia.com:8080/v2/";
+//    public static final String CWBaseurl = "http://chewanapi.gongpingjia.com/v2/";
 
 
     //获取验证码
@@ -37,6 +37,8 @@ public class API2 {
     public static final String forgetPassword = CWBaseurl + "user/password";
 
     public static final String allCarBrands = CWBaseurl + "/car/brand";
+
+
 
     public static final String carDetails = CWBaseurl + "/car/model";
 
@@ -60,6 +62,7 @@ public class API2 {
 
     //报名参加
     public static final String joinActive = CWBaseurl + "official/activity/";
+
 
     //约她同去参加官方活动
     public static final String joinTogether = CWBaseurl + "official/activity/";

@@ -143,7 +143,9 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
         switch (id) {
             case R.id.btn_login:
                 login();
+
                 break;
+
             case R.id.btn_register:
                 register();
                 break;
@@ -186,6 +188,7 @@ public class LoginActivity2 extends CarPlayBaseActivity implements View.OnClickL
         UMSsoHandler ssoHandler = mController.getConfig().getSsoHandler(requestCode);
         if (ssoHandler != null) {
             ssoHandler.authorizeCallBack(requestCode, resultCode, data);
+
         }
 
     }

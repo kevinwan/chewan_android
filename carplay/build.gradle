@@ -87,6 +87,11 @@ android {
         }
 
 
+        Xiaomi {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Xiaomi"]
+        }
+
+
 
         Anzhi {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Anzhi"]

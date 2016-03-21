@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.gongpingjia.carplay"
     android:versionCode="6"
-    android:versionName="2.02" >
+    android:versionName="2.02">
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -24,8 +24,7 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <uses-permission android:name="android.permission.VIBRATE" >
-    </uses-permission>
+    <uses-permission android:name="android.permission.VIBRATE"></uses-permission>
 
     <supports-screens
         android:largeScreens="true"
@@ -41,46 +40,27 @@
         android:label="@string/app_name"
         android:largeHeap="true"
         android:persistent="true"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="55c80d4be0f55af652003627" />
         <!-- 正式版 -->
-            <meta-data
-            android:name="com.amap.api.v2.apikey"
-            android:value="f5a41f709dd7b958bda5c51d3a0a247e" />
-     <!--       <meta-data
+        <!--    <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="f5a41f709dd7b958bda5c51d3a0a247e" />-->
-        <!--  <meta-data
-              android:name="com.amap.api.v2.apikey"
-              android:value="427c3acc9b4358fd1fa1823194709ae3" />-->
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="427c3acc9b4358fd1fa1823194709ae3" />
 
         <!-- 正式版 -->
-            <meta-data
+        <!--   <meta-data
+           android:name="EASEMOB_APPKEY"
+           android:value="gongpingjia#chewanapi" />-->
+
+
+        <meta-data
             android:name="EASEMOB_APPKEY"
-            android:value="gongpingjia#chewanapi" />
-        <!-- <meta-data -->
-        <!-- android:name="EASEMOB_APPKEY" -->
-        <!-- android:value="gongpingjia#chewanapi" /> -->
-
-
-        <!--
-                <meta-data
-                android:name="EASEMOB_APPKEY"
-                android:value="gongpingjia#chewantest" />
-        -->
-
-
-        <!-- <meta-data -->
-        <!-- android:name="EASEMOB_APPKEY" -->
-        <!--
-             android:value="gongpingjia#
-             " />
-        -->
-      <!--  <meta-data
-            android:name="EASEMOB_APPKEY"
-            android:value="gongpingjia#carplayapp" />-->
+            android:value="gongpingjia#carplayapp" />
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="${UMENG_CHANNEL_VALUE}" />
@@ -132,7 +112,7 @@
         <activity
             android:name=".activity.main.SplashActivity"
             android:launchMode="standard"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -141,12 +121,10 @@
         </activity>
         <activity
             android:name=".activity.my.LoginActivity2"
-            android:screenOrientation="portrait" >
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.my.BindPhoneInfoActivity"
-            android:screenOrientation="portrait" >
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.my.BasicInformationActivity2"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -186,7 +164,7 @@
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"
             android:noHistory="true"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -227,7 +205,7 @@
 
         <service android:name="com.easemob.chat.EMChatService" />
 
-        <receiver android:name="com.easemob.chat.EMMonitorReceiver" >
+        <receiver android:name="com.easemob.chat.EMMonitorReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />
 
@@ -304,47 +282,37 @@
         <activity
             android:name=".activity.main.GuidanceActivity2"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" >
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.active.OfficialParticipantsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" >
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.my.VisitorsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" >
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.my.HisDynamicActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" >
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.active.NearListActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" >
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.my.RevisePassword"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" >
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.my.BoundPhoneActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" >
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.my.MsgNotice"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity android:name=".activity.active.ActiveShareActivity" >
-        </activity>
-        <activity android:name=".activity.my.CarPlayAlbum" >
-        </activity>
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.active.ActiveShareActivity"></activity>
+        <activity android:name=".activity.my.CarPlayAlbum"></activity>
     </application>
 
 </manifest>
